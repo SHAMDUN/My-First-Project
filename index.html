@@ -35,6 +35,7 @@
             max-width: 500px;
             width: 100%;
         }
+        
 
         .avatar {
             width: 100px;
@@ -103,6 +104,30 @@
             color: #888;
             margin-top: 10px;
         }
+        /* ===== دکمه شناور اینستاگرام ===== */
+.instagram-btn {
+    position: fixed;
+    bottom: 20px;          /* فاصله از پایین صفحه */
+    left: 20px;            /* فاصله از چپ صفحه */
+    z-index: 999;          /* برای اینکه بالای همه عناصر باشه */
+    background: #E4405F;   /* رنگ قرمز اینستاگرام */
+    color: #fff;
+    padding: 12px 20px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: bold;
+    box-shadow: 0 4px 15px rgba(228, 64, 95, 0.4);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 16px;
+    transition: 0.3s;
+}
+
+.instagram-btn:hover {
+    transform: scale(1.05);
+    background: #c13584;
+}
     </style>
 </head>
 <body>
@@ -111,7 +136,9 @@
         <div class="avatar">
             <img src="me.png" alt="عکس مدیر آکادمی">
         </div>
-
+<a href="https://www.instagram.com/shamdun.trade/" target="_blank" class="instagram-btn">
+    📸 اینستاگرام
+</a>
         <h1>سلام! من مدیر آکادمی شمعدون هستم</h1>
         <p>👨‍💻 تازه‌کار برنامه‌نویسی وب</p>
         <p>🚀 به دنیای کدنویسی خوش اومدی!</p>
