@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تست با عکس اینترنتی</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            width: 100vw;
+            height: 100vh;
+            background-image: url('https://img.freepik.com/free-photo/abstract-gradient-background_53876-10248.jpg');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: Tahoma, sans-serif;
+        }
+        .test-box {
+            background: rgba(0, 0, 0, 0.6);
+            color: white;
+            padding: 30px 50px;
+            border-radius: 20px;
+            font-size: 28px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-box">
+        ✅ بک‌گراند اینترنتی<br>به درستی کار می‌کند!
+    </div>
+</body>
+</html>

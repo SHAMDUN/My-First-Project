@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>تست رنگ</title>
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            background: red;  /* ← این یه رنگ ساده است */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-family: Tahoma;
+            font-size: 30px;
+        }
+    </style>
+</head>
+<body>
+    <h1>🔴 اگر این صفحه قرمز است، مرورگر شما کار می‌کند!</h1>
+</body>
+</html>

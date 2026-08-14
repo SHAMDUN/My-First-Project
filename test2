@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>تست نهایی بک‌گراند</title>
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            background-image: url('https://img.freepik.com/free-photo/abstract-gradient-background_53876-10248.jpg');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-family: Tahoma;
+            font-size: 30px;
+            text-shadow: 2px 2px 8px black;
+        }
+    </style>
+</head>
+<body>
+    <h1>✅ اگر این عکس رو می‌بینید، مرورگر شما سالم است!</h1>
+</body>
+</html>

@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>تست ساده</title>
+</head>
+<body>
+    <h1>سلام! اگر این متن را می‌بینید، مرورگر شما کار می‌کند.</h1>
+    <p id="demo"></p>
+
+    <script>
+        document.getElementById('demo').innerHTML = 'ساعت: ' + new Date().toLocaleTimeString('fa-IR');
+    </script>
+</body>
+</html>
