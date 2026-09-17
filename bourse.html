@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>بورس ایران | آکادمی شمعدون</title>
-    <script src="https://unpkg.com/lightweight-charts/dist/lightweight-charts.standalone.production.js"></script>
+    <script src="https://unpkg.com/lightweight-charts@3.8.0/dist/lightweight-charts.standalone.production.js"></script>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -179,36 +179,44 @@
         function initChart() {
             if (chartInitialized) return;
             
-            const chartContainer = document.getElementById('tvchart');
-            const width = chartContainer.clientWidth || window.innerWidth - 60;
-            
-            chart = LightweightCharts.createChart(chartContainer, {
-                width: width,
-                height: 450,
-                layout: { 
-                    background: { color: '#0f172a' }, 
-                    textColor: '#94a3b8' 
-                },
-                grid: { 
-                    vertLines: { color: '#1e293b' }, 
-                    horzLines: { color: '#1e293b' } 
-                },
-                timeScale: { 
-                    timeVisible: true, 
-                    secondsVisible: false 
-                }
-            });
-            
-            candleSeries = chart.addCandlestickSeries({
-                upColor: '#4ade80', 
-                downColor: '#f87171',
-                borderVisible: false,
-                wickUpColor: '#4ade80', 
-                wickDownColor: '#f87171'
-            });
-            
-            chartInitialized = true;
-            console.log('✅ چارت مقداردهی شد | عرض:', width);
+            try {
+                const chartContainer = document.getElementById('tvchart');
+                const width = chartContainer.clientWidth || window.innerWidth - 60;
+                
+                console.log('📐 عرض چارت:', width);
+                
+                chart = LightweightCharts.createChart(chartContainer, {
+                    width: width,
+                    height: 450,
+                    layout: { 
+                        background: { color: '#0f172a' }, 
+                        textColor: '#94a3b8' 
+                    },
+                    grid: { 
+                        vertLines: { color: '#1e293b' }, 
+                        horzLines: { color: '#1e293b' } 
+                    },
+                    timeScale: { 
+                        timeVisible: true, 
+                        secondsVisible: false 
+                    }
+                });
+                
+                candleSeries = chart.addCandlestickSeries({
+                    upColor: '#4ade80', 
+                    downColor: '#f87171',
+                    borderVisible: false,
+                    wickUpColor: '#4ade80', 
+                    wickDownColor: '#f87171'
+                });
+                
+                chartInitialized = true;
+                console.log('✅ چارت مقداردهی شد');
+            } catch (e) {
+                console.error('❌ خطا در مقداردهی چارت:', e);
+                document.getElementById('tvchart').innerHTML = 
+                    '<div style="color:red; padding:20px; text-align:center;">❌ خطا در بارگذاری چارت: ' + e.message + '</div>';
+            }
         }
 
         // ===== جستجوی نماد =====
@@ -339,7 +347,6 @@
                 }
 
                 console.log('✅ تعداد کندل‌های نهایی:', chartData.length);
-                console.log('📅 اولین کندل:', chartData[0]);
                 console.log('📅 آخرین کندل:', chartData[chartData.length - 1]);
 
                 if (chartData.length > 0) {
