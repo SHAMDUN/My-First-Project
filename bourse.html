@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>بورس ایران | آکادمی شمعدون</title>
+    <!-- استفاده از نسخه پایدار کتابخانه چارت -->
     <script src="https://unpkg.com/lightweight-charts@3.8.0/dist/lightweight-charts.standalone.production.js"></script>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -114,6 +115,48 @@
         .up { color: #4ade80; }
         .down { color: #f87171; }
 
+        /* ===== بخش عملکرد دوره‌ای ===== */
+        .performance-box {
+            background: #1e293b;
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+        .performance-box h3 { color: #f59e0b; font-size: 16px; margin-bottom: 12px; }
+        .performance-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            gap: 10px;
+        }
+        .perf-item {
+            background: #0f172a;
+            padding: 10px;
+            border-radius: 10px;
+            text-align: center;
+        }
+        .perf-item .perf-label { font-size: 11px; color: #94a3b8; margin-bottom: 5px; }
+        .perf-item .perf-value { font-size: 16px; font-weight: bold; }
+        .perf-item .perf-value.up { color: #4ade80; }
+        .perf-item .perf-value.down { color: #f87171; }
+
+        .money-flow-box {
+            background: #1e293b;
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+        .money-flow-box h3 { color: #f59e0b; font-size: 16px; margin-bottom: 12px; }
+        .flow-bar {
+            display: flex;
+            height: 40px;
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 8px;
+        }
+        .flow-bar .buy { background: #4ade80; display: flex; align-items: center; justify-content: center; font-weight: bold; color: #0f172a; font-size: 12px; }
+        .flow-bar .sell { background: #f87171; display: flex; align-items: center; justify-content: center; font-weight: bold; color: #0f172a; font-size: 12px; }
+        .flow-legend { display: flex; justify-content: space-between; font-size: 13px; color: #94a3b8; }
+
         .chart-section {
             background: #1e293b;
             padding: 15px;
@@ -128,6 +171,17 @@
             gap: 10px;
         }
         .chart-header h3 { color: #f59e0b; font-size: 18px; }
+        .chart-tabs { display: flex; gap: 5px; flex-wrap: wrap; }
+        .chart-tab {
+            background: #0f172a;
+            color: #94a3b8;
+            border: 1px solid #334155;
+            padding: 6px 14px;
+            border-radius: 8px;
+            font-size: 13px;
+            cursor: pointer;
+        }
+        .chart-tab.active { background: #f59e0b; color: #0f172a; border-color: #f59e0b; }
         #tvchart { width: 100%; height: 450px; }
 
         .loading { text-align: center; padding: 20px; color: #94a3b8; }
@@ -162,9 +216,55 @@
         <div class="info-card"><div class="label">ارزش معاملات</div><div class="value" id="tval">--</div></div>
     </div>
 
+    <!-- ===== بخش عملکرد دوره‌ای (سود/ضرر) ===== -->
+    <div class="performance-box" id="performanceBox" style="display:none;">
+        <h3>📈 عملکرد و سود/ضرر در بازه‌های زمانی</h3>
+        <div class="performance-grid">
+            <div class="perf-item">
+                <div class="perf-label">۱ هفته گذشته</div>
+                <div class="perf-value" id="perf-1w">--</div>
+            </div>
+            <div class="perf-item">
+                <div class="perf-label">۱ ماه گذشته</div>
+                <div class="perf-value" id="perf-1m">--</div>
+            </div>
+            <div class="perf-item">
+                <div class="perf-label">۳ ماه گذشته</div>
+                <div class="perf-value" id="perf-3m">--</div>
+            </div>
+            <div class="perf-item">
+                <div class="perf-label">۶ ماه گذشته</div>
+                <div class="perf-value" id="perf-6m">--</div>
+            </div>
+            <div class="perf-item">
+                <div class="perf-label">۱ سال گذشته</div>
+                <div class="perf-value" id="perf-1y">--</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== بخش ورود/خروج پول حقیقی ===== -->
+    <div class="money-flow-box" id="moneyFlowBox" style="display:none;">
+        <h3>💰 ورود و خروج پول حقیقی (آخرین روز)</h3>
+        <div class="flow-bar">
+            <div class="buy" id="buyBar" style="width: 50%;">خرید حقیقی</div>
+            <div class="sell" id="sellBar" style="width: 50%;">فروش حقیقی</div>
+        </div>
+        <div class="flow-legend">
+            <span>خرید: <span id="buyValue">--</span></span>
+            <span>فروش: <span id="sellValue">--</span></span>
+        </div>
+    </div>
+
     <div class="chart-section">
         <div class="chart-header">
             <h3 id="chartTitle">📈 چارت قیمت</h3>
+            <div class="chart-tabs">
+                <button class="chart-tab active" onclick="changeTimeframe('daily', this)">روزانه</button>
+                <button class="chart-tab" onclick="changeTimeframe('weekly', this)">هفتگی</button>
+                <button class="chart-tab" onclick="changeTimeframe('monthly', this)">ماهانه</button>
+                <button class="chart-tab" onclick="toggleFullscreen()">🖥️ تمام‌صفحه</button>
+            </div>
         </div>
         <div id="tvchart"></div>
     </div>
@@ -173,49 +273,45 @@
         const TSETMC_API = 'https://cdn.tsetmc.com/api';
         let chart, candleSeries;
         let currentSymbol = '';
+        let currentInsCode = '';
         let chartInitialized = false;
+        let currentTimeframe = 'daily';
+        let fullscreenMode = false;
+        let allDailyData = [];
 
         // ===== مقداردهی چارت =====
         function initChart() {
             if (chartInitialized) return;
-            
             try {
                 const chartContainer = document.getElementById('tvchart');
                 const width = chartContainer.clientWidth || window.innerWidth - 60;
-                
-                console.log('📐 عرض چارت:', width);
-                
+
                 chart = LightweightCharts.createChart(chartContainer, {
                     width: width,
                     height: 450,
-                    layout: { 
-                        background: { color: '#0f172a' }, 
-                        textColor: '#94a3b8' 
+                    layout: {
+                        background: { color: '#0f172a' },
+                        textColor: '#94a3b8'
                     },
-                    grid: { 
-                        vertLines: { color: '#1e293b' }, 
-                        horzLines: { color: '#1e293b' } 
+                    grid: {
+                        vertLines: { color: '#1e293b' },
+                        horzLines: { color: '#1e293b' }
                     },
-                    timeScale: { 
-                        timeVisible: true, 
-                        secondsVisible: false 
-                    }
+                    timeScale: { timeVisible: true, secondsVisible: false }
                 });
-                
+
                 candleSeries = chart.addCandlestickSeries({
-                    upColor: '#4ade80', 
+                    upColor: '#4ade80',
                     downColor: '#f87171',
                     borderVisible: false,
-                    wickUpColor: '#4ade80', 
+                    wickUpColor: '#4ade80',
                     wickDownColor: '#f87171'
                 });
-                
+
                 chartInitialized = true;
                 console.log('✅ چارت مقداردهی شد');
             } catch (e) {
                 console.error('❌ خطا در مقداردهی چارت:', e);
-                document.getElementById('tvchart').innerHTML = 
-                    '<div style="color:red; padding:20px; text-align:center;">❌ خطا در بارگذاری چارت: ' + e.message + '</div>';
             }
         }
 
@@ -236,13 +332,9 @@
                     document.getElementById('searchResults').innerHTML = results.map(item => {
                         const name = item.lVal18AFC || item.lVal30 || '';
                         const insCode = item.insCode || '';
-                        return `<span class="symbol-tag ${insCode === currentSymbol ? 'active' : ''}" onclick="loadSymbolByCode('${insCode}', '${name}')">${name}</span>`;
+                        return `<span class="symbol-tag ${insCode === currentInsCode ? 'active' : ''}" onclick="loadSymbolByCode('${insCode}', '${name}')">${name}</span>`;
                     }).join('');
-                    document.getElementById('statusBox').textContent = `✅ ${results.length} نتیجه یافت شد. روی نماد مورد نظر کلیک کنید.`;
-                    
-                    if (results.length === 1) {
-                        loadSymbolByCode(results[0].insCode, results[0].lVal18AFC);
-                    }
+                    document.getElementById('statusBox').textContent = `✅ ${results.length} نتیجه یافت شد.`;
                 } else {
                     document.getElementById('statusBox').textContent = '❌ نمادی یافت نشد.';
                 }
@@ -253,7 +345,8 @@
 
         // ===== بارگذاری اطلاعات نماد =====
         async function loadSymbolByCode(insCode, symbolName) {
-            currentSymbol = insCode;
+            currentSymbol = symbolName;
+            currentInsCode = insCode;
             document.getElementById('chartTitle').textContent = '📈 چارت ' + symbolName;
             document.getElementById('infoGrid').innerHTML = '<div class="loading">⏳ در حال دریافت اطلاعات...</div>';
             document.getElementById('statusBox').textContent = `⏳ در حال دریافت اطلاعات ${symbolName}...`;
@@ -263,11 +356,9 @@
                 const data = await res.json();
 
                 if (data && data.closingPriceInfo) {
-                    const info = data.closingPriceInfo;
-                    displayInfo(info, symbolName);
+                    displayInfo(data.closingPriceInfo);
                     document.getElementById('statusBox').textContent = `✅ اطلاعات ${symbolName} بارگذاری شد.`;
-                    
-                    await loadChart(insCode);
+                    await loadChartData(insCode);
                 } else {
                     document.getElementById('infoGrid').innerHTML = '<div class="error">❌ اطلاعات یافت نشد.</div>';
                 }
@@ -276,19 +367,16 @@
             }
         }
 
-        // ===== نمایش اطلاعات =====
-        function displayInfo(info, symbolName) {
+        // ===== نمایش اطلاعات لحظه‌ای =====
+        function displayInfo(info) {
             const pc = (parseInt(info.pClosing || 0) / 10).toLocaleString('fa-IR');
             const pl = (parseInt(info.pDrCotVal || 0) / 10).toLocaleString('fa-IR');
-            
             const pClosing = parseInt(info.pClosing || 0);
             const pYesterday = parseInt(info.priceYesterday || 0);
             const pccRaw = pClosing - pYesterday;
             const pcpRaw = pYesterday > 0 ? (pccRaw / pYesterday) * 100 : 0;
-            
             const pcc = (pccRaw / 10).toLocaleString('fa-IR');
             const pcp = pcpRaw.toFixed(2);
-            
             const tvol = parseInt(info.qTotTran5J || 0).toLocaleString('fa-IR');
             const tval = (parseInt(info.qTotCap || 0) / 10000000000).toFixed(1) + ' میلیارد';
 
@@ -302,27 +390,76 @@
             `;
         }
 
-        // ===== دریافت و رسم چارت =====
-        async function loadChart(insCode) {
-            try {
-                console.log('🔄 شروع بارگذاری چارت برای:', insCode);
+        // ===== محاسبه سود/ضرر در بازه‌های زمانی =====
+        function calculatePerformance(dailyData) {
+            if (!dailyData || dailyData.length < 2) return;
+
+            // مرتب‌سازی از قدیم به جدید
+            const sorted = dailyData.filter(d => d.pClosing > 0).sort((a, b) => a.dEven - b.dEven);
+            if (sorted.length < 2) return;
+
+            const latest = sorted[sorted.length - 1];
+            const latestPrice = latest.pClosing;
+
+            // محاسبه تعداد روزهای معاملاتی برای هر بازه
+            const periods = {
+                '1w': 5,   // ۱ هفته (۵ روز کاری)
+                '1m': 22,  // ۱ ماه
+                '3m': 66,  // ۳ ماه
+                '6m': 132, // ۶ ماه
+                '1y': 250  // ۱ سال
+            };
+
+            for (const [key, days] of Object.entries(periods)) {
+                const index = sorted.length - 1 - days;
+                const oldPrice = index >= 0 ? sorted[index].pClosing : sorted[0].pClosing;
+                const changePercent = ((latestPrice - oldPrice) / oldPrice) * 100;
                 
-                if (!chartInitialized) {
-                    initChart();
+                const el = document.getElementById(`perf-${key}`);
+                if (el) {
+                    el.textContent = (changePercent >= 0 ? '+' : '') + changePercent.toFixed(2) + '%';
+                    el.className = 'perf-value ' + (changePercent >= 0 ? 'up' : 'down');
                 }
-                
+            }
+
+            document.getElementById('performanceBox').style.display = 'block';
+        }
+
+        // ===== محاسبه ورود/خروج پول حقیقی =====
+        function calculateMoneyFlow(info) {
+            // استفاده از داده‌های حقیقی/حقوقی در ClosingPriceInfo
+            const buyI = parseInt(info.Buy_I_Value || 0);
+            const sellI = parseInt(info.Sell_I_Value || 0);
+            const total = buyI + sellI;
+            
+            if (total === 0) {
+                document.getElementById('moneyFlowBox').style.display = 'none';
+                return;
+            }
+
+            const buyPercent = (buyI / total) * 100;
+            document.getElementById('buyBar').style.width = buyPercent + '%';
+            document.getElementById('sellBar').style.width = (100 - buyPercent) + '%';
+            document.getElementById('buyValue').textContent = (buyI / 1000000000).toFixed(1) + ' میلیارد';
+            document.getElementById('sellValue').textContent = (sellI / 1000000000).toFixed(1) + ' میلیارد';
+            document.getElementById('moneyFlowBox').style.display = 'block';
+        }
+
+        // ===== بارگذاری داده‌های چارت =====
+        async function loadChartData(insCode) {
+            try {
+                if (!chartInitialized) initChart();
+
                 const res = await fetch(`${TSETMC_API}/ClosingPrice/GetClosingPriceDailyList/${insCode}/0`);
                 const data = await res.json();
 
                 if (!data || !data.closingPriceDaily || data.closingPriceDaily.length === 0) {
-                    console.warn('❌ داده‌ای برای چارت وجود ندارد');
+                    console.warn('داده‌ای برای چارت وجود ندارد');
                     return;
                 }
 
-                console.log('📊 تعداد کل داده‌ها:', data.closingPriceDaily.length);
-
-                const recent = data.closingPriceDaily.slice(0, 200);
-                recent.sort((a, b) => a.dEven - b.dEven);
+                allDailyData = data.closingPriceDaily;
+                const recent = data.closingPriceDaily.slice(0, 200).sort((a, b) => a.dEven - b.dEven);
 
                 const chartData = [];
                 for (const item of recent) {
@@ -331,9 +468,7 @@
                         const year = parseInt(str.substring(0, 4));
                         const month = parseInt(str.substring(4, 6)) - 1;
                         const day = parseInt(str.substring(6, 8));
-                        const dateObj = new Date(year, month, day);
-                        const timestamp = Math.floor(dateObj.getTime() / 1000);
-                        
+                        const timestamp = Math.floor(new Date(year, month, day).getTime() / 1000);
                         if (timestamp > 0) {
                             chartData.push({
                                 time: timestamp,
@@ -346,18 +481,116 @@
                     }
                 }
 
-                console.log('✅ تعداد کندل‌های نهایی:', chartData.length);
-                console.log('📅 آخرین کندل:', chartData[chartData.length - 1]);
-
                 if (chartData.length > 0) {
                     candleSeries.setData(chartData);
                     chart.timeScale().fitContent();
-                    console.log('🎉 چارت با موفقیت رسم شد!');
-                } else {
-                    console.warn('❌ هیچ داده معتبری برای چارت نیست');
+                    console.log('✅ چارت رسم شد');
                 }
+
+                // محاسبه عملکرد
+                calculatePerformance(data.closingPriceDaily);
+                
+                // محاسبه جریان پول حقیقی
+                calculateMoneyFlow(data.closingPriceInfo);
+                
             } catch (e) {
                 console.error('❌ خطا در چارت:', e);
+            }
+        }
+
+        // ===== تغییر تایم‌فریم =====
+        function changeTimeframe(timeframe, btn) {
+            document.querySelectorAll('.chart-tab').forEach(t => t.classList.remove('active'));
+            btn.classList.add('active');
+            currentTimeframe = timeframe;
+
+            // در این نسخه ساده، فقط روزانه رو پشتیبانی می‌کنیم
+            // برای هفتگی و ماهانه باید داده‌ها رو به صورت دستی گروه‌بندی کنیم
+            if (timeframe === 'daily') {
+                candleSeries.setData([]);
+                loadChartData(currentInsCode);
+            } else {
+                // برای هفتگی و ماهانه، داده‌های روزانه رو گروه‌بندی می‌کنیم
+                groupAndRender(timeframe);
+            }
+        }
+
+        // ===== گروه‌بندی داده‌ها برای هفتگی و ماهانه =====
+        function groupAndRender(timeframe) {
+            if (!allDailyData || allDailyData.length === 0) return;
+
+            const sorted = allDailyData.filter(d => d.pClosing > 0).sort((a, b) => a.dEven - b.dEven);
+            const grouped = [];
+            let currentGroup = null;
+
+            for (const item of sorted) {
+                const str = item.dEven.toString();
+                const year = parseInt(str.substring(0, 4));
+                const month = parseInt(str.substring(4, 6));
+                const day = parseInt(str.substring(6, 8));
+                const date = new Date(year, month - 1, day);
+
+                let groupKey;
+                if (timeframe === 'weekly') {
+                    // هفته از شنبه شروع میشه (روز ۶ در جاوااسکریپت)
+                    const weekStart = new Date(date);
+                    weekStart.setDate(date.getDate() - date.getDay() + (date.getDay() === 6 ? 0 : 1));
+                    groupKey = weekStart.getTime();
+                } else if (timeframe === 'monthly') {
+                    groupKey = year * 100 + month;
+                }
+
+                if (!currentGroup || currentGroup.key !== groupKey) {
+                    if (currentGroup) grouped.push(currentGroup);
+                    currentGroup = {
+                        key: groupKey,
+                        time: Math.floor(date.getTime() / 1000),
+                        open: parseInt(item.priceFirst) / 10,
+                        high: parseInt(item.priceMax) / 10,
+                        low: parseInt(item.priceMin) / 10,
+                        close: parseInt(item.pClosing) / 10
+                    };
+                } else {
+                    currentGroup.high = Math.max(currentGroup.high, parseInt(item.priceMax) / 10);
+                    currentGroup.low = Math.min(currentGroup.low, parseInt(item.priceMin) / 10);
+                    currentGroup.close = parseInt(item.pClosing) / 10;
+                }
+            }
+            if (currentGroup) grouped.push(currentGroup);
+
+            const chartData = grouped.map(g => ({
+                time: g.time,
+                open: g.open,
+                high: g.high,
+                low: g.low,
+                close: g.close
+            }));
+
+            if (chartData.length > 0) {
+                candleSeries.setData(chartData);
+                chart.timeScale().fitContent();
+            }
+        }
+
+        // ===== حالت تمام‌صفحه =====
+        function toggleFullscreen() {
+            const elem = document.getElementById('tvchart');
+            if (!fullscreenMode) {
+                if (elem.requestFullscreen) {
+                    elem.requestFullscreen();
+                } else if (elem.webkitRequestFullscreen) {
+                    elem.webkitRequestFullscreen();
+                } else if (elem.msRequestFullscreen) {
+                    elem.msRequestFullscreen();
+                }
+                fullscreenMode = true;
+            } else {
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                } else if (document.webkitExitFullscreen) {
+                    document.webkitExitFullscreen();
+                }
+                fullscreenMode = false;
             }
         }
 
@@ -371,8 +604,8 @@
 
         window.addEventListener('resize', () => {
             if (chart && chartInitialized) {
-                chart.applyOptions({ 
-                    width: document.getElementById('tvchart').clientWidth 
+                chart.applyOptions({
+                    width: document.getElementById('tvchart').clientWidth
                 });
             }
         });
