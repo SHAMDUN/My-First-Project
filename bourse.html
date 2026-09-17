@@ -97,24 +97,7 @@
         .symbol-tag:hover { background: #f59e0b; color: #0f172a; }
         .symbol-tag.active { background: #f59e0b; color: #0f172a; }
 
-        .info-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-            gap: 10px;
-            margin-bottom: 20px;
-        }
-        .info-card {
-            background: #1e293b;
-            padding: 12px;
-            border-radius: 12px;
-            border-right: 4px solid #f59e0b;
-        }
-        .info-card .label { font-size: 12px; color: #94a3b8; }
-        .info-card .value { font-size: 16px; font-weight: bold; margin-top: 5px; }
-        .up { color: #4ade80; }
-        .down { color: #f87171; }
-
-        /* ===== بخش رتبه‌بندی سهام ===== */
+        /* ===== بخش رتبه‌بندی ===== */
         .ranking-section {
             background: #1e293b;
             border-radius: 12px;
@@ -157,7 +140,7 @@
         .sort-btn.desc { background: #ef4444; color: #fff; border-color: #ef4444; }
 
         .ranking-list {
-            max-height: 400px;
+            max-height: 500px;
             overflow-y: auto;
         }
         .ranking-item {
@@ -184,10 +167,28 @@
             font-weight: bold;
         }
         .ranking-item .rank.top-3 { background: #f59e0b; color: #0f172a; }
-        .ranking-item .name { flex: 1; margin-right: 10px; font-weight: bold; }
-        .ranking-item .change { font-weight: bold; font-size: 15px; }
+        .ranking-item .name { flex: 1; margin-right: 10px; font-weight: bold; font-size: 14px; }
+        .ranking-item .price { color: #94a3b8; font-size: 12px; margin-left: 8px; }
+        .ranking-item .change { font-weight: bold; font-size: 15px; min-width: 70px; text-align: left; }
         .ranking-item .change.up { color: #4ade80; }
         .ranking-item .change.down { color: #f87171; }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .info-card {
+            background: #1e293b;
+            padding: 12px;
+            border-radius: 12px;
+            border-right: 4px solid #f59e0b;
+        }
+        .info-card .label { font-size: 12px; color: #94a3b8; }
+        .info-card .value { font-size: 16px; font-weight: bold; margin-top: 5px; }
+        .up { color: #4ade80; }
+        .down { color: #f87171; }
 
         .chart-section {
             background: #1e293b;
@@ -239,9 +240,9 @@
         <div class="tags" id="searchResults"></div>
     </div>
 
-    <!-- ===== بخش رتبه‌بندی سهام ===== -->
+    <!-- ===== بخش رتبه‌بندی ===== -->
     <div class="ranking-section">
-        <h3>🏆 رتبه‌بندی سهام بر اساس سود/ضرر</h3>
+        <h3>🏆 رتبه‌بندی سهام بر اساس سود/ضرر (داده‌های زنده TSETMC)</h3>
         
         <div class="ranking-tabs">
             <button class="ranking-tab active" onclick="changeRankingPeriod('1w', this)">۱ هفته</button>
@@ -257,7 +258,7 @@
         </div>
 
         <div class="ranking-list" id="rankingList">
-            <div class="loading">⏳ در حال بارگذاری...</div>
+            <div class="loading">⏳ در حال بارگذاری داده‌های زنده از TSETMC...</div>
         </div>
     </div>
 
@@ -291,7 +292,7 @@
         let currentTimeframe = 'daily';
         let allDailyData = [];
 
-        // لیست نمادهای پرطرفدار (برای رتبه‌بندی)
+        // لیست نمادهای پرطرفدار با insCode دقیق
         const POPULAR_SYMBOLS = [
             { name: 'فولاد', insCode: '46348559193224090' },
             { name: 'فملی', insCode: '35425587644337450' },
@@ -312,7 +313,8 @@
             { name: 'وتجارت', insCode: '35366681030756042' },
             { name: 'وبصادر', insCode: '63917420514309142' },
             { name: 'شپدیس', insCode: '20562625141228010' },
-            { name: 'کرماشا', insCode: '44376134185409315' }
+            { name: 'کرماشا', insCode: '44376134185409315' },
+            { name: 'فزر', insCode: '29453122942532375' }
         ];
 
         let rankingData = [];
@@ -329,29 +331,20 @@
                 chart = LightweightCharts.createChart(chartContainer, {
                     width: width,
                     height: 450,
-                    layout: {
-                        background: { color: '#0f172a' },
-                        textColor: '#94a3b8'
-                    },
-                    grid: {
-                        vertLines: { color: '#1e293b' },
-                        horzLines: { color: '#1e293b' }
-                    },
+                    layout: { background: { color: '#0f172a' }, textColor: '#94a3b8' },
+                    grid: { vertLines: { color: '#1e293b' }, horzLines: { color: '#1e293b' } },
                     timeScale: { timeVisible: true, secondsVisible: false }
                 });
 
                 candleSeries = chart.addCandlestickSeries({
-                    upColor: '#4ade80',
-                    downColor: '#f87171',
+                    upColor: '#4ade80', downColor: '#f87171',
                     borderVisible: false,
-                    wickUpColor: '#4ade80',
-                    wickDownColor: '#f87171'
+                    wickUpColor: '#4ade80', wickDownColor: '#f87171'
                 });
 
                 chartInitialized = true;
-                console.log('✅ چارت مقداردهی شد');
             } catch (e) {
-                console.error('❌ خطا در مقداردهی چارت:', e);
+                console.error('خطا در مقداردهی چارت:', e);
             }
         }
 
@@ -359,7 +352,6 @@
         async function searchAndLoad() {
             const query = document.getElementById('symbolSearch').value.trim();
             if (!query) return;
-
             document.getElementById('statusBox').textContent = '⏳ در حال جستجو...';
 
             try {
@@ -434,33 +426,24 @@
         async function loadChartData(insCode) {
             try {
                 if (!chartInitialized) initChart();
-
                 const res = await fetch(`${TSETMC_API}/ClosingPrice/GetClosingPriceDailyList/${insCode}/0`);
                 const data = await res.json();
 
-                if (!data || !data.closingPriceDaily || data.closingPriceDaily.length === 0) {
-                    console.warn('داده‌ای برای چارت وجود ندارد');
-                    return;
-                }
-
+                if (!data || !data.closingPriceDaily || data.closingPriceDaily.length === 0) return;
                 allDailyData = data.closingPriceDaily;
                 renderChart(currentTimeframe);
-                
             } catch (e) {
-                console.error('❌ خطا در چارت:', e);
+                console.error('خطا در چارت:', e);
             }
         }
 
-        // ===== رسم چارت بر اساس تایم‌فریم =====
+        // ===== رسم چارت =====
         function renderChart(timeframe) {
             if (!allDailyData || allDailyData.length === 0) return;
-
             const sorted = allDailyData.filter(d => d.pClosing > 0).sort((a, b) => a.dEven - b.dEven);
-
             let chartData = [];
 
             if (timeframe === 'daily') {
-                // فقط ۲۰۰ کندل آخر
                 const recent = sorted.slice(-200);
                 chartData = recent.map(item => ({
                     time: dateToTimestamp(item.dEven),
@@ -478,11 +461,9 @@
             if (chartData.length > 0) {
                 candleSeries.setData(chartData);
                 chart.timeScale().fitContent();
-                console.log(`✅ چارت ${timeframe} با ${chartData.length} کندل رسم شد`);
             }
         }
 
-        // ===== تبدیل تاریخ TSETMC به timestamp =====
         function dateToTimestamp(dateNum) {
             const str = dateNum.toString();
             const year = parseInt(str.substring(0, 4));
@@ -491,24 +472,19 @@
             return Math.floor(new Date(year, month, day).getTime() / 1000);
         }
 
-        // ===== گروه‌بندی هفتگی =====
         function groupByWeek(sorted) {
             const grouped = [];
             let currentGroup = null;
-
             for (const item of sorted) {
                 const timestamp = dateToTimestamp(item.dEven);
                 const date = new Date(timestamp * 1000);
-                // شروع هفته (شنبه)
                 const weekStart = new Date(date);
                 weekStart.setDate(date.getDate() - date.getDay());
                 const weekKey = weekStart.getTime();
-
                 if (!currentGroup || currentGroup.key !== weekKey) {
                     if (currentGroup) grouped.push(currentGroup);
                     currentGroup = {
-                        key: weekKey,
-                        time: timestamp,
+                        key: weekKey, time: timestamp,
                         open: parseInt(item.priceFirst) / 10,
                         high: parseInt(item.priceMax) / 10,
                         low: parseInt(item.priceMin) / 10,
@@ -524,23 +500,19 @@
             return grouped.slice(-100);
         }
 
-        // ===== گروه‌بندی ماهانه =====
         function groupByMonth(sorted) {
             const grouped = [];
             let currentGroup = null;
-
             for (const item of sorted) {
                 const str = item.dEven.toString();
                 const year = parseInt(str.substring(0, 4));
                 const month = parseInt(str.substring(4, 6));
                 const monthKey = year * 100 + month;
                 const timestamp = dateToTimestamp(item.dEven);
-
                 if (!currentGroup || currentGroup.key !== monthKey) {
                     if (currentGroup) grouped.push(currentGroup);
                     currentGroup = {
-                        key: monthKey,
-                        time: timestamp,
+                        key: monthKey, time: timestamp,
                         open: parseInt(item.priceFirst) / 10,
                         high: parseInt(item.priceMax) / 10,
                         low: parseInt(item.priceMin) / 10,
@@ -556,7 +528,6 @@
             return grouped.slice(-60);
         }
 
-        // ===== تغییر تایم‌فریم =====
         function changeTimeframe(timeframe, btn) {
             document.querySelectorAll('.chart-tab').forEach(t => t.classList.remove('active'));
             btn.classList.add('active');
@@ -564,9 +535,9 @@
             renderChart(timeframe);
         }
 
-        // ===== بارگذاری رتبه‌بندی =====
+        // ===== بارگذاری رتبه‌بندی (محاسبه دقیق از TSETMC) =====
         async function loadRanking() {
-            document.getElementById('rankingList').innerHTML = '<div class="loading">⏳ در حال محاسبه سود/ضرر...</div>';
+            document.getElementById('rankingList').innerHTML = '<div class="loading">⏳ در حال محاسبه سود/ضرر از داده‌های زنده...</div>';
             
             const promises = POPULAR_SYMBOLS.map(async (symbol) => {
                 try {
@@ -590,6 +561,7 @@
                         return {
                             name: symbol.name,
                             insCode: symbol.insCode,
+                            latestPrice: latestPrice / 10,
                             changes: changes
                         };
                     }
@@ -601,12 +573,10 @@
 
             const results = await Promise.all(promises);
             rankingData = results.filter(r => r !== null);
-            
             console.log('✅ رتبه‌بندی بارگذاری شد:', rankingData.length, 'نماد');
             renderRanking();
         }
 
-        // ===== نمایش رتبه‌بندی =====
         function renderRanking() {
             if (rankingData.length === 0) {
                 document.getElementById('rankingList').innerHTML = '<div class="error">❌ داده‌ای برای رتبه‌بندی وجود ندارد</div>';
@@ -626,6 +596,7 @@
                     <div class="ranking-item" onclick="loadSymbolByCode('${item.insCode}', '${item.name}')">
                         <span class="rank ${rankClass}">${index + 1}</span>
                         <span class="name">${item.name}</span>
+                        <span class="price">${item.latestPrice.toLocaleString('fa-IR')} ت</span>
                         <span class="change ${change >= 0 ? 'up' : 'down'}">
                             ${(change >= 0 ? '+' : '') + change.toFixed(2)}%
                         </span>
@@ -634,7 +605,6 @@
             }).join('');
         }
 
-        // ===== تغییر دوره رتبه‌بندی =====
         function changeRankingPeriod(period, btn) {
             document.querySelectorAll('.ranking-tab').forEach(t => t.classList.remove('active'));
             btn.classList.add('active');
@@ -642,7 +612,6 @@
             renderRanking();
         }
 
-        // ===== تغییر ترتیب سورت =====
         function changeSortOrder(order, btn) {
             document.querySelectorAll('.sort-btn').forEach(t => {
                 t.classList.remove('active', 'desc');
@@ -663,9 +632,7 @@
 
         window.addEventListener('resize', () => {
             if (chart && chartInitialized) {
-                chart.applyOptions({
-                    width: document.getElementById('tvchart').clientWidth
-                });
+                chart.applyOptions({ width: document.getElementById('tvchart').clientWidth });
             }
         });
     </script>
