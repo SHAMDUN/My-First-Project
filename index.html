@@ -430,7 +430,7 @@
         updateDateTime();
         setInterval(updateDateTime, 1000);
 
-        // ===== چارت TradingView =====
+        // ===== چارت TradingView با تم دفتر یادداشت =====
         let tvWidget = null;
         function initChart(symbol) {
             if (tvWidget) {
@@ -451,7 +451,26 @@
                 "allow_symbol_change": true,
                 "details": true,
                 "withdateranges": true,
-                "studies": ["RSI@tv-basicstudies"]
+                "studies": ["RSI@tv-basicstudies"],
+                "overrides": {
+                    "paneProperties.background": "#FAF0E6",
+                    "paneProperties.backgroundType": "solid",
+                    "paneProperties.vertGridProperties.color": "#D3C4B0",
+                    "paneProperties.horzGridProperties.color": "#D3C4B0",
+                    "paneProperties.vertGridProperties.style": 2,
+                    "paneProperties.horzGridProperties.style": 2,
+                    "mainSeriesProperties.candleStyle.upColor": "#4CAF50",
+                    "mainSeriesProperties.candleStyle.downColor": "#E57373",
+                    "mainSeriesProperties.candleStyle.borderUpColor": "#388E3C",
+                    "mainSeriesProperties.candleStyle.borderDownColor": "#C62828",
+                    "mainSeriesProperties.candleStyle.wickUpColor": "#388E3C",
+                    "mainSeriesProperties.candleStyle.wickDownColor": "#C62828",
+                    "paneProperties.topMargin": 10,
+                    "paneProperties.bottomMargin": 10,
+                    "scalesProperties.textColor": "#5D4037",
+                    "scalesProperties.lineColor": "#8D6E63",
+                    "scalesProperties.fontSize": 11
+                }
             });
         }
         function switchChart(symbol, btn) {
@@ -492,8 +511,6 @@
 
             if (!tickerHTML) tickerHTML = '<span class="ticker-item">⏳ در حال دریافت...</span>';
             document.getElementById('tickerContent').innerHTML = tickerHTML;
-
-            // به‌روزرسانی کارت‌های قیمت
             updatePriceCards();
         }
 
