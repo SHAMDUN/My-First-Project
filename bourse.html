@@ -97,7 +97,6 @@
         .symbol-tag:hover { background: #f59e0b; color: #0f172a; }
         .symbol-tag.active { background: #f59e0b; color: #0f172a; }
 
-        /* ===== بخش رتبه‌بندی ===== */
         .ranking-section {
             background: #1e293b;
             border-radius: 12px;
@@ -219,6 +218,18 @@
 
         .loading { text-align: center; padding: 20px; color: #94a3b8; }
         .error { color: #f87171; text-align: center; padding: 20px; }
+
+        .refresh-btn {
+            background: #334155;
+            color: #fff;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 13px;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+        .refresh-btn:hover { background: #475569; }
     </style>
 </head>
 <body>
@@ -242,7 +253,10 @@
 
     <!-- ===== بخش رتبه‌بندی ===== -->
     <div class="ranking-section">
-        <h3>🏆 رتبه‌بندی سهام بر اساس سود/ضرر (داده‌های زنده TSETMC)</h3>
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
+            <h3>🏆 رتبه‌بندی همه سهام بورس (داده‌های زنده)</h3>
+            <button class="refresh-btn" onclick="loadRanking(true)">🔄 بروزرسانی</button>
+        </div>
         
         <div class="ranking-tabs">
             <button class="ranking-tab active" onclick="changeRankingPeriod('1w', this)">۱ هفته</button>
@@ -258,7 +272,7 @@
         </div>
 
         <div class="ranking-list" id="rankingList">
-            <div class="loading">⏳ در حال بارگذاری داده‌های زنده از TSETMC...</div>
+            <div class="loading">⏳ در حال دریافت لیست نمادها از TSETMC...</div>
         </div>
     </div>
 
@@ -292,7 +306,7 @@
         let currentTimeframe = 'daily';
         let allDailyData = [];
 
-        // لیست نمادهای پرطرفدار با insCode دقیق
+        // لیست نمادهای پرطرفدار (برای نمایش سریع اولیه)
         const POPULAR_SYMBOLS = [
             { name: 'فولاد', insCode: '46348559193224090' },
             { name: 'فملی', insCode: '35425587644337450' },
@@ -303,23 +317,13 @@
             { name: 'کگل', insCode: '35700344742885862' },
             { name: 'همراه', insCode: '68635710163497089' },
             { name: 'فارس', insCode: '25244118756242821' },
-            { name: 'شبندر', insCode: '39748500597480009' },
-            { name: 'وپارس', insCode: '63917420514309141' },
-            { name: 'کچاد', insCode: '41724286877835112' },
-            { name: 'وغدیر', insCode: '39748988510393655' },
-            { name: 'برکت', insCode: '63071932384200832' },
-            { name: 'اخابر', insCode: '25245747187689006' },
-            { name: 'خساپا', insCode: '44891482026867833' },
-            { name: 'وتجارت', insCode: '35366681030756042' },
-            { name: 'وبصادر', insCode: '63917420514309142' },
-            { name: 'شپدیس', insCode: '20562625141228010' },
-            { name: 'کرماشا', insCode: '44376134185409315' },
-            { name: 'فزر', insCode: '29453122942532375' }
+            { name: 'شبندر', insCode: '39748500597480009' }
         ];
 
         let rankingData = [];
         let currentRankingPeriod = '1w';
         let currentSortOrder = 'desc';
+        let rankingLoaded = false;
 
         // ===== مقداردهی چارت =====
         function initChart() {
@@ -437,7 +441,6 @@
             }
         }
 
-        // ===== رسم چارت =====
         function renderChart(timeframe) {
             if (!allDailyData || allDailyData.length === 0) return;
             const sorted = allDailyData.filter(d => d.pClosing > 0).sort((a, b) => a.dEven - b.dEven);
@@ -535,46 +538,105 @@
             renderChart(timeframe);
         }
 
-        // ===== بارگذاری رتبه‌بندی (محاسبه دقیق از TSETMC) =====
-        async function loadRanking() {
-            document.getElementById('rankingList').innerHTML = '<div class="loading">⏳ در حال محاسبه سود/ضرر از داده‌های زنده...</div>';
+        // ===== بارگذاری رتبه‌بندی (همه‌ی سهام بورس) =====
+        async function loadRanking(forceReload = false) {
+            if (rankingLoaded && !forceReload && rankingData.length > 0) {
+                renderRanking();
+                return;
+            }
+
+            document.getElementById('rankingList').innerHTML = '<div class="loading">⏳ در حال دریافت لیست کامل نمادها از TSETMC...<br><small>لطفاً صبر کنید</small></div>';
             
-            const promises = POPULAR_SYMBOLS.map(async (symbol) => {
-                try {
-                    const res = await fetch(`${TSETMC_API}/ClosingPrice/GetClosingPriceDailyList/${symbol.insCode}/0`);
-                    const data = await res.json();
-                    
-                    if (data && data.closingPriceDaily && data.closingPriceDaily.length > 0) {
-                        const sorted = data.closingPriceDaily.filter(d => d.pClosing > 0).sort((a, b) => a.dEven - b.dEven);
-                        if (sorted.length < 2) return null;
-
-                        const latestPrice = sorted[sorted.length - 1].pClosing;
-                        const periods = { '1w': 5, '1m': 22, '3m': 66, '6m': 132, '1y': 250 };
-                        
-                        const changes = {};
-                        for (const [key, days] of Object.entries(periods)) {
-                            const index = Math.max(0, sorted.length - 1 - days);
-                            const oldPrice = sorted[index].pClosing;
-                            changes[key] = ((latestPrice - oldPrice) / oldPrice) * 100;
+            try {
+                // ===== مرحله ۱: دریافت لیست کامل نمادها =====
+                // از چند حرف پرکاربرد برای جمع‌آوری همه نمادها استفاده می‌کنیم
+                const searchQueries = ['ا', 'ب', 'پ', 'ت', 'ث', 'ج', 'چ', 'ح', 'خ', 'د', 'ذ', 'ر', 'ز', 'ژ', 'س', 'ش', 'ص', 'ض', 'ط', 'ظ', 'ع', 'غ', 'ف', 'ق', 'ک', 'گ', 'ل', 'م', 'ن', 'و', 'ه', 'ی'];
+                const allSymbolsMap = new Map();
+                
+                for (const query of searchQueries) {
+                    try {
+                        const res = await fetch(`${TSETMC_API}/Instrument/GetInstrumentSearch/${encodeURIComponent(query)}`);
+                        const data = await res.json();
+                        if (data && data.instrumentSearch) {
+                            data.instrumentSearch.forEach(item => {
+                                if (item.insCode && item.lVal18AFC) {
+                                    allSymbolsMap.set(item.insCode, {
+                                        name: item.lVal18AFC,
+                                        insCode: item.insCode
+                                    });
+                                }
+                            });
                         }
-
-                        return {
-                            name: symbol.name,
-                            insCode: symbol.insCode,
-                            latestPrice: latestPrice / 10,
-                            changes: changes
-                        };
+                    } catch (e) {
+                        // نادیده گرفتن
                     }
-                } catch (e) {
-                    console.warn(`خطا در ${symbol.name}:`, e);
                 }
-                return null;
-            });
+                
+                const allSymbols = Array.from(allSymbolsMap.values());
+                console.log('✅ تعداد نمادها:', allSymbols.length);
+                
+                if (allSymbols.length === 0) {
+                    document.getElementById('rankingList').innerHTML = '<div class="error">❌ لیست نمادها دریافت نشد</div>';
+                    return;
+                }
+                
+                document.getElementById('rankingList').innerHTML = `<div class="loading">⏳ در حال محاسبه سود/ضرر برای ${allSymbols.length} نماد...<br><small>این ممکنه ۲-۳ دقیقه طول بکشه</small></div>`;
+                
+                // ===== مرحله ۲: محاسبه سود/ضرر برای هر نماد =====
+                const results = [];
+                const batchSize = 15;
+                
+                for (let i = 0; i < allSymbols.length; i += batchSize) {
+                    const batch = allSymbols.slice(i, i + batchSize);
+                    
+                    const batchPromises = batch.map(async (symbol) => {
+                        try {
+                            const res = await fetch(`${TSETMC_API}/ClosingPrice/GetClosingPriceDailyList/${symbol.insCode}/0`);
+                            const data = await res.json();
+                            
+                            if (data && data.closingPriceDaily && data.closingPriceDaily.length > 0) {
+                                const sorted = data.closingPriceDaily.filter(d => d.pClosing > 0).sort((a, b) => a.dEven - b.dEven);
+                                if (sorted.length < 2) return null;
 
-            const results = await Promise.all(promises);
-            rankingData = results.filter(r => r !== null);
-            console.log('✅ رتبه‌بندی بارگذاری شد:', rankingData.length, 'نماد');
-            renderRanking();
+                                const latestPrice = sorted[sorted.length - 1].pClosing;
+                                const periods = { '1w': 5, '1m': 22, '3m': 66, '6m': 132, '1y': 250 };
+                                
+                                const changes = {};
+                                for (const [key, days] of Object.entries(periods)) {
+                                    const index = Math.max(0, sorted.length - 1 - days);
+                                    const oldPrice = sorted[index].pClosing;
+                                    changes[key] = ((latestPrice - oldPrice) / oldPrice) * 100;
+                                }
+
+                                return {
+                                    name: symbol.name,
+                                    insCode: symbol.insCode,
+                                    latestPrice: latestPrice / 10,
+                                    changes: changes
+                                };
+                            }
+                        } catch (e) {
+                            // نادیده گرفتن
+                        }
+                        return null;
+                    });
+                    
+                    const batchResults = await Promise.all(batchPromises);
+                    results.push(...batchResults.filter(r => r !== null));
+                    
+                    const progress = Math.min(i + batchSize, allSymbols.length);
+                    document.getElementById('rankingList').innerHTML = `<div class="loading">⏳ در حال پردازش... ${progress} از ${allSymbols.length} نماد (${results.length} نتیجه)</div>`;
+                }
+                
+                rankingData = results;
+                rankingLoaded = true;
+                console.log('✅ رتبه‌بندی کامل شد:', rankingData.length, 'نماد');
+                renderRanking();
+                
+            } catch (e) {
+                console.error('خطا در رتبه‌بندی:', e);
+                document.getElementById('rankingList').innerHTML = '<div class="error">❌ خطا در بارگذاری رتبه‌بندی: ' + e.message + '</div>';
+            }
         }
 
         function renderRanking() {
