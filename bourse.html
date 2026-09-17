@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>بورس ایران | آکادمی شمعدون</title>
+    <script src="https://unpkg.com/lightweight-charts/dist/lightweight-charts.standalone.production.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: Tahoma, sans-serif;
+            background: #0f172a;
+            color: #e2e8f0;
+            direction: rtl;
+            min-height: 100vh;
+            padding: 15px;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        .header h1 { color: #f59e0b; font-size: 22px; }
+        .header a {
+            color: #94a3b8;
+            text-decoration: none;
+            font-weight: bold;
+            border: 2px solid #334155;
+            padding: 8px 16px;
+            border-radius: 25px;
+            font-size: 14px;
+        }
+        .header a:hover { background: #334155; color: #fff; }
+
+        .search-box {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        .search-box input {
+            flex: 1;
+            min-width: 200px;
+            padding: 12px 18px;
+            border-radius: 12px;
+            border: 2px solid #334155;
+            background: #1e293b;
+            color: #fff;
+            font-size: 16px;
+            outline: none;
+        }
+        .search-box input:focus { border-color: #f59e0b; }
+        .search-box button {
+            background: #f59e0b;
+            color: #0f172a;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 12px;
+            font-weight: bold;
+            font-size: 15px;
+            cursor: pointer;
+        }
+        .search-box button:hover { background: #d97706; }
+
+        .status-box {
+            background: #1e293b;
+            padding: 12px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            font-size: 13px;
+            color: #94a3b8;
+        }
+
+        .symbol-list {
+            background: #1e293b;
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 20px;
+            max-height: 250px;
+            overflow-y: auto;
+        }
+        .symbol-list h3 { color: #f59e0b; font-size: 15px; margin-bottom: 10px; }
+        .symbol-list .tags { display: flex; flex-wrap: wrap; gap: 6px; }
+        .symbol-tag {
+            background: #0f172a;
+            color: #94a3b8;
+            padding: 6px 14px;
+            border-radius: 15px;
+            font-size: 13px;
+            cursor: pointer;
+            border: 1px solid #334155;
+            transition: 0.2s;
+        }
+        .symbol-tag:hover { background: #f59e0b; color: #0f172a; }
+        .symbol-tag.active { background: #f59e0b; color: #0f172a; }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .info-card {
+            background: #1e293b;
+            padding: 12px;
+            border-radius: 12px;
+            border-right: 4px solid #f59e0b;
+        }
+        .info-card .label { font-size: 12px; color: #94a3b8; }
+        .info-card .value { font-size: 16px; font-weight: bold; margin-top: 5px; }
+        .up { color: #4ade80; }
+        .down { color: #f87171; }
+
+        .chart-section {
+            background: #1e293b;
+            padding: 15px;
+            border-radius: 12px;
+        }
+        .chart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .chart-header h3 { color: #f59e0b; font-size: 18px; }
+        #tvchart { width: 100%; height: 450px; }
+
+        .loading { text-align: center; padding: 20px; color: #94a3b8; }
+        .error { color: #f87171; text-align: center; padding: 20px; }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <h1>📊 بورس ایران</h1>
+        <a href="index.html">⬅ بازگشت به خانه</a>
+    </div>
+
+    <div class="search-box">
+        <input type="text" id="symbolSearch" placeholder="نام نماد (مثال: فولاد، خودرو، شپنا)" value="فولاد">
+        <button onclick="searchAndLoad()">🔍 جستجو و نمایش</button>
+    </div>
+
+    <div class="status-box" id="statusBox">💡 نام نماد را وارد کنید و جستجو را بزنید</div>
+
+    <div class="symbol-list" id="symbolListContainer" style="display:none;">
+        <h3>📌 نتایج جستجو (کلیک کنید)</h3>
+        <div class="tags" id="searchResults"></div>
+    </div>
+
+    <div class="info-grid" id="infoGrid">
+        <div class="info-card"><div class="label">قیمت پایانی</div><div class="value" id="pc">--</div></div>
+        <div class="info-card"><div class="label">آخرین معامله</div><div class="value" id="pl">--</div></div>
+        <div class="info-card"><div class="label">تغییر قیمت</div><div class="value" id="pcc">--</div></div>
+        <div class="info-card"><div class="label">درصد تغییر</div><div class="value" id="pcp">--</div></div>
+        <div class="info-card"><div class="label">حجم معاملات</div><div class="value" id="tvol">--</div></div>
+        <div class="info-card"><div class="label">ارزش معاملات</div><div class="value" id="tval">--</div></div>
+    </div>
+
+    <div class="chart-section">
+        <div class="chart-header">
+            <h3 id="chartTitle">📈 چارت قیمت</h3>
+        </div>
+        <div id="tvchart"></div>
+    </div>
+
+    <script>
+        const TSETMC_API = 'https://cdn.tsetmc.com/api';
+        let chart, candleSeries;
+        let currentSymbol = '';
+        let chartInitialized = false;
+
+        // ===== مقداردهی چارت =====
+        function initChart() {
+            if (chartInitialized) return;
+            
+            const chartContainer = document.getElementById('tvchart');
+            const width = chartContainer.clientWidth || window.innerWidth - 60;
+            
+            chart = LightweightCharts.createChart(chartContainer, {
+                width: width,
+                height: 450,
+                layout: { 
+                    background: { color: '#0f172a' }, 
+                    textColor: '#94a3b8' 
+                },
+                grid: { 
+                    vertLines: { color: '#1e293b' }, 
+                    horzLines: { color: '#1e293b' } 
+                },
+                timeScale: { 
+                    timeVisible: true, 
+                    secondsVisible: false 
+                }
+            });
+            
+            candleSeries = chart.addCandlestickSeries({
+                upColor: '#4ade80', 
+                downColor: '#f87171',
+                borderVisible: false,
+                wickUpColor: '#4ade80', 
+                wickDownColor: '#f87171'
+            });
+            
+            chartInitialized = true;
+            console.log('✅ چارت مقداردهی شد | عرض:', width);
+        }
+
+        // ===== جستجوی نماد =====
+        async function searchAndLoad() {
+            const query = document.getElementById('symbolSearch').value.trim();
+            if (!query) return;
+
+            document.getElementById('statusBox').textContent = '⏳ در حال جستجو...';
+
+            try {
+                const res = await fetch(`${TSETMC_API}/Instrument/GetInstrumentSearch/${encodeURIComponent(query)}`);
+                const data = await res.json();
+
+                if (data && data.instrumentSearch && data.instrumentSearch.length > 0) {
+                    const results = data.instrumentSearch;
+                    document.getElementById('symbolListContainer').style.display = 'block';
+                    document.getElementById('searchResults').innerHTML = results.map(item => {
+                        const name = item.lVal18AFC || item.lVal30 || '';
+                        const insCode = item.insCode || '';
+                        return `<span class="symbol-tag ${insCode === currentSymbol ? 'active' : ''}" onclick="loadSymbolByCode('${insCode}', '${name}')">${name}</span>`;
+                    }).join('');
+                    document.getElementById('statusBox').textContent = `✅ ${results.length} نتیجه یافت شد. روی نماد مورد نظر کلیک کنید.`;
+                    
+                    if (results.length === 1) {
+                        loadSymbolByCode(results[0].insCode, results[0].lVal18AFC);
+                    }
+                } else {
+                    document.getElementById('statusBox').textContent = '❌ نمادی یافت نشد.';
+                }
+            } catch (e) {
+                document.getElementById('statusBox').textContent = '❌ خطا: ' + e.message;
+            }
+        }
+
+        // ===== بارگذاری اطلاعات نماد =====
+        async function loadSymbolByCode(insCode, symbolName) {
+            currentSymbol = insCode;
+            document.getElementById('chartTitle').textContent = '📈 چارت ' + symbolName;
+            document.getElementById('infoGrid').innerHTML = '<div class="loading">⏳ در حال دریافت اطلاعات...</div>';
+            document.getElementById('statusBox').textContent = `⏳ در حال دریافت اطلاعات ${symbolName}...`;
+
+            try {
+                const res = await fetch(`${TSETMC_API}/ClosingPrice/GetClosingPriceInfo/${insCode}`);
+                const data = await res.json();
+
+                if (data && data.closingPriceInfo) {
+                    const info = data.closingPriceInfo;
+                    displayInfo(info, symbolName);
+                    document.getElementById('statusBox').textContent = `✅ اطلاعات ${symbolName} بارگذاری شد.`;
+                    
+                    await loadChart(insCode);
+                } else {
+                    document.getElementById('infoGrid').innerHTML = '<div class="error">❌ اطلاعات یافت نشد.</div>';
+                }
+            } catch (e) {
+                document.getElementById('infoGrid').innerHTML = '<div class="error">❌ خطا: ' + e.message + '</div>';
+            }
+        }
+
+        // ===== نمایش اطلاعات =====
+        function displayInfo(info, symbolName) {
+            const pc = (parseInt(info.pClosing || 0) / 10).toLocaleString('fa-IR');
+            const pl = (parseInt(info.pDrCotVal || 0) / 10).toLocaleString('fa-IR');
+            
+            const pClosing = parseInt(info.pClosing || 0);
+            const pYesterday = parseInt(info.priceYesterday || 0);
+            const pccRaw = pClosing - pYesterday;
+            const pcpRaw = pYesterday > 0 ? (pccRaw / pYesterday) * 100 : 0;
+            
+            const pcc = (pccRaw / 10).toLocaleString('fa-IR');
+            const pcp = pcpRaw.toFixed(2);
+            
+            const tvol = parseInt(info.qTotTran5J || 0).toLocaleString('fa-IR');
+            const tval = (parseInt(info.qTotCap || 0) / 10000000000).toFixed(1) + ' میلیارد';
+
+            document.getElementById('infoGrid').innerHTML = `
+                <div class="info-card"><div class="label">قیمت پایانی</div><div class="value">${pc} تومان</div></div>
+                <div class="info-card"><div class="label">آخرین معامله</div><div class="value">${pl} تومان</div></div>
+                <div class="info-card"><div class="label">تغییر قیمت</div><div class="value ${pccRaw >= 0 ? 'up' : 'down'}">${(pccRaw > 0 ? '+' : '') + pcc}</div></div>
+                <div class="info-card"><div class="label">درصد تغییر</div><div class="value ${pcpRaw >= 0 ? 'up' : 'down'}">${(pcpRaw > 0 ? '+' : '') + pcp}%</div></div>
+                <div class="info-card"><div class="label">حجم معاملات</div><div class="value">${tvol}</div></div>
+                <div class="info-card"><div class="label">ارزش معاملات</div><div class="value">${tval}</div></div>
+            `;
+        }
+
+        // ===== دریافت و رسم چارت =====
+        async function loadChart(insCode) {
+            try {
+                console.log('🔄 شروع بارگذاری چارت برای:', insCode);
+                
+                if (!chartInitialized) {
+                    initChart();
+                }
+                
+                const res = await fetch(`${TSETMC_API}/ClosingPrice/GetClosingPriceDailyList/${insCode}/0`);
+                const data = await res.json();
+
+                if (!data || !data.closingPriceDaily || data.closingPriceDaily.length === 0) {
+                    console.warn('❌ داده‌ای برای چارت وجود ندارد');
+                    return;
+                }
+
+                console.log('📊 تعداد کل داده‌ها:', data.closingPriceDaily.length);
+
+                const recent = data.closingPriceDaily.slice(0, 200);
+                recent.sort((a, b) => a.dEven - b.dEven);
+
+                const chartData = [];
+                for (const item of recent) {
+                    if (item.pClosing > 0 && item.priceFirst > 0 && item.priceMax > 0 && item.priceMin > 0) {
+                        const str = item.dEven.toString();
+                        const year = parseInt(str.substring(0, 4));
+                        const month = parseInt(str.substring(4, 6)) - 1;
+                        const day = parseInt(str.substring(6, 8));
+                        const dateObj = new Date(year, month, day);
+                        const timestamp = Math.floor(dateObj.getTime() / 1000);
+                        
+                        if (timestamp > 0) {
+                            chartData.push({
+                                time: timestamp,
+                                open: item.priceFirst / 10,
+                                high: item.priceMax / 10,
+                                low: item.priceMin / 10,
+                                close: item.pClosing / 10
+                            });
+                        }
+                    }
+                }
+
+                console.log('✅ تعداد کندل‌های نهایی:', chartData.length);
+                console.log('📅 اولین کندل:', chartData[0]);
+                console.log('📅 آخرین کندل:', chartData[chartData.length - 1]);
+
+                if (chartData.length > 0) {
+                    candleSeries.setData(chartData);
+                    chart.timeScale().fitContent();
+                    console.log('🎉 چارت با موفقیت رسم شد!');
+                } else {
+                    console.warn('❌ هیچ داده معتبری برای چارت نیست');
+                }
+            } catch (e) {
+                console.error('❌ خطا در چارت:', e);
+            }
+        }
+
+        // ===== راه‌اندازی =====
+        window.addEventListener('load', function() {
+            setTimeout(() => {
+                initChart();
+                searchAndLoad();
+            }, 500);
+        });
+
+        window.addEventListener('resize', () => {
+            if (chart && chartInitialized) {
+                chart.applyOptions({ 
+                    width: document.getElementById('tvchart').clientWidth 
+                });
+            }
+        });
+    </script>
+</body>
+</html>
