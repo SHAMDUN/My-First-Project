@@ -36,24 +36,49 @@
             border: 1px solid rgba(255,255,255,0.08);
         }
 
+        /* ===== لوگو ===== */
         .logo {
             text-align: center;
             margin-bottom: 25px;
         }
-        .logo .icon {
-            font-size: 50px;
-            margin-bottom: 10px;
+
+        .logo-container {
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 15px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 4px solid #f59e0b;
+            box-shadow: 0 0 30px rgba(245, 158, 11, 0.4);
+            animation: float 3s ease-in-out infinite;
+            background: #0f172a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
+
+        .logo-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
+
         .logo h1 {
             color: #f59e0b;
-            font-size: 24px;
+            font-size: 22px;
             margin-bottom: 5px;
         }
         .logo p {
             color: #94a3b8;
-            font-size: 14px;
+            font-size: 13px;
         }
 
+        /* ===== تب‌ها ===== */
         .tabs {
             display: flex;
             background: rgba(15, 23, 42, 0.6);
@@ -80,6 +105,7 @@
             color: #0f172a;
         }
 
+        /* ===== فرم ===== */
         .form-group {
             margin-bottom: 18px;
         }
@@ -128,7 +154,6 @@
         .btn-submit:disabled {
             opacity: 0.6;
             cursor: not-allowed;
-            transform: none;
         }
 
         .message {
@@ -186,11 +211,11 @@
 
     <div class="login-container">
         <div class="logo">
-    <div class="logo-container">
-        <img src="519.png" alt="آکادمی شمعدون" class="logo-image">
-    </div>
-    <h1>آکادمی شمعدون</h1>
-    <p>پنل تحلیلی بازار</p>
+            <div class="logo-container">
+                <img src="519.png" alt="آکادمی شمعدون" class="logo-image">
+            </div>
+            <h1>آکادمی شمعدون</h1>
+            <p>پنل تحلیلی بازار</p>
         </div>
 
         <div class="tabs">
@@ -232,13 +257,11 @@
     </div>
 
     <script>
-        // ===== تنظیمات Supabase =====
         const SUPABASE_URL = 'https://jcwwilatvstjrohvhtss.supabase.co';
         const SUPABASE_KEY = 'sb_publishable_R7tCe030dGeJ0IRWfcgxww_MgEfh95O';
         
         const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-        // ===== تغییر تب =====
         function switchTab(tab) {
             const loginForm = document.getElementById('loginForm');
             const signupForm = document.getElementById('signupForm');
@@ -261,14 +284,12 @@
             }
         }
 
-        // ===== نمایش پیام =====
         function showMessage(text, type) {
             const message = document.getElementById('message');
             message.textContent = text;
             message.className = 'message ' + type;
         }
 
-        // ===== ورود =====
         async function handleLogin(event) {
             event.preventDefault();
             const email = document.getElementById('loginEmail').value.trim();
@@ -301,7 +322,6 @@
             btn.innerHTML = 'ورود به حساب';
         }
 
-        // ===== ثبت‌نام =====
         async function handleSignup(event) {
             event.preventDefault();
             const name = document.getElementById('signupName').value.trim();
@@ -340,7 +360,6 @@
             btn.innerHTML = 'ایجاد حساب کاربری';
         }
 
-        // ===== ترجمه خطاها به فارسی =====
         function translateError(msg) {
             const translations = {
                 'Invalid login credentials': 'ایمیل یا رمز عبور اشتباه است',
@@ -354,7 +373,6 @@
             return translations[msg] || msg;
         }
 
-        // ===== چک کردن ورود قبلی =====
         async function checkSession() {
             const { data } = await supabaseClient.auth.getSession();
             if (data.session) {
