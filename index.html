@@ -4,282 +4,625 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>آکادمی شمعدون | پنل تحلیلی بازار</title>
-    
-    <!-- PWA Manifest -->
+
+    <!-- ===== PWA ===== -->
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#f59e0b">
     <link rel="apple-touch-icon" href="icon-192.png">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="شمعدون">
-    
+
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: Tahoma, sans-serif;
             background-color: #0f172a;
             background-image: 
-                radial-gradient(circle at 0% 0%, rgba(245, 158, 11, 0.15) 0%, transparent 40%),
-                radial-gradient(circle at 100% 100%, rgba(59, 130, 246, 0.1) 0%, transparent 40%),
+                radial-gradient(circle at 0% 0%, rgba(245, 158, 11, 0.12) 0%, transparent 40%),
+                radial-gradient(circle at 100% 100%, rgba(59, 130, 246, 0.08) 0%, transparent 40%),
                 linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
                 linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
             background-size: 100% 100%, 100% 100%, 50px 50px, 50px 50px;
             background-attachment: fixed;
             min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
             direction: rtl;
-            padding: 20px;
+            padding: 0;
         }
-
-        .welcome-container {
-            max-width: 480px;
-            width: 100%;
-            text-align: center;
-            animation: fadeInUp 0.8s ease-out;
+        .ticker-bar {
+            position: fixed; top: 0; left: 0; right: 0;
+            background: linear-gradient(90deg, #0f172a, #1e293b);
+            color: #fff; padding: 10px 0; overflow: hidden;
+            z-index: 9999; box-shadow: 0 2px 10px rgba(0,0,0,0.3);
         }
-
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
+        .ticker-content {
+            display: flex; gap: 40px;
+            animation: scrollTicker 40s linear infinite;
+            white-space: nowrap; padding-left: 100%;
         }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
+        @keyframes scrollTicker {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-100%); }
         }
-
-        .logo-container {
-            width: 140px;
-            height: 140px;
-            margin: 0 auto 25px;
-            border-radius: 50%;
-            overflow: hidden;
-            border: 5px solid #f59e0b;
-            box-shadow: 0 0 40px rgba(245, 158, 11, 0.5);
-            animation: float 3s ease-in-out infinite;
-            background: #0f172a;
+        .ticker-item {
+            display: inline-flex; align-items: center; gap: 8px;
+            font-size: 14px; font-weight: bold;
         }
-
-        .logo-image {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
+        .menu-container {
+            position: fixed; top: 55px; right: 20px; z-index: 99999;
         }
-
-        h1 {
-            color: #f59e0b;
-            font-size: 30px;
-            font-weight: bold;
-            margin-bottom: 15px;
-            line-height: 1.4;
-            text-shadow: 0 0 30px rgba(245, 158, 11, 0.4);
+        .menu-icon {
+            width: 45px; height: 45px; background: rgba(255,255,255,0.95);
+            border-radius: 12px; display: flex; flex-direction: column;
+            justify-content: center; align-items: center; gap: 5px;
+            cursor: pointer; box-shadow: 0 4px 15px rgba(0,0,0,0.3); border: none;
         }
-
-        .subtitle {
-            color: #cbd5e1;
-            font-size: 17px;
-            margin-bottom: 8px;
-            line-height: 1.6;
+        .menu-icon span {
+            display: block; width: 28px; height: 3px;
+            background: #1e293b; border-radius: 5px;
         }
-
-        .description {
-            color: #94a3b8;
-            font-size: 15px;
-            margin-bottom: 40px;
-            line-height: 1.8;
+        .menu-dropdown {
+            display: none; position: absolute; top: 55px; right: 0;
+            background: rgba(255,255,255,0.98); padding: 12px 8px;
+            border-radius: 16px; box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            flex-direction: column; gap: 6px; min-width: 220px; z-index: 99999;
         }
-
-        .buttons-container {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-            margin-bottom: 40px;
+        .menu-dropdown.show { display: flex; }
+        .menu-dropdown a {
+            color: #1e293b; text-decoration: none; padding: 12px 18px;
+            border-radius: 12px; font-weight: bold; font-size: 15px;
+            border-bottom: 1px solid #f1f5f9;
         }
-
-        .btn {
-            width: 100%;
-            padding: 18px 24px;
-            border-radius: 15px;
-            font-size: 17px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-family: Tahoma, sans-serif;
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            border: none;
+        .menu-dropdown a:last-child { border-bottom: none; }
+        .menu-dropdown a:hover { background: #f1f5f9; color: #d97706; }
+        .instagram-btn {
+            position: fixed; bottom: 20px; left: 20px; z-index: 9999;
+            background: #E4405F; color: #fff; padding: 12px 20px;
+            border-radius: 50px; text-decoration: none; font-weight: bold;
+            box-shadow: 0 4px 15px rgba(228, 64, 95, 0.4);
+            display: flex; align-items: center; gap: 8px; font-size: 15px;
         }
-
-        .btn-primary {
-            background: linear-gradient(135deg, #f59e0b, #d97706);
-            color: #0f172a;
-            box-shadow: 0 10px 30px rgba(245, 158, 11, 0.4);
+        .main-container {
+            max-width: 900px; margin: 70px auto 30px; padding: 0 20px;
         }
-        .btn-primary:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 40px rgba(245, 158, 11, 0.6);
+        .card {
+            background: rgba(30, 41, 59, 0.85); backdrop-filter: blur(10px);
+            padding: 25px; border-radius: 25px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            text-align: center; margin-bottom: 20px;
+            border: 1px solid rgba(255,255,255,0.05);
         }
-
-        .btn-secondary {
-            background: transparent;
-            color: #f59e0b;
-            border: 2px solid #f59e0b;
+        .avatar {
+            width: 120px; height: 120px; border-radius: 50%;
+            margin: 0 auto 15px; overflow: hidden; border: 4px solid #f7971e;
         }
-        .btn-secondary:hover {
-            background: rgba(245, 158, 11, 0.1);
-            transform: translateY(-3px);
+        .avatar img { width: 100%; height: 100%; object-fit: cover; }
+        h1 { color: #f1f5f9; font-size: 22px; margin: 10px 0 5px; }
+        .subtitle { color: #94a3b8; font-size: 15px; margin: 5px 0; }
+        .info-box {
+            background: rgba(15, 23, 42, 0.6); padding: 12px;
+            border-radius: 15px; margin: 15px 0;
+            font-size: 17px; font-weight: bold; color: #f1f5f9;
         }
-
-        .install-btn {
-            display: none;
-            background: linear-gradient(135deg, #22c55e, #16a34a);
-            color: #fff;
-            box-shadow: 0 10px 30px rgba(34, 197, 94, 0.4);
-            margin-top: 15px;
+        .price-grid {
+            display: grid; grid-template-columns: repeat(3, 1fr);
+            gap: 10px; margin-top: 15px;
         }
-        .install-btn.show {
-            display: flex;
+        @media (max-width: 600px) {
+            .price-grid { grid-template-columns: repeat(2, 1fr); }
         }
-        .install-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 40px rgba(34, 197, 94, 0.6);
+        .price-card {
+            background: rgba(15, 23, 42, 0.6); padding: 12px;
+            border-radius: 12px; border-right: 4px solid #f7971e;
+            text-align: right; transition: 0.3s;
         }
-
-        .features {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 15px;
-            margin-top: 40px;
-            padding-top: 30px;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        a .price-card:hover {
+            background: rgba(15, 23, 42, 0.9); transform: translateY(-2px);
         }
-
-        .feature {
-            text-align: center;
+        .price-card .label { font-size: 12px; color: #94a3b8; }
+        .price-card .value { font-size: 15px; font-weight: bold; color: #f1f5f9; margin-top: 5px; }
+        .gold { border-right-color: #D4AF37; }
+        .silver { border-right-color: #A8A8A8; }
+        .silver999 { border-right-color: #C0C0C0; }
+        .usd { border-right-color: #2E8B57; }
+        .btc { border-right-color: #f7931a; }
+        .eth { border-right-color: #627eea; }
+        .sol { border-right-color: #9945FF; }
+        .index { border-right-color: #1a73e8; }
+        .ounce { border-right-color: #FFD700; }
+        .bubble-section {
+            background: rgba(30, 41, 59, 0.85); backdrop-filter: blur(10px);
+            border-radius: 25px; padding: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            margin-bottom: 20px; border: 1px solid rgba(255,255,255,0.05);
         }
-
-        .feature-icon {
-            font-size: 32px;
-            margin-bottom: 8px;
+        .bubble-section h2 {
+            color: #f1f5f9; font-size: 18px; margin-bottom: 15px;
+            border-bottom: 2px solid #f7971e; display: inline-block; padding-bottom: 5px;
         }
-
-        .feature-text {
-            color: #94a3b8;
-            font-size: 12px;
-            line-height: 1.5;
+        .bubble-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 12px; margin-top: 15px;
         }
-
-        .footer {
-            margin-top: 30px;
-            color: #64748b;
-            font-size: 13px;
+        .bubble-card {
+            background: rgba(15, 23, 42, 0.6); padding: 15px;
+            border-radius: 15px; border-right: 4px solid #f59e0b; text-align: right;
         }
-
-        @media (max-width: 400px) {
-            h1 { font-size: 24px; }
-            .logo-container { width: 110px; height: 110px; }
-            .btn { padding: 15px 20px; font-size: 15px; }
-            .features { grid-template-columns: 1fr; gap: 10px; }
+        .bubble-card .title {
+            font-size: 14px; color: #f59e0b; font-weight: bold;
+            margin-bottom: 10px; display: flex; align-items: center; gap: 6px;
+        }
+        .bubble-card .row {
+            display: flex; justify-content: space-between; padding: 5px 0;
+            font-size: 13px; color: #cbd5e1;
+            border-bottom: 1px dashed rgba(255,255,255,0.05);
+        }
+        .bubble-card .row:last-child { border-bottom: none; }
+        .bubble-card .row .label { color: #94a3b8; }
+        .bubble-card .row .value { font-weight: bold; color: #f1f5f9; }
+        .bubble-card .bubble-value {
+            font-size: 20px; font-weight: bold; text-align: center;
+            margin-top: 12px; padding: 10px; border-radius: 10px;
+            background: rgba(15, 23, 42, 0.6);
+        }
+        .bubble-positive { color: #4ade80; }
+        .bubble-negative { color: #f87171; }
+        .bubble-neutral { color: #94a3b8; }
+        .chart-section {
+            background: rgba(30, 41, 59, 0.85); backdrop-filter: blur(10px);
+            border-radius: 25px; padding: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            margin-bottom: 20px; border: 1px solid rgba(255,255,255,0.05);
+        }
+        .chart-header {
+            display: flex; justify-content: space-between; align-items: center;
+            margin-bottom: 15px; flex-wrap: wrap; gap: 10px;
+        }
+        .chart-header h2 { color: #f1f5f9; font-size: 18px; }
+        .chart-tabs {
+            display: flex; gap: 5px; flex-wrap: wrap; align-items: center;
+        }
+        .chart-tab {
+            background: rgba(15, 23, 42, 0.6); color: #94a3b8;
+            border: 1px solid #334155; padding: 8px 14px;
+            border-radius: 8px; font-size: 13px; font-weight: bold; cursor: pointer;
+        }
+        .chart-tab.active {
+            background: #f59e0b; color: #0f172a; border-color: #f59e0b;
+        }
+        .fullscreen-btn {
+            background: rgba(15, 23, 42, 0.6); color: #f59e0b;
+            border: 1px solid #f59e0b; padding: 8px 14px;
+            border-radius: 8px; font-size: 13px; font-weight: bold; cursor: pointer;
+        }
+        .fullscreen-btn:hover { background: #f59e0b; color: #0f172a; }
+        #tvchart { width: 100%; height: 400px; }
+        .chart-fullscreen {
+            position: fixed !important; top: 0 !important; left: 0 !important;
+            right: 0 !important; bottom: 0 !important;
+            width: 100vw !important; height: 100vh !important;
+            z-index: 999999 !important; background: #0f172a !important;
+            padding: 20px !important; margin: 0 !important;
+            border-radius: 0 !important; display: flex !important;
+            flex-direction: column !important;
+            background-image: 
+                radial-gradient(circle at 0% 0%, rgba(245, 158, 11, 0.12) 0%, transparent 40%),
+                radial-gradient(circle at 100% 100%, rgba(59, 130, 246, 0.08) 0%, transparent 40%),
+                linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px) !important;
+            background-size: 100% 100%, 100% 100%, 50px 50px, 50px 50px !important;
+        }
+        .chart-fullscreen .chart-header {
+            display: flex !important; justify-content: space-between !important;
+            align-items: center !important; margin-bottom: 15px !important;
+            flex-wrap: wrap !important; gap: 10px !important;
+        }
+        .chart-fullscreen #tvchart {
+            flex: 1 !important; height: auto !important; width: 100% !important;
+        }
+        .management-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 12px;
+        }
+        .management-card {
+            background: rgba(15, 23, 42, 0.6); padding: 15px;
+            border-radius: 12px; border-top: 3px solid #f7971e;
+            cursor: pointer; transition: 0.3s; text-decoration: none;
+            color: inherit; text-align: center;
+        }
+        .management-card:hover {
+            transform: translateY(-3px); box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+        }
+        .management-card .icon { font-size: 28px; margin-bottom: 8px; }
+        .management-card h3 { font-size: 14px; color: #f1f5f9; margin-bottom: 5px; }
+        .management-card p { font-size: 12px; color: #94a3b8; }
+        .section-title {
+            color: #f1f5f9; font-size: 18px; margin-bottom: 15px;
+            border-bottom: 2px solid #f7971e; display: inline-block; padding-bottom: 5px;
         }
     </style>
 </head>
 <body>
 
-    <div class="welcome-container">
-        <div class="logo-container">
-            <img src="519.png" alt="آکادمی شمعدون" class="logo-image">
+    <div class="ticker-bar">
+        <div class="ticker-content" id="tickerContent">
+            <span class="ticker-item">⏳ در حال دریافت قیمت‌ها...</span>
         </div>
-
-        <h1>🚀 به آکادمی شمعدون خوش آمدید</h1>
-        <p class="subtitle">پنل تحلیلی و آموزشی بازارهای مالی</p>
-        <p class="description">
-            با ثبت‌نام رایگان، به تمام امکانات تحلیلی و آموزشی دسترسی پیدا می‌کنید.
-        </p>
-
-        <div class="buttons-container">
-            <a href="login.html" class="btn btn-primary">
-                ✨ شروع رایگان
-            </a>
-            <a href="login.html" class="btn btn-secondary">
-                🔐 ورود به حساب
-            </a>
-            <button class="btn install-btn" id="installBtn" onclick="installPWA()">
-                📱 نصب روی گوشی
-            </button>
-        </div>
-
-        <div class="features">
-            <div class="feature">
-                <div class="feature-icon">📊</div>
-                <div class="feature-text">چارت زنده<br>بازار</div>
-            </div>
-            <div class="feature">
-                <div class="feature-icon">📚</div>
-                <div class="feature-text">دوره‌های<br>آموزشی</div>
-            </div>
-            <div class="feature">
-                <div class="feature-icon">🤖</div>
-                <div class="feature-text">دستیار<br>هوشمند</div>
-            </div>
-        </div>
-
-        <p class="footer">© ۱۴۰۵ آکادمی شمعدون | تمامی حقوق محفوظ است</p>
     </div>
 
+    <div class="menu-container">
+        <div class="menu-icon" onclick="toggleMenu(event)">
+            <span></span><span></span><span></span>
+        </div>
+        <div class="menu-dropdown" id="menuDropdown">
+            <a href="login.html">🔐 ورود / ثبت‌نام</a>
+            <a href="bourse.html">🏢 بورس ایران</a>
+            <a href="gold-analysis.html">📊 تحلیل روزانه</a>
+            <a href="about.html">📘 درباره ما</a>
+            <a href="courses.html">🎓 دوره‌های آموزشی</a>
+            <a href="contact.html">📞 تماس با ما</a>
+        </div>
+    </div>
+
+    <a href="https://www.instagram.com/shamdun.trade/" target="_blank" class="instagram-btn">
+        📸 اینستاگرام
+    </a>
+
+    <div class="main-container">
+        <div class="card">
+            <div class="avatar">
+                <img src="me.png" alt="عکس مدیر آکادمی">
+            </div>
+            <h1>آکادمی شمعدون</h1>
+            <p class="subtitle">📊 پنل تحلیلی بازار</p>
+            <div class="info-box">
+                <span id="date">--</span> - <span id="time">--</span>
+            </div>
+            <div class="price-grid">
+                <div class="price-card ounce">
+                    <div class="label">🏅 انس طلا</div>
+                    <div class="value" id="ounce-price">در حال دریافت...</div>
+                </div>
+                <div class="price-card silver">
+                    <div class="label">🥈 انس نقره</div>
+                    <div class="value" id="silver-price">در حال دریافت...</div>
+                </div>
+                <div class="price-card usd">
+                    <div class="label">💵 دلار آزاد</div>
+                    <div class="value" id="usd-price">در حال دریافت...</div>
+                </div>
+                <div class="price-card gold">
+                    <div class="label">🥇 طلا ۱۸ عیار</div>
+                    <div class="value" id="gold-price">در حال دریافت...</div>
+                </div>
+                <div class="price-card silver999">
+                    <div class="label">🥈 نقره ۹۹۹ (گرم)</div>
+                    <div class="value" id="silver999-price">در حال دریافت...</div>
+                </div>
+                <a href="bourse.html" style="text-decoration: none;">
+                    <div class="price-card index" style="cursor: pointer;">
+                        <div class="label">📊 شاخص کل بورس</div>
+                        <div class="value" id="index-price">در حال دریافت...</div>
+                    </div>
+                </a>
+                <div class="price-card btc">
+                    <div class="label">₿ بیت‌کوین</div>
+                    <div class="value" id="btc-price">در حال دریافت...</div>
+                </div>
+                <div class="price-card eth">
+                    <div class="label">⟠ اتریوم</div>
+                    <div class="value" id="eth-price">در حال دریافت...</div>
+                </div>
+                <div class="price-card sol">
+                    <div class="label">◎ سولانا</div>
+                    <div class="value" id="sol-price">در حال دریافت...</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="bubble-section">
+            <h2>💎 محاسبه حباب طلا و نقره</h2>
+            <div class="bubble-grid">
+                <div class="bubble-card">
+                    <div class="title">🥇 طلا ۱۸ عیار</div>
+                    <div class="row"><span class="label">انس طلا:</span><span class="value" id="bubble-gold-ounce">--</span></div>
+                    <div class="row"><span class="label">دلار:</span><span class="value" id="bubble-gold-usd">--</span></div>
+                    <div class="row"><span class="label">قیمت محاسبه‌شده:</span><span class="value" id="bubble-gold-calc">--</span></div>
+                    <div class="row"><span class="label">قیمت بازار:</span><span class="value" id="bubble-gold-market">--</span></div>
+                    <div class="bubble-value bubble-neutral" id="bubble-gold-result">حباب: --</div>
+                </div>
+
+                <div class="bubble-card">
+                    <div class="title">🥈 نقره ۹۹۹ (گرم)</div>
+                    <div class="row"><span class="label">انس نقره:</span><span class="value" id="bubble-silver-ounce">--</span></div>
+                    <div class="row"><span class="label">دلار:</span><span class="value" id="bubble-silver-usd">--</span></div>
+                    <div class="row"><span class="label">قیمت محاسبه‌شده:</span><span class="value" id="bubble-silver-calc">--</span></div>
+                    <div class="row"><span class="label">قیمت بازار:</span><span class="value" id="bubble-silver-market">--</span></div>
+                    <div class="bubble-value bubble-neutral" id="bubble-silver-result">حباب: --</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="chart-section" id="chartSection">
+            <div class="chart-header">
+                <h2>📈 چارت زنده بازار</h2>
+                <div class="chart-tabs">
+                    <button class="chart-tab active" onclick="switchChart('BINANCE:BTCUSDT', this)">بیت‌کوین</button>
+                    <button class="chart-tab" onclick="switchChart('BINANCE:ETHUSDT', this)">اتریوم</button>
+                    <button class="chart-tab" onclick="switchChart('BINANCE:SOLUSDT', this)">سولانا</button>
+                    <button class="chart-tab" onclick="switchChart('TVC:GOLD', this)">انس طلا</button>
+                    <button class="chart-tab" onclick="switchChart('TVC:SILVER', this)">انس نقره</button>
+                    <button class="fullscreen-btn" onclick="toggleFullscreen()" id="fullscreenBtn">⛶ تمام‌صفحه</button>
+                </div>
+            </div>
+            <div id="tvchart"></div>
+        </div>
+
+        <div class="card">
+            <h2 class="section-title">🛠️ پنل مدیریت</h2>
+            <div class="management-grid">
+                <a href="bourse.html" class="management-card">
+                    <div class="icon">🏢</div><h3>بورس ایران</h3><p>مشاهده همه سهام</p>
+                </a>
+                <a href="gold-analysis.html" class="management-card">
+                    <div class="icon">📊</div><h3>تحلیل روزانه</h3><p>تحلیل‌های بازار</p>
+                </a>
+                <a href="courses.html" class="management-card">
+                    <div class="icon">🎓</div><h3>دوره‌های آموزشی</h3><p>آموزش تخصصی</p>
+                </a>
+                <a href="about.html" class="management-card">
+                    <div class="icon">📘</div><h3>درباره ما</h3><p>آشنایی با آکادمی</p>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://s3.tradingview.com/tv.js"></script>
     <script>
-        // ===== ثبت Service Worker =====
+        // ===== Service Worker =====
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
                 navigator.serviceWorker.register('/My-First-Project/service-worker.js')
-                    .then(registration => {
-                        console.log('✅ Service Worker registered:', registration.scope);
-                    })
-                    .catch(error => {
-                        console.log('❌ Service Worker registration failed:', error);
-                    });
+                    .then(registration => console.log('✅ SW registered:', registration.scope))
+                    .catch(error => console.log('❌ SW failed:', error));
             });
         }
 
-        // ===== نصب PWA =====
-        let deferredPrompt;
-
-        window.addEventListener('beforeinstallprompt', (e) => {
-            e.preventDefault();
-            deferredPrompt = e;
-            
-            // نمایش دکمه نصب
-            document.getElementById('installBtn').classList.add('show');
-            console.log('✅ PWA قابل نصب است');
-        });
-
-        async function installPWA() {
-            if (deferredPrompt) {
-                deferredPrompt.prompt();
-                const { outcome } = await deferredPrompt.userChoice;
-                console.log('نصب:', outcome);
-                deferredPrompt = null;
-                document.getElementById('installBtn').classList.remove('show');
-            } else {
-                alert('📱 برای نصب:\n\n1. روی منوی مرورگر (سه نقطه) کلیک کنید\n2. گزینه "Add to Home screen" یا "Install app" را انتخاب کنید');
+        function toggleMenu(event) {
+            event.stopPropagation();
+            document.getElementById('menuDropdown').classList.toggle('show');
+        }
+        window.onclick = function(event) {
+            if (!event.target.closest('.menu-container')) {
+                document.getElementById('menuDropdown').classList.remove('show');
             }
         }
 
-        // ===== بررسی نصب‌شده =====
-        window.addEventListener('appinstalled', () => {
-            console.log('✅ اپلیکیشن نصب شد');
-            document.getElementById('installBtn').classList.remove('show');
+        function updateDateTime() {
+            const now = new Date();
+            const options = { year: 'numeric', month: 'long', day: 'numeric', weekday: 'long' };
+            const persianDate = new Intl.DateTimeFormat('fa-IR', options).format(now);
+            const timeString = now.toLocaleTimeString('fa-IR', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+            document.getElementById('date').textContent = persianDate;
+            document.getElementById('time').textContent = timeString;
+        }
+        updateDateTime();
+        setInterval(updateDateTime, 1000);
+
+        let tvWidget = null;
+        let currentChartSymbol = 'BINANCE:BTCUSDT';
+
+        function initChart(symbol) {
+            currentChartSymbol = symbol;
+            if (tvWidget) {
+                document.getElementById('tvchart').innerHTML = '';
+            }
+            tvWidget = new TradingView.widget({
+                "container_id": "tvchart",
+                "autosize": true,
+                "symbol": symbol,
+                "interval": "60",
+                "timezone": "Asia/Tehran",
+                "theme": "dark",
+                "style": "1",
+                "locale": "fa_IR",
+                "toolbar_bg": "#1e293b",
+                "enable_publishing": false,
+                "hide_side_toolbar": false,
+                "allow_symbol_change": true,
+                "details": true,
+                "withdateranges": true,
+                "studies": ["RSI@tv-basicstudies"]
+            });
+        }
+
+        function switchChart(symbol, btn) {
+            document.querySelectorAll('.chart-tab').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            initChart(symbol);
+        }
+
+        initChart('BINANCE:BTCUSDT');
+
+        function toggleFullscreen() {
+            const chartSection = document.getElementById('chartSection');
+            const btn = document.getElementById('fullscreenBtn');
+
+            if (chartSection.classList.contains('chart-fullscreen')) {
+                chartSection.classList.remove('chart-fullscreen');
+                btn.innerHTML = '⛶ تمام‌صفحه';
+                document.body.style.overflow = '';
+                setTimeout(() => {
+                    if (tvWidget) document.getElementById('tvchart').innerHTML = '';
+                    initChart(currentChartSymbol);
+                }, 100);
+            } else {
+                chartSection.classList.add('chart-fullscreen');
+                btn.innerHTML = '✕ خروج';
+                document.body.style.overflow = 'hidden';
+                setTimeout(() => {
+                    if (tvWidget) document.getElementById('tvchart').innerHTML = '';
+                    initChart(currentChartSymbol);
+                }, 100);
+            }
+        }
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                const chartSection = document.getElementById('chartSection');
+                if (chartSection.classList.contains('chart-fullscreen')) {
+                    toggleFullscreen();
+                }
+            }
         });
 
-        // ===== اگه قبلاً نصب شده، دکمه رو نشون نده =====
-        if (window.matchMedia('(display-mode: standalone)').matches) {
-            document.getElementById('installBtn')?.classList.remove('show');
+        function toPersianNumber(num) {
+            if (!num && num !== 0) return '--';
+            const persianDigits = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
+            return num.toString().replace(/\d/g, d => persianDigits[d]);
         }
-    </script>
 
-</body>
-</html>
+        function formatNumber(num, decimals = 0) {
+            if (num === null || num === undefined) return '--';
+            const formatted = Number(num).toLocaleString('en-US', {
+                minimumFractionDigits: decimals,
+                maximumFractionDigits: decimals
+            });
+            return toPersianNumber(formatted);
+        }
+
+        let globalOunceGold = 0;
+        let globalOunceSilver = 0;
+        let globalUSD = 0;
+        let globalGold18Market = 0;
+        let globalSilver999Market = 0;
+
+        function calculateBubbles() {
+            if (globalOunceGold > 0 && globalUSD > 0) {
+                const gold18Calc = (globalOunceGold * globalUSD * 0.75) / 31.1035;
+                
+                document.getElementById('bubble-gold-ounce').textContent = formatNumber(globalOunceGold, 2) + ' دلار';
+                document.getElementById('bubble-gold-usd').textContent = formatNumber(globalUSD) + ' تومان';
+                document.getElementById('bubble-gold-calc').textContent = formatNumber(Math.round(gold18Calc)) + ' تومان';
+                
+                if (globalGold18Market > 0) {
+                    document.getElementById('bubble-gold-market').textContent = formatNumber(globalGold18Market) + ' تومان';
+                    const bubble = ((globalGold18Market - gold18Calc) / gold18Calc) * 100;
+                    const bubbleEl = document.getElementById('bubble-gold-result');
+                    bubbleEl.textContent = 'حباب: ' + (bubble >= 0 ? '+' : '') + bubble.toFixed(2) + '٪';
+                    bubbleEl.className = 'bubble-value ' + 
+                        (bubble > 0.5 ? 'bubble-positive' : bubble < -0.5 ? 'bubble-negative' : 'bubble-neutral');
+                } else {
+                    document.getElementById('bubble-gold-market').textContent = 'در دسترس نیست';
+                }
+            }
+
+            if (globalOunceSilver > 0 && globalUSD > 0) {
+                const silver999Calc = (globalOunceSilver * globalUSD * 0.999) / 31.1035;
+                
+                document.getElementById('bubble-silver-ounce').textContent = formatNumber(globalOunceSilver, 2) + ' دلار';
+                document.getElementById('bubble-silver-usd').textContent = formatNumber(globalUSD) + ' تومان';
+                document.getElementById('bubble-silver-calc').textContent = formatNumber(Math.round(silver999Calc)) + ' تومان';
+                
+                if (globalSilver999Market > 0) {
+                    document.getElementById('bubble-silver-market').textContent = formatNumber(globalSilver999Market) + ' تومان';
+                    const bubble = ((globalSilver999Market - silver999Calc) / silver999Calc) * 100;
+                    const bubbleEl = document.getElementById('bubble-silver-result');
+                    bubbleEl.textContent = 'حباب: ' + (bubble >= 0 ? '+' : '') + bubble.toFixed(2) + '٪';
+                    bubbleEl.className = 'bubble-value ' + 
+                        (bubble > 0.5 ? 'bubble-positive' : bubble < -0.5 ? 'bubble-negative' : 'bubble-neutral');
+                } else {
+                    document.getElementById('bubble-silver-market').textContent = 'در دسترس نیست';
+                }
+            }
+        }
+
+        async function updatePrices() {
+            const TSETMC_API = 'https://cdn.tsetmc.com/api';
+            const BRS_API = 'BvUj3cMKWNBK87KW9xhNccCThmfVbd8u';
+
+            try {
+                const indexRes = await fetch(`${TSETMC_API}/ClosingPrice/GetClosingPriceInfo/32097828799138957`);
+                const indexData = await indexRes.json();
+                if (indexData && indexData.closingPriceInfo && indexData.closingPriceInfo.pClosing) {
+                    const value = formatNumber(parseInt(indexData.closingPriceInfo.pClosing) / 10);
+                    document.getElementById('index-price').textContent = value + ' واحد';
+                } else {
+                    document.getElementById('index-price').innerHTML = '← مشاهده در بورس';
+                }
+            } catch (e) {
+                document.getElementById('index-price').innerHTML = '← مشاهده در بورس';
+            }
+
+            try {
+                const cryptoRes = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum,solana&vs_currencies=usd');
+                const cryptoData = await cryptoRes.json();
+                if (cryptoData.bitcoin) document.getElementById('btc-price').textContent = formatNumber(cryptoData.bitcoin.usd, 0) + ' دلار';
+                if (cryptoData.ethereum) document.getElementById('eth-price').textContent = formatNumber(cryptoData.ethereum.usd, 0) + ' دلار';
+                if (cryptoData.solana) document.getElementById('sol-price').textContent = formatNumber(cryptoData.solana.usd, 2) + ' دلار';
+            } catch (e) {}
+
+            try {
+                const res = await fetch(`https://Api.BrsApi.ir/Market/Gold_Currency.php?key=${BRS_API}`);
+                const data = await res.json();
+
+                if (data.gold && Array.isArray(data.gold)) {
+                    const gold18 = data.gold.find(item => item.symbol === 'IR_GOLD_18K');
+                    if (gold18) {
+                        globalGold18Market = parseInt(gold18.price);
+                        document.getElementById('gold-price').textContent = formatNumber(gold18.price) + ' تومان';
+                    }
+                    const ounce = data.gold.find(item => item.symbol === 'XAUUSD');
+                    if (ounce) {
+                        globalOunceGold = parseFloat(ounce.price);
+                        document.getElementById('ounce-price').textContent = formatNumber(ounce.price, 2) + ' دلار';
+                    }
+                }
+
+                if (data.currency && Array.isArray(data.currency)) {
+                    const usd = data.currency.find(item => item.symbol === 'USD');
+                    if (usd) {
+                        globalUSD = parseInt(usd.price);
+                        document.getElementById('usd-price').textContent = formatNumber(usd.price) + ' تومان';
+                    }
+                }
+            } catch (e) {}
+
+            try {
+                const silverRes = await fetch(`https://Api.BrsApi.ir/Market/Commodity.php?key=${BRS_API}`);
+                const silverData = await silverRes.json();
+                
+                if (silverData && silverData.metal_precious && Array.isArray(silverData.metal_precious)) {
+                    const silver = silverData.metal_precious.find(item => item.symbol === 'XAGUSD');
+                    if (silver) {
+                        globalOunceSilver = parseFloat(silver.price);
+                        document.getElementById('silver-price').textContent = formatNumber(silver.price, 2) + ' دلار';
+                    }
+                }
+            } catch (e) {}
+
+            if (globalOunceSilver > 0 && globalUSD > 0) {
+                const silver999Calc = (globalOunceSilver * globalUSD * 0.999) / 31.1035;
+                document.getElementById('silver999-price').textContent = formatNumber(Math.round(silver999Calc)) + ' تومان';
+            }
+
+            calculateBubbles();
+        }
+
+        async function updateTicker() {
+            const TSETMC_API = 'https://cdn.tsetmc.com/api';
+            const BRS_API = 'BvUj3cMKWNBK87KW9xhNccCThmfVbd8u';
+            let tickerHTML = '';
+
+            try {
+                const indexRes = await fetch(`${TSETMC_API}/ClosingPrice/GetClosingPriceInfo/32097828799138957`);
+                const indexData = await indexRes.json();
+                if (indexData && indexData.closingPriceInfo && indexData.closingPriceInfo.pClosing) {
+                    const value = formatNumber(parseInt(indexData.closingPriceInfo.pClosing) / 10);
+                    tickerHTML += `<span class="ticker-item">📊 شاخص کل: ${value} واحد</span>`;
+                }
+            } catch (e) {}
+
+            try {
+                const cryptoRes = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum,solana&vs_currencies=usd');
+                const cryptoData = await cryptoRes
