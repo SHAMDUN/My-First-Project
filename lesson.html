@@ -268,7 +268,7 @@
 
             // ===== خواندن فایل JSON =====
             try {
-                const response = await fetch(`lessons/course-${courseId}.json`);
+                const response = await fetch(`course-${courseId}.json`);
                 
                 if (!response.ok) {
                     showError('❌ محتوای این دوره به زودی اضافه می‌شود.');
