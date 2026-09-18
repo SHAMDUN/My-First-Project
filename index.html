@@ -134,7 +134,7 @@
             border-bottom: 2px solid #f7971e; display: inline-block; padding-bottom: 5px;
         }
         .bubble-grid {
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 12px; margin-top: 15px;
         }
         .bubble-card {
@@ -158,8 +158,8 @@
             margin-top: 12px; padding: 10px; border-radius: 10px;
             background: rgba(15, 23, 42, 0.6);
         }
-        .bubble-positive { color: #f87171; }
-        .bubble-negative { color: #4ade80; }
+        .bubble-positive { color: #4ade80; }
+        .bubble-negative { color: #f87171; }
         .bubble-neutral { color: #94a3b8; }
         .chart-section {
             background: rgba(30, 41, 59, 0.85); backdrop-filter: blur(10px);
@@ -272,26 +272,32 @@
                 <span id="date">--</span> - <span id="time">--</span>
             </div>
             <div class="price-grid">
-                <div class="price-card gold">
-                    <div class="label">🥇 طلا ۱۸ عیار</div>
-                    <div class="value" id="gold-price">در حال دریافت...</div>
+                <div class="price-card ounce">
+                    <div class="label">🏅 انس طلا</div>
+                    <div class="value" id="ounce-price">در حال دریافت...</div>
                 </div>
                 <div class="price-card silver">
                     <div class="label">🥈 انس نقره</div>
                     <div class="value" id="silver-price">در حال دریافت...</div>
                 </div>
-                <div class="price-card silver999">
-                    <div class="label">🥈 نقره ۹۹۹ (گرم)</div>
-                    <div class="value" id="silver999-price">در حال دریافت...</div>
-                </div>
-                <div class="price-card ounce">
-                    <div class="label">🏅 انس طلا</div>
-                    <div class="value" id="ounce-price">در حال دریافت...</div>
-                </div>
                 <div class="price-card usd">
                     <div class="label">💵 دلار آزاد</div>
                     <div class="value" id="usd-price">در حال دریافت...</div>
                 </div>
+                <div class="price-card gold">
+                    <div class="label">🥇 طلا ۱۸ عیار</div>
+                    <div class="value" id="gold-price">در حال دریافت...</div>
+                </div>
+                <div class="price-card silver999">
+                    <div class="label">🥈 نقره ۹۹۹ (گرم)</div>
+                    <div class="value" id="silver999-price">در حال دریافت...</div>
+                </div>
+                <a href="bourse.html" style="text-decoration: none;">
+                    <div class="price-card index" style="cursor: pointer;">
+                        <div class="label">📊 شاخص کل بورس</div>
+                        <div class="value" id="index-price">در حال دریافت...</div>
+                    </div>
+                </a>
                 <div class="price-card btc">
                     <div class="label">₿ بیت‌کوین</div>
                     <div class="value" id="btc-price">در حال دریافت...</div>
@@ -304,17 +310,11 @@
                     <div class="label">◎ سولانا</div>
                     <div class="value" id="sol-price">در حال دریافت...</div>
                 </div>
-                <a href="bourse.html" style="text-decoration: none;">
-                    <div class="price-card index" style="cursor: pointer;">
-                        <div class="label">📊 شاخص کل بورس</div>
-                        <div class="value" id="index-price">در حال دریافت...</div>
-                    </div>
-                </a>
             </div>
         </div>
 
         <div class="bubble-section">
-            <h2>💎 محاسبه حباب طلا و نقره</h2>
+            <h2>💎 محاسبه حباب طلا ۱۸ عیار</h2>
             <div class="bubble-grid">
                 <div class="bubble-card">
                     <div class="title">🥇 طلا ۱۸ عیار</div>
@@ -323,14 +323,6 @@
                     <div class="row"><span class="label">قیمت محاسبه‌شده:</span><span class="value" id="bubble-gold-calc">--</span></div>
                     <div class="row"><span class="label">قیمت بازار:</span><span class="value" id="bubble-gold-market">--</span></div>
                     <div class="bubble-value bubble-neutral" id="bubble-gold-result">حباب: --</div>
-                </div>
-                <div class="bubble-card">
-                    <div class="title">🥈 نقره ۹۹۹ (گرم)</div>
-                    <div class="row"><span class="label">انس نقره:</span><span class="value" id="bubble-silver-ounce">--</span></div>
-                    <div class="row"><span class="label">دلار:</span><span class="value" id="bubble-silver-usd">--</span></div>
-                    <div class="row"><span class="label">قیمت محاسبه‌شده:</span><span class="value" id="bubble-silver-calc">--</span></div>
-                    <div class="row"><span class="label">قیمت بازار:</span><span class="value" id="bubble-silver-market">--</span></div>
-                    <div class="bubble-value bubble-neutral" id="bubble-silver-result">حباب: --</div>
                 </div>
             </div>
         </div>
@@ -478,11 +470,12 @@
         let globalOunceSilver = 0;
         let globalUSD = 0;
         let globalGold18Market = 0;
-        let globalSilver999Market = 0;
 
-        function calculateBubbles() {
+        function calculateGoldBubble() {
             if (globalOunceGold > 0 && globalUSD > 0) {
-                const gold18Calc = (globalOunceGold * globalUSD) / 9.5784;
+                // فرمول درست: (انس طلا × دلار × 0.75) ÷ 31.1035
+                const gold18Calc = (globalOunceGold * globalUSD * 0.75) / 31.1035;
+                
                 document.getElementById('bubble-gold-ounce').textContent = formatNumber(globalOunceGold, 2) + ' دلار';
                 document.getElementById('bubble-gold-usd').textContent = formatNumber(globalUSD) + ' تومان';
                 document.getElementById('bubble-gold-calc').textContent = formatNumber(Math.round(gold18Calc)) + ' تومان';
@@ -492,28 +485,11 @@
                     const bubble = ((globalGold18Market - gold18Calc) / gold18Calc) * 100;
                     const bubbleEl = document.getElementById('bubble-gold-result');
                     bubbleEl.textContent = 'حباب: ' + (bubble >= 0 ? '+' : '') + bubble.toFixed(2) + '٪';
+                    // حباب مثبت = سبز، حباب منفی = قرمز
                     bubbleEl.className = 'bubble-value ' + 
                         (bubble > 0.5 ? 'bubble-positive' : bubble < -0.5 ? 'bubble-negative' : 'bubble-neutral');
                 } else {
                     document.getElementById('bubble-gold-market').textContent = 'در دسترس نیست';
-                }
-            }
-
-            if (globalOunceSilver > 0 && globalUSD > 0) {
-                const silver999Calc = (globalOunceSilver * globalUSD) / 31.1035 * 0.999;
-                document.getElementById('bubble-silver-ounce').textContent = formatNumber(globalOunceSilver, 2) + ' دلار';
-                document.getElementById('bubble-silver-usd').textContent = formatNumber(globalUSD) + ' تومان';
-                document.getElementById('bubble-silver-calc').textContent = formatNumber(Math.round(silver999Calc)) + ' تومان';
-                
-                if (globalSilver999Market > 0) {
-                    document.getElementById('bubble-silver-market').textContent = formatNumber(globalSilver999Market) + ' تومان';
-                    const bubble = ((globalSilver999Market - silver999Calc) / silver999Calc) * 100;
-                    const bubbleEl = document.getElementById('bubble-silver-result');
-                    bubbleEl.textContent = 'حباب: ' + (bubble >= 0 ? '+' : '') + bubble.toFixed(2) + '٪';
-                    bubbleEl.className = 'bubble-value ' + 
-                        (bubble > 0.5 ? 'bubble-positive' : bubble < -0.5 ? 'bubble-negative' : 'bubble-neutral');
-                } else {
-                    document.getElementById('bubble-silver-market').textContent = 'در دسترس نیست';
                 }
             }
         }
@@ -522,6 +498,7 @@
             const TSETMC_API = 'https://cdn.tsetmc.com/api';
             const BRS_API = 'BvUj3cMKWNBK87KW9xhNccCThmfVbd8u';
 
+            // ۱. شاخص کل
             try {
                 const indexRes = await fetch(`${TSETMC_API}/ClosingPrice/GetClosingPriceInfo/32097828799138957`);
                 const indexData = await indexRes.json();
@@ -535,6 +512,7 @@
                 document.getElementById('index-price').innerHTML = '← مشاهده در بورس';
             }
 
+            // ۲. ارز دیجیتال
             try {
                 const cryptoRes = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum,solana&vs_currencies=usd');
                 const cryptoData = await cryptoRes.json();
@@ -543,6 +521,7 @@
                 if (cryptoData.solana) document.getElementById('sol-price').textContent = formatNumber(cryptoData.solana.usd, 2) + ' دلار';
             } catch (e) {}
 
+            // ۳. طلا و انس طلا و دلار
             try {
                 const res = await fetch(`https://Api.BrsApi.ir/Market/Gold_Currency.php?key=${BRS_API}`);
                 const data = await res.json();
@@ -569,6 +548,7 @@
                 }
             } catch (e) {}
 
+            // ۴. انس نقره از BrsApi Commodity
             try {
                 const silverRes = await fetch(`https://Api.BrsApi.ir/Market/Commodity.php?key=${BRS_API}`);
                 const silverData = await silverRes.json();
@@ -582,7 +562,13 @@
                 }
             } catch (e) {}
 
-            calculateBubbles();
+            // ۵. محاسبه نقره ۹۹۹ (فقط قیمت محاسبه‌شده، بدون حباب)
+            if (globalOunceSilver > 0 && globalUSD > 0) {
+                const silver999Calc = (globalOunceSilver * globalUSD * 0.999) / 31.1035;
+                document.getElementById('silver999-price').textContent = formatNumber(Math.round(silver999Calc)) + ' تومان';
+            }
+
+            calculateGoldBubble();
         }
 
         async function updateTicker() {
