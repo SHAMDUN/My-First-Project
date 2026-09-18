@@ -4,6 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>به آکادمی شمعدون خوش آمدید</title>
+    
+    <!-- PWA -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#f59e0b">
+    <link rel="apple-touch-icon" href="icon-192.png">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="شمعدون">
+    
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
@@ -465,6 +474,17 @@
         <div class="footer">© ۱۴۰۵ آکادمی شمعدون | تمامی حقوق محفوظ است</div>
 
     </div>
+
+    <!-- ثبت Service Worker -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/My-First-Project/service-worker.js')
+                    .then(registration => console.log('✅ SW registered:', registration.scope))
+                    .catch(error => console.log('❌ SW failed:', error));
+            });
+        }
+    </script>
 
 </body>
 </html>
