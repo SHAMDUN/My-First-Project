@@ -339,7 +339,6 @@
             animation: fadeInUp 0.8s ease-out 1.5s backwards;
         }
 
-        /* دکمه خروج ادمین (بالای صفحه) */
         .admin-topbar {
             display: none;
             justify-content: space-between;
@@ -384,7 +383,7 @@
 
     <div class="welcome-container">
         
-        <!-- نوار ادمین (اگه ادمین لاگین بود نشون داده می‌شه) -->
+        <!-- نوار ادمین -->
         <div id="adminTopbar" class="admin-topbar">
             <div class="admin-topbar-text">👑 شما به عنوان ادمین وارد شده‌اید</div>
             <button class="admin-logout-btn" onclick="adminLogout()">🚪 خروج</button>
@@ -402,7 +401,7 @@
             با ثبت‌نام رایگان، به تمام امکانات تحلیلی و آموزشی دسترسی پیدا می‌کنید.
         </p>
 
-        <!-- دکمه‌ها (حالت کاربر عادی) -->
+        <!-- دکمه‌ها (کاربر عادی) -->
         <div class="buttons-container" id="buttonsUser">
             <a href="login.html" class="btn btn-primary">
                 ✨ شروع رایگان
@@ -412,7 +411,7 @@
             </a>
         </div>
 
-        <!-- دکمه‌ها (حالت ادمین) -->
+        <!-- دکمه‌ها (ادمین) -->
         <div class="buttons-container" id="buttonsAdmin" style="display:none;">
             <a href="admin.html" class="btn btn-admin">
                 🎯 ورود به پنل ادمین
@@ -520,7 +519,7 @@
 
     </div>
 
-    <!-- ثبت Service Worker -->
+    <!-- Service Worker -->
     <script>
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
@@ -537,15 +536,37 @@
     <script>
         (async () => {
             try {
-                const { data } = await db.auth.getSession();
-                if (data && data.session && data.session.user && data.session.user.email === ADMIN_EMAIL) {
-                    // کاربر ادمینه — دکمه‌های ادمین رو نشون بده
+                console.log('🔍 شروع چک کردن سشن...');
+                console.log('SUPABASE_URL:', SUPABASE_URL);
+                console.log('ADMIN_EMAIL:', ADMIN_EMAIL);
+                
+                const { data, error } = await db.auth.getSession();
+                console.log('📦 نتیجه getSession:', data, error);
+                
+                if (error) {
+                    console.log('❌ خطا در getSession:', error);
+                    return;
+                }
+                
+                if (!data || !data.session) {
+                    console.log('⚠️ هیچ سشنی وجود نداره — کاربر لاگین نیست');
+                    return;
+                }
+                
+                console.log('👤 ایمیل کاربر:', data.session.user.email);
+                console.log('📧 ایمیل ادمین:', ADMIN_EMAIL);
+                console.log('آیا برابرند؟', data.session.user.email === ADMIN_EMAIL);
+                
+                if (data.session.user.email === ADMIN_EMAIL) {
                     document.getElementById('buttonsUser').style.display = 'none';
                     document.getElementById('buttonsAdmin').style.display = 'flex';
                     document.getElementById('adminTopbar').classList.add('show');
+                    console.log('✅ دکمه ادمین نشون داده شد');
+                } else {
+                    console.log('👤 کاربر عادیه');
                 }
             } catch (err) {
-                console.log('Auth check error:', err);
+                console.log('💥 خطای کلی:', err);
             }
         })();
 
