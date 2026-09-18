@@ -234,6 +234,19 @@
         }
         .btn-danger:hover { background: rgba(239, 68, 68, 0.2); }
 
+        /* دکمه ادمین */
+        .btn-admin {
+            background: linear-gradient(135deg, #dc2626, #b91c1c, #dc2626);
+            background-size: 200% 200%;
+            color: #ffffff;
+            box-shadow: 0 5px 20px rgba(220, 38, 38, 0.4);
+            border: 2px solid #fca5a5;
+        }
+        .btn-admin:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(220, 38, 38, 0.6);
+        }
+
         /* ===== لیست دسترسی سریع ===== */
         .quick-links { display: flex; flex-direction: column; gap: 8px; }
 
@@ -384,6 +397,8 @@
         const SUPABASE_KEY = 'sb_publishable_R7tCe030dGeJ0IRWfcgxww_MgEfh95O';
         const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
+        const ADMIN_EMAIL = 'beat.market.office@gmail.com';
+
         // ===== اطلاعات دوره‌ها =====
         const coursesData = {
             1: { title: 'اقتصاد کلان و خرد', icon: '📊', lessons: 8 },
@@ -411,6 +426,10 @@
                 year: 'numeric', month: 'long', day: 'numeric'
             });
 
+            // چک کردن ادمین
+            const isAdmin = (email === ADMIN_EMAIL);
+            const adminBadge = isAdmin ? '👑 ادمین' : '';
+
             // اطلاعات دوره‌ها
             const completedCourses = currentUser.user_metadata?.completed_courses || [];
             const inProgressCourses = currentUser.user_metadata?.in_progress_courses || [];
@@ -430,7 +449,6 @@
                     </div>
                 `;
             } else {
-                // دوره‌های تکمیل‌شده
                 completedCourses.forEach(courseId => {
                     const course = coursesData[courseId];
                     if (course) {
@@ -449,7 +467,6 @@
                     }
                 });
 
-                // دوره‌های در حال پیشرفت
                 inProgressCourses.forEach(courseId => {
                     const course = coursesData[courseId];
                     if (course) {
@@ -471,16 +488,29 @@
                 });
             }
 
+            // کارت ادمین
+            const adminCardHTML = isAdmin ? `
+                <div class="card">
+                    <div class="section-title">👑 دسترسی ادمین</div>
+                    <a href="admin.html" class="btn btn-admin">
+                        🎯 ورود به پنل ادمین
+                    </a>
+                </div>
+            ` : '';
+
             document.getElementById('content').innerHTML = `
                 <!-- کارت پروفایل -->
                 <div class="card">
                     <div class="avatar-section">
                         <div class="avatar-large">${firstLetter}</div>
-                        <div class="user-name">${fullName}</div>
+                        <div class="user-name">${fullName} ${adminBadge}</div>
                         <div class="user-email">${email}</div>
                         <div class="user-badge">✨ عضو از ${joinDate}</div>
                     </div>
                 </div>
+
+                <!-- کارت ادمین (فقط برای ادمین) -->
+                ${adminCardHTML}
 
                 <!-- آمار فعالیت -->
                 <div class="card">
