@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ورود / ثبت‌نام | آکادمی شمعدون</title>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: Tahoma, sans-serif;
+            background-color: #0f172a;
+            background-image: 
+                radial-gradient(circle at 0% 0%, rgba(245, 158, 11, 0.12) 0%, transparent 40%),
+                radial-gradient(circle at 100% 100%, rgba(59, 130, 246, 0.08) 0%, transparent 40%),
+                linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+            background-size: 100% 100%, 100% 100%, 50px 50px, 50px 50px;
+            background-attachment: fixed;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            direction: rtl;
+            padding: 20px;
+        }
+
+        .login-container {
+            background: rgba(30, 41, 59, 0.95);
+            backdrop-filter: blur(15px);
+            padding: 35px 30px;
+            border-radius: 25px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+            width: 100%;
+            max-width: 420px;
+            border: 1px solid rgba(255,255,255,0.08);
+        }
+
+        .logo {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+        .logo .icon {
+            font-size: 50px;
+            margin-bottom: 10px;
+        }
+        .logo h1 {
+            color: #f59e0b;
+            font-size: 24px;
+            margin-bottom: 5px;
+        }
+        .logo p {
+            color: #94a3b8;
+            font-size: 14px;
+        }
+
+        .tabs {
+            display: flex;
+            background: rgba(15, 23, 42, 0.6);
+            border-radius: 12px;
+            padding: 5px;
+            margin-bottom: 25px;
+        }
+        .tab {
+            flex: 1;
+            padding: 12px;
+            text-align: center;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 15px;
+            cursor: pointer;
+            color: #94a3b8;
+            transition: 0.3s;
+            border: none;
+            background: transparent;
+            font-family: Tahoma, sans-serif;
+        }
+        .tab.active {
+            background: #f59e0b;
+            color: #0f172a;
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+        .form-group label {
+            display: block;
+            color: #cbd5e1;
+            font-size: 14px;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+        .form-group input {
+            width: 100%;
+            padding: 14px 16px;
+            border-radius: 12px;
+            border: 2px solid #334155;
+            background: rgba(15, 23, 42, 0.6);
+            color: #fff;
+            font-size: 15px;
+            outline: none;
+            transition: 0.3s;
+            font-family: Tahoma, sans-serif;
+        }
+        .form-group input:focus {
+            border-color: #f59e0b;
+            background: rgba(15, 23, 42, 0.9);
+        }
+
+        .btn-submit {
+            width: 100%;
+            padding: 15px;
+            border-radius: 12px;
+            border: none;
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            color: #0f172a;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+            font-family: Tahoma, sans-serif;
+            margin-top: 10px;
+        }
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(245, 158, 11, 0.3);
+        }
+        .btn-submit:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .message {
+            padding: 12px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            font-size: 14px;
+            text-align: center;
+            display: none;
+        }
+        .message.success {
+            background: rgba(34, 197, 94, 0.2);
+            color: #4ade80;
+            border: 1px solid #22c55e;
+            display: block;
+        }
+        .message.error {
+            background: rgba(239, 68, 68, 0.2);
+            color: #f87171;
+            border: 1px solid #ef4444;
+            display: block;
+        }
+
+        .back-link {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            color: #94a3b8;
+            text-decoration: none;
+            font-size: 14px;
+        }
+        .back-link:hover {
+            color: #f59e0b;
+        }
+
+        .hidden { display: none !important; }
+
+        .loading-spinner {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border: 2px solid #0f172a;
+            border-top-color: transparent;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            margin-left: 8px;
+            vertical-align: middle;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="login-container">
+        <div class="logo">
+            <div class="icon">📊</div>
+            <h1>آکادمی شمعدون</h1>
+            <p>پنل تحلیلی بازار</p>
+        </div>
+
+        <div class="tabs">
+            <button class="tab active" id="tabLogin" onclick="switchTab('login')">ورود</button>
+            <button class="tab" id="tabSignup" onclick="switchTab('signup')">ثبت‌نام</button>
+        </div>
+
+        <div class="message" id="message"></div>
+
+        <form id="loginForm" onsubmit="handleLogin(event)">
+            <div class="form-group">
+                <label>📧 ایمیل</label>
+                <input type="email" id="loginEmail" placeholder="example@email.com" required>
+            </div>
+            <div class="form-group">
+                <label>🔒 رمز عبور</label>
+                <input type="password" id="loginPassword" placeholder="رمز عبور خود را وارد کنید" required>
+            </div>
+            <button type="submit" class="btn-submit" id="loginBtn">ورود به حساب</button>
+        </form>
+
+        <form id="signupForm" class="hidden" onsubmit="handleSignup(event)">
+            <div class="form-group">
+                <label>👤 نام و نام خانوادگی</label>
+                <input type="text" id="signupName" placeholder="مثال: علی رضایی" required>
+            </div>
+            <div class="form-group">
+                <label>📧 ایمیل</label>
+                <input type="email" id="signupEmail" placeholder="example@email.com" required>
+            </div>
+            <div class="form-group">
+                <label>🔒 رمز عبور</label>
+                <input type="password" id="signupPassword" placeholder="حداقل ۶ کاراکتر" minlength="6" required>
+            </div>
+            <button type="submit" class="btn-submit" id="signupBtn">ایجاد حساب کاربری</button>
+        </form>
+
+        <a href="index.html" class="back-link">⬅ بازگشت به صفحه اصلی</a>
+    </div>
+
+    <script>
+        // ===== تنظیمات Supabase =====
+        const SUPABASE_URL = 'https://jcwwilatvstjrohvhtss.supabase.co';
+        const SUPABASE_KEY = 'sb_publishable_R7tCe030dGeJ0IRWfcgxww_MgEfh95O';
+        
+        const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+        // ===== تغییر تب =====
+        function switchTab(tab) {
+            const loginForm = document.getElementById('loginForm');
+            const signupForm = document.getElementById('signupForm');
+            const tabLogin = document.getElementById('tabLogin');
+            const tabSignup = document.getElementById('tabSignup');
+            const message = document.getElementById('message');
+
+            message.className = 'message';
+
+            if (tab === 'login') {
+                loginForm.classList.remove('hidden');
+                signupForm.classList.add('hidden');
+                tabLogin.classList.add('active');
+                tabSignup.classList.remove('active');
+            } else {
+                loginForm.classList.add('hidden');
+                signupForm.classList.remove('hidden');
+                tabLogin.classList.remove('active');
+                tabSignup.classList.add('active');
+            }
+        }
+
+        // ===== نمایش پیام =====
+        function showMessage(text, type) {
+            const message = document.getElementById('message');
+            message.textContent = text;
+            message.className = 'message ' + type;
+        }
+
+        // ===== ورود =====
+        async function handleLogin(event) {
+            event.preventDefault();
+            const email = document.getElementById('loginEmail').value.trim();
+            const password = document.getElementById('loginPassword').value;
+            const btn = document.getElementById('loginBtn');
+
+            btn.disabled = true;
+            btn.innerHTML = 'در حال ورود... <span class="loading-spinner"></span>';
+            showMessage('', '');
+
+            try {
+                const { data, error } = await supabaseClient.auth.signInWithPassword({
+                    email: email,
+                    password: password
+                });
+
+                if (error) {
+                    showMessage('❌ ' + translateError(error.message), 'error');
+                } else {
+                    showMessage('✅ ورود موفق! در حال انتقال...', 'success');
+                    setTimeout(() => {
+                        window.location.href = 'dashboard.html';
+                    }, 1000);
+                }
+            } catch (e) {
+                showMessage('❌ خطا در ارتباط با سرور', 'error');
+            }
+
+            btn.disabled = false;
+            btn.innerHTML = 'ورود به حساب';
+        }
+
+        // ===== ثبت‌نام =====
+        async function handleSignup(event) {
+            event.preventDefault();
+            const name = document.getElementById('signupName').value.trim();
+            const email = document.getElementById('signupEmail').value.trim();
+            const password = document.getElementById('signupPassword').value;
+            const btn = document.getElementById('signupBtn');
+
+            btn.disabled = true;
+            btn.innerHTML = 'در حال ثبت‌نام... <span class="loading-spinner"></span>';
+            showMessage('', '');
+
+            try {
+                const { data, error } = await supabaseClient.auth.signUp({
+                    email: email,
+                    password: password,
+                    options: {
+                        data: {
+                            full_name: name
+                        }
+                    }
+                });
+
+                if (error) {
+                    showMessage('❌ ' + translateError(error.message), 'error');
+                } else {
+                    showMessage('✅ ثبت‌نام موفق! در حال انتقال...', 'success');
+                    setTimeout(() => {
+                        window.location.href = 'dashboard.html';
+                    }, 1000);
+                }
+            } catch (e) {
+                showMessage('❌ خطا در ارتباط با سرور', 'error');
+            }
+
+            btn.disabled = false;
+            btn.innerHTML = 'ایجاد حساب کاربری';
+        }
+
+        // ===== ترجمه خطاها به فارسی =====
+        function translateError(msg) {
+            const translations = {
+                'Invalid login credentials': 'ایمیل یا رمز عبور اشتباه است',
+                'Email not confirmed': 'ایمیل شما تأیید نشده است',
+                'User already registered': 'این ایمیل قبلاً ثبت‌نام شده است',
+                'Password should be at least 6 characters': 'رمز عبور باید حداقل ۶ کاراکتر باشد',
+                'Unable to validate email address: invalid format': 'فرمت ایمیل نامعتبر است',
+                'signup is disabled': 'ثبت‌نام غیرفعال است',
+                'Email rate limit exceeded': 'تعداد درخواست‌ها زیاد است. لطفاً چند دقیقه صبر کنید'
+            };
+            return translations[msg] || msg;
+        }
+
+        // ===== چک کردن ورود قبلی =====
+        async function checkSession() {
+            const { data } = await supabaseClient.auth.getSession();
+            if (data.session) {
+                window.location.href = 'dashboard.html';
+            }
+        }
+        checkSession();
+    </script>
+
+</body>
+</html>
