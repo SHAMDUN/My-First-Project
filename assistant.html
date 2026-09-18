@@ -20,24 +20,29 @@
             flex-direction: column;
             overflow: hidden;
         }
+
+        /* ===== هدر ===== */
         .header {
             background: rgba(30, 41, 59, 0.95);
             backdrop-filter: blur(15px);
-            padding: 15px 20px;
+            padding: 12px 15px;
             border-bottom: 1px solid rgba(255,255,255,0.05);
+            flex-shrink: 0;
+        }
+        .header-top {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            flex-shrink: 0;
+            margin-bottom: 10px;
         }
-        .header-info { display: flex; align-items: center; gap: 12px; }
+        .header-info { display: flex; align-items: center; gap: 10px; }
         .header-icon {
-            width: 42px; height: 42px; border-radius: 50%;
+            width: 40px; height: 40px; border-radius: 50%;
             background: linear-gradient(135deg, #f59e0b, #d97706);
             display: flex; align-items: center; justify-content: center;
-            font-size: 22px;
+            font-size: 20px;
         }
-        .header-title h1 { color: #f1f5f9; font-size: 16px; margin-bottom: 2px; }
+        .header-title h1 { color: #f1f5f9; font-size: 15px; margin-bottom: 2px; }
         .header-title p {
             color: #4ade80; font-size: 11px;
             display: flex; align-items: center; gap: 5px;
@@ -48,14 +53,44 @@
         }
         @keyframes pulse { 0%,100%{opacity:1;} 50%{opacity:0.4;} }
         .header a {
-            color: #94a3b8; text-decoration: none; font-size: 13px;
-            padding: 8px 14px; border: 1px solid #334155;
+            color: #94a3b8; text-decoration: none; font-size: 12px;
+            padding: 6px 12px; border: 1px solid #334155;
             border-radius: 20px; transition: 0.3s;
         }
         .header a:hover { background: #334155; color: #fff; }
 
+        /* ===== انتخاب مدل ===== */
+        .model-selector {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 12px;
+            background: rgba(15, 23, 42, 0.6);
+            border-radius: 12px;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+        .model-selector label {
+            color: #94a3b8;
+            font-size: 12px;
+            white-space: nowrap;
+        }
+        .model-selector select {
+            flex: 1;
+            background: rgba(15, 23, 42, 0.8);
+            border: 1px solid #334155;
+            border-radius: 8px;
+            padding: 6px 10px;
+            color: #f1f5f9;
+            font-size: 12px;
+            font-family: Tahoma, sans-serif;
+            outline: none;
+            cursor: pointer;
+        }
+        .model-selector select:focus { border-color: #f59e0b; }
+
+        /* ===== چت ===== */
         .chat-container {
-            flex: 1; overflow-y: auto; padding: 20px 15px;
+            flex: 1; overflow-y: auto; padding: 15px;
             display: flex; flex-direction: column; gap: 15px;
             max-width: 800px; width: 100%; margin: 0 auto;
         }
@@ -91,6 +126,11 @@
             background: rgba(59, 130, 246, 0.15);
             border-color: rgba(59, 130, 246, 0.3);
         }
+        .message-content img {
+            max-width: 100%;
+            border-radius: 10px;
+            margin-top: 8px;
+        }
 
         .typing-indicator {
             display: flex; gap: 4px; padding: 4px 0;
@@ -106,47 +146,114 @@
             30% { transform: translateY(-8px); opacity: 1; }
         }
 
+        /* ===== پیشنهادات ===== */
+        .suggestions-section {
+            padding: 8px 15px;
+            max-width: 800px;
+            width: 100%;
+            margin: 0 auto;
+            flex-shrink: 0;
+        }
+        .suggestions-label {
+            color: #94a3b8;
+            font-size: 11px;
+            margin-bottom: 6px;
+        }
         .suggestions {
-            display: flex; flex-wrap: wrap; gap: 8px;
-            padding: 10px 15px; max-width: 800px;
-            width: 100%; margin: 0 auto;
+            display: flex; flex-wrap: wrap; gap: 6px;
         }
         .suggestion-chip {
             background: rgba(30, 41, 59, 0.7);
-            color: #cbd5e1; padding: 8px 14px;
-            border-radius: 20px; font-size: 13px;
-            cursor: pointer; border: 1px solid rgba(245, 158, 11, 0.3);
+            color: #cbd5e1;
+            padding: 6px 12px;
+            border-radius: 15px;
+            font-size: 12px;
+            cursor: pointer;
+            border: 1px solid rgba(245, 158, 11, 0.3);
             transition: 0.3s;
+            white-space: nowrap;
         }
         .suggestion-chip:hover {
             background: rgba(245, 158, 11, 0.15);
-            color: #f59e0b; transform: translateY(-2px);
+            color: #f59e0b;
+            transform: translateY(-2px);
+        }
+        .suggestion-chip.active {
+            background: rgba(245, 158, 11, 0.3);
+            color: #f59e0b;
+            border-color: #f59e0b;
         }
 
+        /* ===== فایل پیوست ===== */
+        .file-preview {
+            display: none;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 12px;
+            background: rgba(59, 130, 246, 0.15);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            border-radius: 10px;
+            margin: 0 auto 8px;
+            max-width: 800px;
+            width: calc(100% - 30px);
+            font-size: 13px;
+            color: #60a5fa;
+        }
+        .file-preview.show { display: flex; }
+        .file-preview .filename {
+            flex: 1;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .file-preview .remove {
+            cursor: pointer;
+            color: #f87171;
+            font-weight: bold;
+            padding: 0 5px;
+        }
+
+        /* ===== ورودی ===== */
         .input-container {
             background: rgba(30, 41, 59, 0.95);
             backdrop-filter: blur(15px);
-            padding: 15px;
+            padding: 12px 15px;
             border-top: 1px solid rgba(255,255,255,0.05);
             flex-shrink: 0;
         }
         .input-wrapper {
             max-width: 800px; margin: 0 auto;
-            display: flex; gap: 10px; align-items: flex-end;
+            display: flex; gap: 8px; align-items: flex-end;
+        }
+        .attach-btn {
+            width: 48px; height: 48px;
+            border-radius: 12px;
+            border: 1px solid #334155;
+            background: rgba(15, 23, 42, 0.8);
+            color: #94a3b8;
+            font-size: 20px;
+            cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            flex-shrink: 0;
+            transition: 0.3s;
+        }
+        .attach-btn:hover {
+            border-color: #f59e0b;
+            color: #f59e0b;
         }
         .input-wrapper textarea {
             flex: 1; background: rgba(15, 23, 42, 0.8);
-            border: 2px solid #334155; border-radius: 15px;
-            padding: 14px 18px; color: #f1f5f9;
-            font-size: 15px; font-family: Tahoma, sans-serif;
-            resize: none; outline: none; max-height: 120px;
-            min-height: 52px; line-height: 1.5;
+            border: 2px solid #334155; border-radius: 12px;
+            padding: 12px 15px; color: #f1f5f9;
+            font-size: 14px; font-family: Tahoma, sans-serif;
+            resize: none; outline: none; max-height: 100px;
+            min-height: 48px; line-height: 1.5;
         }
         .input-wrapper textarea:focus { border-color: #f59e0b; }
         .send-btn {
-            width: 52px; height: 52px; border-radius: 15px;
+            width: 48px; height: 48px; border-radius: 12px;
             border: none; background: linear-gradient(135deg, #f59e0b, #d97706);
-            color: #0f172a; font-size: 22px; cursor: pointer;
+            color: #0f172a; font-size: 20px; cursor: pointer;
             display: flex; align-items: center; justify-content: center;
             flex-shrink: 0; transition: 0.3s;
         }
@@ -155,39 +262,113 @@
             box-shadow: 0 0 25px rgba(245, 158, 11, 0.5);
         }
         .send-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+        @media (max-width: 600px) {
+            .header { padding: 10px 12px; }
+            .header-title h1 { font-size: 13px; }
+            .message-content { font-size: 14px; padding: 12px 15px; }
+            .suggestions-section { padding: 6px 12px; }
+            .suggestion-chip { font-size: 11px; padding: 5px 10px; }
+            .input-container { padding: 10px 12px; }
+            .attach-btn, .send-btn { width: 44px; height: 44px; font-size: 18px; }
+        }
     </style>
 </head>
 <body>
 
+    <!-- هدر -->
     <div class="header">
-        <div class="header-info">
-            <div class="header-icon">🤖</div>
-            <div class="header-title">
-                <h1>دستیار هوشمند شمعدون</h1>
-                <p><span class="status-dot"></span> آنلاین</p>
+        <div class="header-top">
+            <div class="header-info">
+                <div class="header-icon">🤖</div>
+                <div class="header-title">
+                    <h1>دستیار هوشمند شمعدون</h1>
+                    <p><span class="status-dot"></span> آنلاین</p>
+                </div>
             </div>
+            <a href="dashboard.html">⬅ بازگشت</a>
         </div>
-        <a href="dashboard.html">⬅ بازگشت</a>
+        
+        <!-- انتخاب مدل -->
+        <div class="model-selector">
+            <label>🧠 مدل:</label>
+            <select id="modelSelect">
+                <option value="openai/gpt-5.4-nano">GPT-5.4 Nano (سریع)</option>
+                <option value="openai/gpt-5.4">GPT-5.4 (دقیق)</option>
+                <option value="deepseek/deepseek-v4-flash">DeepSeek V4 (تحلیلی)</option>
+                <option value="anthropic/claude-sonnet-5">Claude Sonnet 5 (حرفه‌ای)</option>
+                <option value="x-ai/grok-4.6">Grok 4.6 (به‌روز)</option>
+                <option value="meta/llama-3.3-70b-instruct">Llama 3.3 70B (متن‌باز)</option>
+            </select>
+        </div>
     </div>
 
+    <!-- چت -->
     <div class="chat-container" id="chatContainer">
         <div class="message assistant">
             <div class="message-avatar">🤖</div>
             <div class="message-content">سلام! من دستیار هوشمند آکادمی شمعدون هستم. 👋
 
-می‌تونم در مورد بازارهای مالی، طلا، ارز دیجیتال، بورس، تحلیل تکنیکال و هر سوال دیگه‌ای کمکت کنم. چطور می‌تونم کمکت کنم؟</div>
+می‌تونم در مورد بازارهای مالی، طلا، نقره، ارز دیجیتال، بورس، تحلیل تکنیکال، پرایس اکشن، ICT، وایکوف، اندیکاتورها و هر سوال دیگه‌ای کمکت کنم.
+
+💡 **می‌تونی:**
+- سوالاتت رو بنویسی
+- عکس چارت بفرستی تا تحلیل کنم
+- از دکمه‌های پیشنهاد سریع استفاده کنی
+
+چطور می‌تونم کمکت کنم؟</div>
         </div>
     </div>
 
-    <div class="suggestions" id="suggestions">
-        <div class="suggestion-chip" onclick="askSuggestion('طلا بخرم یا دلار؟')">🥇 طلا بخرم یا دلار؟</div>
-        <div class="suggestion-chip" onclick="askSuggestion('RSI چیه؟')">📊 RSI چیه؟</div>
-        <div class="suggestion-chip" onclick="askSuggestion('بیت‌کوین بخرم؟')">₿ بیت‌کوین بخرم؟</div>
-        <div class="suggestion-chip" onclick="askSuggestion('سبد سرمایه‌گذاری من چطور باشه؟')">💼 سبد سرمایه‌گذاری</div>
+    <!-- پیشنهادات -->
+    <div class="suggestions-section" id="suggestionsSection">
+        <div class="suggestions-label">🎯 دارایی‌ها:</div>
+        <div class="suggestions" id="suggestionsAssets">
+            <div class="suggestion-chip" onclick="toggleSuggestion(this, 'طلا ۱۸ عیار')">🥇 طلا ۱۸ عیار</div>
+            <div class="suggestion-chip" onclick="toggleSuggestion(this, 'انس طلا')">🏅 انس طلا</div>
+            <div class="suggestion-chip" onclick="toggleSuggestion(this, 'انس نقره')">🥈 انس نقره</div>
+            <div class="suggestion-chip" onclick="toggleSuggestion(this, 'نقره ۹۹۹')">🥈 نقره ۹۹۹</div>
+            <div class="suggestion-chip" onclick="toggleSuggestion(this, 'بیت‌کوین')">₿ بیت‌کوین</div>
+            <div class="suggestion-chip" onclick="toggleSuggestion(this, 'اتریوم')">⟠ اتریوم</div>
+            <div class="suggestion-chip" onclick="toggleSuggestion(this, 'سولانا')">◎ سولانا</div>
+            <div class="suggestion-chip" onclick="toggleSuggestion(this, 'بورس ایران')">📊 بورس ایران</div>
+            <div class="suggestion-chip" onclick="toggleSuggestion(this, 'دلار')">💵 دلار</div>
+        </div>
+        
+        <div class="suggestions-label" style="margin-top: 8px;">📈 روش تحلیل:</div>
+        <div class="suggestions" id="suggestionsAnalysis">
+            <div class="suggestion-chip" onclick="toggleSuggestion(this, 'پرایس اکشن')">📊 پرایس اکشن</div>
+            <div class="suggestion-chip" onclick="toggleSuggestion(this, 'ICT')">🎯 ICT</div>
+            <div class="suggestion-chip" onclick="toggleSuggestion(this, 'وایکوف')">📉 وایکوف</div>
+            <div class="suggestion-chip" onclick="toggleSuggestion(this, 'خط روند')">📏 خط روند</div>
+            <div class="suggestion-chip" onclick="toggleSuggestion(this, 'RSI')">🔍 RSI</div>
+            <div class="suggestion-chip" onclick="toggleSuggestion(this, 'MACD')">📉 MACD</div>
+            <div class="suggestion-chip" onclick="toggleSuggestion(this, 'بولینگر باند')">📊 بولینگر</div>
+            <div class="suggestion-chip" onclick="toggleSuggestion(this, 'فیبوناچی')">🌀 فیبوناچی</div>
+        </div>
+        
+        <div style="display: flex; gap: 8px; margin-top: 8px;">
+            <button onclick="sendSelectedSuggestions()" style="flex:1; background: linear-gradient(135deg, #f59e0b, #d97706); color: #0f172a; border: none; padding: 8px 15px; border-radius: 10px; font-weight: bold; font-size: 13px; cursor: pointer; font-family: Tahoma;">
+                🚀 ارسال انتخاب‌ها
+            </button>
+            <button onclick="clearSuggestions()" style="background: rgba(15, 23, 42, 0.8); color: #94a3b8; border: 1px solid #334155; padding: 8px 15px; border-radius: 10px; font-size: 13px; cursor: pointer; font-family: Tahoma;">
+                ❌ پاک کردن
+            </button>
+        </div>
     </div>
 
+    <!-- فایل پیوست -->
+    <div class="file-preview" id="filePreview">
+        <span>📎</span>
+        <span class="filename" id="fileName"></span>
+        <span class="remove" onclick="removeFile()">✕</span>
+    </div>
+
+    <!-- ورودی -->
     <div class="input-container">
         <div class="input-wrapper">
+            <input type="file" id="fileInput" accept="image/*" style="display:none" onchange="handleFileSelect(event)">
+            <button class="attach-btn" onclick="document.getElementById('fileInput').click()">📎</button>
             <textarea id="userInput" placeholder="سوال خود را بنویسید..." rows="1" onkeydown="handleKeyDown(event)"></textarea>
             <button class="send-btn" id="sendBtn" onclick="sendMessage()">➤</button>
         </div>
@@ -196,24 +377,98 @@
     <script>
         const API_KEY = 'sk_Lg9fjXt4JVdWMXe7QIWUSBwfAlPP67qO';
         const API_URL = 'https://gen.pollinations.ai/v1/chat/completions';
-        const MODEL = 'openai/gpt-5.4-nano';
 
         let conversationHistory = [];
         let isTyping = false;
+        let selectedSuggestions = [];
+        let attachedFile = null;
 
+        // ===== انتخاب پیشنهاد =====
+        function toggleSuggestion(el, text) {
+            el.classList.toggle('active');
+            if (el.classList.contains('active')) {
+                selectedSuggestions.push(text);
+            } else {
+                selectedSuggestions = selectedSuggestions.filter(s => s !== text);
+            }
+        }
+
+        // ===== ارسال انتخاب‌ها =====
+        function sendSelectedSuggestions() {
+            if (selectedSuggestions.length === 0) {
+                alert('لطفاً حداقل یک گزینه انتخاب کنید');
+                return;
+            }
+            const text = 'لطفاً در مورد ' + selectedSuggestions.join(' و ') + ' تحلیل و توضیح بده.';
+            document.getElementById('userInput').value = text;
+            sendMessage();
+            clearSuggestions();
+        }
+
+        // ===== پاک کردن پیشنهادات =====
+        function clearSuggestions() {
+            document.querySelectorAll('.suggestion-chip').forEach(el => el.classList.remove('active'));
+            selectedSuggestions = [];
+        }
+
+        // ===== انتخاب فایل =====
+        function handleFileSelect(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            if (file.size > 5 * 1024 * 1024) {
+                alert('حجم فایل باید کمتر از ۵ مگابایت باشد');
+                return;
+            }
+
+            attachedFile = file;
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                attachedFile.dataUrl = e.target.result;
+            };
+            reader.readAsDataURL(file);
+
+            document.getElementById('fileName').textContent = file.name;
+            document.getElementById('filePreview').classList.add('show');
+        }
+
+        // ===== حذف فایل =====
+        function removeFile() {
+            attachedFile = null;
+            document.getElementById('fileInput').value = '';
+            document.getElementById('filePreview').classList.remove('show');
+        }
+
+        // ===== ارسال پیام =====
         async function sendMessage() {
             if (isTyping) return;
             
             const input = document.getElementById('userInput');
             const message = input.value.trim();
-            if (!message) return;
+            if (!message && !attachedFile) return;
 
-            addMessage('user', message);
+            const model = document.getElementById('modelSelect').value;
+
+            // نمایش پیام کاربر
+            let userMessageHTML = escapeHtml(message);
+            if (attachedFile && attachedFile.dataUrl) {
+                userMessageHTML += `<br><img src="${attachedFile.dataUrl}" alt="پیوست">`;
+            }
+            addMessageHTML('user', userMessageHTML);
+
+            // افزودن به تاریخچه
+            let userContent = message;
+            conversationHistory.push({ role: 'user', content: userContent });
+
             input.value = '';
             input.style.height = 'auto';
-            document.getElementById('suggestions').style.display = 'none';
+            
+            // حذف فایل پس از ارسال
+            const fileToSend = attachedFile;
+            removeFile();
 
-            conversationHistory.push({ role: 'user', content: message });
+            // مخفی کردن پیشنهادات
+            document.getElementById('suggestionsSection').style.display = 'none';
 
             showTyping();
             isTyping = true;
@@ -227,11 +482,11 @@
                         'Authorization': `Bearer ${API_KEY}`
                     },
                     body: JSON.stringify({
-                        model: MODEL,
+                        model: model,
                         messages: [
                             { 
                                 role: 'system', 
-                                content: 'شما دستیار هوشمند آکادمی شمعدون هستید. پاسخ‌های خود را به فارسی، کوتاه و مفید بدهید. در مورد بازارهای مالی، طلا، نقره، ارز دیجیتال، بورس، تحلیل تکنیکال، مدیریت ریسک و سرمایه‌گذاری تخصص دارید.' 
+                                content: 'شما دستیار هوشمند آکادمی شمعدون هستید. پاسخ‌های خود را به فارسی، دقیق و کاربردی بدهید. در مورد بازارهای مالی، طلا، نقره، انس طلا، انس نقره، ارز دیجیتال (بیت‌کوین، اتریوم، سولانا)، بورس ایران، دلار، تحلیل تکنیکال، پرایس اکشن، ICT، وایکوف، خط روند، اندیکاتورها (RSI، MACD، بولینگر)، فیبوناچی، مدیریت ریسک و سرمایه‌گذاری تخصص دارید. پاسخ‌ها را با ذکر نکات کلیدی و قابل اجرا بدهید.' 
                             },
                             ...conversationHistory
                         ]
@@ -243,7 +498,7 @@
                 if (!response.ok) {
                     const errorText = await response.text();
                     console.error('API Error:', response.status, errorText);
-                    addMessage('assistant', '❌ خطا در ارتباط با سرور (کد: ' + response.status + '). لطفاً دوباره تلاش کنید.');
+                    addMessage('assistant', '❌ خطا در ارتباط با سرور (کد: ' + response.status + '). لطفاً دوباره تلاش کنید یا مدل دیگری انتخاب کنید.');
                 } else {
                     const data = await response.json();
                     const assistantMessage = data.choices[0].message.content;
@@ -261,14 +516,19 @@
             document.getElementById('sendBtn').disabled = false;
         }
 
+        // ===== افزودن پیام =====
         function addMessage(role, text) {
+            addMessageHTML(role, escapeHtml(text));
+        }
+
+        function addMessageHTML(role, html) {
             const container = document.getElementById('chatContainer');
             const messageDiv = document.createElement('div');
             messageDiv.className = `message ${role}`;
             const avatar = role === 'user' ? '👤' : '🤖';
             messageDiv.innerHTML = `
                 <div class="message-avatar">${avatar}</div>
-                <div class="message-content">${escapeHtml(text)}</div>
+                <div class="message-content">${html}</div>
             `;
             container.appendChild(messageDiv);
             container.scrollTop = container.scrollHeight;
@@ -311,13 +571,8 @@
 
         document.getElementById('userInput').addEventListener('input', function() {
             this.style.height = 'auto';
-            this.style.height = Math.min(this.scrollHeight, 120) + 'px';
+            this.style.height = Math.min(this.scrollHeight, 100) + 'px';
         });
-
-        function askSuggestion(text) {
-            document.getElementById('userInput').value = text;
-            sendMessage();
-        }
     </script>
 
 </body>
