@@ -39,7 +39,6 @@ async function logoutAdmin() {
     location.reload();
 }
 
-// ============ نمایش پنل ============
 function showPanel() {
     document.getElementById('loginScreen').style.display = 'none';
     document.getElementById('adminPanel').style.display = 'block';
@@ -60,7 +59,6 @@ window.addEventListener('load', async () => {
     }
 });
 
-// ============ تب‌ها ============
 function switchTab(tabName, btn) {
     document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
     document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
@@ -91,9 +89,11 @@ async function loadDashboard() {
         const { count: lessonCount, error: e3 } = await db.from('lessons').select('*', { count: 'exact', head: true });
         document.getElementById('statLessons').textContent = e3 ? 'خطا' : (lessonCount || 0);
 
-        const { count: scoreCount, error: e4 } = await db.from('scores').select('*', { count: 'exact', head: true });
+        // امتیازات = تعداد نظرات (چون از course_ratings میان)
+        const { count: scoreCount, error: e4 } = await db.from('course_ratings').select('*', { count: 'exact', head: true });
         document.getElementById('statScores').textContent = e4 ? 'خطا' : (scoreCount || 0);
 
+        // نظرات = همان course_ratings
         const { count: commentCount, error: e5 } = await db.from('course_ratings').select('*', { count: 'exact', head: true });
         document.getElementById('statComments').textContent = e5 ? 'خطا' : (commentCount || 0);
 
@@ -108,8 +108,8 @@ async function loadScoresChart() {
     sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
 
     const { data, error } = await db
-        .from('scores')
-        .select('created_at, score')
+        .from('course_ratings')
+        .select('created_at')
         .gte('created_at', sevenDaysAgo.toISOString())
         .order('created_at');
 
@@ -145,7 +145,7 @@ async function loadScoresChart() {
         data: {
             labels,
             datasets: [{
-                label: 'امتیازات',
+                label: 'نظرات ثبت‌شده',
                 data: values,
                 borderColor: '#f59e0b',
                 backgroundColor: 'rgba(245, 158, 11, 0.1)',
@@ -167,7 +167,7 @@ async function loadScoresChart() {
     });
 }
 
-// ============ نظرات (از جدول course_ratings) ============
+// ============ نظرات (از course_ratings) ============
 async function loadComments() {
     const container = document.getElementById('commentsList');
     const { data, error } = await db
@@ -176,8 +176,7 @@ async function loadComments() {
         .order('created_at', { ascending: false });
 
     if (error) {
-        container.innerHTML = '<p style="color:#ef4444; padding:20px; text-align:center;">❌ خطا در بارگذاری نظرات:<br><br>' + error.message + '<br><br>کد خطا: ' + error.code + '</p>';
-        console.error('loadComments error:', error);
+        container.innerHTML = '<p style="color:#ef4444; padding:20px; text-align:center;">❌ خطا:<br>' + error.message + '</p>';
         return;
     }
 
@@ -232,7 +231,7 @@ async function loadCourses() {
         .order('id', { ascending: false });
 
     if (error) {
-        container.innerHTML = '<p style="color:#ef4444; padding:20px; text-align:center;">❌ خطا:<br>' + error.message + '</p>';
+        container.innerHTML = '<p style="color:#ef4444; padding:20px;">❌ خطا: ' + error.message + '</p>';
         return;
     }
 
@@ -320,7 +319,7 @@ async function saveCourse() {
 }
 
 async function deleteCourse(id) {
-    if (!confirm('مطمئنی؟ تمام دروس این دوره هم حذف می‌شن.')) return;
+    if (!confirm('مطمئنی؟')) return;
     const { error } = await db.from('courses').delete().eq('id', id);
     if (error) return showToast('خطا: ' + error.message, 'error');
     showToast('دوره حذف شد');
@@ -336,7 +335,7 @@ async function loadLessons() {
         .order('order_num', { ascending: true });
 
     if (error) {
-        container.innerHTML = '<p style="color:#ef4444; padding:20px; text-align:center;">❌ خطا:<br>' + error.message + '</p>';
+        container.innerHTML = '<p style="color:#ef4444; padding:20px;">❌ خطا: ' + error.message + '</p>';
         return;
     }
 
@@ -455,7 +454,7 @@ async function loadUsers() {
         .order('created_at', { ascending: false });
 
     if (error) {
-        container.innerHTML = '<p style="color:#ef4444; padding:20px; text-align:center;">❌ خطا:<br>' + error.message + '</p>';
+        container.innerHTML = '<p style="color:#ef4444; padding:20px;">❌ خطا: ' + error.message + '</p>';
         return;
     }
 
@@ -495,9 +494,7 @@ function renderUsers(users) {
 function filterUsers() {
     const q = document.getElementById('userSearch').value.trim().toLowerCase();
     if (!q) return renderUsers(usersCache);
-    const filtered = usersCache.filter(u => 
-        (u.email || '').toLowerCase().includes(q)
-    );
+    const filtered = usersCache.filter(u => (u.email || '').toLowerCase().includes(q));
     renderUsers(filtered);
 }
 
