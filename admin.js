@@ -52,7 +52,6 @@ function showPanel() {
     loadUsers();
 }
 
-// ============ چک وضعیت لاگین در لود ============
 window.addEventListener('load', async () => {
     const { data } = await db.auth.getSession();
     if (data.session && data.session.user.email === ADMIN_EMAIL) {
@@ -77,7 +76,6 @@ function showToast(msg, type = 'success') {
     setTimeout(() => toast.classList.remove('show'), 3000);
 }
 
-// ============ مودال ============
 function closeModal(id) {
     document.getElementById(id).classList.remove('show');
 }
@@ -85,25 +83,29 @@ function closeModal(id) {
 // ============ داشبورد ============
 async function loadDashboard() {
     try {
-        const { count: userCount } = await db.from('profiles').select('*', { count: 'exact', head: true });
-        document.getElementById('statUsers').textContent = userCount || 0;
+        const { count: userCount, error: e1 } = await db.from('profiles').select('*', { count: 'exact', head: true });
+        document.getElementById('statUsers').textContent = e1 ? 'خطا' : (userCount || 0);
 
-        const { count: courseCount } = await db.from('courses').select('*', { count: 'exact', head: true });
-        document.getElementById('statCourses').textContent = courseCount || 0;
+        const { count: courseCount, error: e2 } = await db.from('courses').select('*', { count: 'exact', head: true });
+        document.getElementById('statCourses').textContent = e2 ? 'خطا' : (courseCount || 0);
 
-        const { count: lessonCount } = await db.from('lessons').select('*', { count: 'exact', head: true });
-        document.getElementById('statLessons').textContent = lessonCount || 0;
+        const { count: lessonCount, error: e3 } = await db.from('lessons').select('*', { count: 'exact', head: true });
+        document.getElementById('statLessons').textContent = e3 ? 'خطا' : (lessonCount || 0);
 
-        const { count: scoreCount } = await db.from('scores').select('*', { count: 'exact', head: true });
-        document.getElementById('statScores').textContent = scoreCount || 0;
+        const { count: scoreCount, error: e4 } = await db.from('scores').select('*', { count: 'exact', head: true });
+        document.getElementById('statScores').textContent = e4 ? 'خطا' : (scoreCount || 0);
 
-        const { count: commentCount } = await db.from('comments').select('*', { count: 'exact', head: true });
-        document.getElementById('statComments').textContent = commentCount || 0;
+        const { count: commentCount, error: e5 } = await db.from('comments').select('*', { count: 'exact', head: true });
+        document.getElementById('statComments').textContent = e5 ? 'خطا' : (commentCount || 0);
+
+        // چاپ خطاها توی کنسول
+        if (e1 || e2 || e3 || e4 || e5) {
+            console.log('Dashboard errors:', { e1, e2, e3, e4, e5 });
+        }
 
         await loadScoresChart();
     } catch (err) {
-        console.error(err);
-        showToast('خطا در بارگذاری آمار', 'error');
+        console.error('Dashboard catch:', err);
     }
 }
 
@@ -111,11 +113,16 @@ async function loadScoresChart() {
     const sevenDaysAgo = new Date();
     sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
 
-    const { data } = await db
+    const { data, error } = await db
         .from('scores')
         .select('created_at, score')
         .gte('created_at', sevenDaysAgo.toISOString())
         .order('created_at');
+
+    if (error) {
+        console.log('Chart error:', error);
+        return;
+    }
 
     const days = {};
     for (let i = 6; i >= 0; i--) {
@@ -175,7 +182,8 @@ async function loadComments() {
         .order('created_at', { ascending: false });
 
     if (error) {
-        container.innerHTML = '<p style="color:#ef4444;">خطا در بارگذاری</p>';
+        container.innerHTML = '<p style="color:#ef4444; padding:20px; text-align:center;">❌ خطا در بارگذاری نظرات:<br><br>' + error.message + '<br><br>کد خطا: ' + error.code + '</p>';
+        console.error('loadComments error:', error);
         return;
     }
 
@@ -219,7 +227,7 @@ function getStatusBadge(status) {
 
 async function updateCommentStatus(id, status) {
     const { error } = await db.from('comments').update({ status }).eq('id', id);
-    if (error) return showToast('خطا', 'error');
+    if (error) return showToast('خطا: ' + error.message, 'error');
     showToast('وضعیت بروزرسانی شد');
     loadComments();
 }
@@ -227,7 +235,7 @@ async function updateCommentStatus(id, status) {
 async function deleteComment(id) {
     if (!confirm('مطمئنی می‌خوای این نظر رو حذف کنی؟')) return;
     const { error } = await db.from('comments').delete().eq('id', id);
-    if (error) return showToast('خطا', 'error');
+    if (error) return showToast('خطا: ' + error.message, 'error');
     showToast('نظر حذف شد');
     loadComments();
 }
@@ -238,10 +246,11 @@ async function loadCourses() {
     const { data, error } = await db
         .from('courses')
         .select('*')
-        .order('created_at', { ascending: false });
+        .order('id', { ascending: false });
 
     if (error) {
-        container.innerHTML = '<p style="color:#ef4444;">خطا</p>';
+        container.innerHTML = '<p style="color:#ef4444; padding:20px; text-align:center;">❌ خطا در بارگذاری دوره‌ها:<br><br>' + error.message + '<br><br>کد خطا: ' + error.code + '</p>';
+        console.error('loadCourses error:', error);
         return;
     }
 
@@ -266,7 +275,7 @@ async function loadCourses() {
                 ${data.map(c => `
                     <tr>
                         <td style="font-size:22px;">${c.icon || '📚'}</td>
-                        <td>${escapeHtml(c.title)}</td>
+                        <td>${escapeHtml(c.title || '')}</td>
                         <td>${c.level || '-'}</td>
                         <td>
                             <button class="btn btn-small btn-primary" onclick="editCourse(${c.id})">✏️</button>
@@ -331,7 +340,7 @@ async function saveCourse() {
 async function deleteCourse(id) {
     if (!confirm('مطمئنی؟ تمام دروس این دوره هم حذف می‌شن.')) return;
     const { error } = await db.from('courses').delete().eq('id', id);
-    if (error) return showToast('خطا', 'error');
+    if (error) return showToast('خطا: ' + error.message, 'error');
     showToast('دوره حذف شد');
     loadCourses();
 }
@@ -345,7 +354,8 @@ async function loadLessons() {
         .order('order_num', { ascending: true });
 
     if (error) {
-        container.innerHTML = '<p style="color:#ef4444;">خطا</p>';
+        container.innerHTML = '<p style="color:#ef4444; padding:20px; text-align:center;">❌ خطا در بارگذاری دروس:<br><br>' + error.message + '<br><br>کد خطا: ' + error.code + '</p>';
+        console.error('loadLessons error:', error);
         return;
     }
 
@@ -366,7 +376,7 @@ async function loadLessons() {
             <tbody>
                 ${data.map(l => `
                     <tr>
-                        <td>${escapeHtml(l.title)}</td>
+                        <td>${escapeHtml(l.title || '')}</td>
                         <td>${l.order_num || '-'}</td>
                         <td>
                             <button class="btn btn-small btn-primary" onclick="editLesson(${l.id})">✏️</button>
@@ -449,7 +459,7 @@ async function saveLesson() {
 async function deleteLesson(id) {
     if (!confirm('مطمئنی؟')) return;
     const { error } = await db.from('lessons').delete().eq('id', id);
-    if (error) return showToast('خطا', 'error');
+    if (error) return showToast('خطا: ' + error.message, 'error');
     showToast('درس حذف شد');
     loadLessons();
 }
@@ -463,7 +473,8 @@ async function loadUsers() {
         .order('created_at', { ascending: false });
 
     if (error) {
-        container.innerHTML = '<p style="color:#ef4444;">خطا</p>';
+        container.innerHTML = '<p style="color:#ef4444; padding:20px; text-align:center;">❌ خطا در بارگذاری کاربران:<br><br>' + error.message + '<br><br>کد خطا: ' + error.code + '</p>';
+        console.error('loadUsers error:', error);
         return;
     }
 
