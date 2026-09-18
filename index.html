@@ -32,7 +32,6 @@
             overflow-x: hidden;
         }
 
-        /* ===== انیمیشن گرادینت متحرک ===== */
         @keyframes gradientShift {
             0% { background-position: 0% 50%; }
             50% { background-position: 100% 50%; }
@@ -45,7 +44,6 @@
             text-align: center;
         }
 
-        /* ===== انیمیشن‌های ورود ===== */
         @keyframes fadeInUp {
             from { opacity: 0; transform: translateY(30px); }
             to { opacity: 1; transform: translateY(0); }
@@ -71,7 +69,6 @@
             100% { left: 100%; }
         }
 
-        /* ===== لوگو ===== */
         .logo-container {
             width: 130px;
             height: 130px;
@@ -90,7 +87,6 @@
             object-fit: cover;
         }
 
-        /* ===== عنوان ===== */
         h1 {
             color: #f59e0b;
             font-size: 30px;
@@ -116,7 +112,6 @@
             animation: fadeInUp 0.8s ease-out 0.4s backwards;
         }
 
-        /* ===== دکمه‌ها ===== */
         .buttons-container {
             display: flex;
             flex-direction: column;
@@ -176,7 +171,19 @@
             transform: translateY(-3px);
         }
 
-        /* ===== بخش ویژگی‌ها ===== */
+        .btn-admin {
+            background: linear-gradient(135deg, #dc2626, #b91c1c, #dc2626);
+            background-size: 200% 200%;
+            color: #ffffff;
+            box-shadow: 0 10px 30px rgba(220, 38, 38, 0.4);
+            animation: gradientShift 4s ease infinite;
+            border: 2px solid #fca5a5;
+        }
+        .btn-admin:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(220, 38, 38, 0.6);
+        }
+
         .section-title {
             color: #f1f5f9;
             font-size: 18px;
@@ -242,7 +249,6 @@
             line-height: 1.5;
         }
 
-        /* ===== آمار زنده ===== */
         .stats-container {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -277,7 +283,6 @@
             font-size: 11px;
         }
 
-        /* ===== نقطه پالس ===== */
         .pulse-dot {
             display: inline-block;
             width: 8px;
@@ -288,7 +293,6 @@
             animation: pulse 1.5s ease-in-out infinite;
         }
 
-        /* ===== باکس رایگان ===== */
         .free-badge {
             background: linear-gradient(135deg, rgba(245, 158, 11, 0.2), rgba(217, 119, 6, 0.2));
             border: 2px dashed #f59e0b;
@@ -301,7 +305,6 @@
             animation: fadeInUp 0.8s ease-out 1.2s backwards;
         }
 
-        /* ===== سوالات متداول ===== */
         .faq-container {
             animation: fadeInUp 0.8s ease-out 1.3s backwards;
             margin-bottom: 30px;
@@ -329,7 +332,6 @@
             line-height: 1.6;
         }
 
-        /* ===== فوتر ===== */
         .footer {
             margin-top: 30px;
             color: #64748b;
@@ -337,7 +339,37 @@
             animation: fadeInUp 0.8s ease-out 1.5s backwards;
         }
 
-        /* ===== موبایل ===== */
+        /* دکمه خروج ادمین (بالای صفحه) */
+        .admin-topbar {
+            display: none;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(220, 38, 38, 0.15);
+            border: 1px solid rgba(220, 38, 38, 0.5);
+            border-radius: 12px;
+            padding: 10px 15px;
+            margin-bottom: 20px;
+            animation: fadeInUp 0.5s ease-out;
+        }
+        .admin-topbar.show { display: flex; }
+        .admin-topbar-text {
+            color: #fca5a5;
+            font-size: 13px;
+            font-weight: bold;
+        }
+        .admin-logout-btn {
+            background: rgba(220, 38, 38, 0.3);
+            color: #fca5a5;
+            border: 1px solid #dc2626;
+            padding: 6px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: Tahoma;
+            font-size: 12px;
+            transition: 0.3s;
+        }
+        .admin-logout-btn:hover { background: rgba(220, 38, 38, 0.5); }
+
         @media (max-width: 400px) {
             h1 { font-size: 24px; }
             .logo-container { width: 110px; height: 110px; }
@@ -352,6 +384,12 @@
 
     <div class="welcome-container">
         
+        <!-- نوار ادمین (اگه ادمین لاگین بود نشون داده می‌شه) -->
+        <div id="adminTopbar" class="admin-topbar">
+            <div class="admin-topbar-text">👑 شما به عنوان ادمین وارد شده‌اید</div>
+            <button class="admin-logout-btn" onclick="adminLogout()">🚪 خروج</button>
+        </div>
+
         <!-- لوگو -->
         <div class="logo-container">
             <img src="519.png" alt="آکادمی شمعدون" class="logo-image">
@@ -364,13 +402,20 @@
             با ثبت‌نام رایگان، به تمام امکانات تحلیلی و آموزشی دسترسی پیدا می‌کنید.
         </p>
 
-        <!-- دکمه‌ها -->
-        <div class="buttons-container">
+        <!-- دکمه‌ها (حالت کاربر عادی) -->
+        <div class="buttons-container" id="buttonsUser">
             <a href="login.html" class="btn btn-primary">
                 ✨ شروع رایگان
             </a>
             <a href="login.html" class="btn btn-secondary">
                 🔐 ورود به حساب
+            </a>
+        </div>
+
+        <!-- دکمه‌ها (حالت ادمین) -->
+        <div class="buttons-container" id="buttonsAdmin" style="display:none;">
+            <a href="admin.html" class="btn btn-admin">
+                🎯 ورود به پنل ادمین
             </a>
         </div>
 
@@ -483,6 +528,36 @@
                     .then(registration => console.log('✅ SW registered:', registration.scope))
                     .catch(error => console.log('❌ SW failed:', error));
             });
+        }
+    </script>
+
+    <!-- Supabase + چک کردن ادمین -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabase-config.js"></script>
+    <script>
+        (async () => {
+            try {
+                const { data } = await db.auth.getSession();
+                if (data && data.session && data.session.user && data.session.user.email === ADMIN_EMAIL) {
+                    // کاربر ادمینه — دکمه‌های ادمین رو نشون بده
+                    document.getElementById('buttonsUser').style.display = 'none';
+                    document.getElementById('buttonsAdmin').style.display = 'flex';
+                    document.getElementById('adminTopbar').classList.add('show');
+                }
+            } catch (err) {
+                console.log('Auth check error:', err);
+            }
+        })();
+
+        async function adminLogout() {
+            if (!confirm('می‌خوای از حساب ادمین خارج بشی؟')) return;
+            try {
+                await db.auth.signOut();
+                location.reload();
+            } catch (err) {
+                console.log('Logout error:', err);
+                alert('خطا در خروج');
+            }
         }
     </script>
 
