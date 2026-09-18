@@ -23,7 +23,6 @@
             padding: 0;
         }
 
-        /* ===== تیکر بالای صفحه ===== */
         .ticker-bar {
             position: fixed;
             top: 0;
@@ -55,7 +54,6 @@
             font-weight: bold;
         }
 
-        /* ===== منوی همبرگری ===== */
         .menu-container {
             position: fixed;
             top: 55px;
@@ -110,7 +108,6 @@
         .menu-dropdown a:last-child { border-bottom: none; }
         .menu-dropdown a:hover { background: #f1f5f9; color: #d97706; }
 
-        /* ===== دکمه شناور اینستاگرام ===== */
         .instagram-btn {
             position: fixed;
             bottom: 20px;
@@ -129,7 +126,6 @@
             font-size: 15px;
         }
 
-        /* ===== محتوای اصلی ===== */
         .main-container {
             max-width: 900px;
             margin: 70px auto 30px;
@@ -168,7 +164,6 @@
             color: #f1f5f9;
         }
 
-        /* ===== کارت‌های قیمت ===== */
         .price-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -195,6 +190,7 @@
 
         .gold { border-right-color: #D4AF37; }
         .silver { border-right-color: #A8A8A8; }
+        .silver999 { border-right-color: #C0C0C0; }
         .usd { border-right-color: #2E8B57; }
         .btc { border-right-color: #f7931a; }
         .eth { border-right-color: #627eea; }
@@ -202,7 +198,69 @@
         .index { border-right-color: #1a73e8; }
         .ounce { border-right-color: #FFD700; }
 
-        /* ===== بخش چارت ===== */
+        .bubble-section {
+            background: rgba(30, 41, 59, 0.85);
+            backdrop-filter: blur(10px);
+            border-radius: 25px;
+            padding: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            margin-bottom: 20px;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+        .bubble-section h2 {
+            color: #f1f5f9;
+            font-size: 18px;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #f7971e;
+            display: inline-block;
+            padding-bottom: 5px;
+        }
+        .bubble-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 12px;
+            margin-top: 15px;
+        }
+        .bubble-card {
+            background: rgba(15, 23, 42, 0.6);
+            padding: 15px;
+            border-radius: 15px;
+            border-right: 4px solid #f59e0b;
+            text-align: right;
+        }
+        .bubble-card .title {
+            font-size: 14px;
+            color: #f59e0b;
+            font-weight: bold;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .bubble-card .row {
+            display: flex;
+            justify-content: space-between;
+            padding: 5px 0;
+            font-size: 13px;
+            color: #cbd5e1;
+            border-bottom: 1px dashed rgba(255,255,255,0.05);
+        }
+        .bubble-card .row:last-child { border-bottom: none; }
+        .bubble-card .row .label { color: #94a3b8; }
+        .bubble-card .row .value { font-weight: bold; color: #f1f5f9; }
+        .bubble-card .bubble-value {
+            font-size: 20px;
+            font-weight: bold;
+            text-align: center;
+            margin-top: 12px;
+            padding: 10px;
+            border-radius: 10px;
+            background: rgba(15, 23, 42, 0.6);
+        }
+        .bubble-positive { color: #f87171; }
+        .bubble-negative { color: #4ade80; }
+        .bubble-neutral { color: #94a3b8; }
+
         .chart-section {
             background: rgba(30, 41, 59, 0.85);
             backdrop-filter: blur(10px);
@@ -225,6 +283,7 @@
             display: flex;
             gap: 5px;
             flex-wrap: wrap;
+            align-items: center;
         }
         .chart-tab {
             background: rgba(15, 23, 42, 0.6);
@@ -241,9 +300,58 @@
             color: #0f172a;
             border-color: #f59e0b;
         }
+        .fullscreen-btn {
+            background: rgba(15, 23, 42, 0.6);
+            color: #f59e0b;
+            border: 1px solid #f59e0b;
+            padding: 8px 14px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .fullscreen-btn:hover {
+            background: #f59e0b;
+            color: #0f172a;
+        }
         #tvchart { width: 100%; height: 400px; }
 
-        /* ===== پنل مدیریت ===== */
+        .chart-fullscreen {
+            position: fixed !important;
+            top: 0 !important;
+            left: 0 !important;
+            right: 0 !important;
+            bottom: 0 !important;
+            width: 100vw !important;
+            height: 100vh !important;
+            z-index: 999999 !important;
+            background: #0f172a !important;
+            padding: 20px !important;
+            margin: 0 !important;
+            border-radius: 0 !important;
+            display: flex !important;
+            flex-direction: column !important;
+            background-image: 
+                radial-gradient(circle at 0% 0%, rgba(245, 158, 11, 0.12) 0%, transparent 40%),
+                radial-gradient(circle at 100% 100%, rgba(59, 130, 246, 0.08) 0%, transparent 40%),
+                linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px) !important;
+            background-size: 100% 100%, 100% 100%, 50px 50px, 50px 50px !important;
+        }
+        .chart-fullscreen .chart-header {
+            display: flex !important;
+            justify-content: space-between !important;
+            align-items: center !important;
+            margin-bottom: 15px !important;
+            flex-wrap: wrap !important;
+            gap: 10px !important;
+        }
+        .chart-fullscreen #tvchart {
+            flex: 1 !important;
+            height: auto !important;
+            width: 100% !important;
+        }
+
         .management-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
@@ -280,14 +388,12 @@
 </head>
 <body>
 
-    <!-- ===== تیکر بالای صفحه ===== -->
     <div class="ticker-bar">
         <div class="ticker-content" id="tickerContent">
             <span class="ticker-item">⏳ در حال دریافت قیمت‌ها...</span>
         </div>
     </div>
 
-    <!-- ===== منوی همبرگری ===== -->
     <div class="menu-container">
         <div class="menu-icon" onclick="toggleMenu(event)">
             <span></span>
@@ -304,15 +410,12 @@
         </div>
     </div>
 
-    <!-- ===== دکمه اینستاگرام ===== -->
     <a href="https://www.instagram.com/shamdun.trade/" target="_blank" class="instagram-btn">
         📸 اینستاگرام
     </a>
 
-    <!-- ===== محتوای اصلی ===== -->
     <div class="main-container">
 
-        <!-- کارت پروفایل -->
         <div class="card">
             <div class="avatar">
                 <img src="me.png" alt="عکس مدیر آکادمی">
@@ -330,8 +433,12 @@
                     <div class="value" id="gold-price">در حال دریافت...</div>
                 </div>
                 <div class="price-card silver">
-                    <div class="label">🥈 نقره</div>
-                    <div class="value" id="silver-price">در حال دریافت...</div>
+                    <div class="label">🥈 انس نقره</div>
+                    <div class="value" id="silver-ounce-price">در حال دریافت...</div>
+                </div>
+                <div class="price-card silver999">
+                    <div class="label">🥈 نقره ۹۹۹</div>
+                    <div class="value" id="silver999-price">در حال دریافت...</div>
                 </div>
                 <div class="price-card ounce">
                     <div class="label">🏅 انس طلا</div>
@@ -362,8 +469,60 @@
             </div>
         </div>
 
-        <!-- بخش چارت -->
-        <div class="chart-section">
+        <div class="bubble-section">
+            <h2>💎 محاسبه حباب طلا و نقره</h2>
+            <div class="bubble-grid">
+                
+                <div class="bubble-card">
+                    <div class="title">🥇 طلا ۱۸ عیار</div>
+                    <div class="row">
+                        <span class="label">انس طلا:</span>
+                        <span class="value" id="bubble-gold-ounce">--</span>
+                    </div>
+                    <div class="row">
+                        <span class="label">دلار:</span>
+                        <span class="value" id="bubble-gold-usd">--</span>
+                    </div>
+                    <div class="row">
+                        <span class="label">قیمت محاسبه‌شده:</span>
+                        <span class="value" id="bubble-gold-calc">--</span>
+                    </div>
+                    <div class="row">
+                        <span class="label">قیمت بازار:</span>
+                        <span class="value" id="bubble-gold-market">--</span>
+                    </div>
+                    <div class="bubble-value bubble-neutral" id="bubble-gold-result">
+                        حباب: --
+                    </div>
+                </div>
+
+                <div class="bubble-card">
+                    <div class="title">🥈 نقره ۹۹۹</div>
+                    <div class="row">
+                        <span class="label">انس نقره:</span>
+                        <span class="value" id="bubble-silver-ounce">--</span>
+                    </div>
+                    <div class="row">
+                        <span class="label">دلار:</span>
+                        <span class="value" id="bubble-silver-usd">--</span>
+                    </div>
+                    <div class="row">
+                        <span class="label">قیمت محاسبه‌شده:</span>
+                        <span class="value" id="bubble-silver-calc">--</span>
+                    </div>
+                    <div class="row">
+                        <span class="label">قیمت بازار:</span>
+                        <span class="value" id="bubble-silver-market">--</span>
+                    </div>
+                    <div class="bubble-value bubble-neutral" id="bubble-silver-result">
+                        حباب: --
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="chart-section" id="chartSection">
             <div class="chart-header">
                 <h2>📈 چارت زنده بازار</h2>
                 <div class="chart-tabs">
@@ -371,13 +530,13 @@
                     <button class="chart-tab" onclick="switchChart('BINANCE:ETHUSDT', this)">اتریوم</button>
                     <button class="chart-tab" onclick="switchChart('BINANCE:SOLUSDT', this)">سولانا</button>
                     <button class="chart-tab" onclick="switchChart('TVC:GOLD', this)">انس طلا</button>
-                    <button class="chart-tab" onclick="switchChart('TVC:SILVER', this)">نقره</button>
+                    <button class="chart-tab" onclick="switchChart('TVC:SILVER', this)">انس نقره</button>
+                    <button class="fullscreen-btn" onclick="toggleFullscreen()" id="fullscreenBtn">⛶ تمام‌صفحه</button>
                 </div>
             </div>
             <div id="tvchart"></div>
         </div>
 
-        <!-- پنل مدیریت -->
         <div class="card">
             <h2 class="section-title">🛠️ پنل مدیریت</h2>
             <div class="management-grid">
@@ -408,7 +567,6 @@
 
     <script src="https://s3.tradingview.com/tv.js"></script>
     <script>
-        // ===== منوی همبرگری =====
         function toggleMenu(event) {
             event.stopPropagation();
             document.getElementById('menuDropdown').classList.toggle('show');
@@ -419,7 +577,6 @@
             }
         }
 
-        // ===== ساعت و تاریخ شمسی =====
         function updateDateTime() {
             const now = new Date();
             const options = { year: 'numeric', month: 'long', day: 'numeric', weekday: 'long' };
@@ -431,9 +588,11 @@
         updateDateTime();
         setInterval(updateDateTime, 1000);
 
-        // ===== چارت TradingView =====
         let tvWidget = null;
+        let currentChartSymbol = 'BINANCE:BTCUSDT';
+
         function initChart(symbol) {
+            currentChartSymbol = symbol;
             if (tvWidget) {
                 document.getElementById('tvchart').innerHTML = '';
             }
@@ -455,21 +614,53 @@
                 "studies": ["RSI@tv-basicstudies"]
             });
         }
+
         function switchChart(symbol, btn) {
             document.querySelectorAll('.chart-tab').forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
             initChart(symbol);
         }
+
         initChart('BINANCE:BTCUSDT');
 
-        // ===== تابع کمکی برای تبدیل اعداد به فارسی =====
+        function toggleFullscreen() {
+            const chartSection = document.getElementById('chartSection');
+            const btn = document.getElementById('fullscreenBtn');
+
+            if (chartSection.classList.contains('chart-fullscreen')) {
+                chartSection.classList.remove('chart-fullscreen');
+                btn.innerHTML = '⛶ تمام‌صفحه';
+                document.body.style.overflow = '';
+                setTimeout(() => {
+                    if (tvWidget) document.getElementById('tvchart').innerHTML = '';
+                    initChart(currentChartSymbol);
+                }, 100);
+            } else {
+                chartSection.classList.add('chart-fullscreen');
+                btn.innerHTML = '✕ خروج';
+                document.body.style.overflow = 'hidden';
+                setTimeout(() => {
+                    if (tvWidget) document.getElementById('tvchart').innerHTML = '';
+                    initChart(currentChartSymbol);
+                }, 100);
+            }
+        }
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                const chartSection = document.getElementById('chartSection');
+                if (chartSection.classList.contains('chart-fullscreen')) {
+                    toggleFullscreen();
+                }
+            }
+        });
+
         function toPersianNumber(num) {
             if (!num && num !== 0) return '--';
             const persianDigits = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
             return num.toString().replace(/\d/g, d => persianDigits[d]);
         }
 
-        // ===== تابع کمکی برای فرمت اعداد با جداکننده =====
         function formatNumber(num, decimals = 0) {
             if (num === null || num === undefined) return '--';
             const formatted = Number(num).toLocaleString('en-US', {
@@ -479,11 +670,53 @@
             return toPersianNumber(formatted);
         }
 
-        // ===== دریافت قیمت‌ها =====
+        let globalOunceGold = 0;
+        let globalOunceSilver = 0;
+        let globalUSD = 0;
+        let globalGold18Market = 0;
+        let globalSilver999Market = 0;
+
+        function calculateBubbles() {
+            if (globalOunceGold > 0 && globalUSD > 0) {
+                const gold18Calc = (globalOunceGold * globalUSD) / 9.5784;
+                
+                document.getElementById('bubble-gold-ounce').textContent = formatNumber(globalOunceGold, 2) + ' دلار';
+                document.getElementById('bubble-gold-usd').textContent = formatNumber(globalUSD) + ' تومان';
+                document.getElementById('bubble-gold-calc').textContent = formatNumber(Math.round(gold18Calc)) + ' تومان';
+                
+                if (globalGold18Market > 0) {
+                    document.getElementById('bubble-gold-market').textContent = formatNumber(globalGold18Market) + ' تومان';
+                    
+                    const bubble = ((globalGold18Market - gold18Calc) / gold18Calc) * 100;
+                    const bubbleEl = document.getElementById('bubble-gold-result');
+                    bubbleEl.textContent = 'حباب: ' + (bubble >= 0 ? '+' : '') + bubble.toFixed(2) + '٪';
+                    bubbleEl.className = 'bubble-value ' + 
+                        (bubble > 0.5 ? 'bubble-positive' : bubble < -0.5 ? 'bubble-negative' : 'bubble-neutral');
+                }
+            }
+
+            if (globalOunceSilver > 0 && globalUSD > 0) {
+                const silver999Calc = (globalOunceSilver * globalUSD) / 31.1035;
+                
+                document.getElementById('bubble-silver-ounce').textContent = formatNumber(globalOunceSilver, 3) + ' دلار';
+                document.getElementById('bubble-silver-usd').textContent = formatNumber(globalUSD) + ' تومان';
+                document.getElementById('bubble-silver-calc').textContent = formatNumber(Math.round(silver999Calc)) + ' تومان';
+                
+                if (globalSilver999Market > 0) {
+                    document.getElementById('bubble-silver-market').textContent = formatNumber(globalSilver999Market) + ' تومان';
+                    
+                    const bubble = ((globalSilver999Market - silver999Calc) / silver999Calc) * 100;
+                    const bubbleEl = document.getElementById('bubble-silver-result');
+                    bubbleEl.textContent = 'حباب: ' + (bubble >= 0 ? '+' : '') + bubble.toFixed(2) + '٪';
+                    bubbleEl.className = 'bubble-value ' + 
+                        (bubble > 0.5 ? 'bubble-positive' : bubble < -0.5 ? 'bubble-negative' : 'bubble-neutral');
+                }
+            }
+        }
+
         async function updatePrices() {
             const TSETMC_API = 'https://cdn.tsetmc.com/api';
 
-            // ۱. شاخص کل از TSETMC
             try {
                 const indexRes = await fetch(`${TSETMC_API}/ClosingPrice/GetClosingPriceInfo/32097828799138957`);
                 const indexData = await indexRes.json();
@@ -497,7 +730,6 @@
                 document.getElementById('index-price').innerHTML = '← مشاهده در بورس';
             }
 
-            // ۲. ارز دیجیتال از CoinGecko (با اعداد فارسی و کلمه "دلار")
             try {
                 const cryptoRes = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum,solana&vs_currencies=usd');
                 const cryptoData = await cryptoRes.json();
@@ -515,26 +747,20 @@
                 console.log('خطا در ارز دیجیتال');
             }
 
-            // ۳. طلا، نقره، انس و دلار از BrsApi
             const BRS_API = 'BvUj3cMKWNBK87KW9xhNccCThmfVbd8u';
             try {
                 const res = await fetch(`https://Api.BrsApi.ir/Market/Gold_Currency.php?key=${BRS_API}`);
                 const data = await res.json();
 
                 if (data.gold && Array.isArray(data.gold)) {
-                    // طلا ۱۸ عیار
                     const gold18 = data.gold.find(item => item.symbol === 'IR_GOLD_18K');
                     if (gold18) {
+                        globalGold18Market = gold18.price;
                         document.getElementById('gold-price').textContent = formatNumber(gold18.price) + ' تومان';
                     }
-                    // نقره
-                    const silver = data.gold.find(item => item.symbol === 'IR_SILVER' || item.symbol === 'XAGUSD');
-                    if (silver) {
-                        document.getElementById('silver-price').textContent = formatNumber(silver.price) + ' تومان';
-                    }
-                    // انس طلا
                     const ounce = data.gold.find(item => item.symbol === 'XAUUSD');
                     if (ounce) {
+                        globalOunceGold = ounce.price;
                         document.getElementById('ounce-price').textContent = formatNumber(ounce.price, 2) + ' دلار';
                     }
                 }
@@ -542,74 +768,46 @@
                 if (data.currency && Array.isArray(data.currency)) {
                     const usd = data.currency.find(item => item.symbol === 'USD');
                     if (usd) {
+                        globalUSD = usd.price;
                         document.getElementById('usd-price').textContent = formatNumber(usd.price) + ' تومان';
                     }
                 }
             } catch (e) {
                 console.log('خطا در BrsApi');
             }
-        }
 
-        // ===== تیکر بالای صفحه =====
-        async function updateTicker() {
-            const TSETMC_API = 'https://cdn.tsetmc.com/api';
-            let tickerHTML = '';
-
-            // ۱. شاخص کل
             try {
-                const indexRes = await fetch(`${TSETMC_API}/ClosingPrice/GetClosingPriceInfo/32097828799138957`);
-                const indexData = await indexRes.json();
-                if (indexData && indexData.closingPriceInfo && indexData.closingPriceInfo.pClosing) {
-                    const value = formatNumber(parseInt(indexData.closingPriceInfo.pClosing) / 10);
-                    tickerHTML += `<span class="ticker-item">📊 شاخص کل: ${value} واحد</span>`;
+                const silverRes = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=silver&vs_currencies=usd');
+                const silverData = await silverRes.json();
+                if (silverData && silverData.silver && silverData.silver.usd) {
+                    globalOunceSilver = silverData.silver.usd;
+                    document.getElementById('silver-ounce-price').textContent = formatNumber(silverData.silver.usd, 2) + ' دلار';
                 }
-            } catch (e) {}
-
-            // ۲. ارز دیجیتال
-            try {
-                const cryptoRes = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum,solana&vs_currencies=usd');
-                const cryptoData = await cryptoRes.json();
-                if (cryptoData.bitcoin) tickerHTML += `<span class="ticker-item">₿ بیت‌کوین: ${formatNumber(cryptoData.bitcoin.usd)} دلار</span>`;
-                if (cryptoData.ethereum) tickerHTML += `<span class="ticker-item">⟠ اتریوم: ${formatNumber(cryptoData.ethereum.usd)} دلار</span>`;
-                if (cryptoData.solana) tickerHTML += `<span class="ticker-item">◎ سولانا: ${formatNumber(cryptoData.solana.usd, 2)} دلار</span>`;
-            } catch (e) {}
-
-            // ۳. طلا و دلار از BrsApi
-            const BRS_API = 'BvUj3cMKWNBK87KW9xhNccCThmfVbd8u';
-            try {
-                const res = await fetch(`https://Api.BrsApi.ir/Market/Gold_Currency.php?key=${BRS_API}`);
-                const data = await res.json();
-
-                if (data.gold && Array.isArray(data.gold)) {
-                    const gold18 = data.gold.find(item => item.symbol === 'IR_GOLD_18K');
-                    if (gold18) tickerHTML += `<span class="ticker-item">🥇 طلا ۱۸ عیار: ${formatNumber(gold18.price)} تومان</span>`;
-                    
-                    const silver = data.gold.find(item => item.symbol === 'IR_SILVER' || item.symbol === 'XAGUSD');
-                    if (silver) tickerHTML += `<span class="ticker-item">🥈 نقره: ${formatNumber(silver.price)} تومان</span>`;
-                    
-                    const ounce = data.gold.find(item => item.symbol === 'XAUUSD');
-                    if (ounce) tickerHTML += `<span class="ticker-item">🏅 انس طلا: ${formatNumber(ounce.price, 2)} دلار</span>`;
-                }
-
-                if (data.currency && Array.isArray(data.currency)) {
-                    const usd = data.currency.find(item => item.symbol === 'USD');
-                    if (usd) tickerHTML += `<span class="ticker-item">💵 دلار: ${formatNumber(usd.price)} تومان</span>`;
-                }
-            } catch (e) {}
-
-            if (!tickerHTML) {
-                tickerHTML = '<span class="ticker-item">⏳ در حال دریافت قیمت‌ها...</span>';
+            } catch (e) {
+                console.log('خطا در انس نقره');
             }
 
-            // تکرار تیکر برای اسکرول بی‌نهایت
-            document.getElementById('tickerContent').innerHTML = tickerHTML + tickerHTML + tickerHTML;
+            try {
+                const tsetmcSilverRes = await fetch(`${TSETMC_API}/Instrument/GetInstrumentSearch/نقره`);
+                const tsetmcSilverData = await tsetmcSilverRes.json();
+                if (tsetmcSilverData && tsetmcSilverData.instrumentSearch && tsetmcSilverData.instrumentSearch.length > 0) {
+                    const silverSymbol = tsetmcSilverData.instrumentSearch.find(i => i.lVal18AFC && i.lVal18AFC.includes('نقره'));
+                    if (silverSymbol) {
+                        const silverInfoRes = await fetch(`${TSETMC_API}/ClosingPrice/GetClosingPriceInfo/${silverSymbol.insCode}`);
+                        const silverInfoData = await silverInfoRes.json();
+                        if (silverInfoData && silverInfoData.closingPriceInfo && silverInfoData.closingPriceInfo.pClosing) {
+                            globalSilver999Market = parseInt(silverInfoData.closingPriceInfo.pClosing) / 10;
+                            document.getElementById('silver999-price').textContent = formatNumber(globalSilver999Market) + ' تومان';
+                        }
+                    }
+                }
+            } catch (e) {
+                console.log('خطا در نقره ۹۹۹ از TSETMC');
+            }
+
+            calculateBubbles();
         }
 
-        updatePrices();
-        updateTicker();
-        setInterval(updatePrices, 60000);
-        setInterval(updateTicker, 60000);
-    </script>
-
-</body>
-</html>
+        async function updateTicker() {
+            const TSETMC_API = 'https://cdn.tsetmc.com/api';
+            let tickerHTML
