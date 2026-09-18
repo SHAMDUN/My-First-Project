@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>دوره‌های آموزشی | آکادمی شمعدون</title>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: Tahoma, sans-serif;
+            background-color: #0f172a;
+            background-image: 
+                radial-gradient(circle at 0% 0%, rgba(245, 158, 11, 0.12) 0%, transparent 40%),
+                radial-gradient(circle at 100% 100%, rgba(59, 130, 246, 0.08) 0%, transparent 40%),
+                linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+            background-size: 100% 100%, 100% 100%, 50px 50px, 50px 50px;
+            background-attachment: fixed;
+            min-height: 100vh;
+            direction: rtl;
+            padding: 20px 15px;
+        }
+
+        .container { max-width: 900px; margin: 0 auto; }
+
+        /* ===== هدر ===== */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        .header h1 {
+            color: #f59e0b;
+            font-size: 24px;
+        }
+        .header a {
+            color: #94a3b8;
+            text-decoration: none;
+            font-size: 14px;
+            padding: 8px 16px;
+            border: 2px solid #334155;
+            border-radius: 25px;
+            transition: 0.3s;
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(10px);
+        }
+        .header a:hover {
+            background: #334155;
+            color: #fff;
+        }
+
+        /* ===== کارت وضعیت دانشجو ===== */
+        .student-status {
+            background: rgba(30, 41, 59, 0.85);
+            backdrop-filter: blur(15px);
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 25px;
+            border: 1px solid rgba(255,255,255,0.05);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        .status-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            flex-shrink: 0;
+        }
+        .status-content { flex: 1; min-width: 200px; }
+        .status-content h2 {
+            color: #f1f5f9;
+            font-size: 17px;
+            margin-bottom: 5px;
+        }
+        .status-content p {
+            color: #94a3b8;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+        .status-content .highlight {
+            color: #f59e0b;
+            font-weight: bold;
+        }
+        .status-btn {
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            color: #0f172a;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 12px;
+            font-weight: bold;
+            font-size: 13px;
+            cursor: pointer;
+            font-family: Tahoma, sans-serif;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        /* ===== بنر توضیحی ===== */
+        .info-banner {
+            background: linear-gradient(135deg, rgba(245, 158, 11, 0.15), rgba(217, 119, 6, 0.1));
+            border: 1px solid rgba(245, 158, 11, 0.3);
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 25px;
+            text-align: right;
+        }
+        .info-banner h3 {
+            color: #f59e0b;
+            font-size: 16px;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .info-banner p {
+            color: #cbd5e1;
+            font-size: 13px;
+            line-height: 1.9;
+            margin-bottom: 8px;
+        }
+        .info-banner p:last-child { margin-bottom: 0; }
+        .info-banner ul {
+            list-style: none;
+            padding-right: 0;
+            margin: 8px 0;
+        }
+        .info-banner li {
+            color: #cbd5e1;
+            font-size: 13px;
+            line-height: 1.9;
+            padding-right: 20px;
+            position: relative;
+        }
+        .info-banner li::before {
+            content: "◆";
+            color: #f59e0b;
+            position: absolute;
+            right: 0;
+            font-size: 10px;
+        }
+
+        /* ===== فیلترها ===== */
+        .filters {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        .filter-btn {
+            background: rgba(30, 41, 59, 0.7);
+            color: #94a3b8;
+            border: 1px solid #334155;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 13px;
+            cursor: pointer;
+            font-family: Tahoma, sans-serif;
+            transition: 0.3s;
+        }
+        .filter-btn.active {
+            background: #f59e0b;
+            color: #0f172a;
+            border-color: #f59e0b;
+        }
+        .filter-btn:hover:not(.active) {
+            background: rgba(245, 158, 11, 0.15);
+            color: #f59e0b;
+        }
+
+        /* ===== لیست دوره‌ها ===== */
+        .courses-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .course-card {
+            background: rgba(30, 41, 59, 0.85);
+            backdrop-filter: blur(15px);
+            border-radius: 20px;
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.05);
+            transition: 0.3s;
+            cursor: pointer;
+            position: relative;
+        }
+        .course-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.4);
+            border-color: rgba(245, 158, 11, 0.3);
+        }
+
+        .course-card.locked {
+            opacity: 0.7;
+        }
+        .course-card.locked:hover {
+            transform: none;
+            cursor: not-allowed;
+        }
+
+        .course-image {
+            height: 130px;
+            background: linear-gradient(135deg, #1e293b, #0f172a);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 50px;
+            position: relative;
+        }
+        .course-image::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 50%;
+            background: linear-gradient(transparent, rgba(30, 41, 59, 0.9));
+        }
+
+        .lock-overlay {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(239, 68, 68, 0.9);
+            color: #fff;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            z-index: 2;
+        }
+
+        .free-badge {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: linear-gradient(135deg, #22c55e, #16a34a);
+            color: #fff;
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 11px;
+            font-weight: bold;
+            z-index: 2;
+        }
+
+        .course-content {
+            padding: 15px;
+        }
+        .course-level {
+            color: #f59e0b;
+            font-size: 11px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        .course-title {
+            color: #f1f5f9;
+            font-size: 15px;
+            font-weight: bold;
+            margin-bottom: 8px;
+            line-height: 1.4;
+        }
+        .course-desc {
+            color: #94a3b8;
+            font-size: 12px;
+            line-height: 1.6;
+            margin-bottom: 12px;
+        }
+        .course-meta {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 12px;
+            font-size: 11px;
+            color: #94a3b8;
+        }
+        .course-meta span {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .course-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 12px;
+            border-top: 1px solid rgba(255,255,255,0.05);
+        }
+        .course-price {
+            color: #4ade80;
+            font-weight: bold;
+            font-size: 14px;
+        }
+        .course-price.paid {
+            color: #f59e0b;
+        }
+        .course-progress {
+            font-size: 11px;
+            color: #60a5fa;
+        }
+
+        /* ===== آمار ===== */
+        .stats-section {
+            background: rgba(30, 41, 59, 0.85);
+            backdrop-filter: blur(15px);
+            border-radius: 20px;
+            padding: 20px;
+            border: 1px solid rgba(255,255,255,0.05);
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 15px;
+            text-align: center;
+        }
+        .stat-item .icon { font-size: 24px; margin-bottom: 5px; }
+        .stat-item .value { color: #f59e0b; font-size: 20px; font-weight: bold; }
+        .stat-item .label { color: #94a3b8; font-size: 11px; }
+
+        /* ===== لودینگ ===== */
+        .loading {
+            text-align: center;
+            padding: 50px 20px;
+            color: #94a3b8;
+        }
+
+        @media (max-width: 600px) {
+            .header h1 { font-size: 20px; }
+            .courses-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="header">
+            <h1>📚 دوره‌های آموزشی</h1>
+            <a href="dashboard.html">⬅ بازگشت</a>
+        </div>
+
+        <!-- کارت وضعیت دانشجو -->
+        <div class="student-status" id="studentStatus">
+            <div class="status-icon">👤</div>
+            <div class="status-content">
+                <h2 id="statusTitle">در حال بارگذاری...</h2>
+                <p id="statusText"></p>
+            </div>
+        </div>
+
+        <!-- بنر توضیحی -->
+        <div class="info-banner">
+            <h3>📚 ساختار آموزشی آکادمی شمعدون</h3>
+            <p>
+                دوره‌های آکادمی شمعدون بر اساس <strong style="color: #f59e0b;">اصول آموزشی استاندارد</strong> طراحی شدن. هر دوره، <strong style="color: #f59e0b;">پیش‌نیاز دوره‌ی قبلی</strong> محسوب می‌شه و دسترسی به دوره‌ی بعدی، <strong style="color: #f59e0b;">فقط بعد از تکمیل موفق دوره‌ی فعلی</strong> امکان‌پذیره.
+            </p>
+            <p><strong style="color: #f59e0b;">دلیل این ساختار:</strong></p>
+            <ul>
+                <li><strong>توالی منطقی:</strong> مفاهیم بازارهای مالی، وابسته به هم هستن. بدون درک پایه، مفاهیم پیشرفته قابل هضم نیستن.</li>
+                <li><strong>جلوگیری از سردرگمی:</strong> کاربری که مستقیم بره سراغ «ICT» بدون دونستن «پرایس اکشن»، فقط وقت و سرمایه‌اش رو از دست می‌ده.</li>
+                <li><strong>یادگیری عمیق:</strong> تکرار و مرور دروس قبلی، باعث تثبیت مطالب در ذهن می‌شه.</li>
+            </ul>
+            <p style="color: #f59e0b; font-weight: bold; margin-top: 10px;">
+                🎯 هدف ما: تربیت معامله‌گرهای حرفه‌ای و اصولی، نه معامله‌گرهای سطحی.
+            </p>
+        </div>
+
+        <!-- فیلترها -->
+        <div class="filters">
+            <button class="filter-btn active" onclick="filterCourses('all', this)">همه دوره‌ها</button>
+            <button class="filter-btn" onclick="filterCourses('beginner', this)">🟢 مبتدی</button>
+            <button class="filter-btn" onclick="filterCourses('intermediate', this)">🟡 متوسط</button>
+            <button class="filter-btn" onclick="filterCourses('advanced', this)">🔴 پیشرفته</button>
+        </div>
+
+        <!-- لیست دوره‌ها -->
+        <div class="courses-grid" id="coursesGrid">
+            <div class="loading">⏳ در حال بارگذاری دوره‌ها...</div>
+        </div>
+
+        <!-- آمار -->
+        <div class="stats-section">
+            <div class="stat-item">
+                <div class="icon">📚</div>
+                <div class="value">۱۵</div>
+                <div class="label">دوره آموزشی</div>
+            </div>
+            <div class="stat-item">
+                <div class="icon">🎓</div>
+                <div class="value">۵</div>
+                <div class="label">دوره رایگان</div>
+            </div>
+            <div class="stat-item">
+                <div class="icon">👥</div>
+                <div class="value">۱۰۰۰+</div>
+                <div class="label">دانشجو</div>
+            </div>
+            <div class="stat-item">
+                <div class="icon">⭐</div>
+                <div class="value">۴.۸</div>
+                <div class="label">رضایت</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const SUPABASE_URL = 'https://jcwwilatvstjrohvhtss.supabase.co';
+        const SUPABASE_KEY = 'sb_publishable_R7tCe030dGeJ0IRWfcgxww_MgEfh95O';
+        const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+        // ===== لیست دوره‌ها =====
+        const courses = [
+            {
+                id: 1,
+                title: 'اقتصاد کلان و خرد',
+                desc: 'مفاهیم پایه اقتصاد، تورم، نرخ بهره و تأثیر آن‌ها بر بازارهای مالی',
+                icon: '📊',
+                level: 'beginner',
+                levelText: '🟢 مبتدی',
+                duration: '۲ ساعت',
+                lessons: ۸,
+                price: 'رایگان',
+                isFree: true,
+                prerequisite: null
+            },
+            {
+                id: 2,
+                title: 'آشنایی با بازارهای مالی',
+                desc: 'بورس، فارکس، کریپتو، طلا و مسکن - هر بازار چطور کار می‌کند؟',
+                icon: '💹',
+                level: 'beginner',
+                levelText: '🟢 مبتدی',
+                duration: '۲ ساعت',
+                lessons: ۱۰,
+                price: 'رایگان',
+                isFree: true,
+                prerequisite: 1
+            },
+            {
+                id: 3,
+                title: 'مبانی تحلیل تکنیکال',
+                desc: 'کندل‌ها، خط روند، حمایت و مقاومت - زبان نمودارها',
+                icon: '📈',
+                level: 'beginner',
+                levelText: '🟢 مبتدی',
+                duration: '۳ ساعت',
+                lessons: ۱۲,
+                price: 'رایگان',
+                isFree: true,
+                prerequisite: 2
+            },
+            {
+                id: 4,
+                title: 'مدیریت ریسک مقدماتی',
+                desc: 'حد ضرر، حجم معامله و صندوق اضطراری - چطور سرمایه‌ات را حفظ کنی',
+                icon: '🛡️',
+                level: 'beginner',
+                levelText: '🟢 مبتدی',
+                duration: '۲ ساعت',
+                lessons: ۸,
+                price: 'رایگان',
+                isFree: true,
+                prerequisite: 3
+            },
+            {
+                id: 5,
+                title: 'آشنایی با ارز دیجیتال',
+                desc: 'بیت‌کوین، اتریوم، بلاک‌چین و کیف پول‌ها - ورود به دنیای کریپتو',
+                icon: '₿',
+                level: 'beginner',
+                levelText: '🟢 مبتدی',
+                duration: '۳ ساعت',
+                lessons: ۱۰,
+                price: 'رایگان',
+                isFree: true,
+                prerequisite: 4
+            }
+        ];
+
+        let currentUser = null;
+        let completedCourses = [];
+        let inProgressCourses = [];
+        let purchasedCourses = [];
+
+        // ===== بارگذاری اطلاعات کاربر =====
+        async function loadUserData() {
+            const { data: { session } } = await supabaseClient.auth.getSession();
+            
+            if (!session) {
+                window.location.href = 'login.html';
+                return;
+            }
+
+            currentUser = session.user;
+            
+            // دریافت دوره‌های تکمیل‌شده از user_metadata
+            completedCourses = currentUser.user_metadata?.completed_courses || [];
+            inProgressCourses = currentUser.user_metadata?.in_progress_courses || [];
+            purchasedCourses = currentUser.user_metadata?.purchased_courses || [];
+            
+            updateStudentStatus();
+            renderCourses();
+        }
+
+        // ===== نمایش وضعیت دانشجو =====
+        function updateStudentStatus() {
+            const statusTitle = document.getElementById('statusTitle');
+            const statusText = document.getElementById('statusText');
+
+            const totalEnrolled = completedCourses.length + inProgressCourses.length;
+
+            if (totalEnrolled === 0) {
+                statusTitle.textContent = '👋 خوش آمدید!';
+                statusText.innerHTML = 'شما هنوز در هیچ دوره‌ای <span class="highlight">ثبت‌نام نکرده‌اید</span>. از دوره‌های رایگان شروع کنید و مسیر یادگیری خود را آغاز کنید.';
+            } else {
+                statusTitle.textContent = '📊 پیشرفت آموزشی شما';
+                statusText.innerHTML = `شما <span class="highlight">${totalEnrolled} دوره</span> در حال یادگیری دارید. 
+                    <span class="highlight">${completedCourses.length}</span> دوره تکمیل شده و 
+                    <span class="highlight">${inProgressCourses.length}</span> دوره در حال پیشرفت است.`;
+            }
+        }
+
+        // ===== نمایش دوره‌ها =====
+        function renderCourses(filter = 'all') {
+            const grid = document.getElementById('coursesGrid');
+            
+            let filteredCourses = courses;
+            if (filter !== 'all') {
+                filteredCourses = courses.filter(c => c.level === filter);
+            }
+
+            grid.innerHTML = filteredCourses.map(course => {
+                const isCompleted = completedCourses.includes(course.id);
+                const isInProgress = inProgressCourses.includes(course.id);
+                
+                // بررسی قفل بودن
+                let isLocked = false;
+                if (course.prerequisite) {
+                    // اگه پیش‌نیاز تکمیل نشده باشه، قفله
+                    if (!completedCourses.includes(course.prerequisite)) {
+                        isLocked = true;
+                    }
+                }
+
+                // اگه خودش تکمیل شده، قفل نیست
+                if (isCompleted) isLocked = false;
+
+                // پیشرفت
+                let progressHTML = '';
+                if (isCompleted) {
+                    progressHTML = '<span class="course-progress">✅ تکمیل شده</span>';
+                } else if (isInProgress) {
+                    progressHTML = '<span class="course-progress">📖 در حال یادگیری</span>';
+                }
+
+                return `
+                    <div class="course-card ${isLocked ? 'locked' : ''}" onclick="${isLocked ? '' : `goToCourse(${course.id})`}">
+                        <div class="course-image">
+                            ${course.icon}
+                            ${course.isFree ? '<div class="free-badge">🎁 رایگان</div>' : ''}
+                            ${isLocked ? '<div class="lock-overlay">🔒</div>' : ''}
+                        </div>
+                        <div class="course-content">
+                            <div class="course-level">${course.levelText}</div>
+                            <div class="course-title">${course.title}</div>
+                            <div class="course-desc">${course.desc}</div>
+                            <div class="course-meta">
+                                <span>⏱️ ${course.duration}</span>
+                                <span>📁 ${course.lessons} درس</span>
+     
