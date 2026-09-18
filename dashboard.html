@@ -7,6 +7,7 @@
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
+        
         body {
             font-family: Tahoma, sans-serif;
             background-color: #0f172a;
@@ -19,49 +20,68 @@
             background-attachment: fixed;
             min-height: 100vh;
             direction: rtl;
-            padding: 20px;
+            padding: 20px 15px;
         }
 
         .container {
-            max-width: 700px;
+            max-width: 600px;
             margin: 0 auto;
         }
 
+        /* ===== انیمیشن‌ها ===== */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.6; }
+        }
+
+        /* ===== کارت ===== */
         .card {
-            background: rgba(30, 41, 59, 0.95);
+            background: rgba(30, 41, 59, 0.85);
             backdrop-filter: blur(15px);
-            padding: 30px;
+            padding: 25px 20px;
             border-radius: 25px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
-            border: 1px solid rgba(255,255,255,0.08);
-            text-align: center;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            border: 1px solid rgba(255,255,255,0.05);
             margin-bottom: 20px;
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        /* ===== آواتار ===== */
+        .avatar-section {
+            text-align: center;
+            margin-bottom: 25px;
         }
 
         .avatar-large {
-            width: 100px;
-            height: 100px;
+            width: 110px;
+            height: 110px;
             border-radius: 50%;
             margin: 0 auto 15px;
             background: linear-gradient(135deg, #f59e0b, #d97706);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 45px;
+            font-size: 48px;
             color: #0f172a;
             font-weight: bold;
-            border: 4px solid #f59e0b;
-        }
-
-        .welcome {
-            color: #f59e0b;
-            font-size: 26px;
-            margin-bottom: 10px;
+            border: 5px solid #f59e0b;
+            box-shadow: 0 0 40px rgba(245, 158, 11, 0.4);
+            animation: float 3s ease-in-out infinite;
         }
 
         .user-name {
             color: #f1f5f9;
-            font-size: 20px;
+            font-size: 22px;
             font-weight: bold;
             margin-bottom: 5px;
         }
@@ -69,81 +89,311 @@
         .user-email {
             color: #94a3b8;
             font-size: 14px;
-            margin-bottom: 20px;
+            margin-bottom: 8px;
         }
 
-        .btn-logout {
-            background: #ef4444;
-            color: #fff;
-            border: none;
-            padding: 12px 30px;
-            border-radius: 12px;
-            font-weight: bold;
-            font-size: 15px;
-            cursor: pointer;
-            transition: 0.3s;
-            font-family: Tahoma, sans-serif;
-        }
-        .btn-logout:hover {
-            background: #dc2626;
-            transform: translateY(-2px);
+        .user-badge {
+            display: inline-block;
+            background: rgba(74, 222, 128, 0.15);
+            color: #4ade80;
+            font-size: 12px;
+            padding: 4px 14px;
+            border-radius: 20px;
+            border: 1px solid rgba(74, 222, 128, 0.3);
         }
 
+        /* ===== بخش عنوان ===== */
         .section-title {
             color: #f1f5f9;
-            font-size: 18px;
+            font-size: 17px;
+            font-weight: bold;
             margin-bottom: 15px;
-            border-bottom: 2px solid #f59e0b;
-            display: inline-block;
-            padding-bottom: 5px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid rgba(245, 158, 11, 0.3);
         }
 
-        .quick-links {
+        /* ===== آمار فعالیت ===== */
+        .stats-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-            gap: 12px;
-            margin-top: 20px;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-bottom: 25px;
+        }
+
+        .stat-card {
+            background: rgba(15, 23, 42, 0.6);
+            padding: 14px 8px;
+            border-radius: 12px;
+            text-align: center;
+            border: 1px solid rgba(255,255,255,0.05);
+            transition: 0.3s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-3px);
+            border-color: rgba(245, 158, 11, 0.3);
+        }
+
+        .stat-icon {
+            font-size: 22px;
+            margin-bottom: 5px;
+        }
+
+        .stat-value {
+            color: #f59e0b;
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 3px;
+        }
+
+        .stat-label {
+            color: #94a3b8;
+            font-size: 11px;
+        }
+
+        /* ===== دکمه‌ها ===== */
+        .btn {
+            width: 100%;
+            padding: 14px 20px;
+            border-radius: 12px;
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: Tahoma, sans-serif;
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 10px;
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            color: #0f172a;
+            box-shadow: 0 5px 20px rgba(245, 158, 11, 0.3);
+        }
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(245, 158, 11, 0.5);
+        }
+
+        .btn-secondary {
+            background: rgba(15, 23, 42, 0.6);
+            color: #f1f5f9;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        .btn-secondary:hover {
+            background: rgba(15, 23, 42, 0.9);
+            border-color: rgba(245, 158, 11, 0.3);
+        }
+
+        .btn-danger {
+            background: rgba(239, 68, 68, 0.1);
+            color: #f87171;
+            border: 1px solid rgba(239, 68, 68, 0.3);
+        }
+        .btn-danger:hover {
+            background: rgba(239, 68, 68, 0.2);
+        }
+
+        /* ===== لیست دسترسی سریع ===== */
+        .quick-links {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
         }
 
         .quick-link {
             background: rgba(15, 23, 42, 0.6);
-            padding: 18px;
-            border-radius: 15px;
+            padding: 14px 16px;
+            border-radius: 12px;
             text-decoration: none;
             color: #f1f5f9;
-            border-top: 3px solid #f59e0b;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border-right: 3px solid #f59e0b;
             transition: 0.3s;
-            text-align: center;
         }
-        .quick-link:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-        }
-        .quick-link .icon { font-size: 30px; margin-bottom: 8px; }
-        .quick-link h3 { font-size: 14px; margin-bottom: 3px; }
-        .quick-link p { font-size: 12px; color: #94a3b8; }
 
-        .loading {
-            color: #94a3b8;
+        .quick-link:hover {
+            background: rgba(15, 23, 42, 0.9);
+            transform: translateX(-5px);
+        }
+
+        .quick-link .icon {
+            font-size: 24px;
+            min-width: 30px;
             text-align: center;
-            padding: 50px;
+        }
+
+        .quick-link .content {
+            flex: 1;
+        }
+
+        .quick-link .title {
+            font-size: 14px;
+            font-weight: bold;
+            margin-bottom: 2px;
+        }
+
+        .quick-link .desc {
+            font-size: 11px;
+            color: #94a3b8;
+        }
+
+        .quick-link .arrow {
+            color: #f59e0b;
             font-size: 18px;
+        }
+
+        /* ===== مودال ===== */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 99999;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .modal-overlay.show {
+            display: flex;
+        }
+
+        .modal {
+            background: #1e293b;
+            padding: 25px;
+            border-radius: 20px;
+            max-width: 400px;
+            width: 100%;
+            border: 1px solid rgba(255,255,255,0.1);
+            animation: fadeInUp 0.3s ease-out;
+        }
+
+        .modal h3 {
+            color: #f1f5f9;
+            font-size: 18px;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .modal-input {
+            width: 100%;
+            padding: 12px 16px;
+            border-radius: 10px;
+            border: 2px solid #334155;
+            background: rgba(15, 23, 42, 0.8);
+            color: #fff;
+            font-size: 14px;
+            outline: none;
+            margin-bottom: 12px;
+            font-family: Tahoma, sans-serif;
+        }
+
+        .modal-input:focus {
+            border-color: #f59e0b;
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .modal-buttons .btn {
+            margin-bottom: 0;
+        }
+
+        .message {
+            padding: 10px;
+            border-radius: 10px;
+            margin-bottom: 12px;
+            font-size: 13px;
+            text-align: center;
+            display: none;
+        }
+        .message.success {
+            background: rgba(34, 197, 94, 0.2);
+            color: #4ade80;
+            border: 1px solid #22c55e;
+            display: block;
+        }
+        .message.error {
+            background: rgba(239, 68, 68, 0.2);
+            color: #f87171;
+            border: 1px solid #ef4444;
+            display: block;
+        }
+
+        /* ===== لودینگ ===== */
+        .loading {
+            text-align: center;
+            padding: 50px 20px;
+            color: #94a3b8;
+            font-size: 16px;
+        }
+
+        @media (max-width: 400px) {
+            .avatar-large { width: 90px; height: 90px; font-size: 38px; }
+            .user-name { font-size: 18px; }
+            .stat-value { font-size: 16px; }
+            .btn { padding: 12px 16px; font-size: 14px; }
         }
     </style>
 </head>
 <body>
 
     <div class="container" id="content">
-        <div class="loading">⏳ در حال بارگذاری...</div>
+        <div class="loading">⏳ در حال بارگذاری پروفایل...</div>
+    </div>
+
+    <!-- ===== مودال ویرایش نام ===== -->
+    <div class="modal-overlay" id="editNameModal">
+        <div class="modal">
+            <h3>✏️ ویرایش نام</h3>
+            <div class="message" id="editNameMsg"></div>
+            <input type="text" id="editNameInput" class="modal-input" placeholder="نام جدید">
+            <div class="modal-buttons">
+                <button class="btn btn-primary" onclick="saveName()">💾 ذخیره</button>
+                <button class="btn btn-secondary" onclick="closeModal('editNameModal')">لغو</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== مودال تغییر رمز ===== -->
+    <div class="modal-overlay" id="changePassModal">
+        <div class="modal">
+            <h3>🔒 تغییر رمز عبور</h3>
+            <div class="message" id="changePassMsg"></div>
+            <input type="password" id="newPassword" class="modal-input" placeholder="رمز جدید (حداقل ۶ کاراکتر)">
+            <input type="password" id="confirmPassword" class="modal-input" placeholder="تکرار رمز جدید">
+            <div class="modal-buttons">
+                <button class="btn btn-primary" onclick="savePassword()">💾 ذخیره</button>
+                <button class="btn btn-secondary" onclick="closeModal('changePassModal')">لغو</button>
+            </div>
+        </div>
     </div>
 
     <script>
+        // ===== تنظیمات Supabase =====
         const SUPABASE_URL = 'https://jcwwilatvstjrohvhtss.supabase.co';
         const SUPABASE_KEY = 'sb_publishable_R7tCe030dGeJ0IRWfcgxww_MgEfh95O';
         
         const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-        async function loadDashboard() {
+        let currentUser = null;
+
+        // ===== بارگذاری پروفایل =====
+        async function loadProfile() {
             const { data: { session } } = await supabaseClient.auth.getSession();
 
             if (!session) {
@@ -151,54 +401,203 @@
                 return;
             }
 
-            const user = session.user;
-            const fullName = user.user_metadata?.full_name || 'کاربر عزیز';
-            const email = user.email;
-            const firstLetter = fullName.charAt(0);
+            currentUser = session.user;
+            const fullName = currentUser.user_metadata?.full_name || 'کاربر عزیز';
+            const email = currentUser.email;
+            const firstLetter = fullName.charAt(0).toUpperCase();
+            const joinDate = new Date(currentUser.created_at).toLocaleDateString('fa-IR', {
+                year: 'numeric', month: 'long', day: 'numeric'
+            });
 
             document.getElementById('content').innerHTML = `
+                <!-- کارت پروفایل -->
                 <div class="card">
-                    <div class="avatar-large">${firstLetter}</div>
-                    <h1 class="welcome">🎉 خوش آمدید!</h1>
-                    <div class="user-name">${fullName}</div>
-                    <div class="user-email">${email}</div>
-                    <button class="btn-logout" onclick="handleLogout()">🚪 خروج از حساب</button>
+                    <div class="avatar-section">
+                        <div class="avatar-large">${firstLetter}</div>
+                        <div class="user-name">${fullName}</div>
+                        <div class="user-email">${email}</div>
+                        <div class="user-badge">✨ عضو از ${joinDate}</div>
+                    </div>
                 </div>
 
+                <!-- آمار فعالیت -->
                 <div class="card">
-                    <h2 class="section-title">📌 دسترسی سریع</h2>
+                    <div class="section-title">📊 آمار فعالیت</div>
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-icon">📈</div>
+                            <div class="stat-value">۰</div>
+                            <div class="stat-label">تحلیل انجام شده</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">🎯</div>
+                            <div class="stat-value">--</div>
+                            <div class="stat-label">تست شخصیت</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">💼</div>
+                            <div class="stat-value">۰</div>
+                            <div class="stat-label">سبد ذخیره‌شده</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ویرایش پروفایل -->
+                <div class="card">
+                    <div class="section-title">✏️ ویرایش پروفایل</div>
+                    <button class="btn btn-secondary" onclick="openEditName()">
+                        ✏️ ویرایش نام
+                    </button>
+                    <button class="btn btn-secondary" onclick="openChangePass()">
+                        🔒 تغییر رمز عبور
+                    </button>
+                </div>
+
+                <!-- دسترسی سریع -->
+                <div class="card">
+                    <div class="section-title">📌 دسترسی سریع</div>
                     <div class="quick-links">
                         <a href="home.html" class="quick-link">
                             <div class="icon">🏠</div>
-                            <h3>صفحه اصلی</h3>
-                            <p>پنل تحلیلی</p>
+                            <div class="content">
+                                <div class="title">پنل تحلیلی</div>
+                                <div class="desc">چارت زنده و حباب طلا</div>
+                            </div>
+                            <div class="arrow">←</div>
                         </a>
                         <a href="bourse.html" class="quick-link">
                             <div class="icon">🏢</div>
-                            <h3>بورس ایران</h3>
-                            <p>مشاهده سهام</p>
+                            <div class="content">
+                                <div class="title">بورس ایران</div>
+                                <div class="desc">رتبه‌بندی و تحلیل سهام</div>
+                            </div>
+                            <div class="arrow">←</div>
                         </a>
-                        <a href="gold-analysis.html" class="quick-link">
-                            <div class="icon">📊</div>
-                            <h3>تحلیل روزانه</h3>
-                            <p>تحلیل بازار</p>
+                        <a href="#" class="quick-link" onclick="comingSoon(event, 'تست شخصیت‌شناسی')">
+                            <div class="icon">🎯</div>
+                            <div class="content">
+                                <div class="title">تست شخصیت‌شناسی مالی</div>
+                                <div class="desc">سبد سرمایه‌گذاری مخصوص خودت</div>
+                            </div>
+                            <div class="arrow">←</div>
                         </a>
-                        <a href="courses.html" class="quick-link">
-                            <div class="icon">🎓</div>
-                            <h3>دوره‌های آموزشی</h3>
-                            <p>آموزش تخصصی</p>
+                        <a href="#" class="quick-link" onclick="comingSoon(event, 'دوره‌های آموزشی')">
+                            <div class="icon">📚</div>
+                            <div class="content">
+                                <div class="title">دوره‌های آموزشی</div>
+                                <div class="desc">از مبتدی تا حرفه‌ای</div>
+                            </div>
+                            <div class="arrow">←</div>
                         </a>
                     </div>
+                </div>
+
+                <!-- خروج -->
+                <div class="card">
+                    <button class="btn btn-danger" onclick="handleLogout()">
+                        🚪 خروج از حساب
+                    </button>
                 </div>
             `;
         }
 
-        async function handleLogout() {
-            await supabaseClient.auth.signOut();
-            window.location.href = 'login.html';
+        // ===== ویرایش نام =====
+        function openEditName() {
+            const currentName = currentUser.user_metadata?.full_name || '';
+            document.getElementById('editNameInput').value = currentName;
+            document.getElementById('editNameMsg').className = 'message';
+            document.getElementById('editNameModal').classList.add('show');
         }
 
-        loadDashboard();
+        async function saveName() {
+            const newName = document.getElementById('editNameInput').value.trim();
+            const msg = document.getElementById('editNameMsg');
+
+            if (!newName) {
+                msg.textContent = '❌ لطفاً نام را وارد کنید';
+                msg.className = 'message error';
+                return;
+            }
+
+            const { error } = await supabaseClient.auth.updateUser({
+                data: { full_name: newName }
+            });
+
+            if (error) {
+                msg.textContent = '❌ خطا: ' + error.message;
+                msg.className = 'message error';
+            } else {
+                msg.textContent = '✅ نام با موفقیت تغییر کرد';
+                msg.className = 'message success';
+                setTimeout(() => {
+                    closeModal('editNameModal');
+                    loadProfile();
+                }, 1500);
+            }
+        }
+
+        // ===== تغییر رمز =====
+        function openChangePass() {
+            document.getElementById('newPassword').value = '';
+            document.getElementById('confirmPassword').value = '';
+            document.getElementById('changePassMsg').className = 'message';
+            document.getElementById('changePassModal').classList.add('show');
+        }
+
+        async function savePassword() {
+            const newPass = document.getElementById('newPassword').value;
+            const confirmPass = document.getElementById('confirmPassword').value;
+            const msg = document.getElementById('changePassMsg');
+
+            if (newPass.length < 6) {
+                msg.textContent = '❌ رمز عبور باید حداقل ۶ کاراکتر باشد';
+                msg.className = 'message error';
+                return;
+            }
+
+            if (newPass !== confirmPass) {
+                msg.textContent = '❌ رمز عبور و تکرار آن یکسان نیستند';
+                msg.className = 'message error';
+                return;
+            }
+
+            const { error } = await supabaseClient.auth.updateUser({
+                password: newPass
+            });
+
+            if (error) {
+                msg.textContent = '❌ خطا: ' + error.message;
+                msg.className = 'message error';
+            } else {
+                msg.textContent = '✅ رمز عبور با موفقیت تغییر کرد';
+                msg.className = 'message success';
+                setTimeout(() => {
+                    closeModal('changePassModal');
+                }, 1500);
+            }
+        }
+
+        // ===== بستن مودال =====
+        function closeModal(id) {
+            document.getElementById(id).classList.remove('show');
+        }
+
+        // ===== خروج =====
+        async function handleLogout() {
+            if (confirm('آیا مطمئنید که می‌خواهید خارج شوید؟')) {
+                await supabaseClient.auth.signOut();
+                window.location.href = 'login.html';
+            }
+        }
+
+        // ===== بخش‌های در دست ساخت =====
+        function comingSoon(event, name) {
+            event.preventDefault();
+            alert('🚧 بخش «' + name + '» به زودی اضافه می‌شود!');
+        }
+
+        // ===== راه‌اندازی =====
+        loadProfile();
     </script>
 
 </body>
