@@ -80,20 +80,33 @@ function closeModal(id) {
 // ============ داشبورد ============
 async function loadDashboard() {
     try {
+        // کاربران
         const { count: userCount, error: e1 } = await db.from('profiles').select('*', { count: 'exact', head: true });
         document.getElementById('statUsers').textContent = e1 ? 'خطا' : (userCount || 0);
 
+        // دوره‌ها
         const { count: courseCount, error: e2 } = await db.from('courses').select('*', { count: 'exact', head: true });
         document.getElementById('statCourses').textContent = e2 ? 'خطا' : (courseCount || 0);
 
+        // دروس
         const { count: lessonCount, error: e3 } = await db.from('lessons').select('*', { count: 'exact', head: true });
         document.getElementById('statLessons').textContent = e3 ? 'خطا' : (lessonCount || 0);
 
-        // امتیازات = تعداد نظرات (چون از course_ratings میان)
-        const { count: scoreCount, error: e4 } = await db.from('course_ratings').select('*', { count: 'exact', head: true });
-        document.getElementById('statScores').textContent = e4 ? 'خطا' : (scoreCount || 0);
+        // میانگین امتیازات ستاره‌ای
+        const { data: ratings, error: e4 } = await db.from('course_ratings').select('rating');
+        if (e4 || !ratings || ratings.length === 0) {
+            document.getElementById('statScores').textContent = '0';
+        } else {
+            const validRatings = ratings.filter(r => r.rating != null);
+            if (validRatings.length === 0) {
+                document.getElementById('statScores').textContent = '0';
+            } else {
+                const avg = validRatings.reduce((sum, r) => sum + r.rating, 0) / validRatings.length;
+                document.getElementById('statScores').textContent = avg.toFixed(1);
+            }
+        }
 
-        // نظرات = همان course_ratings
+        // تعداد نظرات
         const { count: commentCount, error: e5 } = await db.from('course_ratings').select('*', { count: 'exact', head: true });
         document.getElementById('statComments').textContent = e5 ? 'خطا' : (commentCount || 0);
 
@@ -109,7 +122,7 @@ async function loadScoresChart() {
 
     const { data, error } = await db
         .from('course_ratings')
-        .select('created_at')
+        .select('created_at, rating')
         .gte('created_at', sevenDaysAgo.toISOString())
         .order('created_at');
 
@@ -118,24 +131,30 @@ async function loadScoresChart() {
         return;
     }
 
+    // گروه‌بندی بر اساس تاریخ و محاسبه میانگین امتیاز هر روز
     const days = {};
     for (let i = 6; i >= 0; i--) {
         const d = new Date();
         d.setDate(d.getDate() - i);
         const key = d.toISOString().split('T')[0];
-        days[key] = 0;
+        days[key] = { sum: 0, count: 0 };
     }
 
     (data || []).forEach(item => {
         const key = item.created_at.split('T')[0];
-        if (days[key] !== undefined) days[key]++;
+        if (days[key] !== undefined && item.rating != null) {
+            days[key].sum += item.rating;
+            days[key].count += 1;
+        }
     });
 
     const labels = Object.keys(days).map(k => {
         const d = new Date(k);
         return `${d.getMonth() + 1}/${d.getDate()}`;
     });
-    const values = Object.values(days);
+    const values = Object.values(days).map(d => 
+        d.count > 0 ? (d.sum / d.count).toFixed(1) : 0
+    );
 
     const ctx = document.getElementById('scoresChart').getContext('2d');
     if (scoresChart) scoresChart.destroy();
@@ -145,7 +164,7 @@ async function loadScoresChart() {
         data: {
             labels,
             datasets: [{
-                label: 'نظرات ثبت‌شده',
+                label: 'میانگین امتیاز روزانه',
                 data: values,
                 borderColor: '#f59e0b',
                 backgroundColor: 'rgba(245, 158, 11, 0.1)',
@@ -161,13 +180,18 @@ async function loadScoresChart() {
             plugins: { legend: { labels: { color: '#cbd5e1' } } },
             scales: {
                 x: { ticks: { color: '#94a3b8' }, grid: { color: 'rgba(255,255,255,0.05)' } },
-                y: { ticks: { color: '#94a3b8' }, grid: { color: 'rgba(255,255,255,0.05)' }, beginAtZero: true }
+                y: { 
+                    ticks: { color: '#94a3b8' }, 
+                    grid: { color: 'rgba(255,255,255,0.05)' },
+                    beginAtZero: true,
+                    max: 5
+                }
             }
         }
     });
 }
 
-// ============ نظرات (از course_ratings) ============
+// ============ نظرات ============
 async function loadComments() {
     const container = document.getElementById('commentsList');
     const { data, error } = await db
@@ -190,6 +214,7 @@ async function loadComments() {
             <thead>
                 <tr>
                     <th>نظر</th>
+                    <th>امتیاز</th>
                     <th>موضوع پیشنهادی</th>
                     <th>نیاز به دوره پیشرفته</th>
                     <th>تاریخ</th>
@@ -200,6 +225,7 @@ async function loadComments() {
                 ${data.map(c => `
                     <tr>
                         <td>${escapeHtml(c.comment || '')}</td>
+                        <td>${getStars(c.rating)}</td>
                         <td>${escapeHtml(c.suggested_topic || '-')}</td>
                         <td>${c.needs_advanced_course === true ? '✅ بله' : '❌ خیر'}</td>
                         <td>${formatDate(c.created_at)}</td>
@@ -211,6 +237,12 @@ async function loadComments() {
             </tbody>
         </table>
     `;
+}
+
+function getStars(rating) {
+    if (rating == null) return '-';
+    const r = Math.round(rating);
+    return '⭐'.repeat(r) + ' (' + rating + ')';
 }
 
 async function deleteComment(id) {
