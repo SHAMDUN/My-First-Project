@@ -313,9 +313,12 @@
             </div>
         </div>
 
+        <!-- ===== بخش حباب ===== -->
         <div class="bubble-section">
-            <h2>💎 محاسبه حباب طلا ۱۸ عیار</h2>
+            <h2>💎 محاسبه حباب طلا و نقره</h2>
             <div class="bubble-grid">
+                
+                <!-- حباب طلا ۱۸ عیار -->
                 <div class="bubble-card">
                     <div class="title">🥇 طلا ۱۸ عیار</div>
                     <div class="row"><span class="label">انس طلا:</span><span class="value" id="bubble-gold-ounce">--</span></div>
@@ -324,6 +327,17 @@
                     <div class="row"><span class="label">قیمت بازار:</span><span class="value" id="bubble-gold-market">--</span></div>
                     <div class="bubble-value bubble-neutral" id="bubble-gold-result">حباب: --</div>
                 </div>
+
+                <!-- حباب نقره ۹۹۹ -->
+                <div class="bubble-card">
+                    <div class="title">🥈 نقره ۹۹۹ (گرم)</div>
+                    <div class="row"><span class="label">انس نقره:</span><span class="value" id="bubble-silver-ounce">--</span></div>
+                    <div class="row"><span class="label">دلار:</span><span class="value" id="bubble-silver-usd">--</span></div>
+                    <div class="row"><span class="label">قیمت محاسبه‌شده:</span><span class="value" id="bubble-silver-calc">--</span></div>
+                    <div class="row"><span class="label">قیمت بازار:</span><span class="value" id="bubble-silver-market">--</span></div>
+                    <div class="bubble-value bubble-neutral" id="bubble-silver-result">حباب: --</div>
+                </div>
+
             </div>
         </div>
 
@@ -470,10 +484,11 @@
         let globalOunceSilver = 0;
         let globalUSD = 0;
         let globalGold18Market = 0;
+        let globalSilver999Market = 0;
 
-        function calculateGoldBubble() {
+        function calculateBubbles() {
+            // ===== حباب طلا ۱۸ عیار =====
             if (globalOunceGold > 0 && globalUSD > 0) {
-                // فرمول درست: (انس طلا × دلار × 0.75) ÷ 31.1035
                 const gold18Calc = (globalOunceGold * globalUSD * 0.75) / 31.1035;
                 
                 document.getElementById('bubble-gold-ounce').textContent = formatNumber(globalOunceGold, 2) + ' دلار';
@@ -485,11 +500,30 @@
                     const bubble = ((globalGold18Market - gold18Calc) / gold18Calc) * 100;
                     const bubbleEl = document.getElementById('bubble-gold-result');
                     bubbleEl.textContent = 'حباب: ' + (bubble >= 0 ? '+' : '') + bubble.toFixed(2) + '٪';
-                    // حباب مثبت = سبز، حباب منفی = قرمز
                     bubbleEl.className = 'bubble-value ' + 
                         (bubble > 0.5 ? 'bubble-positive' : bubble < -0.5 ? 'bubble-negative' : 'bubble-neutral');
                 } else {
                     document.getElementById('bubble-gold-market').textContent = 'در دسترس نیست';
+                }
+            }
+
+            // ===== حباب نقره ۹۹۹ =====
+            if (globalOunceSilver > 0 && globalUSD > 0) {
+                const silver999Calc = (globalOunceSilver * globalUSD * 0.999) / 31.1035;
+                
+                document.getElementById('bubble-silver-ounce').textContent = formatNumber(globalOunceSilver, 2) + ' دلار';
+                document.getElementById('bubble-silver-usd').textContent = formatNumber(globalUSD) + ' تومان';
+                document.getElementById('bubble-silver-calc').textContent = formatNumber(Math.round(silver999Calc)) + ' تومان';
+                
+                if (globalSilver999Market > 0) {
+                    document.getElementById('bubble-silver-market').textContent = formatNumber(globalSilver999Market) + ' تومان';
+                    const bubble = ((globalSilver999Market - silver999Calc) / silver999Calc) * 100;
+                    const bubbleEl = document.getElementById('bubble-silver-result');
+                    bubbleEl.textContent = 'حباب: ' + (bubble >= 0 ? '+' : '') + bubble.toFixed(2) + '٪';
+                    bubbleEl.className = 'bubble-value ' + 
+                        (bubble > 0.5 ? 'bubble-positive' : bubble < -0.5 ? 'bubble-negative' : 'bubble-neutral');
+                } else {
+                    document.getElementById('bubble-silver-market').textContent = 'در دسترس نیست';
                 }
             }
         }
@@ -562,13 +596,13 @@
                 }
             } catch (e) {}
 
-            // ۵. محاسبه نقره ۹۹۹ (فقط قیمت محاسبه‌شده، بدون حباب)
+            // ۵. نقره ۹۹۹ (محاسبه‌شده)
             if (globalOunceSilver > 0 && globalUSD > 0) {
                 const silver999Calc = (globalOunceSilver * globalUSD * 0.999) / 31.1035;
                 document.getElementById('silver999-price').textContent = formatNumber(Math.round(silver999Calc)) + ' تومان';
             }
 
-            calculateGoldBubble();
+            calculateBubbles();
         }
 
         async function updateTicker() {
