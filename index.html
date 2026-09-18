@@ -536,37 +536,24 @@
     <script>
         (async () => {
             try {
-                console.log('🔍 شروع چک کردن سشن...');
-                console.log('SUPABASE_URL:', SUPABASE_URL);
-                console.log('ADMIN_EMAIL:', ADMIN_EMAIL);
-                
                 const { data, error } = await db.auth.getSession();
-                console.log('📦 نتیجه getSession:', data, error);
                 
                 if (error) {
-                    console.log('❌ خطا در getSession:', error);
+                    console.log('Auth error:', error);
                     return;
                 }
                 
                 if (!data || !data.session) {
-                    console.log('⚠️ هیچ سشنی وجود نداره — کاربر لاگین نیست');
                     return;
                 }
-                
-                console.log('👤 ایمیل کاربر:', data.session.user.email);
-                console.log('📧 ایمیل ادمین:', ADMIN_EMAIL);
-                console.log('آیا برابرند؟', data.session.user.email === ADMIN_EMAIL);
                 
                 if (data.session.user.email === ADMIN_EMAIL) {
                     document.getElementById('buttonsUser').style.display = 'none';
                     document.getElementById('buttonsAdmin').style.display = 'flex';
                     document.getElementById('adminTopbar').classList.add('show');
-                    console.log('✅ دکمه ادمین نشون داده شد');
-                } else {
-                    console.log('👤 کاربر عادیه');
                 }
             } catch (err) {
-                console.log('💥 خطای کلی:', err);
+                console.log('Auth check error:', err);
             }
         })();
 
@@ -577,7 +564,6 @@
                 location.reload();
             } catch (err) {
                 console.log('Logout error:', err);
-                alert('خطا در خروج');
             }
         }
     </script>
