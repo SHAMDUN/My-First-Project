@@ -194,11 +194,13 @@
         .price-card .value { font-size: 15px; font-weight: bold; color: #f1f5f9; margin-top: 5px; }
 
         .gold { border-right-color: #D4AF37; }
+        .silver { border-right-color: #A8A8A8; }
         .usd { border-right-color: #2E8B57; }
         .btc { border-right-color: #f7931a; }
         .eth { border-right-color: #627eea; }
         .sol { border-right-color: #9945FF; }
         .index { border-right-color: #1a73e8; }
+        .ounce { border-right-color: #FFD700; }
 
         /* ===== بخش چارت ===== */
         .chart-section {
@@ -326,6 +328,14 @@
                     <div class="label">🥇 طلا ۱۸ عیار</div>
                     <div class="value" id="gold-price">در حال دریافت...</div>
                 </div>
+                <div class="price-card silver">
+                    <div class="label">🥈 نقره</div>
+                    <div class="value" id="silver-price">در حال دریافت...</div>
+                </div>
+                <div class="price-card ounce">
+                    <div class="label">🏅 انس طلا</div>
+                    <div class="value" id="ounce-price">در حال دریافت...</div>
+                </div>
                 <div class="price-card usd">
                     <div class="label">💵 دلار آزاد</div>
                     <div class="value" id="usd-price">در حال دریافت...</div>
@@ -360,6 +370,7 @@
                     <button class="chart-tab" onclick="switchChart('BINANCE:ETHUSDT', this)">اتریوم</button>
                     <button class="chart-tab" onclick="switchChart('BINANCE:SOLUSDT', this)">سولانا</button>
                     <button class="chart-tab" onclick="switchChart('TVC:GOLD', this)">انس طلا</button>
+                    <button class="chart-tab" onclick="switchChart('TVC:SILVER', this)">نقره</button>
                 </div>
             </div>
             <div id="tvchart"></div>
@@ -450,16 +461,33 @@
         }
         initChart('BINANCE:BTCUSDT');
 
+        // ===== تابع کمکی برای تبدیل اعداد به فارسی =====
+        function toPersianNumber(num) {
+            if (!num && num !== 0) return '--';
+            const persianDigits = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
+            return num.toString().replace(/\d/g, d => persianDigits[d]);
+        }
+
+        // ===== تابع کمکی برای فرمت اعداد با جداکننده =====
+        function formatNumber(num, decimals = 0) {
+            if (num === null || num === undefined) return '--';
+            const formatted = Number(num).toLocaleString('en-US', {
+                minimumFractionDigits: decimals,
+                maximumFractionDigits: decimals
+            });
+            return toPersianNumber(formatted);
+        }
+
         // ===== دریافت قیمت‌ها =====
         async function updatePrices() {
             const TSETMC_API = 'https://cdn.tsetmc.com/api';
 
-            // ۱. قیمت شاخص کل از TSETMC
+            // ۱. شاخص کل از TSETMC
             try {
                 const indexRes = await fetch(`${TSETMC_API}/ClosingPrice/GetClosingPriceInfo/32097828799138957`);
                 const indexData = await indexRes.json();
                 if (indexData && indexData.closingPriceInfo && indexData.closingPriceInfo.pClosing) {
-                    const value = (parseInt(indexData.closingPriceInfo.pClosing) / 10).toLocaleString('fa-IR');
+                    const value = formatNumber(parseInt(indexData.closingPriceInfo.pClosing) / 10);
                     document.getElementById('index-price').textContent = value + ' واحد';
                 } else {
                     document.getElementById('index-price').innerHTML = '← مشاهده در بورس';
@@ -468,31 +496,53 @@
                 document.getElementById('index-price').innerHTML = '← مشاهده در بورس';
             }
 
-            // ۲. قیمت ارز دیجیتال از CoinGecko
+            // ۲. ارز دیجیتال از CoinGecko (با اعداد فارسی و کلمه "دلار")
             try {
                 const cryptoRes = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum,solana&vs_currencies=usd');
                 const cryptoData = await cryptoRes.json();
-                if (cryptoData.bitcoin) document.getElementById('btc-price').textContent = '$' + cryptoData.bitcoin.usd.toLocaleString('en-US');
-                if (cryptoData.ethereum) document.getElementById('eth-price').textContent = '$' + cryptoData.ethereum.usd.toLocaleString('en-US');
-                if (cryptoData.solana) document.getElementById('sol-price').textContent = '$' + cryptoData.solana.usd.toLocaleString('en-US');
+                
+                if (cryptoData.bitcoin) {
+                    document.getElementById('btc-price').textContent = formatNumber(cryptoData.bitcoin.usd, 0) + ' دلار';
+                }
+                if (cryptoData.ethereum) {
+                    document.getElementById('eth-price').textContent = formatNumber(cryptoData.ethereum.usd, 0) + ' دلار';
+                }
+                if (cryptoData.solana) {
+                    document.getElementById('sol-price').textContent = formatNumber(cryptoData.solana.usd, 2) + ' دلار';
+                }
             } catch (e) {
                 console.log('خطا در ارز دیجیتال');
             }
 
-            // ۳. قیمت طلا و دلار از BrsApi
+            // ۳. طلا، نقره، انس و دلار از BrsApi
             const BRS_API = 'BvUj3cMKWNBK87KW9xhNccCThmfVbd8u';
             try {
                 const res = await fetch(`https://Api.BrsApi.ir/Market/Gold_Currency.php?key=${BRS_API}`);
                 const data = await res.json();
 
                 if (data.gold && Array.isArray(data.gold)) {
+                    // طلا ۱۸ عیار
                     const gold18 = data.gold.find(item => item.symbol === 'IR_GOLD_18K');
-                    if (gold18) document.getElementById('gold-price').textContent = gold18.price.toLocaleString('fa-IR') + ' تومان';
+                    if (gold18) {
+                        document.getElementById('gold-price').textContent = formatNumber(gold18.price) + ' تومان';
+                    }
+                    // نقره
+                    const silver = data.gold.find(item => item.symbol === 'IR_SILVER' || item.symbol === 'XAGUSD');
+                    if (silver) {
+                        document.getElementById('silver-price').textContent = formatNumber(silver.price) + ' تومان';
+                    }
+                    // انس طلا
+                    const ounce = data.gold.find(item => item.symbol === 'XAUUSD');
+                    if (ounce) {
+                        document.getElementById('ounce-price').textContent = formatNumber(ounce.price, 2) + ' دلار';
+                    }
                 }
 
                 if (data.currency && Array.isArray(data.currency)) {
                     const usd = data.currency.find(item => item.symbol === 'USD');
-                    if (usd) document.getElementById('usd-price').textContent = usd.price.toLocaleString('fa-IR') + ' تومان';
+                    if (usd) {
+                        document.getElementById('usd-price').textContent = formatNumber(usd.price) + ' تومان';
+                    }
                 }
             } catch (e) {
                 console.log('خطا در BrsApi');
@@ -504,25 +554,53 @@
             const TSETMC_API = 'https://cdn.tsetmc.com/api';
             let tickerHTML = '';
 
+            // ۱. شاخص کل
             try {
                 const indexRes = await fetch(`${TSETMC_API}/ClosingPrice/GetClosingPriceInfo/32097828799138957`);
                 const indexData = await indexRes.json();
                 if (indexData && indexData.closingPriceInfo && indexData.closingPriceInfo.pClosing) {
-                    const value = (parseInt(indexData.closingPriceInfo.pClosing) / 10).toLocaleString('fa-IR');
-                    tickerHTML += `<span class="ticker-item">📊 شاخص کل: ${value}</span>`;
+                    const value = formatNumber(parseInt(indexData.closingPriceInfo.pClosing) / 10);
+                    tickerHTML += `<span class="ticker-item">📊 شاخص کل: ${value} واحد</span>`;
                 }
+            } catch (e) {}
 
+            // ۲. ارز دیجیتال
+            try {
                 const cryptoRes = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum,solana&vs_currencies=usd');
                 const cryptoData = await cryptoRes.json();
-                if (cryptoData.bitcoin) tickerHTML += `<span class="ticker-item">₿ بیت‌کوین: $${cryptoData.bitcoin.usd.toLocaleString('en-US')}</span>`;
-                if (cryptoData.ethereum) tickerHTML += `<span class="ticker-item">⟠ اتریوم: $${cryptoData.ethereum.usd.toLocaleString('en-US')}</span>`;
-                if (cryptoData.solana) tickerHTML += `<span class="ticker-item">◎ سولانا: $${cryptoData.solana.usd.toLocaleString('en-US')}</span>`;
+                if (cryptoData.bitcoin) tickerHTML += `<span class="ticker-item">₿ بیت‌کوین: ${formatNumber(cryptoData.bitcoin.usd)} دلار</span>`;
+                if (cryptoData.ethereum) tickerHTML += `<span class="ticker-item">⟠ اتریوم: ${formatNumber(cryptoData.ethereum.usd)} دلار</span>`;
+                if (cryptoData.solana) tickerHTML += `<span class="ticker-item">◎ سولانا: ${formatNumber(cryptoData.solana.usd, 2)} دلار</span>`;
+            } catch (e) {}
 
-            } catch (e) {
-                tickerHTML = '<span class="ticker-item">⏳ در حال دریافت...</span>';
+            // ۳. طلا و دلار از BrsApi
+            const BRS_API = 'BvUj3cMKWNBK87KW9xhNccCThmfVbd8u';
+            try {
+                const res = await fetch(`https://Api.BrsApi.ir/Market/Gold_Currency.php?key=${BRS_API}`);
+                const data = await res.json();
+
+                if (data.gold && Array.isArray(data.gold)) {
+                    const gold18 = data.gold.find(item => item.symbol === 'IR_GOLD_18K');
+                    if (gold18) tickerHTML += `<span class="ticker-item">🥇 طلا ۱۸ عیار: ${formatNumber(gold18.price)} تومان</span>`;
+                    
+                    const silver = data.gold.find(item => item.symbol === 'IR_SILVER' || item.symbol === 'XAGUSD');
+                    if (silver) tickerHTML += `<span class="ticker-item">🥈 نقره: ${formatNumber(silver.price)} تومان</span>`;
+                    
+                    const ounce = data.gold.find(item => item.symbol === 'XAUUSD');
+                    if (ounce) tickerHTML += `<span class="ticker-item">🏅 انس طلا: ${formatNumber(ounce.price, 2)} دلار</span>`;
+                }
+
+                if (data.currency && Array.isArray(data.currency)) {
+                    const usd = data.currency.find(item => item.symbol === 'USD');
+                    if (usd) tickerHTML += `<span class="ticker-item">💵 دلار: ${formatNumber(usd.price)} تومان</span>`;
+                }
+            } catch (e) {}
+
+            if (!tickerHTML) {
+                tickerHTML = '<span class="ticker-item">⏳ در حال دریافت قیمت‌ها...</span>';
             }
 
-            if (!tickerHTML) tickerHTML = '<span class="ticker-item">⏳ در حال دریافت...</span>';
+            // تکرار تیکر برای اسکرول بی‌نهایت
             document.getElementById('tickerContent').innerHTML = tickerHTML + tickerHTML + tickerHTML;
         }
 
