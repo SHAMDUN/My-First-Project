@@ -9,7 +9,15 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: Tahoma, sans-serif;
-            background: #0f172a;
+            /* ===== پس‌زمینه ترکیبی حرفه‌ای ===== */
+            background-color: #0f172a;
+            background-image: 
+                radial-gradient(circle at 0% 0%, rgba(245, 158, 11, 0.12) 0%, transparent 40%),
+                radial-gradient(circle at 100% 100%, rgba(59, 130, 246, 0.08) 0%, transparent 40%),
+                linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+            background-size: 100% 100%, 100% 100%, 50px 50px, 50px 50px;
+            background-attachment: fixed;
             color: #e2e8f0;
             direction: rtl;
             min-height: 100vh;
@@ -32,6 +40,8 @@
             padding: 8px 16px;
             border-radius: 25px;
             font-size: 14px;
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(10px);
         }
         .header a:hover { background: #334155; color: #fff; }
 
@@ -47,7 +57,8 @@
             padding: 12px 18px;
             border-radius: 12px;
             border: 2px solid #334155;
-            background: #1e293b;
+            background: rgba(30, 41, 59, 0.85);
+            backdrop-filter: blur(10px);
             color: #fff;
             font-size: 16px;
             outline: none;
@@ -66,7 +77,8 @@
         .search-box button:hover { background: #d97706; }
 
         .status-box {
-            background: #1e293b;
+            background: rgba(30, 41, 59, 0.85);
+            backdrop-filter: blur(10px);
             padding: 12px;
             border-radius: 10px;
             margin-bottom: 15px;
@@ -75,7 +87,8 @@
         }
 
         .symbol-list {
-            background: #1e293b;
+            background: rgba(30, 41, 59, 0.85);
+            backdrop-filter: blur(10px);
             border-radius: 12px;
             padding: 15px;
             margin-bottom: 20px;
@@ -85,7 +98,7 @@
         .symbol-list h3 { color: #f59e0b; font-size: 15px; margin-bottom: 10px; }
         .symbol-list .tags { display: flex; flex-wrap: wrap; gap: 6px; }
         .symbol-tag {
-            background: #0f172a;
+            background: rgba(15, 23, 42, 0.8);
             color: #94a3b8;
             padding: 6px 14px;
             border-radius: 15px;
@@ -98,7 +111,8 @@
         .symbol-tag.active { background: #f59e0b; color: #0f172a; }
 
         .ranking-section {
-            background: #1e293b;
+            background: rgba(30, 41, 59, 0.85);
+            backdrop-filter: blur(10px);
             border-radius: 12px;
             padding: 15px;
             margin-bottom: 20px;
@@ -111,7 +125,7 @@
             margin-bottom: 15px;
         }
         .ranking-tab {
-            background: #0f172a;
+            background: rgba(15, 23, 42, 0.8);
             color: #94a3b8;
             border: 1px solid #334155;
             padding: 6px 14px;
@@ -127,7 +141,7 @@
             margin-bottom: 15px;
         }
         .sort-btn {
-            background: #0f172a;
+            background: rgba(15, 23, 42, 0.8);
             color: #94a3b8;
             border: 1px solid #334155;
             padding: 6px 14px;
@@ -151,10 +165,10 @@
             cursor: pointer;
             transition: 0.2s;
         }
-        .ranking-item:hover { background: #0f172a; }
+        .ranking-item:hover { background: rgba(15, 23, 42, 0.8); }
         .ranking-item:last-child { border-bottom: none; }
         .ranking-item .rank { 
-            background: #0f172a; 
+            background: rgba(15, 23, 42, 0.8);
             color: #94a3b8; 
             width: 28px; 
             height: 28px; 
@@ -179,7 +193,8 @@
             margin-bottom: 20px;
         }
         .info-card {
-            background: #1e293b;
+            background: rgba(30, 41, 59, 0.85);
+            backdrop-filter: blur(10px);
             padding: 12px;
             border-radius: 12px;
             border-right: 4px solid #f59e0b;
@@ -190,7 +205,8 @@
         .down { color: #f87171; }
 
         .chart-section {
-            background: #1e293b;
+            background: rgba(30, 41, 59, 0.85);
+            backdrop-filter: blur(10px);
             padding: 15px;
             border-radius: 12px;
         }
@@ -205,7 +221,7 @@
         .chart-header h3 { color: #f59e0b; font-size: 18px; }
         .chart-tabs { display: flex; gap: 5px; flex-wrap: wrap; }
         .chart-tab {
-            background: #0f172a;
+            background: rgba(15, 23, 42, 0.8);
             color: #94a3b8;
             border: 1px solid #334155;
             padding: 6px 14px;
@@ -227,7 +243,6 @@
             border-radius: 8px;
             font-size: 13px;
             cursor: pointer;
-            margin-right: 10px;
         }
         .refresh-btn:hover { background: #475569; }
     </style>
@@ -251,10 +266,9 @@
         <div class="tags" id="searchResults"></div>
     </div>
 
-    <!-- ===== بخش رتبه‌بندی ===== -->
     <div class="ranking-section">
         <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
-            <h3>🏆 رتبه‌بندی همه سهام بورس (داده‌های زنده)</h3>
+            <h3>🏆 رتبه‌بندی سهام بورس</h3>
             <button class="refresh-btn" onclick="loadRanking(true)">🔄 بروزرسانی</button>
         </div>
         
@@ -272,7 +286,7 @@
         </div>
 
         <div class="ranking-list" id="rankingList">
-            <div class="loading">⏳ در حال دریافت لیست نمادها از TSETMC...</div>
+            <div class="loading">⏳ در حال دریافت لیست نمادها...</div>
         </div>
     </div>
 
@@ -306,20 +320,6 @@
         let currentTimeframe = 'daily';
         let allDailyData = [];
 
-        // لیست نمادهای پرطرفدار (برای نمایش سریع اولیه)
-        const POPULAR_SYMBOLS = [
-            { name: 'فولاد', insCode: '46348559193224090' },
-            { name: 'فملی', insCode: '35425587644337450' },
-            { name: 'خودرو', insCode: '65883838195688438' },
-            { name: 'شپنا', insCode: '7745894403636165' },
-            { name: 'شتران', insCode: '41302553122416896' },
-            { name: 'وبملت', insCode: '778253364357513' },
-            { name: 'کگل', insCode: '35700344742885862' },
-            { name: 'همراه', insCode: '68635710163497089' },
-            { name: 'فارس', insCode: '25244118756242821' },
-            { name: 'شبندر', insCode: '39748500597480009' }
-        ];
-
         let rankingData = [];
         let currentRankingPeriod = '1w';
         let currentSortOrder = 'desc';
@@ -335,8 +335,14 @@
                 chart = LightweightCharts.createChart(chartContainer, {
                     width: width,
                     height: 450,
-                    layout: { background: { color: '#0f172a' }, textColor: '#94a3b8' },
-                    grid: { vertLines: { color: '#1e293b' }, horzLines: { color: '#1e293b' } },
+                    layout: { 
+                        background: { color: '#0f172a' }, 
+                        textColor: '#94a3b8' 
+                    },
+                    grid: { 
+                        vertLines: { color: 'rgba(30, 41, 59, 0.5)' }, 
+                        horzLines: { color: 'rgba(30, 41, 59, 0.5)' } 
+                    },
                     timeScale: { timeVisible: true, secondsVisible: false }
                 });
 
@@ -441,9 +447,33 @@
             }
         }
 
+        // ===== رسم چارت با فیلتر دقیق =====
         function renderChart(timeframe) {
             if (!allDailyData || allDailyData.length === 0) return;
-            const sorted = allDailyData.filter(d => d.pClosing > 0).sort((a, b) => a.dEven - b.dEven);
+            
+            // فیلتر دقیق: حذف داده‌های خراب
+            const filtered = allDailyData.filter(d => {
+                if (!d.dEven || d.dEven === 0 || d.dEven === '0') return false;
+                if (d.pClosing <= 0 || d.priceFirst <= 0 || d.priceMax <= 0 || d.priceMin <= 0) return false;
+                if (d.pClosing < 1 || d.priceFirst < 1) return false;
+                const year = parseInt(d.dEven.toString().substring(0, 4));
+                if (year < 2020 || year > 2030) return false;
+                return true;
+            });
+            
+            // حذف تاریخ‌های تکراری
+            const uniqueByDate = [];
+            const seenDates = new Set();
+            for (let i = filtered.length - 1; i >= 0; i--) {
+                if (!seenDates.has(filtered[i].dEven)) {
+                    seenDates.add(filtered[i].dEven);
+                    uniqueByDate.unshift(filtered[i]);
+                }
+            }
+            
+            const sorted = uniqueByDate.sort((a, b) => a.dEven - b.dEven);
+            console.log('تعداد داده‌های معتبر:', sorted.length);
+            
             let chartData = [];
 
             if (timeframe === 'daily') {
@@ -464,6 +494,7 @@
             if (chartData.length > 0) {
                 candleSeries.setData(chartData);
                 chart.timeScale().fitContent();
+                console.log('✅ چارت با ' + chartData.length + ' کندل رسم شد');
             }
         }
 
@@ -538,18 +569,16 @@
             renderChart(timeframe);
         }
 
-        // ===== بارگذاری رتبه‌بندی (همه‌ی سهام بورس) =====
+        // ===== رتبه‌بندی =====
         async function loadRanking(forceReload = false) {
             if (rankingLoaded && !forceReload && rankingData.length > 0) {
                 renderRanking();
                 return;
             }
 
-            document.getElementById('rankingList').innerHTML = '<div class="loading">⏳ در حال دریافت لیست کامل نمادها از TSETMC...<br><small>لطفاً صبر کنید</small></div>';
+            document.getElementById('rankingList').innerHTML = '<div class="loading">⏳ در حال دریافت لیست نمادها...</div>';
             
             try {
-                // ===== مرحله ۱: دریافت لیست کامل نمادها =====
-                // از چند حرف پرکاربرد برای جمع‌آوری همه نمادها استفاده می‌کنیم
                 const searchQueries = ['ا', 'ب', 'پ', 'ت', 'ث', 'ج', 'چ', 'ح', 'خ', 'د', 'ذ', 'ر', 'ز', 'ژ', 'س', 'ش', 'ص', 'ض', 'ط', 'ظ', 'ع', 'غ', 'ف', 'ق', 'ک', 'گ', 'ل', 'م', 'ن', 'و', 'ه', 'ی'];
                 const allSymbolsMap = new Map();
                 
@@ -567,9 +596,7 @@
                                 }
                             });
                         }
-                    } catch (e) {
-                        // نادیده گرفتن
-                    }
+                    } catch (e) {}
                 }
                 
                 const allSymbols = Array.from(allSymbolsMap.values());
@@ -582,7 +609,6 @@
                 
                 document.getElementById('rankingList').innerHTML = `<div class="loading">⏳ در حال محاسبه سود/ضرر برای ${allSymbols.length} نماد...<br><small>این ممکنه ۲-۳ دقیقه طول بکشه</small></div>`;
                 
-                // ===== مرحله ۲: محاسبه سود/ضرر برای هر نماد =====
                 const results = [];
                 const batchSize = 15;
                 
@@ -595,7 +621,9 @@
                             const data = await res.json();
                             
                             if (data && data.closingPriceDaily && data.closingPriceDaily.length > 0) {
-                                const sorted = data.closingPriceDaily.filter(d => d.pClosing > 0).sort((a, b) => a.dEven - b.dEven);
+                                const sorted = data.closingPriceDaily
+                                    .filter(d => d.pClosing > 0 && d.dEven > 0)
+                                    .sort((a, b) => a.dEven - b.dEven);
                                 if (sorted.length < 2) return null;
 
                                 const latestPrice = sorted[sorted.length - 1].pClosing;
@@ -615,9 +643,7 @@
                                     changes: changes
                                 };
                             }
-                        } catch (e) {
-                            // نادیده گرفتن
-                        }
+                        } catch (e) {}
                         return null;
                     });
                     
@@ -630,18 +656,17 @@
                 
                 rankingData = results;
                 rankingLoaded = true;
-                console.log('✅ رتبه‌بندی کامل شد:', rankingData.length, 'نماد');
                 renderRanking();
                 
             } catch (e) {
                 console.error('خطا در رتبه‌بندی:', e);
-                document.getElementById('rankingList').innerHTML = '<div class="error">❌ خطا در بارگذاری رتبه‌بندی: ' + e.message + '</div>';
+                document.getElementById('rankingList').innerHTML = '<div class="error">❌ خطا: ' + e.message + '</div>';
             }
         }
 
         function renderRanking() {
             if (rankingData.length === 0) {
-                document.getElementById('rankingList').innerHTML = '<div class="error">❌ داده‌ای برای رتبه‌بندی وجود ندارد</div>';
+                document.getElementById('rankingList').innerHTML = '<div class="error">❌ داده‌ای وجود ندارد</div>';
                 return;
             }
 
