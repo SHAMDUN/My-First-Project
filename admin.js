@@ -1,0 +1,524 @@
+// ==========================================
+// منطق پنل ادمین شمعدون
+// ==========================================
+
+let currentUser = null;
+let coursesCache = [];
+let usersCache = [];
+let scoresChart = null;
+
+// ============ ورود ادمین ============
+async function loginAdmin() {
+    const email = document.getElementById('adminEmail').value.trim();
+    const password = document.getElementById('adminPassword').value;
+    const errorEl = document.getElementById('loginError');
+
+    if (!email || !password) {
+        errorEl.textContent = 'ایمیل و رمز عبور رو وارد کن';
+        return;
+    }
+
+    if (email !== ADMIN_EMAIL) {
+        errorEl.textContent = '⛔ این ایمیل دسترسی ادمین نداره';
+        return;
+    }
+
+    const { data, error } = await db.auth.signInWithPassword({ email, password });
+
+    if (error) {
+        errorEl.textContent = '❌ ' + error.message;
+        return;
+    }
+
+    currentUser = data.user;
+    showPanel();
+}
+
+async function logoutAdmin() {
+    await db.auth.signOut();
+    location.reload();
+}
+
+// ============ نمایش پنل ============
+function showPanel() {
+    document.getElementById('loginScreen').style.display = 'none';
+    document.getElementById('adminPanel').style.display = 'block';
+    document.getElementById('adminEmailShow').textContent = currentUser.email;
+
+    loadDashboard();
+    loadComments();
+    loadCourses();
+    loadLessons();
+    loadUsers();
+}
+
+// ============ چک وضعیت لاگین در لود ============
+window.addEventListener('load', async () => {
+    const { data } = await db.auth.getSession();
+    if (data.session && data.session.user.email === ADMIN_EMAIL) {
+        currentUser = data.session.user;
+        showPanel();
+    }
+});
+
+// ============ تب‌ها ============
+function switchTab(tabName, btn) {
+    document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('tab-' + tabName).classList.add('active');
+    btn.classList.add('active');
+}
+
+// ============ Toast ============
+function showToast(msg, type = 'success') {
+    const toast = document.getElementById('toast');
+    toast.textContent = msg;
+    toast.className = 'toast show ' + type;
+    setTimeout(() => toast.classList.remove('show'), 3000);
+}
+
+// ============ مودال ============
+function closeModal(id) {
+    document.getElementById(id).classList.remove('show');
+}
+
+// ============ داشبورد ============
+async function loadDashboard() {
+    try {
+        const { count: userCount } = await db.from('profiles').select('*', { count: 'exact', head: true });
+        document.getElementById('statUsers').textContent = userCount || 0;
+
+        const { count: courseCount } = await db.from('courses').select('*', { count: 'exact', head: true });
+        document.getElementById('statCourses').textContent = courseCount || 0;
+
+        const { count: lessonCount } = await db.from('lessons').select('*', { count: 'exact', head: true });
+        document.getElementById('statLessons').textContent = lessonCount || 0;
+
+        const { count: scoreCount } = await db.from('scores').select('*', { count: 'exact', head: true });
+        document.getElementById('statScores').textContent = scoreCount || 0;
+
+        const { count: commentCount } = await db.from('comments').select('*', { count: 'exact', head: true });
+        document.getElementById('statComments').textContent = commentCount || 0;
+
+        await loadScoresChart();
+    } catch (err) {
+        console.error(err);
+        showToast('خطا در بارگذاری آمار', 'error');
+    }
+}
+
+async function loadScoresChart() {
+    const sevenDaysAgo = new Date();
+    sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
+
+    const { data } = await db
+        .from('scores')
+        .select('created_at, score')
+        .gte('created_at', sevenDaysAgo.toISOString())
+        .order('created_at');
+
+    const days = {};
+    for (let i = 6; i >= 0; i--) {
+        const d = new Date();
+        d.setDate(d.getDate() - i);
+        const key = d.toISOString().split('T')[0];
+        days[key] = 0;
+    }
+
+    (data || []).forEach(item => {
+        const key = item.created_at.split('T')[0];
+        if (days[key] !== undefined) days[key]++;
+    });
+
+    const labels = Object.keys(days).map(k => {
+        const d = new Date(k);
+        return `${d.getMonth() + 1}/${d.getDate()}`;
+    });
+    const values = Object.values(days);
+
+    const ctx = document.getElementById('scoresChart').getContext('2d');
+    if (scoresChart) scoresChart.destroy();
+
+    scoresChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels,
+            datasets: [{
+                label: 'امتیازات',
+                data: values,
+                borderColor: '#f59e0b',
+                backgroundColor: 'rgba(245, 158, 11, 0.1)',
+                borderWidth: 3,
+                fill: true,
+                tension: 0.4,
+                pointBackgroundColor: '#f59e0b',
+                pointRadius: 5
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: { legend: { labels: { color: '#cbd5e1' } } },
+            scales: {
+                x: { ticks: { color: '#94a3b8' }, grid: { color: 'rgba(255,255,255,0.05)' } },
+                y: { ticks: { color: '#94a3b8' }, grid: { color: 'rgba(255,255,255,0.05)' }, beginAtZero: true }
+            }
+        }
+    });
+}
+
+// ============ نظرات ============
+async function loadComments() {
+    const container = document.getElementById('commentsList');
+    const { data, error } = await db
+        .from('comments')
+        .select('*')
+        .order('created_at', { ascending: false });
+
+    if (error) {
+        container.innerHTML = '<p style="color:#ef4444;">خطا در بارگذاری</p>';
+        return;
+    }
+
+    if (!data || data.length === 0) {
+        container.innerHTML = '<p style="color:#94a3b8; text-align:center; padding:30px;">هنوز نظری ثبت نشده</p>';
+        return;
+    }
+
+    container.innerHTML = `
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>نظر</th>
+                    <th>موضوع</th>
+                    <th>وضعیت</th>
+                    <th>عملیات</th>
+                </tr>
+            </thead>
+            <tbody>
+                ${data.map(c => `
+                    <tr>
+                        <td>${escapeHtml(c.text || '')}</td>
+                        <td>${c.topic || '-'}</td>
+                        <td>${getStatusBadge(c.status)}</td>
+                        <td>
+                            <button class="btn btn-small btn-success" onclick="updateCommentStatus(${c.id}, 'approved')">✅</button>
+                            <button class="btn btn-small btn-danger" onclick="deleteComment(${c.id})">🗑️</button>
+                        </td>
+                    </tr>
+                `).join('')}
+            </tbody>
+        </table>
+    `;
+}
+
+function getStatusBadge(status) {
+    if (status === 'approved') return '<span style="color:#4ade80;">✅ تأیید</span>';
+    if (status === 'rejected') return '<span style="color:#ef4444;">❌ رد</span>';
+    return '<span style="color:#f59e0b;">⏳ در انتظار</span>';
+}
+
+async function updateCommentStatus(id, status) {
+    const { error } = await db.from('comments').update({ status }).eq('id', id);
+    if (error) return showToast('خطا', 'error');
+    showToast('وضعیت بروزرسانی شد');
+    loadComments();
+}
+
+async function deleteComment(id) {
+    if (!confirm('مطمئنی می‌خوای این نظر رو حذف کنی؟')) return;
+    const { error } = await db.from('comments').delete().eq('id', id);
+    if (error) return showToast('خطا', 'error');
+    showToast('نظر حذف شد');
+    loadComments();
+}
+
+// ============ دوره‌ها ============
+async function loadCourses() {
+    const container = document.getElementById('coursesList');
+    const { data, error } = await db
+        .from('courses')
+        .select('*')
+        .order('created_at', { ascending: false });
+
+    if (error) {
+        container.innerHTML = '<p style="color:#ef4444;">خطا</p>';
+        return;
+    }
+
+    coursesCache = data || [];
+
+    if (!data || data.length === 0) {
+        container.innerHTML = '<p style="color:#94a3b8; text-align:center; padding:30px;">هنوز دوره‌ای اضافه نشده</p>';
+        return;
+    }
+
+    container.innerHTML = `
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>آیکون</th>
+                    <th>عنوان</th>
+                    <th>سطح</th>
+                    <th>عملیات</th>
+                </tr>
+            </thead>
+            <tbody>
+                ${data.map(c => `
+                    <tr>
+                        <td style="font-size:22px;">${c.icon || '📚'}</td>
+                        <td>${escapeHtml(c.title)}</td>
+                        <td>${c.level || '-'}</td>
+                        <td>
+                            <button class="btn btn-small btn-primary" onclick="editCourse(${c.id})">✏️</button>
+                            <button class="btn btn-small btn-danger" onclick="deleteCourse(${c.id})">🗑️</button>
+                        </td>
+                    </tr>
+                `).join('')}
+            </tbody>
+        </table>
+    `;
+}
+
+function openCourseModal() {
+    document.getElementById('courseModalTitle').textContent = '➕ دوره جدید';
+    document.getElementById('courseId').value = '';
+    document.getElementById('courseTitle').value = '';
+    document.getElementById('courseDesc').value = '';
+    document.getElementById('courseIcon').value = '';
+    document.getElementById('courseLevel').value = 'مبتدی';
+    document.getElementById('courseModal').classList.add('show');
+}
+
+function editCourse(id) {
+    const c = coursesCache.find(x => x.id === id);
+    if (!c) return;
+
+    document.getElementById('courseModalTitle').textContent = '✏️ ویرایش دوره';
+    document.getElementById('courseId').value = c.id;
+    document.getElementById('courseTitle').value = c.title || '';
+    document.getElementById('courseDesc').value = c.description || '';
+    document.getElementById('courseIcon').value = c.icon || '';
+    document.getElementById('courseLevel').value = c.level || 'مبتدی';
+    document.getElementById('courseModal').classList.add('show');
+}
+
+async function saveCourse() {
+    const id = document.getElementById('courseId').value;
+    const title = document.getElementById('courseTitle').value.trim();
+    const description = document.getElementById('courseDesc').value.trim();
+    const icon = document.getElementById('courseIcon').value.trim();
+    const level = document.getElementById('courseLevel').value;
+
+    if (!title) return showToast('عنوان الزامی است', 'error');
+
+    const payload = { title, description, icon, level };
+
+    let error;
+    if (id) {
+        ({ error } = await db.from('courses').update(payload).eq('id', id));
+    } else {
+        ({ error } = await db.from('courses').insert(payload));
+    }
+
+    if (error) return showToast('خطا: ' + error.message, 'error');
+
+    showToast(id ? 'دوره ویرایش شد' : 'دوره اضافه شد');
+    closeModal('courseModal');
+    loadCourses();
+    loadDashboard();
+}
+
+async function deleteCourse(id) {
+    if (!confirm('مطمئنی؟ تمام دروس این دوره هم حذف می‌شن.')) return;
+    const { error } = await db.from('courses').delete().eq('id', id);
+    if (error) return showToast('خطا', 'error');
+    showToast('دوره حذف شد');
+    loadCourses();
+}
+
+// ============ دروس ============
+async function loadLessons() {
+    const container = document.getElementById('lessonsList');
+    const { data, error } = await db
+        .from('lessons')
+        .select('*')
+        .order('order_num', { ascending: true });
+
+    if (error) {
+        container.innerHTML = '<p style="color:#ef4444;">خطا</p>';
+        return;
+    }
+
+    if (!data || data.length === 0) {
+        container.innerHTML = '<p style="color:#94a3b8; text-align:center; padding:30px;">هنوز درسی اضافه نشده</p>';
+        return;
+    }
+
+    container.innerHTML = `
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>عنوان درس</th>
+                    <th>ترتیب</th>
+                    <th>عملیات</th>
+                </tr>
+            </thead>
+            <tbody>
+                ${data.map(l => `
+                    <tr>
+                        <td>${escapeHtml(l.title)}</td>
+                        <td>${l.order_num || '-'}</td>
+                        <td>
+                            <button class="btn btn-small btn-primary" onclick="editLesson(${l.id})">✏️</button>
+                            <button class="btn btn-small btn-danger" onclick="deleteLesson(${l.id})">🗑️</button>
+                        </td>
+                    </tr>
+                `).join('')}
+            </tbody>
+        </table>
+    `;
+}
+
+async function openLessonModal() {
+    document.getElementById('lessonModalTitle').textContent = '➕ درس جدید';
+    document.getElementById('lessonId').value = '';
+    document.getElementById('lessonTitle').value = '';
+    document.getElementById('lessonContent').value = '';
+    document.getElementById('lessonVideo').value = '';
+    document.getElementById('lessonOrder').value = '1';
+
+    const select = document.getElementById('lessonCourse');
+    const { data } = await db.from('courses').select('id, title').order('title');
+
+    if (!data || data.length === 0) {
+        showToast('اول یه دوره بساز', 'error');
+        return;
+    }
+
+    select.innerHTML = data.map(c => `<option value="${c.id}">${c.title}</option>`).join('');
+    document.getElementById('lessonModal').classList.add('show');
+}
+
+async function editLesson(id) {
+    const { data: lesson } = await db.from('lessons').select('*').eq('id', id).single();
+    if (!lesson) return;
+
+    document.getElementById('lessonModalTitle').textContent = '✏️ ویرایش درس';
+    document.getElementById('lessonId').value = lesson.id;
+    document.getElementById('lessonTitle').value = lesson.title || '';
+    document.getElementById('lessonContent').value = lesson.content || '';
+    document.getElementById('lessonVideo').value = lesson.video_url || '';
+    document.getElementById('lessonOrder').value = lesson.order_num || 1;
+
+    const select = document.getElementById('lessonCourse');
+    const { data: courses } = await db.from('courses').select('id, title').order('title');
+    select.innerHTML = (courses || []).map(c => 
+        `<option value="${c.id}" ${c.id === lesson.course_id ? 'selected' : ''}>${c.title}</option>`
+    ).join('');
+
+    document.getElementById('lessonModal').classList.add('show');
+}
+
+async function saveLesson() {
+    const id = document.getElementById('lessonId').value;
+    const course_id = document.getElementById('lessonCourse').value;
+    const title = document.getElementById('lessonTitle').value.trim();
+    const content = document.getElementById('lessonContent').value.trim();
+    const video_url = document.getElementById('lessonVideo').value.trim();
+    const order_num = parseInt(document.getElementById('lessonOrder').value) || 1;
+
+    if (!title || !course_id) return showToast('عنوان و دوره الزامی است', 'error');
+
+    const payload = { course_id, title, content, video_url, order_num };
+
+    let error;
+    if (id) {
+        ({ error } = await db.from('lessons').update(payload).eq('id', id));
+    } else {
+        ({ error } = await db.from('lessons').insert(payload));
+    }
+
+    if (error) return showToast('خطا: ' + error.message, 'error');
+
+    showToast(id ? 'درس ویرایش شد' : 'درس اضافه شد');
+    closeModal('lessonModal');
+    loadLessons();
+    loadDashboard();
+}
+
+async function deleteLesson(id) {
+    if (!confirm('مطمئنی؟')) return;
+    const { error } = await db.from('lessons').delete().eq('id', id);
+    if (error) return showToast('خطا', 'error');
+    showToast('درس حذف شد');
+    loadLessons();
+}
+
+// ============ کاربران ============
+async function loadUsers() {
+    const container = document.getElementById('usersList');
+    const { data, error } = await db
+        .from('profiles')
+        .select('*')
+        .order('created_at', { ascending: false });
+
+    if (error) {
+        container.innerHTML = '<p style="color:#ef4444;">خطا</p>';
+        return;
+    }
+
+    usersCache = data || [];
+    renderUsers(data || []);
+}
+
+function renderUsers(users) {
+    const container = document.getElementById('usersList');
+    if (!users || users.length === 0) {
+        container.innerHTML = '<p style="color:#94a3b8; text-align:center; padding:30px;">کاربری یافت نشد</p>';
+        return;
+    }
+
+    container.innerHTML = `
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>ایمیل</th>
+                    <th>نام</th>
+                    <th>نقش</th>
+                </tr>
+            </thead>
+            <tbody>
+                ${users.map(u => `
+                    <tr>
+                        <td>${escapeHtml(u.email || '-')}</td>
+                        <td>${escapeHtml(u.full_name || '-')}</td>
+                        <td>${u.role === 'admin' ? '<span style="color:#f59e0b;">👑 ادمین</span>' : 'کاربر'}</td>
+                    </tr>
+                `).join('')}
+            </tbody>
+        </table>
+    `;
+}
+
+function filterUsers() {
+    const q = document.getElementById('userSearch').value.trim().toLowerCase();
+    if (!q) return renderUsers(usersCache);
+    const filtered = usersCache.filter(u => 
+        (u.email || '').toLowerCase().includes(q) ||
+        (u.full_name || '').toLowerCase().includes(q)
+    );
+    renderUsers(filtered);
+}
+
+// ============ ابزارها ============
+function escapeHtml(str) {
+    return String(str).replace(/[&<>"']/g, m => ({
+        '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+    }[m]));
+}
+
+function formatDate(iso) {
+    if (!iso) return '-';
+    const d = new Date(iso);
+    return `${d.getFullYear()}/${d.getMonth() + 1}/${d.getDate()}`;
+}
