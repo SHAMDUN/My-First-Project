@@ -23,12 +23,8 @@
             padding: 20px 15px;
         }
 
-        .container {
-            max-width: 600px;
-            margin: 0 auto;
-        }
+        .container { max-width: 600px; margin: 0 auto; }
 
-        /* ===== انیمیشن‌ها ===== */
         @keyframes fadeInUp {
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
@@ -39,12 +35,6 @@
             50% { transform: translateY(-5px); }
         }
 
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.6; }
-        }
-
-        /* ===== کارت ===== */
         .card {
             background: rgba(30, 41, 59, 0.85);
             backdrop-filter: blur(15px);
@@ -56,11 +46,7 @@
             animation: fadeInUp 0.6s ease-out;
         }
 
-        /* ===== آواتار ===== */
-        .avatar-section {
-            text-align: center;
-            margin-bottom: 25px;
-        }
+        .avatar-section { text-align: center; margin-bottom: 25px; }
 
         .avatar-large {
             width: 110px;
@@ -79,19 +65,8 @@
             animation: float 3s ease-in-out infinite;
         }
 
-        .user-name {
-            color: #f1f5f9;
-            font-size: 22px;
-            font-weight: bold;
-            margin-bottom: 5px;
-        }
-
-        .user-email {
-            color: #94a3b8;
-            font-size: 14px;
-            margin-bottom: 8px;
-        }
-
+        .user-name { color: #f1f5f9; font-size: 22px; font-weight: bold; margin-bottom: 5px; }
+        .user-email { color: #94a3b8; font-size: 14px; margin-bottom: 8px; }
         .user-badge {
             display: inline-block;
             background: rgba(74, 222, 128, 0.15);
@@ -102,7 +77,6 @@
             border: 1px solid rgba(74, 222, 128, 0.3);
         }
 
-        /* ===== بخش عنوان ===== */
         .section-title {
             color: #f1f5f9;
             font-size: 17px;
@@ -115,7 +89,6 @@
             border-bottom: 2px solid rgba(245, 158, 11, 0.3);
         }
 
-        /* ===== آمار فعالیت ===== */
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -131,30 +104,15 @@
             border: 1px solid rgba(255,255,255,0.05);
             transition: 0.3s;
         }
-
         .stat-card:hover {
             transform: translateY(-3px);
             border-color: rgba(245, 158, 11, 0.3);
         }
 
-        .stat-icon {
-            font-size: 22px;
-            margin-bottom: 5px;
-        }
+        .stat-icon { font-size: 22px; margin-bottom: 5px; }
+        .stat-value { color: #f59e0b; font-size: 18px; font-weight: bold; margin-bottom: 3px; }
+        .stat-label { color: #94a3b8; font-size: 11px; }
 
-        .stat-value {
-            color: #f59e0b;
-            font-size: 18px;
-            font-weight: bold;
-            margin-bottom: 3px;
-        }
-
-        .stat-label {
-            color: #94a3b8;
-            font-size: 11px;
-        }
-
-        /* ===== دکمه‌ها ===== */
         .btn {
             width: 100%;
             padding: 14px 20px;
@@ -198,16 +156,9 @@
             color: #f87171;
             border: 1px solid rgba(239, 68, 68, 0.3);
         }
-        .btn-danger:hover {
-            background: rgba(239, 68, 68, 0.2);
-        }
+        .btn-danger:hover { background: rgba(239, 68, 68, 0.2); }
 
-        /* ===== لیست دسترسی سریع ===== */
-        .quick-links {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
+        .quick-links { display: flex; flex-direction: column; gap: 8px; }
 
         .quick-link {
             background: rgba(15, 23, 42, 0.6);
@@ -227,33 +178,12 @@
             transform: translateX(-5px);
         }
 
-        .quick-link .icon {
-            font-size: 24px;
-            min-width: 30px;
-            text-align: center;
-        }
+        .quick-link .icon { font-size: 24px; min-width: 30px; text-align: center; }
+        .quick-link .content { flex: 1; }
+        .quick-link .title { font-size: 14px; font-weight: bold; margin-bottom: 2px; }
+        .quick-link .desc { font-size: 11px; color: #94a3b8; }
+        .quick-link .arrow { color: #f59e0b; font-size: 18px; }
 
-        .quick-link .content {
-            flex: 1;
-        }
-
-        .quick-link .title {
-            font-size: 14px;
-            font-weight: bold;
-            margin-bottom: 2px;
-        }
-
-        .quick-link .desc {
-            font-size: 11px;
-            color: #94a3b8;
-        }
-
-        .quick-link .arrow {
-            color: #f59e0b;
-            font-size: 18px;
-        }
-
-        /* ===== مودال ===== */
         .modal-overlay {
             display: none;
             position: fixed;
@@ -265,9 +195,7 @@
             padding: 20px;
         }
 
-        .modal-overlay.show {
-            display: flex;
-        }
+        .modal-overlay.show { display: flex; }
 
         .modal {
             background: #1e293b;
@@ -299,19 +227,10 @@
             font-family: Tahoma, sans-serif;
         }
 
-        .modal-input:focus {
-            border-color: #f59e0b;
-        }
+        .modal-input:focus { border-color: #f59e0b; }
 
-        .modal-buttons {
-            display: flex;
-            gap: 10px;
-            margin-top: 15px;
-        }
-
-        .modal-buttons .btn {
-            margin-bottom: 0;
-        }
+        .modal-buttons { display: flex; gap: 10px; margin-top: 15px; }
+        .modal-buttons .btn { margin-bottom: 0; }
 
         .message {
             padding: 10px;
@@ -334,7 +253,6 @@
             display: block;
         }
 
-        /* ===== لودینگ ===== */
         .loading {
             text-align: center;
             padding: 50px 20px;
@@ -356,7 +274,7 @@
         <div class="loading">⏳ در حال بارگذاری پروفایل...</div>
     </div>
 
-    <!-- ===== مودال ویرایش نام ===== -->
+    <!-- مودال ویرایش نام -->
     <div class="modal-overlay" id="editNameModal">
         <div class="modal">
             <h3>✏️ ویرایش نام</h3>
@@ -369,7 +287,7 @@
         </div>
     </div>
 
-    <!-- ===== مودال تغییر رمز ===== -->
+    <!-- مودال تغییر رمز -->
     <div class="modal-overlay" id="changePassModal">
         <div class="modal">
             <h3>🔒 تغییر رمز عبور</h3>
@@ -384,15 +302,12 @@
     </div>
 
     <script>
-        // ===== تنظیمات Supabase =====
         const SUPABASE_URL = 'https://jcwwilatvstjrohvhtss.supabase.co';
         const SUPABASE_KEY = 'sb_publishable_R7tCe030dGeJ0IRWfcgxww_MgEfh95O';
-        
         const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
         let currentUser = null;
 
-        // ===== بارگذاری پروفایل =====
         async function loadProfile() {
             const { data: { session } } = await supabaseClient.auth.getSession();
 
@@ -408,6 +323,19 @@
             const joinDate = new Date(currentUser.created_at).toLocaleDateString('fa-IR', {
                 year: 'numeric', month: 'long', day: 'numeric'
             });
+
+            // بررسی نتیجه تست شخصیت
+            const personalityResult = currentUser.user_metadata?.personality_result;
+            let personalityLabel = '--';
+            if (personalityResult) {
+                const labels = {
+                    'conservative': '🛡️ محافظه‌کار',
+                    'balanced': '⚖️ متعادل',
+                    'aggressive': '🚀 جسور',
+                    'professional': '🎯 حرفه‌ای'
+                };
+                personalityLabel = labels[personalityResult] || '--';
+            }
 
             document.getElementById('content').innerHTML = `
                 <!-- کارت پروفایل -->
@@ -431,7 +359,7 @@
                         </div>
                         <div class="stat-card">
                             <div class="stat-icon">🎯</div>
-                            <div class="stat-value">--</div>
+                            <div class="stat-value">${personalityResult ? '✓' : '--'}</div>
                             <div class="stat-label">تست شخصیت</div>
                         </div>
                         <div class="stat-card">
@@ -473,7 +401,7 @@
                             </div>
                             <div class="arrow">←</div>
                         </a>
-                        <a href="#" class="quick-link" onclick="comingSoon(event, 'تست شخصیت‌شناسی')">
+                        <a href="personality-test.html" class="quick-link">
                             <div class="icon">🎯</div>
                             <div class="content">
                                 <div class="title">تست شخصیت‌شناسی مالی</div>
@@ -501,7 +429,6 @@
             `;
         }
 
-        // ===== ویرایش نام =====
         function openEditName() {
             const currentName = currentUser.user_metadata?.full_name || '';
             document.getElementById('editNameInput').value = currentName;
@@ -536,7 +463,6 @@
             }
         }
 
-        // ===== تغییر رمز =====
         function openChangePass() {
             document.getElementById('newPassword').value = '';
             document.getElementById('confirmPassword').value = '';
@@ -577,12 +503,10 @@
             }
         }
 
-        // ===== بستن مودال =====
         function closeModal(id) {
             document.getElementById(id).classList.remove('show');
         }
 
-        // ===== خروج =====
         async function handleLogout() {
             if (confirm('آیا مطمئنید که می‌خواهید خارج شوید؟')) {
                 await supabaseClient.auth.signOut();
@@ -590,13 +514,11 @@
             }
         }
 
-        // ===== بخش‌های در دست ساخت =====
         function comingSoon(event, name) {
             event.preventDefault();
             alert('🚧 بخش «' + name + '» به زودی اضافه می‌شود!');
         }
 
-        // ===== راه‌اندازی =====
         loadProfile();
     </script>
 
