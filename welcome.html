@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>به آکادمی شمعدون خوش آمدید</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: Tahoma, sans-serif;
+            background-color: #0f172a;
+            background-image: 
+                radial-gradient(circle at 0% 0%, rgba(245, 158, 11, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 100% 100%, rgba(59, 130, 246, 0.1) 0%, transparent 40%),
+                linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+            background-size: 100% 100%, 100% 100%, 50px 50px, 50px 50px;
+            background-attachment: fixed;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            direction: rtl;
+            padding: 20px;
+        }
+
+        .welcome-container {
+            max-width: 480px;
+            width: 100%;
+            text-align: center;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ===== لوگو ===== */
+        .logo-icon {
+            font-size: 80px;
+            margin-bottom: 20px;
+            display: inline-block;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        /* ===== عنوان ===== */
+        h1 {
+            color: #f59e0b;
+            font-size: 32px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            line-height: 1.4;
+            text-shadow: 0 0 30px rgba(245, 158, 11, 0.3);
+        }
+
+        .subtitle {
+            color: #cbd5e1;
+            font-size: 18px;
+            margin-bottom: 8px;
+            line-height: 1.6;
+        }
+
+        .description {
+            color: #94a3b8;
+            font-size: 15px;
+            margin-bottom: 40px;
+            line-height: 1.8;
+        }
+
+        /* ===== دکمه‌ها ===== */
+        .buttons-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 18px 24px;
+            border-radius: 15px;
+            font-size: 17px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: Tahoma, sans-serif;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            border: none;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            color: #0f172a;
+            box-shadow: 0 10px 30px rgba(245, 158, 11, 0.3);
+        }
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(245, 158, 11, 0.5);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: #f59e0b;
+            border: 2px solid #f59e0b;
+        }
+        .btn-secondary:hover {
+            background: rgba(245, 158, 11, 0.1);
+            transform: translateY(-3px);
+        }
+
+        /* ===== ویژگی‌ها ===== */
+        .features {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .feature {
+            text-align: center;
+        }
+
+        .feature-icon {
+            font-size: 32px;
+            margin-bottom: 8px;
+        }
+
+        .feature-text {
+            color: #94a3b8;
+            font-size: 12px;
+            line-height: 1.5;
+        }
+
+        /* ===== فوتر ===== */
+        .footer {
+            margin-top: 30px;
+            color: #64748b;
+            font-size: 13px;
+        }
+
+        /* ===== انیمیشن ورود دکمه‌ها ===== */
+        .btn {
+            animation: fadeInBtn 0.6s ease-out backwards;
+        }
+        .btn-primary { animation-delay: 0.3s; }
+        .btn-secondary { animation-delay: 0.5s; }
+        .features { animation: fadeInBtn 0.6s ease-out 0.7s backwards; }
+
+        @keyframes fadeInBtn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ===== موبایل ===== */
+        @media (max-width: 400px) {
+            h1 { font-size: 26px; }
+            .logo-icon { font-size: 65px; }
+            .btn { padding: 15px 20px; font-size: 15px; }
+            .features { grid-template-columns: 1fr; gap: 10px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="welcome-container">
+        <!-- لوگو -->
+        <div class="logo-icon">📊</div>
+
+        <!-- عنوان -->
+        <h1>به آکادمی شمعدون خوش آمدید</h1>
+        <p class="subtitle">پنل تحلیلی بازارهای مالی</p>
+        <p class="description">
+            برای دسترسی به امکانات، لطفاً وارد حساب کاربری خود شوید<br>
+            یا اگر تازه‌وارد هستید، ثبت‌نام کنید.
+        </p>
+
+        <!-- دکمه‌ها -->
+        <div class="buttons-container">
+            <a href="login.html" class="btn btn-primary">
+                🚀 ورود به حساب
+            </a>
+            <a href="login.html#signup" class="btn btn-secondary">
+                ✨ ایجاد حساب جدید
+            </a>
+        </div>
+
+        <!-- ویژگی‌ها -->
+        <div class="features">
+            <div class="feature">
+                <div class="feature-icon">📈</div>
+                <div class="feature-text">چارت زنده<br>بازار</div>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">💎</div>
+                <div class="feature-text">محاسبه حباب<br>طلا و نقره</div>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">🏢</div>
+                <div class="feature-text">رتبه‌بندی<br>بورس ایران</div>
+            </div>
+        </div>
+
+        <!-- فوتر -->
+        <p class="footer">© ۱۴۰۵ آکادمی شمعدون | تمامی حقوق محفوظ است</p>
+    </div>
+
+</body>
+</html>
