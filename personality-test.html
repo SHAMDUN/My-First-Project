@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تست شخصیت‌شناسی مالی | آکادمی شمعدون</title>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: Tahoma, sans-serif;
+            background-color: #0f172a;
+            background-image: 
+                radial-gradient(circle at 0% 0%, rgba(245, 158, 11, 0.12) 0%, transparent 40%),
+                radial-gradient(circle at 100% 100%, rgba(59, 130, 246, 0.08) 0%, transparent 40%),
+                linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+            background-size: 100% 100%, 100% 100%, 50px 50px, 50px 50px;
+            background-attachment: fixed;
+            min-height: 100vh;
+            direction: rtl;
+            padding: 20px 15px;
+        }
+        .container { max-width: 600px; margin: 0 auto; }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .header h1 { color: #f59e0b; font-size: 20px; }
+        .header a {
+            color: #94a3b8;
+            text-decoration: none;
+            font-size: 14px;
+            padding: 8px 16px;
+            border: 2px solid #334155;
+            border-radius: 20px;
+            transition: 0.3s;
+        }
+        .header a:hover { background: #334155; color: #fff; }
+        .card {
+            background: rgba(30, 41, 59, 0.85);
+            backdrop-filter: blur(15px);
+            padding: 25px 20px;
+            border-radius: 25px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            border: 1px solid rgba(255,255,255,0.05);
+            margin-bottom: 20px;
+        }
+        .progress-container { margin-bottom: 25px; }
+        .progress-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            color: #94a3b8;
+            font-size: 13px;
+        }
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: rgba(15, 23, 42, 0.8);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #f59e0b, #d97706);
+            border-radius: 10px;
+            transition: width 0.4s ease;
+            width: 0%;
+        }
+        .question-container { animation: fadeInUp 0.5s ease-out; }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .question-number {
+            color: #f59e0b;
+            font-size: 14px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .question-text {
+            color: #f1f5f9;
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+        .options { display: flex; flex-direction: column; gap: 10px; }
+        .option {
+            background: rgba(15, 23, 42, 0.6);
+            padding: 16px 18px;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: 0.3s;
+            border: 2px solid transparent;
+            color: #cbd5e1;
+            font-size: 15px;
+            text-align: right;
+            font-family: Tahoma, sans-serif;
+        }
+        .option:hover {
+            background: rgba(15, 23, 42, 0.9);
+            border-color: rgba(245, 158, 11, 0.3);
+            transform: translateX(-3px);
+        }
+        .option.selected {
+            background: rgba(245, 158, 11, 0.15);
+            border-color: #f59e0b;
+            color: #f1f5f9;
+            font-weight: bold;
+        }
+        .buttons { display: flex; gap: 10px; margin-top: 20px; }
+        .btn {
+            flex: 1;
+            padding: 14px 20px;
+            border-radius: 12px;
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: Tahoma, sans-serif;
+            border: none;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            color: #0f172a;
+        }
+        .btn-primary:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(245, 158, 11, 0.4);
+        }
+        .btn-secondary {
+            background: rgba(15, 23, 42, 0.6);
+            color: #f1f5f9;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        .btn-secondary:hover { background: rgba(15, 23, 42, 0.9); }
+        .btn:disabled { opacity: 0.4; cursor: not-allowed; }
+        .result-container { text-align: center; animation: fadeInUp 0.6s ease-out; }
+        .result-icon { font-size: 80px; margin-bottom: 15px; animation: float 3s ease-in-out infinite; }
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        .result-title { color: #f59e0b; font-size: 26px; font-weight: bold; margin-bottom: 10px; }
+        .result-subtitle { color: #cbd5e1; font-size: 16px; margin-bottom: 20px; }
+        .result-description {
+            background: rgba(15, 23, 42, 0.6);
+            padding: 18px;
+            border-radius: 15px;
+            color: #cbd5e1;
+            font-size: 14px;
+            line-height: 1.8;
+            text-align: right;
+            margin-bottom: 20px;
+        }
+        .portfolio-section {
+            background: rgba(15, 23, 42, 0.6);
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+        }
+        .portfolio-title { color: #f1f5f9; font-size: 16px; font-weight: bold; margin-bottom: 15px; text-align: right; }
+        .portfolio-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px dashed rgba(255,255,255,0.1);
+        }
+        .portfolio-item:last-child { border-bottom: none; }
+        .portfolio-label { color: #cbd5e1; font-size: 14px; display: flex; align-items: center; gap: 8px; }
+        .portfolio-percent { color: #f59e0b; font-size: 16px; font-weight: bold; }
+        .loading { text-align: center; padding: 50px 20px; color: #94a3b8; }
+        @media (max-width: 400px) {
+            .question-text { font-size: 16px; }
+            .option { font-size: 14px; padding: 14px; }
+            .result-title { font-size: 22px; }
+            .result-icon { font-size: 65px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎯 تست شخصیت‌شناسی مالی</h1>
+            <a href="dashboard.html">⬅ بازگشت</a>
+        </div>
+        <div class="card" id="content">
+            <div class="loading">⏳ در حال بارگذاری...</div>
+        </div>
+    </div>
+
+    <script>
+        const SUPABASE_URL = 'https://jcwwilatvstjrohvhtss.supabase.co';
+        const SUPABASE_KEY = 'sb_publishable_R7tCe030dGeJ0IRWfcgxww_MgEfh95O';
+        const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+        // ===== سوالات استاندارد (۱۵ سوال در ۴ بُعد) =====
+        const questions = [
+            // --- بُعد ۱: توانایی ریسک (Capacity) ---
+            {
+                q: "سن شما چقدر است؟",
+                options: [
+                    { text: "زیر ۳۰ سال", score: 4 },
+                    { text: "۳۰ تا ۴۵ سال", score: 3 },
+                    { text: "۴۵ تا ۶۰ سال", score: 2 },
+                    { text: "بالای ۶۰ سال", score: 1 }
+                ]
+            },
+            {
+                q: "چند درصد از کل دارایی‌تان را وارد این سرمایه‌گذاری می‌کنید؟",
+                options: [
+                    { text: "کمتر از ۱۰٪", score: 4 },
+                    { text: "۱۰ تا ۳۰٪", score: 3 },
+                    { text: "۳۰ تا ۵۰٪", score: 2 },
+                    { text: "بیش از ۵۰٪", score: 1 }
+                ]
+            },
+            {
+                q: "چه مدت می‌خواهید سرمایه‌گذاری کنید؟",
+                options: [
+                    { text: "کمتر از ۱ سال", score: 1 },
+                    { text: "۱ تا ۳ سال", score: 2 },
+                    { text: "۳ تا ۵ سال", score: 3 },
+                    { text: "بیش از ۵ سال", score: 4 }
+                ]
+            },
+            {
+                q: "آیا صندوق اضطراری (پس‌انداز ۳-۶ ماه هزینه زندگی) دارید؟",
+                options: [
+                    { text: "خیر، ندارم", score: 1 },
+                    { text: "بله، کمتر از ۳ ماه", score: 2 },
+                    { text: "بله، ۳ تا ۶ ماه", score: 3 },
+                    { text: "بله، بیش از ۶ ماه", score: 4 }
+                ]
+            },
+
+            // --- بُعد ۲: تمایل به ریسک (Tolerance) ---
+            {
+                q: "اگر سرمایه‌تان ۲۰٪ ضرر کند، چه می‌کنید؟",
+                options: [
+                    { text: "همه را می‌فروشم", score: 1 },
+                    { text: "بخشی را می‌فروشم", score: 2 },
+                    { text: "منتظر می‌مانم تا جبران شود", score: 3 },
+                    { text: "بیشتر خرید می‌کنم", score: 4 }
+                ]
+            },
+            {
+                q: "کدام سبد را ترجیح می‌دهید؟",
+                options: [
+                    { text: "سود ۵٪ با احتمال ضرر ۱٪", score: 1 },
+                    { text: "سود ۱۰٪ با احتمال ضرر ۵٪", score: 2 },
+                    { text: "سود ۲۰٪ با احتمال ضرر ۱۵٪", score: 3 },
+                    { text: "سود ۴۰٪ با احتمال ضرر ۳۰٪", score: 4 }
+                ]
+            },
+            {
+                q: "واکنش شما به نوسانات شدید بازار چیست؟",
+                options: [
+                    { text: "خیلی نگران می‌شوم", score: 1 },
+                    { text: "کمی نگران می‌شوم", score: 2 },
+                    { text: "طبیعی است، صبر می‌کنم", score: 3 },
+                    { text: "فرصت خرید می‌بینم", score: 4 }
+                ]
+            },
+            {
+                q: "هدف شما از سرمایه‌گذاری چیست؟",
+                options: [
+                    { text: "حفظ ارزش پول در برابر تورم", score: 1 },
+                    { text: "درآمد ثابت ماهانه", score: 2 },
+                    { text: "رشد سرمایه در میان‌مدت", score: 3 },
+                    { text: "حداکثر سود در بلندمدت", score: 4 }
+                ]
+            },
+
+            // --- بُعد ۳: دانش و تجربه (Knowledge) ---
+            {
+                q: "تجربه سرمایه‌گذاری شما چقدر است؟",
+                options: [
+                    { text: "هیچ تجربه‌ای ندارم", score: 1 },
+                    { text: "کمتر از ۱ سال", score: 2 },
+                    { text: "۱ تا ۳ سال", score: 3 },
+                    { text: "بیش از ۳ سال", score: 4 }
+                ]
+            },
+            {
+                q: "چقدر با بازارهای مالی آشنایی دارید؟",
+                options: [
+                    { text: "هیچ آشنایی ندارم", score: 1 },
+                    { text: "فقط بازار طلا و ارز", score: 2 },
+                    { text: "بورس و طلا و ارز", score: 3 },
+                    { text: "همه بازارها شامل کریپتو و فارکس", score: 4 }
+                ]
+            },
+            {
+                q: "آیا با مفاهیمی مثل RSI، MACD و تحلیل تکنیکال آشنایی دارید؟",
+                options: [
+                    { text: "خیر، اصلاً", score: 1 },
+                    { text: "فقط اسم شنیدم", score: 2 },
+                    { text: "تا حدی آشنا هستم", score: 3 },
+                    { text: "کاملاً مسلط هستم", score: 4 }
+                ]
+            },
+            {
+                q: "آیا می‌دانید تنوع‌بخشی (Diversification) چیست؟",
+                options: [
+                    { text: "خیر، نمی‌دانم", score: 1 },
+                    { text: "تا حدی می‌دانم", score: 2 },
+                    { text: "بله، می‌دانم و رعایت می‌کنم", score: 3 },
+                    { text: "بله، و استراتژی تنوع‌بخشی شخصی دارم", score: 4 }
+                ]
+            },
+
+            // --- بُعد ۴: ترجیحات و اهداف (Preferences) ---
+            {
+                q: "به کدام بازارها علاقه‌مند هستید؟ (چند گزینه می‌توانید انتخاب کنید)",
+                options: [
+                    { text: "طلا و سکه", score: 1 },
+                    { text: "بورس ایران", score: 2 },
+                    { text: "ارز دیجیتال", score: 3 },
+                    { text: "فارکس", score: 4 }
+                ]
+            },
+            {
+                q: "آیا نیاز به درآمد ثابت ماهانه دارید؟",
+                options: [
+                    { text: "بله، کاملاً", score: 1 },
+                    { text: "تا حدی", score: 2 },
+                    { text: "خیر، بیشتر رشد می‌خواهم", score: 3 },
+                    { text: "خیر، فقط رشد بلندمدت", score: 4 }
+                ]
+            }
+        ];
+
+        // ===== انواع شخصیت (استاندارد بین‌المللی) =====
+        const personalities = {
+            conservative: {
+                title: "🛡️ محافظه‌کار",
+                icon: "🛡️",
+                range: [15, 28],
+                desc: "شما فردی محتاط و ریسک‌گریز هستید. اولویت شما حفظ سرمایه و جلوگیری از ضرر است. بهترین گزینه برای شما سرمایه‌گذاری در دارایی‌های کم‌ریسک مثل طلا و ارز است.",
+                portfolio: [
+                    { label: "🥇 طلا و سکه", percent: "۷۰٪" },
+                    { label: "💵 ارز (دلار، یورو)", percent: "۲۰٪" },
+                    { label: "📊 سهام کم‌ریسک", percent: "۱۰٪" }
+                ]
+            },
+            balanced: {
+                title: "⚖️ متعادل",
+                icon: "⚖️",
+                range: [29, 40],
+                desc: "شما فردی متعادل هستید. هم به دنبال رشد سرمایه هستید و هم از ریسک زیاد دوری می‌کنید. ترکیبی از دارایی‌های امن و پر بازده برای شما مناسب است.",
+                portfolio: [
+                    { label: "🥇 طلا و سکه", percent: "۴۰٪" },
+                    { label: "📊 سهام بورس", percent: "۳۰٪" },
+                    { label: "💵 ارز", percent: "۳۰٪" }
+                ]
+            },
+            aggressive: {
+                title: "🚀 جسور",
+                icon: "🚀",
+                range: [41, 52],
+                desc: "شما فردی جسور و ریسک‌پذیر هستید. به دنبال بازدهی بالا هستید و نوسانات بازار شما را نمی‌ترساند. سهام و ارزهای دیجیتال می‌توانند گزینه‌های مناسبی باشند.",
+                portfolio: [
+                    { label: "🥇 طلا و سکه", percent: "۲۰٪" },
+                    { label: "📊 سهام بورس", percent: "۶۰٪" },
+                    { label: "💵 ارز", percent: "۲۰٪" }
+                ]
+            },
+            professional: {
+                title: "🎯 حرفه‌ای",
+                icon: "🎯",
+                range: [53, 60],
+                desc: "شما فردی حرفه‌ای و بسیار ریسک‌پذیر هستید. به دنبال حداکثر بازدهی هستید و از ریسک لذت می‌برید. ارزهای دیجیتال و سهام پرنوسان برای شما مناسب‌اند.",
+                portfolio: [
+                    { label: "🥇 طلا و سکه", percent: "۱۰٪" },
+                    { label: "📊 سهام بورس", percent: "۵۰٪" },
+                    { label: "₿ ارز دیجیتال", percent: "۳۰٪" },
+                    { label: "💵 ارز", percent: "۱۰٪" }
+                ]
+            }
+        };
+
+        let currentQuestion = 0;
+        let answers = [];
+        let selectedOption = null;
+
+        async function init() {
+            const { data: { session } } = await supabaseClient.auth.getSession();
+            if (!session) {
+                window.location.href = 'login.html';
+                return;
+            }
+            const savedResult = session.user.user_metadata?.personality_result;
+            if (savedResult) {
+                showPreviousResult(savedResult);
+            } else {
+                renderQuestion();
+            }
+        }
+
+        function showPreviousResult(resultKey) {
+            const p = personalities[resultKey];
+            if (!p) { renderQuestion(); return; }
+            document.getElementById('content').innerHTML = `
+                <div class="result-container">
+                    <div class="result-icon">${p.icon}</div>
+                    <h2 class="result-title">شخصیت مالی شما: ${p.title}</h2>
+                    <p class="result-subtitle">نتیجه‌ی تست قبلی شما</p>
+                    <div class="result-description">${p.desc}</div>
+                    <div class="portfolio-section">
+                        <div class="portfolio-title">💼 سبد پیشنهادی:</div>
+                        ${p.portfolio.map(item => `
+                            <div class="portfolio-item">
+                                <span class="portfolio-label">${item.label}</span>
+                                <span class="portfolio-percent">${item.percent}</span>
+                            </div>
+                        `).join('')}
+                    </div>
+                    <button class="btn btn-primary" onclick="resetTest()" style="width:100%;">
+                        🔄 انجام مجدد تست
+                    </button>
+                </div>
+            `;
+        }
+
+        function resetTest() {
+            currentQuestion = 0;
+            answers = [];
+            selectedOption = null;
+            renderQuestion();
+        }
+
+        function renderQuestion() {
+            const q = questions[currentQuestion];
+            const progress = ((currentQuestion) / questions.length) * 100;
+            document.getElementById('content').innerHTML = `
+                <div class="progress-container">
+                    <div class="progress-info">
+                        <span>سوال ${currentQuestion + 1} از ${questions.length}</span>
+                        <span>${Math.round(progress)}٪</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: ${progress}%"></div>
+                    </div>
+                </div>
+                <div class="question-container">
+                    <div class="question-number">📝 سوال ${currentQuestion + 1}</div>
+                    <div class="question-text">${q.q}</div>
+                    <div class="options">
+                        ${q.options.map((opt, i) => `
+                            <button class="option" onclick="selectOption(${i}, ${opt.score})">
+                                ${opt.text}
+                            </button>
+                        `).join('')}
+                    </div>
+                    <div class="buttons">
+                        ${currentQuestion > 0 ? `
+                            <button class="btn btn-secondary" onclick="prevQuestion()">⬅ قبلی</button>
+                        ` : ''}
+                        <button class="btn btn-primary" id="nextBtn" onclick="nextQuestion()" disabled>
+                            ${currentQuestion === questions.length - 1 ? '🎯 مشاهده نتیجه' : 'بعدی ➡'}
+                        </button>
+                    </div>
+                </div>
+            `;
+        }
+
+        function selectOption(index, score) {
+            document.querySelectorAll('.option').forEach(o => o.classList.remove('selected'));
+            document.querySelectorAll('.option')[index].classList.add('selected');
+            selectedOption = { index, score };
+            document.getElementById('nextBtn').disabled = false;
+        }
+
+        function nextQuestion() {
+            if (selectedOption === null) return;
+            answers[currentQuestion] = selectedOption.score;
+            if (currentQuestion === questions.length - 1) {
+                showResult();
+            } else {
+                currentQuestion++;
+                selectedOption = answers[currentQuestion] ? { index: 0, score: answers[currentQuestion] } : null;
+                renderQuestion();
+            }
+        }
+
+        function prevQuestion() {
+            if (currentQuestion > 0) {
+                answers[currentQuestion] = selectedOption?.score || answers[currentQuestion];
+                currentQuestion--;
+                selectedOption = answers[currentQuestion] ? { index: 0, score: answers[currentQuestion] } : null;
+                renderQuestion();
+            }
+        }
+
+        async function showResult() {
+            const totalScore = answers.reduce((a, b) => a + b, 0);
+            let resultKey = 'conservative';
+            for (const [key, p] of Object.entries(personalities)) {
+                if (totalScore >= p.range[0] && totalScore <= p.range[1]) {
+                    resultKey = key;
+                    break;
+                }
+            }
+            const p = personalities[resultKey];
+            try {
+                await supabaseClient.auth.updateUser({
+                    data: { 
+                        personality_result: resultKey,
+                        personality_score: totalScore,
+                        personality_date: new Date().toISOString()
+                    }
+                });
+            } catch (e) { console.log('خطا در ذخیره نتیجه'); }
+            document.getElementById('content').innerHTML = `
+                <div class="result-container">
+                    <div class="result-icon">${p.icon}</div>
+                    <h2 class="result-title">شخصیت مالی شما: ${p.title}</h2>
+                    <p class="result-subtitle">امتیاز شما: ${totalScore} از ${questions.length * 4}</p>
+                    <div class="result-description">${p.desc}</div>
+                    <div class="portfolio-section">
+                        <div class="portfolio-title">💼 سبد پیشنهادی برای شما:</div>
+                        ${p.portfolio.map(item => `
+                            <div class="portfolio-item">
+                                <span class="portfolio-label">${item.label}</span>
+                                <span class="portfolio-percent">${item.percent}</span>
+                            </div>
+                        `).join('')}
+                    </div>
+                    <div style="display:flex; gap:10px; margin-top:20px;">
+                        <button class="btn btn-primary" onclick="resetTest()" style="flex:1;">
+                            🔄 انجام مجدد
+                        </button>
+                        <a href="dashboard.html" class="btn btn-secondary" style="flex:1; text-decoration:none; display:flex; align-items:center; justify-content:center;">
+                            🏠 بازگشت
+                        </a>
+                    </div>
+                </div>
+            `;
+        }
+
+        init();
+    </script>
+</body>
+</html>
