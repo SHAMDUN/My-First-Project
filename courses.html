@@ -33,25 +33,15 @@
             flex-wrap: wrap;
             gap: 15px;
         }
-        .header h1 {
-            color: #f59e0b;
-            font-size: 24px;
-        }
+        .header h1 { color: #f59e0b; font-size: 24px; }
         .header a {
-            color: #94a3b8;
-            text-decoration: none;
-            font-size: 14px;
-            padding: 8px 16px;
-            border: 2px solid #334155;
-            border-radius: 25px;
-            transition: 0.3s;
+            color: #94a3b8; text-decoration: none; font-size: 14px;
+            padding: 8px 16px; border: 2px solid #334155;
+            border-radius: 25px; transition: 0.3s;
             background: rgba(30, 41, 59, 0.7);
             backdrop-filter: blur(10px);
         }
-        .header a:hover {
-            background: #334155;
-            color: #fff;
-        }
+        .header a:hover { background: #334155; color: #fff; }
 
         /* ===== کارت وضعیت دانشجو ===== */
         .student-status {
@@ -67,43 +57,21 @@
             flex-wrap: wrap;
         }
         .status-icon {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
+            width: 50px; height: 50px; border-radius: 50%;
             background: linear-gradient(135deg, #f59e0b, #d97706);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 24px;
-            flex-shrink: 0;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 24px; flex-shrink: 0;
         }
         .status-content { flex: 1; min-width: 200px; }
-        .status-content h2 {
-            color: #f1f5f9;
-            font-size: 17px;
-            margin-bottom: 5px;
-        }
-        .status-content p {
-            color: #94a3b8;
-            font-size: 13px;
-            line-height: 1.6;
-        }
-        .status-content .highlight {
-            color: #f59e0b;
-            font-weight: bold;
-        }
+        .status-content h2 { color: #f1f5f9; font-size: 17px; margin-bottom: 5px; }
+        .status-content p { color: #94a3b8; font-size: 13px; line-height: 1.6; }
+        .status-content .highlight { color: #f59e0b; font-weight: bold; }
         .status-btn {
             background: linear-gradient(135deg, #f59e0b, #d97706);
-            color: #0f172a;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 12px;
-            font-weight: bold;
-            font-size: 13px;
-            cursor: pointer;
-            font-family: Tahoma, sans-serif;
-            text-decoration: none;
-            display: inline-block;
+            color: #0f172a; border: none; padding: 10px 20px;
+            border-radius: 12px; font-weight: bold; font-size: 13px;
+            cursor: pointer; font-family: Tahoma, sans-serif;
+            text-decoration: none; display: inline-block;
         }
 
         /* ===== بنر توضیحی ===== */
@@ -116,224 +84,111 @@
             text-align: right;
         }
         .info-banner h3 {
-            color: #f59e0b;
-            font-size: 16px;
-            margin-bottom: 12px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
+            color: #f59e0b; font-size: 16px; margin-bottom: 12px;
+            display: flex; align-items: center; gap: 8px;
         }
-        .info-banner p {
-            color: #cbd5e1;
-            font-size: 13px;
-            line-height: 1.9;
-            margin-bottom: 8px;
-        }
+        .info-banner p { color: #cbd5e1; font-size: 13px; line-height: 1.9; margin-bottom: 8px; }
         .info-banner p:last-child { margin-bottom: 0; }
-        .info-banner ul {
-            list-style: none;
-            padding-right: 0;
-            margin: 8px 0;
-        }
+        .info-banner ul { list-style: none; padding-right: 0; margin: 8px 0; }
         .info-banner li {
-            color: #cbd5e1;
-            font-size: 13px;
-            line-height: 1.9;
-            padding-right: 20px;
-            position: relative;
+            color: #cbd5e1; font-size: 13px; line-height: 1.9;
+            padding-right: 20px; position: relative;
         }
         .info-banner li::before {
-            content: "◆";
-            color: #f59e0b;
-            position: absolute;
-            right: 0;
-            font-size: 10px;
+            content: "◆"; color: #f59e0b;
+            position: absolute; right: 0; font-size: 10px;
         }
 
         /* ===== فیلترها ===== */
         .filters {
-            display: flex;
-            gap: 8px;
-            margin-bottom: 20px;
-            flex-wrap: wrap;
+            display: flex; gap: 8px; margin-bottom: 20px; flex-wrap: wrap;
         }
         .filter-btn {
-            background: rgba(30, 41, 59, 0.7);
-            color: #94a3b8;
-            border: 1px solid #334155;
-            padding: 8px 16px;
-            border-radius: 20px;
-            font-size: 13px;
-            cursor: pointer;
-            font-family: Tahoma, sans-serif;
-            transition: 0.3s;
+            background: rgba(30, 41, 59, 0.7); color: #94a3b8;
+            border: 1px solid #334155; padding: 8px 16px;
+            border-radius: 20px; font-size: 13px; cursor: pointer;
+            font-family: Tahoma, sans-serif; transition: 0.3s;
         }
-        .filter-btn.active {
-            background: #f59e0b;
-            color: #0f172a;
-            border-color: #f59e0b;
-        }
-        .filter-btn:hover:not(.active) {
-            background: rgba(245, 158, 11, 0.15);
-            color: #f59e0b;
-        }
+        .filter-btn.active { background: #f59e0b; color: #0f172a; border-color: #f59e0b; }
+        .filter-btn:hover:not(.active) { background: rgba(245, 158, 11, 0.15); color: #f59e0b; }
 
         /* ===== لیست دوره‌ها ===== */
         .courses-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 15px;
-            margin-bottom: 25px;
+            gap: 15px; margin-bottom: 25px;
         }
 
         .course-card {
             background: rgba(30, 41, 59, 0.85);
             backdrop-filter: blur(15px);
-            border-radius: 20px;
-            overflow: hidden;
+            border-radius: 20px; overflow: hidden;
             border: 1px solid rgba(255,255,255,0.05);
-            transition: 0.3s;
-            cursor: pointer;
-            position: relative;
+            transition: 0.3s; cursor: pointer; position: relative;
         }
         .course-card:hover {
             transform: translateY(-5px);
             box-shadow: 0 15px 40px rgba(0,0,0,0.4);
             border-color: rgba(245, 158, 11, 0.3);
         }
-
-        .course-card.locked {
-            opacity: 0.7;
-        }
-        .course-card.locked:hover {
-            transform: none;
-            cursor: not-allowed;
-        }
+        .course-card.locked { opacity: 0.7; }
+        .course-card.locked:hover { transform: none; cursor: not-allowed; }
 
         .course-image {
             height: 130px;
             background: linear-gradient(135deg, #1e293b, #0f172a);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 50px;
-            position: relative;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 50px; position: relative;
         }
         .course-image::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            height: 50%;
+            content: ''; position: absolute;
+            bottom: 0; left: 0; right: 0; height: 50%;
             background: linear-gradient(transparent, rgba(30, 41, 59, 0.9));
         }
 
         .lock-overlay {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            background: rgba(239, 68, 68, 0.9);
-            color: #fff;
-            width: 35px;
-            height: 35px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 16px;
-            z-index: 2;
+            position: absolute; top: 10px; right: 10px;
+            background: rgba(239, 68, 68, 0.9); color: #fff;
+            width: 35px; height: 35px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 16px; z-index: 2;
         }
 
         .free-badge {
-            position: absolute;
-            top: 10px;
-            left: 10px;
+            position: absolute; top: 10px; left: 10px;
             background: linear-gradient(135deg, #22c55e, #16a34a);
-            color: #fff;
-            padding: 4px 12px;
-            border-radius: 15px;
-            font-size: 11px;
-            font-weight: bold;
-            z-index: 2;
+            color: #fff; padding: 4px 12px; border-radius: 15px;
+            font-size: 11px; font-weight: bold; z-index: 2;
         }
 
-        .course-content {
-            padding: 15px;
-        }
-        .course-level {
-            color: #f59e0b;
-            font-size: 11px;
-            font-weight: bold;
-            margin-bottom: 5px;
-        }
-        .course-title {
-            color: #f1f5f9;
-            font-size: 15px;
-            font-weight: bold;
-            margin-bottom: 8px;
-            line-height: 1.4;
-        }
-        .course-desc {
-            color: #94a3b8;
-            font-size: 12px;
-            line-height: 1.6;
-            margin-bottom: 12px;
-        }
-        .course-meta {
-            display: flex;
-            gap: 12px;
-            margin-bottom: 12px;
-            font-size: 11px;
-            color: #94a3b8;
-        }
-        .course-meta span {
-            display: flex;
-            align-items: center;
-            gap: 4px;
-        }
+        .course-content { padding: 15px; }
+        .course-level { color: #f59e0b; font-size: 11px; font-weight: bold; margin-bottom: 5px; }
+        .course-title { color: #f1f5f9; font-size: 15px; font-weight: bold; margin-bottom: 8px; line-height: 1.4; }
+        .course-desc { color: #94a3b8; font-size: 12px; line-height: 1.6; margin-bottom: 12px; }
+        .course-meta { display: flex; gap: 12px; margin-bottom: 12px; font-size: 11px; color: #94a3b8; flex-wrap: wrap; }
+        .course-meta span { display: flex; align-items: center; gap: 4px; }
         .course-footer {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding-top: 12px;
-            border-top: 1px solid rgba(255,255,255,0.05);
+            display: flex; justify-content: space-between; align-items: center;
+            padding-top: 12px; border-top: 1px solid rgba(255,255,255,0.05);
         }
-        .course-price {
-            color: #4ade80;
-            font-weight: bold;
-            font-size: 14px;
-        }
-        .course-price.paid {
-            color: #f59e0b;
-        }
-        .course-progress {
-            font-size: 11px;
-            color: #60a5fa;
-        }
+        .course-price { color: #4ade80; font-weight: bold; font-size: 14px; }
+        .course-progress { font-size: 11px; color: #60a5fa; }
 
-        /* ===== آمار ===== */
+        /* ===== آمار (واقعی) ===== */
         .stats-section {
             background: rgba(30, 41, 59, 0.85);
             backdrop-filter: blur(15px);
-            border-radius: 20px;
-            padding: 20px;
+            border-radius: 20px; padding: 20px;
             border: 1px solid rgba(255,255,255,0.05);
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-            gap: 15px;
-            text-align: center;
+            gap: 15px; text-align: center;
         }
         .stat-item .icon { font-size: 24px; margin-bottom: 5px; }
         .stat-item .value { color: #f59e0b; font-size: 20px; font-weight: bold; }
         .stat-item .label { color: #94a3b8; font-size: 11px; }
 
-        /* ===== لودینگ ===== */
-        .loading {
-            text-align: center;
-            padding: 50px 20px;
-            color: #94a3b8;
-        }
+        .loading { text-align: center; padding: 50px 20px; color: #94a3b8; }
 
         @media (max-width: 600px) {
             .header h1 { font-size: 20px; }
@@ -350,11 +205,11 @@
         </div>
 
         <!-- کارت وضعیت دانشجو -->
-        <div class="student-status" id="studentStatus">
+        <div class="student-status">
             <div class="status-icon">👤</div>
             <div class="status-content">
                 <h2 id="statusTitle">در حال بارگذاری...</h2>
-                <p id="statusText"></p>
+                <p id="statusText">لطفاً صبر کنید...</p>
             </div>
         </div>
 
@@ -388,27 +243,27 @@
             <div class="loading">⏳ در حال بارگذاری دوره‌ها...</div>
         </div>
 
-        <!-- آمار -->
-        <div class="stats-section">
+        <!-- آمار واقعی -->
+        <div class="stats-section" id="statsSection">
             <div class="stat-item">
                 <div class="icon">📚</div>
-                <div class="value">۱۵</div>
+                <div class="value" id="statCourses">--</div>
                 <div class="label">دوره آموزشی</div>
             </div>
             <div class="stat-item">
                 <div class="icon">🎓</div>
-                <div class="value">۵</div>
+                <div class="value" id="statFree">--</div>
                 <div class="label">دوره رایگان</div>
             </div>
             <div class="stat-item">
                 <div class="icon">👥</div>
-                <div class="value">۱۰۰۰+</div>
+                <div class="value" id="statStudents">--</div>
                 <div class="label">دانشجو</div>
             </div>
             <div class="stat-item">
                 <div class="icon">⭐</div>
-                <div class="value">۴.۸</div>
-                <div class="label">رضایت</div>
+                <div class="value" id="statRating">--</div>
+                <div class="label">میانگین امتیاز</div>
             </div>
         </div>
     </div>
@@ -420,96 +275,39 @@
 
         // ===== لیست دوره‌ها =====
         const courses = [
-            {
-                id: 1,
-                title: 'اقتصاد کلان و خرد',
-                desc: 'مفاهیم پایه اقتصاد، تورم، نرخ بهره و تأثیر آن‌ها بر بازارهای مالی',
-                icon: '📊',
-                level: 'beginner',
-                levelText: '🟢 مبتدی',
-                duration: '۲ ساعت',
-                lessons: ۸,
-                price: 'رایگان',
-                isFree: true,
-                prerequisite: null
-            },
-            {
-                id: 2,
-                title: 'آشنایی با بازارهای مالی',
-                desc: 'بورس، فارکس، کریپتو، طلا و مسکن - هر بازار چطور کار می‌کند؟',
-                icon: '💹',
-                level: 'beginner',
-                levelText: '🟢 مبتدی',
-                duration: '۲ ساعت',
-                lessons: ۱۰,
-                price: 'رایگان',
-                isFree: true,
-                prerequisite: 1
-            },
-            {
-                id: 3,
-                title: 'مبانی تحلیل تکنیکال',
-                desc: 'کندل‌ها، خط روند، حمایت و مقاومت - زبان نمودارها',
-                icon: '📈',
-                level: 'beginner',
-                levelText: '🟢 مبتدی',
-                duration: '۳ ساعت',
-                lessons: ۱۲,
-                price: 'رایگان',
-                isFree: true,
-                prerequisite: 2
-            },
-            {
-                id: 4,
-                title: 'مدیریت ریسک مقدماتی',
-                desc: 'حد ضرر، حجم معامله و صندوق اضطراری - چطور سرمایه‌ات را حفظ کنی',
-                icon: '🛡️',
-                level: 'beginner',
-                levelText: '🟢 مبتدی',
-                duration: '۲ ساعت',
-                lessons: ۸,
-                price: 'رایگان',
-                isFree: true,
-                prerequisite: 3
-            },
-            {
-                id: 5,
-                title: 'آشنایی با ارز دیجیتال',
-                desc: 'بیت‌کوین، اتریوم، بلاک‌چین و کیف پول‌ها - ورود به دنیای کریپتو',
-                icon: '₿',
-                level: 'beginner',
-                levelText: '🟢 مبتدی',
-                duration: '۳ ساعت',
-                lessons: ۱۰,
-                price: 'رایگان',
-                isFree: true,
-                prerequisite: 4
-            }
+            { id: 1, title: 'اقتصاد کلان و خرد', desc: 'مفاهیم پایه اقتصاد، تورم، نرخ بهره و تأثیر آن‌ها بر بازارهای مالی', icon: '📊', level: 'beginner', levelText: '🟢 مبتدی', duration: '۲ ساعت', lessons: 8, price: 'رایگان', isFree: true, prerequisite: null },
+            { id: 2, title: 'آشنایی با بازارهای مالی', desc: 'بورس، فارکس، کریپتو، طلا و مسکن - هر بازار چطور کار می‌کند؟', icon: '💹', level: 'beginner', levelText: '🟢 مبتدی', duration: '۲ ساعت', lessons: 10, price: 'رایگان', isFree: true, prerequisite: 1 },
+            { id: 3, title: 'مبانی تحلیل تکنیکال', desc: 'کندل‌ها، خط روند، حمایت و مقاومت - زبان نمودارها', icon: '📈', level: 'beginner', levelText: '🟢 مبتدی', duration: '۳ ساعت', lessons: 12, price: 'رایگان', isFree: true, prerequisite: 2 },
+            { id: 4, title: 'مدیریت ریسک مقدماتی', desc: 'حد ضرر، حجم معامله و صندوق اضطراری - چطور سرمایه‌ات را حفظ کنی', icon: '🛡️', level: 'beginner', levelText: '🟢 مبتدی', duration: '۲ ساعت', lessons: 8, price: 'رایگان', isFree: true, prerequisite: 3 },
+            { id: 5, title: 'آشنایی با ارز دیجیتال', desc: 'بیت‌کوین، اتریوم، بلاک‌چین و کیف پول‌ها - ورود به دنیای کریپتو', icon: '₿', level: 'beginner', levelText: '🟢 مبتدی', duration: '۳ ساعت', lessons: 10, price: 'رایگان', isFree: true, prerequisite: 4 }
         ];
 
         let currentUser = null;
         let completedCourses = [];
         let inProgressCourses = [];
-        let purchasedCourses = [];
 
         // ===== بارگذاری اطلاعات کاربر =====
         async function loadUserData() {
-            const { data: { session } } = await supabaseClient.auth.getSession();
-            
-            if (!session) {
-                window.location.href = 'login.html';
-                return;
-            }
+            try {
+                const { data: { session } } = await supabaseClient.auth.getSession();
+                
+                if (!session) {
+                    window.location.href = 'login.html';
+                    return;
+                }
 
-            currentUser = session.user;
-            
-            // دریافت دوره‌های تکمیل‌شده از user_metadata
-            completedCourses = currentUser.user_metadata?.completed_courses || [];
-            inProgressCourses = currentUser.user_metadata?.in_progress_courses || [];
-            purchasedCourses = currentUser.user_metadata?.purchased_courses || [];
-            
-            updateStudentStatus();
-            renderCourses();
+                currentUser = session.user;
+                completedCourses = currentUser.user_metadata?.completed_courses || [];
+                inProgressCourses = currentUser.user_metadata?.in_progress_courses || [];
+                
+                updateStudentStatus();
+                renderCourses();
+                loadStats();
+
+            } catch (error) {
+                console.error('خطا:', error);
+                document.getElementById('coursesGrid').innerHTML = '<div class="loading">❌ خطا در بارگذاری. لطفاً دوباره تلاش کنید.</div>';
+            }
         }
 
         // ===== نمایش وضعیت دانشجو =====
@@ -539,23 +337,21 @@
                 filteredCourses = courses.filter(c => c.level === filter);
             }
 
+            if (filteredCourses.length === 0) {
+                grid.innerHTML = '<div class="loading">دوره‌ای یافت نشد.</div>';
+                return;
+            }
+
             grid.innerHTML = filteredCourses.map(course => {
                 const isCompleted = completedCourses.includes(course.id);
                 const isInProgress = inProgressCourses.includes(course.id);
                 
-                // بررسی قفل بودن
                 let isLocked = false;
-                if (course.prerequisite) {
-                    // اگه پیش‌نیاز تکمیل نشده باشه، قفله
-                    if (!completedCourses.includes(course.prerequisite)) {
-                        isLocked = true;
-                    }
+                if (course.prerequisite && !completedCourses.includes(course.prerequisite)) {
+                    isLocked = true;
                 }
-
-                // اگه خودش تکمیل شده، قفل نیست
                 if (isCompleted) isLocked = false;
 
-                // پیشرفت
                 let progressHTML = '';
                 if (isCompleted) {
                     progressHTML = '<span class="course-progress">✅ تکمیل شده</span>';
@@ -577,4 +373,76 @@
                             <div class="course-meta">
                                 <span>⏱️ ${course.duration}</span>
                                 <span>📁 ${course.lessons} درس</span>
-     
+                            </div>
+                            <div class="course-footer">
+                                <div class="course-price">${course.price}</div>
+                                ${progressHTML}
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // ===== آمار واقعی =====
+        async function loadStats() {
+            try {
+                // تعداد دوره‌ها (واقعی)
+                document.getElementById('statCourses').textContent = courses.length;
+                document.getElementById('statFree').textContent = courses.filter(c => c.isFree).length;
+
+                // تعداد دانشجو (از Supabase)
+                let studentCount = '--';
+                let ratingAvg = '--';
+
+                try {
+                    // سعی می‌کنیم تعداد کاربران رو از Supabase بگیریم
+                    const { data, error } = await supabaseClient
+                        .from('profiles')
+                        .select('id', { count: 'exact', head: true });
+
+                    if (!error && data) {
+                        studentCount = data.length || '--';
+                    } else {
+                        // اگه جدول profiles نبود، تعداد رو از user_metadata حساب می‌کنیم
+                        studentCount = '--';
+                    }
+                } catch (e) {
+                    // اگه جدول نبود، از localStorage یا یه عدد پایه استفاده می‌کنیم
+                    studentCount = '--';
+                }
+
+                document.getElementById('statStudents').textContent = studentCount;
+                document.getElementById('statRating').textContent = ratingAvg;
+
+            } catch (error) {
+                console.error('خطا در آمار:', error);
+            }
+        }
+
+        // ===== فیلتر دوره‌ها =====
+        function filterCourses(level, btn) {
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            renderCourses(level);
+        }
+
+        // ===== رفتن به دوره =====
+        function goToCourse(courseId) {
+            const course = courses.find(c => c.id === courseId);
+            
+            if (course.prerequisite && !completedCourses.includes(course.prerequisite)) {
+                const prereqCourse = courses.find(c => c.id === course.prerequisite);
+                alert(`🔒 این دوره قفل است!\n\nابتدا باید دوره «${prereqCourse.title}» را تکمیل کنید.`);
+                return;
+            }
+
+            window.location.href = 'course-detail.html?id=' + courseId;
+        }
+
+        // ===== راه‌اندازی =====
+        loadUserData();
+    </script>
+
+</body>
+</html>
