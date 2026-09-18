@@ -1,21 +1,27 @@
 {
   "name": "آکادمی شمعدون",
   "short_name": "شمعدون",
-  "description": "پنل لحظه‌ای قیمت‌های بازار",
-  "start_url": ".",
+  "description": "پنل تحلیلی و آموزشی بازارهای مالی",
+  "start_url": "/My-First-Project/",
+  "scope": "/My-First-Project/",
   "display": "standalone",
-  "background_color": "#0f0c29",
-  "theme_color": "#f7971e",
+  "orientation": "portrait",
+  "background_color": "#0f172a",
+  "theme_color": "#f59e0b",
+  "lang": "fa",
+  "dir": "rtl",
   "icons": [
     {
-      "src": "icon-192.png",
-      "sizes": "192x192",
-      "type": "image/png"
+      "src": "519.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
     },
     {
-      "src": "icon-512.png",
-      "sizes": "512x512",
-      "type": "image/png"
+      "src": "519.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
     }
   ]
 }
