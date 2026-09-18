@@ -33,46 +33,24 @@
             flex-wrap: wrap;
             gap: 10px;
         }
-        .header-info {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
+        .header-info { display: flex; align-items: center; gap: 10px; }
         .header-icon {
-            width: 40px;
-            height: 40px;
-            border-radius: 12px;
+            width: 40px; height: 40px; border-radius: 12px;
             background: linear-gradient(135deg, #f59e0b, #d97706);
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            display: flex; align-items: center; justify-content: center;
             font-size: 20px;
         }
-        .header-title h1 {
-            color: #f1f5f9;
-            font-size: 15px;
-            margin-bottom: 2px;
-        }
-        .header-title p {
-            color: #94a3b8;
-            font-size: 12px;
-        }
+        .header-title h1 { color: #f1f5f9; font-size: 15px; margin-bottom: 2px; }
+        .header-title p { color: #94a3b8; font-size: 12px; }
         .header a {
-            color: #94a3b8;
-            text-decoration: none;
-            font-size: 13px;
-            padding: 8px 15px;
-            border: 1px solid #334155;
-            border-radius: 20px;
-            background: rgba(30, 41, 59, 0.7);
+            color: #94a3b8; text-decoration: none; font-size: 13px;
+            padding: 8px 15px; border: 1px solid #334155;
+            border-radius: 20px; background: rgba(30, 41, 59, 0.7);
             transition: 0.3s;
         }
-        .header a:hover {
-            background: #334155;
-            color: #fff;
-        }
+        .header a:hover { background: #334155; color: #fff; }
 
-        /* ===== نوار پیشرفت ===== */
+        /* ===== پیشرفت ===== */
         .progress-section {
             background: rgba(30, 41, 59, 0.85);
             backdrop-filter: blur(15px);
@@ -82,27 +60,21 @@
             border: 1px solid rgba(255,255,255,0.05);
         }
         .progress-info {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 8px;
-            color: #94a3b8;
-            font-size: 13px;
+            display: flex; justify-content: space-between;
+            margin-bottom: 8px; color: #94a3b8; font-size: 13px;
         }
         .progress-bar {
-            width: 100%;
-            height: 8px;
+            width: 100%; height: 8px;
             background: rgba(15, 23, 42, 0.8);
-            border-radius: 10px;
-            overflow: hidden;
+            border-radius: 10px; overflow: hidden;
         }
         .progress-fill {
             height: 100%;
             background: linear-gradient(90deg, #f59e0b, #d97706);
-            border-radius: 10px;
-            transition: width 0.4s;
+            border-radius: 10px; transition: width 0.4s;
         }
 
-        /* ===== محتوای درس ===== */
+        /* ===== درس ===== */
         .lesson-card {
             background: rgba(30, 41, 59, 0.85);
             backdrop-filter: blur(15px);
@@ -113,156 +85,107 @@
         }
 
         .lesson-header {
-            text-align: center;
-            padding-bottom: 20px;
+            text-align: center; padding-bottom: 20px;
             margin-bottom: 20px;
             border-bottom: 1px solid rgba(255,255,255,0.05);
         }
         .lesson-number {
-            color: #f59e0b;
-            font-size: 13px;
-            font-weight: bold;
-            margin-bottom: 8px;
+            color: #f59e0b; font-size: 13px;
+            font-weight: bold; margin-bottom: 8px;
         }
         .lesson-title {
-            color: #f1f5f9;
-            font-size: 22px;
-            margin-bottom: 10px;
-            line-height: 1.4;
+            color: #f1f5f9; font-size: 22px;
+            margin-bottom: 10px; line-height: 1.4;
         }
         .lesson-meta {
-            color: #94a3b8;
-            font-size: 13px;
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            flex-wrap: wrap;
+            color: #94a3b8; font-size: 13px;
+            display: flex; justify-content: center;
+            gap: 15px; flex-wrap: wrap;
         }
 
-        /* ===== متن درس ===== */
+        /* ===== محتوای درس ===== */
         .lesson-content {
-            color: #cbd5e1;
-            font-size: 15px;
-            line-height: 2;
+            color: #cbd5e1; font-size: 15px; line-height: 2;
         }
         .lesson-content h2 {
-            color: #f59e0b;
-            font-size: 18px;
-            margin-top: 25px;
-            margin-bottom: 12px;
+            color: #f59e0b; font-size: 18px;
+            margin-top: 25px; margin-bottom: 12px;
             padding-bottom: 8px;
             border-bottom: 2px solid rgba(245, 158, 11, 0.2);
         }
         .lesson-content h3 {
-            color: #f1f5f9;
-            font-size: 16px;
-            margin-top: 20px;
-            margin-bottom: 10px;
+            color: #f1f5f9; font-size: 16px;
+            margin-top: 20px; margin-bottom: 10px;
         }
-        .lesson-content p {
-            margin-bottom: 15px;
-        }
+        .lesson-content p { margin-bottom: 15px; }
         .lesson-content ul, .lesson-content ol {
-            padding-right: 25px;
-            margin-bottom: 15px;
+            padding-right: 25px; margin-bottom: 15px;
         }
-        .lesson-content li {
-            margin-bottom: 8px;
-        }
-        .lesson-content strong {
-            color: #f59e0b;
-        }
+        .lesson-content li { margin-bottom: 8px; }
+        .lesson-content strong { color: #f59e0b; }
         .lesson-content .highlight-box {
             background: rgba(245, 158, 11, 0.1);
             border-right: 4px solid #f59e0b;
-            padding: 15px 20px;
-            border-radius: 10px;
-            margin: 15px 0;
-            color: #f1f5f9;
+            padding: 15px 20px; border-radius: 10px;
+            margin: 15px 0; color: #f1f5f9;
         }
         .lesson-content .tip-box {
             background: rgba(59, 130, 246, 0.1);
             border-right: 4px solid #3b82f6;
-            padding: 15px 20px;
-            border-radius: 10px;
-            margin: 15px 0;
-            color: #cbd5e1;
+            padding: 15px 20px; border-radius: 10px;
+            margin: 15px 0; color: #cbd5e1;
         }
         .lesson-content .warning-box {
             background: rgba(239, 68, 68, 0.1);
             border-right: 4px solid #ef4444;
-            padding: 15px 20px;
-            border-radius: 10px;
-            margin: 15px 0;
-            color: #fecaca;
+            padding: 15px 20px; border-radius: 10px;
+            margin: 15px 0; color: #fecaca;
         }
         .lesson-content table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 15px 0;
-            font-size: 13px;
+            width: 100%; border-collapse: collapse;
+            margin: 15px 0; font-size: 13px;
         }
         .lesson-content th, .lesson-content td {
             border: 1px solid #334155;
-            padding: 10px;
-            text-align: center;
+            padding: 10px; text-align: center;
         }
         .lesson-content th {
             background: rgba(245, 158, 11, 0.2);
             color: #f59e0b;
         }
-        .lesson-content td {
-            color: #cbd5e1;
-        }
+        .lesson-content td { color: #cbd5e1; }
 
         /* ===== تمرین ===== */
         .exercise-box {
             background: rgba(34, 197, 94, 0.1);
             border: 1px solid rgba(34, 197, 94, 0.3);
             border-radius: 15px;
-            padding: 20px;
-            margin-top: 25px;
+            padding: 20px; margin-top: 25px;
         }
         .exercise-box h3 {
-            color: #4ade80;
-            font-size: 16px;
+            color: #4ade80; font-size: 16px;
             margin-bottom: 12px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
+            display: flex; align-items: center; gap: 8px;
         }
         .exercise-box p, .exercise-box li {
-            color: #cbd5e1;
-            font-size: 14px;
-            line-height: 1.8;
+            color: #cbd5e1; font-size: 14px; line-height: 1.8;
         }
-        .exercise-box ul {
-            padding-right: 20px;
-        }
+        .exercise-box ul { padding-right: 20px; }
 
         /* ===== دکمه‌های ناوبری ===== */
         .nav-buttons {
-            display: flex;
-            gap: 10px;
-            margin-top: 25px;
-            flex-wrap: wrap;
+            display: flex; gap: 10px;
+            margin-top: 25px; flex-wrap: wrap;
         }
         .btn {
-            flex: 1;
-            min-width: 130px;
-            padding: 14px 20px;
-            border-radius: 12px;
-            font-size: 14px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s;
+            flex: 1; min-width: 130px;
+            padding: 14px 20px; border-radius: 12px;
+            font-size: 14px; font-weight: bold;
+            cursor: pointer; transition: all 0.3s;
             font-family: Tahoma, sans-serif;
-            border: none;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            text-decoration: none;
+            border: none; display: flex;
+            align-items: center; justify-content: center;
+            gap: 8px; text-decoration: none;
         }
         .btn-primary {
             background: linear-gradient(135deg, #f59e0b, #d97706);
@@ -290,15 +213,11 @@
             border-color: rgba(245, 158, 11, 0.3);
         }
         .btn:disabled {
-            opacity: 0.4;
-            cursor: not-allowed;
-            transform: none;
+            opacity: 0.4; cursor: not-allowed; transform: none;
         }
 
         .loading {
-            text-align: center;
-            padding: 50px 20px;
-            color: #94a3b8;
+            text-align: center; padding: 50px 20px; color: #94a3b8;
         }
 
         @media (max-width: 600px) {
@@ -320,229 +239,11 @@
         const SUPABASE_KEY = 'sb_publishable_R7tCe030dGeJ0IRWfcgxww_MgEfh95O';
         const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-        // ===== محتوای دروس (نمونه) =====
-        const coursesContent = {
-            1: {
-                title: 'اقتصاد کلان و خرد',
-                icon: '📊',
-                lessons: [
-                    {
-                        title: 'مقدمه‌ای بر اقتصاد',
-                        duration: '۱۵ دقیقه',
-                        content: `
-                            <h2>اقتصاد چیست؟</h2>
-                            <p>اقتصاد علم مطالعه‌ی <strong>تخصیص منابع محدود</strong> به نیازهای نامحدود انسانی است. به عبارت ساده‌تر، اقتصاد به ما می‌گوید که چگونه با منابعی که داریم، بهترین استفاده را ببریم.</p>
-                            
-                            <h3>دو شاخه‌ی اصلی اقتصاد</h3>
-                            <ul>
-                                <li><strong>اقتصاد خرد (Microeconomics):</strong> به رفتار افراد و بنگاه‌های اقتصادی می‌پردازد. مثل قیمت یک کالا، عرضه و تقاضا در یک بازار خاص.</li>
-                                <li><strong>اقتصاد کلان (Macroeconomics):</strong> به کل اقتصاد یک کشور می‌پردازد. مثل تورم، بیکاری، تولید ناخالص داخلی.</li>
-                            </ul>
-
-                            <div class="highlight-box">
-                                💡 <strong>نکته مهم:</strong> به عنوان یک معامله‌گر، درک اقتصاد کلان به شما کمک می‌کند تا روند کلی بازارها را پیش‌بینی کنید.
-                            </div>
-
-                            <h3>چرا اقتصاد برای معامله‌گر مهم است؟</h3>
-                            <p>وقتی تورم افزایش پیدا می‌کند، ارزش پول کاهش می‌یابد و مردم به سمت دارایی‌های امن مثل <strong>طلا</strong> و <strong>ارز دیجیتال</strong> روی می‌آورند. این یعنی قیمت این دارایی‌ها بالا می‌رود.</p>
-
-                            <div class="tip-box">
-                                📌 <strong>تمرین:</strong> به اخبار اقتصادی هفته‌ی گذشته فکر کنید. کدام خبر باعث تغییر قیمت طلا یا دلار شد؟
-                            </div>
-                        `
-                    },
-                    {
-                        title: 'عرضه و تقاضا',
-                        duration: '۲۰ دقیقه',
-                        content: `
-                            <h2>قانون عرضه و تقاضا</h2>
-                            <p>این قانون یکی از <strong>بنیادی‌ترین مفاهیم اقتصاد</strong> است. همه‌ی قیمت‌ها در بازارهای آزاد، بر اساس تعامل عرضه و تقاضا تعیین می‌شوند.</p>
-
-                            <h3>عرضه (Supply)</h3>
-                            <p>مقداری از یک کالا یا خدمات که <strong>تولیدکنندگان</strong> حاضرند در قیمت‌های مختلف به فروش برسانند.</p>
-                            <ul>
-                                <li>وقتی قیمت بالا می‌رود، عرضه‌کنندگان بیشتری وارد بازار می‌شوند.</li>
-                                <li>وقتی قیمت پایین می‌آید، عرضه کاهش می‌یابد.</li>
-                            </ul>
-
-                            <h3>تقاضا (Demand)</h3>
-                            <p>مقداری از یک کالا یا خدمات که <strong>مصرف‌کنندگان</strong> حاضرند در قیمت‌های مختلف بخرند.</p>
-                            <ul>
-                                <li>وقتی قیمت بالا می‌رود، تقاضا کاهش می‌یابد.</li>
-                                <li>وقتی قیمت پایین می‌آید، تقاضا افزایش می‌یابد.</li>
-                            </ul>
-
-                            <div class="highlight-box">
-                                ⚖️ <strong>نقطه‌ی تعادل:</strong> جایی که عرضه و تقاضا برابر می‌شوند و قیمت بازار تعیین می‌شود.
-                            </div>
-
-                            <h3>مثال در بازار طلا</h3>
-                            <p>فرض کنید خبری منتشر می‌شود که تنش‌های سیاسی افزایش یافته. این خبر باعث می‌شود <strong>تقاضا برای طلا بالا برود</strong>، ولی عرضه ثابت بماند. نتیجه: <strong>قیمت طلا بالا می‌رود</strong>.</p>
-
-                            <div class="warning-box">
-                                ⚠️ <strong>هشدار:</strong> در بازارهای مالی، عرضه و تقاضا تنها عامل تعیین قیمت نیستند. عوامل روانی و اخبار نیز تأثیرگذارند.
-                            </div>
-                        `
-                    },
-                    {
-                        title: 'تورم و deflation',
-                        duration: '۱۸ دقیقه',
-                        content: `
-                            <h2>تورم (Inflation) چیست؟</h2>
-                            <p>تورم یعنی <strong>افزایش مداوم و عمومی قیمت‌ها</strong> در یک اقتصاد. به عبارت ساده، با پول ثابت، می‌توانید کالای کمتری بخرید.</p>
-
-                            <h3>انواع تورم</h3>
-                            <table>
-                                <tr>
-                                    <th>نوع</th>
-                                    <th>میزان</th>
-                                    <th>تأثیر</th>
-                                </tr>
-                                <tr>
-                                    <td>خفیف</td>
-                                    <td>۱-۳٪</td>
-                                    <td>مفید برای اقتصاد</td>
-                                </tr>
-                                <tr>
-                                    <td>متوسط</td>
-                                    <td>۳-۱۰٪</td>
-                                    <td>قابل کنترل</td>
-                                </tr>
-                                <tr>
-                                    <td>شدید</td>
-                                    <td>۱۰-۵۰٪</td>
-                                    <td>خطرناک</td>
-                                </tr>
-                                <tr>
-                                    <td>ابرتورم</td>
-                                    <td>بیش از ۵۰٪</td>
-                                    <td>فروپاشی اقتصادی</td>
-                                </tr>
-                            </table>
-
-                            <h3>دفلاسیون (Deflation) چیست؟</h3>
-                            <p>دفلاسیون یعنی <strong>کاهش مداوم قیمت‌ها</strong>. این پدیده ممکن است در ظاهر خوب به نظر برسد، ولی می‌تواند بسیار خطرناک باشد، چون مردم خرید را به تعویق می‌اندازند.</p>
-
-                            <div class="highlight-box">
-                                📊 <strong>ارتباط با بازار:</strong> در شرایط تورمی، دارایی‌های فیزیکی مثل طلا، مسکن و ارز دیجیتال ارزش بیشتری پیدا می‌کنند.
-                            </div>
-
-                            <div class="tip-box">
-                                📌 <strong>نکته:</strong> تورم در ایران در سال‌های اخیر بالای ۴۰٪ بوده، به همین دلیل قیمت طلا و دلار به شدت رشد کرده است.
-                            </div>
-                        `
-                    },
-                    {
-                        title: 'نرخ بهره و تأثیر آن',
-                        duration: '۲۰ دقیقه',
-                        content: `
-                            <h2>نرخ بهره چیست؟</h2>
-                            <p>نرخ بهره، <strong>هزینه‌ی قرض گرفتن پول</strong> یا <strong>پاداش پس‌انداز</strong> است. این نرخ توسط بانک مرکزی هر کشور تعیین می‌شود.</p>
-
-                            <h3>تأثیر نرخ بهره بر بازارها</h3>
-                            <ul>
-                                <li><strong>افزایش نرخ بهره:</strong> پول به سمت بانک‌ها می‌رود، بازارهای ریسکی مثل بورس و کریپتو افت می‌کنند.</li>
-                                <li><strong>کاهش نرخ بهره:</strong> پول به سمت بازارهای ریسکی می‌رود، قیمت‌ها بالا می‌رود.</li>
-                            </ul>
-
-                            <h3>فدرال رزرو (Fed)</h3>
-                            <p>بانک مرکزی آمریکا (فدرال رزرو) نرخ بهره‌ی دلار را تعیین می‌کند و چون دلار <strong>ارز جهانی</strong> است، تصمیمات آن بر کل بازارهای جهان تأثیر می‌گذارد.</p>
-
-                            <div class="highlight-box">
-                                🌍 <strong>مثال واقعی:</strong> وقتی فدرال رزرو نرخ بهره را افزایش می‌دهد، معمولاً قیمت بیت‌کوین و طلا کاهش می‌یابد.
-                            </div>
-
-                            <div class="warning-box">
-                                ⚠️ <strong>هشدار:</strong> اخبار مربوط به نرخ بهره فدرال رزرو، از مهم‌ترین رویدادهای بازارهای مالی هستند. همیشه تقویم اقتصادی را چک کنید.
-                            </div>
-                        `
-                    },
-                    {
-                        title: 'تولید ناخالص داخلی (GDP)',
-                        duration: '۱۵ دقیقه',
-                        content: `
-                            <h2>GDP چیست؟</h2>
-                            <p>تولید ناخالص داخلی (Gross Domestic Product) یعنی <strong>ارزش کل کالاها و خدمات تولید شده در یک کشور</strong> در یک بازه‌ی زمانی مشخص.</p>
-
-                            <h3>اجزای GDP</h3>
-                            <ul>
-                                <li><strong>مصرف (C):</strong> هزینه‌های خانوارها</li>
-                                <li><strong>سرمایه‌گذاری (I):</strong> هزینه‌های بنگاه‌ها</li>
-                                <li><strong>هزینه‌های دولت (G):</strong> مخارج دولتی</li>
-                                <li><strong>صادرات منهای واردات (NX):</strong> تراز تجاری</li>
-                            </ul>
-
-                            <h3>چرا GDP مهم است؟</h3>
-                            <p>GDP نشان‌دهنده‌ی <strong>سلامت اقتصادی</strong> یک کشور است. GDP بالا یعنی اقتصاد در حال رشد است و معمولاً بازارهای مالی هم رشد می‌کنند.</p>
-
-                            <div class="tip-box">
-                                📌 <strong>نکته معاملاتی:</strong> رشد GDP معمولاً به نفع ارز ملی و بازار سهام است.
-                            </div>
-                        `
-                    },
-                    {
-                        title: 'بیکاری و اشتغال',
-                        duration: '۱۲ دقیقه',
-                        content: `
-                            <h2>نرخ بیکاری</h2>
-                            <p>نرخ بیکاری یعنی <strong>درصد افرادی که توانایی کار دارند ولی شغل ندارند</strong>. این شاخص یکی از مهم‌ترین شاخص‌های اقتصادی است.</p>
-
-                            <h3>تأثیر بر بازارها</h3>
-                            <ul>
-                                <li><strong>بیکاری بالا:</strong> کاهش مصرف، کاهش رشد اقتصادی</li>
-                                <li><strong>بیکاری پایین:</strong> افزایش مصرف، رشد اقتصادی</li>
-                            </ul>
-
-                            <div class="highlight-box">
-                                📊 <strong>ارتباط با نرخ بهره:</strong> اگر بیکاری پایین باشد، بانک مرکزی ممکن است نرخ بهره را افزایش دهد تا از تورم جلوگیری کند.
-                            </div>
-                        `
-                    },
-                    {
-                        title: 'سیاست‌های پولی و مالی',
-                        duration: '۲۰ دقیقه',
-                        content: `
-                            <h2>سیاست پولی (Monetary Policy)</h2>
-                            <p>تصمیمات بانک مرکزی در مورد <strong>عرضه‌ی پول و نرخ بهره</strong>. ابزارها:</p>
-                            <ul>
-                                <li>نرخ بهره</li>
-                                <li>ذخیره‌ی قانونی بانک‌ها</li>
-                                <li>عملیات بازار باز</li>
-                            </ul>
-
-                            <h2>سیاست مالی (Fiscal Policy)</h2>
-                            <p>تصمیمات دولت در مورد <strong>مالیات و هزینه‌های دولتی</strong>.</p>
-
-                            <div class="highlight-box">
-                                🎯 <strong>نکته:</strong> سیاست پولی توسط بانک مرکزی و سیاست مالی توسط دولت اعمال می‌شود.
-                            </div>
-                        `
-                    },
-                    {
-                        title: 'جمع‌بندی و آزمون',
-                        duration: '۱۰ دقیقه',
-                        content: `
-                            <h2>جمع‌بندی دوره</h2>
-                            <p>در این دوره یاد گرفتیم که:</p>
-                            <ul>
-                                <li>اقتصاد چیست و چرا مهم است</li>
-                                <li>عرضه و تقاضا چگونه قیمت‌ها را تعیین می‌کند</li>
-                                <li>تورم و دفلاسیون چه تأثیری بر بازارها دارند</li>
-                                <li>نرخ بهره چگونه بر بازارهای مالی تأثیر می‌گذارد</li>
-                                <li>GDP، بیکاری و سیاست‌های اقتصادی چه هستند</li>
-                            </ul>
-
-                            <div class="tip-box">
-                                ✅ <strong>آماده‌ای برای دوره بعدی؟</strong> در دوره‌ی «آشنایی با بازارهای مالی»، با انواع بازارها آشنا می‌شوی.
-                            </div>
-                        `
-                    }
-                ]
-            }
-        };
-
         let currentUser = null;
         let completedLessons = {};
+        let courseData = null;
+        let courseId = null;
+        let lessonNum = null;
 
         // ===== بارگذاری =====
         async function init() {
@@ -557,41 +258,48 @@
             completedLessons = currentUser.user_metadata?.completed_lessons || {};
 
             const params = new URLSearchParams(window.location.search);
-            const courseId = parseInt(params.get('course'));
-            const lessonNum = parseInt(params.get('lesson'));
+            courseId = parseInt(params.get('course'));
+            lessonNum = parseInt(params.get('lesson'));
 
             if (!courseId || !lessonNum) {
-                document.getElementById('content').innerHTML = `
-                    <div class="loading">
-                        ❌ درس مورد نظر پیدا نشد.
-                        <br><br>
-                        <a href="courses.html" style="color: #f59e0b;">⬅ بازگشت به دوره‌ها</a>
-                    </div>
-                `;
+                showError('❌ درس مورد نظر پیدا نشد.');
                 return;
             }
 
-            const course = coursesContent[courseId];
-            if (!course) {
-                document.getElementById('content').innerHTML = `
-                    <div class="loading">
-                        ❌ محتوای این دوره به زودی اضافه می‌شود.
-                        <br><br>
-                        <a href="course-detail.html?id=${courseId}" style="color: #f59e0b;">⬅ بازگشت به دوره</a>
-                    </div>
-                `;
-                return;
-            }
+            // ===== خواندن فایل JSON =====
+            try {
+                const response = await fetch(`lessons/course-${courseId}.json`);
+                
+                if (!response.ok) {
+                    showError('❌ محتوای این دوره به زودی اضافه می‌شود.');
+                    return;
+                }
 
-            const lesson = course.lessons[lessonNum - 1];
-            if (!lesson) {
-                document.getElementById('content').innerHTML = `
-                    <div class="loading">❌ این درس وجود ندارد.</div>
-                `;
-                return;
-            }
+                courseData = await response.json();
+                const lesson = courseData.lessons[lessonNum - 1];
 
-            renderLesson(courseId, lessonNum, course, lesson);
+                if (!lesson) {
+                    showError('❌ این درس وجود ندارد.');
+                    return;
+                }
+
+                renderLesson(courseId, lessonNum, courseData, lesson);
+
+            } catch (error) {
+                console.error('خطا در خواندن فایل:', error);
+                showError('❌ خطا در بارگذاری محتوای درس.');
+            }
+        }
+
+        // ===== نمایش خطا =====
+        function showError(message) {
+            document.getElementById('content').innerHTML = `
+                <div class="loading">
+                    ${message}
+                    <br><br>
+                    <a href="courses.html" style="color: #f59e0b;">⬅ بازگشت به دوره‌ها</a>
+                </div>
+            `;
         }
 
         // ===== نمایش درس =====
@@ -695,11 +403,9 @@
                 completedLessons[courseId] = courseLessons;
 
                 // بررسی تکمیل کل دوره
-                const course = coursesContent[courseId];
-                const totalLessons = course.lessons.length;
+                const totalLessons = courseData.lessons.length;
                 const isCourseComplete = courseLessons.length >= totalLessons;
 
-                // آپدیت user_metadata
                 const updates = {
                     completed_lessons: completedLessons
                 };
