@@ -53,64 +53,41 @@
             border: 1px solid rgba(255,255,255,0.05);
             text-align: center;
         }
-        .course-hero .icon {
-            font-size: 70px;
-            margin-bottom: 15px;
-        }
+        .course-hero .icon { font-size: 70px; margin-bottom: 15px; }
         .course-hero .level {
-            color: #f59e0b;
-            font-size: 13px;
-            font-weight: bold;
-            margin-bottom: 8px;
+            color: #f59e0b; font-size: 13px;
+            font-weight: bold; margin-bottom: 8px;
         }
         .course-hero h1 {
-            color: #f1f5f9;
-            font-size: 24px;
-            margin-bottom: 12px;
+            color: #f1f5f9; font-size: 24px; margin-bottom: 12px;
         }
         .course-hero p {
-            color: #94a3b8;
-            font-size: 14px;
-            line-height: 1.8;
-            max-width: 600px;
+            color: #94a3b8; font-size: 14px;
+            line-height: 1.8; max-width: 600px;
             margin: 0 auto 15px;
         }
         .course-meta {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            flex-wrap: wrap;
-            margin-bottom: 20px;
+            display: flex; justify-content: center;
+            gap: 20px; flex-wrap: wrap; margin-bottom: 20px;
         }
         .course-meta span {
-            color: #cbd5e1;
-            font-size: 13px;
-            display: flex;
-            align-items: center;
-            gap: 5px;
+            color: #cbd5e1; font-size: 13px;
+            display: flex; align-items: center; gap: 5px;
         }
         .course-price {
-            font-size: 22px;
-            font-weight: bold;
-            color: #4ade80;
-            margin-bottom: 15px;
+            font-size: 22px; font-weight: bold;
+            color: #4ade80; margin-bottom: 15px;
         }
 
         /* ===== دکمه ثبت‌نام ===== */
         .enroll-btn {
             background: linear-gradient(135deg, #f59e0b, #d97706);
-            color: #0f172a;
-            border: none;
-            padding: 15px 40px;
-            border-radius: 15px;
-            font-size: 16px;
-            font-weight: bold;
-            cursor: pointer;
-            font-family: Tahoma, sans-serif;
+            color: #0f172a; border: none;
+            padding: 15px 40px; border-radius: 15px;
+            font-size: 16px; font-weight: bold;
+            cursor: pointer; font-family: Tahoma, sans-serif;
             transition: 0.3s;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
+            display: inline-flex; align-items: center; gap: 8px;
         }
         .enroll-btn:hover {
             transform: translateY(-3px);
@@ -120,165 +97,222 @@
             background: linear-gradient(135deg, #22c55e, #16a34a);
         }
         .enroll-btn:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-            transform: none;
+            opacity: 0.6; cursor: not-allowed; transform: none;
         }
 
-        /* ===== بخش سرفصل ===== */
+        /* ===== سرفصل ===== */
         .section-title {
-            color: #f1f5f9;
-            font-size: 18px;
+            color: #f1f5f9; font-size: 18px;
             margin-bottom: 15px;
             border-bottom: 2px solid rgba(245, 158, 11, 0.3);
-            display: inline-block;
-            padding-bottom: 5px;
+            display: inline-block; padding-bottom: 5px;
         }
 
         .lessons-list {
             background: rgba(30, 41, 59, 0.85);
             backdrop-filter: blur(15px);
-            border-radius: 20px;
-            padding: 20px;
+            border-radius: 20px; padding: 20px;
             border: 1px solid rgba(255,255,255,0.05);
             margin-bottom: 25px;
         }
 
         .lesson-item {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 12px 15px;
-            border-radius: 12px;
-            margin-bottom: 8px;
+            display: flex; align-items: center;
+            gap: 12px; padding: 12px 15px;
+            border-radius: 12px; margin-bottom: 8px;
             background: rgba(15, 23, 42, 0.6);
             border: 1px solid rgba(255,255,255,0.05);
-            transition: 0.3s;
-            cursor: pointer;
+            transition: 0.3s; cursor: pointer;
         }
         .lesson-item:hover {
             background: rgba(15, 23, 42, 0.9);
             border-color: rgba(245, 158, 11, 0.3);
         }
-        .lesson-item.locked {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
+        .lesson-item.locked { opacity: 0.5; cursor: not-allowed; }
         .lesson-item.locked:hover {
             background: rgba(15, 23, 42, 0.6);
             border-color: rgba(255,255,255,0.05);
         }
 
         .lesson-number {
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
+            width: 30px; height: 30px; border-radius: 50%;
             background: rgba(245, 158, 11, 0.2);
-            color: #f59e0b;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 12px;
-            font-weight: bold;
-            flex-shrink: 0;
+            color: #f59e0b; display: flex;
+            align-items: center; justify-content: center;
+            font-size: 12px; font-weight: bold; flex-shrink: 0;
         }
         .lesson-item.completed .lesson-number {
-            background: rgba(34, 197, 94, 0.2);
-            color: #4ade80;
+            background: rgba(34, 197, 94, 0.2); color: #4ade80;
         }
         .lesson-item.locked .lesson-number {
-            background: rgba(100, 116, 139, 0.2);
-            color: #64748b;
+            background: rgba(100, 116, 139, 0.2); color: #64748b;
         }
 
         .lesson-info { flex: 1; }
         .lesson-title {
-            color: #f1f5f9;
-            font-size: 14px;
-            font-weight: bold;
-            margin-bottom: 3px;
+            color: #f1f5f9; font-size: 14px;
+            font-weight: bold; margin-bottom: 3px;
         }
-        .lesson-duration {
-            color: #94a3b8;
-            font-size: 11px;
-        }
-        .lesson-status {
-            font-size: 18px;
-            flex-shrink: 0;
-        }
+        .lesson-duration { color: #94a3b8; font-size: 11px; }
+        .lesson-status { font-size: 18px; flex-shrink: 0; }
 
         /* ===== پیشرفت ===== */
         .progress-section {
             background: rgba(30, 41, 59, 0.85);
             backdrop-filter: blur(15px);
-            border-radius: 20px;
-            padding: 20px;
+            border-radius: 20px; padding: 20px;
             border: 1px solid rgba(255,255,255,0.05);
             margin-bottom: 25px;
         }
         .progress-bar-container {
-            width: 100%;
-            height: 10px;
+            width: 100%; height: 10px;
             background: rgba(15, 23, 42, 0.8);
-            border-radius: 10px;
-            overflow: hidden;
-            margin: 10px 0;
+            border-radius: 10px; overflow: hidden; margin: 10px 0;
         }
         .progress-bar-fill {
             height: 100%;
             background: linear-gradient(90deg, #f59e0b, #d97706);
-            border-radius: 10px;
-            transition: width 0.5s ease;
+            border-radius: 10px; transition: width 0.5s ease;
         }
         .progress-text {
-            color: #94a3b8;
-            font-size: 13px;
-            display: flex;
-            justify-content: space-between;
+            color: #94a3b8; font-size: 13px;
+            display: flex; justify-content: space-between;
+        }
+
+        /* ===== فرم بازخورد ===== */
+        .feedback-section {
+            background: rgba(30, 41, 59, 0.85);
+            backdrop-filter: blur(15px);
+            border-radius: 20px; padding: 25px;
+            margin-bottom: 25px;
+            border: 1px solid rgba(245, 158, 11, 0.3);
+        }
+
+        .rating-stars {
+            display: flex; justify-content: center;
+            gap: 8px; margin: 20px 0; direction: ltr;
+        }
+        .rating-stars .star {
+            font-size: 40px; color: #475569;
+            cursor: pointer; transition: 0.2s; user-select: none;
+        }
+        .rating-stars .star:hover,
+        .rating-stars .star.active {
+            color: #f59e0b; transform: scale(1.1);
+        }
+
+        #feedbackComment, #suggestedTopic {
+            width: 100%; padding: 12px 15px;
+            border-radius: 12px; border: 2px solid #334155;
+            background: rgba(15, 23, 42, 0.8);
+            color: #fff; font-size: 14px;
+            font-family: Tahoma, sans-serif;
+            outline: none; resize: vertical;
+            margin-bottom: 15px; box-sizing: border-box;
+        }
+        #feedbackComment:focus, #suggestedTopic:focus {
+            border-color: #f59e0b;
+        }
+
+        .checkbox-wrapper {
+            display: flex; align-items: center;
+            gap: 10px; padding: 12px;
+            background: rgba(15, 23, 42, 0.6);
+            border-radius: 12px; margin-bottom: 15px;
+            cursor: pointer;
+        }
+        .checkbox-wrapper input[type="checkbox"] {
+            width: 20px; height: 20px;
+            accent-color: #f59e0b; cursor: pointer;
+        }
+        .checkbox-wrapper label {
+            color: #cbd5e1; font-size: 13px;
+            cursor: pointer; flex: 1;
+        }
+
+        .btn-submit-feedback {
+            width: 100%; padding: 14px;
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            color: #0f172a; border: none;
+            border-radius: 12px; font-size: 15px;
+            font-weight: bold; cursor: pointer;
+            font-family: Tahoma, sans-serif; transition: 0.3s;
+        }
+        .btn-submit-feedback:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(245, 158, 11, 0.4);
+        }
+
+        /* ===== نظرات ===== */
+        .ratings-section {
+            background: rgba(30, 41, 59, 0.85);
+            backdrop-filter: blur(15px);
+            border-radius: 20px; padding: 25px;
+            margin-bottom: 25px;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+        .ratings-summary {
+            text-align: center; padding: 20px;
+            background: rgba(15, 23, 42, 0.6);
+            border-radius: 15px; margin-bottom: 20px;
+        }
+        .avg-number {
+            color: #f59e0b; font-size: 42px; font-weight: bold;
+        }
+        .avg-stars {
+            color: #f59e0b; font-size: 24px; margin: 5px 0;
+        }
+        .avg-count { color: #94a3b8; font-size: 13px; }
+
+        .rating-item {
+            padding: 15px; background: rgba(15, 23, 42, 0.6);
+            border-radius: 12px; margin-bottom: 10px;
+            border-right: 3px solid #f59e0b;
+        }
+        .rating-header {
+            display: flex; justify-content: space-between;
+            align-items: center; margin-bottom: 8px;
+        }
+        .rating-stars-display { color: #f59e0b; font-size: 16px; }
+        .rating-date { color: #64748b; font-size: 11px; }
+        .rating-comment {
+            color: #cbd5e1; font-size: 13px;
+            line-height: 1.7; margin: 0;
+        }
+        .rating-advanced {
+            margin-top: 8px; padding: 8px 12px;
+            background: rgba(59, 130, 246, 0.15);
+            border-radius: 8px; color: #60a5fa; font-size: 12px;
         }
 
         /* ===== دکمه بازگشت ===== */
         .back-btn {
             display: inline-block;
             background: rgba(30, 41, 59, 0.7);
-            color: #94a3b8;
-            padding: 12px 25px;
-            border-radius: 12px;
-            text-decoration: none;
-            font-size: 14px;
-            border: 1px solid #334155;
-            transition: 0.3s;
-            margin-top: 10px;
+            color: #94a3b8; padding: 12px 25px;
+            border-radius: 12px; text-decoration: none;
+            font-size: 14px; border: 1px solid #334155;
+            transition: 0.3s; margin-top: 10px;
         }
-        .back-btn:hover {
-            background: #334155;
-            color: #fff;
-        }
+        .back-btn:hover { background: #334155; color: #fff; }
 
         .loading {
-            text-align: center;
-            padding: 50px 20px;
-            color: #94a3b8;
+            text-align: center; padding: 50px 20px; color: #94a3b8;
         }
 
         .message {
-            padding: 15px;
-            border-radius: 12px;
-            margin-bottom: 20px;
-            font-size: 14px;
-            text-align: center;
-            display: none;
+            padding: 15px; border-radius: 12px;
+            margin-bottom: 20px; font-size: 14px;
+            text-align: center; display: none;
         }
         .message.success {
             background: rgba(34, 197, 94, 0.2);
-            color: #4ade80;
-            border: 1px solid #22c55e;
+            color: #4ade80; border: 1px solid #22c55e;
             display: block;
         }
         .message.error {
             background: rgba(239, 68, 68, 0.2);
-            color: #f87171;
-            border: 1px solid #ef4444;
+            color: #f87171; border: 1px solid #ef4444;
             display: block;
         }
 
@@ -301,115 +335,71 @@
 
         // ===== اطلاعات دوره‌ها =====
         const coursesData = {
-            1: {
-                id: 1,
-                title: 'اقتصاد کلان و خرد',
-                desc: 'مفاهیم پایه اقتصاد، تورم، نرخ بهره و تأثیر آن‌ها بر بازارهای مالی. در این دوره یاد می‌گیرید که چطور اخبار اقتصادی بر قیمت‌ها تأثیر می‌گذارد.',
-                icon: '📊',
-                level: '🟢 مبتدی',
-                duration: '۲ ساعت',
-                lessons: [
-                    { title: 'مقدمه‌ای بر اقتصاد', duration: '۱۵ دقیقه' },
-                    { title: 'عرضه و تقاضا', duration: '۲۰ دقیقه' },
-                    { title: 'تورم و deflation', duration: '۱۸ دقیقه' },
-                    { title: 'نرخ بهره و تأثیر آن', duration: '۲۰ دقیقه' },
-                    { title: 'تولید ناخالص داخلی (GDP)', duration: '۱۵ دقیقه' },
-                    { title: 'بیکاری و اشتغال', duration: '۱۲ دقیقه' },
-                    { title: 'سیاست‌های پولی و مالی', duration: '۲۰ دقیقه' },
-                    { title: 'جمع‌بندی و آزمون', duration: '۱۰ دقیقه' }
-                ],
-                prerequisite: null
-            },
-            2: {
-                id: 2,
-                title: 'آشنایی با بازارهای مالی',
-                desc: 'بورس، فارکس، کریپتو، طلا و مسکن - هر بازار چطور کار می‌کند و کدام برای شما مناسب است؟',
-                icon: '💹',
-                level: '🟢 مبتدی',
-                duration: '۲ ساعت',
-                lessons: [
-                    { title: 'بازار بورس چیست؟', duration: '۱۵ دقیقه' },
-                    { title: 'بازار فارکس', duration: '۱۸ دقیقه' },
-                    { title: 'ارزهای دیجیتال', duration: '۲۰ دقیقه' },
-                    { title: 'طلا و فلزات گرانبها', duration: '۱۵ دقیقه' },
-                    { title: 'بازار مسکن و املاک', duration: '۱۲ دقیقه' },
-                    { title: 'مقایسه بازارها', duration: '۱۵ دقیقه' },
-                    { title: 'انتخاب بازار مناسب', duration: '۱۵ دقیقه' },
-                    { title: 'ریسک و بازدهی هر بازار', duration: '۱۵ دقیقه' },
-                    { title: 'مقدمات سرمایه‌گذاری', duration: '۱۸ دقیقه' },
-                    { title: 'جمع‌بندی و آزمون', duration: '۱۰ دقیقه' }
-                ],
-                prerequisite: 1
-            },
-            3: {
-                id: 3,
-                title: 'مبانی تحلیل تکنیکال',
-                desc: 'کندل‌ها، خط روند، حمایت و مقاومت - زبان نمودارها را یاد بگیرید و اولین تحلیل‌های خود را انجام دهید.',
-                icon: '📈',
-                level: '🟢 مبتدی',
-                duration: '۳ ساعت',
-                lessons: [
-                    { title: 'مقدمه تحلیل تکنیکال', duration: '۱۵ دقیقه' },
-                    { title: 'انواع نمودارها', duration: '۱۵ دقیقه' },
-                    { title: 'کندل استیک چیست؟', duration: '۲۰ دقیقه' },
-                    { title: 'الگوهای کندلی', duration: '۲۵ دقیقه' },
-                    { title: 'خط روند', duration: '۱۸ دقیقه' },
-                    { title: 'حمایت و مقاومت', duration: '۲۰ دقیقه' },
-                    { title: 'کانال‌ها', duration: '۱۵ دقیقه' },
-                    { title: 'شکست‌ها (Breakouts)', duration: '۱۸ دقیقه' },
-                    { title: 'حجم معاملات', duration: '۱۵ دقیقه' },
-                    { title: 'تایم فریم‌ها', duration: '۱۲ دقیقه' },
-                    { title: 'تمرین عملی', duration: '۲۰ دقیقه' },
-                    { title: 'جمع‌بندی و آزمون', duration: '۱۰ دقیقه' }
-                ],
-                prerequisite: 2
-            },
-            4: {
-                id: 4,
-                title: 'مدیریت ریسک مقدماتی',
-                desc: 'حد ضرر، حجم معامله و صندوق اضطراری - چطور سرمایه‌ات را حفظ کنی و از ضررهای بزرگ جلوگیری کنی.',
-                icon: '🛡️',
-                level: '🟢 مبتدی',
-                duration: '۲ ساعت',
-                lessons: [
-                    { title: 'چرا مدیریت ریسک؟', duration: '۱۵ دقیقه' },
-                    { title: 'حد ضرر (Stop Loss)', duration: '۱۸ دقیقه' },
-                    { title: 'حد سود (Take Profit)', duration: '۱۵ دقیقه' },
-                    { title: 'حجم معامله (Position Size)', duration: '۲۰ دقیقه' },
-                    { title: 'نسبت ریسک به ریوارد', duration: '۱۸ دقیقه' },
-                    { title: 'صندوق اضطراری', duration: '۱۵ دقیقه' },
-                    { title: 'تنوع‌بخشی', duration: '۱۵ دقیقه' },
-                    { title: 'جمع‌بندی و آزمون', duration: '۱۲ دقیقه' }
-                ],
-                prerequisite: 3
-            },
-            5: {
-                id: 5,
-                title: 'آشنایی با ارز دیجیتال',
-                desc: 'بیت‌کوین، اتریوم، بلاک‌چین و کیف پول‌ها - ورود به دنیای کریپتو با اطمینان.',
-                icon: '₿',
-                level: '🟢 مبتدی',
-                duration: '۳ ساعت',
-                lessons: [
-                    { title: 'بلاک‌چین چیست؟', duration: '۲۰ دقیقه' },
-                    { title: 'بیت‌کوین', duration: '۲۰ دقیقه' },
-                    { title: 'اتریوم و قراردادهای هوشمند', duration: '۲۰ دقیقه' },
-                    { title: 'سایر ارزهای دیجیتال', duration: '۱۸ دقیقه' },
-                    { title: 'کیف پول و امنیت', duration: '۲۰ دقیقه' },
-                    { title: 'صرافی‌ها و نحوه خرید', duration: '۲۰ دقیقه' },
-                    { title: 'استیبل‌کوین‌ها', duration: '۱۵ دقیقه' },
-                    { title: 'DeFi و Web3', duration: '۲۰ دقیقه' },
-                    { title: 'NFT چیست؟', duration: '۱۵ دقیقه' },
-                    { title: 'جمع‌بندی و آزمون', duration: '۱۵ دقیقه' }
-                ],
-                prerequisite: 4
-            }
+            1: { id: 1, title: 'اقتصاد کلان و خرد', desc: 'مفاهیم پایه اقتصاد، تورم، نرخ بهره و تأثیر آن‌ها بر بازارهای مالی', icon: '📊', level: '🟢 مبتدی', duration: '۲ ساعت', lessons: [
+                { title: 'مقدمه‌ای بر اقتصاد', duration: '۱۵ دقیقه' },
+                { title: 'عرضه و تقاضا', duration: '۲۰ دقیقه' },
+                { title: 'تورم و deflation', duration: '۱۸ دقیقه' },
+                { title: 'نرخ بهره و تأثیر آن', duration: '۲۰ دقیقه' },
+                { title: 'تولید ناخالص داخلی (GDP)', duration: '۱۵ دقیقه' },
+                { title: 'بیکاری و اشتغال', duration: '۱۲ دقیقه' },
+                { title: 'سیاست‌های پولی و مالی', duration: '۲۰ دقیقه' },
+                { title: 'جمع‌بندی و آزمون', duration: '۱۰ دقیقه' }
+            ], prerequisite: null },
+            2: { id: 2, title: 'آشنایی با بازارهای مالی', desc: 'بورس، فارکس، کریپتو، طلا و مسکن', icon: '💹', level: '🟢 مبتدی', duration: '۲ ساعت', lessons: [
+                { title: 'بازار بورس چیست؟', duration: '۱۵ دقیقه' },
+                { title: 'بازار فارکس', duration: '۱۸ دقیقه' },
+                { title: 'ارزهای دیجیتال', duration: '۲۰ دقیقه' },
+                { title: 'طلا و فلزات گرانبها', duration: '۱۵ دقیقه' },
+                { title: 'بازار مسکن و املاک', duration: '۱۲ دقیقه' },
+                { title: 'مقایسه بازارها', duration: '۱۵ دقیقه' },
+                { title: 'انتخاب بازار مناسب', duration: '۱۵ دقیقه' },
+                { title: 'ریسک و بازدهی هر بازار', duration: '۱۵ دقیقه' },
+                { title: 'مقدمات سرمایه‌گذاری', duration: '۱۸ دقیقه' },
+                { title: 'جمع‌بندی و آزمون', duration: '۱۰ دقیقه' }
+            ], prerequisite: 1 },
+            3: { id: 3, title: 'مبانی تحلیل تکنیکال', desc: 'کندل‌ها، خط روند، حمایت و مقاومت', icon: '📈', level: '🟢 مبتدی', duration: '۳ ساعت', lessons: [
+                { title: 'مقدمه تحلیل تکنیکال', duration: '۱۵ دقیقه' },
+                { title: 'انواع نمودارها', duration: '۱۵ دقیقه' },
+                { title: 'کندل استیک چیست؟', duration: '۲۰ دقیقه' },
+                { title: 'الگوهای کندلی', duration: '۲۵ دقیقه' },
+                { title: 'خط روند', duration: '۱۸ دقیقه' },
+                { title: 'حمایت و مقاومت', duration: '۲۰ دقیقه' },
+                { title: 'کانال‌ها', duration: '۱۵ دقیقه' },
+                { title: 'شکست‌ها (Breakouts)', duration: '۱۸ دقیقه' },
+                { title: 'حجم معاملات', duration: '۱۵ دقیقه' },
+                { title: 'تایم فریم‌ها', duration: '۱۲ دقیقه' },
+                { title: 'تمرین عملی', duration: '۲۰ دقیقه' },
+                { title: 'جمع‌بندی و آزمون', duration: '۱۰ دقیقه' }
+            ], prerequisite: 2 },
+            4: { id: 4, title: 'مدیریت ریسک مقدماتی', desc: 'حد ضرر، حجم معامله و صندوق اضطراری', icon: '🛡️', level: '🟢 مبتدی', duration: '۲ ساعت', lessons: [
+                { title: 'چرا مدیریت ریسک؟', duration: '۱۵ دقیقه' },
+                { title: 'حد ضرر (Stop Loss)', duration: '۱۸ دقیقه' },
+                { title: 'حد سود (Take Profit)', duration: '۱۵ دقیقه' },
+                { title: 'حجم معامله (Position Size)', duration: '۲۰ دقیقه' },
+                { title: 'نسبت ریسک به ریوارد', duration: '۱۸ دقیقه' },
+                { title: 'صندوق اضطراری', duration: '۱۵ دقیقه' },
+                { title: 'تنوع‌بخشی', duration: '۱۵ دقیقه' },
+                { title: 'جمع‌بندی و آزمون', duration: '۱۲ دقیقه' }
+            ], prerequisite: 3 },
+            5: { id: 5, title: 'آشنایی با ارز دیجیتال', desc: 'بیت‌کوین، اتریوم، بلاک‌چین و کیف پول‌ها', icon: '₿', level: '🟢 مبتدی', duration: '۳ ساعت', lessons: [
+                { title: 'بلاک‌چین چیست؟', duration: '۲۰ دقیقه' },
+                { title: 'بیت‌کوین', duration: '۲۰ دقیقه' },
+                { title: 'اتریوم و قراردادهای هوشمند', duration: '۲۰ دقیقه' },
+                { title: 'سایر ارزهای دیجیتال', duration: '۱۸ دقیقه' },
+                { title: 'کیف پول و امنیت', duration: '۲۰ دقیقه' },
+                { title: 'صرافی‌ها و نحوه خرید', duration: '۲۰ دقیقه' },
+                { title: 'استیبل‌کوین‌ها', duration: '۱۵ دقیقه' },
+                { title: 'DeFi و Web3', duration: '۲۰ دقیقه' },
+                { title: 'NFT چیست؟', duration: '۱۵ دقیقه' },
+                { title: 'جمع‌بندی و آزمون', duration: '۱۵ دقیقه' }
+            ], prerequisite: 4 }
         };
 
         let currentUser = null;
         let completedCourses = [];
         let inProgressCourses = [];
         let completedLessons = {};
+        let selectedRating = 0;
 
         // ===== بارگذاری =====
         async function init() {
@@ -439,26 +429,25 @@
                 return;
             }
 
-            renderCourse(coursesData[courseId]);
+            await renderCourse(coursesData[courseId]);
         }
 
         // ===== نمایش دوره =====
-        function renderCourse(course) {
+        async function renderCourse(course) {
+            const ratingsData = await loadCourseRatings(course.id);
+            
             const isCompleted = completedCourses.includes(course.id);
             const isInProgress = inProgressCourses.includes(course.id);
             const isEnrolled = isCompleted || isInProgress;
 
-            // بررسی پیشرفت
             const lessonCount = course.lessons.length;
             const completedCount = (completedLessons[course.id] || []).length;
             const progressPercent = lessonCount > 0 ? Math.round((completedCount / lessonCount) * 100) : 0;
 
-            // دکمه ثبت‌نام
             let enrollBtnHTML = '';
             if (isCompleted) {
                 enrollBtnHTML = `<button class="enroll-btn enrolled" disabled>✅ دوره تکمیل شده</button>`;
             } else if (isInProgress) {
-                // پیدا کردن اولین درس تکمیل نشده
                 const completedList = completedLessons[course.id] || [];
                 let nextLesson = 1;
                 for (let i = 1; i <= lessonCount; i++) {
@@ -472,7 +461,6 @@
                 enrollBtnHTML = `<button class="enroll-btn" onclick="enrollCourse(${course.id})">🎓 ثبت‌نام رایگان</button>`;
             }
 
-            // لیست دروس
             const lessonsHTML = course.lessons.map((lesson, index) => {
                 const lessonNum = index + 1;
                 const isLessonCompleted = (completedLessons[course.id] || []).includes(lessonNum);
@@ -507,6 +495,7 @@
                     <div class="course-meta">
                         <span>⏱️ ${course.duration}</span>
                         <span>📁 ${course.lessons.length} درس</span>
+                        ${ratingsData.count > 0 ? `<span>⭐ ${ratingsData.avg} (${ratingsData.count} نظر)</span>` : ''}
                     </div>
                     <div class="course-price">🎁 رایگان</div>
                     ${enrollBtnHTML}
@@ -535,55 +524,203 @@
                     ${lessonsHTML}
                 </div>
 
+                ${isCompleted ? renderFeedbackForm(course.id) : ''}
+
+                ${ratingsData.count > 0 ? renderRatings(ratingsData) : ''}
+
                 <div style="text-align: center; margin-top: 20px;">
                     <a href="courses.html" class="back-btn">⬅ بازگشت به لیست دوره‌ها</a>
                 </div>
             `;
         }
 
-        // ===== ثبت‌نام در دوره =====
+        // ===== بارگذاری امتیازات =====
+        async function loadCourseRatings(courseId) {
+            try {
+                const { data, error } = await supabaseClient
+                    .from('course_ratings')
+                    .select('rating, comment, needs_advanced_course, suggested_topic, created_at, user_id')
+                    .eq('course_id', courseId)
+                    .order('created_at', { ascending: false });
+
+                if (error || !data || data.length === 0) {
+                    return { avg: 0, count: 0, ratings: [] };
+                }
+
+                const avg = (data.reduce((sum, r) => sum + r.rating, 0) / data.length).toFixed(1);
+                return { avg: parseFloat(avg), count: data.length, ratings: data };
+
+            } catch (e) {
+                return { avg: 0, count: 0, ratings: [] };
+            }
+        }
+
+        // ===== فرم بازخورد =====
+        function renderFeedbackForm(courseId) {
+            return `
+                <div class="feedback-section">
+                    <div class="section-title">⭐ بازخورد شما</div>
+                    <p style="color: #94a3b8; font-size: 13px; margin-bottom: 15px;">
+                        شما این دوره را با موفقیت تکمیل کردید! لطفاً بازخورد خود را ثبت کنید.
+                    </p>
+
+                    <div class="rating-stars" id="ratingStars">
+                        <span class="star" onclick="setRating(1)">★</span>
+                        <span class="star" onclick="setRating(2)">★</span>
+                        <span class="star" onclick="setRating(3)">★</span>
+                        <span class="star" onclick="setRating(4)">★</span>
+                        <span class="star" onclick="setRating(5)">★</span>
+                    </div>
+
+                    <textarea id="feedbackComment" placeholder="نظر خود را بنویسید (اختیاری)..." rows="3"></textarea>
+
+                    <div class="checkbox-wrapper">
+                        <input type="checkbox" id="needsAdvanced" onchange="toggleTopicInput()">
+                        <label for="needsAdvanced">📚 آیا مایلید دوره تکمیلی این موضوع تهیه کنیم؟</label>
+                    </div>
+
+                    <div id="topicInputWrapper" style="display: none;">
+                        <textarea id="suggestedTopic" placeholder="چه موضوعی مدنظرتون هست؟" rows="2"></textarea>
+                    </div>
+
+                    <button class="btn-submit-feedback" onclick="submitFeedback(${courseId})">
+                        📤 ثبت بازخورد
+                    </button>
+
+                    <div class="message" id="feedbackMessage"></div>
+                </div>
+            `;
+        }
+
+        // ===== نمایش نظرات =====
+        function renderRatings(ratingsData) {
+            const ratingsHTML = ratingsData.ratings.map(r => {
+                const stars = '★'.repeat(r.rating) + '☆'.repeat(5 - r.rating);
+                const date = new Date(r.created_at).toLocaleDateString('fa-IR');
+                const showAdvanced = r.needs_advanced_course && r.suggested_topic;
+                
+                return `
+                    <div class="rating-item">
+                        <div class="rating-header">
+                            <span class="rating-stars-display">${stars}</span>
+                            <span class="rating-date">${date}</span>
+                        </div>
+                        ${r.comment ? `<p class="rating-comment">${escapeHtml(r.comment)}</p>` : ''}
+                        ${showAdvanced ? `<div class="rating-advanced">📚 پیشنهاد دوره تکمیلی: ${escapeHtml(r.suggested_topic)}</div>` : ''}
+                    </div>
+                `;
+            }).join('');
+
+            return `
+                <div class="ratings-section">
+                    <div class="section-title">💬 نظرات کاربران</div>
+                    <div class="ratings-summary">
+                        <div class="avg-number">${ratingsData.avg}</div>
+                        <div class="avg-stars">${'★'.repeat(Math.round(ratingsData.avg))}${'☆'.repeat(5 - Math.round(ratingsData.avg))}</div>
+                        <div class="avg-count">از ${ratingsData.count} نظر</div>
+                    </div>
+                    <div class="ratings-list">
+                        ${ratingsHTML}
+                    </div>
+                </div>
+            `;
+        }
+
+        function setRating(value) {
+            selectedRating = value;
+            const stars = document.querySelectorAll('#ratingStars .star');
+            stars.forEach((star, index) => {
+                if (index < value) {
+                    star.classList.add('active');
+                } else {
+                    star.classList.remove('active');
+                }
+            });
+        }
+
+        function toggleTopicInput() {
+            const checkbox = document.getElementById('needsAdvanced');
+            const wrapper = document.getElementById('topicInputWrapper');
+            wrapper.style.display = checkbox.checked ? 'block' : 'none';
+        }
+
+        async function submitFeedback(courseId) {
+            const message = document.getElementById('feedbackMessage');
+            
+            if (selectedRating === 0) {
+                message.textContent = '❌ لطفاً امتیاز خود را انتخاب کنید';
+                message.className = 'message error';
+                return;
+            }
+
+            const comment = document.getElementById('feedbackComment').value.trim();
+            const needsAdvanced = document.getElementById('needsAdvanced').checked;
+            const suggestedTopic = needsAdvanced ? document.getElementById('suggestedTopic').value.trim() : null;
+
+            try {
+                const { error } = await supabaseClient
+                    .from('course_ratings')
+                    .upsert({
+                        user_id: currentUser.id,
+                        course_id: courseId,
+                        rating: selectedRating,
+                        comment: comment || null,
+                        needs_advanced_course: needsAdvanced,
+                        suggested_topic: suggestedTopic
+                    }, {
+                        onConflict: 'user_id,course_id'
+                    });
+
+                if (error) {
+                    message.textContent = '❌ خطا: ' + error.message;
+                    message.className = 'message error';
+                    return;
+                }
+
+                message.textContent = '✅ بازخورد شما با موفقیت ثبت شد!';
+                message.className = 'message success';
+
+                setTimeout(() => {
+                    window.location.reload();
+                }, 2000);
+
+            } catch (e) {
+                message.textContent = '❌ خطای شبکه';
+                message.className = 'message error';
+            }
+        }
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
         async function enrollCourse(courseId) {
             try {
                 const newInProgress = [...inProgressCourses, courseId];
                 
                 const { error } = await supabaseClient.auth.updateUser({
-                    data: {
-                        in_progress_courses: newInProgress
-                    }
+                    data: { in_progress_courses: newInProgress }
                 });
 
                 if (error) {
-                    showMessage('❌ خطا در ثبت‌نام: ' + error.message, 'error');
+                    alert('❌ خطا در ثبت‌نام: ' + error.message);
                     return;
                 }
 
-                showMessage('✅ ثبت‌نام با موفقیت انجام شد! در حال انتقال به دوره...', 'success');
-                
                 inProgressCourses = newInProgress;
-                
-                setTimeout(() => {
-                    renderCourse(coursesData[courseId]);
-                }, 1500);
+                window.location.reload();
 
             } catch (e) {
-                showMessage('❌ خطای شبکه', 'error');
+                alert('❌ خطای شبکه');
             }
         }
 
-        // ===== شروع درس =====
         function startLesson(courseId, lessonNum) {
             window.location.href = `lesson.html?course=${courseId}&lesson=${lessonNum}`;
         }
 
-        // ===== نمایش پیام =====
-        function showMessage(text, type) {
-            const message = document.getElementById('message');
-            message.textContent = text;
-            message.className = 'message ' + type;
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-
-        // ===== راه‌اندازی =====
         init();
     </script>
 
