@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>آکادمی شمعدون | پنل تحلیلی بازار</title>
 
-    <!-- ===== PWA ===== -->
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#f59e0b">
     <link rel="apple-touch-icon" href="icon-192.png">
@@ -379,7 +378,6 @@
 
     <script src="https://s3.tradingview.com/tv.js"></script>
     <script>
-        // ===== Service Worker =====
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
                 navigator.serviceWorker.register('/My-First-Project/service-worker.js')
@@ -625,4 +623,5 @@
 
             try {
                 const cryptoRes = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum,solana&vs_currencies=usd');
-                const cryptoData = await cryptoRes
+                const cryptoData = await cryptoRes.json();
+                if (cryptoData.
