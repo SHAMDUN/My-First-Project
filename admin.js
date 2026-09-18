@@ -68,7 +68,6 @@ function switchTab(tabName, btn) {
     btn.classList.add('active');
 }
 
-// ============ Toast ============
 function showToast(msg, type = 'success') {
     const toast = document.getElementById('toast');
     toast.textContent = msg;
@@ -95,13 +94,8 @@ async function loadDashboard() {
         const { count: scoreCount, error: e4 } = await db.from('scores').select('*', { count: 'exact', head: true });
         document.getElementById('statScores').textContent = e4 ? 'خطا' : (scoreCount || 0);
 
-        const { count: commentCount, error: e5 } = await db.from('comments').select('*', { count: 'exact', head: true });
+        const { count: commentCount, error: e5 } = await db.from('course_ratings').select('*', { count: 'exact', head: true });
         document.getElementById('statComments').textContent = e5 ? 'خطا' : (commentCount || 0);
-
-        // چاپ خطاها توی کنسول
-        if (e1 || e2 || e3 || e4 || e5) {
-            console.log('Dashboard errors:', { e1, e2, e3, e4, e5 });
-        }
 
         await loadScoresChart();
     } catch (err) {
@@ -173,11 +167,11 @@ async function loadScoresChart() {
     });
 }
 
-// ============ نظرات ============
+// ============ نظرات (از جدول course_ratings) ============
 async function loadComments() {
     const container = document.getElementById('commentsList');
     const { data, error } = await db
-        .from('comments')
+        .from('course_ratings')
         .select('*')
         .order('created_at', { ascending: false });
 
@@ -197,19 +191,20 @@ async function loadComments() {
             <thead>
                 <tr>
                     <th>نظر</th>
-                    <th>موضوع</th>
-                    <th>وضعیت</th>
+                    <th>موضوع پیشنهادی</th>
+                    <th>نیاز به دوره پیشرفته</th>
+                    <th>تاریخ</th>
                     <th>عملیات</th>
                 </tr>
             </thead>
             <tbody>
                 ${data.map(c => `
                     <tr>
-                        <td>${escapeHtml(c.text || '')}</td>
-                        <td>${c.topic || '-'}</td>
-                        <td>${getStatusBadge(c.status)}</td>
+                        <td>${escapeHtml(c.comment || '')}</td>
+                        <td>${escapeHtml(c.suggested_topic || '-')}</td>
+                        <td>${c.needs_advanced_course === true ? '✅ بله' : '❌ خیر'}</td>
+                        <td>${formatDate(c.created_at)}</td>
                         <td>
-                            <button class="btn btn-small btn-success" onclick="updateCommentStatus(${c.id}, 'approved')">✅</button>
                             <button class="btn btn-small btn-danger" onclick="deleteComment(${c.id})">🗑️</button>
                         </td>
                     </tr>
@@ -219,25 +214,13 @@ async function loadComments() {
     `;
 }
 
-function getStatusBadge(status) {
-    if (status === 'approved') return '<span style="color:#4ade80;">✅ تأیید</span>';
-    if (status === 'rejected') return '<span style="color:#ef4444;">❌ رد</span>';
-    return '<span style="color:#f59e0b;">⏳ در انتظار</span>';
-}
-
-async function updateCommentStatus(id, status) {
-    const { error } = await db.from('comments').update({ status }).eq('id', id);
-    if (error) return showToast('خطا: ' + error.message, 'error');
-    showToast('وضعیت بروزرسانی شد');
-    loadComments();
-}
-
 async function deleteComment(id) {
     if (!confirm('مطمئنی می‌خوای این نظر رو حذف کنی؟')) return;
-    const { error } = await db.from('comments').delete().eq('id', id);
+    const { error } = await db.from('course_ratings').delete().eq('id', id);
     if (error) return showToast('خطا: ' + error.message, 'error');
     showToast('نظر حذف شد');
     loadComments();
+    loadDashboard();
 }
 
 // ============ دوره‌ها ============
@@ -249,8 +232,7 @@ async function loadCourses() {
         .order('id', { ascending: false });
 
     if (error) {
-        container.innerHTML = '<p style="color:#ef4444; padding:20px; text-align:center;">❌ خطا در بارگذاری دوره‌ها:<br><br>' + error.message + '<br><br>کد خطا: ' + error.code + '</p>';
-        console.error('loadCourses error:', error);
+        container.innerHTML = '<p style="color:#ef4444; padding:20px; text-align:center;">❌ خطا:<br>' + error.message + '</p>';
         return;
     }
 
@@ -354,8 +336,7 @@ async function loadLessons() {
         .order('order_num', { ascending: true });
 
     if (error) {
-        container.innerHTML = '<p style="color:#ef4444; padding:20px; text-align:center;">❌ خطا در بارگذاری دروس:<br><br>' + error.message + '<br><br>کد خطا: ' + error.code + '</p>';
-        console.error('loadLessons error:', error);
+        container.innerHTML = '<p style="color:#ef4444; padding:20px; text-align:center;">❌ خطا:<br>' + error.message + '</p>';
         return;
     }
 
@@ -462,6 +443,7 @@ async function deleteLesson(id) {
     if (error) return showToast('خطا: ' + error.message, 'error');
     showToast('درس حذف شد');
     loadLessons();
+    loadDashboard();
 }
 
 // ============ کاربران ============
@@ -473,8 +455,7 @@ async function loadUsers() {
         .order('created_at', { ascending: false });
 
     if (error) {
-        container.innerHTML = '<p style="color:#ef4444; padding:20px; text-align:center;">❌ خطا در بارگذاری کاربران:<br><br>' + error.message + '<br><br>کد خطا: ' + error.code + '</p>';
-        console.error('loadUsers error:', error);
+        container.innerHTML = '<p style="color:#ef4444; padding:20px; text-align:center;">❌ خطا:<br>' + error.message + '</p>';
         return;
     }
 
@@ -494,16 +475,16 @@ function renderUsers(users) {
             <thead>
                 <tr>
                     <th>ایمیل</th>
-                    <th>نام</th>
                     <th>نقش</th>
+                    <th>تاریخ عضویت</th>
                 </tr>
             </thead>
             <tbody>
                 ${users.map(u => `
                     <tr>
                         <td>${escapeHtml(u.email || '-')}</td>
-                        <td>${escapeHtml(u.full_name || '-')}</td>
                         <td>${u.role === 'admin' ? '<span style="color:#f59e0b;">👑 ادمین</span>' : 'کاربر'}</td>
+                        <td>${formatDate(u.created_at)}</td>
                     </tr>
                 `).join('')}
             </tbody>
@@ -515,8 +496,7 @@ function filterUsers() {
     const q = document.getElementById('userSearch').value.trim().toLowerCase();
     if (!q) return renderUsers(usersCache);
     const filtered = usersCache.filter(u => 
-        (u.email || '').toLowerCase().includes(q) ||
-        (u.full_name || '').toLowerCase().includes(q)
+        (u.email || '').toLowerCase().includes(q)
     );
     renderUsers(filtered);
 }
