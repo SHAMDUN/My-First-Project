@@ -100,6 +100,9 @@
             font-size: 15px;
             text-align: right;
             font-family: Tahoma, sans-serif;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
         .option:hover {
             background: rgba(15, 23, 42, 0.9);
@@ -111,6 +114,22 @@
             border-color: #f59e0b;
             color: #f1f5f9;
             font-weight: bold;
+        }
+        .option .checkbox {
+            width: 20px;
+            height: 20px;
+            border: 2px solid #64748b;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            font-size: 14px;
+        }
+        .option.selected .checkbox {
+            background: #f59e0b;
+            border-color: #f59e0b;
+            color: #0f172a;
         }
         .buttons { display: flex; gap: 10px; margin-top: 20px; }
         .btn {
@@ -165,15 +184,36 @@
         }
         .portfolio-title { color: #f1f5f9; font-size: 16px; font-weight: bold; margin-bottom: 15px; text-align: right; }
         .portfolio-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 12px 0;
+            padding: 14px 0;
             border-bottom: 1px dashed rgba(255,255,255,0.1);
         }
         .portfolio-item:last-child { border-bottom: none; }
+        .portfolio-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 6px;
+        }
         .portfolio-label { color: #cbd5e1; font-size: 14px; display: flex; align-items: center; gap: 8px; }
-        .portfolio-percent { color: #f59e0b; font-size: 16px; font-weight: bold; }
+        .portfolio-percent { color: #f59e0b; font-size: 17px; font-weight: bold; }
+        .portfolio-detail {
+            color: #94a3b8;
+            font-size: 12px;
+            padding-right: 28px;
+            line-height: 1.6;
+        }
+        .portfolio-bar {
+            height: 6px;
+            background: rgba(15, 23, 42, 0.8);
+            border-radius: 10px;
+            overflow: hidden;
+            margin-top: 8px;
+        }
+        .portfolio-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #f59e0b, #d97706);
+            border-radius: 10px;
+        }
         .loading { text-align: center; padding: 50px 20px; color: #94a3b8; }
         @media (max-width: 400px) {
             .question-text { font-size: 16px; }
@@ -199,11 +239,11 @@
         const SUPABASE_KEY = 'sb_publishable_R7tCe030dGeJ0IRWfcgxww_MgEfh95O';
         const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-        // ===== سوالات استاندارد (۱۵ سوال در ۴ بُعد) =====
+        // ===== سوالات استاندارد (۱۸ سوال در ۴ بُعد) =====
         const questions = [
             // --- بُعد ۱: توانایی ریسک (Capacity) ---
             {
-                q: "سن شما چقدر است؟",
+                q: "سن شما در چه محدوده‌ای است؟",
                 options: [
                     { text: "زیر ۳۰ سال", score: 4 },
                     { text: "۳۰ تا ۴۵ سال", score: 3 },
@@ -212,7 +252,7 @@
                 ]
             },
             {
-                q: "چند درصد از کل دارایی‌تان را وارد این سرمایه‌گذاری می‌کنید؟",
+                q: "چه درصدی از کل دارایی‌تان را به این سرمایه‌گذاری اختصاص می‌دهید؟",
                 options: [
                     { text: "کمتر از ۱۰٪", score: 4 },
                     { text: "۱۰ تا ۳۰٪", score: 3 },
@@ -221,7 +261,7 @@
                 ]
             },
             {
-                q: "چه مدت می‌خواهید سرمایه‌گذاری کنید؟",
+                q: "افق زمانی سرمایه‌گذاری شما چقدر است؟",
                 options: [
                     { text: "کمتر از ۱ سال", score: 1 },
                     { text: "۱ تا ۳ سال", score: 2 },
@@ -230,7 +270,7 @@
                 ]
             },
             {
-                q: "آیا صندوق اضطراری (پس‌انداز ۳-۶ ماه هزینه زندگی) دارید؟",
+                q: "آیا صندوق پس‌انداز اضطراری (معادل ۳ تا ۶ ماه هزینه زندگی) دارید؟",
                 options: [
                     { text: "خیر، ندارم", score: 1 },
                     { text: "بله، کمتر از ۳ ماه", score: 2 },
@@ -238,10 +278,19 @@
                     { text: "بله، بیش از ۶ ماه", score: 4 }
                 ]
             },
+            {
+                q: "چه مقدار از درآمد ماهانه‌تان را پس‌انداز می‌کنید؟",
+                options: [
+                    { text: "کمتر از ۱۰٪", score: 1 },
+                    { text: "۱۰ تا ۲۰٪", score: 2 },
+                    { text: "۲۰ تا ۳۰٪", score: 3 },
+                    { text: "بیش از ۳۰٪", score: 4 }
+                ]
+            },
 
             // --- بُعد ۲: تمایل به ریسک (Tolerance) ---
             {
-                q: "اگر سرمایه‌تان ۲۰٪ ضرر کند، چه می‌کنید؟",
+                q: "اگر سرمایه‌تان ۲۰٪ افت کند، واکنش شما چیست؟",
                 options: [
                     { text: "همه را می‌فروشم", score: 1 },
                     { text: "بخشی را می‌فروشم", score: 2 },
@@ -250,7 +299,7 @@
                 ]
             },
             {
-                q: "کدام سبد را ترجیح می‌دهید؟",
+                q: "کدام ترکیب بازدهی و ریسک را ترجیح می‌دهید؟",
                 options: [
                     { text: "سود ۵٪ با احتمال ضرر ۱٪", score: 1 },
                     { text: "سود ۱۰٪ با احتمال ضرر ۵٪", score: 2 },
@@ -259,7 +308,7 @@
                 ]
             },
             {
-                q: "واکنش شما به نوسانات شدید بازار چیست؟",
+                q: "در برابر نوسانات شدید بازار چه واکنشی نشان می‌دهید؟",
                 options: [
                     { text: "خیلی نگران می‌شوم", score: 1 },
                     { text: "کمی نگران می‌شوم", score: 2 },
@@ -268,7 +317,7 @@
                 ]
             },
             {
-                q: "هدف شما از سرمایه‌گذاری چیست؟",
+                q: "مهم‌ترین هدف شما از سرمایه‌گذاری چیست؟",
                 options: [
                     { text: "حفظ ارزش پول در برابر تورم", score: 1 },
                     { text: "درآمد ثابت ماهانه", score: 2 },
@@ -276,10 +325,19 @@
                     { text: "حداکثر سود در بلندمدت", score: 4 }
                 ]
             },
+            {
+                q: "اگر بازار سهام ۳۰٪ افت کند، چه می‌کنید؟",
+                options: [
+                    { text: "همه را می‌فروشم", score: 1 },
+                    { text: "بخشی را می‌فروشم", score: 2 },
+                    { text: "صبر می‌کنم", score: 3 },
+                    { text: "خرید پله‌ای می‌کنم", score: 4 }
+                ]
+            },
 
             // --- بُعد ۳: دانش و تجربه (Knowledge) ---
             {
-                q: "تجربه سرمایه‌گذاری شما چقدر است؟",
+                q: "سابقه سرمایه‌گذاری شما چقدر است؟",
                 options: [
                     { text: "هیچ تجربه‌ای ندارم", score: 1 },
                     { text: "کمتر از ۱ سال", score: 2 },
@@ -288,7 +346,7 @@
                 ]
             },
             {
-                q: "چقدر با بازارهای مالی آشنایی دارید؟",
+                q: "میزان آشنایی شما با بازارهای مالی چقدر است؟",
                 options: [
                     { text: "هیچ آشنایی ندارم", score: 1 },
                     { text: "فقط بازار طلا و ارز", score: 2 },
@@ -297,7 +355,7 @@
                 ]
             },
             {
-                q: "آیا با مفاهیمی مثل RSI، MACD و تحلیل تکنیکال آشنایی دارید؟",
+                q: "آیا با ابزارهای تحلیل تکنیکال (مثل RSI و MACD) آشنایی دارید؟",
                 options: [
                     { text: "خیر، اصلاً", score: 1 },
                     { text: "فقط اسم شنیدم", score: 2 },
@@ -306,7 +364,7 @@
                 ]
             },
             {
-                q: "آیا می‌دانید تنوع‌بخشی (Diversification) چیست؟",
+                q: "آیا مفهوم تنوع‌بخشی (Diversification) را می‌دانید و رعایت می‌کنید؟",
                 options: [
                     { text: "خیر، نمی‌دانم", score: 1 },
                     { text: "تا حدی می‌دانم", score: 2 },
@@ -314,24 +372,45 @@
                     { text: "بله، و استراتژی تنوع‌بخشی شخصی دارم", score: 4 }
                 ]
             },
+            {
+                q: "اگر یک سرمایه‌گذاری ۵۰٪ ضرر کند، چه می‌کنید؟",
+                options: [
+                    { text: "کاملاً ناامید می‌شوم و خارج می‌شوم", score: 1 },
+                    { text: "بخشی را نگه می‌دارم", score: 2 },
+                    { text: "تحلیل می‌کنم و تصمیم می‌گیرم", score: 3 },
+                    { text: "فرصت خرید می‌بینم", score: 4 }
+                ]
+            },
 
             // --- بُعد ۴: ترجیحات و اهداف (Preferences) ---
             {
-                q: "به کدام بازارها علاقه‌مند هستید؟ (چند گزینه می‌توانید انتخاب کنید)",
+                q: "به کدام بازارها علاقه‌مند هستید؟ (چند گزینه قابل انتخاب)",
+                multi: true,
                 options: [
-                    { text: "طلا و سکه", score: 1 },
-                    { text: "بورس ایران", score: 2 },
-                    { text: "ارز دیجیتال", score: 3 },
-                    { text: "فارکس", score: 4 }
+                    { text: "🥇 طلا و سکه", score: 1 },
+                    { text: "📊 بورس ایران", score: 2 },
+                    { text: "₿ ارز دیجیتال", score: 3 },
+                    { text: "💱 فارکس", score: 4 },
+                    { text: "🏠 مسکن و املاک", score: 2 },
+                    { text: "🏦 سپرده بانکی", score: 1 }
                 ]
             },
             {
-                q: "آیا نیاز به درآمد ثابت ماهانه دارید؟",
+                q: "آیا به درآمد ثابت ماهانه نیاز دارید؟",
                 options: [
                     { text: "بله، کاملاً", score: 1 },
                     { text: "تا حدی", score: 2 },
                     { text: "خیر، بیشتر رشد می‌خواهم", score: 3 },
                     { text: "خیر، فقط رشد بلندمدت", score: 4 }
+                ]
+            },
+            {
+                q: "ترجیح می‌دهید سرمایه‌گذاری‌تان چه مقدار نقدشوندگی داشته باشد؟",
+                options: [
+                    { text: "خیلی سریع (کمتر از ۱ هفته)", score: 4 },
+                    { text: "سریع (۱ تا ۴ هفته)", score: 3 },
+                    { text: "متوسط (۱ تا ۶ ماه)", score: 2 },
+                    { text: "بلندمدت (بیش از ۶ ماه)", score: 1 }
                 ]
             }
         ];
@@ -341,53 +420,120 @@
             conservative: {
                 title: "🛡️ محافظه‌کار",
                 icon: "🛡️",
-                range: [15, 28],
-                desc: "شما فردی محتاط و ریسک‌گریز هستید. اولویت شما حفظ سرمایه و جلوگیری از ضرر است. بهترین گزینه برای شما سرمایه‌گذاری در دارایی‌های کم‌ریسک مثل طلا و ارز است.",
+                range: [0, 32],
+                desc: "شما فردی محتاط و ریسک‌گریز هستید. اولویت شما حفظ سرمایه و جلوگیری از ضرر است. سبد شما ترکیبی از دارایی‌های کم‌ریسک و درآمد ثابت است.",
                 portfolio: [
-                    { label: "🥇 طلا و سکه", percent: "۷۰٪" },
-                    { label: "💵 ارز (دلار، یورو)", percent: "۲۰٪" },
-                    { label: "📊 سهام کم‌ریسک", percent: "۱۰٪" }
+                    { 
+                        label: "🏦 درآمد ثابت (صندوق‌های ETF)", 
+                        percent: "۵۰٪",
+                        detail: "صندوق‌های درآمد ثابت بورسی، سود روزشمار و نقدشوندگی بالا"
+                    },
+                    { 
+                        label: "🥇 فلزات گرانبها", 
+                        percent: "۱۰٪",
+                        detail: "۸۰٪ طلا (لنگر) + ۲۰٪ نقره (پوشش تورم)"
+                    },
+                    { 
+                        label: "💵 ارز (دلار، یورو)", 
+                        percent: "۲۵٪",
+                        detail: "ذخیره ارزش در برابر تورم"
+                    },
+                    { 
+                        label: "📊 سهام کم‌ریسک", 
+                        percent: "۱۵٪",
+                        detail: "سهام شرکت‌های بزرگ و باسابقه بورس"
+                    }
                 ]
             },
             balanced: {
                 title: "⚖️ متعادل",
                 icon: "⚖️",
-                range: [29, 40],
-                desc: "شما فردی متعادل هستید. هم به دنبال رشد سرمایه هستید و هم از ریسک زیاد دوری می‌کنید. ترکیبی از دارایی‌های امن و پر بازده برای شما مناسب است.",
+                range: [33, 46],
+                desc: "شما فردی متعادل هستید. هم به دنبال رشد سرمایه هستید و هم از ریسک زیاد دوری می‌کنید. سبد شما ترکیبی از درآمد ثابت، فلزات و سهام است.",
                 portfolio: [
-                    { label: "🥇 طلا و سکه", percent: "۴۰٪" },
-                    { label: "📊 سهام بورس", percent: "۳۰٪" },
-                    { label: "💵 ارز", percent: "۳۰٪" }
+                    { 
+                        label: "🏦 درآمد ثابت (صندوق‌های ETF)", 
+                        percent: "۳۰٪",
+                        detail: "پشتوانه سبد و تأمین نقدشوندگی"
+                    },
+                    { 
+                        label: "🥇 فلزات گرانبها", 
+                        percent: "۲۰٪",
+                        detail: "۷۰٪ طلا (لنگر) + ۳۰٪ نقره (تنوع صنعتی)"
+                    },
+                    { 
+                        label: "📊 سهام بورس", 
+                        percent: "۳۰٪",
+                        detail: "سهام شرکت‌های بزرگ و متوسط بورس"
+                    },
+                    { 
+                        label: "💵 ارز", 
+                        percent: "۲۰٪",
+                        detail: "دلار و یورو برای حفظ ارزش"
+                    }
                 ]
             },
             aggressive: {
                 title: "🚀 جسور",
                 icon: "🚀",
-                range: [41, 52],
-                desc: "شما فردی جسور و ریسک‌پذیر هستید. به دنبال بازدهی بالا هستید و نوسانات بازار شما را نمی‌ترساند. سهام و ارزهای دیجیتال می‌توانند گزینه‌های مناسبی باشند.",
+                range: [47, 58],
+                desc: "شما فردی جسور و ریسک‌پذیر هستید. به دنبال بازدهی بالا هستید و نوسانات بازار شما را نمی‌ترساند. سبد شما وزن بیشتری روی سهام و فلزات دارد.",
                 portfolio: [
-                    { label: "🥇 طلا و سکه", percent: "۲۰٪" },
-                    { label: "📊 سهام بورس", percent: "۶۰٪" },
-                    { label: "💵 ارز", percent: "۲۰٪" }
+                    { 
+                        label: "🏦 درآمد ثابت (صندوق‌های ETF)", 
+                        percent: "۱۵٪",
+                        detail: "حداقل نقدشوندگی و پشتوانه"
+                    },
+                    { 
+                        label: "🥇 فلزات گرانبها", 
+                        percent: "۳۰٪",
+                        detail: "۶۰٪ طلا (لنگر) + ۴۰٪ نقره (بازدهی بالاتر)"
+                    },
+                    { 
+                        label: "📊 سهام بورس", 
+                        percent: "۳۵٪",
+                        detail: "سهام رشد و شرکت‌های متوسط"
+                    },
+                    { 
+                        label: "💵 ارز و طلا", 
+                        percent: "۲۰٪",
+                        detail: "ارز برای حفظ ارزش در برابر تورم"
+                    }
                 ]
             },
             professional: {
                 title: "🎯 حرفه‌ای",
                 icon: "🎯",
-                range: [53, 60],
-                desc: "شما فردی حرفه‌ای و بسیار ریسک‌پذیر هستید. به دنبال حداکثر بازدهی هستید و از ریسک لذت می‌برید. ارزهای دیجیتال و سهام پرنوسان برای شما مناسب‌اند.",
+                range: [59, 72],
+                desc: "شما فردی حرفه‌ای و بسیار ریسک‌پذیر هستید. به دنبال حداکثر بازدهی هستید و از ریسک لذت می‌برید. سبد شما بیشترین وزن را روی سهام و ارز دیجیتال دارد.",
                 portfolio: [
-                    { label: "🥇 طلا و سکه", percent: "۱۰٪" },
-                    { label: "📊 سهام بورس", percent: "۵۰٪" },
-                    { label: "₿ ارز دیجیتال", percent: "۳۰٪" },
-                    { label: "💵 ارز", percent: "۱۰٪" }
+                    { 
+                        label: "🏦 درآمد ثابت (صندوق‌های ETF)", 
+                        percent: "۱۰٪",
+                        detail: "حداقل برای نقدشوندگی"
+                    },
+                    { 
+                        label: "🥇 فلزات گرانبها", 
+                        percent: "۴۰٪",
+                        detail: "۵۰٪ طلا (لنگر) + ۵۰٪ نقره (حداکثر وزن فلزات)"
+                    },
+                    { 
+                        label: "📊 سهام بورس", 
+                        percent: "۳۰٪",
+                        detail: "سهام رشد و شرکت‌های پرنوسان"
+                    },
+                    { 
+                        label: "₿ ارز دیجیتال", 
+                        percent: "۲۰٪",
+                        detail: "بیت‌کوین و اتریوم برای بازدهی بالا"
+                    }
                 ]
             }
         };
 
         let currentQuestion = 0;
         let answers = [];
-        let selectedOption = null;
+        let selectedOptions = [];
 
         async function init() {
             const { data: { session } } = await supabaseClient.auth.getSession();
@@ -412,15 +558,7 @@
                     <h2 class="result-title">شخصیت مالی شما: ${p.title}</h2>
                     <p class="result-subtitle">نتیجه‌ی تست قبلی شما</p>
                     <div class="result-description">${p.desc}</div>
-                    <div class="portfolio-section">
-                        <div class="portfolio-title">💼 سبد پیشنهادی:</div>
-                        ${p.portfolio.map(item => `
-                            <div class="portfolio-item">
-                                <span class="portfolio-label">${item.label}</span>
-                                <span class="portfolio-percent">${item.percent}</span>
-                            </div>
-                        `).join('')}
-                    </div>
+                    ${renderPortfolio(p.portfolio)}
                     <button class="btn btn-primary" onclick="resetTest()" style="width:100%;">
                         🔄 انجام مجدد تست
                     </button>
@@ -428,16 +566,47 @@
             `;
         }
 
+        function renderPortfolio(portfolio) {
+            return `
+                <div class="portfolio-section">
+                    <div class="portfolio-title">💼 سبد پیشنهادی برای شما:</div>
+                    ${portfolio.map(item => `
+                        <div class="portfolio-item">
+                            <div class="portfolio-header">
+                                <span class="portfolio-label">${item.label}</span>
+                                <span class="portfolio-percent">${item.percent}</span>
+                            </div>
+                            <div class="portfolio-detail">${item.detail}</div>
+                            <div class="portfolio-bar">
+                                <div class="portfolio-bar-fill" style="width: ${item.percent}"></div>
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+        }
+
         function resetTest() {
             currentQuestion = 0;
             answers = [];
-            selectedOption = null;
+            selectedOptions = [];
             renderQuestion();
         }
 
         function renderQuestion() {
             const q = questions[currentQuestion];
             const progress = ((currentQuestion) / questions.length) * 100;
+            
+            // بازیابی پاسخ قبلی
+            const prevAnswer = answers[currentQuestion];
+            if (q.multi && Array.isArray(prevAnswer)) {
+                selectedOptions = [...prevAnswer];
+            } else if (!q.multi && prevAnswer !== undefined) {
+                selectedOptions = [prevAnswer];
+            } else {
+                selectedOptions = [];
+            }
+
             document.getElementById('content').innerHTML = `
                 <div class="progress-container">
                     <div class="progress-info">
@@ -449,20 +618,21 @@
                     </div>
                 </div>
                 <div class="question-container">
-                    <div class="question-number">📝 سوال ${currentQuestion + 1}</div>
+                    <div class="question-number">📝 سوال ${currentQuestion + 1}${q.multi ? ' (چند گزینه)' : ''}</div>
                     <div class="question-text">${q.q}</div>
                     <div class="options">
                         ${q.options.map((opt, i) => `
-                            <button class="option" onclick="selectOption(${i}, ${opt.score})">
-                                ${opt.text}
-                            </button>
+                            <div class="option ${selectedOptions.includes(i) ? 'selected' : ''}" onclick="selectOption(${i})">
+                                <div class="checkbox">${selectedOptions.includes(i) ? '✓' : ''}</div>
+                                <span>${opt.text}</span>
+                            </div>
                         `).join('')}
                     </div>
                     <div class="buttons">
                         ${currentQuestion > 0 ? `
                             <button class="btn btn-secondary" onclick="prevQuestion()">⬅ قبلی</button>
                         ` : ''}
-                        <button class="btn btn-primary" id="nextBtn" onclick="nextQuestion()" disabled>
+                        <button class="btn btn-primary" id="nextBtn" onclick="nextQuestion()" ${selectedOptions.length === 0 ? 'disabled' : ''}>
                             ${currentQuestion === questions.length - 1 ? '🎯 مشاهده نتیجه' : 'بعدی ➡'}
                         </button>
                     </div>
@@ -470,68 +640,107 @@
             `;
         }
 
-        function selectOption(index, score) {
-            document.querySelectorAll('.option').forEach(o => o.classList.remove('selected'));
-            document.querySelectorAll('.option')[index].classList.add('selected');
-            selectedOption = { index, score };
-            document.getElementById('nextBtn').disabled = false;
+        function selectOption(index) {
+            const q = questions[currentQuestion];
+            
+            if (q.multi) {
+                if (selectedOptions.includes(index)) {
+                    selectedOptions = selectedOptions.filter(i => i !== index);
+                } else {
+                    selectedOptions.push(index);
+                }
+            } else {
+                selectedOptions = [index];
+            }
+            
+            document.querySelectorAll('.option').forEach((el, i) => {
+                if (selectedOptions.includes(i)) {
+                    el.classList.add('selected');
+                    el.querySelector('.checkbox').textContent = '✓';
+                } else {
+                    el.classList.remove('selected');
+                    el.querySelector('.checkbox').textContent = '';
+                }
+            });
+            
+            document.getElementById('nextBtn').disabled = selectedOptions.length === 0;
         }
 
         function nextQuestion() {
-            if (selectedOption === null) return;
-            answers[currentQuestion] = selectedOption.score;
+            if (selectedOptions.length === 0) return;
+            
+            const q = questions[currentQuestion];
+            if (q.multi) {
+                answers[currentQuestion] = [...selectedOptions];
+            } else {
+                answers[currentQuestion] = selectedOptions[0];
+            }
+
             if (currentQuestion === questions.length - 1) {
                 showResult();
             } else {
                 currentQuestion++;
-                selectedOption = answers[currentQuestion] ? { index: 0, score: answers[currentQuestion] } : null;
                 renderQuestion();
             }
         }
 
         function prevQuestion() {
             if (currentQuestion > 0) {
-                answers[currentQuestion] = selectedOption?.score || answers[currentQuestion];
+                const q = questions[currentQuestion];
+                if (q.multi) {
+                    answers[currentQuestion] = [...selectedOptions];
+                } else {
+                    answers[currentQuestion] = selectedOptions[0];
+                }
                 currentQuestion--;
-                selectedOption = answers[currentQuestion] ? { index: 0, score: answers[currentQuestion] } : null;
                 renderQuestion();
             }
         }
 
         async function showResult() {
-            const totalScore = answers.reduce((a, b) => a + b, 0);
+            let totalScore = 0;
+            let maxScore = 0;
+            
+            answers.forEach((ans, idx) => {
+                const q = questions[idx];
+                if (q.multi && Array.isArray(ans)) {
+                    const avgScore = ans.reduce((sum, i) => sum + q.options[i].score, 0) / ans.length;
+                    totalScore += avgScore;
+                    maxScore += 4;
+                } else {
+                    totalScore += q.options[ans].score;
+                    maxScore += 4;
+                }
+            });
+
+            const normalizedScore = Math.round((totalScore / maxScore) * 72);
+            
             let resultKey = 'conservative';
             for (const [key, p] of Object.entries(personalities)) {
-                if (totalScore >= p.range[0] && totalScore <= p.range[1]) {
+                if (normalizedScore >= p.range[0] && normalizedScore <= p.range[1]) {
                     resultKey = key;
                     break;
                 }
             }
             const p = personalities[resultKey];
+
             try {
                 await supabaseClient.auth.updateUser({
                     data: { 
                         personality_result: resultKey,
-                        personality_score: totalScore,
+                        personality_score: normalizedScore,
                         personality_date: new Date().toISOString()
                     }
                 });
             } catch (e) { console.log('خطا در ذخیره نتیجه'); }
+
             document.getElementById('content').innerHTML = `
                 <div class="result-container">
                     <div class="result-icon">${p.icon}</div>
                     <h2 class="result-title">شخصیت مالی شما: ${p.title}</h2>
-                    <p class="result-subtitle">امتیاز شما: ${totalScore} از ${questions.length * 4}</p>
+                    <p class="result-subtitle">امتیاز شما: ${normalizedScore} از ۱۰۰</p>
                     <div class="result-description">${p.desc}</div>
-                    <div class="portfolio-section">
-                        <div class="portfolio-title">💼 سبد پیشنهادی برای شما:</div>
-                        ${p.portfolio.map(item => `
-                            <div class="portfolio-item">
-                                <span class="portfolio-label">${item.label}</span>
-                                <span class="portfolio-percent">${item.percent}</span>
-                            </div>
-                        `).join('')}
-                    </div>
+                    ${renderPortfolio(p.portfolio)}
                     <div style="display:flex; gap:10px; margin-top:20px;">
                         <button class="btn btn-primary" onclick="resetTest()" style="flex:1;">
                             🔄 انجام مجدد
