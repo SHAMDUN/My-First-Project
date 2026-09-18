@@ -10,9 +10,13 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: Tahoma, sans-serif;
-            background-image: url('BG.png');
-            background-size: cover;
-            background-position: center;
+            background-color: #0f172a;
+            background-image: 
+                radial-gradient(circle at 0% 0%, rgba(245, 158, 11, 0.12) 0%, transparent 40%),
+                radial-gradient(circle at 100% 100%, rgba(59, 130, 246, 0.08) 0%, transparent 40%),
+                linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+            background-size: 100% 100%, 100% 100%, 50px 50px, 50px 50px;
             background-attachment: fixed;
             min-height: 100vh;
             direction: rtl;
@@ -133,12 +137,14 @@
         }
 
         .card {
-            background: rgba(255, 255, 255, 0.97);
+            background: rgba(30, 41, 59, 0.85);
+            backdrop-filter: blur(10px);
             padding: 25px;
             border-radius: 25px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
             text-align: center;
             margin-bottom: 20px;
+            border: 1px solid rgba(255,255,255,0.05);
         }
         .avatar {
             width: 120px;
@@ -149,17 +155,17 @@
             border: 4px solid #f7971e;
         }
         .avatar img { width: 100%; height: 100%; object-fit: cover; }
-        h1 { color: #222; font-size: 22px; margin: 10px 0 5px; }
-        .subtitle { color: #555; font-size: 15px; margin: 5px 0; }
+        h1 { color: #f1f5f9; font-size: 22px; margin: 10px 0 5px; }
+        .subtitle { color: #94a3b8; font-size: 15px; margin: 5px 0; }
 
         .info-box {
-            background: #eef2f7;
+            background: rgba(15, 23, 42, 0.6);
             padding: 12px;
             border-radius: 15px;
             margin: 15px 0;
             font-size: 17px;
             font-weight: bold;
-            color: #1a1a2e;
+            color: #f1f5f9;
         }
 
         /* ===== کارت‌های قیمت ===== */
@@ -173,14 +179,19 @@
             .price-grid { grid-template-columns: repeat(2, 1fr); }
         }
         .price-card {
-            background: #f8f9fc;
+            background: rgba(15, 23, 42, 0.6);
             padding: 12px;
             border-radius: 12px;
             border-right: 4px solid #f7971e;
             text-align: right;
+            transition: 0.3s;
         }
-        .price-card .label { font-size: 12px; color: #666; }
-        .price-card .value { font-size: 15px; font-weight: bold; color: #1a1a2e; margin-top: 5px; }
+        a .price-card:hover {
+            background: rgba(15, 23, 42, 0.9);
+            transform: translateY(-2px);
+        }
+        .price-card .label { font-size: 12px; color: #94a3b8; }
+        .price-card .value { font-size: 15px; font-weight: bold; color: #f1f5f9; margin-top: 5px; }
 
         .gold { border-right-color: #D4AF37; }
         .usd { border-right-color: #2E8B57; }
@@ -191,11 +202,13 @@
 
         /* ===== بخش چارت ===== */
         .chart-section {
-            background: rgba(255, 255, 255, 0.97);
+            background: rgba(30, 41, 59, 0.85);
+            backdrop-filter: blur(10px);
             border-radius: 25px;
             padding: 20px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
             margin-bottom: 20px;
+            border: 1px solid rgba(255,255,255,0.05);
         }
         .chart-header {
             display: flex;
@@ -205,16 +218,16 @@
             flex-wrap: wrap;
             gap: 10px;
         }
-        .chart-header h2 { color: #1e293b; font-size: 18px; }
+        .chart-header h2 { color: #f1f5f9; font-size: 18px; }
         .chart-tabs {
             display: flex;
             gap: 5px;
             flex-wrap: wrap;
         }
         .chart-tab {
-            background: #f1f5f9;
-            color: #64748b;
-            border: none;
+            background: rgba(15, 23, 42, 0.6);
+            color: #94a3b8;
+            border: 1px solid #334155;
             padding: 8px 14px;
             border-radius: 8px;
             font-size: 13px;
@@ -222,8 +235,9 @@
             cursor: pointer;
         }
         .chart-tab.active {
-            background: #1e293b;
-            color: #fff;
+            background: #f59e0b;
+            color: #0f172a;
+            border-color: #f59e0b;
         }
         #tvchart { width: 100%; height: 400px; }
 
@@ -234,7 +248,7 @@
             gap: 12px;
         }
         .management-card {
-            background: #f8f9fc;
+            background: rgba(15, 23, 42, 0.6);
             padding: 15px;
             border-radius: 12px;
             border-top: 3px solid #f7971e;
@@ -246,14 +260,14 @@
         }
         .management-card:hover {
             transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
         }
         .management-card .icon { font-size: 28px; margin-bottom: 8px; }
-        .management-card h3 { font-size: 14px; color: #1e293b; margin-bottom: 5px; }
-        .management-card p { font-size: 12px; color: #666; }
+        .management-card h3 { font-size: 14px; color: #f1f5f9; margin-bottom: 5px; }
+        .management-card p { font-size: 12px; color: #94a3b8; }
 
         .section-title {
-            color: #1e293b;
+            color: #f1f5f9;
             font-size: 18px;
             margin-bottom: 15px;
             border-bottom: 2px solid #f7971e;
@@ -328,10 +342,12 @@
                     <div class="label">◎ سولانا</div>
                     <div class="value" id="sol-price">در حال دریافت...</div>
                 </div>
-                <div class="price-card index">
-                    <div class="label">📊 شاخص کل بورس</div>
-                    <div class="value" id="index-price">در حال دریافت...</div>
-                </div>
+                <a href="bourse.html" style="text-decoration: none;">
+                    <div class="price-card index" style="cursor: pointer;">
+                        <div class="label">📊 شاخص کل بورس</div>
+                        <div class="value" id="index-price">در حال دریافت...</div>
+                    </div>
+                </a>
             </div>
         </div>
 
@@ -415,10 +431,10 @@
                 "symbol": symbol,
                 "interval": "60",
                 "timezone": "Asia/Tehran",
-                "theme": "light",
+                "theme": "dark",
                 "style": "1",
                 "locale": "fa_IR",
-                "toolbar_bg": "#f1f3f6",
+                "toolbar_bg": "#1e293b",
                 "enable_publishing": false,
                 "hide_side_toolbar": false,
                 "allow_symbol_change": true,
@@ -442,12 +458,14 @@
             try {
                 const indexRes = await fetch(`${TSETMC_API}/ClosingPrice/GetClosingPriceInfo/32097828799138957`);
                 const indexData = await indexRes.json();
-                if (indexData && indexData.closingPriceInfo) {
+                if (indexData && indexData.closingPriceInfo && indexData.closingPriceInfo.pClosing) {
                     const value = (parseInt(indexData.closingPriceInfo.pClosing) / 10).toLocaleString('fa-IR');
                     document.getElementById('index-price').textContent = value + ' واحد';
+                } else {
+                    document.getElementById('index-price').innerHTML = '← مشاهده در بورس';
                 }
             } catch (e) {
-                document.getElementById('index-price').textContent = '⚠️ خطا';
+                document.getElementById('index-price').innerHTML = '← مشاهده در بورس';
             }
 
             // ۲. قیمت ارز دیجیتال از CoinGecko
@@ -487,15 +505,13 @@
             let tickerHTML = '';
 
             try {
-                // شاخص کل
                 const indexRes = await fetch(`${TSETMC_API}/ClosingPrice/GetClosingPriceInfo/32097828799138957`);
                 const indexData = await indexRes.json();
-                if (indexData && indexData.closingPriceInfo) {
+                if (indexData && indexData.closingPriceInfo && indexData.closingPriceInfo.pClosing) {
                     const value = (parseInt(indexData.closingPriceInfo.pClosing) / 10).toLocaleString('fa-IR');
                     tickerHTML += `<span class="ticker-item">📊 شاخص کل: ${value}</span>`;
                 }
 
-                // ارز دیجیتال
                 const cryptoRes = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum,solana&vs_currencies=usd');
                 const cryptoData = await cryptoRes.json();
                 if (cryptoData.bitcoin) tickerHTML += `<span class="ticker-item">₿ بیت‌کوین: $${cryptoData.bitcoin.usd.toLocaleString('en-US')}</span>`;
@@ -507,8 +523,6 @@
             }
 
             if (!tickerHTML) tickerHTML = '<span class="ticker-item">⏳ در حال دریافت...</span>';
-            
-            // تکرار تیکر برای اسکرول بی‌نهایت
             document.getElementById('tickerContent').innerHTML = tickerHTML + tickerHTML + tickerHTML;
         }
 
