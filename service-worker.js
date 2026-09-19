@@ -1,55 +1,55 @@
-const CACHE_NAME = 'shamdun-academy-v2';
+// ==========================================
+// Service Worker - آکادمی شمعدون
+// ==========================================
+
+const CACHE_NAME = 'shamdun-v2'; // ← این عدد رو بعد از هر آپدیت عوض کن
+
 const urlsToCache = [
-    '/My-First-Project/',
-    '/My-First-Project/index.html',
-    '/My-First-Project/login.html',
-    '/My-First-Project/dashboard.html',
-    '/My-First-Project/courses.html',
-    '/My-First-Project/icon-192.png',
-    '/My-First-Project/icon-512.png',
-    '/My-First-Project/me.png',
-    '/My-First-Project/BG.png'
+  '/My-First-Project/',
+  '/My-First-Project/index.html',
+  '/My-First-Project/login.html',
+  '/My-First-Project/dashboard.html',
+  '/My-First-Project/courses.html',
+  '/My-First-Project/course-detail.html',
+  '/My-First-Project/lesson.html',
+  '/My-First-Project/admin.html',
+  '/My-First-Project/assistant.html',
+  '/My-First-Project/manifest.json',
+  '/My-First-Project/supabase-config.js',
+  '/My-First-Project/519.png'
 ];
 
-self.addEventListener('install', event => {
-    event.waitUntil(
-        caches.open(CACHE_NAME)
-            .then(cache => {
-                console.log('Cache opened');
-                return cache.addAll(urlsToCache);
-            })
-    );
-    self.skipWaiting();
+// نصب
+self.addEventListener('install', (event) => {
+  self.skipWaiting(); // ← نسخه جدید فوری فعال بشه
+  event.waitUntil(
+    caches.open(CACHE_NAME).then((cache) => {
+      return cache.addAll(urlsToCache);
+    })
+  );
 });
 
-self.addEventListener('activate', event => {
-    event.waitUntil(
-        caches.keys().then(cacheNames => {
-            return Promise.all(
-                cacheNames.map(cacheName => {
-                    if (cacheName !== CACHE_NAME) {
-                        return caches.delete(cacheName);
-                    }
-                })
-            );
-        })
-    );
-    self.clients.claim();
+// فعال‌سازی: پاک کردن کش‌های قدیمی
+self.addEventListener('activate', (event) => {
+  event.waitUntil(
+    caches.keys().then((names) =>
+      Promise.all(
+        names.filter(n => n !== CACHE_NAME).map(n => caches.delete(n))
+      )
+    ).then(() => self.clients.claim())
+  );
 });
 
-self.addEventListener('fetch', event => {
-    event.respondWith(
-        caches.match(event.request)
-            .then(response => {
-                if (response) {
-                    return response;
-                }
-                return fetch(event.request);
-            })
-            .catch(() => {
-                if (event.request.destination === 'document') {
-                    return caches.match('/My-First-Project/index.html');
-                }
-            })
-    );
+// fetch
+self.addEventListener('fetch', (event) => {
+  // برای درخواست‌های Supabase، کش نمی‌کنیم
+  if (event.request.url.includes('supabase.co')) {
+    return;
+  }
+
+  event.respondWith(
+    caches.match(event.request).then((response) => {
+      return response || fetch(event.request);
+    })
+  );
 });
