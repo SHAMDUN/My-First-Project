@@ -69,98 +69,11 @@
         .delay-3 { animation-delay: 0.3s; }
         .delay-4 { animation-delay: 0.4s; }
 
-        /* ============= Navbar ============= */
-        .navbar {
-            position: fixed;
-            top: 0; left: 0; right: 0;
-            background: rgba(10, 10, 15, 0.9);
-            backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(212, 175, 55, 0.15);
-            z-index: 1000;
-            padding: 12px 0;
-        }
-        .nav-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .nav-logo {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            text-decoration: none;
-        }
-        .nav-logo-img {
-            width: 40px; height: 40px;
-            border-radius: 50%;
-            border: 2px solid var(--gold);
-            object-fit: cover;
-        }
-        .nav-logo-text {
-            color: var(--gold);
-            font-size: 18px;
-            font-weight: 800;
-        }
-        .nav-links {
-            display: flex;
-            gap: 22px;
-            align-items: center;
-        }
-        .nav-links a {
-            color: var(--gray);
-            text-decoration: none;
-            font-size: 13px;
-            font-weight: 500;
-            transition: 0.3s;
-        }
-        .nav-links a:hover { color: var(--gold); }
-        .nav-actions {
-            display: flex;
-            gap: 10px;
-            align-items: center;
-        }
-        .nav-icon-btn {
-            width: 38px; height: 38px;
-            border-radius: 10px;
-            background: rgba(212, 175, 55, 0.08);
-            border: 1px solid rgba(212, 175, 55, 0.2);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--gold);
-            text-decoration: none;
-            font-size: 16px;
-            transition: 0.3s;
-            cursor: pointer;
-        }
-        .nav-icon-btn:hover {
-            background: rgba(212, 175, 55, 0.2);
-            transform: translateY(-2px);
-        }
-        .nav-admin-btn {
-            background: linear-gradient(135deg, #dc2626, #b91c1c);
-            color: #fff;
-            padding: 8px 16px;
-            border-radius: 10px;
-            text-decoration: none;
-            font-size: 12px;
-            font-weight: 700;
-            border: 1px solid rgba(239, 68, 68, 0.4);
-            transition: 0.3s;
-        }
-        .nav-admin-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(220, 38, 38, 0.4);
-        }
-
         /* ============= Main Container ============= */
         .main-container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 100px 20px 40px;
+            padding: 90px 20px 40px;
         }
 
         /* ============= Welcome Hero ============= */
@@ -831,27 +744,6 @@
 </head>
 <body>
 
-    <!-- Navbar -->
-    <nav class="navbar">
-        <div class="nav-container">
-            <a href="index.html" class="nav-logo">
-                <img src="519.png" alt="شمعدون" class="nav-logo-img">
-                <span class="nav-logo-text">شمعدون</span>
-            </a>
-            <div class="nav-links">
-                <a href="index.html">صفحه اصلی</a>
-                <a href="courses.html">دوره‌ها</a>
-                <a href="home.html">تحلیل زنده</a>
-                <a href="bourse.html">بورس</a>
-                <a href="assistant.html">دستیار</a>
-            </div>
-            <div class="nav-actions" id="navActions">
-                <a href="assistant.html" class="nav-icon-btn" title="دستیار هوشمند">🤖</a>
-                <a href="personality-test.html" class="nav-icon-btn" title="تست شخصیت">🎯</a>
-            </div>
-        </div>
-    </nav>
-
     <!-- Main Container -->
     <div class="main-container" id="content">
         <div class="loading">⏳ در حال بارگذاری...</div>
@@ -1268,9 +1160,6 @@
                 </div>
             `;
 
-            // دکمه ادمین در Navbar
-            if (isAdmin) {
-                document.getElementById('navActions').innerHTML += adminBtnHTML;
             }
         }
 
@@ -1395,10 +1284,14 @@
             });
         }
 
+        
         // ==========================================
         // راه‌اندازی
         // ==========================================
         loadProfile();
     </script>
+    
+    <!-- Navbar مشترک -->
+    <script src="navbar.js"></script>
 </body>
 </html>
