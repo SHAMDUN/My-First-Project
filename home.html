@@ -1255,11 +1255,28 @@
 
         function formatNumber(num, decimals = 0) {
             if (num === null || num === undefined || isNaN(num)) return '--';
-            const formatted = Number(num).toLocaleString('en-US', {
-                minimumFractionDigits: decimals,
-                maximumFractionDigits: decimals
-            });
-            return toPersianNumber(formatted);
+            try {
+                const n = Number(num);
+                if (isNaN(n)) return '--';
+        
+                let str;
+                if (decimals > 0) {
+                    str = n.toFixed(decimals);
+                } else {
+                    str = Math.round(n).toString();
+                }
+        
+                // جداکننده هزارگان
+                const parts = str.split('.');
+                parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+                str = parts.join('.');
+        
+                // تبدیل به فارسی
+                const persianDigits = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
+                return str.replace(/\d/g, d => persianDigits[d]);
+            } catch (e) {
+                return '--';
+            }
         }
 
         function escapeHtml(text) {
