@@ -44,7 +44,6 @@
         }
         @keyframes spin { to { transform: rotate(360deg); } }
 
-        /* ============= Navbar ============= */
         .sn-navbar {
             position: fixed;
             top: 0; left: 0; right: 0;
@@ -122,8 +121,6 @@
             border: 2px solid var(--gold);
             text-decoration: none;
         }
-
-        /* ============= Sidebar ============= */
         .sn-overlay {
             position: fixed;
             top: 0; left: 0; right: 0; bottom: 0;
@@ -206,7 +203,6 @@
         }
         .sn-logout { color: #f87171 !important; }
 
-        /* ============= Main ============= */
         .main-container {
             max-width: 1200px;
             margin: 0 auto;
@@ -228,7 +224,6 @@
         }
         .page-header p { color: var(--gray); font-size: 14px; }
 
-        /* ============= Tabs ============= */
         .news-tabs {
             display: flex;
             gap: 8px;
@@ -264,7 +259,6 @@
             box-shadow: 0 5px 20px rgba(212, 175, 55, 0.3);
         }
 
-        /* ============= News Grid ============= */
         .news-section { display: none; }
         .news-section.active { display: block; animation: fadeInUp 0.4s ease-out; }
 
@@ -376,7 +370,6 @@
             gap: 4px;
         }
 
-        /* ============= Loading ============= */
         .loading {
             text-align: center;
             padding: 60px 20px;
@@ -393,7 +386,6 @@
             margin: 0 auto 15px;
         }
 
-        /* ============= Dictionary ============= */
         .dict-section { display: none; }
         .dict-section.active { display: block; animation: fadeInUp 0.4s ease-out; }
 
@@ -457,7 +449,6 @@
             line-height: 1.8;
         }
 
-        /* ============= Footer ============= */
         .footer {
             text-align: center;
             padding: 30px 20px;
@@ -467,7 +458,6 @@
             margin-top: 40px;
         }
 
-        /* ============= Responsive ============= */
         @media (max-width: 600px) {
             .main-container { padding: 90px 15px 30px; }
             .page-header h1 { font-size: 26px; }
@@ -524,16 +514,12 @@
         </div>
     </aside>
 
-    <!-- Main Container -->
     <div class="main-container">
-
-        <!-- Page Header -->
         <div class="page-header">
             <h1>📰 اخبار اقتصادی</h1>
             <p>آخرین اخبار اقتصادی، بازار سرمایه، ارز و طلا و ارز دیجیتال</p>
         </div>
 
-        <!-- Tabs -->
         <div class="news-tabs">
             <button class="news-tab active" onclick="switchTab('all', this)">📰 همه اخبار</button>
             <button class="news-tab" onclick="switchTab('economy', this)">🏦 اقتصاد کلان</button>
@@ -543,42 +529,36 @@
             <button class="news-tab" onclick="switchTab('dict', this)">📚 دیکشنری اصطلاحات</button>
         </div>
 
-        <!-- All News -->
         <div class="news-section active" id="section-all">
             <div class="news-grid" id="newsGrid-all">
                 <div class="loading"><div class="spinner"></div>⏳ در حال دریافت اخبار...</div>
             </div>
         </div>
 
-        <!-- Economy News -->
         <div class="news-section" id="section-economy">
             <div class="news-grid" id="newsGrid-economy">
                 <div class="loading"><div class="spinner"></div>⏳ در حال فیلتر اخبار...</div>
             </div>
         </div>
 
-        <!-- Bourse News -->
         <div class="news-section" id="section-bourse">
             <div class="news-grid" id="newsGrid-bourse">
                 <div class="loading"><div class="spinner"></div>⏳ در حال فیلتر اخبار...</div>
             </div>
         </div>
 
-        <!-- Currency News -->
         <div class="news-section" id="section-currency">
             <div class="news-grid" id="newsGrid-currency">
                 <div class="loading"><div class="spinner"></div>⏳ در حال فیلتر اخبار...</div>
             </div>
         </div>
 
-        <!-- Crypto News -->
         <div class="news-section" id="section-crypto">
             <div class="news-grid" id="newsGrid-crypto">
                 <div class="loading"><div class="spinner"></div>⏳ در حال فیلتر اخبار...</div>
             </div>
         </div>
 
-        <!-- Dictionary Section -->
         <div class="dict-section" id="section-dict">
             <div class="dict-categories">
                 <button class="dict-cat-btn active" onclick="switchDictCat('economy', this)">🏦 اقتصاد کلان</button>
@@ -591,31 +571,20 @@
                 <div class="loading"><div class="spinner"></div></div>
             </div>
         </div>
-
     </div>
 
-    <!-- Footer -->
     <footer class="footer">
         © ۱۴۰۵ آکادمی شمعدون | تمامی حقوق محفوظ است
     </footer>
 
     <script>
-        // ==========================================
-        // تنظیمات
-        // ==========================================
         const ADMIN_EMAIL = 'beat.market.office@gmail.com';
         const SUPABASE_URL = 'https://jcwwilatvstjrohvhtss.supabase.co';
         const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Impjd3dpbGF0dnN0anJvaHZodHNzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODk3MDY4NTYsImV4cCI6MjEwNTI4Mjg1Nn0.eUC89RJy6-60nNGrSeYeDADzLxz-kWTGy4DbNGVi6MM';
         const EDGE_URL = 'https://jcwwilatvstjrohvhtss.supabase.co/functions/v1/bright-api';
 
-        // ==========================================
-        // متغیرهای جهانی
-        // ==========================================
         let allNews = [];
 
-        // ==========================================
-        // Navbar
-        // ==========================================
         function setupNavbar() {
             const hamburger = document.getElementById('snHamburger');
             const sidebar = document.getElementById('snSidebar');
@@ -682,9 +651,6 @@
             }
         }
 
-        // ==========================================
-        // ابزارها
-        // ==========================================
         function escapeHtml(text) {
             if (!text) return '';
             const div = document.createElement('div');
@@ -712,36 +678,37 @@
         }
 
         // ==========================================
-        // دسته‌بندی خبر
+        // دسته‌بندی سخت‌گیرانه - فقط اقتصادی
         // ==========================================
         function categorizeNews(title, description) {
             const text = (title + ' ' + description).toLowerCase();
 
-            // ارز دیجیتال
-            if (text.match(/بیت\s?کوین|اتریوم|ارز دیجیتال|رمزارز|بلاکچین|کریپتو|سولانا|ریپل|دوج/) ||
+            // ===== ارز دیجیتال =====
+            if (text.match(/بیت\s?کوین|اتریوم|ارز\s?دیجیتال|رمزارز|بلاکچین|کریپتو|سولانا|ریپل|دوج\s?کوین|استیبل\s?کوین|تتر|کیف\s?پول\s?دیجیتال|ماینر|استخراج\s?رمزارز/) ||
                 text.includes('crypto') || text.includes('bitcoin') || text.includes('blockchain')) {
                 return 'crypto';
             }
 
-            // ارز و طلا
-            if (text.match(/دلار|یورو|پوند|درهم|لیر|طلا|سکه|نقره|ارز|صرافی|انس/) ||
-                text.includes('usd') || text.includes('gold')) {
+            // ===== ارز و طلا =====
+            if (text.match(/قیمت\s?دلار|نرخ\s?دلار|قیمت\s?یورو|قیمت\s?طلا|قیمت\s?سکه|قیمت\s?نقره|بازار\s?ارز|بازار\s?طلا|صرافی|انس\s?طلا|حباب\s?طلا|نرخ\s?ارز|دلار\s?آزاد|طلا\s?۱۸|سکه\s?امامی|سکه\s?بهار|ارز\s?آمریکا|نرخ\s?تتر/) ||
+                text.includes('usd') || text.includes('xauusd')) {
                 return 'currency';
             }
 
-            // بورس
-            if (text.match(/بورس|سهام|شاخص|فرابورس|تالار|نماد|حق\s?تقدم|معامله\s?گر/) ||
-                text.includes('stock') || text.includes('market')) {
+            // ===== بازار سرمایه =====
+            if (text.match(/بورس|سهام|شاخص\s?کل|فرابورس|تالار\s?شیشه|حق\s?تقدم|معاملات\s?سهام|بازار\s?سرمایه|سود\s?سهام|eps|p\/e|نماد\s?بورس|شاخص\s?بورس|ارزش\s?معاملات/) ||
+                text.includes('stock market') || text.includes('بورس\s?تهران')) {
                 return 'bourse';
             }
 
-            // اقتصاد کلان
-            if (text.match(/اقتصاد|تورم|نقدینگی|بانک|نرخ\s?بهره|بدهی|بودجه|مالیات|صادرات|واردات|تولید|GDP|اشتغال|بیکاری/) ||
-                text.includes('economy') || text.includes('inflation')) {
+            // ===== اقتصاد کلان =====
+            if (text.match(/اقتصاد\s?کلان|تورم|نقدینگی|بانک\s?مرکزی|نرخ\s?بهره|بودجه\s?دولت|مالیات|صادرات|واردات|تولید\s?ناخالص|اشتغال|بیکاری|رکود\s?اقتصادی|رشد\s?اقتصادی|سیاست\s?پولی|سیاست\s?مالی|کسری\s?بودجه|یارانه|هدفمندی\s?یارانه|تسهیلات\s?بانکی|سود\s?بانکی|اعتبار|GDP|اقتصاد\s?ایران|اقتصاد\s?جهان|وزیر\s?اقتصاد/) ||
+                text.includes('gdp') || text.includes('inflation') || text.includes('economy')) {
                 return 'economy';
             }
 
-            return 'economy'; // پیش‌فرض
+            // ===== سایر (ورزش، سیاست، فرهنگ و...) → حذف کامل =====
+            return null;
         }
 
         function getCategoryLabel(cat) {
@@ -754,20 +721,12 @@
             return labels[cat] || '📰 خبر';
         }
 
-        // ==========================================
-        // پارس RSS
-        // ==========================================
         function parseRSS(xmlText) {
             try {
                 const parser = new DOMParser();
                 const xml = parser.parseFromString(xmlText, 'text/xml');
 
-                // چک خطا
-                const parseError = xml.querySelector('parsererror');
-                if (parseError) {
-                    console.error('XML parse error');
-                    return [];
-                }
+                if (xml.querySelector('parsererror')) return [];
 
                 const items = xml.querySelectorAll('item');
                 const news = [];
@@ -778,21 +737,23 @@
                     const description = item.querySelector('description')?.textContent || '';
                     const pubDate = item.querySelector('pubDate')?.textContent || '';
                     const category = item.querySelector('category')?.textContent || '';
-
-                    // استخراج عکس
                     const enclosure = item.querySelector('enclosure');
                     const imageUrl = enclosure?.getAttribute('url') || '';
 
                     if (title && link) {
-                        news.push({
-                            title: title.trim(),
-                            link: link.trim(),
-                            description: description.trim(),
-                            pubDate: pubDate.trim(),
-                            category: category.trim(),
-                            image: imageUrl,
-                            cat: categorizeNews(title, description)
-                        });
+                        const cat = categorizeNews(title, description);
+                        // فقط اگه توی دسته اقتصادی بود، اضافه کن
+                        if (cat !== null) {
+                            news.push({
+                                title: title.trim(),
+                                link: link.trim(),
+                                description: description.trim(),
+                                pubDate: pubDate.trim(),
+                                category: category.trim(),
+                                image: imageUrl,
+                                cat: cat
+                            });
+                        }
                     }
                 });
 
@@ -803,17 +764,12 @@
             }
         }
 
-        // ==========================================
-        // بارگذاری اخبار
-        // ==========================================
         async function loadNews() {
             const grids = ['all', 'economy', 'bourse', 'currency', 'crypto'];
 
             grids.forEach(g => {
                 const el = document.getElementById('newsGrid-' + g);
-                if (el) {
-                    el.innerHTML = '<div class="loading"><div class="spinner"></div>⏳ در حال دریافت اخبار از ایرنا...</div>';
-                }
+                if (el) el.innerHTML = '<div class="loading"><div class="spinner"></div>⏳ در حال دریافت اخبار...</div>';
             });
 
             try {
@@ -829,15 +785,12 @@
                 if (allNews.length === 0) {
                     grids.forEach(g => {
                         const el = document.getElementById('newsGrid-' + g);
-                        if (el) el.innerHTML = '<div class="loading">❌ خبری یافت نشد</div>';
+                        if (el) el.innerHTML = '<div class="loading">📭 خبر اقتصادی جدیدی یافت نشد</div>';
                     });
                     return;
                 }
 
-                // نمایش همه
-                renderNews('all', allNews.slice(0, 30));
-
-                // فیلترها
+                renderNews('all', allNews.slice(0, 40));
                 renderNews('economy', allNews.filter(n => n.cat === 'economy').slice(0, 30));
                 renderNews('bourse', allNews.filter(n => n.cat === 'bourse').slice(0, 30));
                 renderNews('currency', allNews.filter(n => n.cat === 'currency').slice(0, 30));
@@ -862,7 +815,7 @@
             }
 
             grid.innerHTML = newsList.map((n, idx) => `
-                <a href="${escapeHtml(n.link)}" target="_blank" rel="noopener" class="news-card" style="animation: fadeInUp 0.4s ease-out ${idx * 0.05}s backwards;">
+                <a href="${escapeHtml(n.link)}" target="_blank" rel="noopener" class="news-card" style="animation: fadeInUp 0.4s ease-out ${idx * 0.03}s backwards;">
                     ${n.image ? `
                         <div class="news-image">
                             <img src="${escapeHtml(n.image)}" alt="" onerror="this.parentElement.innerHTML='📰'">
@@ -876,7 +829,7 @@
                             <span class="date">⏰ ${formatDate(n.pubDate)}</span>
                         </div>
                         <div class="news-title">${escapeHtml(n.title)}</div>
-                        <div class="news-desc">${escapeHtml(n.description.substring(0, 180))}</div>
+                        <div class="news-desc">${escapeHtml(n.description.substring(0, 200))}</div>
                         <div class="news-footer">
                             <span class="news-category">${getCategoryLabel(n.cat)}</span>
                             <span class="news-read-more">مشاهده ←</span>
@@ -886,9 +839,6 @@
             `).join('');
         }
 
-        // ==========================================
-        // تب‌ها
-        // ==========================================
         function switchTab(tabId, btn) {
             document.querySelectorAll('.news-tab').forEach(t => t.classList.remove('active'));
             btn.classList.add('active');
@@ -918,7 +868,7 @@
                 { term: 'نماد', def: 'هر شرکت در بورس با یک نام کوتاه مشخص می‌شود. مثل «فولاد» و «شپنا».' },
                 { term: 'حق تقدم', def: 'حقی که به سهامداران فعلی داده می‌شود تا سهام جدید را با تخفیف بخرند.' },
                 { term: 'فرابورس', def: 'بازار خارج از بورس که شرایط پذیرش ساده‌تری دارد.' },
-                { term: 'P/E', def: 'نسبت قیمت سهام به سود هر سهم. نشون‌دهنده گران یا ارزان بودن سهم.' },
+                { term: 'P/E', def: 'نسبت قیمت سهام به سود هر سهم. نشان‌دهنده گران یا ارزان بودن سهم.' },
                 { term: 'EPS', def: 'سود هر سهم — کل سود شرکت تقسیم بر تعداد سهام.' },
                 { term: 'ارزش بازار', def: 'قیمت هر سهم ضرب در تعداد کل سهام شرکت.' },
                 { term: 'حجم مبنا', def: 'حداقل تعداد سهامی که باید در روز معامله بشه تا قیمت تغییر کنه.' },
@@ -947,8 +897,8 @@
                 { term: 'پرایس اکشن', def: 'روش تحلیل بر اساس حرکات قیمت و الگوهای کندلی، بدون استفاده از اندیکاتور.' },
                 { term: 'حمایت', def: 'سطحی که قیمت به آن می‌رسد و احتمال برگشت به بالا وجود دارد.' },
                 { term: 'مقاومت', def: 'سطحی که قیمت به آن می‌رسد و احتمال برگشت به پایین وجود دارد.' },
-                { term: 'خط روند', def: 'خطی که کف‌ها یا سقف‌های قیمت را به هم وصل می‌کند و جهت روند را نشون می‌دهد.' },
-                { term: 'کندل استیک', def: 'نمایش گرافیکی قیمت که شامل باز، بسته، بالا و پایین در یک دوره زمانیه.' },
+                { term: 'خط روند', def: 'خطی که کف‌ها یا سقف‌های قیمت را به هم وصل می‌کند و جهت روند را نشان می‌دهد.' },
+                { term: 'کندل استیک', def: 'نمایش گرافیکی قیمت که شامل باز، بسته، بالا و پایین در یک دوره زمانی است.' },
                 { term: 'RSI', def: 'اندیکاتوری که قدرت خرید و فروش را بین ۰ تا ۱۰۰ نشان می‌دهد. بالای ۷۰ اشباع خرید و زیر ۳۰ اشباع فروش.' },
                 { term: 'MACD', def: 'اندیکاتوری برای تشخیص روند و نقاط ورود و خروج از دو میانگین متحرک استفاده می‌کند.' },
                 { term: 'فیبوناچی', def: 'ابزاری برای پیدا کردن سطوح برگشت قیمت بر اساس نسبت‌های ریاضی.' },
@@ -973,9 +923,6 @@
             renderDict(cat);
         }
 
-        // ==========================================
-        // راه‌اندازی
-        // ==========================================
         document.addEventListener('DOMContentLoaded', async () => {
             setupNavbar();
             checkUser();
@@ -983,7 +930,6 @@
             await loadNews();
             renderDict('economy');
 
-            // آپدیت هر ۱۰ دقیقه
             setInterval(loadNews, 600000);
         });
     </script>
