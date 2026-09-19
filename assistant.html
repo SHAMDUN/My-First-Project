@@ -926,6 +926,12 @@
             // ساخت محتوای پیام
             let userContent = message;
             if (fileToSend) {
+                console.log('🔍 عکس:', {
+                    type: fileToSend.type,
+                    hasDataUrl: !!fileToSend.dataUrl,
+                    dataUrlLength: fileToSend.dataUrl ? fileToSend.dataUrl.length : 0,
+                    dataUrlStart: fileToSend.dataUrl ? fileToSend.dataUrl.substring(0, 30) : 'null'
+                }.);
                 if (fileToSend.type === 'image' && fileToSend.dataUrl) {
                     userContent = [
                         { type: 'text', text: message || 'این عکس رو تحلیل کن.' },
