@@ -26,7 +26,10 @@
             background-color: var(--bg-primary);
             background-image: 
                 radial-gradient(circle at 0% 0%, rgba(212, 175, 55, 0.08) 0%, transparent 40%),
-                radial-gradient(circle at 100% 100%, rgba(59, 130, 246, 0.06) 0%, transparent 40%);
+                radial-gradient(circle at 100% 100%, rgba(59, 130, 246, 0.06) 0%, transparent 40%),
+                linear-gradient(rgba(255, 255, 255, 0.015) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
+            background-size: 100% 100%, 100% 100%, 60px 60px, 60px 60px;
             background-attachment: fixed;
             color: var(--white);
             min-height: 100vh;
@@ -37,7 +40,221 @@
             from { opacity: 0; transform: translateY(30px); }
             to { opacity: 1; transform: translateY(0); }
         }
-        .main-container { max-width: 1200px; margin: 0 auto; padding: 30px 20px 40px; }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.3); }
+        }
+
+        /* ============= Navbar ============= */
+        .sn-navbar {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            background: rgba(10, 10, 15, 0.92);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(212, 175, 55, 0.15);
+            z-index: 9998;
+            padding: 12px 0;
+        }
+        .sn-navbar-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+        }
+        .sn-hamburger {
+            width: 42px; height: 42px;
+            border-radius: 12px;
+            background: rgba(212, 175, 55, 0.08);
+            border: 1px solid rgba(212, 175, 55, 0.25);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+            cursor: pointer;
+            padding: 0;
+            transition: 0.3s;
+        }
+        .sn-hamburger:hover {
+            background: rgba(212, 175, 55, 0.2);
+        }
+        .sn-hamburger span {
+            display: block;
+            width: 18px; height: 2px;
+            background: #d4af37;
+            border-radius: 2px;
+        }
+        .sn-brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            flex: 1;
+            justify-content: center;
+        }
+        .sn-brand-logo {
+            width: 38px; height: 38px;
+            border-radius: 50%;
+            border: 2px solid #d4af37;
+            object-fit: cover;
+        }
+        .sn-brand-text {
+            color: #d4af37;
+            font-size: 17px;
+            font-weight: 800;
+        }
+        .sn-user-area {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            min-width: 42px;
+            justify-content: flex-end;
+        }
+        .sn-login-btn {
+            color: #d4af37;
+            text-decoration: none;
+            font-size: 12px;
+            font-weight: 700;
+            padding: 9px 16px;
+            border-radius: 10px;
+            border: 1px solid rgba(212, 175, 55, 0.4);
+            background: rgba(212, 175, 55, 0.08);
+            transition: 0.3s;
+        }
+        .sn-login-btn:hover {
+            background: rgba(212, 175, 55, 0.2);
+        }
+        .sn-user-avatar {
+            width: 42px; height: 42px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #d4af37, #a8862a);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #0a0a0f;
+            font-weight: 900;
+            font-size: 15px;
+            border: 2px solid #d4af37;
+            text-decoration: none;
+            transition: 0.3s;
+        }
+        .sn-user-avatar:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.4);
+        }
+
+        /* ============= Overlay ============= */
+        .sn-overlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(5px);
+            z-index: 9999;
+            opacity: 0;
+            visibility: hidden;
+            transition: 0.3s;
+        }
+        .sn-overlay.show { opacity: 1; visibility: visible; }
+
+        /* ============= Sidebar ============= */
+        .sn-sidebar {
+            position: fixed;
+            top: 0;
+            right: -320px;
+            width: 300px;
+            height: 100vh;
+            background: linear-gradient(180deg, #14141c, #0a0a0f);
+            border-left: 1px solid rgba(212, 175, 55, 0.2);
+            z-index: 10000;
+            transition: right 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow-y: auto;
+            box-shadow: -10px 0 40px rgba(0, 0, 0, 0.5);
+        }
+        .sn-sidebar.show { right: 0; }
+        .sn-sidebar::-webkit-scrollbar { width: 4px; }
+        .sn-sidebar::-webkit-scrollbar-thumb {
+            background: rgba(212, 175, 55, 0.3);
+            border-radius: 10px;
+        }
+        .sn-sidebar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            border-bottom: 1px solid rgba(212, 175, 55, 0.15);
+            position: sticky;
+            top: 0;
+            background: #14141c;
+            z-index: 2;
+        }
+        .sn-sidebar-header .sn-brand {
+            justify-content: flex-start;
+        }
+        .sn-close {
+            background: rgba(239, 68, 68, 0.1);
+            color: #ef4444;
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            width: 34px; height: 34px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 16px;
+            font-family: inherit;
+            transition: 0.3s;
+        }
+        .sn-close:hover {
+            background: rgba(239, 68, 68, 0.2);
+        }
+        .sn-sidebar-content { padding: 15px; }
+        .sn-menu-section { display: flex; flex-direction: column; gap: 4px; }
+        .sn-menu-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 14px;
+            border-radius: 12px;
+            text-decoration: none;
+            color: #cbd5e1;
+            font-size: 14px;
+            font-weight: 600;
+            transition: 0.25s;
+            border: 1px solid transparent;
+        }
+        .sn-menu-item:hover {
+            background: rgba(212, 175, 55, 0.08);
+            color: #d4af37;
+            border-color: rgba(212, 175, 55, 0.2);
+            transform: translateX(-4px);
+        }
+        .sn-menu-item.active {
+            background: rgba(212, 175, 55, 0.15);
+            color: #d4af37;
+            border-color: rgba(212, 175, 55, 0.4);
+        }
+        .sn-menu-icon { font-size: 20px; width: 26px; text-align: center; }
+        .sn-menu-label { flex: 1; }
+        .sn-menu-divider {
+            height: 1px;
+            background: rgba(212, 175, 55, 0.15);
+            margin: 15px 0;
+        }
+        .sn-logout { color: #f87171 !important; }
+        .sn-logout:hover {
+            background: rgba(239, 68, 68, 0.1) !important;
+            color: #ef4444 !important;
+            border-color: rgba(239, 68, 68, 0.3) !important;
+        }
+
+        /* ============= Main Container ============= */
+        .main-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 90px 20px 40px;
+        }
+
+        /* ============= Welcome Hero ============= */
         .welcome-hero {
             background: linear-gradient(135deg, rgba(212, 175, 55, 0.1), rgba(59, 130, 246, 0.05));
             border: 1px solid rgba(212, 175, 55, 0.2);
@@ -71,12 +288,15 @@
         .streak-info { text-align: right; }
         .streak-value { color: var(--gold); font-size: 22px; font-weight: 900; line-height: 1; }
         .streak-label { color: var(--gray); font-size: 11px; margin-top: 3px; }
+
+        /* ============= Continue Card ============= */
         .continue-card {
             background: linear-gradient(135deg, var(--bg-card), var(--bg-secondary));
             border: 1px solid rgba(59, 130, 246, 0.3);
             border-radius: 20px;
             padding: 25px;
             margin-bottom: 24px;
+            box-shadow: 0 10px 40px rgba(59, 130, 246, 0.15);
         }
         .continue-header { display: flex; align-items: center; gap: 10px; margin-bottom: 18px; }
         .continue-icon {
@@ -97,7 +317,7 @@
         .continue-course-name { color: var(--white); font-size: 16px; font-weight: 800; margin-bottom: 4px; }
         .continue-lesson-name { color: var(--gray); font-size: 12px; }
         .continue-progress-bar { width: 100%; height: 8px; background: rgba(255, 255, 255, 0.05); border-radius: 10px; overflow: hidden; margin-bottom: 8px; }
-        .continue-progress-fill { height: 100%; background: linear-gradient(90deg, var(--blue), var(--gold)); border-radius: 10px; }
+        .continue-progress-fill { height: 100%; background: linear-gradient(90deg, var(--blue), var(--gold)); border-radius: 10px; transition: width 0.5s; }
         .continue-progress-info { display: flex; justify-content: space-between; color: var(--gray); font-size: 11px; }
         .continue-btn {
             width: 100%;
@@ -115,7 +335,14 @@
             gap: 8px;
             text-decoration: none;
             border: none;
+            transition: 0.3s;
         }
+        .continue-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(59, 130, 246, 0.5);
+        }
+
+        /* ============= Stats Grid ============= */
         .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-bottom: 24px; }
         .stat-card {
             background: linear-gradient(135deg, var(--bg-card), var(--bg-secondary));
@@ -123,10 +350,18 @@
             border-radius: 18px;
             padding: 20px;
             text-align: center;
+            transition: 0.3s;
+        }
+        .stat-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(212, 175, 55, 0.4);
+            box-shadow: 0 15px 40px rgba(212, 175, 55, 0.15);
         }
         .stat-icon { font-size: 32px; margin-bottom: 10px; }
         .stat-value { color: var(--gold); font-size: 28px; font-weight: 900; margin-bottom: 5px; }
         .stat-label { color: var(--gray); font-size: 12px; }
+
+        /* ============= Section ============= */
         .section {
             background: linear-gradient(135deg, var(--bg-card), var(--bg-secondary));
             border: 1px solid rgba(212, 175, 55, 0.1);
@@ -144,6 +379,9 @@
         }
         .section-title { color: var(--white); font-size: 16px; font-weight: 800; display: flex; align-items: center; gap: 8px; }
         .section-link { color: var(--gold); text-decoration: none; font-size: 12px; font-weight: 600; }
+        .section-link:hover { text-decoration: underline; }
+
+        /* ============= Course Item ============= */
         .course-item {
             display: flex;
             align-items: center;
@@ -153,8 +391,14 @@
             border-radius: 15px;
             margin-bottom: 12px;
             border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: 0.3s;
         }
         .course-item:last-child { margin-bottom: 0; }
+        .course-item:hover {
+            background: rgba(10, 10, 15, 0.8);
+            border-color: rgba(212, 175, 55, 0.3);
+            transform: translateX(-5px);
+        }
         .course-item-icon {
             width: 50px; height: 50px;
             border-radius: 12px;
@@ -163,6 +407,7 @@
             align-items: center;
             justify-content: center;
             font-size: 24px;
+            flex-shrink: 0;
         }
         .course-item-info { flex: 1; }
         .course-item-title { color: var(--white); font-size: 14px; font-weight: 700; margin-bottom: 8px; }
@@ -172,6 +417,8 @@
         .course-item-percent.done { color: var(--green); }
         .empty-state { text-align: center; padding: 30px 20px; color: var(--gray); font-size: 13px; }
         .empty-state a { color: var(--gold); text-decoration: none; font-weight: 700; }
+
+        /* ============= AI Suggestion ============= */
         .ai-suggestion {
             background: linear-gradient(135deg, rgba(212, 175, 55, 0.08), rgba(59, 130, 246, 0.05));
             border: 1px solid rgba(212, 175, 55, 0.25);
@@ -195,7 +442,14 @@
             text-decoration: none;
             font-size: 12px;
             font-weight: 800;
+            transition: 0.3s;
         }
+        .ai-suggestion-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(212, 175, 55, 0.4);
+        }
+
+        /* ============= Achievements ============= */
         .achievements-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
         .achievement {
             background: rgba(10, 10, 15, 0.5);
@@ -203,11 +457,14 @@
             border-radius: 12px;
             padding: 15px 10px;
             text-align: center;
+            transition: 0.3s;
         }
         .achievement.unlocked { border-color: rgba(212, 175, 55, 0.4); background: rgba(212, 175, 55, 0.05); }
         .achievement.locked { opacity: 0.4; }
         .achievement-icon { font-size: 28px; margin-bottom: 8px; }
         .achievement-title { color: var(--white); font-size: 11px; font-weight: 700; line-height: 1.4; }
+
+        /* ============= Quick Links ============= */
         .quick-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
         .quick-link {
             background: rgba(10, 10, 15, 0.5);
@@ -219,9 +476,17 @@
             align-items: center;
             gap: 12px;
             border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: 0.3s;
+        }
+        .quick-link:hover {
+            background: rgba(10, 10, 15, 0.8);
+            border-color: rgba(212, 175, 55, 0.3);
+            transform: translateY(-3px);
         }
         .quick-link-icon { font-size: 22px; }
         .quick-link-title { font-size: 13px; font-weight: 700; }
+
+        /* ============= Profile ============= */
         .profile-card {
             background: linear-gradient(135deg, var(--bg-card), var(--bg-secondary));
             border: 1px solid rgba(212, 175, 55, 0.15);
@@ -248,8 +513,10 @@
             font-weight: 900;
             color: var(--bg-primary);
             border: 3px solid var(--gold);
+            box-shadow: 0 0 30px rgba(212, 175, 55, 0.4);
+            flex-shrink: 0;
         }
-        .profile-info { flex: 1; }
+        .profile-info { flex: 1; min-width: 0; }
         .profile-name { color: var(--white); font-size: 18px; font-weight: 800; margin-bottom: 5px; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
         .profile-email { color: var(--gray); font-size: 12px; margin-bottom: 8px; word-break: break-all; }
         .profile-badges { display: flex; gap: 6px; flex-wrap: wrap; }
@@ -279,17 +546,28 @@
             font-size: 13px;
             font-weight: 700;
             cursor: pointer;
+            transition: 0.3s;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 6px;
+            text-decoration: none;
+        }
+        .profile-btn:hover {
+            background: rgba(10, 10, 15, 0.9);
+            border-color: rgba(212, 175, 55, 0.4);
+            color: var(--gold);
         }
         .profile-btn.danger { color: var(--red); border-color: rgba(239, 68, 68, 0.3); }
+        .profile-btn.danger:hover { background: rgba(239, 68, 68, 0.1); border-color: var(--red); color: #fca5a5; }
+
+        /* ============= Modal ============= */
         .modal-overlay {
             display: none;
             position: fixed;
             top: 0; left: 0; right: 0; bottom: 0;
             background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(5px);
             z-index: 9999;
             align-items: center;
             justify-content: center;
@@ -316,6 +594,11 @@
             outline: none;
             margin-bottom: 12px;
             font-family: 'Vazirmatn', Tahoma, sans-serif;
+            transition: 0.3s;
+        }
+        .modal-input:focus {
+            border-color: var(--gold);
+            box-shadow: 0 0 0 4px rgba(212, 175, 55, 0.1);
         }
         .modal-buttons { display: flex; gap: 10px; margin-top: 18px; }
         .modal-btn {
@@ -327,25 +610,87 @@
             font-size: 13px;
             font-weight: 700;
             cursor: pointer;
+            transition: 0.3s;
         }
         .modal-btn.primary { background: linear-gradient(135deg, var(--gold), var(--gold-dark)); color: var(--bg-primary); }
+        .modal-btn.primary:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(212, 175, 55, 0.4); }
         .modal-btn.secondary { background: rgba(10, 10, 15, 0.6); color: var(--white); border: 1px solid rgba(255, 255, 255, 0.1); }
+        .modal-btn.secondary:hover { background: rgba(10, 10, 15, 0.9); }
         .message { padding: 10px 14px; border-radius: 10px; margin-bottom: 12px; font-size: 12px; text-align: center; display: none; }
         .message.success { background: rgba(16, 185, 129, 0.15); color: var(--green); border: 1px solid rgba(16, 185, 129, 0.4); display: block; }
         .message.error { background: rgba(239, 68, 68, 0.15); color: var(--red); border: 1px solid rgba(239, 68, 68, 0.4); display: block; }
         .loading { text-align: center; padding: 100px 20px; color: var(--gray); font-size: 16px; }
         .footer { text-align: center; padding: 25px 20px; color: var(--gray); font-size: 12px; border-top: 1px solid rgba(212, 175, 55, 0.1); }
+
+        /* ============= ریسپانسیو ============= */
+        @media (max-width: 900px) {
+            .stats-grid { gap: 10px; }
+            .stat-card { padding: 15px 10px; }
+            .stat-value { font-size: 22px; }
+            .achievements-grid { grid-template-columns: repeat(2, 1fr); }
+        }
         @media (max-width: 600px) {
+            .main-container { padding: 90px 15px 30px; }
+            .welcome-hero { flex-direction: column; align-items: flex-start; padding: 20px; }
+            .welcome-text h1 { font-size: 20px; }
             .stats-grid { grid-template-columns: 1fr; }
             .quick-grid { grid-template-columns: 1fr; }
             .profile-actions { flex-direction: column; }
             .profile-header { flex-direction: column; text-align: center; }
-            .achievements-grid { grid-template-columns: repeat(2, 1fr); }
+            .profile-name { justify-content: center; }
+            .sn-sidebar { width: 280px; right: -300px; }
         }
     </style>
 </head>
 <body>
 
+    <!-- Navbar -->
+    <nav class="sn-navbar">
+        <div class="sn-navbar-container">
+            <button class="sn-hamburger" id="snHamburger" aria-label="منو">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <a href="index.html" class="sn-brand">
+                <img src="519.png" alt="شمعدون" class="sn-brand-logo">
+                <span class="sn-brand-text">شمعدون</span>
+            </a>
+            <div class="sn-user-area" id="snUserArea">
+                <a href="login.html" class="sn-login-btn">ورود</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="sn-overlay" id="snOverlay"></div>
+
+    <aside class="sn-sidebar" id="snSidebar">
+        <div class="sn-sidebar-header">
+            <a href="index.html" class="sn-brand" style="justify-content:flex-start;">
+                <img src="519.png" alt="شمعدون" class="sn-brand-logo">
+                <span class="sn-brand-text">شمعدون</span>
+            </a>
+            <button class="sn-close" id="snClose">✕</button>
+        </div>
+        <div class="sn-sidebar-content">
+            <div class="sn-menu-section">
+                <a href="index.html" class="sn-menu-item"><span class="sn-menu-icon">🏠</span><span class="sn-menu-label">صفحه اصلی</span></a>
+                <a href="home.html" class="sn-menu-item"><span class="sn-menu-icon">📊</span><span class="sn-menu-label">نمای بازار</span></a>
+                <a href="bourse.html" class="sn-menu-item"><span class="sn-menu-icon">📈</span><span class="sn-menu-label">بورس ایران</span></a>
+                <a href="courses.html" class="sn-menu-item"><span class="sn-menu-icon">📚</span><span class="sn-menu-label">دوره‌های آموزشی</span></a>
+                <a href="personality-test.html" class="sn-menu-item"><span class="sn-menu-icon">🧠</span><span class="sn-menu-label">آزمون خودشناسی مالی</span></a>
+                <a href="assistant.html" class="sn-menu-item"><span class="sn-menu-icon">🤖</span><span class="sn-menu-label">دستیار هوشمند</span></a>
+            </div>
+            <div class="sn-menu-divider"></div>
+            <div class="sn-menu-section">
+                <a href="dashboard.html" class="sn-menu-item"><span class="sn-menu-icon">👤</span><span class="sn-menu-label">پنل کاربری</span></a>
+                <a href="admin.html" class="sn-menu-item" id="snAdminLink" style="display:none; color:#fca5a5;"><span class="sn-menu-icon">🎯</span><span class="sn-menu-label">پنل ادمین</span></a>
+                <a href="#" class="sn-menu-item sn-logout" id="snLogoutBtn" style="display:none;"><span class="sn-menu-icon">🚪</span><span class="sn-menu-label">خروج</span></a>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
     <div class="main-container" id="content">
         <div class="loading">⏳ در حال بارگذاری...</div>
     </div>
@@ -382,6 +727,9 @@
     </footer>
 
     <script>
+        // ==========================================
+        // تنظیمات
+        // ==========================================
         const SUPABASE_URL = 'https://jcwwilatvstjrohvhtss.supabase.co';
         const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Impjd3dpbGF0dnN0anJvaHZodHNzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODk3MDY4NTYsImV4cCI6MjEwNTI4Mjg1Nn0.eUC89RJy6-60nNGrSeYeDADzLxz-kWTGy4DbNGVi6MM';
         const ADMIN_EMAIL = 'beat.market.office@gmail.com';
@@ -397,10 +745,83 @@
 
         let currentUser = null;
 
-        function getCourseInfo(courseId) {
-            return staticCourses[courseId] || null;
+        // ==========================================
+        // Navbar
+        // ==========================================
+        function setupNavbar() {
+            const hamburger = document.getElementById('snHamburger');
+            const sidebar = document.getElementById('snSidebar');
+            const overlay = document.getElementById('snOverlay');
+            const closeBtn = document.getElementById('snClose');
+
+            hamburger.addEventListener('click', () => {
+                sidebar.classList.add('show');
+                overlay.classList.add('show');
+            });
+
+            closeBtn.addEventListener('click', () => {
+                sidebar.classList.remove('show');
+                overlay.classList.remove('show');
+            });
+
+            overlay.addEventListener('click', () => {
+                sidebar.classList.remove('show');
+                overlay.classList.remove('show');
+            });
+
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') {
+                    sidebar.classList.remove('show');
+                    overlay.classList.remove('show');
+                }
+            });
+
+            // هایلایت صفحه فعلی
+            const currentPath = window.location.pathname.split('/').pop() || 'index.html';
+            document.querySelectorAll('.sn-menu-item').forEach(item => {
+                if (item.getAttribute('href') === currentPath) {
+                    item.classList.add('active');
+                }
+            });
         }
 
+        function updateNavbarUser() {
+            if (!currentUser) return;
+
+            const fullName = currentUser.user_metadata?.full_name || currentUser.email || 'کاربر';
+            const firstLetter = fullName.charAt(0).toUpperCase();
+            const isAdmin = currentUser.email === ADMIN_EMAIL;
+
+            const userArea = document.getElementById('snUserArea');
+            if (userArea) {
+                userArea.innerHTML = `
+                    <a href="dashboard.html" class="sn-user-avatar" title="${escapeHtml(fullName)}">
+                        ${firstLetter}
+                    </a>
+                `;
+            }
+
+            const logoutBtn = document.getElementById('snLogoutBtn');
+            if (logoutBtn) {
+                logoutBtn.style.display = 'flex';
+                logoutBtn.addEventListener('click', async (e) => {
+                    e.preventDefault();
+                    if (confirm('می‌خوای خارج بشی؟')) {
+                        await supabaseClient.auth.signOut();
+                        window.location.href = 'login.html';
+                    }
+                });
+            }
+
+            if (isAdmin) {
+                const adminLink = document.getElementById('snAdminLink');
+                if (adminLink) adminLink.style.display = 'flex';
+            }
+        }
+
+        // ==========================================
+        // Load Profile
+        // ==========================================
         async function loadProfile() {
             try {
                 const { data: { session } } = await supabaseClient.auth.getSession();
@@ -410,6 +831,7 @@
                 }
 
                 currentUser = session.user;
+                updateNavbarUser();
 
                 const fullName = currentUser.user_metadata?.full_name || 'کاربر عزیز';
                 const email = currentUser.email;
@@ -429,10 +851,10 @@
                 let continueHTML = '';
                 if (inProgressCourses.length > 0) {
                     const firstId = inProgressCourses[0];
-                    const courseInfo = getCourseInfo(firstId);
-                    if (courseInfo) {
+                    const info = staticCourses[firstId];
+                    if (info) {
                         const completedCount = (completedLessons[firstId] || []).length;
-                        const percent = Math.round((completedCount / courseInfo.lessons) * 100);
+                        const percent = Math.round((completedCount / info.lessons) * 100);
                         const nextLesson = completedCount + 1;
                         continueHTML = `
                             <div class="continue-card">
@@ -445,17 +867,17 @@
                                 </div>
                                 <div class="continue-body">
                                     <div class="continue-course-info">
-                                        <div class="continue-course-icon">${courseInfo.icon}</div>
+                                        <div class="continue-course-icon">${info.icon}</div>
                                         <div class="continue-course-details">
-                                            <div class="continue-course-name">${courseInfo.title}</div>
-                                            <div class="continue-lesson-name">درس ${toPersianNum(nextLesson)} از ${toPersianNum(courseInfo.lessons)}</div>
+                                            <div class="continue-course-name">${info.title}</div>
+                                            <div class="continue-lesson-name">درس ${toPersianNum(nextLesson)} از ${toPersianNum(info.lessons)}</div>
                                         </div>
                                     </div>
                                     <div class="continue-progress-bar">
                                         <div class="continue-progress-fill" style="width: ${percent}%"></div>
                                     </div>
                                     <div class="continue-progress-info">
-                                        <span>${toPersianNum(completedCount)} از ${toPersianNum(courseInfo.lessons)} درس</span>
+                                        <span>${toPersianNum(completedCount)} از ${toPersianNum(info.lessons)} درس</span>
                                         <span>${toPersianNum(percent)}٪</span>
                                     </div>
                                 </div>
@@ -476,7 +898,7 @@
                     `;
                 } else {
                     completedCourses.forEach(courseId => {
-                        const info = getCourseInfo(courseId);
+                        const info = staticCourses[courseId];
                         if (info) {
                             myCoursesHTML += `
                                 <div class="course-item">
@@ -494,7 +916,7 @@
                     });
 
                     inProgressCourses.forEach(courseId => {
-                        const info = getCourseInfo(courseId);
+                        const info = staticCourses[courseId];
                         if (info) {
                             const completedCount = (completedLessons[courseId] || []).length;
                             const percent = Math.round((completedCount / info.lessons) * 100);
@@ -546,7 +968,6 @@
                     `;
                 }
 
-                // Render
                 document.getElementById('content').innerHTML = `
                     <div class="welcome-hero">
                         <div class="welcome-text">
@@ -640,7 +1061,7 @@
                         <div class="profile-actions">
                             <button class="profile-btn" onclick="openEditName()">✏️ ویرایش نام</button>
                             <button class="profile-btn" onclick="openChangePass()">🔒 تغییر رمز</button>
-                            ${isAdmin ? '<a href="admin.html" class="profile-btn" style="background: rgba(220,38,38,0.15); color:#fca5a5; border-color: rgba(220,38,38,0.4); text-decoration:none;">🎯 پنل ادمین</a>' : ''}
+                            ${isAdmin ? '<a href="admin.html" class="profile-btn" style="background: rgba(220,38,38,0.15); color:#fca5a5; border-color: rgba(220,38,38,0.4);">🎯 پنل ادمین</a>' : ''}
                             <button class="profile-btn danger" onclick="handleLogout()">🚪 خروج</button>
                         </div>
                     </div>
@@ -654,6 +1075,9 @@
             }
         }
 
+        // ==========================================
+        // Modal Functions
+        // ==========================================
         function openEditName() {
             const currentName = currentUser.user_metadata?.full_name || '';
             document.getElementById('editNameInput').value = currentName;
@@ -748,14 +1172,13 @@
             return String(num).replace(/\d/g, d => persianDigits[d]);
         }
 
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                navigator.serviceWorker.register('/My-First-Project/service-worker.js')
-                    .catch(error => console.log('SW failed:', error));
-            });
-        }
-
-        loadProfile();
+        // ==========================================
+        // راه‌اندازی
+        // ==========================================
+        document.addEventListener('DOMContentLoaded', () => {
+            setupNavbar();
+            loadProfile();
+        });
     </script>
 </body>
 </html>
