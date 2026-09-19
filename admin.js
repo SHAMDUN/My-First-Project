@@ -407,6 +407,11 @@ async function openLessonModal() {
     document.getElementById('lessonTitle').value = '';
     document.getElementById('lessonContent').value = '';
     document.getElementById('lessonVideo').value = '';
+    document.getElementById('lessonImage').value = '';
+    document.getElementById('lessonPdf').value = '';
+    document.getElementById('lessonWord').value = '';
+    document.getElementById('lessonPowerpoint').value = '';
+    document.getElementById('lessonNotes').value = '';
     document.getElementById('lessonOrder').value = '1';
 
     const select = document.getElementById('lessonCourse');
@@ -420,7 +425,6 @@ async function openLessonModal() {
     select.innerHTML = data.map(c => `<option value="${c.id}">${c.title}</option>`).join('');
     document.getElementById('lessonModal').classList.add('show');
 }
-
 async function editLesson(id) {
     const { data: lesson } = await db.from('lessons').select('*').eq('id', id).single();
     if (!lesson) return;
@@ -430,6 +434,11 @@ async function editLesson(id) {
     document.getElementById('lessonTitle').value = lesson.title || '';
     document.getElementById('lessonContent').value = lesson.content || '';
     document.getElementById('lessonVideo').value = lesson.video_url || '';
+    document.getElementById('lessonImage').value = lesson.image_url || '';
+    document.getElementById('lessonPdf').value = lesson.pdf_url || '';
+    document.getElementById('lessonWord').value = lesson.word_url || '';
+    document.getElementById('lessonPowerpoint').value = lesson.powerpoint_url || '';
+    document.getElementById('lessonNotes').value = lesson.notes_url || '';
     document.getElementById('lessonOrder').value = lesson.order_num || 1;
 
     const select = document.getElementById('lessonCourse');
@@ -447,11 +456,27 @@ async function saveLesson() {
     const title = document.getElementById('lessonTitle').value.trim();
     const content = document.getElementById('lessonContent').value.trim();
     const video_url = document.getElementById('lessonVideo').value.trim();
+    const image_url = document.getElementById('lessonImage').value.trim();
+    const pdf_url = document.getElementById('lessonPdf').value.trim();
+    const word_url = document.getElementById('lessonWord').value.trim();
+    const powerpoint_url = document.getElementById('lessonPowerpoint').value.trim();
+    const notes_url = document.getElementById('lessonNotes').value.trim();
     const order_num = parseInt(document.getElementById('lessonOrder').value) || 1;
 
     if (!title || !course_id) return showToast('عنوان و دوره الزامی است', 'error');
 
-    const payload = { course_id, title, content, video_url, order_num };
+    const payload = { 
+        course_id, 
+        title, 
+        content, 
+        video_url: video_url || null,
+        image_url: image_url || null,
+        pdf_url: pdf_url || null,
+        word_url: word_url || null,
+        powerpoint_url: powerpoint_url || null,
+        notes_url: notes_url || null,
+        order_num 
+    };
 
     let error;
     if (id) {
