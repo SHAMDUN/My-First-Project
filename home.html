@@ -595,7 +595,7 @@
             transition: 0.3s;
         }
         .fullscreen-btn:hover { background: var(--gold); color: var(--bg-primary); }
-        #tvchart { width: 100%; height: 400px; border-radius: 12px; overflow: hidden; }
+        #tvchart { width: 100%; height: 550px; border-radius: 12px; overflow: hidden; }
         .chart-fullscreen {
             position: fixed !important;
             top: 0 !important; left: 0 !important; right: 0 !important; bottom: 0 !important;
@@ -603,13 +603,30 @@
             height: 100vh !important;
             z-index: 999999 !important;
             background: var(--bg-primary) !important;
-            padding: 20px !important;
+            padding: 10px !important;
             margin: 0 !important;
             border-radius: 0 !important;
             display: flex !important;
             flex-direction: column !important;
+            overflow: hidden !important;
         }
-        .chart-fullscreen #tvchart { flex: 1 !important; height: auto !important; }
+        .chart-fullscreen .chart-header {
+            flex-shrink: 0 !important;
+            margin-bottom: 8px !important;
+        }
+        .chart-fullscreen .chart-header h2 {
+            display: none !important;
+        }
+        .chart-fullscreen .chart-tabs {
+            max-height: 60px !important;
+            overflow-y: auto !important;
+        }.  
+        .chart-fullscreen #tvchart {
+            flex: 1 !important;
+            height: auto !important;
+            min-height: 0 !important;
+            width: 100% !important;
+        }
 
         /* ============= CTA ============= */
         .cta-section {
@@ -680,7 +697,7 @@
             .main-container { padding: 130px 15px 30px; }
             .page-header h1 { font-size: 26px; }
             .price-grid { grid-template-columns: 1fr; }
-            #tvchart { height: 300px; }
+            #tvchart { height: 400px; }
             .chart-tab { font-size: 10px; padding: 5px 8px; }
             .sn-sidebar { width: 280px; right: -300px; }
             .market-tab { font-size: 11px; padding: 8px 12px; }
@@ -937,11 +954,6 @@
                     <div class="value" id="ounce-palladium-price">--</div>
                     <div class="change" id="ounce-palladium-change">--</div>
                 </div>
-                <div class="price-card silver999">
-                    <div class="label">🥈 نقره ۹۹۹ (گرم)</div>
-                    <div class="value" id="silver999-price">--</div>
-                    <div class="intrinsic-badge">قیمت ذاتی</div>
-                </div>
                 <div class="price-card platinum">
                     <div class="label">🔶 پلاتین (گرم)</div>
                     <div class="value" id="platinum-gram-price">--</div>
@@ -1095,7 +1107,10 @@
         <!-- Chart Section -->
         <div class="chart-section" id="chartSection">
             <div class="chart-header">
-                <h2>📈 چارت زنده بازار</h2>
+                <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
+                    <h2>📈 چارت زنده بازار</h2>
+                    <button class="fullscreen-btn" onclick="toggleFullscreen()" id="fullscreenBtn">⛶ تمام‌صفحه</button>
+                </div>
                 <div class="chart-tabs">
                     <button class="chart-tab active" onclick="switchChart('BINANCE:BTCUSDT', this)">₿ بیت‌کوین</button>
                     <button class="chart-tab" onclick="switchChart('BINANCE:ETHUSDT', this)">⟠ اتریوم</button>
@@ -1114,7 +1129,6 @@
                     <button class="chart-tab" onclick="switchChart('TVC:USOIL', this)">🛢️ WTI</button>
                     <button class="chart-tab" onclick="switchChart('COMEX:HG1!', this)">🟤 مس</button>
                     <button class="chart-tab" onclick="switchChart('NYMEX:NG1!', this)">⚡ گاز</button>
-                    <button class="fullscreen-btn" onclick="toggleFullscreen()" id="fullscreenBtn">⛶ تمام‌صفحه</button>
                 </div>
             </div>
             <div id="tvchart"></div>
