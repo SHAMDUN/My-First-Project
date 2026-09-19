@@ -1,368 +1,860 @@
 <!DOCTYPE html>
-<html lang="fa">
+<html lang="fa" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>پنل کاربری | آکادمی شمعدون</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css">
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
+        :root {
+            --bg-primary: #0a0a0f;
+            --bg-secondary: #14141c;
+            --bg-card: #1a1a24;
+            --gold: #d4af37;
+            --gold-light: #f4d47c;
+            --gold-dark: #a8862a;
+            --blue: #3b82f6;
+            --green: #10b981;
+            --red: #ef4444;
+            --white: #f8fafc;
+            --gray: #94a3b8;
+        }
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        
         body {
-            font-family: Tahoma, sans-serif;
-            background-color: #0f172a;
+            font-family: 'Vazirmatn', Tahoma, sans-serif;
+            background-color: var(--bg-primary);
             background-image: 
-                radial-gradient(circle at 0% 0%, rgba(245, 158, 11, 0.12) 0%, transparent 40%),
-                radial-gradient(circle at 100% 100%, rgba(59, 130, 246, 0.08) 0%, transparent 40%),
-                linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
-            background-size: 100% 100%, 100% 100%, 50px 50px, 50px 50px;
+                radial-gradient(circle at 0% 0%, rgba(212, 175, 55, 0.08) 0%, transparent 40%),
+                radial-gradient(circle at 100% 100%, rgba(59, 130, 246, 0.06) 0%, transparent 40%),
+                linear-gradient(rgba(255, 255, 255, 0.015) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
+            background-size: 100% 100%, 100% 100%, 60px 60px, 60px 60px;
             background-attachment: fixed;
+            color: var(--white);
             min-height: 100vh;
             direction: rtl;
-            padding: 20px 15px;
+            overflow-x: hidden;
         }
-
-        .container { max-width: 600px; margin: 0 auto; }
 
         @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(20px); }
+            from { opacity: 0; transform: translateY(30px); }
             to { opacity: 1; transform: translateY(0); }
         }
-
         @keyframes float {
             0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-5px); }
+            50% { transform: translateY(-8px); }
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.3); }
+        }
+        @keyframes shine {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
         }
 
-        .card {
-            background: rgba(30, 41, 59, 0.85);
-            backdrop-filter: blur(15px);
-            padding: 25px 20px;
-            border-radius: 25px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
-            border: 1px solid rgba(255,255,255,0.05);
-            margin-bottom: 20px;
-            animation: fadeInUp 0.6s ease-out;
+        .fade-up { animation: fadeInUp 0.8s ease-out backwards; }
+        .delay-1 { animation-delay: 0.1s; }
+        .delay-2 { animation-delay: 0.2s; }
+        .delay-3 { animation-delay: 0.3s; }
+        .delay-4 { animation-delay: 0.4s; }
+
+        /* ============= Navbar ============= */
+        .navbar {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            background: rgba(10, 10, 15, 0.9);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(212, 175, 55, 0.15);
+            z-index: 1000;
+            padding: 12px 0;
         }
-
-        .avatar-section { text-align: center; margin-bottom: 25px; }
-
-        .avatar-large {
-            width: 110px;
-            height: 110px;
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+        }
+        .nav-logo-img {
+            width: 40px; height: 40px;
             border-radius: 50%;
-            margin: 0 auto 15px;
-            background: linear-gradient(135deg, #f59e0b, #d97706);
+            border: 2px solid var(--gold);
+            object-fit: cover;
+        }
+        .nav-logo-text {
+            color: var(--gold);
+            font-size: 18px;
+            font-weight: 800;
+        }
+        .nav-links {
+            display: flex;
+            gap: 22px;
+            align-items: center;
+        }
+        .nav-links a {
+            color: var(--gray);
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 500;
+            transition: 0.3s;
+        }
+        .nav-links a:hover { color: var(--gold); }
+        .nav-actions {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+        .nav-icon-btn {
+            width: 38px; height: 38px;
+            border-radius: 10px;
+            background: rgba(212, 175, 55, 0.08);
+            border: 1px solid rgba(212, 175, 55, 0.2);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 48px;
-            color: #0f172a;
-            font-weight: bold;
-            border: 5px solid #f59e0b;
-            box-shadow: 0 0 40px rgba(245, 158, 11, 0.4);
-            animation: float 3s ease-in-out infinite;
+            color: var(--gold);
+            text-decoration: none;
+            font-size: 16px;
+            transition: 0.3s;
+            cursor: pointer;
         }
-
-        .user-name { color: #f1f5f9; font-size: 22px; font-weight: bold; margin-bottom: 5px; }
-        .user-email { color: #94a3b8; font-size: 14px; margin-bottom: 8px; }
-        .user-badge {
-            display: inline-block;
-            background: rgba(74, 222, 128, 0.15);
-            color: #4ade80;
+        .nav-icon-btn:hover {
+            background: rgba(212, 175, 55, 0.2);
+            transform: translateY(-2px);
+        }
+        .nav-admin-btn {
+            background: linear-gradient(135deg, #dc2626, #b91c1c);
+            color: #fff;
+            padding: 8px 16px;
+            border-radius: 10px;
+            text-decoration: none;
             font-size: 12px;
-            padding: 4px 14px;
-            border-radius: 20px;
-            border: 1px solid rgba(74, 222, 128, 0.3);
-        }
-
-        .section-title {
-            color: #f1f5f9;
-            font-size: 17px;
-            font-weight: bold;
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            padding-bottom: 10px;
-            border-bottom: 2px solid rgba(245, 158, 11, 0.3);
-        }
-
-        /* ===== آمار ===== */
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
-            margin-bottom: 10px;
-        }
-
-        .stat-card {
-            background: rgba(15, 23, 42, 0.6);
-            padding: 14px 8px;
-            border-radius: 12px;
-            text-align: center;
-            border: 1px solid rgba(255,255,255,0.05);
+            font-weight: 700;
+            border: 1px solid rgba(239, 68, 68, 0.4);
             transition: 0.3s;
         }
-        .stat-card:hover {
-            transform: translateY(-3px);
-            border-color: rgba(245, 158, 11, 0.3);
+        .nav-admin-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(220, 38, 38, 0.4);
         }
 
-        .stat-icon { font-size: 22px; margin-bottom: 5px; }
-        .stat-value { color: #f59e0b; font-size: 18px; font-weight: bold; margin-bottom: 3px; }
-        .stat-label { color: #94a3b8; font-size: 11px; }
-
-        /* ===== دوره‌های من ===== */
-        .my-courses-section {
-            background: rgba(15, 23, 42, 0.6);
-            padding: 15px;
-            border-radius: 15px;
-            margin-top: 15px;
+        /* ============= Main Container ============= */
+        .main-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 100px 20px 40px;
         }
 
-        .course-progress-item {
+        /* ============= Welcome Hero ============= */
+        .welcome-hero {
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.1), rgba(59, 130, 246, 0.05));
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            border-radius: 20px;
+            padding: 25px 30px;
+            margin-bottom: 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            animation: fadeInUp 0.6s ease-out;
+        }
+        .welcome-text h1 {
+            color: var(--white);
+            font-size: 24px;
+            font-weight: 900;
+            margin-bottom: 6px;
+        }
+        .welcome-text h1 .gold {
+            background: linear-gradient(135deg, var(--gold), var(--gold-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .welcome-text p {
+            color: var(--gray);
+            font-size: 13px;
+        }
+        .welcome-streak {
             display: flex;
             align-items: center;
             gap: 12px;
-            padding: 10px 0;
-            border-bottom: 1px dashed rgba(255,255,255,0.1);
+            background: rgba(20, 20, 28, 0.8);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            border-radius: 15px;
+            padding: 12px 20px;
         }
-        .course-progress-item:last-child {
-            border-bottom: none;
+        .streak-icon { font-size: 28px; }
+        .streak-info { text-align: right; }
+        .streak-value {
+            color: var(--gold);
+            font-size: 22px;
+            font-weight: 900;
+            line-height: 1;
+        }
+        .streak-label {
+            color: var(--gray);
+            font-size: 11px;
+            margin-top: 3px;
         }
 
-        .course-progress-icon {
-            width: 40px;
-            height: 40px;
-            border-radius: 10px;
-            background: rgba(245, 158, 11, 0.2);
+        /* ============= Continue Learning ============= */
+        .continue-card {
+            background: linear-gradient(135deg, var(--bg-card), var(--bg-secondary));
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            border-radius: 20px;
+            padding: 25px;
+            margin-bottom: 24px;
+            position: relative;
+            overflow: hidden;
+            animation: fadeInUp 0.6s ease-out 0.1s backwards;
+            box-shadow: 0 10px 40px rgba(59, 130, 246, 0.15);
+        }
+        .continue-card::before {
+            content: '';
+            position: absolute;
+            top: -50%; right: -50%;
+            width: 200%; height: 200%;
+            background: radial-gradient(circle, rgba(59, 130, 246, 0.08), transparent 60%);
+            pointer-events: none;
+        }
+        .continue-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 18px;
+            position: relative;
+            z-index: 2;
+        }
+        .continue-icon {
+            width: 42px; height: 42px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, var(--blue), #2563eb);
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 20px;
-            flex-shrink: 0;
+            box-shadow: 0 5px 20px rgba(59, 130, 246, 0.4);
         }
-
-        .course-progress-info {
-            flex: 1;
-            text-align: right;
+        .continue-title {
+            color: var(--white);
+            font-size: 16px;
+            font-weight: 800;
         }
-        .course-progress-title {
-            color: #f1f5f9;
-            font-size: 13px;
-            font-weight: bold;
+        .continue-subtitle {
+            color: var(--gray);
+            font-size: 11px;
+            margin-top: 2px;
+        }
+        .continue-body {
+            background: rgba(10, 10, 15, 0.5);
+            border-radius: 15px;
+            padding: 18px;
+            margin-bottom: 16px;
+            position: relative;
+            z-index: 2;
+        }
+        .continue-course-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+        .continue-course-icon {
+            font-size: 38px;
+        }
+        .continue-course-details { flex: 1; }
+        .continue-course-name {
+            color: var(--white);
+            font-size: 16px;
+            font-weight: 800;
             margin-bottom: 4px;
         }
-        .course-progress-bar {
+        .continue-lesson-name {
+            color: var(--gray);
+            font-size: 12px;
+        }
+        .continue-progress-bar {
             width: 100%;
-            height: 6px;
-            background: rgba(15, 23, 42, 0.8);
+            height: 8px;
+            background: rgba(255, 255, 255, 0.05);
             border-radius: 10px;
             overflow: hidden;
+            margin-bottom: 8px;
         }
-        .course-progress-fill {
+        .continue-progress-fill {
             height: 100%;
-            background: linear-gradient(90deg, #f59e0b, #d97706);
+            background: linear-gradient(90deg, var(--blue), var(--gold));
             border-radius: 10px;
             transition: width 0.5s;
         }
-        .course-progress-percent {
-            color: #f59e0b;
-            font-size: 12px;
-            font-weight: bold;
-            min-width: 40px;
-            text-align: left;
+        .continue-progress-info {
+            display: flex;
+            justify-content: space-between;
+            color: var(--gray);
+            font-size: 11px;
         }
-
-        .empty-courses {
-            text-align: center;
-            padding: 20px;
-            color: #94a3b8;
-            font-size: 13px;
-        }
-        .empty-courses a {
-            color: #f59e0b;
-            text-decoration: none;
-            font-weight: bold;
-        }
-
-        /* ===== دکمه‌ها ===== */
-        .btn {
+        .continue-btn {
             width: 100%;
-            padding: 14px 20px;
+            padding: 15px;
             border-radius: 12px;
-            font-size: 15px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-family: Tahoma, sans-serif;
             border: none;
+            background: linear-gradient(135deg, var(--blue), #2563eb);
+            color: #fff;
+            font-size: 15px;
+            font-weight: 800;
+            cursor: pointer;
+            font-family: 'Vazirmatn', Tahoma, sans-serif;
+            transition: 0.3s;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 8px;
-            margin-bottom: 10px;
             text-decoration: none;
+            position: relative;
+            z-index: 2;
         }
-
-        .btn-primary {
-            background: linear-gradient(135deg, #f59e0b, #d97706);
-            color: #0f172a;
-            box-shadow: 0 5px 20px rgba(245, 158, 11, 0.3);
-        }
-        .btn-primary:hover {
+        .continue-btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(245, 158, 11, 0.5);
+            box-shadow: 0 10px 30px rgba(59, 130, 246, 0.5);
         }
 
-        .btn-secondary {
-            background: rgba(15, 23, 42, 0.6);
-            color: #f1f5f9;
-            border: 1px solid rgba(255,255,255,0.1);
+        /* ============= Stats Grid ============= */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-bottom: 24px;
         }
-        .btn-secondary:hover {
-            background: rgba(15, 23, 42, 0.9);
-            border-color: rgba(245, 158, 11, 0.3);
+        .stat-card {
+            background: linear-gradient(135deg, var(--bg-card), var(--bg-secondary));
+            border: 1px solid rgba(212, 175, 55, 0.15);
+            border-radius: 18px;
+            padding: 20px;
+            text-align: center;
+            transition: 0.3s;
+            animation: fadeInUp 0.6s ease-out 0.2s backwards;
+        }
+        .stat-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(212, 175, 55, 0.4);
+            box-shadow: 0 15px 40px rgba(212, 175, 55, 0.15);
+        }
+        .stat-icon {
+            font-size: 32px;
+            margin-bottom: 10px;
+            filter: drop-shadow(0 0 10px rgba(212, 175, 55, 0.3));
+        }
+        .stat-value {
+            color: var(--gold);
+            font-size: 28px;
+            font-weight: 900;
+            margin-bottom: 5px;
+            font-variant-numeric: tabular-nums;
+        }
+        .stat-label {
+            color: var(--gray);
+            font-size: 12px;
         }
 
-        .btn-danger {
-            background: rgba(239, 68, 68, 0.1);
-            color: #f87171;
-            border: 1px solid rgba(239, 68, 68, 0.3);
+        /* ============= Section ============= */
+        .section {
+            background: linear-gradient(135deg, var(--bg-card), var(--bg-secondary));
+            border: 1px solid rgba(212, 175, 55, 0.1);
+            border-radius: 20px;
+            padding: 25px;
+            margin-bottom: 24px;
+            animation: fadeInUp 0.6s ease-out 0.3s backwards;
         }
-        .btn-danger:hover { background: rgba(239, 68, 68, 0.2); }
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(212, 175, 55, 0.15);
+        }
+        .section-title {
+            color: var(--white);
+            font-size: 16px;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .section-link {
+            color: var(--gold);
+            text-decoration: none;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        .section-link:hover { text-decoration: underline; }
 
-        /* دکمه ادمین */
-        .btn-admin {
-            background: linear-gradient(135deg, #dc2626, #b91c1c, #dc2626);
-            background-size: 200% 200%;
-            color: #ffffff;
-            box-shadow: 0 5px 20px rgba(220, 38, 38, 0.4);
-            border: 2px solid #fca5a5;
+        /* ============= Course Card ============= */
+        .course-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px;
+            background: rgba(10, 10, 15, 0.5);
+            border-radius: 15px;
+            margin-bottom: 12px;
+            transition: 0.3s;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            text-decoration: none;
+            color: inherit;
         }
-        .btn-admin:hover {
+        .course-item:last-child { margin-bottom: 0; }
+        .course-item:hover {
+            background: rgba(10, 10, 15, 0.8);
+            border-color: rgba(212, 175, 55, 0.3);
+            transform: translateX(-5px);
+        }
+        .course-item-icon {
+            width: 50px; height: 50px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.2), rgba(212, 175, 55, 0.05));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            flex-shrink: 0;
+        }
+        .course-item-info { flex: 1; }
+        .course-item-title {
+            color: var(--white);
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+        .course-item-progress {
+            width: 100%;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        .course-item-progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--gold), var(--gold-dark));
+            border-radius: 10px;
+        }
+        .course-item-percent {
+            color: var(--gold);
+            font-size: 14px;
+            font-weight: 800;
+            min-width: 50px;
+            text-align: left;
+        }
+        .course-item-percent.done { color: var(--green); }
+
+        .empty-state {
+            text-align: center;
+            padding: 30px 20px;
+            color: var(--gray);
+            font-size: 13px;
+        }
+        .empty-state a {
+            color: var(--gold);
+            text-decoration: none;
+            font-weight: 700;
+        }
+
+        /* ============= AI Suggestion ============= */
+        .ai-suggestion {
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.08), rgba(59, 130, 246, 0.05));
+            border: 1px solid rgba(212, 175, 55, 0.25);
+            border-radius: 18px;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            animation: fadeInUp 0.6s ease-out 0.4s backwards;
+            margin-bottom: 24px;
+        }
+        .ai-suggestion-icon {
+            font-size: 38px;
+            flex-shrink: 0;
+        }
+        .ai-suggestion-content { flex: 1; }
+        .ai-suggestion-title {
+            color: var(--gold);
+            font-size: 14px;
+            font-weight: 800;
+            margin-bottom: 6px;
+        }
+        .ai-suggestion-text {
+            color: var(--white);
+            font-size: 13px;
+            margin-bottom: 12px;
+            line-height: 1.7;
+        }
+        .ai-suggestion-btn {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+            color: var(--bg-primary);
+            padding: 10px 20px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-size: 12px;
+            font-weight: 800;
+            transition: 0.3s;
+        }
+        .ai-suggestion-btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(220, 38, 38, 0.6);
+            box-shadow: 0 8px 25px rgba(212, 175, 55, 0.4);
         }
 
-        /* ===== لیست دسترسی سریع ===== */
-        .quick-links { display: flex; flex-direction: column; gap: 8px; }
+        /* ============= Achievements ============= */
+        .achievements-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+        }
+        .achievement {
+            background: rgba(10, 10, 15, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 15px 10px;
+            text-align: center;
+            transition: 0.3s;
+        }
+        .achievement.unlocked {
+            border-color: rgba(212, 175, 55, 0.4);
+            background: rgba(212, 175, 55, 0.05);
+        }
+        .achievement.locked {
+            opacity: 0.4;
+        }
+        .achievement-icon { font-size: 28px; margin-bottom: 8px; }
+        .achievement-title {
+            color: var(--white);
+            font-size: 11px;
+            font-weight: 700;
+            line-height: 1.4;
+        }
 
+        /* ============= Quick Links ============= */
+        .quick-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
         .quick-link {
-            background: rgba(15, 23, 42, 0.6);
-            padding: 14px 16px;
+            background: rgba(10, 10, 15, 0.5);
+            padding: 15px;
             border-radius: 12px;
             text-decoration: none;
-            color: #f1f5f9;
+            color: var(--white);
             display: flex;
             align-items: center;
             gap: 12px;
-            border-right: 3px solid #f59e0b;
+            border: 1px solid rgba(255, 255, 255, 0.05);
             transition: 0.3s;
         }
-
         .quick-link:hover {
-            background: rgba(15, 23, 42, 0.9);
-            transform: translateX(-5px);
+            background: rgba(10, 10, 15, 0.8);
+            border-color: rgba(212, 175, 55, 0.3);
+            transform: translateY(-3px);
+        }
+        .quick-link-icon { font-size: 22px; }
+        .quick-link-title {
+            font-size: 13px;
+            font-weight: 700;
         }
 
-        .quick-link .icon { font-size: 24px; min-width: 30px; text-align: center; }
-        .quick-link .content { flex: 1; }
-        .quick-link .title { font-size: 14px; font-weight: bold; margin-bottom: 2px; }
-        .quick-link .desc { font-size: 11px; color: #94a3b8; }
-        .quick-link .arrow { color: #f59e0b; font-size: 18px; }
+        /* ============= Profile Card ============= */
+        .profile-card {
+            background: linear-gradient(135deg, var(--bg-card), var(--bg-secondary));
+            border: 1px solid rgba(212, 175, 55, 0.15);
+            border-radius: 20px;
+            padding: 25px;
+            margin-bottom: 24px;
+            animation: fadeInUp 0.6s ease-out 0.5s backwards;
+        }
+        .profile-header {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(212, 175, 55, 0.15);
+        }
+        .profile-avatar {
+            width: 80px; height: 80px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            font-weight: 900;
+            color: var(--bg-primary);
+            border: 3px solid var(--gold);
+            box-shadow: 0 0 30px rgba(212, 175, 55, 0.4);
+            flex-shrink: 0;
+            overflow: hidden;
+        }
+        .profile-avatar-img {
+            width: 100%; height: 100%;
+            object-fit: cover;
+        }
+        .profile-info { flex: 1; min-width: 0; }
+        .profile-name {
+            color: var(--white);
+            font-size: 18px;
+            font-weight: 800;
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        .profile-email {
+            color: var(--gray);
+            font-size: 12px;
+            margin-bottom: 8px;
+            word-break: break-all;
+        }
+        .profile-badges {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            background: rgba(212, 175, 55, 0.15);
+            color: var(--gold);
+            font-size: 10px;
+            padding: 4px 10px;
+            border-radius: 12px;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            font-weight: 700;
+        }
+        .badge.admin {
+            background: rgba(220, 38, 38, 0.15);
+            color: #fca5a5;
+            border-color: rgba(220, 38, 38, 0.4);
+        }
+        .profile-actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .profile-btn {
+            flex: 1;
+            min-width: 130px;
+            padding: 12px 18px;
+            border-radius: 10px;
+            background: rgba(10, 10, 15, 0.6);
+            color: var(--white);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            font-family: 'Vazirmatn', Tahoma, sans-serif;
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+        .profile-btn:hover {
+            background: rgba(10, 10, 15, 0.9);
+            border-color: rgba(212, 175, 55, 0.4);
+            color: var(--gold);
+        }
+        .profile-btn.danger {
+            color: var(--red);
+            border-color: rgba(239, 68, 68, 0.3);
+        }
+        .profile-btn.danger:hover {
+            background: rgba(239, 68, 68, 0.1);
+            border-color: var(--red);
+            color: #fca5a5;
+        }
 
-        /* ===== مودال ===== */
+        /* ============= Modal ============= */
         .modal-overlay {
             display: none;
             position: fixed;
             top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(0, 0, 0, 0.7);
-            z-index: 99999;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(5px);
+            z-index: 9999;
             align-items: center;
             justify-content: center;
             padding: 20px;
         }
-
         .modal-overlay.show { display: flex; }
-
         .modal {
-            background: #1e293b;
+            background: var(--bg-card);
+            border: 1px solid rgba(212, 175, 55, 0.3);
             padding: 25px;
             border-radius: 20px;
             max-width: 400px;
             width: 100%;
-            border: 1px solid rgba(255,255,255,0.1);
             animation: fadeInUp 0.3s ease-out;
         }
-
         .modal h3 {
-            color: #f1f5f9;
-            font-size: 18px;
-            margin-bottom: 15px;
+            color: var(--white);
+            font-size: 17px;
+            margin-bottom: 18px;
             text-align: center;
         }
-
         .modal-input {
             width: 100%;
-            padding: 12px 16px;
-            border-radius: 10px;
-            border: 2px solid #334155;
-            background: rgba(15, 23, 42, 0.8);
-            color: #fff;
+            padding: 13px 16px;
+            border-radius: 12px;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            background: rgba(10, 10, 15, 0.6);
+            color: var(--white);
             font-size: 14px;
             outline: none;
             margin-bottom: 12px;
-            font-family: Tahoma, sans-serif;
+            font-family: 'Vazirmatn', Tahoma, sans-serif;
+            transition: 0.3s;
         }
-
-        .modal-input:focus { border-color: #f59e0b; }
-
-        .modal-buttons { display: flex; gap: 10px; margin-top: 15px; }
-        .modal-buttons .btn { margin-bottom: 0; }
-
+        .modal-input:focus {
+            border-color: var(--gold);
+            box-shadow: 0 0 0 4px rgba(212, 175, 55, 0.1);
+        }
+        .modal-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 18px;
+        }
+        .modal-btn {
+            flex: 1;
+            padding: 12px;
+            border-radius: 10px;
+            border: none;
+            font-family: 'Vazirmatn', Tahoma, sans-serif;
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .modal-btn.primary {
+            background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+            color: var(--bg-primary);
+        }
+        .modal-btn.primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(212, 175, 55, 0.4);
+        }
+        .modal-btn.secondary {
+            background: rgba(10, 10, 15, 0.6);
+            color: var(--white);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .modal-btn.secondary:hover {
+            background: rgba(10, 10, 15, 0.9);
+        }
         .message {
-            padding: 10px;
+            padding: 10px 14px;
             border-radius: 10px;
             margin-bottom: 12px;
-            font-size: 13px;
+            font-size: 12px;
             text-align: center;
             display: none;
         }
         .message.success {
-            background: rgba(34, 197, 94, 0.2);
-            color: #4ade80;
-            border: 1px solid #22c55e;
+            background: rgba(16, 185, 129, 0.15);
+            color: var(--green);
+            border: 1px solid rgba(16, 185, 129, 0.4);
             display: block;
         }
         .message.error {
-            background: rgba(239, 68, 68, 0.2);
-            color: #f87171;
-            border: 1px solid #ef4444;
+            background: rgba(239, 68, 68, 0.15);
+            color: var(--red);
+            border: 1px solid rgba(239, 68, 68, 0.4);
             display: block;
         }
 
         .loading {
             text-align: center;
-            padding: 50px 20px;
-            color: #94a3b8;
+            padding: 100px 20px;
+            color: var(--gray);
             font-size: 16px;
         }
 
-        @media (max-width: 400px) {
-            .avatar-large { width: 90px; height: 90px; font-size: 38px; }
-            .user-name { font-size: 18px; }
-            .stat-value { font-size: 16px; }
-            .btn { padding: 12px 16px; font-size: 14px; }
+        /* ============= Footer ============= */
+        .footer {
+            text-align: center;
+            padding: 25px 20px;
+            color: var(--gray);
+            font-size: 12px;
+            border-top: 1px solid rgba(212, 175, 55, 0.1);
+        }
+
+        /* ============= ریسپانسیو ============= */
+        @media (max-width: 900px) {
+            .nav-links { display: none; }
+            .welcome-hero { padding: 20px; }
+            .welcome-text h1 { font-size: 20px; }
+            .stats-grid { gap: 10px; }
+            .stat-card { padding: 15px 10px; }
+            .stat-value { font-size: 22px; }
+            .achievements-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (max-width: 600px) {
+            .main-container { padding: 90px 15px 30px; }
+            .welcome-hero { flex-direction: column; align-items: flex-start; }
+            .stats-grid { grid-template-columns: 1fr; }
+            .quick-grid { grid-template-columns: 1fr; }
+            .profile-actions { flex-direction: column; }
+            .profile-header { flex-direction: column; text-align: center; }
+            .profile-name { justify-content: center; }
         }
     </style>
 </head>
 <body>
 
-    <div class="container" id="content">
-        <div class="loading">⏳ در حال بارگذاری پروفایل...</div>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">
+                <img src="519.png" alt="شمعدون" class="nav-logo-img">
+                <span class="nav-logo-text">شمعدون</span>
+            </a>
+            <div class="nav-links">
+                <a href="index.html">صفحه اصلی</a>
+                <a href="courses.html">دوره‌ها</a>
+                <a href="home.html">تحلیل زنده</a>
+                <a href="bourse.html">بورس</a>
+                <a href="assistant.html">دستیار</a>
+            </div>
+            <div class="nav-actions" id="navActions">
+                <a href="assistant.html" class="nav-icon-btn" title="دستیار هوشمند">🤖</a>
+                <a href="personality-test.html" class="nav-icon-btn" title="تست شخصیت">🎯</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Container -->
+    <div class="main-container" id="content">
+        <div class="loading">⏳ در حال بارگذاری...</div>
     </div>
 
     <!-- مودال ویرایش نام -->
@@ -372,8 +864,8 @@
             <div class="message" id="editNameMsg"></div>
             <input type="text" id="editNameInput" class="modal-input" placeholder="نام جدید">
             <div class="modal-buttons">
-                <button class="btn btn-primary" onclick="saveName()">💾 ذخیره</button>
-                <button class="btn btn-secondary" onclick="closeModal('editNameModal')">لغو</button>
+                <button class="modal-btn primary" onclick="saveName()">💾 ذخیره</button>
+                <button class="modal-btn secondary" onclick="closeModal('editNameModal')">لغو</button>
             </div>
         </div>
     </div>
@@ -386,21 +878,31 @@
             <input type="password" id="newPassword" class="modal-input" placeholder="رمز جدید (حداقل ۶ کاراکتر)">
             <input type="password" id="confirmPassword" class="modal-input" placeholder="تکرار رمز جدید">
             <div class="modal-buttons">
-                <button class="btn btn-primary" onclick="savePassword()">💾 ذخیره</button>
-                <button class="btn btn-secondary" onclick="closeModal('changePassModal')">لغو</button>
+                <button class="modal-btn primary" onclick="savePassword()">💾 ذخیره</button>
+                <button class="modal-btn secondary" onclick="closeModal('changePassModal')">لغو</button>
             </div>
         </div>
     </div>
 
+    <!-- Footer -->
+    <footer class="footer">
+        © ۱۴۰۵ آکادمی شمعدون | تمامی حقوق محفوظ است
+    </footer>
+
     <script>
+        // ==========================================
+        // تنظیمات Supabase
+        // ==========================================
         const SUPABASE_URL = 'https://jcwwilatvstjrohvhtss.supabase.co';
         const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Impjd3dpbGF0dnN0anJvaHZodHNzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODk3MDY4NTYsImV4cCI6MjEwNTI4Mjg1Nn0.eUC89RJy6-60nNGrSeYeDADzLxz-kWTGy4DbNGVi6MM';
-        const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-
         const ADMIN_EMAIL = 'beat.market.office@gmail.com';
 
-        // ===== اطلاعات دوره‌ها =====
-        const coursesData = {
+        const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+        // ==========================================
+        // اطلاعات دوره‌های ثابت
+        // ==========================================
+        const staticCourses = {
             1: { title: 'اقتصاد کلان و خرد', icon: '📊', lessons: 8 },
             2: { title: 'آشنایی با بازارهای مالی', icon: '💹', lessons: 10 },
             3: { title: 'مبانی تحلیل تکنیکال', icon: '📈', lessons: 12 },
@@ -409,16 +911,63 @@
         };
 
         let currentUser = null;
+        let dynamicCourses = [];
 
+        // ==========================================
+        // بارگذاری دوره‌های داینامیک از Supabase
+        // ==========================================
+        async function loadDynamicCourses() {
+            try {
+                const { data, error } = await supabaseClient
+                    .from('courses')
+                    .select('*')
+                    .order('id', { ascending: true });
+
+                if (error || !data) return;
+
+                dynamicCourses = data.map(c => ({
+                    id: c.id,
+                    title: c.title || 'بدون عنوان',
+                    icon: c.icon || '📚',
+                    lessons: 0,
+                    isDynamic: true
+                }));
+            } catch (e) {
+                console.log('Dynamic courses error:', e);
+            }
+        }
+
+        // ==========================================
+        // پیدا کردن اطلاعات دوره
+        // ==========================================
+        function getCourseInfo(courseId) {
+            if (staticCourses[courseId]) {
+                return staticCourses[courseId];
+            }
+            const dynamic = dynamicCourses.find(c => c.id === courseId);
+            if (dynamic) {
+                return {
+                    title: dynamic.title,
+                    icon: dynamic.icon,
+                    lessons: dynamic.lessons || 8  // پیش‌فرض ۸ درس
+                };
+            }
+            return null;
+        }
+
+        // ==========================================
+        // بارگذاری پروفایل
+        // ==========================================
         async function loadProfile() {
             const { data: { session } } = await supabaseClient.auth.getSession();
-
             if (!session) {
                 window.location.href = 'login.html';
                 return;
             }
 
             currentUser = session.user;
+            await loadDynamicCourses();
+
             const fullName = currentUser.user_metadata?.full_name || 'کاربر عزیز';
             const email = currentUser.email;
             const firstLetter = fullName.charAt(0).toUpperCase();
@@ -426,11 +975,8 @@
                 year: 'numeric', month: 'long', day: 'numeric'
             });
 
-            // چک کردن ادمین
             const isAdmin = (email === ADMIN_EMAIL);
-            const adminBadge = isAdmin ? '👑 ادمین' : '';
 
-            // اطلاعات دوره‌ها
             const completedCourses = currentUser.user_metadata?.completed_courses || [];
             const inProgressCourses = currentUser.user_metadata?.in_progress_courses || [];
             const completedLessons = currentUser.user_metadata?.completed_lessons || {};
@@ -438,180 +984,299 @@
 
             const totalCourses = completedCourses.length + inProgressCourses.length;
 
-            // ساخت HTML دوره‌های من
+            // ===== Continue Learning =====
+            let continueHTML = '';
+            if (inProgressCourses.length > 0) {
+                const firstInProgress = inProgressCourses[0];
+                const courseInfo = getCourseInfo(firstInProgress);
+                if (courseInfo) {
+                    const completedCount = (completedLessons[firstInProgress] || []).length;
+                    const totalLessons = courseInfo.lessons;
+                    const percent = Math.round((completedCount / totalLessons) * 100);
+                    const nextLesson = completedCount + 1;
+
+                    continueHTML = `
+                        <div class="continue-card">
+                            <div class="continue-header">
+                                <div class="continue-icon">🎯</div>
+                                <div>
+                                    <div class="continue-title">ادامه یادگیری</div>
+                                    <div class="continue-subtitle">از جایی که رها کردی</div>
+                                </div>
+                            </div>
+                            <div class="continue-body">
+                                <div class="continue-course-info">
+                                    <div class="continue-course-icon">${courseInfo.icon}</div>
+                                    <div class="continue-course-details">
+                                        <div class="continue-course-name">${courseInfo.title}</div>
+                                        <div class="continue-lesson-name">درس ${nextLesson} از ${totalLessons}</div>
+                                    </div>
+                                </div>
+                                <div class="continue-progress-bar">
+                                    <div class="continue-progress-fill" style="width: ${percent}%"></div>
+                                </div>
+                                <div class="continue-progress-info">
+                                    <span>${completedCount} از ${totalLessons} درس تکمیل شده</span>
+                                    <span>${percent}٪</span>
+                                </div>
+                            </div>
+                            <a href="lesson.html?course=${firstInProgress}&lesson=${nextLesson}" class="continue-btn">
+                                ادامه بده ←
+                            </a>
+                        </div>
+                    `;
+                }
+            } else if (completedCourses.length > 0) {
+                continueHTML = `
+                    <div class="continue-card">
+                        <div class="continue-header">
+                            <div class="continue-icon">🎉</div>
+                            <div>
+                                <div class="continue-title">آفرین!</div>
+                                <div class="continue-subtitle">همه دوره‌های فعلی رو تموم کردی</div>
+                            </div>
+                        </div>
+                        <div class="continue-body">
+                            <div class="continue-course-info">
+                                <div class="continue-course-icon">🎓</div>
+                                <div class="continue-course-details">
+                                    <div class="continue-course-name">دوره جدید شروع کن</div>
+                                    <div class="continue-lesson-name">دوره‌های جدید در انتظارته</div>
+                                </div>
+                            </div>
+                        </div>
+                        <a href="courses.html" class="continue-btn">
+                            مشاهده دوره‌ها ←
+                        </a>
+                    </div>
+                `;
+            }
+
+            // ===== My Courses =====
             let myCoursesHTML = '';
-            
             if (totalCourses === 0) {
                 myCoursesHTML = `
-                    <div class="empty-courses">
-                        📚 شما هنوز در هیچ دوره‌ای ثبت‌نام نکرده‌اید.<br>
+                    <div class="empty-state">
+                        📚 هنوز در هیچ دوره‌ای ثبت‌نام نکردی.<br><br>
                         <a href="courses.html">مشاهده دوره‌های رایگان →</a>
                     </div>
                 `;
             } else {
+                // دوره‌های تکمیل‌شده
                 completedCourses.forEach(courseId => {
-                    const course = coursesData[courseId];
-                    if (course) {
+                    const courseInfo = getCourseInfo(courseId);
+                    if (courseInfo) {
                         myCoursesHTML += `
-                            <div class="course-progress-item">
-                                <div class="course-progress-icon">${course.icon}</div>
-                                <div class="course-progress-info">
-                                    <div class="course-progress-title">${course.title}</div>
-                                    <div class="course-progress-bar">
-                                        <div class="course-progress-fill" style="width: 100%"></div>
+                            <div class="course-item">
+                                <div class="course-item-icon">${courseInfo.icon}</div>
+                                <div class="course-item-info">
+                                    <div class="course-item-title">${courseInfo.title}</div>
+                                    <div class="course-item-progress">
+                                        <div class="course-item-progress-fill" style="width: 100%"></div>
                                     </div>
                                 </div>
-                                <div class="course-progress-percent">✅</div>
+                                <div class="course-item-percent done">✅</div>
                             </div>
                         `;
                     }
                 });
 
+                // دوره‌های در حال یادگیری
                 inProgressCourses.forEach(courseId => {
-                    const course = coursesData[courseId];
-                    if (course) {
-                        const completed = (completedLessons[courseId] || []).length;
-                        const percent = Math.round((completed / course.lessons) * 100);
+                    const courseInfo = getCourseInfo(courseId);
+                    if (courseInfo) {
+                        const completedCount = (completedLessons[courseId] || []).length;
+                        const percent = Math.round((completedCount / courseInfo.lessons) * 100);
                         myCoursesHTML += `
-                            <div class="course-progress-item">
-                                <div class="course-progress-icon">${course.icon}</div>
-                                <div class="course-progress-info">
-                                    <div class="course-progress-title">${course.title}</div>
-                                    <div class="course-progress-bar">
-                                        <div class="course-progress-fill" style="width: ${percent}%"></div>
+                            <div class="course-item">
+                                <div class="course-item-icon">${courseInfo.icon}</div>
+                                <div class="course-item-info">
+                                    <div class="course-item-title">${courseInfo.title}</div>
+                                    <div class="course-item-progress">
+                                        <div class="course-item-progress-fill" style="width: ${percent}%"></div>
                                     </div>
                                 </div>
-                                <div class="course-progress-percent">${percent}٪</div>
+                                <div class="course-item-percent">${percent}٪</div>
                             </div>
                         `;
                     }
                 });
             }
 
-            // کارت ادمین
-            const adminCardHTML = isAdmin ? `
-                <div class="card">
-                    <div class="section-title">👑 دسترسی ادمین</div>
-                    <a href="admin.html" class="btn btn-admin">
-                        🎯 ورود به پنل ادمین
-                    </a>
+            // ===== Achievements =====
+            const achievements = [
+                { icon: '🥇', title: 'کاربر طلایی', unlocked: completedCourses.length >= 3 },
+                { icon: '🎓', title: 'دانشجوی فعال', unlocked: totalCourses >= 2 },
+                { icon: '🎯', title: 'تست شخصیت', unlocked: !!personalityResult },
+                { icon: '🔥', title: 'شروع قدرتمند', unlocked: totalCourses >= 1 },
+                { icon: '⭐', title: 'عضو وفادار', unlocked: true },
+                { icon: '🏆', title: 'حرفه‌ای', unlocked: completedCourses.length >= 5 }
+            ];
+
+            const achievementsHTML = achievements.map(a => `
+                <div class="achievement ${a.unlocked ? 'unlocked' : 'locked'}">
+                    <div class="achievement-icon">${a.icon}</div>
+                    <div class="achievement-title">${a.title}</div>
                 </div>
+            `).join('');
+
+            // ===== AI Suggestion =====
+            let suggestionHTML = '';
+            if (completedCourses.length > 0) {
+                // پیشنهاد بعد از تکمیل دوره
+                suggestionHTML = `
+                    <div class="ai-suggestion">
+                        <div class="ai-suggestion-icon">🤖</div>
+                        <div class="ai-suggestion-content">
+                            <div class="ai-suggestion-title">پیشنهاد بعدی تو</div>
+                            <div class="ai-suggestion-text">
+                                بر اساس پیشرفتت، دوره‌ی بعدی که می‌تونه برات مفید باشه رو ببین.
+                            </div>
+                            <a href="courses.html" class="ai-suggestion-btn">مشاهده پیشنهادها ←</a>
+                        </div>
+                    </div>
+                `;
+            } else if (totalCourses === 0) {
+                suggestionHTML = `
+                    <div class="ai-suggestion">
+                        <div class="ai-suggestion-icon">👋</div>
+                        <div class="ai-suggestion-content">
+                            <div class="ai-suggestion-title">خوش آمدی!</div>
+                            <div class="ai-suggestion-text">
+                                برای شروع، دوره‌ی «اقتصاد کلان» رو پیشنهاد می‌کنیم — کاملاً رایگان.
+                            </div>
+                            <a href="courses.html" class="ai-suggestion-btn">شروع کن ←</a>
+                        </div>
+                    </div>
+                `;
+            }
+
+            // ===== Admin Panel Button =====
+            const adminBtnHTML = isAdmin ? `
+                <a href="admin.html" class="nav-admin-btn">🎯 پنل ادمین</a>
             ` : '';
 
+            // ===== Render =====
             document.getElementById('content').innerHTML = `
-                <!-- کارت پروفایل -->
-                <div class="card">
-                    <div class="avatar-section">
-                        <div class="avatar-large">${firstLetter}</div>
-                        <div class="user-name">${fullName} ${adminBadge}</div>
-                        <div class="user-email">${email}</div>
-                        <div class="user-badge">✨ عضو از ${joinDate}</div>
+                <!-- Welcome Hero -->
+                <div class="welcome-hero">
+                    <div class="welcome-text">
+                        <h1>سلام <span class="gold">${escapeHtml(fullName)}</span> 👋</h1>
+                        <p>خوش برگشتی! امروز چه خبر؟</p>
                     </div>
-                </div>
-
-                <!-- کارت ادمین (فقط برای ادمین) -->
-                ${adminCardHTML}
-
-                <!-- آمار فعالیت -->
-                <div class="card">
-                    <div class="section-title">📊 آمار فعالیت</div>
-                    <div class="stats-grid">
-                        <div class="stat-card">
-                            <div class="stat-icon">📚</div>
-                            <div class="stat-value">${totalCourses}</div>
-                            <div class="stat-label">دوره ثبت‌نام شده</div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-icon">🎯</div>
-                            <div class="stat-value">${personalityResult ? '✓' : '--'}</div>
-                            <div class="stat-label">تست شخصیت</div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-icon">✅</div>
-                            <div class="stat-value">${completedCourses.length}</div>
-                            <div class="stat-label">دوره تکمیل شده</div>
+                    <div class="welcome-streak">
+                        <div class="streak-icon">🔥</div>
+                        <div class="streak-info">
+                            <div class="streak-value">${toPersianNum(totalCourses)}</div>
+                            <div class="streak-label">دوره فعال</div>
                         </div>
                     </div>
                 </div>
 
-                <!-- دوره‌های من -->
-                <div class="card">
-                    <div class="section-title">📚 دوره‌های من</div>
-                    <div class="my-courses-section">
-                        ${myCoursesHTML}
+                <!-- Continue Learning -->
+                ${continueHTML}
+
+                <!-- Stats Grid -->
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon">📚</div>
+                        <div class="stat-value">${toPersianNum(totalCourses)}</div>
+                        <div class="stat-label">دوره ثبت‌نام شده</div>
                     </div>
-                    <a href="courses.html" class="btn btn-primary" style="margin-top: 15px;">
-                        🎓 مشاهده همه دوره‌ها
-                    </a>
+                    <div class="stat-card">
+                        <div class="stat-icon">✅</div>
+                        <div class="stat-value">${toPersianNum(completedCourses.length)}</div>
+                        <div class="stat-label">دوره تکمیل شده</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">🎯</div>
+                        <div class="stat-value">${personalityResult ? '✓' : '--'}</div>
+                        <div class="stat-label">تست شخصیت</div>
+                    </div>
                 </div>
 
-                <!-- ویرایش پروفایل -->
-                <div class="card">
-                    <div class="section-title">✏️ ویرایش پروفایل</div>
-                    <button class="btn btn-secondary" onclick="openEditName()">
-                        ✏️ ویرایش نام
-                    </button>
-                    <button class="btn btn-secondary" onclick="openChangePass()">
-                        🔒 تغییر رمز عبور
-                    </button>
+                <!-- My Courses -->
+                <div class="section">
+                    <div class="section-header">
+                        <div class="section-title">📚 دوره‌های من</div>
+                        <a href="courses.html" class="section-link">مشاهده همه ←</a>
+                    </div>
+                    ${myCoursesHTML}
                 </div>
 
-                <!-- دسترسی سریع -->
-                <div class="card">
-                    <div class="section-title">📌 دسترسی سریع</div>
-                    <div class="quick-links">
+                <!-- AI Suggestion -->
+                ${suggestionHTML}
+
+                <!-- Achievements -->
+                <div class="section">
+                    <div class="section-header">
+                        <div class="section-title">🏆 دستاوردها</div>
+                    </div>
+                    <div class="achievements-grid">
+                        ${achievementsHTML}
+                    </div>
+                </div>
+
+                <!-- Quick Links -->
+                <div class="section">
+                    <div class="section-header">
+                        <div class="section-title">⚡ دسترسی سریع</div>
+                    </div>
+                    <div class="quick-grid">
                         <a href="home.html" class="quick-link">
-                            <div class="icon">🏠</div>
-                            <div class="content">
-                                <div class="title">پنل تحلیلی</div>
-                                <div class="desc">چارت زنده و حباب طلا</div>
-                            </div>
-                            <div class="arrow">←</div>
-                        </a>
-                        <a href="courses.html" class="quick-link">
-                            <div class="icon">📚</div>
-                            <div class="content">
-                                <div class="title">دوره‌های آموزشی</div>
-                                <div class="desc">از مبتدی تا حرفه‌ای</div>
-                            </div>
-                            <div class="arrow">←</div>
-                        </a>
-                        <a href="bourse.html" class="quick-link">
-                            <div class="icon">🏢</div>
-                            <div class="content">
-                                <div class="title">بورس ایران</div>
-                                <div class="desc">رتبه‌بندی و تحلیل سهام</div>
-                            </div>
-                            <div class="arrow">←</div>
+                            <div class="quick-link-icon">📊</div>
+                            <div class="quick-link-title">تحلیل زنده</div>
                         </a>
                         <a href="assistant.html" class="quick-link">
-                            <div class="icon">🤖</div>
-                            <div class="content">
-                                <div class="title">دستیار هوشمند</div>
-                                <div class="desc">پاسخ به سوالات مالی</div>
-                            </div>
-                            <div class="arrow">←</div>
+                            <div class="quick-link-icon">🤖</div>
+                            <div class="quick-link-title">دستیار هوشمند</div>
+                        </a>
+                        <a href="bourse.html" class="quick-link">
+                            <div class="quick-link-icon">🏢</div>
+                            <div class="quick-link-title">بورس ایران</div>
                         </a>
                         <a href="personality-test.html" class="quick-link">
-                            <div class="icon">🎯</div>
-                            <div class="content">
-                                <div class="title">تست شخصیت‌شناسی مالی</div>
-                                <div class="desc">سبد سرمایه‌گذاری مخصوص خودت</div>
-                            </div>
-                            <div class="arrow">←</div>
+                            <div class="quick-link-icon">🧠</div>
+                            <div class="quick-link-title">تست شخصیت</div>
                         </a>
                     </div>
                 </div>
 
-                <!-- خروج -->
-                <div class="card">
-                    <button class="btn btn-danger" onclick="handleLogout()">
-                        🚪 خروج از حساب
-                    </button>
+                <!-- Profile -->
+                <div class="profile-card">
+                    <div class="profile-header">
+                        <div class="profile-avatar">
+                            ${firstLetter}
+                        </div>
+                        <div class="profile-info">
+                            <div class="profile-name">
+                                ${escapeHtml(fullName)}
+                                ${isAdmin ? '<span class="badge admin">👑 ادمین</span>' : ''}
+                            </div>
+                            <div class="profile-email">${escapeHtml(email)}</div>
+                            <div class="profile-badges">
+                                <span class="badge">✨ عضو از ${joinDate}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="profile-actions">
+                        <button class="profile-btn" onclick="openEditName()">✏️ ویرایش نام</button>
+                        <button class="profile-btn" onclick="openChangePass()">🔒 تغییر رمز</button>
+                        ${isAdmin ? `<a href="admin.html" class="profile-btn" style="background: rgba(220,38,38,0.15); color:#fca5a5; border-color: rgba(220,38,38,0.4);">🎯 پنل ادمین</a>` : ''}
+                        <button class="profile-btn danger" onclick="handleLogout()">🚪 خروج</button>
+                    </div>
                 </div>
             `;
+
+            // دکمه ادمین در Navbar
+            if (isAdmin) {
+                document.getElementById('navActions').innerHTML += adminBtnHTML;
+            }
         }
 
+        // ==========================================
+        // ویرایش نام
+        // ==========================================
         function openEditName() {
             const currentName = currentUser.user_metadata?.full_name || '';
             document.getElementById('editNameInput').value = currentName;
@@ -646,6 +1311,9 @@
             }
         }
 
+        // ==========================================
+        // تغییر رمز
+        // ==========================================
         function openChangePass() {
             document.getElementById('newPassword').value = '';
             document.getElementById('confirmPassword').value = '';
@@ -686,6 +1354,9 @@
             }
         }
 
+        // ==========================================
+        // Modal & Logout
+        // ==========================================
         function closeModal(id) {
             document.getElementById(id).classList.remove('show');
         }
@@ -697,8 +1368,37 @@
             }
         }
 
+        // ==========================================
+        // ابزارها
+        // ==========================================
+        function escapeHtml(text) {
+            if (!text) return '';
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        function toPersianNum(num) {
+            if (num === 0 || num === null || num === undefined) return '۰';
+            const persianDigits = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
+            return String(num).replace(/\d/g, d => persianDigits[d]);
+        }
+
+        // ==========================================
+        // Service Worker
+        // ==========================================
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/My-First-Project/service-worker.js')
+                    .then(registration => console.log('✅ SW registered:', registration.scope))
+                    .catch(error => console.log('❌ SW failed:', error));
+            });
+        }
+
+        // ==========================================
+        // راه‌اندازی
+        // ==========================================
         loadProfile();
     </script>
-
 </body>
 </html>
