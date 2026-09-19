@@ -519,21 +519,25 @@
     <div class="modal">
         <h2 id="lessonModalTitle">➕ درس جدید</h2>
         <input type="hidden" id="lessonId">
+
         <div class="form-group">
             <label>دوره مربوطه *</label>
             <select id="lessonCourse"></select>
         </div>
+
         <div class="form-group">
             <label>عنوان درس *</label>
             <input type="text" id="lessonTitle">
         </div>
+
         <div class="form-group">
-            <label>محتوا</label>
-            <textarea id="lessonContent" rows="4"></textarea>
+            <label>محتوا (HTML قابل قبول)</label>
+            <textarea id="lessonContent" rows="5"></textarea>
         </div>
+
         <div class="form-row">
             <div class="form-group">
-                <label>لینک ویدیو</label>
+                <label>🎥 لینک ویدیو (اختیاری)</label>
                 <input type="text" id="lessonVideo" placeholder="https://...">
             </div>
             <div class="form-group">
@@ -541,6 +545,32 @@
                 <input type="number" id="lessonOrder" value="1">
             </div>
         </div>
+
+        <div class="form-group">
+            <label>🖼️ لینک تصویر (اختیاری)</label>
+            <input type="text" id="lessonImage" placeholder="files/image.jpg یا https://...">
+        </div>
+
+        <div class="form-group">
+            <label>📄 لینک PDF (اختیاری)</label>
+            <input type="text" id="lessonPdf" placeholder="files/lesson.pdf یا https://...">
+        </div>
+
+        <div class="form-group">
+            <label>📝 لینک Word (اختیاری)</label>
+            <input type="text" id="lessonWord" placeholder="files/lesson.docx یا https://...">
+        </div>
+
+        <div class="form-group">
+            <label>📊 لینک PowerPoint (اختیاری)</label>
+            <input type="text" id="lessonPowerpoint" placeholder="files/lesson.pptx یا https://...">
+        </div>
+
+        <div class="form-group">
+            <label>📚 لینک جزوه (اختیاری)</label>
+            <input type="text" id="lessonNotes" placeholder="files/notes.pdf یا https://...">
+        </div>
+
         <div class="modal-actions">
             <button class="btn btn-secondary" onclick="closeModal('lessonModal')">لغو</button>
             <button class="btn btn-primary" onclick="saveLesson()">💾 ذخیره</button>
