@@ -8,28 +8,28 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js"></script>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        
-         html, body {
-    height: 100%;
-    max-height: 100dvh;
-}
 
-body {
-    font-family: Tahoma, sans-serif;
-    background-color: #0f172a;
-    background-image: 
-        radial-gradient(circle at 0% 0%, rgba(245, 158, 11, 0.12) 0%, transparent 40%),
-        radial-gradient(circle at 100% 100%, rgba(59, 130, 246, 0.08) 0%, transparent 40%);
-    background-size: 100% 100%, 100% 100%;
-    background-attachment: fixed;
-    height: 100dvh;
-    direction: rtl;
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-    padding-bottom: env(safe-area-inset-bottom, 0px);
-}   
-        /* ===== هدر ===== */
+        html, body {
+            height: 100%;
+            max-height: 100dvh;
+        }
+
+        body {
+            font-family: Tahoma, sans-serif;
+            background-color: #0f172a;
+            background-image: 
+                radial-gradient(circle at 0% 0%, rgba(245, 158, 11, 0.12) 0%, transparent 40%),
+                radial-gradient(circle at 100% 100%, rgba(59, 130, 246, 0.08) 0%, transparent 40%);
+            background-size: 100% 100%, 100% 100%;
+            background-attachment: fixed;
+            height: 100dvh;
+            direction: rtl;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            padding-bottom: env(safe-area-inset-bottom, 0px);
+        }
+
         .header {
             background: rgba(30, 41, 59, 0.95);
             backdrop-filter: blur(15px);
@@ -45,24 +45,31 @@ body {
         }
         .header-info { display: flex; align-items: center; gap: 10px; }
         .header-icon {
-            width: 36px; height: 36px; border-radius: 50%;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
             background: linear-gradient(135deg, #f59e0b, #d97706);
-            display: flex; align-items: center; justify-content: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             font-size: 18px;
         }
         .header-title h1 { color: #f1f5f9; font-size: 14px; margin-bottom: 2px; }
-        .header-title p {
-            color: #4ade80; font-size: 10px;
-            display: flex; align-items: center; gap: 5px;
-        }
+        .header-title p { color: #4ade80; font-size: 10px; display: flex; align-items: center; gap: 5px; }
         .status-dot {
-            width: 5px; height: 5px; background: #4ade80;
-            border-radius: 50%; animation: pulse 1.5s infinite;
+            width: 5px;
+            height: 5px;
+            background: #4ade80;
+            border-radius: 50%;
+            animation: pulse 1.5s infinite;
         }
         @keyframes pulse { 0%,100%{opacity:1;} 50%{opacity:0.4;} }
         .header a {
-            color: #94a3b8; text-decoration: none; font-size: 11px;
-            padding: 5px 10px; border: 1px solid #334155;
+            color: #94a3b8;
+            text-decoration: none;
+            font-size: 11px;
+            padding: 5px 10px;
+            border: 1px solid #334155;
             border-radius: 15px;
         }
 
@@ -105,19 +112,28 @@ body {
         .market-status .item { display: flex; align-items: center; gap: 3px; }
         .market-status .value { color: #f59e0b; font-weight: bold; }
 
-        /* ===== چت ===== */
         .chat-container {
-            flex: 1 1 0; overflow-y: auto; padding: 12px;
-            display: flex; flex-direction: column; gap: 12px;
-            max-width: 800px; width: 100%; margin: 0 auto;
+            flex: 1 1 0;
+            min-height: 0;
+            overflow-y: auto;
+            padding: 12px;
+            padding-bottom: 100px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            max-width: 800px;
+            width: 100%;
+            margin: 0 auto;
         }
         .chat-container::-webkit-scrollbar { width: 5px; }
         .chat-container::-webkit-scrollbar-thumb {
-            background: rgba(245, 158, 11, 0.3); border-radius: 10px;
+            background: rgba(245, 158, 11, 0.3);
+            border-radius: 10px;
         }
 
         .message {
-            display: flex; gap: 8px;
+            display: flex;
+            gap: 8px;
             animation: fadeInUp 0.3s ease-out;
         }
         @keyframes fadeInUp {
@@ -125,17 +141,26 @@ body {
             to { opacity: 1; transform: translateY(0); }
         }
         .message-avatar {
-            width: 32px; height: 32px; border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 16px; flex-shrink: 0;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            flex-shrink: 0;
         }
         .message.user .message-avatar { background: linear-gradient(135deg, #3b82f6, #1d4ed8); }
         .message.assistant .message-avatar { background: linear-gradient(135deg, #f59e0b, #d97706); }
         .message-content {
             background: rgba(30, 41, 59, 0.85);
-            padding: 12px 15px; border-radius: 15px;
-            color: #e2e8f0; font-size: 14px; line-height: 1.7;
-            max-width: 85%; word-wrap: break-word;
+            padding: 12px 15px;
+            border-radius: 15px;
+            color: #e2e8f0;
+            font-size: 14px;
+            line-height: 1.7;
+            max-width: 85%;
+            word-wrap: break-word;
             border: 1px solid rgba(255,255,255,0.05);
             white-space: pre-wrap;
         }
@@ -143,11 +168,7 @@ body {
             background: rgba(59, 130, 246, 0.15);
             border-color: rgba(59, 130, 246, 0.3);
         }
-        .message-content img {
-            max-width: 100%;
-            border-radius: 10px;
-            margin-top: 8px;
-        }
+        .message-content img { max-width: 100%; border-radius: 10px; margin-top: 8px; }
         .message-content .file-attachment {
             display: inline-flex;
             align-items: center;
@@ -161,12 +182,13 @@ body {
             border: 1px solid rgba(245, 158, 11, 0.3);
         }
 
-        .typing-indicator {
-            display: flex; gap: 4px; padding: 4px 0;
-        }
+        .typing-indicator { display: flex; gap: 4px; padding: 4px 0; }
         .typing-indicator span {
-            width: 7px; height: 7px; background: #64748b;
-            border-radius: 50%; animation: typing 1.4s infinite;
+            width: 7px;
+            height: 7px;
+            background: #64748b;
+            border-radius: 50%;
+            animation: typing 1.4s infinite;
         }
         .typing-indicator span:nth-child(2) { animation-delay: 0.2s; }
         .typing-indicator span:nth-child(3) { animation-delay: 0.4s; }
@@ -175,7 +197,6 @@ body {
             30% { transform: translateY(-8px); opacity: 1; }
         }
 
-        /* ===== منوهای آبشاری ===== */
         .dropdowns-section {
             padding: 6px 12px;
             max-width: 800px;
@@ -186,13 +207,7 @@ body {
             gap: 6px;
             flex-wrap: wrap;
         }
-
-        .dropdown {
-            position: relative;
-            flex: 1;
-            min-width: 120px;
-        }
-
+        .dropdown { position: relative; flex: 1; min-width: 120px; }
         .dropdown-btn {
             width: 100%;
             padding: 8px 12px;
@@ -209,14 +224,8 @@ body {
             align-items: center;
             transition: 0.3s;
         }
-        .dropdown-btn:hover {
-            background: rgba(245, 158, 11, 0.15);
-            border-color: #f59e0b;
-        }
-        .dropdown-btn.open {
-            background: rgba(245, 158, 11, 0.2);
-            border-color: #f59e0b;
-        }
+        .dropdown-btn:hover { background: rgba(245, 158, 11, 0.15); border-color: #f59e0b; }
+        .dropdown-btn.open { background: rgba(245, 158, 11, 0.2); border-color: #f59e0b; }
         .dropdown-btn .count {
             background: #f59e0b;
             color: #0f172a;
@@ -225,13 +234,8 @@ body {
             border-radius: 10px;
             margin-right: 5px;
         }
-        .dropdown-btn .arrow {
-            transition: transform 0.3s;
-            font-size: 10px;
-        }
-        .dropdown-btn.open .arrow {
-            transform: rotate(180deg);
-        }
+        .dropdown-btn .arrow { transition: transform 0.3s; font-size: 10px; }
+        .dropdown-btn.open .arrow { transform: rotate(180deg); }
 
         .dropdown-content {
             display: none;
@@ -250,13 +254,11 @@ body {
             max-height: 300px;
             overflow-y: auto;
         }
-        .dropdown-content.show {
-            display: block;
-            animation: fadeInUp 0.2s ease-out;
-        }
+        .dropdown-content.show { display: block; animation: fadeInUp 0.2s ease-out; }
         .dropdown-content::-webkit-scrollbar { width: 4px; }
         .dropdown-content::-webkit-scrollbar-thumb {
-            background: rgba(245, 158, 11, 0.3); border-radius: 10px;
+            background: rgba(245, 158, 11, 0.3);
+            border-radius: 10px;
         }
 
         .dropdown-item {
@@ -271,10 +273,7 @@ body {
             transition: 0.2s;
             border: 1px solid transparent;
         }
-        .dropdown-item:hover {
-            background: rgba(245, 158, 11, 0.1);
-            color: #f59e0b;
-        }
+        .dropdown-item:hover { background: rgba(245, 158, 11, 0.1); color: #f59e0b; }
         .dropdown-item.selected {
             background: rgba(245, 158, 11, 0.2);
             color: #f59e0b;
@@ -297,7 +296,6 @@ body {
             color: #0f172a;
         }
 
-        /* ===== تگ‌های انتخاب‌شده ===== */
         .selected-tags {
             padding: 0 12px;
             max-width: 800px;
@@ -308,9 +306,7 @@ body {
             gap: 5px;
             margin-bottom: 6px;
         }
-        .selected-tags.show {
-            display: flex;
-        }
+        .selected-tags.show { display: flex; }
         .selected-tag {
             display: inline-flex;
             align-items: center;
@@ -329,7 +325,6 @@ body {
             font-size: 12px;
         }
 
-        /* ===== دکمه ارسال انتخاب‌ها ===== */
         .send-selected-btn {
             padding: 0 12px;
             max-width: 800px;
@@ -337,9 +332,7 @@ body {
             margin: 0 auto 6px;
             display: none;
         }
-        .send-selected-btn.show {
-            display: block;
-        }
+        .send-selected-btn.show { display: block; }
         .send-selected-btn button {
             width: 100%;
             padding: 8px 15px;
@@ -353,7 +346,6 @@ body {
             font-family: Tahoma, sans-serif;
         }
 
-        /* ===== فایل پیوست ===== */
         .file-preview {
             display: none;
             align-items: center;
@@ -383,57 +375,72 @@ body {
             padding: 0 5px;
         }
 
-        /* ===== ورودی ===== */
         .input-container {
-         position: fixed;
-         bottom: 0;
-         left: 0;
-         right: 0;
-         background: rgba(30, 41, 59, 0.98);
-         backdrop-filter: blur(15px);
-         padding: 10px 12px;
-         padding-bottom: calc(10px + env(safe-area-inset-bottom, 0px));
-         border-top: 1px solid rgba(255,255,255,0.05);
-         z-index: 50;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(30, 41, 59, 0.98);
+            backdrop-filter: blur(15px);
+            padding: 10px 12px;
+            padding-bottom: calc(10px + env(safe-area-inset-bottom, 0px));
+            border-top: 1px solid rgba(255,255,255,0.05);
+            z-index: 50;
         }
         .input-wrapper {
-            max-width: 800px; margin: 0 auto;
-            display: flex; gap: 6px; align-items: flex-end;
+            max-width: 800px;
+            margin: 0 auto;
+            display: flex;
+            gap: 6px;
+            align-items: flex-end;
         }
         .attach-btn {
-            width: 44px; height: 44px;
+            width: 44px;
+            height: 44px;
             border-radius: 10px;
             border: 1px solid #334155;
             background: rgba(15, 23, 42, 0.8);
             color: #94a3b8;
             font-size: 18px;
             cursor: pointer;
-            display: flex; align-items: center; justify-content: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             flex-shrink: 0;
         }
-        .attach-btn:hover {
-            border-color: #f59e0b;
-            color: #f59e0b;
-        }
+        .attach-btn:hover { border-color: #f59e0b; color: #f59e0b; }
         .input-wrapper textarea {
-            flex: 1; background: rgba(15, 23, 42, 0.8);
-            border: 2px solid #334155; border-radius: 10px;
-            padding: 10px 12px; color: #f1f5f9;
-            font-size: 13px; font-family: Tahoma, sans-serif;
-            resize: none; outline: none; max-height: 100px;
-            min-height: 44px; line-height: 1.5;
+            flex: 1;
+            background: rgba(15, 23, 42, 0.8);
+            border: 2px solid #334155;
+            border-radius: 10px;
+            padding: 10px 12px;
+            color: #f1f5f9;
+            font-size: 13px;
+            font-family: Tahoma, sans-serif;
+            resize: none;
+            outline: none;
+            max-height: 100px;
+            min-height: 44px;
+            line-height: 1.5;
         }
         .input-wrapper textarea:focus { border-color: #f59e0b; }
         .send-btn {
-            width: 44px; height: 44px; border-radius: 10px;
-            border: none; background: linear-gradient(135deg, #f59e0b, #d97706);
-            color: #0f172a; font-size: 18px; cursor: pointer;
-            display: flex; align-items: center; justify-content: center;
+            width: 44px;
+            height: 44px;
+            border-radius: 10px;
+            border: none;
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            color: #0f172a;
+            font-size: 18px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             flex-shrink: 0;
         }
         .send-btn:disabled { opacity: 0.5; cursor: not-allowed; }
 
-        /* ===== مدل‌های Vision ===== */
         .vision-warning {
             display: none;
             padding: 6px 12px;
@@ -463,7 +470,6 @@ body {
             </div>
             <a href="dashboard.html">⬅ بازگشت</a>
         </div>
-        
         <div class="model-selector">
             <label>🧠 مدل:</label>
             <select id="modelSelect">
@@ -475,7 +481,6 @@ body {
                 <option value="gemini-1.5-flash">🚀 Gemini 1.5 Flash (سریع - Vision)</option>
             </select>
         </div>
-
         <div class="market-status" id="marketStatus">
             <span class="item">⏳ در حال دریافت قیمت‌ها...</span>
         </div>
@@ -498,7 +503,7 @@ body {
 
     <!-- هشدار Vision -->
     <div class="vision-warning" id="visionWarning">
-        ⚠️ برای تحلیل عکس، لطفاً مدل را به GPT-5.4 یا Claude Sonnet 5 تغییر دهید.
+        ⚠️ برای تحلیل عکس، لطفاً مدل را به GPT-4o یا Claude 3.5 Sonnet تغییر دهید.
     </div>
 
     <!-- تگ‌های انتخاب‌شده -->
@@ -605,30 +610,29 @@ body {
     </div>
 
     <script>
-        
         const API_KEY = 'aa-B6ef1JQ4HnDNBMRw4598qRGOKr7z3TttiznZubQXfD2A1iMf';
         const API_URL = 'https://api.avalai.ir/v1/chat/completions';
         const BRS_API_KEY = 'BvUj3cMKWNBK87KW9xhNccCThmfVbd8u';
 
-        // مدل‌هایی که از Vision پشتیبانی می‌کنند
         const VISION_MODELS = [
-           'gpt-4o',
-           'gpt-4o-mini',
-           'gpt-4-turbo',
-           'claude-3-5-sonnet',
-           'gemini-1.5-pro',
-           'gemini-1.5-flash'
+            'gpt-4o',
+            'gpt-4o-mini',
+            'gpt-4-turbo',
+            'claude-3-5-sonnet',
+            'gemini-1.5-pro',
+            'gemini-1.5-flash'
         ];
+
         let conversationHistory = [];
         let isTyping = false;
         let selectedSuggestions = [];
         let attachedFile = null;
+        let imageLoaded = false;   // ← فلگ جدید
         let marketData = {};
 
         // ===== دریافت قیمت‌های لحظه‌ای =====
         async function loadMarketData() {
             const status = document.getElementById('marketStatus');
-            
             try {
                 const brsRes = await fetch(`https://Api.BrsApi.ir/Market/Gold_Currency.php?key=${BRS_API_KEY}`);
                 const brsData = await brsRes.json();
@@ -636,11 +640,9 @@ body {
                 if (brsData.gold && Array.isArray(brsData.gold)) {
                     const gold18 = brsData.gold.find(item => item.symbol === 'IR_GOLD_18K');
                     if (gold18) marketData.gold18 = gold18.price;
-                    
                     const ounce = brsData.gold.find(item => item.symbol === 'XAUUSD');
                     if (ounce) marketData.ounceGold = ounce.price;
                 }
-
                 if (brsData.currency && Array.isArray(brsData.currency)) {
                     const usd = brsData.currency.find(item => item.symbol === 'USD');
                     if (usd) marketData.usd = usd.price;
@@ -676,9 +678,8 @@ body {
                 if (marketData.usd) statusHTML += `<span class="item">💵 دلار: <span class="value">${formatNum(marketData.usd)}</span></span>`;
                 if (marketData.btc) statusHTML += `<span class="item">₿ بیت‌کوین: <span class="value">$${formatNum(marketData.btc)}</span></span>`;
                 if (marketData.tedpix) statusHTML += `<span class="item">📊 شاخص: <span class="value">${formatNum(marketData.tedpix)}</span></span>`;
-                
-                status.innerHTML = statusHTML || '<span class="item">⚠️ قیمت‌ها در دسترس نیست</span>';
 
+                status.innerHTML = statusHTML || '<span class="item">⚠️ قیمت‌ها در دسترس نیست</span>';
             } catch (e) {
                 status.innerHTML = '<span class="item">⚠️ خطا در دریافت قیمت‌ها</span>';
             }
@@ -693,7 +694,6 @@ body {
 
         function buildMarketContext() {
             let context = '\n\n📊 **قیمت‌های لحظه‌ای بازار (به‌روز):**\n';
-            
             if (marketData.gold18) context += `- 🥇 طلا ۱۸ عیار: ${formatNum(marketData.gold18)} تومان (هر گرم)\n`;
             if (marketData.ounceGold) context += `- 🏅 انس طلا: ${formatNum(marketData.ounceGold)} دلار\n`;
             if (marketData.ounceSilver) context += `- 🥈 انس نقره: ${formatNum(marketData.ounceSilver)} دلار\n`;
@@ -702,9 +702,7 @@ body {
             if (marketData.eth) context += `- ⟠ اتریوم: $${formatNum(marketData.eth)}\n`;
             if (marketData.sol) context += `- ◎ سولانا: $${formatNum(marketData.sol)}\n`;
             if (marketData.tedpix) context += `- 📊 شاخص کل بورس: ${formatNum(marketData.tedpix)} واحد\n`;
-            
             context += '\n⚠️ حتماً در تحلیل‌ها از این قیمت‌های واقعی استفاده کن. هرگز قیمت قدیمی یا اشتباه نده.\n';
-            
             return context;
         }
 
@@ -713,20 +711,18 @@ body {
             event.stopPropagation();
             const dropdown = document.getElementById(id);
             const btn = event.currentTarget;
-            
-            // بستن بقیه
+
             document.querySelectorAll('.dropdown-content').forEach(d => {
                 if (d.id !== id) d.classList.remove('show');
             });
             document.querySelectorAll('.dropdown-btn').forEach(b => {
                 if (b !== btn) b.classList.remove('open');
             });
-            
+
             dropdown.classList.toggle('show');
             btn.classList.toggle('open');
         }
 
-        // بستن dropdown با کلیک بیرون
         document.addEventListener('click', function() {
             document.querySelectorAll('.dropdown-content').forEach(d => d.classList.remove('show'));
             document.querySelectorAll('.dropdown-btn').forEach(b => b.classList.remove('open'));
@@ -735,7 +731,6 @@ body {
         // ===== انتخاب پیشنهاد =====
         function toggleSuggestion(el, text) {
             const check = el.querySelector('.check');
-            
             if (el.classList.contains('selected')) {
                 el.classList.remove('selected');
                 check.textContent = '';
@@ -745,36 +740,33 @@ body {
                 check.textContent = '✓';
                 selectedSuggestions.push(text);
             }
-            
             updateSelectedUI();
         }
 
         function updateSelectedUI() {
             const assets = selectedSuggestions.filter(s => ['طلا ۱۸ عیار', 'انس طلا', 'انس نقره', 'نقره ۹۹۹', 'بیت‌کوین', 'اتریوم', 'سولانا', 'بورس ایران', 'دلار'].includes(s));
             const analysis = selectedSuggestions.filter(s => !['طلا ۱۸ عیار', 'انس طلا', 'انس نقره', 'نقره ۹۹۹', 'بیت‌کوین', 'اتریوم', 'سولانا', 'بورس ایران', 'دلار'].includes(s));
-            
-            // آپدیت شمارنده‌ها
+
             const assetsCount = document.getElementById('assetsCount');
             const analysisCount = document.getElementById('analysisCount');
-            
+
             if (assets.length > 0) {
                 assetsCount.textContent = assets.length;
                 assetsCount.style.display = 'inline';
             } else {
                 assetsCount.style.display = 'none';
             }
-            
+
             if (analysis.length > 0) {
                 analysisCount.textContent = analysis.length;
                 analysisCount.style.display = 'inline';
             } else {
                 analysisCount.style.display = 'none';
             }
-            
-            // نمایش تگ‌های انتخاب‌شده
+
             const tagsContainer = document.getElementById('selectedTags');
             const btnContainer = document.getElementById('sendSelectedBtn');
-            
+
             if (selectedSuggestions.length > 0) {
                 tagsContainer.classList.add('show');
                 btnContainer.classList.add('show');
@@ -792,8 +784,6 @@ body {
 
         function removeTag(text) {
             selectedSuggestions = selectedSuggestions.filter(s => s !== text);
-            
-            // آپدیت UI dropdown
             document.querySelectorAll('.dropdown-item').forEach(item => {
                 const span = item.querySelector('span');
                 if (span && span.textContent.includes(text)) {
@@ -801,7 +791,6 @@ body {
                     item.querySelector('.check').textContent = '';
                 }
             });
-            
             updateSelectedUI();
         }
 
@@ -810,7 +799,6 @@ body {
             const text = 'لطفاً در مورد ' + selectedSuggestions.join(' و ') + ' تحلیل و توضیح بده.';
             document.getElementById('userInput').value = text;
             sendMessage();
-            // پاک نکن - انتخاب‌ها باقی می‌مونن
         }
 
         // ===== فایل =====
@@ -824,20 +812,27 @@ body {
             }
 
             attachedFile = file;
+            attachedFile.name = file.name;
+            attachedFile.type = null;
+            attachedFile.dataUrl = null;
+            attachedFile.extractedText = null;
+            imageLoaded = false;
+
             const reader = new FileReader();
-            
             const fileName = file.name.toLowerCase();
             const isImage = file.type.startsWith('image/');
             const isPDF = fileName.endsWith('.pdf');
             const isWord = fileName.endsWith('.doc') || fileName.endsWith('.docx');
-            
+
             if (isImage) {
                 reader.onload = function(e) {
                     attachedFile.dataUrl = e.target.result;
                     attachedFile.type = 'image';
+                    imageLoaded = true;
+                    document.getElementById('fileIcon').textContent = '🖼️';
+                    document.getElementById('fileName').textContent = file.name + ' ✅';
                 };
                 reader.readAsDataURL(file);
-                document.getElementById('fileIcon').textContent = '🖼️';
             } else if (isPDF) {
                 reader.onload = async function(e) {
                     try {
@@ -858,6 +853,7 @@ body {
                 };
                 reader.readAsArrayBuffer(file);
                 document.getElementById('fileIcon').textContent = '📄';
+                document.getElementById('fileName').textContent = file.name;
             } else if (isWord) {
                 reader.onload = async function(e) {
                     try {
@@ -871,14 +867,15 @@ body {
                 };
                 reader.readAsArrayBuffer(file);
                 document.getElementById('fileIcon').textContent = '📝';
+                document.getElementById('fileName').textContent = file.name;
             }
 
-            document.getElementById('fileName').textContent = file.name;
             document.getElementById('filePreview').classList.add('show');
         }
 
         function removeFile() {
             attachedFile = null;
+            imageLoaded = false;
             document.getElementById('fileInput').value = '';
             document.getElementById('filePreview').classList.remove('show');
         }
@@ -887,20 +884,19 @@ body {
         function checkVisionSupport() {
             const model = document.getElementById('modelSelect').value;
             const warning = document.getElementById('visionWarning');
-            
+
             if (attachedFile && attachedFile.type === 'image' && !VISION_MODELS.includes(model)) {
                 warning.classList.add('show');
             } else {
                 warning.classList.remove('show');
             }
         }
-
         document.getElementById('modelSelect').addEventListener('change', checkVisionSupport);
 
         // ===== ارسال پیام =====
         async function sendMessage() {
             if (isTyping) return;
-            
+
             const input = document.getElementById('userInput');
             const message = input.value.trim();
             if (!message && !attachedFile) return;
@@ -908,9 +904,14 @@ body {
             const model = document.getElementById('modelSelect').value;
             const fileToSend = attachedFile;
 
+            // اگه عکس پیوست شده ولی هنوز لود نشده
+            if (fileToSend && fileToSend.type === null && fileToSend.dataUrl === null && fileToSend.extractedText === null) {
+                alert('⏳ فایل در حال پردازشه. چند لحظه صبر کن.');
+                return;
+            }
+
             // نمایش پیام کاربر
             let userMessageHTML = escapeHtml(message);
-            
             if (fileToSend) {
                 if (fileToSend.type === 'image' && fileToSend.dataUrl) {
                     userMessageHTML += `<br><img src="${fileToSend.dataUrl}" alt="پیوست">`;
@@ -922,22 +923,19 @@ body {
 
             // ساخت محتوای پیام
             let userContent = message;
-            
             if (fileToSend) {
                 if (fileToSend.type === 'image' && fileToSend.dataUrl && VISION_MODELS.includes(model)) {
-                    // ارسال عکس به مدل Vision
                     userContent = [
                         { type: 'text', text: message || 'این عکس رو تحلیل کن.' },
                         { type: 'image_url', image_url: { url: fileToSend.dataUrl } }
                     ];
                 } else if (fileToSend.extractedText) {
-                    // ارسال متن استخراج‌شده از PDF/Word
                     userContent = message + '\n\n📄 محتوای فایل پیوست:\n' + fileToSend.extractedText;
                 }
             }
-            
+
             conversationHistory.push({ role: 'user', content: userContent });
-            
+
             input.value = '';
             input.style.height = 'auto';
             removeFile();
@@ -961,7 +959,8 @@ body {
                         messages: [
                             { role: 'system', content: systemPrompt },
                             ...conversationHistory
-                        ]
+                        ],
+                        max_tokens: 2000
                     })
                 });
 
@@ -970,19 +969,13 @@ body {
                 if (!response.ok) {
                     const errorText = await response.text();
                     console.error('API Error:', response.status, errorText);
-                    
-                    if (errorText.includes('paid') || errorText.includes('credits')) {
-                        addMessage('assistant', '💰 این مدل نیاز به اعتبار پولی داره. لطفاً مدل دیگه‌ای انتخاب کن.');
-                    } else {
-                        addMessage('assistant', '❌ خطا در ارتباط با سرور (کد: ' + response.status + ').');
-                    }
+                    addMessage('assistant', '❌ خطا در ارتباط با سرور (کد: ' + response.status + ').\n\n' + errorText.substring(0, 200));
                 } else {
                     const data = await response.json();
                     const assistantMessage = data.choices[0].message.content;
                     addMessage('assistant', assistantMessage);
                     conversationHistory.push({ role: 'assistant', content: assistantMessage });
                 }
-
             } catch (error) {
                 hideTyping();
                 console.error('Fetch Error:', error);
@@ -1050,12 +1043,10 @@ body {
             this.style.height = Math.min(this.scrollHeight, 100) + 'px';
         });
 
-        // تنظیم PDF.js worker
         pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
 
         loadMarketData();
         setInterval(loadMarketData, 60000);
     </script>
-
 </body>
 </html>
