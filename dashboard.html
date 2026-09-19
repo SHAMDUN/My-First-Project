@@ -6,7 +6,6 @@
     <title>پنل کاربری | آکادمی شمعدون</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css">
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         :root {
             --bg-primary: #0a0a0f;
@@ -27,56 +26,18 @@
             background-color: var(--bg-primary);
             background-image: 
                 radial-gradient(circle at 0% 0%, rgba(212, 175, 55, 0.08) 0%, transparent 40%),
-                radial-gradient(circle at 100% 100%, rgba(59, 130, 246, 0.06) 0%, transparent 40%),
-                linear-gradient(rgba(255, 255, 255, 0.015) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
-            background-size: 100% 100%, 100% 100%, 60px 60px, 60px 60px;
+                radial-gradient(circle at 100% 100%, rgba(59, 130, 246, 0.06) 0%, transparent 40%);
             background-attachment: fixed;
             color: var(--white);
             min-height: 100vh;
             direction: rtl;
             overflow-x: hidden;
         }
-
         @keyframes fadeInUp {
             from { opacity: 0; transform: translateY(30px); }
             to { opacity: 1; transform: translateY(0); }
         }
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-8px); }
-        }
-        @keyframes pulse {
-            0%, 100% { opacity: 1; transform: scale(1); }
-            50% { opacity: 0.5; transform: scale(1.3); }
-        }
-        @keyframes shine {
-            0% { left: -100%; }
-            100% { left: 100%; }
-        }
-        @keyframes gradientShift {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-
-        .fade-up { animation: fadeInUp 0.8s ease-out backwards; }
-        .delay-1 { animation-delay: 0.1s; }
-        .delay-2 { animation-delay: 0.2s; }
-        .delay-3 { animation-delay: 0.3s; }
-        .delay-4 { animation-delay: 0.4s; }
-
-        /* ============= Main Container ============= */
-        .main-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 90px 20px 40px;
-        }
-
-        /* ============= Welcome Hero ============= */
+        .main-container { max-width: 1200px; margin: 0 auto; padding: 30px 20px 40px; }
         .welcome-hero {
             background: linear-gradient(135deg, rgba(212, 175, 55, 0.1), rgba(59, 130, 246, 0.05));
             border: 1px solid rgba(212, 175, 55, 0.2);
@@ -88,24 +49,15 @@
             align-items: center;
             flex-wrap: wrap;
             gap: 15px;
-            animation: fadeInUp 0.6s ease-out;
         }
-        .welcome-text h1 {
-            color: var(--white);
-            font-size: 24px;
-            font-weight: 900;
-            margin-bottom: 6px;
-        }
+        .welcome-text h1 { color: var(--white); font-size: 24px; font-weight: 900; margin-bottom: 6px; }
         .welcome-text h1 .gold {
             background: linear-gradient(135deg, var(--gold), var(--gold-light));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
-        .welcome-text p {
-            color: var(--gray);
-            font-size: 13px;
-        }
+        .welcome-text p { color: var(--gray); font-size: 13px; }
         .welcome-streak {
             display: flex;
             align-items: center;
@@ -117,46 +69,16 @@
         }
         .streak-icon { font-size: 28px; }
         .streak-info { text-align: right; }
-        .streak-value {
-            color: var(--gold);
-            font-size: 22px;
-            font-weight: 900;
-            line-height: 1;
-        }
-        .streak-label {
-            color: var(--gray);
-            font-size: 11px;
-            margin-top: 3px;
-        }
-
-        /* ============= Continue Learning ============= */
+        .streak-value { color: var(--gold); font-size: 22px; font-weight: 900; line-height: 1; }
+        .streak-label { color: var(--gray); font-size: 11px; margin-top: 3px; }
         .continue-card {
             background: linear-gradient(135deg, var(--bg-card), var(--bg-secondary));
             border: 1px solid rgba(59, 130, 246, 0.3);
             border-radius: 20px;
             padding: 25px;
             margin-bottom: 24px;
-            position: relative;
-            overflow: hidden;
-            animation: fadeInUp 0.6s ease-out 0.1s backwards;
-            box-shadow: 0 10px 40px rgba(59, 130, 246, 0.15);
         }
-        .continue-card::before {
-            content: '';
-            position: absolute;
-            top: -50%; right: -50%;
-            width: 200%; height: 200%;
-            background: radial-gradient(circle, rgba(59, 130, 246, 0.08), transparent 60%);
-            pointer-events: none;
-        }
-        .continue-header {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 18px;
-            position: relative;
-            z-index: 2;
-        }
+        .continue-header { display: flex; align-items: center; gap: 10px; margin-bottom: 18px; }
         .continue-icon {
             width: 42px; height: 42px;
             border-radius: 12px;
@@ -165,137 +87,52 @@
             align-items: center;
             justify-content: center;
             font-size: 20px;
-            box-shadow: 0 5px 20px rgba(59, 130, 246, 0.4);
         }
-        .continue-title {
-            color: var(--white);
-            font-size: 16px;
-            font-weight: 800;
-        }
-        .continue-subtitle {
-            color: var(--gray);
-            font-size: 11px;
-            margin-top: 2px;
-        }
-        .continue-body {
-            background: rgba(10, 10, 15, 0.5);
-            border-radius: 15px;
-            padding: 18px;
-            margin-bottom: 16px;
-            position: relative;
-            z-index: 2;
-        }
-        .continue-course-info {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            margin-bottom: 15px;
-        }
-        .continue-course-icon {
-            font-size: 38px;
-        }
+        .continue-title { color: var(--white); font-size: 16px; font-weight: 800; }
+        .continue-subtitle { color: var(--gray); font-size: 11px; margin-top: 2px; }
+        .continue-body { background: rgba(10, 10, 15, 0.5); border-radius: 15px; padding: 18px; margin-bottom: 16px; }
+        .continue-course-info { display: flex; align-items: center; gap: 15px; margin-bottom: 15px; }
+        .continue-course-icon { font-size: 38px; }
         .continue-course-details { flex: 1; }
-        .continue-course-name {
-            color: var(--white);
-            font-size: 16px;
-            font-weight: 800;
-            margin-bottom: 4px;
-        }
-        .continue-lesson-name {
-            color: var(--gray);
-            font-size: 12px;
-        }
-        .continue-progress-bar {
-            width: 100%;
-            height: 8px;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 10px;
-            overflow: hidden;
-            margin-bottom: 8px;
-        }
-        .continue-progress-fill {
-            height: 100%;
-            background: linear-gradient(90deg, var(--blue), var(--gold));
-            border-radius: 10px;
-            transition: width 0.5s;
-        }
-        .continue-progress-info {
-            display: flex;
-            justify-content: space-between;
-            color: var(--gray);
-            font-size: 11px;
-        }
+        .continue-course-name { color: var(--white); font-size: 16px; font-weight: 800; margin-bottom: 4px; }
+        .continue-lesson-name { color: var(--gray); font-size: 12px; }
+        .continue-progress-bar { width: 100%; height: 8px; background: rgba(255, 255, 255, 0.05); border-radius: 10px; overflow: hidden; margin-bottom: 8px; }
+        .continue-progress-fill { height: 100%; background: linear-gradient(90deg, var(--blue), var(--gold)); border-radius: 10px; }
+        .continue-progress-info { display: flex; justify-content: space-between; color: var(--gray); font-size: 11px; }
         .continue-btn {
             width: 100%;
             padding: 15px;
             border-radius: 12px;
-            border: none;
             background: linear-gradient(135deg, var(--blue), #2563eb);
             color: #fff;
             font-size: 15px;
             font-weight: 800;
             cursor: pointer;
             font-family: 'Vazirmatn', Tahoma, sans-serif;
-            transition: 0.3s;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 8px;
             text-decoration: none;
-            position: relative;
-            z-index: 2;
+            border: none;
         }
-        .continue-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(59, 130, 246, 0.5);
-        }
-
-        /* ============= Stats Grid ============= */
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 15px;
-            margin-bottom: 24px;
-        }
+        .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-bottom: 24px; }
         .stat-card {
             background: linear-gradient(135deg, var(--bg-card), var(--bg-secondary));
             border: 1px solid rgba(212, 175, 55, 0.15);
             border-radius: 18px;
             padding: 20px;
             text-align: center;
-            transition: 0.3s;
-            animation: fadeInUp 0.6s ease-out 0.2s backwards;
         }
-        .stat-card:hover {
-            transform: translateY(-5px);
-            border-color: rgba(212, 175, 55, 0.4);
-            box-shadow: 0 15px 40px rgba(212, 175, 55, 0.15);
-        }
-        .stat-icon {
-            font-size: 32px;
-            margin-bottom: 10px;
-            filter: drop-shadow(0 0 10px rgba(212, 175, 55, 0.3));
-        }
-        .stat-value {
-            color: var(--gold);
-            font-size: 28px;
-            font-weight: 900;
-            margin-bottom: 5px;
-            font-variant-numeric: tabular-nums;
-        }
-        .stat-label {
-            color: var(--gray);
-            font-size: 12px;
-        }
-
-        /* ============= Section ============= */
+        .stat-icon { font-size: 32px; margin-bottom: 10px; }
+        .stat-value { color: var(--gold); font-size: 28px; font-weight: 900; margin-bottom: 5px; }
+        .stat-label { color: var(--gray); font-size: 12px; }
         .section {
             background: linear-gradient(135deg, var(--bg-card), var(--bg-secondary));
             border: 1px solid rgba(212, 175, 55, 0.1);
             border-radius: 20px;
             padding: 25px;
             margin-bottom: 24px;
-            animation: fadeInUp 0.6s ease-out 0.3s backwards;
         }
         .section-header {
             display: flex;
@@ -305,23 +142,8 @@
             padding-bottom: 15px;
             border-bottom: 1px solid rgba(212, 175, 55, 0.15);
         }
-        .section-title {
-            color: var(--white);
-            font-size: 16px;
-            font-weight: 800;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        .section-link {
-            color: var(--gold);
-            text-decoration: none;
-            font-size: 12px;
-            font-weight: 600;
-        }
-        .section-link:hover { text-decoration: underline; }
-
-        /* ============= Course Card ============= */
+        .section-title { color: var(--white); font-size: 16px; font-weight: 800; display: flex; align-items: center; gap: 8px; }
+        .section-link { color: var(--gold); text-decoration: none; font-size: 12px; font-weight: 600; }
         .course-item {
             display: flex;
             align-items: center;
@@ -330,68 +152,26 @@
             background: rgba(10, 10, 15, 0.5);
             border-radius: 15px;
             margin-bottom: 12px;
-            transition: 0.3s;
             border: 1px solid rgba(255, 255, 255, 0.05);
-            text-decoration: none;
-            color: inherit;
         }
         .course-item:last-child { margin-bottom: 0; }
-        .course-item:hover {
-            background: rgba(10, 10, 15, 0.8);
-            border-color: rgba(212, 175, 55, 0.3);
-            transform: translateX(-5px);
-        }
         .course-item-icon {
             width: 50px; height: 50px;
             border-radius: 12px;
-            background: linear-gradient(135deg, rgba(212, 175, 55, 0.2), rgba(212, 175, 55, 0.05));
+            background: rgba(212, 175, 55, 0.15);
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 24px;
-            flex-shrink: 0;
         }
         .course-item-info { flex: 1; }
-        .course-item-title {
-            color: var(--white);
-            font-size: 14px;
-            font-weight: 700;
-            margin-bottom: 8px;
-        }
-        .course-item-progress {
-            width: 100%;
-            height: 6px;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 10px;
-            overflow: hidden;
-        }
-        .course-item-progress-fill {
-            height: 100%;
-            background: linear-gradient(90deg, var(--gold), var(--gold-dark));
-            border-radius: 10px;
-        }
-        .course-item-percent {
-            color: var(--gold);
-            font-size: 14px;
-            font-weight: 800;
-            min-width: 50px;
-            text-align: left;
-        }
+        .course-item-title { color: var(--white); font-size: 14px; font-weight: 700; margin-bottom: 8px; }
+        .course-item-progress { width: 100%; height: 6px; background: rgba(255, 255, 255, 0.05); border-radius: 10px; overflow: hidden; }
+        .course-item-progress-fill { height: 100%; background: linear-gradient(90deg, var(--gold), var(--gold-dark)); border-radius: 10px; }
+        .course-item-percent { color: var(--gold); font-size: 14px; font-weight: 800; min-width: 50px; text-align: left; }
         .course-item-percent.done { color: var(--green); }
-
-        .empty-state {
-            text-align: center;
-            padding: 30px 20px;
-            color: var(--gray);
-            font-size: 13px;
-        }
-        .empty-state a {
-            color: var(--gold);
-            text-decoration: none;
-            font-weight: 700;
-        }
-
-        /* ============= AI Suggestion ============= */
+        .empty-state { text-align: center; padding: 30px 20px; color: var(--gray); font-size: 13px; }
+        .empty-state a { color: var(--gold); text-decoration: none; font-weight: 700; }
         .ai-suggestion {
             background: linear-gradient(135deg, rgba(212, 175, 55, 0.08), rgba(59, 130, 246, 0.05));
             border: 1px solid rgba(212, 175, 55, 0.25);
@@ -400,26 +180,12 @@
             display: flex;
             align-items: center;
             gap: 15px;
-            animation: fadeInUp 0.6s ease-out 0.4s backwards;
             margin-bottom: 24px;
         }
-        .ai-suggestion-icon {
-            font-size: 38px;
-            flex-shrink: 0;
-        }
+        .ai-suggestion-icon { font-size: 38px; flex-shrink: 0; }
         .ai-suggestion-content { flex: 1; }
-        .ai-suggestion-title {
-            color: var(--gold);
-            font-size: 14px;
-            font-weight: 800;
-            margin-bottom: 6px;
-        }
-        .ai-suggestion-text {
-            color: var(--white);
-            font-size: 13px;
-            margin-bottom: 12px;
-            line-height: 1.7;
-        }
+        .ai-suggestion-title { color: var(--gold); font-size: 14px; font-weight: 800; margin-bottom: 6px; }
+        .ai-suggestion-text { color: var(--white); font-size: 13px; margin-bottom: 12px; line-height: 1.7; }
         .ai-suggestion-btn {
             display: inline-block;
             background: linear-gradient(135deg, var(--gold), var(--gold-dark));
@@ -429,48 +195,20 @@
             text-decoration: none;
             font-size: 12px;
             font-weight: 800;
-            transition: 0.3s;
         }
-        .ai-suggestion-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(212, 175, 55, 0.4);
-        }
-
-        /* ============= Achievements ============= */
-        .achievements-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 12px;
-        }
+        .achievements-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
         .achievement {
             background: rgba(10, 10, 15, 0.5);
             border: 1px solid rgba(255, 255, 255, 0.05);
             border-radius: 12px;
             padding: 15px 10px;
             text-align: center;
-            transition: 0.3s;
         }
-        .achievement.unlocked {
-            border-color: rgba(212, 175, 55, 0.4);
-            background: rgba(212, 175, 55, 0.05);
-        }
-        .achievement.locked {
-            opacity: 0.4;
-        }
+        .achievement.unlocked { border-color: rgba(212, 175, 55, 0.4); background: rgba(212, 175, 55, 0.05); }
+        .achievement.locked { opacity: 0.4; }
         .achievement-icon { font-size: 28px; margin-bottom: 8px; }
-        .achievement-title {
-            color: var(--white);
-            font-size: 11px;
-            font-weight: 700;
-            line-height: 1.4;
-        }
-
-        /* ============= Quick Links ============= */
-        .quick-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 10px;
-        }
+        .achievement-title { color: var(--white); font-size: 11px; font-weight: 700; line-height: 1.4; }
+        .quick-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
         .quick-link {
             background: rgba(10, 10, 15, 0.5);
             padding: 15px;
@@ -481,27 +219,15 @@
             align-items: center;
             gap: 12px;
             border: 1px solid rgba(255, 255, 255, 0.05);
-            transition: 0.3s;
-        }
-        .quick-link:hover {
-            background: rgba(10, 10, 15, 0.8);
-            border-color: rgba(212, 175, 55, 0.3);
-            transform: translateY(-3px);
         }
         .quick-link-icon { font-size: 22px; }
-        .quick-link-title {
-            font-size: 13px;
-            font-weight: 700;
-        }
-
-        /* ============= Profile Card ============= */
+        .quick-link-title { font-size: 13px; font-weight: 700; }
         .profile-card {
             background: linear-gradient(135deg, var(--bg-card), var(--bg-secondary));
             border: 1px solid rgba(212, 175, 55, 0.15);
             border-radius: 20px;
             padding: 25px;
             margin-bottom: 24px;
-            animation: fadeInUp 0.6s ease-out 0.5s backwards;
         }
         .profile-header {
             display: flex;
@@ -522,36 +248,11 @@
             font-weight: 900;
             color: var(--bg-primary);
             border: 3px solid var(--gold);
-            box-shadow: 0 0 30px rgba(212, 175, 55, 0.4);
-            flex-shrink: 0;
-            overflow: hidden;
         }
-        .profile-avatar-img {
-            width: 100%; height: 100%;
-            object-fit: cover;
-        }
-        .profile-info { flex: 1; min-width: 0; }
-        .profile-name {
-            color: var(--white);
-            font-size: 18px;
-            font-weight: 800;
-            margin-bottom: 5px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            flex-wrap: wrap;
-        }
-        .profile-email {
-            color: var(--gray);
-            font-size: 12px;
-            margin-bottom: 8px;
-            word-break: break-all;
-        }
-        .profile-badges {
-            display: flex;
-            gap: 6px;
-            flex-wrap: wrap;
-        }
+        .profile-info { flex: 1; }
+        .profile-name { color: var(--white); font-size: 18px; font-weight: 800; margin-bottom: 5px; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+        .profile-email { color: var(--gray); font-size: 12px; margin-bottom: 8px; word-break: break-all; }
+        .profile-badges { display: flex; gap: 6px; flex-wrap: wrap; }
         .badge {
             display: inline-flex;
             align-items: center;
@@ -564,16 +265,8 @@
             border: 1px solid rgba(212, 175, 55, 0.3);
             font-weight: 700;
         }
-        .badge.admin {
-            background: rgba(220, 38, 38, 0.15);
-            color: #fca5a5;
-            border-color: rgba(220, 38, 38, 0.4);
-        }
-        .profile-actions {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-        }
+        .badge.admin { background: rgba(220, 38, 38, 0.15); color: #fca5a5; border-color: rgba(220, 38, 38, 0.4); }
+        .profile-actions { display: flex; gap: 10px; flex-wrap: wrap; }
         .profile-btn {
             flex: 1;
             min-width: 130px;
@@ -586,34 +279,17 @@
             font-size: 13px;
             font-weight: 700;
             cursor: pointer;
-            transition: 0.3s;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 6px;
         }
-        .profile-btn:hover {
-            background: rgba(10, 10, 15, 0.9);
-            border-color: rgba(212, 175, 55, 0.4);
-            color: var(--gold);
-        }
-        .profile-btn.danger {
-            color: var(--red);
-            border-color: rgba(239, 68, 68, 0.3);
-        }
-        .profile-btn.danger:hover {
-            background: rgba(239, 68, 68, 0.1);
-            border-color: var(--red);
-            color: #fca5a5;
-        }
-
-        /* ============= Modal ============= */
+        .profile-btn.danger { color: var(--red); border-color: rgba(239, 68, 68, 0.3); }
         .modal-overlay {
             display: none;
             position: fixed;
             top: 0; left: 0; right: 0; bottom: 0;
             background: rgba(0, 0, 0, 0.8);
-            backdrop-filter: blur(5px);
             z-index: 9999;
             align-items: center;
             justify-content: center;
@@ -627,14 +303,8 @@
             border-radius: 20px;
             max-width: 400px;
             width: 100%;
-            animation: fadeInUp 0.3s ease-out;
         }
-        .modal h3 {
-            color: var(--white);
-            font-size: 17px;
-            margin-bottom: 18px;
-            text-align: center;
-        }
+        .modal h3 { color: var(--white); font-size: 17px; margin-bottom: 18px; text-align: center; }
         .modal-input {
             width: 100%;
             padding: 13px 16px;
@@ -646,17 +316,8 @@
             outline: none;
             margin-bottom: 12px;
             font-family: 'Vazirmatn', Tahoma, sans-serif;
-            transition: 0.3s;
         }
-        .modal-input:focus {
-            border-color: var(--gold);
-            box-shadow: 0 0 0 4px rgba(212, 175, 55, 0.1);
-        }
-        .modal-buttons {
-            display: flex;
-            gap: 10px;
-            margin-top: 18px;
-        }
+        .modal-buttons { display: flex; gap: 10px; margin-top: 18px; }
         .modal-btn {
             flex: 1;
             padding: 12px;
@@ -666,85 +327,25 @@
             font-size: 13px;
             font-weight: 700;
             cursor: pointer;
-            transition: 0.3s;
         }
-        .modal-btn.primary {
-            background: linear-gradient(135deg, var(--gold), var(--gold-dark));
-            color: var(--bg-primary);
-        }
-        .modal-btn.primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(212, 175, 55, 0.4);
-        }
-        .modal-btn.secondary {
-            background: rgba(10, 10, 15, 0.6);
-            color: var(--white);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-        .modal-btn.secondary:hover {
-            background: rgba(10, 10, 15, 0.9);
-        }
-        .message {
-            padding: 10px 14px;
-            border-radius: 10px;
-            margin-bottom: 12px;
-            font-size: 12px;
-            text-align: center;
-            display: none;
-        }
-        .message.success {
-            background: rgba(16, 185, 129, 0.15);
-            color: var(--green);
-            border: 1px solid rgba(16, 185, 129, 0.4);
-            display: block;
-        }
-        .message.error {
-            background: rgba(239, 68, 68, 0.15);
-            color: var(--red);
-            border: 1px solid rgba(239, 68, 68, 0.4);
-            display: block;
-        }
-
-        .loading {
-            text-align: center;
-            padding: 100px 20px;
-            color: var(--gray);
-            font-size: 16px;
-        }
-
-        /* ============= Footer ============= */
-        .footer {
-            text-align: center;
-            padding: 25px 20px;
-            color: var(--gray);
-            font-size: 12px;
-            border-top: 1px solid rgba(212, 175, 55, 0.1);
-        }
-
-        /* ============= ریسپانسیو ============= */
-        @media (max-width: 900px) {
-            .nav-links { display: none; }
-            .welcome-hero { padding: 20px; }
-            .welcome-text h1 { font-size: 20px; }
-            .stats-grid { gap: 10px; }
-            .stat-card { padding: 15px 10px; }
-            .stat-value { font-size: 22px; }
-            .achievements-grid { grid-template-columns: repeat(2, 1fr); }
-        }
+        .modal-btn.primary { background: linear-gradient(135deg, var(--gold), var(--gold-dark)); color: var(--bg-primary); }
+        .modal-btn.secondary { background: rgba(10, 10, 15, 0.6); color: var(--white); border: 1px solid rgba(255, 255, 255, 0.1); }
+        .message { padding: 10px 14px; border-radius: 10px; margin-bottom: 12px; font-size: 12px; text-align: center; display: none; }
+        .message.success { background: rgba(16, 185, 129, 0.15); color: var(--green); border: 1px solid rgba(16, 185, 129, 0.4); display: block; }
+        .message.error { background: rgba(239, 68, 68, 0.15); color: var(--red); border: 1px solid rgba(239, 68, 68, 0.4); display: block; }
+        .loading { text-align: center; padding: 100px 20px; color: var(--gray); font-size: 16px; }
+        .footer { text-align: center; padding: 25px 20px; color: var(--gray); font-size: 12px; border-top: 1px solid rgba(212, 175, 55, 0.1); }
         @media (max-width: 600px) {
-            .main-container { padding: 90px 15px 30px; }
-            .welcome-hero { flex-direction: column; align-items: flex-start; }
             .stats-grid { grid-template-columns: 1fr; }
             .quick-grid { grid-template-columns: 1fr; }
             .profile-actions { flex-direction: column; }
             .profile-header { flex-direction: column; text-align: center; }
-            .profile-name { justify-content: center; }
+            .achievements-grid { grid-template-columns: repeat(2, 1fr); }
         }
     </style>
 </head>
 <body>
 
-    <!-- Main Container -->
     <div class="main-container" id="content">
         <div class="loading">⏳ در حال بارگذاری...</div>
     </div>
@@ -776,24 +377,16 @@
         </div>
     </div>
 
-    <!-- Footer -->
     <footer class="footer">
         © ۱۴۰۵ آکادمی شمعدون | تمامی حقوق محفوظ است
     </footer>
 
     <script>
-        // ==========================================
-        // تنظیمات Supabase
-        // ==========================================
         const SUPABASE_URL = 'https://jcwwilatvstjrohvhtss.supabase.co';
         const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Impjd3dpbGF0dnN0anJvaHZodHNzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODk3MDY4NTYsImV4cCI6MjEwNTI4Mjg1Nn0.eUC89RJy6-60nNGrSeYeDADzLxz-kWTGy4DbNGVi6MM';
         const ADMIN_EMAIL = 'beat.market.office@gmail.com';
-
         const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-        // ==========================================
-        // اطلاعات دوره‌های ثابت
-        // ==========================================
         const staticCourses = {
             1: { title: 'اقتصاد کلان و خرد', icon: '📊', lessons: 8 },
             2: { title: 'آشنایی با بازارهای مالی', icon: '💹', lessons: 10 },
@@ -803,369 +396,264 @@
         };
 
         let currentUser = null;
-        let dynamicCourses = [];
 
-        // ==========================================
-        // بارگذاری دوره‌های داینامیک از Supabase
-        // ==========================================
-        async function loadDynamicCourses() {
-            try {
-                const { data, error } = await supabaseClient
-                    .from('courses')
-                    .select('*')
-                    .order('id', { ascending: true });
-
-                if (error || !data) return;
-
-                dynamicCourses = data.map(c => ({
-                    id: c.id,
-                    title: c.title || 'بدون عنوان',
-                    icon: c.icon || '📚',
-                    lessons: 0,
-                    isDynamic: true
-                }));
-            } catch (e) {
-                console.log('Dynamic courses error:', e);
-            }
-        }
-
-        // ==========================================
-        // پیدا کردن اطلاعات دوره
-        // ==========================================
         function getCourseInfo(courseId) {
-            if (staticCourses[courseId]) {
-                return staticCourses[courseId];
-            }
-            const dynamic = dynamicCourses.find(c => c.id === courseId);
-            if (dynamic) {
-                return {
-                    title: dynamic.title,
-                    icon: dynamic.icon,
-                    lessons: dynamic.lessons || 8  // پیش‌فرض ۸ درس
-                };
-            }
-            return null;
+            return staticCourses[courseId] || null;
         }
 
-        // ==========================================
-        // بارگذاری پروفایل
-        // ==========================================
         async function loadProfile() {
-            const { data: { session } } = await supabaseClient.auth.getSession();
-            if (!session) {
-                window.location.href = 'login.html';
-                return;
-            }
+            try {
+                const { data: { session } } = await supabaseClient.auth.getSession();
+                if (!session) {
+                    window.location.href = 'login.html';
+                    return;
+                }
 
-            currentUser = session.user;
-            await loadDynamicCourses();
+                currentUser = session.user;
 
-            const fullName = currentUser.user_metadata?.full_name || 'کاربر عزیز';
-            const email = currentUser.email;
-            const firstLetter = fullName.charAt(0).toUpperCase();
-            const joinDate = new Date(currentUser.created_at).toLocaleDateString('fa-IR', {
-                year: 'numeric', month: 'long', day: 'numeric'
-            });
+                const fullName = currentUser.user_metadata?.full_name || 'کاربر عزیز';
+                const email = currentUser.email;
+                const firstLetter = fullName.charAt(0).toUpperCase();
+                const joinDate = new Date(currentUser.created_at).toLocaleDateString('fa-IR', {
+                    year: 'numeric', month: 'long', day: 'numeric'
+                });
 
-            const isAdmin = (email === ADMIN_EMAIL);
+                const isAdmin = (email === ADMIN_EMAIL);
+                const completedCourses = currentUser.user_metadata?.completed_courses || [];
+                const inProgressCourses = currentUser.user_metadata?.in_progress_courses || [];
+                const completedLessons = currentUser.user_metadata?.completed_lessons || {};
+                const personalityResult = currentUser.user_metadata?.personality_result;
+                const totalCourses = completedCourses.length + inProgressCourses.length;
 
-            const completedCourses = currentUser.user_metadata?.completed_courses || [];
-            const inProgressCourses = currentUser.user_metadata?.in_progress_courses || [];
-            const completedLessons = currentUser.user_metadata?.completed_lessons || {};
-            const personalityResult = currentUser.user_metadata?.personality_result;
-
-            const totalCourses = completedCourses.length + inProgressCourses.length;
-
-            // ===== Continue Learning =====
-            let continueHTML = '';
-            if (inProgressCourses.length > 0) {
-                const firstInProgress = inProgressCourses[0];
-                const courseInfo = getCourseInfo(firstInProgress);
-                if (courseInfo) {
-                    const completedCount = (completedLessons[firstInProgress] || []).length;
-                    const totalLessons = courseInfo.lessons;
-                    const percent = Math.round((completedCount / totalLessons) * 100);
-                    const nextLesson = completedCount + 1;
-
-                    continueHTML = `
-                        <div class="continue-card">
-                            <div class="continue-header">
-                                <div class="continue-icon">🎯</div>
-                                <div>
-                                    <div class="continue-title">ادامه یادگیری</div>
-                                    <div class="continue-subtitle">از جایی که رها کردی</div>
-                                </div>
-                            </div>
-                            <div class="continue-body">
-                                <div class="continue-course-info">
-                                    <div class="continue-course-icon">${courseInfo.icon}</div>
-                                    <div class="continue-course-details">
-                                        <div class="continue-course-name">${courseInfo.title}</div>
-                                        <div class="continue-lesson-name">درس ${nextLesson} از ${totalLessons}</div>
+                // Continue Learning
+                let continueHTML = '';
+                if (inProgressCourses.length > 0) {
+                    const firstId = inProgressCourses[0];
+                    const courseInfo = getCourseInfo(firstId);
+                    if (courseInfo) {
+                        const completedCount = (completedLessons[firstId] || []).length;
+                        const percent = Math.round((completedCount / courseInfo.lessons) * 100);
+                        const nextLesson = completedCount + 1;
+                        continueHTML = `
+                            <div class="continue-card">
+                                <div class="continue-header">
+                                    <div class="continue-icon">🎯</div>
+                                    <div>
+                                        <div class="continue-title">ادامه یادگیری</div>
+                                        <div class="continue-subtitle">از جایی که رها کردی</div>
                                     </div>
                                 </div>
-                                <div class="continue-progress-bar">
-                                    <div class="continue-progress-fill" style="width: ${percent}%"></div>
+                                <div class="continue-body">
+                                    <div class="continue-course-info">
+                                        <div class="continue-course-icon">${courseInfo.icon}</div>
+                                        <div class="continue-course-details">
+                                            <div class="continue-course-name">${courseInfo.title}</div>
+                                            <div class="continue-lesson-name">درس ${toPersianNum(nextLesson)} از ${toPersianNum(courseInfo.lessons)}</div>
+                                        </div>
+                                    </div>
+                                    <div class="continue-progress-bar">
+                                        <div class="continue-progress-fill" style="width: ${percent}%"></div>
+                                    </div>
+                                    <div class="continue-progress-info">
+                                        <span>${toPersianNum(completedCount)} از ${toPersianNum(courseInfo.lessons)} درس</span>
+                                        <span>${toPersianNum(percent)}٪</span>
+                                    </div>
                                 </div>
-                                <div class="continue-progress-info">
-                                    <span>${completedCount} از ${totalLessons} درس تکمیل شده</span>
-                                    <span>${percent}٪</span>
-                                </div>
+                                <a href="lesson.html?course=${firstId}&lesson=${nextLesson}" class="continue-btn">ادامه بده ←</a>
                             </div>
-                            <a href="lesson.html?course=${firstInProgress}&lesson=${nextLesson}" class="continue-btn">
-                                ادامه بده ←
-                            </a>
+                        `;
+                    }
+                }
+
+                // My Courses
+                let myCoursesHTML = '';
+                if (totalCourses === 0) {
+                    myCoursesHTML = `
+                        <div class="empty-state">
+                            📚 هنوز در هیچ دوره‌ای ثبت‌نام نکردی.<br><br>
+                            <a href="courses.html">مشاهده دوره‌های رایگان →</a>
+                        </div>
+                    `;
+                } else {
+                    completedCourses.forEach(courseId => {
+                        const info = getCourseInfo(courseId);
+                        if (info) {
+                            myCoursesHTML += `
+                                <div class="course-item">
+                                    <div class="course-item-icon">${info.icon}</div>
+                                    <div class="course-item-info">
+                                        <div class="course-item-title">${info.title}</div>
+                                        <div class="course-item-progress">
+                                            <div class="course-item-progress-fill" style="width: 100%"></div>
+                                        </div>
+                                    </div>
+                                    <div class="course-item-percent done">✅</div>
+                                </div>
+                            `;
+                        }
+                    });
+
+                    inProgressCourses.forEach(courseId => {
+                        const info = getCourseInfo(courseId);
+                        if (info) {
+                            const completedCount = (completedLessons[courseId] || []).length;
+                            const percent = Math.round((completedCount / info.lessons) * 100);
+                            myCoursesHTML += `
+                                <div class="course-item">
+                                    <div class="course-item-icon">${info.icon}</div>
+                                    <div class="course-item-info">
+                                        <div class="course-item-title">${info.title}</div>
+                                        <div class="course-item-progress">
+                                            <div class="course-item-progress-fill" style="width: ${percent}%"></div>
+                                        </div>
+                                    </div>
+                                    <div class="course-item-percent">${toPersianNum(percent)}٪</div>
+                                </div>
+                            `;
+                        }
+                    });
+                }
+
+                // Achievements
+                const achievements = [
+                    { icon: '🥇', title: 'کاربر طلایی', unlocked: completedCourses.length >= 3 },
+                    { icon: '🎓', title: 'دانشجوی فعال', unlocked: totalCourses >= 2 },
+                    { icon: '🎯', title: 'تست شخصیت', unlocked: !!personalityResult },
+                    { icon: '🔥', title: 'شروع قدرتمند', unlocked: totalCourses >= 1 },
+                    { icon: '⭐', title: 'عضو وفادار', unlocked: true },
+                    { icon: '🏆', title: 'حرفه‌ای', unlocked: completedCourses.length >= 5 }
+                ];
+
+                const achievementsHTML = achievements.map(a => `
+                    <div class="achievement ${a.unlocked ? 'unlocked' : 'locked'}">
+                        <div class="achievement-icon">${a.icon}</div>
+                        <div class="achievement-title">${a.title}</div>
+                    </div>
+                `).join('');
+
+                // Suggestion
+                let suggestionHTML = '';
+                if (totalCourses === 0) {
+                    suggestionHTML = `
+                        <div class="ai-suggestion">
+                            <div class="ai-suggestion-icon">👋</div>
+                            <div class="ai-suggestion-content">
+                                <div class="ai-suggestion-title">خوش آمدی!</div>
+                                <div class="ai-suggestion-text">برای شروع، دوره «اقتصاد کلان» رو پیشنهاد می‌کنیم — کاملاً رایگان.</div>
+                                <a href="courses.html" class="ai-suggestion-btn">شروع کن ←</a>
+                            </div>
                         </div>
                     `;
                 }
-            } else if (completedCourses.length > 0) {
-                continueHTML = `
-                    <div class="continue-card">
-                        <div class="continue-header">
-                            <div class="continue-icon">🎉</div>
-                            <div>
-                                <div class="continue-title">آفرین!</div>
-                                <div class="continue-subtitle">همه دوره‌های فعلی رو تموم کردی</div>
+
+                // Render
+                document.getElementById('content').innerHTML = `
+                    <div class="welcome-hero">
+                        <div class="welcome-text">
+                            <h1>سلام <span class="gold">${escapeHtml(fullName)}</span> 👋</h1>
+                            <p>خوش برگشتی! امروز چه خبر؟</p>
+                        </div>
+                        <div class="welcome-streak">
+                            <div class="streak-icon">🔥</div>
+                            <div class="streak-info">
+                                <div class="streak-value">${toPersianNum(totalCourses)}</div>
+                                <div class="streak-label">دوره فعال</div>
                             </div>
                         </div>
-                        <div class="continue-body">
-                            <div class="continue-course-info">
-                                <div class="continue-course-icon">🎓</div>
-                                <div class="continue-course-details">
-                                    <div class="continue-course-name">دوره جدید شروع کن</div>
-                                    <div class="continue-lesson-name">دوره‌های جدید در انتظارته</div>
+                    </div>
+
+                    ${continueHTML}
+
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-icon">📚</div>
+                            <div class="stat-value">${toPersianNum(totalCourses)}</div>
+                            <div class="stat-label">دوره ثبت‌نام شده</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">✅</div>
+                            <div class="stat-value">${toPersianNum(completedCourses.length)}</div>
+                            <div class="stat-label">دوره تکمیل شده</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">🎯</div>
+                            <div class="stat-value">${personalityResult ? '✓' : '--'}</div>
+                            <div class="stat-label">تست شخصیت</div>
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <div class="section-header">
+                            <div class="section-title">📚 دوره‌های من</div>
+                            <a href="courses.html" class="section-link">مشاهده همه ←</a>
+                        </div>
+                        ${myCoursesHTML}
+                    </div>
+
+                    ${suggestionHTML}
+
+                    <div class="section">
+                        <div class="section-header">
+                            <div class="section-title">🏆 دستاوردها</div>
+                        </div>
+                        <div class="achievements-grid">${achievementsHTML}</div>
+                    </div>
+
+                    <div class="section">
+                        <div class="section-header">
+                            <div class="section-title">⚡ دسترسی سریع</div>
+                        </div>
+                        <div class="quick-grid">
+                            <a href="home.html" class="quick-link">
+                                <div class="quick-link-icon">📊</div>
+                                <div class="quick-link-title">نمای بازار</div>
+                            </a>
+                            <a href="assistant.html" class="quick-link">
+                                <div class="quick-link-icon">🤖</div>
+                                <div class="quick-link-title">دستیار هوشمند</div>
+                            </a>
+                            <a href="bourse.html" class="quick-link">
+                                <div class="quick-link-icon">🏢</div>
+                                <div class="quick-link-title">بورس ایران</div>
+                            </a>
+                            <a href="personality-test.html" class="quick-link">
+                                <div class="quick-link-icon">🧠</div>
+                                <div class="quick-link-title">آزمون خودشناسی</div>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="profile-card">
+                        <div class="profile-header">
+                            <div class="profile-avatar">${firstLetter}</div>
+                            <div class="profile-info">
+                                <div class="profile-name">
+                                    ${escapeHtml(fullName)}
+                                    ${isAdmin ? '<span class="badge admin">👑 ادمین</span>' : ''}
+                                </div>
+                                <div class="profile-email">${escapeHtml(email)}</div>
+                                <div class="profile-badges">
+                                    <span class="badge">✨ عضو از ${joinDate}</span>
                                 </div>
                             </div>
                         </div>
-                        <a href="courses.html" class="continue-btn">
-                            مشاهده دوره‌ها ←
-                        </a>
-                    </div>
-                `;
-            }
-
-            // ===== My Courses =====
-            let myCoursesHTML = '';
-            if (totalCourses === 0) {
-                myCoursesHTML = `
-                    <div class="empty-state">
-                        📚 هنوز در هیچ دوره‌ای ثبت‌نام نکردی.<br><br>
-                        <a href="courses.html">مشاهده دوره‌های رایگان →</a>
-                    </div>
-                `;
-            } else {
-                // دوره‌های تکمیل‌شده
-                completedCourses.forEach(courseId => {
-                    const courseInfo = getCourseInfo(courseId);
-                    if (courseInfo) {
-                        myCoursesHTML += `
-                            <div class="course-item">
-                                <div class="course-item-icon">${courseInfo.icon}</div>
-                                <div class="course-item-info">
-                                    <div class="course-item-title">${courseInfo.title}</div>
-                                    <div class="course-item-progress">
-                                        <div class="course-item-progress-fill" style="width: 100%"></div>
-                                    </div>
-                                </div>
-                                <div class="course-item-percent done">✅</div>
-                            </div>
-                        `;
-                    }
-                });
-
-                // دوره‌های در حال یادگیری
-                inProgressCourses.forEach(courseId => {
-                    const courseInfo = getCourseInfo(courseId);
-                    if (courseInfo) {
-                        const completedCount = (completedLessons[courseId] || []).length;
-                        const percent = Math.round((completedCount / courseInfo.lessons) * 100);
-                        myCoursesHTML += `
-                            <div class="course-item">
-                                <div class="course-item-icon">${courseInfo.icon}</div>
-                                <div class="course-item-info">
-                                    <div class="course-item-title">${courseInfo.title}</div>
-                                    <div class="course-item-progress">
-                                        <div class="course-item-progress-fill" style="width: ${percent}%"></div>
-                                    </div>
-                                </div>
-                                <div class="course-item-percent">${percent}٪</div>
-                            </div>
-                        `;
-                    }
-                });
-            }
-
-            // ===== Achievements =====
-            const achievements = [
-                { icon: '🥇', title: 'کاربر طلایی', unlocked: completedCourses.length >= 3 },
-                { icon: '🎓', title: 'دانشجوی فعال', unlocked: totalCourses >= 2 },
-                { icon: '🎯', title: 'تست شخصیت', unlocked: !!personalityResult },
-                { icon: '🔥', title: 'شروع قدرتمند', unlocked: totalCourses >= 1 },
-                { icon: '⭐', title: 'عضو وفادار', unlocked: true },
-                { icon: '🏆', title: 'حرفه‌ای', unlocked: completedCourses.length >= 5 }
-            ];
-
-            const achievementsHTML = achievements.map(a => `
-                <div class="achievement ${a.unlocked ? 'unlocked' : 'locked'}">
-                    <div class="achievement-icon">${a.icon}</div>
-                    <div class="achievement-title">${a.title}</div>
-                </div>
-            `).join('');
-
-            // ===== AI Suggestion =====
-            let suggestionHTML = '';
-            if (completedCourses.length > 0) {
-                // پیشنهاد بعد از تکمیل دوره
-                suggestionHTML = `
-                    <div class="ai-suggestion">
-                        <div class="ai-suggestion-icon">🤖</div>
-                        <div class="ai-suggestion-content">
-                            <div class="ai-suggestion-title">پیشنهاد بعدی تو</div>
-                            <div class="ai-suggestion-text">
-                                بر اساس پیشرفتت، دوره‌ی بعدی که می‌تونه برات مفید باشه رو ببین.
-                            </div>
-                            <a href="courses.html" class="ai-suggestion-btn">مشاهده پیشنهادها ←</a>
+                        <div class="profile-actions">
+                            <button class="profile-btn" onclick="openEditName()">✏️ ویرایش نام</button>
+                            <button class="profile-btn" onclick="openChangePass()">🔒 تغییر رمز</button>
+                            ${isAdmin ? '<a href="admin.html" class="profile-btn" style="background: rgba(220,38,38,0.15); color:#fca5a5; border-color: rgba(220,38,38,0.4); text-decoration:none;">🎯 پنل ادمین</a>' : ''}
+                            <button class="profile-btn danger" onclick="handleLogout()">🚪 خروج</button>
                         </div>
                     </div>
                 `;
-            } else if (totalCourses === 0) {
-                suggestionHTML = `
-                    <div class="ai-suggestion">
-                        <div class="ai-suggestion-icon">👋</div>
-                        <div class="ai-suggestion-content">
-                            <div class="ai-suggestion-title">خوش آمدی!</div>
-                            <div class="ai-suggestion-text">
-                                برای شروع، دوره‌ی «اقتصاد کلان» رو پیشنهاد می‌کنیم — کاملاً رایگان.
-                            </div>
-                            <a href="courses.html" class="ai-suggestion-btn">شروع کن ←</a>
-                        </div>
-                    </div>
+
+            } catch (err) {
+                console.log('Error:', err);
+                document.getElementById('content').innerHTML = `
+                    <div class="loading">❌ خطا در بارگذاری. لطفاً دوباره تلاش کن.</div>
                 `;
-            }
-
-            // ===== Admin Panel Button =====
-            const adminBtnHTML = isAdmin ? `
-                <a href="admin.html" class="nav-admin-btn">🎯 پنل ادمین</a>
-            ` : '';
-
-            // ===== Render =====
-            document.getElementById('content').innerHTML = `
-                <!-- Welcome Hero -->
-                <div class="welcome-hero">
-                    <div class="welcome-text">
-                        <h1>سلام <span class="gold">${escapeHtml(fullName)}</span> 👋</h1>
-                        <p>خوش برگشتی! امروز چه خبر؟</p>
-                    </div>
-                    <div class="welcome-streak">
-                        <div class="streak-icon">🔥</div>
-                        <div class="streak-info">
-                            <div class="streak-value">${toPersianNum(totalCourses)}</div>
-                            <div class="streak-label">دوره فعال</div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Continue Learning -->
-                ${continueHTML}
-
-                <!-- Stats Grid -->
-                <div class="stats-grid">
-                    <div class="stat-card">
-                        <div class="stat-icon">📚</div>
-                        <div class="stat-value">${toPersianNum(totalCourses)}</div>
-                        <div class="stat-label">دوره ثبت‌نام شده</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-icon">✅</div>
-                        <div class="stat-value">${toPersianNum(completedCourses.length)}</div>
-                        <div class="stat-label">دوره تکمیل شده</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-icon">🎯</div>
-                        <div class="stat-value">${personalityResult ? '✓' : '--'}</div>
-                        <div class="stat-label">تست شخصیت</div>
-                    </div>
-                </div>
-
-                <!-- My Courses -->
-                <div class="section">
-                    <div class="section-header">
-                        <div class="section-title">📚 دوره‌های من</div>
-                        <a href="courses.html" class="section-link">مشاهده همه ←</a>
-                    </div>
-                    ${myCoursesHTML}
-                </div>
-
-                <!-- AI Suggestion -->
-                ${suggestionHTML}
-
-                <!-- Achievements -->
-                <div class="section">
-                    <div class="section-header">
-                        <div class="section-title">🏆 دستاوردها</div>
-                    </div>
-                    <div class="achievements-grid">
-                        ${achievementsHTML}
-                    </div>
-                </div>
-
-                <!-- Quick Links -->
-                <div class="section">
-                    <div class="section-header">
-                        <div class="section-title">⚡ دسترسی سریع</div>
-                    </div>
-                    <div class="quick-grid">
-                        <a href="home.html" class="quick-link">
-                            <div class="quick-link-icon">📊</div>
-                            <div class="quick-link-title">تحلیل زنده</div>
-                        </a>
-                        <a href="assistant.html" class="quick-link">
-                            <div class="quick-link-icon">🤖</div>
-                            <div class="quick-link-title">دستیار هوشمند</div>
-                        </a>
-                        <a href="bourse.html" class="quick-link">
-                            <div class="quick-link-icon">🏢</div>
-                            <div class="quick-link-title">بورس ایران</div>
-                        </a>
-                        <a href="personality-test.html" class="quick-link">
-                            <div class="quick-link-icon">🧠</div>
-                            <div class="quick-link-title">تست شخصیت</div>
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Profile -->
-                <div class="profile-card">
-                    <div class="profile-header">
-                        <div class="profile-avatar">
-                            ${firstLetter}
-                        </div>
-                        <div class="profile-info">
-                            <div class="profile-name">
-                                ${escapeHtml(fullName)}
-                                ${isAdmin ? '<span class="badge admin">👑 ادمین</span>' : ''}
-                            </div>
-                            <div class="profile-email">${escapeHtml(email)}</div>
-                            <div class="profile-badges">
-                                <span class="badge">✨ عضو از ${joinDate}</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="profile-actions">
-                        <button class="profile-btn" onclick="openEditName()">✏️ ویرایش نام</button>
-                        <button class="profile-btn" onclick="openChangePass()">🔒 تغییر رمز</button>
-                        ${isAdmin ? `<a href="admin.html" class="profile-btn" style="background: rgba(220,38,38,0.15); color:#fca5a5; border-color: rgba(220,38,38,0.4);">🎯 پنل ادمین</a>` : ''}
-                        <button class="profile-btn danger" onclick="handleLogout()">🚪 خروج</button>
-                    </div>
-                </div>
-            `;
-
             }
         }
 
-        // ==========================================
-        // ویرایش نام
-        // ==========================================
         function openEditName() {
             const currentName = currentUser.user_metadata?.full_name || '';
             document.getElementById('editNameInput').value = currentName;
@@ -1178,7 +666,7 @@
             const msg = document.getElementById('editNameMsg');
 
             if (!newName) {
-                msg.textContent = '❌ لطفاً نام را وارد کنید';
+                msg.textContent = '❌ لطفاً نام را وارد کن';
                 msg.className = 'message error';
                 return;
             }
@@ -1188,10 +676,10 @@
             });
 
             if (error) {
-                msg.textContent = '❌ خطا: ' + error.message;
+                msg.textContent = '❌ ' + error.message;
                 msg.className = 'message error';
             } else {
-                msg.textContent = '✅ نام با موفقیت تغییر کرد';
+                msg.textContent = '✅ نام تغییر کرد';
                 msg.className = 'message success';
                 setTimeout(() => {
                     closeModal('editNameModal');
@@ -1200,9 +688,6 @@
             }
         }
 
-        // ==========================================
-        // تغییر رمز
-        // ==========================================
         function openChangePass() {
             document.getElementById('newPassword').value = '';
             document.getElementById('confirmPassword').value = '';
@@ -1216,50 +701,40 @@
             const msg = document.getElementById('changePassMsg');
 
             if (newPass.length < 6) {
-                msg.textContent = '❌ رمز عبور باید حداقل ۶ کاراکتر باشد';
+                msg.textContent = '❌ رمز باید حداقل ۶ کاراکتر باشه';
                 msg.className = 'message error';
                 return;
             }
 
             if (newPass !== confirmPass) {
-                msg.textContent = '❌ رمز عبور و تکرار آن یکسان نیستند';
+                msg.textContent = '❌ رمزها یکسان نیستن';
                 msg.className = 'message error';
                 return;
             }
 
-            const { error } = await supabaseClient.auth.updateUser({
-                password: newPass
-            });
+            const { error } = await supabaseClient.auth.updateUser({ password: newPass });
 
             if (error) {
-                msg.textContent = '❌ خطا: ' + error.message;
+                msg.textContent = '❌ ' + error.message;
                 msg.className = 'message error';
             } else {
-                msg.textContent = '✅ رمز عبور با موفقیت تغییر کرد';
+                msg.textContent = '✅ رمز تغییر کرد';
                 msg.className = 'message success';
-                setTimeout(() => {
-                    closeModal('changePassModal');
-                }, 1500);
+                setTimeout(() => closeModal('changePassModal'), 1500);
             }
         }
 
-        // ==========================================
-        // Modal & Logout
-        // ==========================================
         function closeModal(id) {
             document.getElementById(id).classList.remove('show');
         }
 
         async function handleLogout() {
-            if (confirm('آیا مطمئنید که می‌خواهید خارج شوید؟')) {
+            if (confirm('مطمئنی می‌خوای خارج بشی؟')) {
                 await supabaseClient.auth.signOut();
                 window.location.href = 'login.html';
             }
         }
 
-        // ==========================================
-        // ابزارها
-        // ==========================================
         function escapeHtml(text) {
             if (!text) return '';
             const div = document.createElement('div');
@@ -1273,25 +748,14 @@
             return String(num).replace(/\d/g, d => persianDigits[d]);
         }
 
-        // ==========================================
-        // Service Worker
-        // ==========================================
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
                 navigator.serviceWorker.register('/My-First-Project/service-worker.js')
-                    .then(registration => console.log('✅ SW registered:', registration.scope))
-                    .catch(error => console.log('❌ SW failed:', error));
+                    .catch(error => console.log('SW failed:', error));
             });
         }
 
-        
-        // ==========================================
-        // راه‌اندازی
-        // ==========================================
         loadProfile();
     </script>
-    
-    <!-- Navbar مشترک -->
-    <script src="navbar.js"></script>
 </body>
 </html>
