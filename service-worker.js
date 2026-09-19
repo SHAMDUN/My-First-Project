@@ -1,4 +1,4 @@
-const CACHE_NAME = 'shamdun-academy-v1';
+const CACHE_NAME = 'shamdun-academy-v2';
 const urlsToCache = [
     '/My-First-Project/',
     '/My-First-Project/index.html',
