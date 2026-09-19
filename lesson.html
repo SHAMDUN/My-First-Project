@@ -383,7 +383,38 @@
                     <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 15px;">
                         <iframe src="${lesson.video_url}" 
                                 style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; border-radius: 15px;"
-                                allowfullscreen></iframe>
+                               allowfullscreen></iframe>
+                    </div>
+                </div>
+            ` : '';
+
+            // تصویر
+            const imageHTML = lesson.image_url ? `
+                <div style="margin: 20px 0;">
+                    <img src="${lesson.image_url}" alt="${lesson.title}" 
+                         style="width: 100%; border-radius: 15px; box-shadow: 0 8px 25px rgba(0,0,0,0.3);">
+                </div>
+            ` : '';
+
+            // فایل‌های پیوست
+            const attachments = [];
+            if (lesson.pdf_url) attachments.push({ icon: '📄', label: 'دانلود PDF', url: lesson.pdf_url, color: '#ef4444' });
+            if (lesson.word_url) attachments.push({ icon: '📝', label: 'دانلود Word', url: lesson.word_url, color: '#3b82f6' });
+            if (lesson.powerpoint_url) attachments.push({ icon: '📊', label: 'دانلود PowerPoint', url: lesson.powerpoint_url, color: '#f59e0b' });
+            if (lesson.notes_url) attachments.push({ icon: '📚', label: 'دانلود جزوه', url: lesson.notes_url, color: '#22c55e' });
+
+            const attachmentsHTML = attachments.length > 0 ? `
+                <div style="margin: 20px 0; padding: 20px; background: rgba(15, 23, 42, 0.6); border-radius: 15px; border: 1px solid rgba(245, 158, 11, 0.3);">
+                    <h3 style="color: #f59e0b; margin-bottom: 15px;">📎 فایل‌های آموزشی</h3>
+                    <div style="display: flex; flex-direction: column; gap: 10px;">
+                        ${attachments.map(a => `
+                            <a href="${a.url}" target="_blank" download 
+                               style="display: flex; align-items: center; gap: 12px; padding: 12px 15px; background: rgba(15, 23, 42, 0.8); border: 1px solid rgba(255,255,255,0.1); border-radius: 10px; text-decoration: none; color: #f1f5f9; transition: 0.3s;">
+                                <span style="font-size: 20px;">${a.icon}</span>
+                                <span style="flex: 1; font-size: 14px; font-weight: bold;">${a.label}</span>
+                                <span style="color: ${a.color}; font-size: 18px;">⬇️</span>
+                            </a>
+                        `).join('')}
                     </div>
                 </div>
             ` : '';
@@ -423,11 +454,14 @@
                         </div>
                     </div>
 
+                    ${imageHTML}
                     ${videoHTML}
 
                     <div class="lesson-content">
                         ${lesson.content}
                     </div>
+
+                   ${attachmentsHTML}
 
                     <!-- تمرین -->
                     <div class="exercise-box">
