@@ -1,214 +1,556 @@
 <!DOCTYPE html>
-<html lang="fa">
+<html lang="fa" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>بورس ایران | آکادمی شمعدون</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#d4af37">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="https://unpkg.com/lightweight-charts@3.8.0/dist/lightweight-charts.standalone.production.js"></script>
     <style>
+        :root {
+            --bg-primary: #0a0a0f;
+            --bg-secondary: #14141c;
+            --bg-card: #1a1a24;
+            --gold: #d4af37;
+            --gold-light: #f4d47c;
+            --gold-dark: #a8862a;
+            --blue: #3b82f6;
+            --green: #10b981;
+            --red: #ef4444;
+            --white: #f8fafc;
+            --gray: #94a3b8;
+        }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
-            font-family: Tahoma, sans-serif;
-            /* ===== پس‌زمینه ترکیبی حرفه‌ای ===== */
-            background-color: #0f172a;
+            font-family: 'Vazirmatn', Tahoma, sans-serif;
+            background-color: var(--bg-primary);
             background-image: 
-                radial-gradient(circle at 0% 0%, rgba(245, 158, 11, 0.12) 0%, transparent 40%),
-                radial-gradient(circle at 100% 100%, rgba(59, 130, 246, 0.08) 0%, transparent 40%),
-                linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
-            background-size: 100% 100%, 100% 100%, 50px 50px, 50px 50px;
+                radial-gradient(circle at 0% 0%, rgba(212, 175, 55, 0.08) 0%, transparent 40%),
+                radial-gradient(circle at 100% 100%, rgba(59, 130, 246, 0.06) 0%, transparent 40%),
+                linear-gradient(rgba(255, 255, 255, 0.015) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
+            background-size: 100% 100%, 100% 100%, 60px 60px, 60px 60px;
             background-attachment: fixed;
-            color: #e2e8f0;
-            direction: rtl;
+            color: var(--white);
             min-height: 100vh;
-            padding: 15px;
+            direction: rtl;
+            overflow-x: hidden;
         }
-        .header {
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.3); }
+        }
+
+        /* ============= Navbar ============= */
+        .sn-navbar {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            background: rgba(10, 10, 15, 0.92);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(212, 175, 55, 0.15);
+            z-index: 9998;
+            padding: 12px 0;
+        }
+        .sn-navbar-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 20px;
-            flex-wrap: wrap;
             gap: 15px;
         }
-        .header h1 { color: #f59e0b; font-size: 22px; }
-        .header a {
-            color: #94a3b8;
-            text-decoration: none;
-            font-weight: bold;
-            border: 2px solid #334155;
-            padding: 8px 16px;
-            border-radius: 25px;
-            font-size: 14px;
-            background: rgba(30, 41, 59, 0.7);
-            backdrop-filter: blur(10px);
+        .sn-hamburger {
+            width: 42px; height: 42px;
+            border-radius: 12px;
+            background: rgba(212, 175, 55, 0.08);
+            border: 1px solid rgba(212, 175, 55, 0.25);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+            cursor: pointer;
+            padding: 0;
         }
-        .header a:hover { background: #334155; color: #fff; }
+        .sn-hamburger:hover { background: rgba(212, 175, 55, 0.2); }
+        .sn-hamburger span {
+            display: block;
+            width: 18px; height: 2px;
+            background: var(--gold);
+            border-radius: 2px;
+        }
+        .sn-brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            flex: 1;
+            justify-content: center;
+        }
+        .sn-brand-logo {
+            width: 38px; height: 38px;
+            border-radius: 50%;
+            border: 2px solid var(--gold);
+            object-fit: cover;
+        }
+        .sn-brand-text {
+            color: var(--gold);
+            font-size: 17px;
+            font-weight: 800;
+        }
+        .sn-user-area {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            min-width: 42px;
+            justify-content: flex-end;
+        }
+        .sn-user-avatar {
+            width: 42px; height: 42px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--bg-primary);
+            font-weight: 900;
+            font-size: 15px;
+            border: 2px solid var(--gold);
+            text-decoration: none;
+        }
 
-        .search-box {
+        /* ============= Sidebar ============= */
+        .sn-overlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(5px);
+            z-index: 9999;
+            opacity: 0;
+            visibility: hidden;
+            transition: 0.3s;
+        }
+        .sn-overlay.show { opacity: 1; visibility: visible; }
+        .sn-sidebar {
+            position: fixed;
+            top: 0;
+            right: -320px;
+            width: 300px;
+            height: 100vh;
+            background: linear-gradient(180deg, #14141c, #0a0a0f);
+            border-left: 1px solid rgba(212, 175, 55, 0.2);
+            z-index: 10000;
+            transition: right 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow-y: auto;
+            box-shadow: -10px 0 40px rgba(0, 0, 0, 0.5);
+        }
+        .sn-sidebar.show { right: 0; }
+        .sn-sidebar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            border-bottom: 1px solid rgba(212, 175, 55, 0.15);
+            position: sticky;
+            top: 0;
+            background: #14141c;
+            z-index: 2;
+        }
+        .sn-sidebar-header .sn-brand { justify-content: flex-start; }
+        .sn-close {
+            background: rgba(239, 68, 68, 0.1);
+            color: #ef4444;
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            width: 34px; height: 34px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 16px;
+            font-family: inherit;
+        }
+        .sn-sidebar-content { padding: 15px; }
+        .sn-menu-section { display: flex; flex-direction: column; gap: 4px; }
+        .sn-menu-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 14px;
+            border-radius: 12px;
+            text-decoration: none;
+            color: #cbd5e1;
+            font-size: 14px;
+            font-weight: 600;
+            transition: 0.25s;
+            border: 1px solid transparent;
+        }
+        .sn-menu-item:hover {
+            background: rgba(212, 175, 55, 0.08);
+            color: var(--gold);
+            border-color: rgba(212, 175, 55, 0.2);
+            transform: translateX(-4px);
+        }
+        .sn-menu-item.active {
+            background: rgba(212, 175, 55, 0.15);
+            color: var(--gold);
+            border-color: rgba(212, 175, 55, 0.4);
+        }
+        .sn-menu-icon { font-size: 20px; width: 26px; text-align: center; }
+        .sn-menu-label { flex: 1; }
+        .sn-menu-divider {
+            height: 1px;
+            background: rgba(212, 175, 55, 0.15);
+            margin: 15px 0;
+        }
+        .sn-logout { color: #f87171 !important; }
+
+        /* ============= Main ============= */
+        .main-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 100px 20px 40px;
+        }
+        .page-header {
+            text-align: center;
+            margin-bottom: 30px;
+            animation: fadeInUp 0.6s ease-out;
+        }
+        .page-header h1 {
+            font-size: 36px;
+            font-weight: 900;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, var(--gold), var(--gold-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .page-header p { color: var(--gray); font-size: 14px; }
+
+        /* ============= Stats ============= */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+        .stat-card {
+            background: linear-gradient(135deg, var(--bg-card), var(--bg-secondary));
+            border: 1px solid rgba(212, 175, 55, 0.15);
+            border-radius: 15px;
+            padding: 15px;
+            text-align: center;
+            border-right: 4px solid var(--gold);
+        }
+        .stat-card .icon { font-size: 22px; margin-bottom: 6px; }
+        .stat-card .value {
+            color: var(--gold);
+            font-size: 18px;
+            font-weight: 900;
+            margin-bottom: 4px;
+            font-variant-numeric: tabular-nums;
+        }
+        .stat-card .value.up { color: var(--green); }
+        .stat-card .value.down { color: var(--red); }
+        .stat-card .label { color: var(--gray); font-size: 11px; }
+
+        /* ============= Filters ============= */
+        .filters-bar {
+            background: linear-gradient(135deg, var(--bg-card), var(--bg-secondary));
+            border: 1px solid rgba(212, 175, 55, 0.15);
+            border-radius: 15px;
+            padding: 15px;
+            margin-bottom: 20px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            align-items: center;
+        }
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            flex: 1;
+            min-width: 150px;
+        }
+        .filter-group label {
+            color: var(--gray);
+            font-size: 11px;
+            font-weight: 600;
+        }
+        .filter-input {
+            padding: 10px 14px;
+            background: rgba(10, 10, 15, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            color: var(--white);
+            font-family: 'Vazirmatn', Tahoma, sans-serif;
+            font-size: 13px;
+            outline: none;
+            transition: 0.3s;
+        }
+        .filter-input:focus {
+            border-color: var(--gold);
+            box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.1);
+        }
+        .filter-btn {
+            padding: 10px 20px;
+            background: linear-gradient(135deg, var(--red), #b91c1c);
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            font-family: 'Vazirmatn', Tahoma, sans-serif;
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.3s;
+            align-self: flex-end;
+        }
+        .filter-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(239, 68, 68, 0.4);
+        }
+
+        /* ============= Ranking ============= */
+        .ranking-section {
+            background: linear-gradient(135deg, var(--bg-card), var(--bg-secondary));
+            border: 1px solid rgba(212, 175, 55, 0.15);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        .ranking-section h3 {
+            color: var(--gold);
+            font-size: 16px;
+            font-weight: 800;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            justify-content: space-between;
+        }
+        .ranking-controls {
             display: flex;
             gap: 8px;
-            margin-bottom: 20px;
             flex-wrap: wrap;
+            margin-bottom: 15px;
         }
-        .search-box input {
-            flex: 1;
-            min-width: 200px;
-            padding: 12px 18px;
-            border-radius: 12px;
-            border: 2px solid #334155;
-            background: rgba(30, 41, 59, 0.85);
-            backdrop-filter: blur(10px);
+        .ranking-btn {
+            padding: 8px 14px;
+            background: rgba(10, 10, 15, 0.6);
+            color: var(--gray);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            font-family: 'Vazirmatn', Tahoma, sans-serif;
+            font-size: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .ranking-btn:hover { color: var(--gold); border-color: rgba(212, 175, 55, 0.4); }
+        .ranking-btn.active {
+            background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+            color: var(--bg-primary);
+            border-color: var(--gold);
+        }
+        .ranking-btn.up.active {
+            background: linear-gradient(135deg, var(--green), #059669);
+            border-color: var(--green);
             color: #fff;
-            font-size: 16px;
-            outline: none;
         }
-        .search-box input:focus { border-color: #f59e0b; }
-        .search-box button {
-            background: #f59e0b;
-            color: #0f172a;
-            border: none;
-            padding: 12px 24px;
-            border-radius: 12px;
-            font-weight: bold;
-            font-size: 15px;
-            cursor: pointer;
+        .ranking-btn.down.active {
+            background: linear-gradient(135deg, var(--red), #b91c1c);
+            border-color: var(--red);
+            color: #fff;
         }
-        .search-box button:hover { background: #d97706; }
-
-        .status-box {
-            background: rgba(30, 41, 59, 0.85);
-            backdrop-filter: blur(10px);
-            padding: 12px;
-            border-radius: 10px;
-            margin-bottom: 15px;
-            font-size: 13px;
-            color: #94a3b8;
+        .ranking-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
         }
-
-        .symbol-list {
-            background: rgba(30, 41, 59, 0.85);
-            backdrop-filter: blur(10px);
-            border-radius: 12px;
-            padding: 15px;
-            margin-bottom: 20px;
-            max-height: 250px;
-            overflow-y: auto;
-        }
-        .symbol-list h3 { color: #f59e0b; font-size: 15px; margin-bottom: 10px; }
-        .symbol-list .tags { display: flex; flex-wrap: wrap; gap: 6px; }
-        .symbol-tag {
-            background: rgba(15, 23, 42, 0.8);
-            color: #94a3b8;
-            padding: 6px 14px;
-            border-radius: 15px;
-            font-size: 13px;
-            cursor: pointer;
-            border: 1px solid #334155;
-            transition: 0.2s;
-        }
-        .symbol-tag:hover { background: #f59e0b; color: #0f172a; }
-        .symbol-tag.active { background: #f59e0b; color: #0f172a; }
-
-        .ranking-section {
-            background: rgba(30, 41, 59, 0.85);
-            backdrop-filter: blur(10px);
-            border-radius: 12px;
-            padding: 15px;
-            margin-bottom: 20px;
-        }
-        .ranking-section h3 { color: #f59e0b; font-size: 16px; margin-bottom: 12px; }
-        .ranking-tabs {
-            display: flex;
-            gap: 5px;
-            flex-wrap: wrap;
-            margin-bottom: 15px;
-        }
-        .ranking-tab {
-            background: rgba(15, 23, 42, 0.8);
-            color: #94a3b8;
-            border: 1px solid #334155;
-            padding: 6px 14px;
-            border-radius: 8px;
-            font-size: 13px;
-            cursor: pointer;
-        }
-        .ranking-tab.active { background: #f59e0b; color: #0f172a; border-color: #f59e0b; }
-        
-        .ranking-sort {
-            display: flex;
-            gap: 5px;
-            margin-bottom: 15px;
-        }
-        .sort-btn {
-            background: rgba(15, 23, 42, 0.8);
-            color: #94a3b8;
-            border: 1px solid #334155;
-            padding: 6px 14px;
-            border-radius: 8px;
-            font-size: 13px;
-            cursor: pointer;
-        }
-        .sort-btn.active { background: #22c55e; color: #fff; border-color: #22c55e; }
-        .sort-btn.desc { background: #ef4444; color: #fff; border-color: #ef4444; }
-
         .ranking-list {
-            max-height: 500px;
+            background: rgba(10, 10, 15, 0.5);
+            border-radius: 12px;
+            padding: 12px;
+            max-height: 400px;
             overflow-y: auto;
+        }
+        .ranking-list h4 {
+            color: var(--gold);
+            font-size: 13px;
+            margin-bottom: 10px;
+            padding-bottom: 6px;
+            border-bottom: 1px solid rgba(212, 175, 55, 0.15);
         }
         .ranking-item {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 10px 12px;
-            border-bottom: 1px solid #334155;
+            padding: 8px 10px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            font-size: 12px;
             cursor: pointer;
             transition: 0.2s;
         }
-        .ranking-item:hover { background: rgba(15, 23, 42, 0.8); }
-        .ranking-item:last-child { border-bottom: none; }
-        .ranking-item .rank { 
-            background: rgba(15, 23, 42, 0.8);
-            color: #94a3b8; 
-            width: 28px; 
-            height: 28px; 
-            border-radius: 50%; 
-            display: flex; 
-            align-items: center; 
-            justify-content: center;
-            font-size: 12px;
-            font-weight: bold;
-        }
-        .ranking-item .rank.top-3 { background: #f59e0b; color: #0f172a; }
-        .ranking-item .name { flex: 1; margin-right: 10px; font-weight: bold; font-size: 14px; }
-        .ranking-item .price { color: #94a3b8; font-size: 12px; margin-left: 8px; }
-        .ranking-item .change { font-weight: bold; font-size: 15px; min-width: 70px; text-align: left; }
-        .ranking-item .change.up { color: #4ade80; }
-        .ranking-item .change.down { color: #f87171; }
+        .ranking-item:hover { background: rgba(212, 175, 55, 0.05); }
+        .ranking-item .name { color: var(--white); font-weight: 700; }
+        .ranking-item .change { font-weight: 800; }
+        .ranking-item .change.up { color: var(--green); }
+        .ranking-item .change.down { color: var(--red); }
 
-        .info-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-            gap: 10px;
+        /* ============= Table ============= */
+        .table-wrapper {
+            background: linear-gradient(135deg, var(--bg-card), var(--bg-secondary));
+            border: 1px solid rgba(212, 175, 55, 0.15);
+            border-radius: 15px;
+            overflow: hidden;
             margin-bottom: 20px;
         }
-        .info-card {
-            background: rgba(30, 41, 59, 0.85);
-            backdrop-filter: blur(10px);
-            padding: 12px;
-            border-radius: 12px;
-            border-right: 4px solid #f59e0b;
+        .table-info {
+            padding: 12px 20px;
+            background: rgba(10, 10, 15, 0.4);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            color: var(--gray);
+            font-size: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
         }
-        .info-card .label { font-size: 12px; color: #94a3b8; }
-        .info-card .value { font-size: 16px; font-weight: bold; margin-top: 5px; }
-        .up { color: #4ade80; }
-        .down { color: #f87171; }
-
-        .chart-section {
-            background: rgba(30, 41, 59, 0.85);
+        .table-container {
+            overflow-x: auto;
+            max-height: 600px;
+            overflow-y: auto;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+        }
+        thead {
+            position: sticky;
+            top: 0;
+            background: rgba(20, 20, 28, 0.98);
             backdrop-filter: blur(10px);
+            z-index: 10;
+        }
+        th {
+            color: var(--gold);
+            font-weight: 800;
+            padding: 12px 10px;
+            text-align: right;
+            font-size: 12px;
+            border-bottom: 2px solid rgba(212, 175, 55, 0.3);
+            cursor: pointer;
+            user-select: none;
+            white-space: nowrap;
+        }
+        th:hover { background: rgba(212, 175, 55, 0.08); }
+        th.sorted { color: var(--gold-light); }
+        td {
+            padding: 10px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            color: #cbd5e1;
+            white-space: nowrap;
+        }
+        tr { transition: 0.2s; cursor: pointer; }
+        tr:hover td { background: rgba(212, 175, 55, 0.05); color: var(--white); }
+        td.symbol { color: var(--white); font-weight: 800; }
+        td.up { color: var(--green); font-weight: 700; }
+        td.down { color: var(--red); font-weight: 700; }
+        td.center { text-align: center; }
+
+        /* ============= Loading ============= */
+        .loading {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--gray);
+        }
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid rgba(212, 175, 55, 0.2);
+            border-top-color: var(--gold);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 15px;
+        }
+
+        /* ============= Modal ============= */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(10px);
+            z-index: 100000;
+            align-items: center;
+            justify-content: center;
             padding: 15px;
+            overflow-y: auto;
+        }
+        .modal-overlay.show { display: flex; }
+        .modal {
+            background: var(--bg-card);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            border-radius: 20px;
+            max-width: 1100px;
+            width: 100%;
+            max-height: 95vh;
+            overflow-y: auto;
+            padding: 25px;
+            margin: auto;
+        }
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .modal-header h2 {
+            color: var(--gold);
+            font-size: 22px;
+            font-weight: 900;
+        }
+        .modal-header h2 small {
+            color: var(--gray);
+            font-size: 13px;
+            font-weight: 400;
+            display: block;
+            margin-top: 4px;
+        }
+        .modal-close {
+            background: rgba(239, 68, 68, 0.1);
+            color: var(--red);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            width: 38px; height: 38px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 18px;
+            font-family: inherit;
+        }
+        .modal-close:hover { background: rgba(239, 68, 68, 0.25); }
+
+        /* ============= Chart ============= */
+        .chart-container {
+            background: rgba(10, 10, 15, 0.5);
             border-radius: 12px;
+            padding: 12px;
+            margin-bottom: 20px;
+            position: relative;
         }
         .chart-header {
             display: flex;
@@ -218,508 +560,1355 @@
             flex-wrap: wrap;
             gap: 10px;
         }
-        .chart-header h3 { color: #f59e0b; font-size: 18px; }
-        .chart-tabs { display: flex; gap: 5px; flex-wrap: wrap; }
+        .chart-header h3 {
+            color: var(--gold);
+            font-size: 15px;
+            font-weight: 800;
+        }
+        .chart-actions {
+            display: flex;
+            gap: 5px;
+            flex-wrap: wrap;
+        }
         .chart-tab {
-            background: rgba(15, 23, 42, 0.8);
-            color: #94a3b8;
-            border: 1px solid #334155;
-            padding: 6px 14px;
+            background: rgba(10, 10, 15, 0.6);
+            color: var(--gray);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 7px 12px;
             border-radius: 8px;
-            font-size: 13px;
+            font-size: 11px;
+            font-weight: 700;
             cursor: pointer;
+            font-family: inherit;
+            transition: 0.3s;
         }
-        .chart-tab.active { background: #f59e0b; color: #0f172a; border-color: #f59e0b; }
-        #tvchart { width: 100%; height: 450px; }
-
-        .loading { text-align: center; padding: 20px; color: #94a3b8; }
-        .error { color: #f87171; text-align: center; padding: 20px; }
-
-        .refresh-btn {
-            background: #334155;
-            color: #fff;
-            border: none;
-            padding: 8px 16px;
+        .chart-tab:hover { color: var(--gold); border-color: rgba(212, 175, 55, 0.4); }
+        .chart-tab.active {
+            background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+            color: var(--bg-primary);
+            border-color: var(--gold);
+        }
+        .fullscreen-btn {
+            background: rgba(10, 10, 15, 0.6);
+            color: var(--gold);
+            border: 1px solid var(--gold);
+            padding: 7px 14px;
             border-radius: 8px;
-            font-size: 13px;
+            font-size: 11px;
+            font-weight: 700;
             cursor: pointer;
+            font-family: inherit;
+            transition: 0.3s;
         }
-        .refresh-btn:hover { background: #475569; }
+        .fullscreen-btn:hover { background: var(--gold); color: var(--bg-primary); }
+        #modalChart { width: 100%; height: 400px; }
+
+        /* تمام‌صفحه چارت */
+        .chart-container.fullscreen {
+            position: fixed !important;
+            top: 0 !important; left: 0 !important; right: 0 !important; bottom: 0 !important;
+            width: 100vw !important;
+            height: 100vh !important;
+            z-index: 200000 !important;
+            background: var(--bg-primary) !important;
+            padding: 15px !important;
+            margin: 0 !important;
+            border-radius: 0 !important;
+            display: flex !important;
+            flex-direction: column !important;
+        }
+        .chart-container.fullscreen #modalChart {
+            flex: 1 !important;
+            height: auto !important;
+            min-height: 0 !important;
+        }
+
+        /* ============= Info Cards ============= */
+        .info-section { margin-bottom: 20px; }
+        .info-section h3 {
+            color: var(--gold);
+            font-size: 15px;
+            font-weight: 800;
+            margin-bottom: 12px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid rgba(212, 175, 55, 0.15);
+        }
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 10px;
+        }
+        .info-card {
+            background: rgba(10, 10, 15, 0.5);
+            padding: 12px;
+            border-radius: 12px;
+            border-right: 3px solid var(--gold);
+        }
+        .info-card .label { color: var(--gray); font-size: 11px; margin-bottom: 5px; }
+        .info-card .value {
+            color: var(--white);
+            font-size: 14px;
+            font-weight: 800;
+            font-variant-numeric: tabular-nums;
+        }
+        .info-card .value.up { color: var(--green); }
+        .info-card .value.down { color: var(--red); }
+
+        /* ============= Order Book ============= */
+        .orderbook-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+        .orderbook {
+            background: rgba(10, 10, 15, 0.5);
+            border-radius: 12px;
+            padding: 12px;
+        }
+        .orderbook h4 {
+            font-size: 13px;
+            font-weight: 800;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .orderbook.buy h4 { color: var(--green); }
+        .orderbook.sell h4 { color: var(--red); }
+        .orderbook-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 6px 10px;
+            border-radius: 6px;
+            font-size: 12px;
+            margin-bottom: 4px;
+            font-variant-numeric: tabular-nums;
+        }
+        .orderbook.buy .orderbook-row { background: rgba(16, 185, 129, 0.08); }
+        .orderbook.sell .orderbook-row { background: rgba(239, 68, 68, 0.08); }
+        .orderbook-row .price { font-weight: 800; color: var(--white); }
+        .orderbook-row .qty { color: var(--gray); }
+        .orderbook-row .count { color: var(--gray); font-size: 11px; }
+
+        /* ============= Footer ============= */
+        .footer {
+            text-align: center;
+            padding: 30px 20px;
+            color: var(--gray);
+            font-size: 12px;
+            border-top: 1px solid rgba(212, 175, 55, 0.1);
+            margin-top: 40px;
+        }
+
+        /* ============= Responsive ============= */
+        @media (max-width: 900px) {
+            .stats-grid { grid-template-columns: repeat(2, 1fr); }
+            .ranking-grid { grid-template-columns: 1fr; }
+            .orderbook-grid { grid-template-columns: 1fr; }
+        }
+        @media (max-width: 600px) {
+            .main-container { padding: 90px 10px 30px; }
+            .page-header h1 { font-size: 26px; }
+            .stats-grid { grid-template-columns: repeat(2, 1fr); }
+            .filter-group { min-width: 100%; }
+            .modal { padding: 15px; }
+            .modal-header h2 { font-size: 18px; }
+            #modalChart { height: 280px; }
+            th, td { padding: 8px 6px; font-size: 12px; }
+            .sn-sidebar { width: 280px; right: -300px; }
+        }
     </style>
 </head>
 <body>
 
-    <div class="header">
-        <h1>📊 بورس ایران</h1>
-        <a href="index.html">⬅ بازگشت به خانه</a>
-    </div>
-
-    <div class="search-box">
-        <input type="text" id="symbolSearch" placeholder="نام نماد (مثال: فولاد، خودرو، شپنا)" value="فولاد">
-        <button onclick="searchAndLoad()">🔍 جستجو و نمایش</button>
-    </div>
-
-    <div class="status-box" id="statusBox">💡 نام نماد را وارد کنید و جستجو را بزنید</div>
-
-    <div class="symbol-list" id="symbolListContainer" style="display:none;">
-        <h3>📌 نتایج جستجو (کلیک کنید)</h3>
-        <div class="tags" id="searchResults"></div>
-    </div>
-
-    <div class="ranking-section">
-        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
-            <h3>🏆 رتبه‌بندی سهام بورس</h3>
-            <button class="refresh-btn" onclick="loadRanking(true)">🔄 بروزرسانی</button>
+    <!-- Navbar -->
+    <nav class="sn-navbar">
+        <div class="sn-navbar-container">
+            <button class="sn-hamburger" id="snHamburger" aria-label="منو">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <a href="index.html" class="sn-brand">
+                <img src="519.png" alt="شمعدون" class="sn-brand-logo">
+                <span class="sn-brand-text">شمعدون</span>
+            </a>
+            <div class="sn-user-area" id="snUserArea"></div>
         </div>
-        
-        <div class="ranking-tabs">
-            <button class="ranking-tab active" onclick="changeRankingPeriod('1w', this)">۱ هفته</button>
-            <button class="ranking-tab" onclick="changeRankingPeriod('1m', this)">۱ ماه</button>
-            <button class="ranking-tab" onclick="changeRankingPeriod('3m', this)">۳ ماه</button>
-            <button class="ranking-tab" onclick="changeRankingPeriod('6m', this)">۶ ماه</button>
-            <button class="ranking-tab" onclick="changeRankingPeriod('1y', this)">۱ سال</button>
+    </nav>
+
+    <div class="sn-overlay" id="snOverlay"></div>
+
+    <aside class="sn-sidebar" id="snSidebar">
+        <div class="sn-sidebar-header">
+            <a href="index.html" class="sn-brand" style="justify-content:flex-start;">
+                <img src="519.png" alt="شمعدون" class="sn-brand-logo">
+                <span class="sn-brand-text">شمعدون</span>
+            </a>
+            <button class="sn-close" id="snClose">✕</button>
         </div>
-
-        <div class="ranking-sort">
-            <button class="sort-btn active" onclick="changeSortOrder('desc', this)">🔻 بیشترین سود</button>
-            <button class="sort-btn" onclick="changeSortOrder('asc', this)">🔺 بیشترین ضرر</button>
-        </div>
-
-        <div class="ranking-list" id="rankingList">
-            <div class="loading">⏳ در حال دریافت لیست نمادها...</div>
-        </div>
-    </div>
-
-    <div class="info-grid" id="infoGrid">
-        <div class="info-card"><div class="label">قیمت پایانی</div><div class="value" id="pc">--</div></div>
-        <div class="info-card"><div class="label">آخرین معامله</div><div class="value" id="pl">--</div></div>
-        <div class="info-card"><div class="label">تغییر قیمت</div><div class="value" id="pcc">--</div></div>
-        <div class="info-card"><div class="label">درصد تغییر</div><div class="value" id="pcp">--</div></div>
-        <div class="info-card"><div class="label">حجم معاملات</div><div class="value" id="tvol">--</div></div>
-        <div class="info-card"><div class="label">ارزش معاملات</div><div class="value" id="tval">--</div></div>
-    </div>
-
-    <div class="chart-section">
-        <div class="chart-header">
-            <h3 id="chartTitle">📈 چارت قیمت</h3>
-            <div class="chart-tabs">
-                <button class="chart-tab active" onclick="changeTimeframe('daily', this)">روزانه</button>
-                <button class="chart-tab" onclick="changeTimeframe('weekly', this)">هفتگی</button>
-                <button class="chart-tab" onclick="changeTimeframe('monthly', this)">ماهانه</button>
+        <div class="sn-sidebar-content">
+            <div class="sn-menu-section">
+                <a href="index.html" class="sn-menu-item"><span class="sn-menu-icon">🏠</span><span class="sn-menu-label">صفحه اصلی</span></a>
+                <a href="home.html" class="sn-menu-item"><span class="sn-menu-icon">📊</span><span class="sn-menu-label">نمای بازار</span></a>
+                <a href="bourse.html" class="sn-menu-item active"><span class="sn-menu-icon">📈</span><span class="sn-menu-label">بورس ایران</span></a>
+                <a href="courses.html" class="sn-menu-item"><span class="sn-menu-icon">📚</span><span class="sn-menu-label">دوره‌های آموزشی</span></a>
+                <a href="personality-test.html" class="sn-menu-item"><span class="sn-menu-icon">🧠</span><span class="sn-menu-label">آزمون خودشناسی مالی</span></a>
+                <a href="assistant.html" class="sn-menu-item"><span class="sn-menu-icon">🤖</span><span class="sn-menu-label">دستیار هوشمند</span></a>
+            </div>
+            <div class="sn-menu-divider"></div>
+            <div class="sn-menu-section">
+                <a href="dashboard.html" class="sn-menu-item"><span class="sn-menu-icon">👤</span><span class="sn-menu-label">پنل کاربری</span></a>
+                <a href="admin.html" class="sn-menu-item" id="snAdminLink" style="display:none; color:#fca5a5;"><span class="sn-menu-icon">🎯</span><span class="sn-menu-label">پنل ادمین</span></a>
+                <a href="#" class="sn-menu-item sn-logout" id="snLogoutBtn" style="display:none;"><span class="sn-menu-icon">🚪</span><span class="sn-menu-label">خروج</span></a>
             </div>
         </div>
-        <div id="tvchart"></div>
+    </aside>
+
+    <!-- Main Container -->
+    <div class="main-container">
+
+        <!-- Page Header -->
+        <div class="page-header">
+            <h1>📈 بورس ایران</h1>
+            <p>داده‌های لحظه‌ای تمام نمادهای بورس تهران</p>
+        </div>
+
+        <!-- Stats Grid -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="icon">📊</div>
+                <div class="value" id="statTotal">--</div>
+                <div class="label">کل نمادها</div>
+            </div>
+            <div class="stat-card">
+                <div class="icon">🟢</div>
+                <div class="value up" id="statPositive">--</div>
+                <div class="label">نمادهای مثبت</div>
+            </div>
+            <div class="stat-card">
+                <div class="icon">🔴</div>
+                <div class="value down" id="statNegative">--</div>
+                <div class="label">نمادهای منفی</div>
+            </div>
+            <div class="stat-card">
+                <div class="icon">💰</div>
+                <div class="value" id="statValue">--</div>
+                <div class="label">ارزش کل معاملات</div>
+            </div>
+        </div>
+
+        <!-- Ranking Section -->
+        <div class="ranking-section">
+            <h3>
+                <span>🏆 رتبه‌بندی سود و ضرر</span>
+                <span style="color: var(--gray); font-size: 11px; font-weight: 400;">برای تغییر بازه، روی دکمه‌ها بزن</span>
+            </h3>
+            
+            <div class="ranking-controls">
+                <button class="ranking-btn up active" data-period="1w" data-order="desc" onclick="changeRanking('1w', 'desc', this)">📈 بیشترین سود ۱ هفته</button>
+                <button class="ranking-btn down" data-period="1w" data-order="asc" onclick="changeRanking('1w', 'asc', this)">📉 بیشترین ضرر ۱ هفته</button>
+                <button class="ranking-btn up" data-period="1m" data-order="desc" onclick="changeRanking('1m', 'desc', this)">📈 بیشترین سود ۱ ماه</button>
+                <button class="ranking-btn down" data-period="1m" data-order="asc" onclick="changeRanking('1m', 'asc', this)">📉 بیشترین ضرر ۱ ماه</button>
+                <button class="ranking-btn up" data-period="3m" data-order="desc" onclick="changeRanking('3m', 'desc', this)">📈 بیشترین سود ۳ ماه</button>
+                <button class="ranking-btn down" data-period="3m" data-order="asc" onclick="changeRanking('3m', 'asc', this)">📉 بیشترین ضرر ۳ ماه</button>
+            </div>
+
+            <div class="ranking-grid">
+                <div class="ranking-list" id="topGainers">
+                    <h4>📈 بیشترین سود</h4>
+                    <div class="loading"><div class="spinner"></div></div>
+                </div>
+                <div class="ranking-list" id="topLosers">
+                    <h4>📉 بیشترین ضرر</h4>
+                    <div class="loading"><div class="spinner"></div></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Filters -->
+        <div class="filters-bar">
+            <div class="filter-group" style="flex: 2; min-width: 200px;">
+                <label>🔍 جستجوی نماد یا شرکت</label>
+                <input type="text" id="searchInput" class="filter-input" placeholder="مثال: فولاد، خودرو، شپنا...">
+            </div>
+            <div class="filter-group">
+                <label>📁 گروه صنعت</label>
+                <select id="sectorFilter" class="filter-input">
+                    <option value="all">همه گروه‌ها</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label>🏷️ نوع نماد</label>
+                <select id="typeFilter" class="filter-input">
+                    <option value="all">همه</option>
+                    <option value="stock">📊 سهام عادی</option>
+                    <option value="right">📜 حق تقدم</option>
+                    <option value="option">⚙️ اختیار معامله</option>
+                    <option value="fund">💼 صندوق</option>
+                    <option value="bond">📃 اوراق</option>
+                </select>
+            </div>
+            <div class="filter-group" style="min-width: auto;">
+                <label>&nbsp;</label>
+                <button class="filter-btn" onclick="resetFilters()">🗑️ پاک کردن</button>
+            </div>
+        </div>
+
+        <!-- Table -->
+        <div class="table-wrapper">
+            <div class="table-info">
+                <span id="tableInfo">⏳ در حال بارگذاری...</span>
+                <span>🔄 بروزرسانی هر ۲ دقیقه</span>
+            </div>
+            <div class="table-container">
+                <table id="marketTable">
+                    <thead>
+                        <tr>
+                            <th onclick="sortBy('l18', this)">#</th>
+                            <th onclick="sortBy('l18', this)">نماد</th>
+                            <th onclick="sortBy('pc', this)">قیمت پایانی</th>
+                            <th onclick="sortBy('pl', this)">آخرین</th>
+                            <th onclick="sortBy('pcp', this)">تغییر٪</th>
+                            <th onclick="sortBy('tvol', this)">حجم</th>
+                            <th onclick="sortBy('tval', this)">ارزش</th>
+                            <th onclick="sortBy('pe', this)">P/E</th>
+                            <th onclick="sortBy('eps', this)">EPS</th>
+                            <th onclick="sortBy('tno', this)">معاملات</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tableBody">
+                        <tr>
+                            <td colspan="10" class="center">
+                                <div class="loading">
+                                    <div class="spinner"></div>
+                                    <div>⏳ در حال دریافت داده‌ها از BrsApi...</div>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
     </div>
 
+    <!-- Modal -->
+    <div class="modal-overlay" id="symbolModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h2>
+                    <span id="modalSymbolName">--</span>
+                    <small id="modalSymbolFull">--</small>
+                </h2>
+                <button class="modal-close" onclick="closeModal()">✕</button>
+            </div>
+
+            <!-- Chart -->
+            <div class="chart-container" id="chartContainer">
+                <div class="chart-header">
+                    <h3>📈 چارت قیمت</h3>
+                    <div class="chart-actions">
+                        <button class="chart-tab active" onclick="changeTimeframe('daily', this)">روزانه</button>
+                        <button class="chart-tab" onclick="changeTimeframe('weekly', this)">هفتگی</button>
+                        <button class="chart-tab" onclick="changeTimeframe('monthly', this)">ماهانه</button>
+                        <button class="chart-tab" onclick="changeTimeframe('3m', this)">۳ ماهه</button>
+                        <button class="chart-tab" onclick="changeTimeframe('6m', this)">۶ ماهه</button>
+                        <button class="chart-tab" onclick="changeTimeframe('yearly', this)">سالانه</button>
+                        <button class="fullscreen-btn" onclick="toggleChartFullscreen()" id="fullscreenBtn">⛶ تمام‌صفحه</button>
+                    </div>
+                </div>
+                <div id="modalChart"></div>
+            </div>
+
+            <!-- Price Info -->
+            <div class="info-section">
+                <h3>💵 اطلاعات قیمتی</h3>
+                <div class="info-grid" id="priceInfo"></div>
+            </div>
+
+            <!-- Trading Info -->
+            <div class="info-section">
+                <h3>📊 اطلاعات معاملاتی</h3>
+                <div class="info-grid" id="tradingInfo"></div>
+            </div>
+
+            <!-- Real/Legal -->
+            <div class="info-section">
+                <h3>👥 حقیقی و حقوقی</h3>
+                <div class="info-grid" id="realLegalInfo"></div>
+            </div>
+
+            <!-- Order Book -->
+            <div class="info-section">
+                <h3>📋 ۵ سطح عرضه و تقاضا</h3>
+                <div class="orderbook-grid">
+                    <div class="orderbook buy">
+                        <h4>🟢 تقاضا (خرید)</h4>
+                        <div id="buyOrders"></div>
+                    </div>
+                    <div class="orderbook sell">
+                        <h4>🔴 عرضه (فروش)</h4>
+                        <div id="sellOrders"></div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        © ۱۴۰۵ آکادمی شمعدون | تمامی حقوق محفوظ است
+    </footer>
+
+<script>
+    // ==========================================
+    // تنظیمات
+    // ==========================================
+    const BRS_API = 'BvUj3cMKWNBK87KW9xhNccCThmfVbd8u';
+    const ADMIN_EMAIL = 'beat.market.office@gmail.com';
+    const SUPABASE_URL = 'https://jcwwilatvstjrohvhtss.supabase.co';
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Impjd3dpbGF0dnN0anJvaHZodHNzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODk3MDY4NTYsImV4cCI6MjEwNTI4Mjg1Nn0.eUC89RJy6-60nNGrSeYeDADzLxz-kWTGy4DbNGVi6MM';
+
+    const ALL_SYMBOLS_URL = `https://Api.BrsApi.ir/Tsetmc/AllSymbols.php?key=${BRS_API}&type=1`;
+    const CANDLE_URL = (l18, type) => `https://Api.BrsApi.ir/Tsetmc/Candlestick.php?key=${BRS_API}&l18=${encodeURIComponent(l18)}&type=${type}`;
+
+    // ==========================================
+    // متغیرهای جهانی
+    // ==========================================
+    let allSymbols = [];
+    let filteredSymbols = [];
+    let currentSort = { field: 'tval', order: 'desc' };
+    let currentSymbol = null;
+    let currentDailyData = [];
+    let modalChart = null;
+    let modalCandleSeries = null;
+    let modalChartInitialized = false;
+    let currentTimeframe = 'daily';
+    let currentRankingPeriod = '1w';
+    let currentRankingOrder = 'desc';
+    let rankingCache = {};
+
+    // ==========================================
+    // Navbar
+    // ==========================================
+    function setupNavbar() {
+        const hamburger = document.getElementById('snHamburger');
+        const sidebar = document.getElementById('snSidebar');
+        const overlay = document.getElementById('snOverlay');
+        const closeBtn = document.getElementById('snClose');
+
+        hamburger.addEventListener('click', () => {
+            sidebar.classList.add('show');
+            overlay.classList.add('show');
+        });
+        closeBtn.addEventListener('click', () => {
+            sidebar.classList.remove('show');
+            overlay.classList.remove('show');
+        });
+        overlay.addEventListener('click', () => {
+            sidebar.classList.remove('show');
+            overlay.classList.remove('show');
+        });
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                sidebar.classList.remove('show');
+                overlay.classList.remove('show');
+                if (document.getElementById('symbolModal').classList.contains('show')) {
+                    closeModal();
+                }
+                const chartContainer = document.getElementById('chartContainer');
+                if (chartContainer.classList.contains('fullscreen')) {
+                    toggleChartFullscreen();
+                }
+            }
+        });
+    }
+
+    async function checkUser() {
+        try {
+            const client = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+            const { data } = await client.auth.getSession();
+            const userArea = document.getElementById('snUserArea');
+            userArea.innerHTML = '';
+
+            if (data && data.session && data.session.user) {
+                const user = data.session.user;
+                const fullName = user.user_metadata?.full_name || user.email || 'کاربر';
+                const firstLetter = fullName.charAt(0).toUpperCase();
+
+                userArea.innerHTML = `
+                    <a href="dashboard.html" class="sn-user-avatar" title="${escapeHtml(fullName)}">
+                        ${firstLetter}
+                    </a>
+                `;
+
+                if (user.email === ADMIN_EMAIL) {
+                    const adminLink = document.getElementById('snAdminLink');
+                    if (adminLink) adminLink.style.display = 'flex';
+                }
+
+                const logoutBtn = document.getElementById('snLogoutBtn');
+                if (logoutBtn) {
+                    logoutBtn.style.display = 'flex';
+                    logoutBtn.addEventListener('click', async (e) => {
+                        e.preventDefault();
+                        if (confirm('می‌خوای خارج بشی؟')) {
+                            await client.auth.signOut();
+                            window.location.href = 'login.html';
+                        }
+                    });
+                }
+            }
+        } catch (e) {
+            console.log('Navbar error:', e);
+        }
+    }
+
+    // ==========================================
+    // ابزارها
+    // ==========================================
+    function toPersianNumber(num) {
+        if (num === null || num === undefined || isNaN(num)) return '--';
+        const persianDigits = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
+        return num.toString().replace(/\d/g, d => persianDigits[d]);
+    }
+
+    function formatNumber(num, decimals = 0) {
+        if (num === null || num === undefined || isNaN(num)) return '--';
+        try {
+            const n = Number(num);
+            if (isNaN(n)) return '--';
+            let str;
+            if (decimals > 0) {
+                str = n.toFixed(decimals);
+            } else {
+                str = Math.round(n).toString();
+            }
+            const parts = str.split('.');
+            parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+            str = parts.join('.');
+            const persianDigits = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
+            return str.replace(/\d/g, d => persianDigits[d]);
+        } catch (e) {
+            return '--';
+        }
+    }
+
+    function formatVolume(num) {
+        if (!num && num !== 0) return '--';
+        const n = Number(num);
+        if (n >= 1e9) return toPersianNumber((n / 1e9).toFixed(2)) + ' میلیارد';
+        if (n >= 1e6) return toPersianNumber((n / 1e6).toFixed(2)) + ' میلیون';
+        if (n >= 1e3) return toPersianNumber((n / 1e3).toFixed(1)) + ' هزار';
+        return toPersianNumber(n);
+    }
+
+    function escapeHtml(text) {
+        if (!text) return '';
+        const div = document.createElement('div');
+        div.textContent = text;
+        return div.innerHTML;
+    }
+
+    // ==========================================
+    // تشخیص نوع نماد
+    // ==========================================
+    function getSymbolType(symbol) {
+        const name = (symbol.l18 || '').trim();
+        const fullName = (symbol.l30 || '').trim();
+
+        // حق تقدم
+        if (fullName.includes('حق تقدم') || fullName.includes('حقتقدم')) {
+            return 'right';
+        }
+        // اختیار معامله
+        if (fullName.includes('اختیار') || fullName.includes('اختيار')) {
+            return 'option';
+        }
+        // صندوق
+        if (fullName.includes('صندوق') || fullName.includes('ETF') || fullName.includes('سرمایه‌گذاری قابل معامله')) {
+            return 'fund';
+        }
+        // اوراق
+        if (fullName.includes('اوراق') || fullName.includes('مشارکت') || fullName.includes('اجاره')) {
+            return 'bond';
+        }
+        return 'stock';
+    }
+
+    // ==========================================
+    // بارگذاری داده‌ها
+    // ==========================================
+    async function loadAllSymbols() {
+        const tableBody = document.getElementById('tableBody');
+        const tableInfo = document.getElementById('tableInfo');
+
+        tableInfo.textContent = '⏳ در حال دریافت داده‌ها از BrsApi...';
+
+        try {
+            const res = await fetch(ALL_SYMBOLS_URL);
+            const data = await res.json();
+
+            if (!Array.isArray(data)) {
+                throw new Error('پاسخ نامعتبر');
+            }
+
+            allSymbols = data.filter(s => s.l18 && s.l18.trim() !== '');
+            allSymbols.forEach(s => { s.type = getSymbolType(s); });
+
+            populateSectorFilter();
+            calculateStats();
+            applyFilters();
+
+            tableInfo.textContent = `✅ ${toPersianNumber(allSymbols.length)} نماد بارگذاری شد`;
+
+            // بارگذاری رتبه‌بندی
+            loadRanking();
+        } catch (e) {
+            console.error('Error loading symbols:', e);
+            tableBody.innerHTML = `
+                <tr>
+                    <td colspan="10" class="center">
+                        <div class="loading">❌ خطا در دریافت داده‌ها: ${e.message}</div>
+                    </td>
+                </tr>
+            `;
+            tableInfo.textContent = '❌ خطا';
+        }
+    }
+
+    function populateSectorFilter() {
+        const sectors = new Set();
+        allSymbols.forEach(s => {
+            if (s.cs && s.cs.trim()) sectors.add(s.cs.trim());
+        });
+
+        const select = document.getElementById('sectorFilter');
+        const sorted = Array.from(sectors).sort();
+        select.innerHTML = '<option value="all">همه گروه‌ها</option>' +
+            sorted.map(s => `<option value="${escapeHtml(s)}">${escapeHtml(s)}</option>`).join('');
+    }
+
+    function calculateStats() {
+        const total = allSymbols.length;
+        const positive = allSymbols.filter(s => (s.pcp || 0) > 0).length;
+        const negative = allSymbols.filter(s => (s.pcp || 0) < 0).length;
+        const totalValue = allSymbols.reduce((sum, s) => sum + (s.tval || 0), 0);
+
+        document.getElementById('statTotal').textContent = toPersianNumber(total);
+        document.getElementById('statPositive').textContent = toPersianNumber(positive);
+        document.getElementById('statNegative').textContent = toPersianNumber(negative);
+        document.getElementById('statValue').textContent = toPersianNumber((totalValue / 1e10).toFixed(1)) + ' همت';
+    }
+
+    // ==========================================
+    // فیلترها
+    // ==========================================
+    function applyFilters() {
+        const search = document.getElementById('searchInput').value.trim().toLowerCase();
+        const sector = document.getElementById('sectorFilter').value;
+        const type = document.getElementById('typeFilter').value;
+
+        filteredSymbols = allSymbols.filter(s => {
+            if (search) {
+                const nameMatch = (s.l18 || '').toLowerCase().includes(search);
+                const fullMatch = (s.l30 || '').toLowerCase().includes(search);
+                if (!nameMatch && !fullMatch) return false;
+            }
+            if (sector !== 'all' && (s.cs || '').trim() !== sector) return false;
+            if (type !== 'all' && s.type !== type) return false;
+            return true;
+        });
+
+        sortSymbols();
+        renderTable();
+    }
+
+    function sortSymbols() {
+        const { field, order } = currentSort;
+        filteredSymbols.sort((a, b) => {
+            let valA = a[field];
+            let valB = b[field];
+
+            if (typeof valA === 'string') {
+                valA = (valA || '').trim();
+                valB = (valB || '').trim();
+                return order === 'asc'
+                    ? valA.localeCompare(valB, 'fa')
+                    : valB.localeCompare(valA, 'fa');
+            }
+
+            valA = Number(valA) || 0;
+            valB = Number(valB) || 0;
+            return order === 'asc' ? valA - valB : valB - valA;
+        });
+    }
+
+    function sortBy(field, th) {
+        if (currentSort.field === field) {
+            currentSort.order = currentSort.order === 'desc' ? 'asc' : 'desc';
+        } else {
+            currentSort.field = field;
+            currentSort.order = 'desc';
+        }
+        document.querySelectorAll('th').forEach(t => t.classList.remove('sorted'));
+        if (th) th.classList.add('sorted');
+        sortSymbols();
+        renderTable();
+    }
+
+    function resetFilters() {
+        document.getElementById('searchInput').value = '';
+        document.getElementById('sectorFilter').value = 'all';
+        document.getElementById('typeFilter').value = 'all';
+        currentSort = { field: 'tval', order: 'desc' };
+        applyFilters();
+    }
+
+    // ==========================================
+    // نمایش جدول
+    // ==========================================
+    function renderTable() {
+        const tbody = document.getElementById('tableBody');
+
+        if (filteredSymbols.length === 0) {
+            tbody.innerHTML = `
+                <tr><td colspan="10" class="center">
+                    <div class="loading">❌ نمادی با این فیلترها یافت نشد</div>
+                </td></tr>
+            `;
+            return;
+        }
+
+        const limited = filteredSymbols.slice(0, 200);
+
+        tbody.innerHTML = limited.map((s, idx) => {
+            const pc = s.pc ? (s.pc / 10) : 0;
+            const pl = s.pl ? (s.pl / 10) : 0;
+            const pcp = Number(s.pcp) || 0;
+            const pcpClass = pcp > 0 ? 'up' : pcp < 0 ? 'down' : '';
+            const pcpText = (pcp > 0 ? '+' : '') + toPersianNumber(pcp.toFixed(2)) + '٪';
+
+            return `
+                <tr onclick="openModal('${escapeHtml(s.l18)}')">
+                    <td class="center">${toPersianNumber(idx + 1)}</td>
+                    <td class="symbol">${escapeHtml(s.l18 || '--')}</td>
+                    <td>${formatNumber(pc)}</td>
+                    <td>${formatNumber(pl)}</td>
+                    <td class="${pcpClass}">${pcpText}</td>
+                    <td>${formatVolume(s.tvol)}</td>
+                    <td>${formatVolume(s.tval)}</td>
+                    <td>${s.pe ? toPersianNumber(Number(s.pe).toFixed(1)) : '--'}</td>
+                    <td>${s.eps ? toPersianNumber(Math.round(s.eps)) : '--'}</td>
+                    <td>${toPersianNumber(s.tno || 0)}</td>
+                </tr>
+            `;
+        }).join('');
+
+        if (filteredSymbols.length > 200) {
+            tbody.innerHTML += `
+                <tr>
+                    <td colspan="10" class="center" style="padding: 15px; color: var(--gray); font-size: 12px;">
+                        نمایش ۲۰۰ نماد اول از ${toPersianNumber(filteredSymbols.length)} نماد
+                    </td>
+                </tr>
+            `;
+        }
+    }
+
+    // ==========================================
+    // رتبه‌بندی
+    // ==========================================
+    async function loadRanking() {
+        const topEl = document.getElementById('topGainers');
+        const loseEl = document.getElementById('topLosers');
+
+        // چک کش
+        if (rankingCache[currentRankingPeriod]) {
+            renderRanking(rankingCache[currentRankingPeriod]);
+            return;
+        }
+
+        topEl.innerHTML = '<div class="loading"><div class="spinner"></div></div>';
+        loseEl.innerHTML = '<div class="loading"><div class="spinner"></div></div>';
+
+        // انتخاب ۲۰ نماد برتر برای رتبه‌بندی (بر اساس ارزش معاملات)
+        const topSymbols = [...allSymbols]
+            .sort((a, b) => (b.tval || 0) - (a.tval || 0))
+            .slice(0, 20);
+
+        const daysMap = { '1w': 5, '1m': 22, '3m': 66 };
+        const days = daysMap[currentRankingPeriod] || 5;
+
+        const results = [];
+
+        for (const symbol of topSymbols) {
+            try {
+                const res = await fetch(CANDLE_URL(symbol.l18, 2));
+                const data = await res.json();
+
+                if (!data.candle_daily || data.candle_daily.length < days + 1) continue;
+
+                const candles = data.candle_daily;
+                const latest = candles[candles.length - 1];
+                const old = candles[Math.max(0, candles.length - 1 - days)];
+
+                const change = ((latest.close - old.close) / old.close) * 100;
+
+                results.push({
+                    name: symbol.l18,
+                    l18: symbol.l18,
+                    change: change
+                });
+
+                // تأخیر کوچیک برای جلوگیری از محدودیت
+                await new Promise(r => setTimeout(r, 100));
+            } catch (e) {
+                console.log('Error ranking:', symbol.l18, e);
+            }
+        }
+
+        rankingCache[currentRankingPeriod] = results;
+        renderRanking(results);
+    }
+
+    function renderRanking(results) {
+        const topEl = document.getElementById('topGainers');
+        const loseEl = document.getElementById('topLosers');
+
+        if (results.length === 0) {
+            topEl.innerHTML = '<h4>📈 بیشترین سود</h4><div class="loading">داده‌ای موجود نیست</div>';
+            loseEl.innerHTML = '<h4>📉 بیشترین ضرر</h4><div class="loading">داده‌ای موجود نیست</div>';
+            return;
+        }
+
+        const sorted = [...results].sort((a, b) => b.change - a.change);
+        const gainers = sorted.slice(0, 10);
+        const losers = sorted.slice(-10).reverse();
+
+        topEl.innerHTML = `
+            <h4>📈 بیشترین سود</h4>
+            ${gainers.map(r => `
+                <div class="ranking-item" onclick="openModal('${escapeHtml(r.name)}')">
+                    <span class="name">${escapeHtml(r.name)}</span>
+                    <span class="change up">+${toPersianNumber(r.change.toFixed(2))}٪</span>
+                </div>
+            `).join('')}
+        `;
+
+        loseEl.innerHTML = `
+            <h4>📉 بیشترین ضرر</h4>
+            ${losers.map(r => `
+                <div class="ranking-item" onclick="openModal('${escapeHtml(r.name)}')">
+                    <span class="name">${escapeHtml(r.name)}</span>
+                    <span class="change down">${toPersianNumber(r.change.toFixed(2))}٪</span>
+                </div>
+            `).join('')}
+        `;
+    }
+
+    function changeRanking(period, order, btn) {
+        document.querySelectorAll('.ranking-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        currentRankingPeriod = period;
+        currentRankingOrder = order;
+        loadRanking();
+    }
+
+</script>
+
     <script>
-        const TSETMC_API = 'https://cdn.tsetmc.com/api';
-        let chart, candleSeries;
-        let currentSymbol = '';
-        let currentInsCode = '';
-        let chartInitialized = false;
-        let currentTimeframe = 'daily';
-        let allDailyData = [];
-
-        let rankingData = [];
-        let currentRankingPeriod = '1w';
-        let currentSortOrder = 'desc';
-        let rankingLoaded = false;
-
-        // ===== مقداردهی چارت =====
-        function initChart() {
-            if (chartInitialized) return;
-            try {
-                const chartContainer = document.getElementById('tvchart');
-                const width = chartContainer.clientWidth || window.innerWidth - 60;
-
-                chart = LightweightCharts.createChart(chartContainer, {
-                    width: width,
-                    height: 450,
-                    layout: { 
-                        background: { color: '#0f172a' }, 
-                        textColor: '#94a3b8' 
-                    },
-                    grid: { 
-                        vertLines: { color: 'rgba(30, 41, 59, 0.5)' }, 
-                        horzLines: { color: 'rgba(30, 41, 59, 0.5)' } 
-                    },
-                    timeScale: { timeVisible: true, secondsVisible: false }
-                });
-
-                candleSeries = chart.addCandlestickSeries({
-                    upColor: '#4ade80', downColor: '#f87171',
-                    borderVisible: false,
-                    wickUpColor: '#4ade80', wickDownColor: '#f87171'
-                });
-
-                chartInitialized = true;
-            } catch (e) {
-                console.error('خطا در مقداردهی چارت:', e);
+        // ==========================================
+        // تبدیل تاریخ شمسی به میلادی
+        // ==========================================
+        function jalaliToGregorian(jy, jm, jd) {
+            jy += 1595;
+            let days = -355668 + (365 * jy) + (Math.floor(jy / 33) * 8) + Math.floor(((jy % 33) + 3) / 4) + jd + ((jm < 7) ? (jm - 1) * 31 : ((jm - 7) * 30) + 186);
+            let gy = 400 * Math.floor(days / 146097);
+            days %= 146097;
+            if (days > 36524) {
+                gy += 100 * Math.floor(--days / 36524);
+                days %= 36524;
+                if (days >= 365) days++;
             }
+            gy += 4 * Math.floor(days / 1461);
+            days %= 1461;
+            if (days > 365) {
+                gy += Math.floor((days - 1) / 365);
+                days = (days - 1) % 365;
+            }
+            let gd = days + 1;
+            const sal_a = [0, 31, (gy % 4 === 0 && gy % 100 !== 0) || (gy % 400 === 0) ? 29 : 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+            let gm;
+            for (gm = 0; gm < 13 && gd > sal_a[gm]; gm++) gd -= sal_a[gm];
+            return { year: gy, month: gm, day: gd };
         }
 
-        // ===== جستجوی نماد =====
-        async function searchAndLoad() {
-            const query = document.getElementById('symbolSearch').value.trim();
-            if (!query) return;
-            document.getElementById('statusBox').textContent = '⏳ در حال جستجو...';
-
-            try {
-                const res = await fetch(`${TSETMC_API}/Instrument/GetInstrumentSearch/${encodeURIComponent(query)}`);
-                const data = await res.json();
-
-                if (data && data.instrumentSearch && data.instrumentSearch.length > 0) {
-                    const results = data.instrumentSearch;
-                    document.getElementById('symbolListContainer').style.display = 'block';
-                    document.getElementById('searchResults').innerHTML = results.map(item => {
-                        const name = item.lVal18AFC || item.lVal30 || '';
-                        const insCode = item.insCode || '';
-                        return `<span class="symbol-tag ${insCode === currentInsCode ? 'active' : ''}" onclick="loadSymbolByCode('${insCode}', '${name}')">${name}</span>`;
-                    }).join('');
-                    document.getElementById('statusBox').textContent = `✅ ${results.length} نتیجه یافت شد.`;
-                } else {
-                    document.getElementById('statusBox').textContent = '❌ نمادی یافت نشد.';
-                }
-            } catch (e) {
-                document.getElementById('statusBox').textContent = '❌ خطا: ' + e.message;
-            }
+        function dateToTimestamp(dateStr) {
+            const str = dateStr.toString().replace(/-/g, '');
+            const year = parseInt(str.substring(0, 4));
+            const month = parseInt(str.substring(4, 6));
+            const day = parseInt(str.substring(6, 8));
+            const g = jalaliToGregorian(year, month, day);
+            return Math.floor(new Date(g.year, g.month - 1, g.day).getTime() / 1000);
         }
 
-        // ===== بارگذاری اطلاعات نماد =====
-        async function loadSymbolByCode(insCode, symbolName) {
-            currentSymbol = symbolName;
-            currentInsCode = insCode;
-            document.getElementById('chartTitle').textContent = '📈 چارت ' + symbolName;
-            document.getElementById('infoGrid').innerHTML = '<div class="loading">⏳ در حال دریافت اطلاعات...</div>';
-            document.getElementById('statusBox').textContent = `⏳ در حال دریافت اطلاعات ${symbolName}...`;
+        // ==========================================
+        // Modal
+        // ==========================================
+        async function openModal(l18) {
+            const symbol = allSymbols.find(s => s.l18 === l18);
+            if (!symbol) return;
 
-            try {
-                const res = await fetch(`${TSETMC_API}/ClosingPrice/GetClosingPriceInfo/${insCode}`);
-                const data = await res.json();
+            currentSymbol = symbol;
 
-                if (data && data.closingPriceInfo) {
-                    displayInfo(data.closingPriceInfo);
-                    document.getElementById('statusBox').textContent = `✅ اطلاعات ${symbolName} بارگذاری شد.`;
-                    await loadChartData(insCode);
-                } else {
-                    document.getElementById('infoGrid').innerHTML = '<div class="error">❌ اطلاعات یافت نشد.</div>';
-                }
-            } catch (e) {
-                document.getElementById('infoGrid').innerHTML = '<div class="error">❌ خطا: ' + e.message + '</div>';
-            }
+            document.getElementById('modalSymbolName').textContent = symbol.l18 || '--';
+            document.getElementById('modalSymbolFull').textContent = symbol.l30 || '';
+
+            renderPriceInfo(symbol);
+            renderTradingInfo(symbol);
+            renderRealLegalInfo(symbol);
+            renderOrderBook(symbol);
+
+            document.getElementById('symbolModal').classList.add('show');
+            document.body.style.overflow = 'hidden';
+
+            // ساخت چارت
+            setTimeout(async () => {
+                initModalChart();
+                await loadChartData(symbol.l18);
+            }, 100);
         }
 
-        // ===== نمایش اطلاعات لحظه‌ای =====
-        function displayInfo(info) {
-            const pc = (parseInt(info.pClosing || 0) / 10).toLocaleString('fa-IR');
-            const pl = (parseInt(info.pDrCotVal || 0) / 10).toLocaleString('fa-IR');
-            const pClosing = parseInt(info.pClosing || 0);
-            const pYesterday = parseInt(info.priceYesterday || 0);
-            const pccRaw = pClosing - pYesterday;
-            const pcpRaw = pYesterday > 0 ? (pccRaw / pYesterday) * 100 : 0;
-            const pcc = (pccRaw / 10).toLocaleString('fa-IR');
-            const pcp = pcpRaw.toFixed(2);
-            const tvol = parseInt(info.qTotTran5J || 0).toLocaleString('fa-IR');
-            const tval = (parseInt(info.qTotCap || 0) / 10000000000).toFixed(1) + ' میلیارد';
+        function closeModal() {
+            document.getElementById('symbolModal').classList.remove('show');
+            document.body.style.overflow = '';
+            currentSymbol = null;
+            currentDailyData = [];
+        }
 
-            document.getElementById('infoGrid').innerHTML = `
-                <div class="info-card"><div class="label">قیمت پایانی</div><div class="value">${pc} تومان</div></div>
-                <div class="info-card"><div class="label">آخرین معامله</div><div class="value">${pl} تومان</div></div>
-                <div class="info-card"><div class="label">تغییر قیمت</div><div class="value ${pccRaw >= 0 ? 'up' : 'down'}">${(pccRaw > 0 ? '+' : '') + pcc}</div></div>
-                <div class="info-card"><div class="label">درصد تغییر</div><div class="value ${pcpRaw >= 0 ? 'up' : 'down'}">${(pcpRaw > 0 ? '+' : '') + pcp}%</div></div>
-                <div class="info-card"><div class="label">حجم معاملات</div><div class="value">${tvol}</div></div>
-                <div class="info-card"><div class="label">ارزش معاملات</div><div class="value">${tval}</div></div>
+        document.getElementById('symbolModal')?.addEventListener('click', (e) => {
+            if (e.target.id === 'symbolModal') closeModal();
+        });
+
+        // ==========================================
+        // اطلاعات
+        // ==========================================
+        function renderPriceInfo(s) {
+            const pc = s.pc ? (s.pc / 10) : 0;
+            const pl = s.pl ? (s.pl / 10) : 0;
+            const pf = s.pf ? (s.pf / 10) : 0;
+            const py = s.py ? (s.py / 10) : 0;
+            const pmin = s.pmin ? (s.pmin / 10) : 0;
+            const pmax = s.pmax ? (s.pmax / 10) : 0;
+            const pcc = s.pcc || 0;
+            const pcp = s.pcp || 0;
+
+            const pcpClass = pcp > 0 ? 'up' : pcp < 0 ? 'down' : '';
+            const pccClass = pcc > 0 ? 'up' : pcc < 0 ? 'down' : '';
+            const pcpText = (pcp > 0 ? '+' : '') + toPersianNumber(Number(pcp).toFixed(2)) + '٪';
+            const pccText = (pcc > 0 ? '+' : '') + formatNumber(pcc / 10);
+
+            document.getElementById('priceInfo').innerHTML = `
+                <div class="info-card"><div class="label">قیمت پایانی</div><div class="value">${formatNumber(pc)} تومان</div></div>
+                <div class="info-card"><div class="label">آخرین معامله</div><div class="value">${formatNumber(pl)} تومان</div></div>
+                <div class="info-card"><div class="label">اولین قیمت</div><div class="value">${formatNumber(pf)} تومان</div></div>
+                <div class="info-card"><div class="label">قیمت دیروز</div><div class="value">${formatNumber(py)} تومان</div></div>
+                <div class="info-card"><div class="label">کمترین قیمت</div><div class="value">${formatNumber(pmin)} تومان</div></div>
+                <div class="info-card"><div class="label">بیشترین قیمت</div><div class="value">${formatNumber(pmax)} تومان</div></div>
+                <div class="info-card"><div class="label">تغییر قیمت</div><div class="value ${pccClass}">${pccText}</div></div>
+                <div class="info-card"><div class="label">درصد تغییر</div><div class="value ${pcpClass}">${pcpText}</div></div>
             `;
         }
 
-        // ===== بارگذاری داده‌های چارت =====
-        async function loadChartData(insCode) {
-            try {
-                if (!chartInitialized) initChart();
-                const res = await fetch(`${TSETMC_API}/ClosingPrice/GetClosingPriceDailyList/${insCode}/0`);
-                const data = await res.json();
+        function renderTradingInfo(s) {
+            document.getElementById('tradingInfo').innerHTML = `
+                <div class="info-card"><div class="label">حجم معاملات</div><div class="value">${formatVolume(s.tvol)}</div></div>
+                <div class="info-card"><div class="label">ارزش معاملات</div><div class="value">${formatVolume(s.tval)} تومان</div></div>
+                <div class="info-card"><div class="label">تعداد معاملات</div><div class="value">${toPersianNumber(s.tno || 0)}</div></div>
+                <div class="info-card"><div class="label">حجم مبنا</div><div class="value">${formatVolume(s.bvol)}</div></div>
+                <div class="info-card"><div class="label">تعداد سهام</div><div class="value">${formatVolume(s.z)}</div></div>
+                <div class="info-card"><div class="label">ارزش بازار</div><div class="value">${formatVolume(s.mv)} تومان</div></div>
+                <div class="info-card"><div class="label">EPS</div><div class="value">${s.eps ? formatNumber(s.eps) : '--'}</div></div>
+                <div class="info-card"><div class="label">P/E</div><div class="value">${s.pe ? toPersianNumber(Number(s.pe).toFixed(2)) : '--'}</div></div>
+            `;
+        }
 
-                if (!data || !data.closingPriceDaily || data.closingPriceDaily.length === 0) return;
-                allDailyData = data.closingPriceDaily;
-                renderChart(currentTimeframe);
+        function renderRealLegalInfo(s) {
+            const buyI = s.Buy_I_Volume || 0;
+            const buyN = s.Buy_N_Volume || 0;
+            const sellI = s.Sell_I_Volume || 0;
+            const sellN = s.Sell_N_Volume || 0;
+
+            const totalBuy = buyI + buyN;
+            const totalSell = sellI + sellN;
+
+            const buyIPercent = totalBuy > 0 ? (buyI / totalBuy * 100).toFixed(1) : 0;
+            const buyNPercent = totalBuy > 0 ? (buyN / totalBuy * 100).toFixed(1) : 0;
+            const sellIPercent = totalSell > 0 ? (sellI / totalSell * 100).toFixed(1) : 0;
+            const sellNPercent = totalSell > 0 ? (sellN / totalSell * 100).toFixed(1) : 0;
+
+            document.getElementById('realLegalInfo').innerHTML = `
+                <div class="info-card"><div class="label">👤 خریداران حقیقی</div><div class="value">${toPersianNumber(s.Buy_CountI || 0)} نفر</div></div>
+                <div class="info-card"><div class="label">🏢 خریداران حقوقی</div><div class="value">${toPersianNumber(s.Buy_CountN || 0)} نفر</div></div>
+                <div class="info-card"><div class="label">👤 فروشندگان حقیقی</div><div class="value">${toPersianNumber(s.Sell_CountI || 0)} نفر</div></div>
+                <div class="info-card"><div class="label">🏢 فروشندگان حقوقی</div><div class="value">${toPersianNumber(s.Sell_CountN || 0)} نفر</div></div>
+                <div class="info-card"><div class="label">حجم خرید حقیقی</div><div class="value up">${formatVolume(buyI)} (${toPersianNumber(buyIPercent)}٪)</div></div>
+                <div class="info-card"><div class="label">حجم خرید حقوقی</div><div class="value down">${formatVolume(buyN)} (${toPersianNumber(buyNPercent)}٪)</div></div>
+                <div class="info-card"><div class="label">حجم فروش حقیقی</div><div class="value down">${formatVolume(sellI)} (${toPersianNumber(sellIPercent)}٪)</div></div>
+                <div class="info-card"><div class="label">حجم فروش حقوقی</div><div class="value up">${formatVolume(sellN)} (${toPersianNumber(sellNPercent)}٪)</div></div>
+            `;
+        }
+
+        function renderOrderBook(s) {
+            let buyHTML = '';
+            let sellHTML = '';
+
+            for (let i = 1; i <= 5; i++) {
+                const qd = s[`qd${i}`] || 0;
+                const pd = s[`pd${i}`] || 0;
+                const zd = s[`zd${i}`] || 0;
+
+                const qo = s[`qo${i}`] || 0;
+                const po = s[`po${i}`] || 0;
+                const zo = s[`zo${i}`] || 0;
+
+                buyHTML += `
+                    <div class="orderbook-row">
+                        <span class="price">${pd ? formatNumber(pd / 10) : '--'}</span>
+                        <span class="qty">${qd ? formatVolume(qd) : '--'}</span>
+                        <span class="count">${zd ? toPersianNumber(zd) + ' سفارش' : ''}</span>
+                    </div>
+                `;
+
+                sellHTML += `
+                    <div class="orderbook-row">
+                        <span class="price">${po ? formatNumber(po / 10) : '--'}</span>
+                        <span class="qty">${qo ? formatVolume(qo) : '--'}</span>
+                        <span class="count">${zo ? toPersianNumber(zo) + ' سفارش' : ''}</span>
+                    </div>
+                `;
+            }
+
+            document.getElementById('buyOrders').innerHTML = buyHTML;
+            document.getElementById('sellOrders').innerHTML = sellHTML;
+        }
+
+        // ==========================================
+        // چارت
+        // ==========================================
+        function initModalChart() {
+            if (modalChartInitialized) return;
+
+            try {
+                const container = document.getElementById('modalChart');
+                if (!container) return;
+
+                const width = container.clientWidth || 800;
+
+                modalChart = LightweightCharts.createChart(container, {
+                    width: width,
+                    height: container.clientHeight || 400,
+                    layout: {
+                        background: { color: '#0a0a0f' },
+                        textColor: '#94a3b8'
+                    },
+                    grid: {
+                        vertLines: { color: 'rgba(30, 41, 59, 0.5)' },
+                        horzLines: { color: 'rgba(30, 41, 59, 0.5)' }
+                    },
+                    timeScale: {
+                        timeVisible: true,
+                        secondsVisible: false,
+                        borderColor: 'rgba(212, 175, 55, 0.3)'
+                    },
+                    rightPriceScale: {
+                        borderColor: 'rgba(212, 175, 55, 0.3)'
+                    }
+                });
+
+                modalCandleSeries = modalChart.addCandlestickSeries({
+                    upColor: '#4ade80',
+                    downColor: '#f87171',
+                    borderVisible: false,
+                    wickUpColor: '#4ade80',
+                    wickDownColor: '#f87171'
+                });
+
+                modalChartInitialized = true;
             } catch (e) {
-                console.error('خطا در چارت:', e);
+                console.error('Chart init error:', e);
+                document.getElementById('modalChart').innerHTML = 
+                    '<div class="loading">❌ خطا در ساخت چارت: ' + e.message + '</div>';
             }
         }
 
-        // ===== رسم چارت با فیلتر دقیق =====
-        function renderChart(timeframe) {
-            if (!allDailyData || allDailyData.length === 0) return;
-            
-            // فیلتر دقیق: حذف داده‌های خراب
-            const filtered = allDailyData.filter(d => {
-                if (!d.dEven || d.dEven === 0 || d.dEven === '0') return false;
-                if (d.pClosing <= 0 || d.priceFirst <= 0 || d.priceMax <= 0 || d.priceMin <= 0) return false;
-                if (d.pClosing < 1 || d.priceFirst < 1) return false;
-                const year = parseInt(d.dEven.toString().substring(0, 4));
-                if (year < 2020 || year > 2030) return false;
-                return true;
-            });
-            
-            // حذف تاریخ‌های تکراری
-            const uniqueByDate = [];
-            const seenDates = new Set();
-            for (let i = filtered.length - 1; i >= 0; i--) {
-                if (!seenDates.has(filtered[i].dEven)) {
-                    seenDates.add(filtered[i].dEven);
-                    uniqueByDate.unshift(filtered[i]);
+        async function loadChartData(l18) {
+            const container = document.getElementById('modalChart');
+            container.innerHTML = '<div class="loading"><div class="spinner"></div>در حال دریافت داده چارت...</div>';
+
+            // چک کش localStorage
+            const cacheKey = `chart_${l18}_type2`;
+            const cached = localStorage.getItem(cacheKey);
+            const cacheTime = localStorage.getItem(cacheKey + '_time');
+
+            if (cached && cacheTime && (Date.now() - parseInt(cacheTime)) < 24 * 60 * 60 * 1000) {
+                try {
+                    currentDailyData = JSON.parse(cached);
+                    renderModalChart(currentTimeframe);
+                    return;
+                } catch (e) {
+                    console.log('Cache parse error');
                 }
             }
-            
-            const sorted = uniqueByDate.sort((a, b) => a.dEven - b.dEven);
-            console.log('تعداد داده‌های معتبر:', sorted.length);
-            
+
+            try {
+                const res = await fetch(CANDLE_URL(l18, 2));
+                const data = await res.json();
+
+                if (data.successful === false) {
+                    container.innerHTML = '<div class="loading">❌ ' + (data.message_error || 'خطا در دریافت داده') + '</div>';
+                    return;
+                }
+
+                if (!data.candle_daily || data.candle_daily.length === 0) {
+                    container.innerHTML = '<div class="loading">❌ داده چارتی موجود نیست</div>';
+                    return;
+                }
+
+                currentDailyData = data.candle_daily;
+
+                // ذخیره در کش
+                try {
+                    localStorage.setItem(cacheKey, JSON.stringify(currentDailyData));
+                    localStorage.setItem(cacheKey + '_time', Date.now().toString());
+                } catch (e) {
+                    console.log('Cache save error');
+                }
+
+                // ساخت مجدد چارت (چون innerHTML عوض شد)
+                modalChartInitialized = false;
+                initModalChart();
+                renderModalChart(currentTimeframe);
+            } catch (e) {
+                console.error('Chart data error:', e);
+                container.innerHTML = '<div class="loading">❌ خطا: ' + e.message + '</div>';
+            }
+        }
+
+        function renderModalChart(timeframe) {
+            if (!currentDailyData || currentDailyData.length === 0) return;
+
+            // تبدیل به فرمت LightweightCharts
+            const validData = currentDailyData
+                .map(item => ({
+                    time: dateToTimestamp(item.date),
+                    open: Number(item.open),
+                    high: Number(item.high),
+                    low: Number(item.low),
+                    close: Number(item.close)
+                }))
+                .filter(item => item.time > 0 && item.open > 0)
+                .sort((a, b) => a.time - b.time);
+
             let chartData = [];
 
             if (timeframe === 'daily') {
-                const recent = sorted.slice(-200);
-                chartData = recent.map(item => ({
-                    time: dateToTimestamp(item.dEven),
-                    open: parseInt(item.priceFirst) / 10,
-                    high: parseInt(item.priceMax) / 10,
-                    low: parseInt(item.priceMin) / 10,
-                    close: parseInt(item.pClosing) / 10
-                })).filter(item => item.time > 0);
+                chartData = validData.slice(-200);
             } else if (timeframe === 'weekly') {
-                chartData = groupByWeek(sorted);
+                chartData = groupByWeek(validData);
             } else if (timeframe === 'monthly') {
-                chartData = groupByMonth(sorted);
+                chartData = groupByMonth(validData);
+            } else if (timeframe === '3m') {
+                chartData = groupByMonths(validData, 3);
+            } else if (timeframe === '6m') {
+                chartData = groupByMonths(validData, 6);
+            } else if (timeframe === 'yearly') {
+                chartData = groupByYear(validData);
             }
 
-            if (chartData.length > 0) {
-                candleSeries.setData(chartData);
-                chart.timeScale().fitContent();
-                console.log('✅ چارت با ' + chartData.length + ' کندل رسم شد');
+            if (chartData.length > 0 && modalCandleSeries) {
+                modalCandleSeries.setData(chartData);
+                modalChart.timeScale().fitContent();
             }
         }
 
-        function dateToTimestamp(dateNum) {
-            const str = dateNum.toString();
-            const year = parseInt(str.substring(0, 4));
-            const month = parseInt(str.substring(4, 6)) - 1;
-            const day = parseInt(str.substring(6, 8));
-            return Math.floor(new Date(year, month, day).getTime() / 1000);
-        }
-
-        function groupByWeek(sorted) {
+        function groupByWeek(data) {
             const grouped = [];
-            let currentGroup = null;
-            for (const item of sorted) {
-                const timestamp = dateToTimestamp(item.dEven);
-                const date = new Date(timestamp * 1000);
+            let current = null;
+
+            data.forEach(item => {
+                const date = new Date(item.time * 1000);
                 const weekStart = new Date(date);
                 weekStart.setDate(date.getDate() - date.getDay());
+                weekStart.setHours(0, 0, 0, 0);
                 const weekKey = weekStart.getTime();
-                if (!currentGroup || currentGroup.key !== weekKey) {
-                    if (currentGroup) grouped.push(currentGroup);
-                    currentGroup = {
-                        key: weekKey, time: timestamp,
-                        open: parseInt(item.priceFirst) / 10,
-                        high: parseInt(item.priceMax) / 10,
-                        low: parseInt(item.priceMin) / 10,
-                        close: parseInt(item.pClosing) / 10
+
+                if (!current || current.key !== weekKey) {
+                    if (current) grouped.push(current);
+                    current = {
+                        key: weekKey,
+                        time: item.time,
+                        open: item.open,
+                        high: item.high,
+                        low: item.low,
+                        close: item.close
                     };
                 } else {
-                    currentGroup.high = Math.max(currentGroup.high, parseInt(item.priceMax) / 10);
-                    currentGroup.low = Math.min(currentGroup.low, parseInt(item.priceMin) / 10);
-                    currentGroup.close = parseInt(item.pClosing) / 10;
+                    current.high = Math.max(current.high, item.high);
+                    current.low = Math.min(current.low, item.low);
+                    current.close = item.close;
                 }
-            }
-            if (currentGroup) grouped.push(currentGroup);
+            });
+            if (current) grouped.push(current);
             return grouped.slice(-100);
         }
 
-        function groupByMonth(sorted) {
+        function groupByMonth(data) {
             const grouped = [];
-            let currentGroup = null;
-            for (const item of sorted) {
-                const str = item.dEven.toString();
-                const year = parseInt(str.substring(0, 4));
-                const month = parseInt(str.substring(4, 6));
-                const monthKey = year * 100 + month;
-                const timestamp = dateToTimestamp(item.dEven);
-                if (!currentGroup || currentGroup.key !== monthKey) {
-                    if (currentGroup) grouped.push(currentGroup);
-                    currentGroup = {
-                        key: monthKey, time: timestamp,
-                        open: parseInt(item.priceFirst) / 10,
-                        high: parseInt(item.priceMax) / 10,
-                        low: parseInt(item.priceMin) / 10,
-                        close: parseInt(item.pClosing) / 10
+            let current = null;
+
+            data.forEach(item => {
+                const date = new Date(item.time * 1000);
+                const monthKey = date.getFullYear() * 100 + date.getMonth();
+
+                if (!current || current.key !== monthKey) {
+                    if (current) grouped.push(current);
+                    current = {
+                        key: monthKey,
+                        time: item.time,
+                        open: item.open,
+                        high: item.high,
+                        low: item.low,
+                        close: item.close
                     };
                 } else {
-                    currentGroup.high = Math.max(currentGroup.high, parseInt(item.priceMax) / 10);
-                    currentGroup.low = Math.min(currentGroup.low, parseInt(item.priceMin) / 10);
-                    currentGroup.close = parseInt(item.pClosing) / 10;
+                    current.high = Math.max(current.high, item.high);
+                    current.low = Math.min(current.low, item.low);
+                    current.close = item.close;
+                }
+            });
+            if (current) grouped.push(current);
+            return grouped.slice(-60);
+        }
+
+        function groupByMonths(data, n) {
+            const grouped = [];
+            let current = null;
+            let count = 0;
+
+            for (let i = 0; i < data.length; i++) {
+                if (count === 0 || !current) {
+                    if (current) grouped.push(current);
+                    current = {
+                        time: data[i].time,
+                        open: data[i].open,
+                        high: data[i].high,
+                        low: data[i].low,
+                        close: data[i].close
+                    };
+                    count = 1;
+                } else {
+                    current.high = Math.max(current.high, data[i].high);
+                    current.low = Math.min(current.low, data[i].low);
+                    current.close = data[i].close;
+                    count++;
+                    if (count >= n) {
+                        grouped.push(current);
+                        current = null;
+                        count = 0;
+                    }
                 }
             }
-            if (currentGroup) grouped.push(currentGroup);
-            return grouped.slice(-60);
+            if (current) grouped.push(current);
+            return grouped.slice(-100);
+        }
+
+        function groupByYear(data) {
+            const grouped = [];
+            let current = null;
+
+            data.forEach(item => {
+                const yearKey = new Date(item.time * 1000).getFullYear();
+
+                if (!current || current.key !== yearKey) {
+                    if (current) grouped.push(current);
+                    current = {
+                        key: yearKey,
+                        time: item.time,
+                        open: item.open,
+                        high: item.high,
+                        low: item.low,
+                        close: item.close
+                    };
+                } else {
+                    current.high = Math.max(current.high, item.high);
+                    current.low = Math.min(current.low, item.low);
+                    current.close = item.close;
+                }
+            });
+            if (current) grouped.push(current);
+            return grouped;
         }
 
         function changeTimeframe(timeframe, btn) {
             document.querySelectorAll('.chart-tab').forEach(t => t.classList.remove('active'));
             btn.classList.add('active');
             currentTimeframe = timeframe;
-            renderChart(timeframe);
+            renderModalChart(timeframe);
         }
 
-        // ===== رتبه‌بندی =====
-        async function loadRanking(forceReload = false) {
-            if (rankingLoaded && !forceReload && rankingData.length > 0) {
-                renderRanking();
-                return;
+        function toggleChartFullscreen() {
+            const container = document.getElementById('chartContainer');
+            const btn = document.getElementById('fullscreenBtn');
+
+            if (container.classList.contains('fullscreen')) {
+                container.classList.remove('fullscreen');
+                btn.innerHTML = '⛶ تمام‌صفحه';
+                document.body.style.overflow = '';
+            } else {
+                container.classList.add('fullscreen');
+                btn.innerHTML = '✕ خروج';
+                document.body.style.overflow = 'hidden';
             }
 
-            document.getElementById('rankingList').innerHTML = '<div class="loading">⏳ در حال دریافت لیست نمادها...</div>';
-            
-            try {
-                const searchQueries = ['ا', 'ب', 'پ', 'ت', 'ث', 'ج', 'چ', 'ح', 'خ', 'د', 'ذ', 'ر', 'ز', 'ژ', 'س', 'ش', 'ص', 'ض', 'ط', 'ظ', 'ع', 'غ', 'ف', 'ق', 'ک', 'گ', 'ل', 'م', 'ن', 'و', 'ه', 'ی'];
-                const allSymbolsMap = new Map();
-                
-                for (const query of searchQueries) {
-                    try {
-                        const res = await fetch(`${TSETMC_API}/Instrument/GetInstrumentSearch/${encodeURIComponent(query)}`);
-                        const data = await res.json();
-                        if (data && data.instrumentSearch) {
-                            data.instrumentSearch.forEach(item => {
-                                if (item.insCode && item.lVal18AFC) {
-                                    allSymbolsMap.set(item.insCode, {
-                                        name: item.lVal18AFC,
-                                        insCode: item.insCode
-                                    });
-                                }
-                            });
-                        }
-                    } catch (e) {}
-                }
-                
-                const allSymbols = Array.from(allSymbolsMap.values());
-                console.log('✅ تعداد نمادها:', allSymbols.length);
-                
-                if (allSymbols.length === 0) {
-                    document.getElementById('rankingList').innerHTML = '<div class="error">❌ لیست نمادها دریافت نشد</div>';
-                    return;
-                }
-                
-                document.getElementById('rankingList').innerHTML = `<div class="loading">⏳ در حال محاسبه سود/ضرر برای ${allSymbols.length} نماد...<br><small>این ممکنه ۲-۳ دقیقه طول بکشه</small></div>`;
-                
-                const results = [];
-                const batchSize = 15;
-                
-                for (let i = 0; i < allSymbols.length; i += batchSize) {
-                    const batch = allSymbols.slice(i, i + batchSize);
-                    
-                    const batchPromises = batch.map(async (symbol) => {
-                        try {
-                            const res = await fetch(`${TSETMC_API}/ClosingPrice/GetClosingPriceDailyList/${symbol.insCode}/0`);
-                            const data = await res.json();
-                            
-                            if (data && data.closingPriceDaily && data.closingPriceDaily.length > 0) {
-                                const sorted = data.closingPriceDaily
-                                    .filter(d => d.pClosing > 0 && d.dEven > 0)
-                                    .sort((a, b) => a.dEven - b.dEven);
-                                if (sorted.length < 2) return null;
-
-                                const latestPrice = sorted[sorted.length - 1].pClosing;
-                                const periods = { '1w': 5, '1m': 22, '3m': 66, '6m': 132, '1y': 250 };
-                                
-                                const changes = {};
-                                for (const [key, days] of Object.entries(periods)) {
-                                    const index = Math.max(0, sorted.length - 1 - days);
-                                    const oldPrice = sorted[index].pClosing;
-                                    changes[key] = ((latestPrice - oldPrice) / oldPrice) * 100;
-                                }
-
-                                return {
-                                    name: symbol.name,
-                                    insCode: symbol.insCode,
-                                    latestPrice: latestPrice / 10,
-                                    changes: changes
-                                };
-                            }
-                        } catch (e) {}
-                        return null;
-                    });
-                    
-                    const batchResults = await Promise.all(batchPromises);
-                    results.push(...batchResults.filter(r => r !== null));
-                    
-                    const progress = Math.min(i + batchSize, allSymbols.length);
-                    document.getElementById('rankingList').innerHTML = `<div class="loading">⏳ در حال پردازش... ${progress} از ${allSymbols.length} نماد (${results.length} نتیجه)</div>`;
-                }
-                
-                rankingData = results;
-                rankingLoaded = true;
-                renderRanking();
-                
-            } catch (e) {
-                console.error('خطا در رتبه‌بندی:', e);
-                document.getElementById('rankingList').innerHTML = '<div class="error">❌ خطا: ' + e.message + '</div>';
-            }
-        }
-
-        function renderRanking() {
-            if (rankingData.length === 0) {
-                document.getElementById('rankingList').innerHTML = '<div class="error">❌ داده‌ای وجود ندارد</div>';
-                return;
-            }
-
-            const sorted = [...rankingData].sort((a, b) => {
-                const changeA = a.changes[currentRankingPeriod];
-                const changeB = b.changes[currentRankingPeriod];
-                return currentSortOrder === 'desc' ? changeB - changeA : changeA - changeB;
-            });
-
-            document.getElementById('rankingList').innerHTML = sorted.map((item, index) => {
-                const change = item.changes[currentRankingPeriod];
-                const rankClass = index < 3 ? 'top-3' : '';
-                return `
-                    <div class="ranking-item" onclick="loadSymbolByCode('${item.insCode}', '${item.name}')">
-                        <span class="rank ${rankClass}">${index + 1}</span>
-                        <span class="name">${item.name}</span>
-                        <span class="price">${item.latestPrice.toLocaleString('fa-IR')} ت</span>
-                        <span class="change ${change >= 0 ? 'up' : 'down'}">
-                            ${(change >= 0 ? '+' : '') + change.toFixed(2)}%
-                        </span>
-                    </div>
-                `;
-            }).join('');
-        }
-
-        function changeRankingPeriod(period, btn) {
-            document.querySelectorAll('.ranking-tab').forEach(t => t.classList.remove('active'));
-            btn.classList.add('active');
-            currentRankingPeriod = period;
-            renderRanking();
-        }
-
-        function changeSortOrder(order, btn) {
-            document.querySelectorAll('.sort-btn').forEach(t => {
-                t.classList.remove('active', 'desc');
-            });
-            btn.classList.add(order === 'desc' ? 'active' : 'desc');
-            currentSortOrder = order;
-            renderRanking();
-        }
-
-        // ===== راه‌اندازی =====
-        window.addEventListener('load', function() {
+            // Resize chart
             setTimeout(() => {
-                initChart();
-                searchAndLoad();
-                loadRanking();
-            }, 500);
+                if (modalChart) {
+                    const chartEl = document.getElementById('modalChart');
+                    modalChart.applyOptions({
+                        width: chartEl.clientWidth,
+                        height: chartEl.clientHeight
+                    });
+                    modalChart.timeScale().fitContent();
+                }
+            }, 100);
+        }
+
+        // ==========================================
+        // راه‌اندازی
+        // ==========================================
+        document.addEventListener('DOMContentLoaded', async () => {
+            setupNavbar();
+            checkUser();
+
+            document.getElementById('searchInput').addEventListener('input', applyFilters);
+            document.getElementById('sectorFilter').addEventListener('change', applyFilters);
+            document.getElementById('typeFilter').addEventListener('change', applyFilters);
+
+            await loadAllSymbols();
+            setInterval(loadAllSymbols, 120000);
         });
 
+        // Resize
         window.addEventListener('resize', () => {
-            if (chart && chartInitialized) {
-                chart.applyOptions({ width: document.getElementById('tvchart').clientWidth });
+            if (modalChart && modalChartInitialized) {
+                const container = document.getElementById('modalChart');
+                if (container) {
+                    modalChart.applyOptions({ width: container.clientWidth });
+                }
             }
         });
     </script>
