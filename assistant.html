@@ -924,7 +924,7 @@
             // ساخت محتوای پیام
             let userContent = message;
             if (fileToSend) {
-                if (fileToSend.type === 'image' && fileToSend.dataUrl && VISION_MODELS.includes(model)) {
+                if (fileToSend.type === 'image' && fileToSend.dataUrl) {
                     userContent = [
                         { type: 'text', text: message || 'این عکس رو تحلیل کن.' },
                         { type: 'image_url', image_url: { url: fileToSend.dataUrl } }
@@ -933,7 +933,13 @@
                     userContent = message + '\n\n📄 محتوای فایل پیوست:\n' + fileToSend.extractedText;
                 }
             }
-
+            console.log('🔍 DEBUG:');
+            console.log('- fileToSend.type:', fileToSend?.type);
+            console.log('- fileToSend.dataUrl length:', fileToSend?.dataUrl?.length);
+            console.log('- model:', model);
+            console.log('- VISION_MODELS:', VISION_MODELS);
+            console.log('- VISION_MODELS.includes(model):', VISION_MODELS.includes(model));
+            console.log('- userContent:', typeof userContent === 'string' ? 'متن' : 'آرایه (با عکس)');
             conversationHistory.push({ role: 'user', content: userContent });
 
             input.value = '';
