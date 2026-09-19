@@ -334,8 +334,13 @@
                     title: lesson.title,
                     duration: '—',
                     content: lesson.content || 'محتوایی برای این درس ثبت نشده است.',
-                    video_url: lesson.video_url
-                }, lessonNum);
+                    video_url: lesson.video_url,
+                    image_url: lesson.image_url,
+                    pdf_url: lesson.pdf_url,
+                    word_url: lesson.word_url,
+                    powerpoint_url: lesson.powerpoint_url,
+                    notes_url: lesson.notes_url
+               }, lessonNum);
             } catch (error) {
                 console.error('خطا:', error);
                 showError('❌ خطا در بارگذاری محتوای درس.');
