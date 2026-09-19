@@ -502,7 +502,7 @@
 
     <!-- هشدار Vision -->
     <div class="vision-warning" id="visionWarning">
-        ⚠️ برای تحلیل عکس، لطفاً مدل را به GPT-4o یا Claude 3.5 Sonnet تغییر دهید.
+        ⚠️ برای تحلیل عکس، لطفاً مدل Vision دار انتخاب کنید.
     </div>
 
     <!-- تگ‌های انتخاب‌شده -->
@@ -614,22 +614,21 @@
         const BRS_API_KEY = 'BvUj3cMKWNBK87KW9xhNccCThmfVbd8u';
 
         const VISION_MODELS = [
-             'gpt-5.6-luna',
-             'gpt-5.4-nano',
-             'gpt-5.4',
-             'gpt-5.4-mini',
-             'gpt-5.6-sol',
-             'gpt-5.6-terra',
-             'gemini-3.7-flash',
-             'gemini-3.1-pro-preview',
-             'o4-mini'
-         ];       
+            'gpt-5.6-luna',
+            'gpt-5.4-nano',
+            'gpt-5.4',
+            'gpt-5.4-mini',
+            'gpt-5.6-sol',
+            'gpt-5.6-terra',
+            'gemini-3.7-flash',
+            'gemini-3.1-pro-preview',
+            'o4-mini'
+        ];
 
         let conversationHistory = [];
         let isTyping = false;
         let selectedSuggestions = [];
         let attachedFile = null;
-        let imageLoaded = false;   // ← فلگ جدید
         let marketData = {};
 
         // ===== دریافت قیمت‌های لحظه‌ای =====
@@ -818,7 +817,6 @@
             attachedFile.type = null;
             attachedFile.dataUrl = null;
             attachedFile.extractedText = null;
-            imageLoaded = false;
 
             const reader = new FileReader();
             const fileName = file.name.toLowerCase();
@@ -830,7 +828,6 @@
                 reader.onload = function(e) {
                     attachedFile.dataUrl = e.target.result;
                     attachedFile.type = 'image';
-                    imageLoaded = true;
                     document.getElementById('fileIcon').textContent = '🖼️';
                     document.getElementById('fileName').textContent = file.name + ' ✅';
                 };
@@ -877,7 +874,6 @@
 
         function removeFile() {
             attachedFile = null;
-            imageLoaded = false;
             document.getElementById('fileInput').value = '';
             document.getElementById('filePreview').classList.remove('show');
         }
@@ -931,7 +927,8 @@
                     hasDataUrl: !!fileToSend.dataUrl,
                     dataUrlLength: fileToSend.dataUrl ? fileToSend.dataUrl.length : 0,
                     dataUrlStart: fileToSend.dataUrl ? fileToSend.dataUrl.substring(0, 30) : 'null'
-                }.);
+                });
+
                 if (fileToSend.type === 'image' && fileToSend.dataUrl) {
                     userContent = [
                         { type: 'text', text: message || 'این عکس رو تحلیل کن.' },
@@ -941,13 +938,14 @@
                     userContent = message + '\n\n📄 محتوای فایل پیوست:\n' + fileToSend.extractedText;
                 }
             }
+
             console.log('🔍 DEBUG:');
             console.log('- fileToSend.type:', fileToSend?.type);
             console.log('- fileToSend.dataUrl length:', fileToSend?.dataUrl?.length);
             console.log('- model:', model);
-            console.log('- VISION_MODELS:', VISION_MODELS);
             console.log('- VISION_MODELS.includes(model):', VISION_MODELS.includes(model));
             console.log('- userContent:', typeof userContent === 'string' ? 'متن' : 'آرایه (با عکس)');
+
             conversationHistory.push({ role: 'user', content: userContent });
 
             input.value = '';
@@ -983,7 +981,7 @@
                 if (!response.ok) {
                     const errorText = await response.text();
                     console.error('API Error:', response.status, errorText);
-                    addMessage('assistant', '❌ خطا در ارتباط با سرور (کد: ' + response.status + ').\n\n' + errorText.substring(0, 200));
+                    addMessage('assistant', '❌ خطا در ارتباط با سرور (کد: ' + response.status + ').\n\n' + errorText.substring(0, 300));
                 } else {
                     const data = await response.json();
                     const assistantMessage = data.choices[0].message.content;
