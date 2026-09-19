@@ -4,8 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>دستیار هوشمند | آکادمی شمعدون</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js"></script>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -167,19 +165,6 @@
         .message.user .message-content {
             background: rgba(59, 130, 246, 0.15);
             border-color: rgba(59, 130, 246, 0.3);
-        }
-        .message-content img { max-width: 100%; border-radius: 10px; margin-top: 8px; }
-        .message-content .file-attachment {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            background: rgba(15, 23, 42, 0.8);
-            padding: 8px 12px;
-            border-radius: 8px;
-            margin-top: 8px;
-            font-size: 12px;
-            color: #fbbf24;
-            border: 1px solid rgba(245, 158, 11, 0.3);
         }
 
         .typing-indicator { display: flex; gap: 4px; padding: 4px 0; }
@@ -346,35 +331,6 @@
             font-family: Tahoma, sans-serif;
         }
 
-        .file-preview {
-            display: none;
-            align-items: center;
-            gap: 8px;
-            padding: 8px 12px;
-            background: rgba(59, 130, 246, 0.15);
-            border: 1px solid rgba(59, 130, 246, 0.3);
-            border-radius: 10px;
-            margin: 0 auto 6px;
-            max-width: 800px;
-            width: calc(100% - 24px);
-            font-size: 12px;
-            color: #60a5fa;
-        }
-        .file-preview.show { display: flex; }
-        .file-preview .file-icon { font-size: 16px; }
-        .file-preview .filename {
-            flex: 1;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-        .file-preview .remove {
-            cursor: pointer;
-            color: #f87171;
-            font-weight: bold;
-            padding: 0 5px;
-        }
-
         .input-container {
             position: fixed;
             bottom: 0;
@@ -394,21 +350,6 @@
             gap: 6px;
             align-items: flex-end;
         }
-        .attach-btn {
-            width: 44px;
-            height: 44px;
-            border-radius: 10px;
-            border: 1px solid #334155;
-            background: rgba(15, 23, 42, 0.8);
-            color: #94a3b8;
-            font-size: 18px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-        }
-        .attach-btn:hover { border-color: #f59e0b; color: #f59e0b; }
         .input-wrapper textarea {
             flex: 1;
             background: rgba(15, 23, 42, 0.8);
@@ -440,20 +381,6 @@
             flex-shrink: 0;
         }
         .send-btn:disabled { opacity: 0.5; cursor: not-allowed; }
-
-        .vision-warning {
-            display: none;
-            padding: 6px 12px;
-            background: rgba(239, 68, 68, 0.15);
-            border: 1px solid rgba(239, 68, 68, 0.3);
-            border-radius: 8px;
-            color: #f87171;
-            font-size: 11px;
-            max-width: 800px;
-            margin: 0 auto 6px;
-            text-align: center;
-        }
-        .vision-warning.show { display: block; }
     </style>
 </head>
 <body>
@@ -473,11 +400,11 @@
         <div class="model-selector">
             <label>🧠 مدل:</label>
             <select id="modelSelect">
-                <option value="gpt-5.6-luna">🧠 GPT-5.6 Luna (رایگان - Vision)</option>
-                <option value="gpt-5.4-nano">⚡ GPT-5.4 Nano (رایگان - Vision)</option>
-                <option value="gpt-5.4">💼 GPT-5.4 (دقیق - Vision)</option>
-                <option value="gpt-5.6-terra">🎯 GPT-5.6 Terra (متعادل - Vision)</option>
-                <option value="gemini-3.7-flash">🚀 Gemini 3.7 Flash (سریع - Vision)</option>
+                <option value="gpt-5.6-luna">🧠 GPT-5.6 Luna (رایگان)</option>
+                <option value="gpt-5.4-nano">⚡ GPT-5.4 Nano (رایگان)</option>
+                <option value="gpt-5.4">💼 GPT-5.4 (دقیق)</option>
+                <option value="gpt-5.6-terra">🎯 GPT-5.6 Terra (متعادل)</option>
+                <option value="gemini-3.7-flash">🚀 Gemini 3.7 Flash (سریع)</option>
             </select>
         </div>
         <div class="market-status" id="marketStatus">
@@ -492,17 +419,11 @@
             <div class="message-content">سلام! من دستیار هوشمند آکادمی شمعدون هستم. 👋
 
 ✅ قیمت‌های لحظه‌ای بازار در اختیار من قرار داره.
-✅ می‌تونی عکس چارت، PDF و Word بفرستی تا تحلیل کنم.
 
 از منوهای پایین می‌تونی دارایی و روش تحلیل رو انتخاب کنی.
 
 چطور می‌تونم کمکت کنم؟</div>
         </div>
-    </div>
-
-    <!-- هشدار Vision -->
-    <div class="vision-warning" id="visionWarning">
-        ⚠️ برای تحلیل عکس، لطفاً مدل Vision دار انتخاب کنید.
     </div>
 
     <!-- تگ‌های انتخاب‌شده -->
@@ -591,18 +512,9 @@
         </div>
     </div>
 
-    <!-- فایل پیوست -->
-    <div class="file-preview" id="filePreview">
-        <span class="file-icon" id="fileIcon">📎</span>
-        <span class="filename" id="fileName"></span>
-        <span class="remove" onclick="removeFile()">✕</span>
-    </div>
-
     <!-- ورودی -->
     <div class="input-container">
         <div class="input-wrapper">
-            <input type="file" id="fileInput" accept="image/*,.pdf,.doc,.docx" style="display:none" onchange="handleFileSelect(event)">
-            <button class="attach-btn" onclick="document.getElementById('fileInput').click()">📎</button>
             <textarea id="userInput" placeholder="سوال خود را بنویسید..." rows="1" onkeydown="handleKeyDown(event)"></textarea>
             <button class="send-btn" id="sendBtn" onclick="sendMessage()">➤</button>
         </div>
@@ -613,22 +525,9 @@
         const API_URL = 'https://api.avalai.ir/v1/chat/completions';
         const BRS_API_KEY = 'BvUj3cMKWNBK87KW9xhNccCThmfVbd8u';
 
-        const VISION_MODELS = [
-            'gpt-5.6-luna',
-            'gpt-5.4-nano',
-            'gpt-5.4',
-            'gpt-5.4-mini',
-            'gpt-5.6-sol',
-            'gpt-5.6-terra',
-            'gemini-3.7-flash',
-            'gemini-3.1-pro-preview',
-            'o4-mini'
-        ];
-
         let conversationHistory = [];
         let isTyping = false;
         let selectedSuggestions = [];
-        let attachedFile = null;
         let marketData = {};
 
         // ===== دریافت قیمت‌های لحظه‌ای =====
@@ -802,156 +701,24 @@
             sendMessage();
         }
 
-        // ===== فایل =====
-        function handleFileSelect(event) {
-            const file = event.target.files[0];
-            if (!file) return;
-
-            if (file.size > 10 * 1024 * 1024) {
-                alert('حجم فایل باید کمتر از ۱۰ مگابایت باشد');
-                return;
-            }
-
-            attachedFile = file;
-            attachedFile.name = file.name;
-            attachedFile.type = null;
-            attachedFile.dataUrl = null;
-            attachedFile.extractedText = null;
-
-            const reader = new FileReader();
-            const fileName = file.name.toLowerCase();
-            const isImage = file.type.startsWith('image/');
-            const isPDF = fileName.endsWith('.pdf');
-            const isWord = fileName.endsWith('.doc') || fileName.endsWith('.docx');
-
-            if (isImage) {
-                reader.onload = function(e) {
-                    attachedFile.dataUrl = e.target.result;
-                    attachedFile.type = 'image';
-                    document.getElementById('fileIcon').textContent = '🖼️';
-                    document.getElementById('fileName').textContent = file.name + ' ✅';
-                };
-                reader.readAsDataURL(file);
-            } else if (isPDF) {
-                reader.onload = async function(e) {
-                    try {
-                        const typedarray = new Uint8Array(e.target.result);
-                        const pdf = await pdfjsLib.getDocument(typedarray).promise;
-                        let fullText = '';
-                        for (let i = 1; i <= pdf.numPages; i++) {
-                            const page = await pdf.getPage(i);
-                            const textContent = await page.getTextContent();
-                            fullText += textContent.items.map(item => item.str).join(' ') + '\n';
-                        }
-                        attachedFile.extractedText = fullText;
-                        attachedFile.type = 'pdf';
-                    } catch (err) {
-                        console.error('خطا در خواندن PDF:', err);
-                        attachedFile.extractedText = '';
-                    }
-                };
-                reader.readAsArrayBuffer(file);
-                document.getElementById('fileIcon').textContent = '📄';
-                document.getElementById('fileName').textContent = file.name;
-            } else if (isWord) {
-                reader.onload = async function(e) {
-                    try {
-                        const result = await mammoth.extractRawText({ arrayBuffer: e.target.result });
-                        attachedFile.extractedText = result.value;
-                        attachedFile.type = 'word';
-                    } catch (err) {
-                        console.error('خطا در خواندن Word:', err);
-                        attachedFile.extractedText = '';
-                    }
-                };
-                reader.readAsArrayBuffer(file);
-                document.getElementById('fileIcon').textContent = '📝';
-                document.getElementById('fileName').textContent = file.name;
-            }
-
-            document.getElementById('filePreview').classList.add('show');
-        }
-
-        function removeFile() {
-            attachedFile = null;
-            document.getElementById('fileInput').value = '';
-            document.getElementById('filePreview').classList.remove('show');
-        }
-
-        // ===== بررسی مدل Vision =====
-        function checkVisionSupport() {
-            const model = document.getElementById('modelSelect').value;
-            const warning = document.getElementById('visionWarning');
-
-            if (attachedFile && attachedFile.type === 'image' && !VISION_MODELS.includes(model)) {
-                warning.classList.add('show');
-            } else {
-                warning.classList.remove('show');
-            }
-        }
-        document.getElementById('modelSelect').addEventListener('change', checkVisionSupport);
-
         // ===== ارسال پیام =====
         async function sendMessage() {
             if (isTyping) return;
 
             const input = document.getElementById('userInput');
             const message = input.value.trim();
-            if (!message && !attachedFile) return;
+            if (!message) return;
 
             const model = document.getElementById('modelSelect').value;
-            const fileToSend = attachedFile;
-
-            // اگه عکس پیوست شده ولی هنوز لود نشده
-            if (fileToSend && fileToSend.type === null && fileToSend.dataUrl === null && fileToSend.extractedText === null) {
-                alert('⏳ فایل در حال پردازشه. چند لحظه صبر کن.');
-                return;
-            }
 
             // نمایش پیام کاربر
-            let userMessageHTML = escapeHtml(message);
-            if (fileToSend) {
-                if (fileToSend.type === 'image' && fileToSend.dataUrl) {
-                    userMessageHTML += `<br><img src="${fileToSend.dataUrl}" alt="پیوست">`;
-                } else {
-                    userMessageHTML += `<br><span class="file-attachment">📎 ${escapeHtml(fileToSend.name)}</span>`;
-                }
-            }
-            addMessageHTML('user', userMessageHTML);
+            addMessageHTML('user', escapeHtml(message));
 
-            // ساخت محتوای پیام
-            let userContent = message;
-            if (fileToSend) {
-                console.log('🔍 عکس:', {
-                    type: fileToSend.type,
-                    hasDataUrl: !!fileToSend.dataUrl,
-                    dataUrlLength: fileToSend.dataUrl ? fileToSend.dataUrl.length : 0,
-                    dataUrlStart: fileToSend.dataUrl ? fileToSend.dataUrl.substring(0, 30) : 'null'
-                });
-
-                if (fileToSend.type === 'image' && fileToSend.dataUrl) {
-                    userContent = [
-                        { type: 'text', text: message || 'این عکس رو تحلیل کن.' },
-                        { type: 'image_url', image_url: { url: fileToSend.dataUrl } }
-                    ];
-                } else if (fileToSend.extractedText) {
-                    userContent = message + '\n\n📄 محتوای فایل پیوست:\n' + fileToSend.extractedText;
-                }
-            }
-
-            console.log('🔍 DEBUG:');
-            console.log('- fileToSend.type:', fileToSend?.type);
-            console.log('- fileToSend.dataUrl length:', fileToSend?.dataUrl?.length);
-            console.log('- model:', model);
-            console.log('- VISION_MODELS.includes(model):', VISION_MODELS.includes(model));
-            console.log('- userContent:', typeof userContent === 'string' ? 'متن' : 'آرایه (با عکس)');
-
-            conversationHistory.push({ role: 'user', content: userContent });
+            // اضافه به تاریخچه
+            conversationHistory.push({ role: 'user', content: message });
 
             input.value = '';
             input.style.height = 'auto';
-            removeFile();
-            document.getElementById('visionWarning').classList.remove('show');
 
             showTyping();
             isTyping = true;
@@ -1054,8 +821,6 @@
             this.style.height = 'auto';
             this.style.height = Math.min(this.scrollHeight, 100) + 'px';
         });
-
-        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
 
         loadMarketData();
         setInterval(loadMarketData, 60000);
