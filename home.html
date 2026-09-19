@@ -441,6 +441,17 @@
         }
         .price-card .change.up { color: var(--green); }
         .price-card .change.down { color: var(--red); }
+        .price-card .bubble-inline {
+            font-size: 10.5px;
+            margin-top: 5px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .price-card .bubble-inline.up { color: var(--green); }
+        .price-card .bubble-inline.down { color: var(--red); }
+        .price-card .bubble-inline.neutral { color: var(--gray); }
         .price-card .intrinsic-badge {
             display: inline-block;
             background: rgba(59, 130, 246, 0.15);
@@ -493,11 +504,6 @@
             display: flex;
             align-items: center;
             gap: 8px;
-        }
-        .bubble-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 15px;
         }
         .bubble-card {
             background: rgba(10, 10, 15, 0.5);
@@ -614,13 +620,11 @@
             flex-shrink: 0 !important;
             margin-bottom: 8px !important;
         }
-        .chart-fullscreen .chart-header h2 {
-            display: none !important;
-        }
+        .chart-fullscreen .chart-header h2 { display: none !important; }
         .chart-fullscreen .chart-tabs {
             max-height: 60px !important;
             overflow-y: auto !important;
-        }.  
+        }
         .chart-fullscreen #tvchart {
             flex: 1 !important;
             height: auto !important;
@@ -719,7 +723,6 @@
                 <span class="sn-brand-text">شمعدون</span>
             </a>
             <div class="sn-user-area" id="snUserArea">
-                <a href="login.html" class="sn-login-btn">ورود</a>
             </div>
         </div>
     </nav>
@@ -826,6 +829,7 @@
                     <div class="label">🥇 طلا ۱۸ عیار (گرم)</div>
                     <div class="value" id="gold18-price">--</div>
                     <div class="change" id="gold18-change">--</div>
+                    <div class="bubble-inline" id="gold18-bubble"></div>
                 </div>
                 <div class="price-card gold24">
                     <div class="label">🥇 طلا ۲۴ عیار (گرم)</div>
@@ -841,26 +845,31 @@
                     <div class="label">🪙 سکه امامی</div>
                     <div class="value" id="coin-emami-price">--</div>
                     <div class="change" id="coin-emami-change">--</div>
+                    <div class="bubble-inline" id="coin-emami-bubble"></div>
                 </div>
                 <div class="price-card coin">
                     <div class="label">🏅 سکه بهار آزادی</div>
                     <div class="value" id="coin-bahar-price">--</div>
                     <div class="change" id="coin-bahar-change">--</div>
+                    <div class="bubble-inline" id="coin-bahar-bubble"></div>
                 </div>
                 <div class="price-card coin">
                     <div class="label">🥈 نیم سکه</div>
                     <div class="value" id="coin-half-price">--</div>
                     <div class="change" id="coin-half-change">--</div>
+                    <div class="bubble-inline" id="coin-half-bubble"></div>
                 </div>
                 <div class="price-card coin">
                     <div class="label">🥉 ربع سکه</div>
                     <div class="value" id="coin-quarter-price">--</div>
                     <div class="change" id="coin-quarter-change">--</div>
+                    <div class="bubble-inline" id="coin-quarter-bubble"></div>
                 </div>
                 <div class="price-card coin">
                     <div class="label">⭕ سکه گرمی</div>
                     <div class="value" id="coin-1g-price">--</div>
                     <div class="change" id="coin-1g-change">--</div>
+                    <div class="bubble-inline" id="coin-1g-bubble"></div>
                 </div>
             </div>
         </div>
@@ -1080,26 +1089,16 @@
             </div>
         </div>
 
-        <!-- Bubble Section -->
+        <!-- Bubble Section - فقط نقره ۹۹۹ -->
         <div class="bubble-section">
-            <div class="section-title">💎 محاسبه حباب طلا و نقره</div>
-            <div class="bubble-grid">
-                <div class="bubble-card">
-                    <div class="title">🥇 طلا ۱۸ عیار</div>
-                    <div class="row"><span class="label">انس طلا:</span><span class="value" id="bubble-gold-ounce">--</span></div>
-                    <div class="row"><span class="label">دلار:</span><span class="value" id="bubble-gold-usd">--</span></div>
-                    <div class="row"><span class="label">قیمت محاسبه‌شده:</span><span class="value" id="bubble-gold-calc">--</span></div>
-                    <div class="row"><span class="label">قیمت بازار:</span><span class="value" id="bubble-gold-market">--</span></div>
-                    <div class="bubble-value bubble-neutral" id="bubble-gold-result">حباب: --</div>
-                </div>
-                <div class="bubble-card">
-                    <div class="title">🥈 نقره ۹۹۹ (گرم)</div>
-                    <div class="row"><span class="label">انس نقره:</span><span class="value" id="bubble-silver-ounce">--</span></div>
-                    <div class="row"><span class="label">دلار:</span><span class="value" id="bubble-silver-usd">--</span></div>
-                    <div class="row"><span class="label">ارزش ذاتی:</span><span class="value" id="bubble-silver-calc">--</span></div>
-                    <div class="bubble-value bubble-neutral" id="bubble-silver-result">
-                        ⓘ قیمت ذاتی، بدون احتساب حباب
-                    </div>
+            <div class="section-title">💎 قیمت نقره ۹۹۹</div>
+            <div class="bubble-card">
+                <div class="title">🥈 نقره ۹۹۹ (گرم)</div>
+                <div class="row"><span class="label">انس نقره:</span><span class="value" id="bubble-silver-ounce">--</span></div>
+                <div class="row"><span class="label">دلار:</span><span class="value" id="bubble-silver-usd">--</span></div>
+                <div class="row"><span class="label">ارزش ذاتی:</span><span class="value" id="bubble-silver-calc">--</span></div>
+                <div class="bubble-value bubble-neutral" id="bubble-silver-result">
+                    ⓘ قیمت ذاتی، بدون احتساب حباب
                 </div>
             </div>
         </div>
@@ -1170,7 +1169,6 @@
             </a>
         </div>
         © ۱۴۰۵ آکادمی شمعدون | تمامی حقوق محفوظ است
-    </footer>
 
     <script src="https://s3.tradingview.com/tv.js"></script>
     <script>
@@ -1181,6 +1179,7 @@
         const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Impjd3dpbGF0dnN0anJvaHZodHNzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODk3MDY4NTYsImV4cCI6MjEwNTI4Mjg1Nn0.eUC89RJy6-60nNGrSeYeDADzLxz-kWTGy4DbNGVi6MM';
         const BRS_API = 'BvUj3cMKWNBK87KW9xhNccCThmfVbd8u';
         const ADMIN_EMAIL = 'beat.market.office@gmail.com';
+        const OUNCE_TO_GRAM = 31.1035;
 
         // ==========================================
         // Navbar
@@ -1272,20 +1271,15 @@
             try {
                 const n = Number(num);
                 if (isNaN(n)) return '--';
-        
                 let str;
                 if (decimals > 0) {
                     str = n.toFixed(decimals);
                 } else {
                     str = Math.round(n).toString();
                 }
-        
-                // جداکننده هزارگان
                 const parts = str.split('.');
                 parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
                 str = parts.join('.');
-        
-                // تبدیل به فارسی
                 const persianDigits = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
                 return str.replace(/\d/g, d => persianDigits[d]);
             } catch (e) {
@@ -1321,6 +1315,7 @@
                 return;
             }
             el.textContent = formatNumber(value, decimals) + (unit ? ' ' + unit : '');
+            el.dataset.raw = Number(value);
         }
 
         // ==========================================
@@ -1414,6 +1409,15 @@
         let globalOunceSilver = 0;
         let globalUSD = 0;
         let globalGold18Market = 0;
+
+        // وزن سکه‌ها (گرم) - عیار ۰.۹
+        const COIN_WEIGHTS = {
+            'coin-emami': 8.133,
+            'coin-bahar': 8.133,
+            'coin-half': 4.0665,
+            'coin-quarter': 2.03325,
+            'coin-1g': 1.0
+        };
 
         async function fetchBrsApi() {
             // 1. Gold + Currency
@@ -1534,28 +1538,27 @@
                 console.log('BrsApi Commodity error:', e);
             }
 
-            // محاسبه ارزش ذاتی نقره ۹۹۹
+            // محاسبه ارزش ذاتی نقره ۹۹۹ و پلاتین و پالادیوم (گرم)
             if (globalOunceSilver > 0 && globalUSD > 0) {
-                const silver999Gram = (globalOunceSilver * globalUSD * 0.999) / 31.1035;
+                const silver999Gram = (globalOunceSilver * globalUSD * 0.999) / OUNCE_TO_GRAM;
                 setPrice('silver999-price', Math.round(silver999Gram), 'تومان');
 
-                // محاسبه ارزش ذاتی پلاتین و پالادیوم
                 const platinumEl = document.getElementById('ounce-platinum-price');
                 const palladiumEl = document.getElementById('ounce-palladium-price');
-                const platinumPrice = platinumEl ? parseFloat(platinumEl.textContent.replace(/[^\d.]/g, '')) : 0;
-                const palladiumPrice = palladiumEl ? parseFloat(palladiumEl.textContent.replace(/[^\d.]/g, '')) : 0;
+                const platinumPrice = platinumEl ? parseFloat(platinumEl.dataset.raw || 0) : 0;
+                const palladiumPrice = palladiumEl ? parseFloat(palladiumEl.dataset.raw || 0) : 0;
 
                 if (platinumPrice > 0) {
-                    const platGram = (platinumPrice * globalUSD) / 31.1035;
+                    const platGram = (platinumPrice * globalUSD) / OUNCE_TO_GRAM;
                     setPrice('platinum-gram-price', Math.round(platGram), 'تومان');
                 }
                 if (palladiumPrice > 0) {
-                    const pallGram = (palladiumPrice * globalUSD) / 31.1035;
+                    const pallGram = (palladiumPrice * globalUSD) / OUNCE_TO_GRAM;
                     setPrice('palladium-gram-price', Math.round(pallGram), 'تومان');
                 }
             }
 
-            // حباب طلا
+            // محاسبه حباب‌ها
             calculateBubbles();
         }
 
@@ -1591,34 +1594,55 @@
         }
 
         // ==========================================
-        // محاسبه حباب
+        // محاسبه حباب طلا + سکه‌ها
         // ==========================================
         function calculateBubbles() {
-            // حباب طلا ۱۸ عیار
-            if (globalOunceGold > 0 && globalUSD > 0) {
-                const gold18Calc = (globalOunceGold * globalUSD * 0.75) / 31.1035;
-                setPrice('bubble-gold-ounce', globalOunceGold, 'دلار', 2);
-                setPrice('bubble-gold-usd', globalUSD, 'تومان');
-                setPrice('bubble-gold-calc', Math.round(gold18Calc), 'تومان');
+            if (globalOunceGold <= 0 || globalUSD <= 0) return;
 
-                if (globalGold18Market > 0) {
-                    setPrice('bubble-gold-market', globalGold18Market, 'تومان');
-                    const bubble = ((globalGold18Market - gold18Calc) / gold18Calc) * 100;
-                    const bubbleEl = document.getElementById('bubble-gold-result');
-                    if (bubbleEl) {
-                        bubbleEl.textContent = 'حباب: ' + (bubble >= 0 ? '+' : '') + toPersianNumber(bubble.toFixed(2)) + '٪';
-                        bubbleEl.className = 'bubble-value ' + (bubble > 0.5 ? 'bubble-positive' : bubble < -0.5 ? 'bubble-negative' : 'bubble-neutral');
-                    }
+            // ===== حباب طلا ۱۸ عیار =====
+            const gold18Calc = (globalOunceGold * globalUSD * 0.75) / OUNCE_TO_GRAM;
+            if (globalGold18Market > 0) {
+                const bubble = ((globalGold18Market - gold18Calc) / gold18Calc) * 100;
+                const bubbleEl = document.getElementById('gold18-bubble');
+                if (bubbleEl) {
+                    bubbleEl.textContent = '💎 حباب: ' + (bubble >= 0 ? '+' : '') + toPersianNumber(bubble.toFixed(2)) + '٪';
+                    bubbleEl.className = 'bubble-inline ' + (bubble > 0.5 ? 'up' : bubble < -0.5 ? 'down' : 'neutral');
                 }
             }
 
-            // نقره ۹۹۹
-            if (globalOunceSilver > 0 && globalUSD > 0) {
-                const silver999Calc = (globalOunceSilver * globalUSD * 0.999) / 31.1035;
+            // ===== حباب سکه‌ها =====
+            const coinsMap = {
+                'coin-emami': { price: 'coin-emami-price', bubble: 'coin-emami-bubble' },
+                'coin-bahar': { price: 'coin-bahar-price', bubble: 'coin-bahar-bubble' },
+                'coin-half': { price: 'coin-half-price', bubble: 'coin-half-bubble' },
+                'coin-quarter': { price: 'coin-quarter-price', bubble: 'coin-quarter-bubble' },
+                'coin-1g': { price: 'coin-1g-price', bubble: 'coin-1g-bubble' }
+            };
+
+            Object.keys(coinsMap).forEach(key => {
+                const weight = COIN_WEIGHTS[key];
+                const marketEl = document.getElementById(coinsMap[key].price);
+                const bubbleEl = document.getElementById(coinsMap[key].bubble);
+
+                if (!marketEl || !bubbleEl) return;
+
+                const marketPrice = parseFloat(marketEl.dataset.raw || 0);
+                if (marketPrice <= 0) return;
+
+                // ارزش ذاتی سکه: (انس طلا × دلار × 0.9 × وزن) ÷ 31.1035
+                const intrinsic = (globalOunceGold * globalUSD * 0.9 * weight) / OUNCE_TO_GRAM;
+                const bubble = ((marketPrice - intrinsic) / intrinsic) * 100;
+
+                bubbleEl.textContent = '💎 حباب: ' + (bubble >= 0 ? '+' : '') + toPersianNumber(bubble.toFixed(2)) + '٪';
+                bubbleEl.className = 'bubble-inline ' + (bubble > 0.5 ? 'up' : bubble < -0.5 ? 'down' : 'neutral');
+            });
+
+            // ===== نقره ۹۹۹ (فقط ارزش ذاتی) =====
+            if (globalOunceSilver > 0) {
+                const silver999Calc = (globalOunceSilver * globalUSD * 0.999) / OUNCE_TO_GRAM;
                 setPrice('bubble-silver-ounce', globalOunceSilver, 'دلار', 2);
                 setPrice('bubble-silver-usd', globalUSD, 'تومان');
                 setPrice('bubble-silver-calc', Math.round(silver999Calc), 'تومان');
-                // نقره ۹۹۹ حباب واقعی نداریم، فقط ارزش ذاتی
             }
         }
 
@@ -1628,53 +1652,45 @@
         async function updateTicker() {
             let tickerHTML = '';
 
-            // طلا ۱۸
             const gold18El = document.getElementById('gold18-price');
             const gold18Chg = document.getElementById('gold18-change');
             if (gold18El && gold18El.textContent !== '--') {
                 tickerHTML += `<span class="ticker-item">🥇 طلا ۱۸: <span class="value">${gold18El.textContent}</span> ${gold18Chg?.textContent || ''}</span>`;
             }
 
-            // دلار
             const usdEl = document.getElementById('usd-price');
             const usdChg = document.getElementById('usd-change');
             if (usdEl && usdEl.textContent !== '--') {
                 tickerHTML += `<span class="ticker-item">💵 دلار: <span class="value">${usdEl.textContent}</span> ${usdChg?.textContent || ''}</span>`;
             }
 
-            // انس طلا
             const ounceEl = document.getElementById('ounce-gold-price');
             if (ounceEl && ounceEl.textContent !== '--') {
                 tickerHTML += `<span class="ticker-item">🏅 انس طلا: <span class="value">${ounceEl.textContent}</span></span>`;
             }
 
-            // انس نقره
             const silverEl = document.getElementById('ounce-silver-price');
             if (silverEl && silverEl.textContent !== '--') {
                 tickerHTML += `<span class="ticker-item">🥈 انس نقره: <span class="value">${silverEl.textContent}</span></span>`;
             }
 
-            // بیت‌کوین
             const btcEl = document.getElementById('btc-price');
             const btcChg = document.getElementById('btc-change');
             if (btcEl && btcEl.textContent !== '--') {
                 tickerHTML += `<span class="ticker-item">₿ بیت‌کوین: <span class="value">${btcEl.textContent}</span> ${btcChg?.textContent || ''}</span>`;
             }
 
-            // اتریوم
             const ethEl = document.getElementById('eth-price');
             const ethChg = document.getElementById('eth-change');
             if (ethEl && ethEl.textContent !== '--') {
                 tickerHTML += `<span class="ticker-item">⟠ اتریوم: <span class="value">${ethEl.textContent}</span> ${ethChg?.textContent || ''}</span>`;
             }
 
-            // پلاتین
             const platEl = document.getElementById('ounce-platinum-price');
             if (platEl && platEl.textContent !== '--') {
                 tickerHTML += `<span class="ticker-item">🔶 پلاتین: <span class="value">${platEl.textContent}</span></span>`;
             }
 
-            // نفت برنت
             const brentEl = document.getElementById('brent-price');
             if (brentEl && brentEl.textContent !== '--') {
                 tickerHTML += `<span class="ticker-item">🛢️ برنت: <span class="value">${brentEl.textContent}</span></span>`;
@@ -1699,12 +1715,10 @@
 
             initChart('BINANCE:BTCUSDT');
 
-            // اول BrsApi رو بگیر بعد Crypto
             await fetchBrsApi();
             await fetchCrypto();
             updateTicker();
 
-            // آپدیت هر ۶۰ ثانیه
             setInterval(async () => {
                 await fetchBrsApi();
                 await fetchCrypto();
@@ -1713,4 +1727,4 @@
         });
     </script>
 </body>
-</html>    
+</html>    </footer>
