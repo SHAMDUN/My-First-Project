@@ -7,6 +7,7 @@
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
+
         body {
             font-family: Tahoma, sans-serif;
             background-color: #0f172a;
@@ -24,7 +25,6 @@
 
         .container { max-width: 800px; margin: 0 auto; }
 
-        /* ===== هدر ===== */
         .header {
             display: flex;
             justify-content: space-between;
@@ -35,22 +35,29 @@
         }
         .header-info { display: flex; align-items: center; gap: 10px; }
         .header-icon {
-            width: 40px; height: 40px; border-radius: 12px;
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
             background: linear-gradient(135deg, #f59e0b, #d97706);
-            display: flex; align-items: center; justify-content: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             font-size: 20px;
         }
         .header-title h1 { color: #f1f5f9; font-size: 15px; margin-bottom: 2px; }
         .header-title p { color: #94a3b8; font-size: 12px; }
         .header a {
-            color: #94a3b8; text-decoration: none; font-size: 13px;
-            padding: 8px 15px; border: 1px solid #334155;
-            border-radius: 20px; background: rgba(30, 41, 59, 0.7);
+            color: #94a3b8;
+            text-decoration: none;
+            font-size: 13px;
+            padding: 8px 15px;
+            border: 1px solid #334155;
+            border-radius: 20px;
+            background: rgba(30, 41, 59, 0.7);
             transition: 0.3s;
         }
         .header a:hover { background: #334155; color: #fff; }
 
-        /* ===== پیشرفت ===== */
         .progress-section {
             background: rgba(30, 41, 59, 0.85);
             backdrop-filter: blur(15px);
@@ -60,21 +67,26 @@
             border: 1px solid rgba(255,255,255,0.05);
         }
         .progress-info {
-            display: flex; justify-content: space-between;
-            margin-bottom: 8px; color: #94a3b8; font-size: 13px;
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            color: #94a3b8;
+            font-size: 13px;
         }
         .progress-bar {
-            width: 100%; height: 8px;
+            width: 100%;
+            height: 8px;
             background: rgba(15, 23, 42, 0.8);
-            border-radius: 10px; overflow: hidden;
+            border-radius: 10px;
+            overflow: hidden;
         }
         .progress-fill {
             height: 100%;
             background: linear-gradient(90deg, #f59e0b, #d97706);
-            border-radius: 10px; transition: width 0.4s;
+            border-radius: 10px;
+            transition: width 0.4s;
         }
 
-        /* ===== درس ===== */
         .lesson-card {
             background: rgba(30, 41, 59, 0.85);
             backdrop-filter: blur(15px);
@@ -83,142 +95,111 @@
             margin-bottom: 20px;
             border: 1px solid rgba(255,255,255,0.05);
         }
-
         .lesson-header {
-            text-align: center; padding-bottom: 20px;
+            text-align: center;
+            padding-bottom: 20px;
             margin-bottom: 20px;
             border-bottom: 1px solid rgba(255,255,255,0.05);
         }
-        .lesson-number {
-            color: #f59e0b; font-size: 13px;
-            font-weight: bold; margin-bottom: 8px;
-        }
-        .lesson-title {
-            color: #f1f5f9; font-size: 22px;
-            margin-bottom: 10px; line-height: 1.4;
-        }
+        .lesson-number { color: #f59e0b; font-size: 13px; font-weight: bold; margin-bottom: 8px; }
+        .lesson-title { color: #f1f5f9; font-size: 22px; margin-bottom: 10px; line-height: 1.4; }
         .lesson-meta {
-            color: #94a3b8; font-size: 13px;
-            display: flex; justify-content: center;
-            gap: 15px; flex-wrap: wrap;
+            color: #94a3b8;
+            font-size: 13px;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
         }
 
         /* ===== محتوای درس ===== */
-        .lesson-content {
-            color: #cbd5e1; font-size: 15px; line-height: 2;
-        }
-        .lesson-content h2 {
-            color: #f59e0b; font-size: 18px;
-            margin-top: 25px; margin-bottom: 12px;
-            padding-bottom: 8px;
-            border-bottom: 2px solid rgba(245, 158, 11, 0.2);
-        }
-        .lesson-content h3 {
-            color: #f1f5f9; font-size: 16px;
-            margin-top: 20px; margin-bottom: 10px;
-        }
+        .lesson-content { color: #cbd5e1; font-size: 15px; line-height: 2; }
+        .lesson-content h1 { color: #f59e0b; font-size: 22px; margin-top: 25px; margin-bottom: 15px; padding-bottom: 8px; border-bottom: 2px solid rgba(245, 158, 11, 0.3); }
+        .lesson-content h2 { color: #f59e0b; font-size: 18px; margin-top: 25px; margin-bottom: 12px; padding-bottom: 8px; border-bottom: 2px solid rgba(245, 158, 11, 0.2); }
+        .lesson-content h3 { color: #f1f5f9; font-size: 16px; margin-top: 20px; margin-bottom: 10px; }
         .lesson-content p { margin-bottom: 15px; }
-        .lesson-content ul, .lesson-content ol {
-            padding-right: 25px; margin-bottom: 15px;
-        }
+        .lesson-content ul, .lesson-content ol { padding-right: 25px; margin-bottom: 15px; }
         .lesson-content li { margin-bottom: 8px; }
         .lesson-content strong { color: #f59e0b; }
-        .lesson-content .highlight-box {
-            background: rgba(245, 158, 11, 0.1);
+        .lesson-content em { color: #cbd5e1; font-style: italic; }
+        .lesson-content a { color: #60a5fa; text-decoration: underline; }
+        .lesson-content img { max-width: 100%; height: auto; border-radius: 12px; margin: 15px 0; box-shadow: 0 8px 25px rgba(0,0,0,0.3); display: block; }
+        .lesson-content blockquote {
             border-right: 4px solid #f59e0b;
-            padding: 15px 20px; border-radius: 10px;
-            margin: 15px 0; color: #f1f5f9;
+            padding: 15px 20px;
+            background: rgba(245, 158, 11, 0.08);
+            border-radius: 10px;
+            margin: 15px 0;
+            color: #f1f5f9;
         }
-        .lesson-content .tip-box {
-            background: rgba(59, 130, 246, 0.1);
-            border-right: 4px solid #3b82f6;
-            padding: 15px 20px; border-radius: 10px;
-            margin: 15px 0; color: #cbd5e1;
-        }
-        .lesson-content .warning-box {
-            background: rgba(239, 68, 68, 0.1);
-            border-right: 4px solid #ef4444;
-            padding: 15px 20px; border-radius: 10px;
-            margin: 15px 0; color: #fecaca;
-        }
-        .lesson-content table {
-            width: 100%; border-collapse: collapse;
-            margin: 15px 0; font-size: 13px;
-        }
-        .lesson-content th, .lesson-content td {
-            border: 1px solid #334155;
-            padding: 10px; text-align: center;
-        }
-        .lesson-content th {
-            background: rgba(245, 158, 11, 0.2);
+        .lesson-content code {
+            background: rgba(15, 23, 42, 0.8);
             color: #f59e0b;
+            padding: 2px 8px;
+            border-radius: 6px;
+            font-family: monospace;
+            font-size: 13px;
         }
+        .lesson-content pre {
+            background: rgba(15, 23, 42, 0.9);
+            padding: 15px;
+            border-radius: 10px;
+            overflow-x: auto;
+            margin: 15px 0;
+            border: 1px solid #334155;
+        }
+        .lesson-content pre code { background: none; padding: 0; }
+        .lesson-content hr { border: none; border-top: 1px solid rgba(255,255,255,0.1); margin: 20px 0; }
+        .lesson-content table { width: 100%; border-collapse: collapse; margin: 15px 0; font-size: 13px; }
+        .lesson-content th, .lesson-content td { border: 1px solid #334155; padding: 10px; text-align: center; }
+        .lesson-content th { background: rgba(245, 158, 11, 0.2); color: #f59e0b; }
         .lesson-content td { color: #cbd5e1; }
 
-        /* ===== تمرین ===== */
         .exercise-box {
             background: rgba(34, 197, 94, 0.1);
             border: 1px solid rgba(34, 197, 94, 0.3);
             border-radius: 15px;
-            padding: 20px; margin-top: 25px;
+            padding: 20px;
+            margin-top: 25px;
         }
         .exercise-box h3 {
-            color: #4ade80; font-size: 16px;
+            color: #4ade80;
+            font-size: 16px;
             margin-bottom: 12px;
-            display: flex; align-items: center; gap: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
-        .exercise-box p, .exercise-box li {
-            color: #cbd5e1; font-size: 14px; line-height: 1.8;
-        }
+        .exercise-box p, .exercise-box li { color: #cbd5e1; font-size: 14px; line-height: 1.8; }
         .exercise-box ul { padding-right: 20px; }
 
-        /* ===== دکمه‌های ناوبری ===== */
-        .nav-buttons {
-            display: flex; gap: 10px;
-            margin-top: 25px; flex-wrap: wrap;
-        }
+        .nav-buttons { display: flex; gap: 10px; margin-top: 25px; flex-wrap: wrap; }
         .btn {
-            flex: 1; min-width: 130px;
-            padding: 14px 20px; border-radius: 12px;
-            font-size: 14px; font-weight: bold;
-            cursor: pointer; transition: all 0.3s;
+            flex: 1;
+            min-width: 130px;
+            padding: 14px 20px;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
             font-family: Tahoma, sans-serif;
-            border: none; display: flex;
-            align-items: center; justify-content: center;
-            gap: 8px; text-decoration: none;
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            text-decoration: none;
         }
-        .btn-primary {
-            background: linear-gradient(135deg, #f59e0b, #d97706);
-            color: #0f172a;
-        }
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(245, 158, 11, 0.4);
-        }
-        .btn-success {
-            background: linear-gradient(135deg, #22c55e, #16a34a);
-            color: #fff;
-        }
-        .btn-success:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(34, 197, 94, 0.4);
-        }
-        .btn-secondary {
-            background: rgba(15, 23, 42, 0.6);
-            color: #f1f5f9;
-            border: 1px solid rgba(255,255,255,0.1);
-        }
-        .btn-secondary:hover {
-            background: rgba(15, 23, 42, 0.9);
-            border-color: rgba(245, 158, 11, 0.3);
-        }
-        .btn:disabled {
-            opacity: 0.4; cursor: not-allowed; transform: none;
-        }
+        .btn-primary { background: linear-gradient(135deg, #f59e0b, #d97706); color: #0f172a; }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(245, 158, 11, 0.4); }
+        .btn-success { background: linear-gradient(135deg, #22c55e, #16a34a); color: #fff; }
+        .btn-success:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(34, 197, 94, 0.4); }
+        .btn-secondary { background: rgba(15, 23, 42, 0.6); color: #f1f5f9; border: 1px solid rgba(255,255,255,0.1); }
+        .btn-secondary:hover { background: rgba(15, 23, 42, 0.9); border-color: rgba(245, 158, 11, 0.3); }
+        .btn:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
 
-        .loading {
-            text-align: center; padding: 50px 20px; color: #94a3b8;
-        }
+        .loading { text-align: center; padding: 50px 20px; color: #94a3b8; }
 
         @media (max-width: 600px) {
             .lesson-title { font-size: 18px; }
@@ -229,52 +210,62 @@
     </style>
 </head>
 <body>
-
     <div class="container" id="content">
         <div class="loading">⏳ در حال بارگذاری درس...</div>
     </div>
 
     <script>
         const SUPABASE_URL = 'https://jcwwilatvstjrohvhtss.supabase.co';
-        const SUPABASE_KEY = 'sb_publishable_R7tCe030dGeJ0IRWfcgxww_MgEfh95O';
-        const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Impjd3dpbGF0dnN0anJvaHZodHNzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODk3MDY4NTYsImV4cCI6MjEwNTI4Mjg1Nn0.eUC89RJy6-60nNGrSeYeDADzLxz-kWTGy4DbNGVi6MM';
+        const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
         let currentUser = null;
         let completedLessons = {};
         let courseData = null;
-        let courseId = null;
+        let courseKey = null;   // برای ذخیره در user_metadata
         let lessonNum = null;
+        let isDynamicCourse = false;
 
         // ===== بارگذاری =====
         async function init() {
             const { data: { session } } = await supabaseClient.auth.getSession();
-            
             if (!session) {
                 window.location.href = 'login.html';
                 return;
             }
-
             currentUser = session.user;
             completedLessons = currentUser.user_metadata?.completed_lessons || {};
 
             const params = new URLSearchParams(window.location.search);
-            courseId = parseInt(params.get('course'));
+            const courseParam = params.get('course');
+            const type = params.get('type');
             lessonNum = parseInt(params.get('lesson'));
 
-            if (!courseId || !lessonNum) {
+            if (!courseParam || !lessonNum) {
                 showError('❌ درس مورد نظر پیدا نشد.');
                 return;
             }
 
-            // ===== خواندن فایل JSON =====
+            // ===== تشخیص نوع دوره =====
+            if (type === 'db' || courseParam.startsWith('db-')) {
+                // دوره داینامیک
+                const dbId = parseInt(courseParam.replace('db-', ''));
+                await loadDynamicLesson(dbId, lessonNum);
+            } else {
+                // دوره ثابت
+                const staticId = parseInt(courseParam);
+                await loadStaticLesson(staticId, lessonNum);
+            }
+        }
+
+        // ===== دوره ثابت (از JSON) =====
+        async function loadStaticLesson(courseId, lessonNum) {
             try {
                 const response = await fetch(`course-${courseId}.json`);
-                
                 if (!response.ok) {
                     showError('❌ محتوای این دوره به زودی اضافه می‌شود.');
                     return;
                 }
-
                 courseData = await response.json();
                 const lesson = courseData.lessons[lessonNum - 1];
 
@@ -283,10 +274,70 @@
                     return;
                 }
 
-                renderLesson(courseId, lessonNum, courseData, lesson);
-
+                courseKey = courseId;
+                isDynamicCourse = false;
+                renderLesson(courseData, lesson, lessonNum);
             } catch (error) {
                 console.error('خطا در خواندن فایل:', error);
+                showError('❌ خطا در بارگذاری محتوای درس.');
+            }
+        }
+
+        // ===== دوره داینامیک (از Supabase) =====
+        async function loadDynamicLesson(dbId, lessonNum) {
+            try {
+                // لود اطلاعات دوره
+                const { data: course, error: courseError } = await supabaseClient
+                    .from('courses')
+                    .select('*')
+                    .eq('id', dbId)
+                    .single();
+
+                if (courseError || !course) {
+                    showError('❌ دوره مورد نظر پیدا نشد.');
+                    return;
+                }
+
+                // لود دروس
+                const { data: lessons, error: lessonsError } = await supabaseClient
+                    .from('lessons')
+                    .select('*')
+                    .eq('course_id', dbId)
+                    .order('order_num', { ascending: true });
+
+                if (lessonsError || !lessons || lessons.length === 0) {
+                    showError('❌ هنوز درسی برای این دوره ثبت نشده است.');
+                    return;
+                }
+
+                const lesson = lessons[lessonNum - 1];
+                if (!lesson) {
+                    showError('❌ این درس وجود ندارد.');
+                    return;
+                }
+
+                // تبدیل به فرمت مورد نیاز
+                courseData = {
+                    title: course.title,
+                    icon: course.icon || '📚',
+                    lessons: lessons.map(l => ({
+                        title: l.title,
+                        duration: '—',
+                        content: l.content || '',
+                        video_url: l.video_url
+                    }))
+                };
+
+                courseKey = dbId;  // برای ذخیره پیشرفت
+                isDynamicCourse = true;
+                renderLesson(courseData, {
+                    title: lesson.title,
+                    duration: '—',
+                    content: lesson.content || 'محتوایی برای این درس ثبت نشده است.',
+                    video_url: lesson.video_url
+                }, lessonNum);
+            } catch (error) {
+                console.error('خطا:', error);
                 showError('❌ خطا در بارگذاری محتوای درس.');
             }
         }
@@ -303,13 +354,34 @@
         }
 
         // ===== نمایش درس =====
-        function renderLesson(courseId, lessonNum, course, lesson) {
+        function renderLesson(course, lesson, lessonNum) {
             const totalLessons = course.lessons.length;
             const progressPercent = Math.round((lessonNum / totalLessons) * 100);
-            const isCompleted = (completedLessons[courseId] || []).includes(lessonNum);
+            const isCompleted = (completedLessons[courseKey] || []).includes(lessonNum);
 
             const prevLesson = lessonNum > 1 ? lessonNum - 1 : null;
             const nextLesson = lessonNum < totalLessons ? lessonNum + 1 : null;
+
+            // ساخت لینک‌های دوره داینامیک
+            const courseUrl = isDynamicCourse 
+                ? `course-detail.html?id=${courseKey}&type=db`
+                : `course-detail.html?id=${courseKey}`;
+            
+            const lessonUrlBase = isDynamicCourse
+                ? `lesson.html?course=db-${courseKey}&lesson=`
+                : `lesson.html?course=${courseKey}&lesson=`;
+
+            // ویدیو
+            const videoHTML = lesson.video_url ? `
+                <div style="margin: 20px 0;">
+                    <h3 style="color: #f59e0b; margin-bottom: 10px;">🎥 ویدیو آموزشی</h3>
+                    <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 15px;">
+                        <iframe src="${lesson.video_url}" 
+                                style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; border-radius: 15px;"
+                                allowfullscreen></iframe>
+                    </div>
+                </div>
+            ` : '';
 
             document.getElementById('content').innerHTML = `
                 <!-- هدر -->
@@ -317,11 +389,11 @@
                     <div class="header-info">
                         <div class="header-icon">${course.icon}</div>
                         <div class="header-title">
-                            <h1>${course.title}</h1>
+                            <h1>${escapeHtml(course.title)}</h1>
                             <p>درس ${lessonNum} از ${totalLessons}</p>
                         </div>
                     </div>
-                    <a href="course-detail.html?id=${courseId}">⬅ بازگشت به دوره</a>
+                    <a href="${courseUrl}">⬅ بازگشت به دوره</a>
                 </div>
 
                 <!-- پیشرفت -->
@@ -339,12 +411,14 @@
                 <div class="lesson-card">
                     <div class="lesson-header">
                         <div class="lesson-number">📖 درس ${lessonNum}</div>
-                        <h1 class="lesson-title">${lesson.title}</h1>
+                        <h1 class="lesson-title">${escapeHtml(lesson.title)}</h1>
                         <div class="lesson-meta">
                             <span>⏱️ ${lesson.duration}</span>
                             ${isCompleted ? '<span style="color: #4ade80;">✅ تکمیل شده</span>' : ''}
                         </div>
                     </div>
+
+                    ${videoHTML}
 
                     <div class="lesson-content">
                         ${lesson.content}
@@ -365,7 +439,7 @@
                 <!-- دکمه‌های ناوبری -->
                 <div class="nav-buttons">
                     ${prevLesson ? `
-                        <a href="lesson.html?course=${courseId}&lesson=${prevLesson}" class="btn btn-secondary">
+                        <a href="${lessonUrlBase}${prevLesson}" class="btn btn-secondary">
                             ⬅ درس قبلی
                         </a>
                     ` : `
@@ -373,7 +447,7 @@
                     `}
 
                     ${!isCompleted ? `
-                        <button class="btn btn-success" onclick="markComplete(${courseId}, ${lessonNum})">
+                        <button class="btn btn-success" onclick="markComplete(${courseKey}, ${lessonNum})">
                             ✅ تکمیل این درس
                         </button>
                     ` : `
@@ -381,11 +455,11 @@
                     `}
 
                     ${nextLesson ? `
-                        <a href="lesson.html?course=${courseId}&lesson=${nextLesson}" class="btn btn-primary">
+                        <a href="${lessonUrlBase}${nextLesson}" class="btn btn-primary">
                             درس بعدی ➡
                         </a>
                     ` : `
-                        <a href="course-detail.html?id=${courseId}" class="btn btn-primary">
+                        <a href="${courseUrl}" class="btn btn-primary">
                             🎉 پایان دوره
                         </a>
                     `}
@@ -394,32 +468,30 @@
         }
 
         // ===== تکمیل درس =====
-        async function markComplete(courseId, lessonNum) {
+        async function markComplete(courseKey, lessonNum) {
             try {
-                const courseLessons = completedLessons[courseId] || [];
+                const courseLessons = completedLessons[courseKey] || [];
                 if (!courseLessons.includes(lessonNum)) {
                     courseLessons.push(lessonNum);
                 }
-                completedLessons[courseId] = courseLessons;
+                completedLessons[courseKey] = courseLessons;
 
                 // بررسی تکمیل کل دوره
                 const totalLessons = courseData.lessons.length;
                 const isCourseComplete = courseLessons.length >= totalLessons;
 
-                const updates = {
-                    completed_lessons: completedLessons
-                };
+                const updates = { completed_lessons: completedLessons };
 
                 if (isCourseComplete) {
                     const completedCourses = currentUser.user_metadata?.completed_courses || [];
                     const inProgressCourses = currentUser.user_metadata?.in_progress_courses || [];
 
-                    if (!completedCourses.includes(courseId)) {
-                        completedCourses.push(courseId);
+                    if (!completedCourses.includes(courseKey)) {
+                        completedCourses.push(courseKey);
                     }
 
                     updates.completed_courses = completedCourses;
-                    updates.in_progress_courses = inProgressCourses.filter(id => id !== courseId);
+                    updates.in_progress_courses = inProgressCourses.filter(id => id !== courseKey);
                 }
 
                 const { error } = await supabaseClient.auth.updateUser({ data: updates });
@@ -429,17 +501,20 @@
                     return;
                 }
 
-                // رفرش صفحه
                 window.location.reload();
-
             } catch (e) {
                 alert('❌ خطای شبکه');
             }
         }
 
-        // ===== راه‌اندازی =====
+        function escapeHtml(text) {
+            if (!text) return '';
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
         init();
     </script>
-
 </body>
 </html>
