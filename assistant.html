@@ -473,12 +473,11 @@
         <div class="model-selector">
             <label>🧠 مدل:</label>
             <select id="modelSelect">
-                <option value="gpt-4o">🧠 GPT-4o (دقیق - Vision)</option>
-                <option value="gpt-4o-mini">⚡ GPT-4o Mini (سریع - Vision)</option>
-                <option value="gpt-4-turbo">🎯 GPT-4 Turbo (متعادل - Vision)</option>
-                <option value="claude-3-5-sonnet">💼 Claude 3.5 Sonnet (حرفه‌ای - Vision)</option>
-                <option value="gemini-1.5-pro">🌟 Gemini 1.5 Pro (چندمنظوره - Vision)</option>
-                <option value="gemini-1.5-flash">🚀 Gemini 1.5 Flash (سریع - Vision)</option>
+                <option value="gpt-5.6-luna">🧠 GPT-5.6 Luna (رایگان - Vision)</option>
+                <option value="gpt-5.4-nano">⚡ GPT-5.4 Nano (رایگان - Vision)</option>
+                <option value="gpt-5.4">💼 GPT-5.4 (دقیق - Vision)</option>
+                <option value="gpt-5.6-terra">🎯 GPT-5.6 Terra (متعادل - Vision)</option>
+                <option value="gemini-3.7-flash">🚀 Gemini 3.7 Flash (سریع - Vision)</option>
             </select>
         </div>
         <div class="market-status" id="marketStatus">
@@ -615,13 +614,16 @@
         const BRS_API_KEY = 'BvUj3cMKWNBK87KW9xhNccCThmfVbd8u';
 
         const VISION_MODELS = [
-            'gpt-4o',
-            'gpt-4o-mini',
-            'gpt-4-turbo',
-            'claude-3-5-sonnet',
-            'gemini-1.5-pro',
-            'gemini-1.5-flash'
-        ];
+             'gpt-5.6-luna',
+             'gpt-5.4-nano',
+             'gpt-5.4',
+             'gpt-5.4-mini',
+             'gpt-5.6-sol',
+             'gpt-5.6-terra',
+             'gemini-3.7-flash',
+             'gemini-3.1-pro-preview',
+             'o4-mini'
+         ];       
 
         let conversationHistory = [];
         let isTyping = false;
