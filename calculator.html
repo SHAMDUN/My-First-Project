@@ -41,10 +41,6 @@
             from { opacity: 0; transform: translateY(30px); }
             to { opacity: 1; transform: translateY(0); }
         }
-        @keyframes slideDown {
-            from { opacity: 0; max-height: 0; }
-            to { opacity: 1; max-height: 1000px; }
-        }
 
         .main-container { max-width: 900px; margin: 0 auto; padding: 100px 20px 40px; }
 
@@ -61,7 +57,6 @@
         }
         .page-header p { color: var(--gray); font-size: 14px; }
 
-        /* ===== گروه‌بندی تب‌ها ===== */
         .tabs-groups {
             margin-bottom: 25px;
             display: flex;
@@ -134,7 +129,6 @@
         .calc-section { display: none; }
         .calc-section.active { display: block; animation: fadeInUp 0.4s ease-out; }
 
-        /* ===== کارت آموزشی ===== */
         .edu-card {
             background: linear-gradient(135deg, rgba(59, 130, 246, 0.08), rgba(59, 130, 246, 0.02));
             border: 1px solid rgba(59, 130, 246, 0.2);
@@ -156,9 +150,6 @@
             font-size: 13px;
             font-weight: 800;
             margin-bottom: 8px;
-            display: flex;
-            align-items: center;
-            gap: 6px;
         }
         .edu-text {
             color: #cbd5e1;
@@ -173,7 +164,6 @@
         }
         .edu-usage strong { color: var(--gold); }
 
-        /* ===== کارت محاسبه ===== */
         .calc-card {
             background: linear-gradient(135deg, var(--bg-card), var(--bg-secondary));
             border: 1px solid rgba(212, 175, 55, 0.15);
@@ -381,11 +371,6 @@
             font-size: 14px;
             margin-bottom: 10px;
         }
-        .comparison-side .value {
-            font-size: 18px;
-            font-weight: 900;
-            color: var(--white);
-        }
 
         .footer {
             text-align: center;
@@ -403,9 +388,7 @@
             .result-grid { grid-template-columns: 1fr; }
             .result-highlight .value { font-size: 22px; }
             .calc-card { padding: 18px; }
-            .comparison-container {
-                grid-template-columns: 1fr;
-            }
+            .comparison-container { grid-template-columns: 1fr; }
             .edu-card { padding: 14px; }
         }
     </style>
@@ -418,7 +401,6 @@
             <p>ابزار حرفه‌ای تحلیل سرمایه‌گذاری و مدیریت ریسک</p>
         </div>
 
-        <!-- ===== گروه‌بندی تب‌ها ===== -->
         <div class="tabs-groups">
             <div class="tabs-group">
                 <div class="tabs-group-title">💼 سرمایه‌گذاری</div>
@@ -450,8 +432,7 @@
                         اگه هر ماه یه مبلغ ثابت سرمایه‌گذاری کنی (مثلاً ۵ میلیون)، با سود مرکب چقدر می‌شه؟ این روش «DCA» یا سرمایه‌گذاری دوره‌ای نام داره.
                     </div>
                     <div class="edu-usage">
-                        <strong>💡 کاربرد:</strong>
-                        برنامه‌ریزی پس‌انداز ماهانه، دیدن قدرت سود مرکب در بلندمدت، مقایسه بازدهی با نرخ‌های مختلف
+                        <strong>💡 کاربرد:</strong> برنامه‌ریزی پس‌انداز ماهانه، دیدن قدرت سود مرکب در بلندمدت، مقایسه بازدهی با نرخ‌های مختلف
                     </div>
                 </div>
             </div>
@@ -516,8 +497,7 @@
                         اگه یه مبلغ رو با نرخ سود مشخص سرمایه‌گذاری کنی، با سود مرکب (سودی که خودش هم سود می‌سازه) چقدر می‌شه؟
                     </div>
                     <div class="edu-usage">
-                        <strong>💡 کاربرد:</strong>
-                        محاسبه سود سپرده بانکی، پیش‌بینی بازدهی بلندمدت، مقایسه نرخ‌های مختلف
+                        <strong>💡 کاربرد:</strong> محاسبه سود سپرده بانکی، پیش‌بینی بازدهی بلندمدت، مقایسه نرخ‌های مختلف
                     </div>
                 </div>
             </div>
@@ -588,8 +568,7 @@
                         می‌خوای ۳ سال دیگه ۱ میلیارد تومان داشته باشی؟ این ابزار می‌گه ماهی چقدر باید پس‌انداز کنی تا به هدفت برسی.
                     </div>
                     <div class="edu-usage">
-                        <strong>💡 کاربرد:</strong>
-                        برنامه‌ریزی مالی هدف‌محور، پس‌انداز برای خرید خانه/ماشین، ساخت سرمایه بلندمدت
+                        <strong>💡 کاربرد:</strong> برنامه‌ریزی مالی هدف‌محور، پس‌انداز برای خرید خانه/ماشین، ساخت سرمایه بلندمدت
                     </div>
                 </div>
             </div>
@@ -641,7 +620,7 @@
                         <div class="value blue" id="goal-profit-percent">--</div>
                     </div>
                 </div>
-                <div class="info-note" id="goal-note">
+                <div class="info-note">
                     هرچی زودتر شروع کنی، بهره مرکب بیشتر کار می‌کنه و پس‌انداز ماهانه‌ت کمتر میشه.
                 </div>
             </div>
@@ -657,8 +636,7 @@
                         دو گزینه سرمایه‌گذاری مختلف رو کنار هم بذار و ببین کدوم بهتره. مثلاً «بورس با ۳۰٪ بازدهی» vs «طلا با ۲۵٪ بازدهی» توی ۵ سال.
                     </div>
                     <div class="edu-usage">
-                        <strong>💡 کاربرد:</strong>
-                        تصمیم‌گیری بین دو بازار، مقایسه بازدهی با نرخ‌های مختلف، انتخاب بهترین گزینه
+                        <strong>💡 کاربرد:</strong> تصمیم‌گیری بین دو بازار، مقایسه بازدهی با نرخ‌های مختلف، انتخاب بهترین گزینه
                     </div>
                 </div>
             </div>
@@ -726,8 +704,7 @@
                         اگه تورم ۴۰٪ باشه، ۱۰۰ میلیون تومان امروز، ۱ سال دیگه چقدر ارزش داره؟ این ابزار قدرت خرید پولت رو در طول زمان محاسبه می‌کنه.
                     </div>
                     <div class="edu-usage">
-                        <strong>💡 کاربرد:</strong>
-                        فهم تأثیر تورم روی پس‌انداز، مقایسه بازدهی با تورم، تصمیم‌گیری برای سرمایه‌گذاری
+                        <strong>💡 کاربرد:</strong> فهم تأثیر تورم روی پس‌انداز، مقایسه بازدهی با تورم، تصمیم‌گیری برای سرمایه‌گذاری
                     </div>
                 </div>
             </div>
@@ -770,7 +747,7 @@
                         <div class="label">💵 ارزش هر ۱ میلیون امروز</div>
                         <div class="value" id="inf-per-million">--</div>
                     </div>
-                    <div class="result-item">
+                    <div class="result-item blue">
                         <div class="label">⚡ بازدهی لازم برای تورم</div>
                         <div class="value blue" id="inf-return-needed">--</div>
                     </div>
@@ -791,8 +768,7 @@
                         وقتی سهم می‌خری، کارگزاری کارمزد می‌گیره. این ابزار می‌گه سهم باید چند درصد رشد کنه تا تو به سربه‌سر برسی و از اون به بعد سود کنی.
                     </div>
                     <div class="edu-usage">
-                        <strong>💡 کاربرد:</strong>
-                        فهم هزینه‌های واقعی معامله، محاسبه دقیق سود، مقایسه کارگزاری‌های مختلف
+                        <strong>💡 کاربرد:</strong> فهم هزینه‌های واقعی معامله، محاسبه دقیق سود، مقایسه کارگزاری‌های مختلف
                     </div>
                 </div>
             </div>
@@ -831,15 +807,15 @@
                         <div class="label">💰 کل هزینه خرید</div>
                         <div class="value" id="be-total-buy">--</div>
                     </div>
-                    <div class="result-item">
+                    <div class="result-item red">
                         <div class="label">💸 کارمزد خرید</div>
                         <div class="value red" id="be-buy-fee-amount">--</div>
                     </div>
-                    <div class="result-item">
+                    <div class="result-item red">
                         <div class="label">💸 کارمزد فروش (تخمینی)</div>
                         <div class="value red" id="be-sell-fee-amount">--</div>
                     </div>
-                    <div class="result-item">
+                    <div class="result-item red">
                         <div class="label">📊 کل کارمزد</div>
                         <div class="value red" id="be-total-fee">--</div>
                     </div>
@@ -860,8 +836,7 @@
                         سرمایه‌ات رو چطور بین دارایی‌های مختلف (طلا، سهام، ارز، کریپتو) پخش کنی تا ریسک متعادل باشه و به بهترین بازدهی برسی؟
                     </div>
                     <div class="edu-usage">
-                        <strong>💡 کاربرد:</strong>
-                        تنوع‌بخشی به سبد سرمایه‌گذاری، کاهش ریسک، انتخاب تخصیص متناسب با شخصیت مالی
+                        <strong>💡 کاربرد:</strong> تنوع‌بخشی به سبد سرمایه‌گذاری، کاهش ریسک، انتخاب تخصیص متناسب با شخصیت مالی
                     </div>
                 </div>
             </div>
@@ -904,8 +879,7 @@
                         چقدر سرمایه‌گذاری کنی که اگه حد ضرر خورد، ضررت قابل مدیریت باشه؟ این ابزار حجم پوزیشن بهینه و نسبت ریسک به ریوارد رو محاسبه می‌کنه.
                     </div>
                     <div class="edu-usage">
-                        <strong>💡 کاربرد:</strong>
-                        مدیریت ریسک هر معامله، جلوگیری از ضررهای بزرگ، محاسبه نسبت سود به ضرر (R/R)
+                        <strong>💡 کاربرد:</strong> مدیریت ریسک هر معامله، جلوگیری از ضررهای بزرگ، محاسبه نسبت سود به ضرر (R/R)
                     </div>
                 </div>
             </div>
@@ -984,20 +958,32 @@
             return String(num).replace(/\d/g, d => persianDigits[d]);
         }
 
+        // برای اعداد بزرگ (خلاصه‌سازی)
+        function formatBigNum(num) {
+            if (num === null || num === undefined || isNaN(num)) return '--';
+            const n = Number(num);
+            if (!isFinite(n)) return '--';
+            const abs = Math.abs(n);
+            
+            let result;
+            if (abs >= 1e12) result = (n / 1e12).toFixed(2) + ' همت';
+            else if (abs >= 1e9) result = (n / 1e9).toFixed(2) + ' میلیارد';
+            else if (abs >= 1e6) result = (n / 1e6).toFixed(2) + ' میلیون';
+            else if (abs >= 1e3) result = (n / 1e3).toFixed(1) + ' هزار';
+            else result = Math.round(n).toString();
+            
+            // حذف صفرهای اضافی
+            result = result.replace(/\.?0+(\s|$)/g, '$1');
+            
+            return toFa(result);
+        }
+
+        // برای اعداد دقیق با جداکننده
         function formatNum(num) {
             if (num === null || num === undefined || isNaN(num)) return '--';
             const n = Math.round(Number(num));
+            if (!isFinite(n)) return '--';
             return toFa(n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','));
-        }
-
-        function formatBigNum(num) {
-            if (!num || isNaN(num)) return '--';
-            const n = Number(num);
-            if (Math.abs(n) >= 1e12) return formatNum(n / 1e12) + ' همت';
-            if (Math.abs(n) >= 1e9) return formatNum(n / 1e9) + ' میلیارد';
-            if (Math.abs(n) >= 1e6) return formatNum(n / 1e6) + ' میلیون';
-            if (Math.abs(n) >= 1e3) return formatNum(n / 1e3) + ' هزار';
-            return formatNum(n);
         }
 
         function parseNum(str) {
@@ -1062,10 +1048,10 @@
             document.getElementById('dca-profit-sub').textContent = totalProfit > 0 
                 ? `سود: ${formatBigNum(totalProfit)} تومان در ${toFa(months)} ماه`
                 : '';
-            document.getElementById('dca-principal').textContent = formatBigNum(totalPrincipal);
-            document.getElementById('dca-profit').textContent = formatBigNum(totalProfit);
+            document.getElementById('dca-principal').textContent = formatBigNum(totalPrincipal) + ' تومان';
+            document.getElementById('dca-profit').textContent = formatBigNum(totalProfit) + ' تومان';
             document.getElementById('dca-ratio').textContent = toFa(ratio.toFixed(2)) + ' برابر';
-            document.getElementById('dca-avg').textContent = formatBigNum(avgMonthly);
+            document.getElementById('dca-avg').textContent = formatBigNum(avgMonthly) + ' تومان';
 
             document.getElementById('result-dca').classList.add('show');
         }
@@ -1092,10 +1078,10 @@
 
             document.getElementById('cmp-final').textContent = formatNum(finalAmount) + ' تومان';
             document.getElementById('cmp-profit-sub').textContent = `سود: ${formatBigNum(totalProfit)} تومان در ${toFa(years)} سال`;
-            document.getElementById('cmp-principal-result').textContent = formatBigNum(principal);
-            document.getElementById('cmp-profit').textContent = formatBigNum(totalProfit);
+            document.getElementById('cmp-principal-result').textContent = formatBigNum(principal) + ' تومان';
+            document.getElementById('cmp-profit').textContent = formatBigNum(totalProfit) + ' تومان';
             document.getElementById('cmp-total-return').textContent = toFa(totalReturn.toFixed(2)) + '٪';
-            document.getElementById('cmp-daily').textContent = formatBigNum(dailyProfit);
+            document.getElementById('cmp-daily').textContent = formatBigNum(dailyProfit) + ' تومان';
 
             document.getElementById('result-compound').classList.add('show');
         }
@@ -1116,9 +1102,8 @@
 
             const months = years * 12;
             const monthlyRate = annualRate / 100 / 12;
-
-            // PMT = (FV - PV × (1+r)^n) × r / ((1+r)^n - 1)
             let monthlySaving;
+
             if (monthlyRate === 0) {
                 monthlySaving = (target - initial) / months;
             } else {
@@ -1133,10 +1118,10 @@
             const profitPercent = target > 0 ? (totalProfit / target * 100) : 0;
 
             document.getElementById('goal-monthly').textContent = formatNum(monthlySaving) + ' تومان';
-            document.getElementById('goal-monthly-sub').textContent = `در ${toFa(months)} ماه آینده`;
+            document.getElementById('goal-monthly-sub').textContent = `در ${toFa(Math.round(months))} ماه آینده`;
             document.getElementById('goal-principal').textContent = formatBigNum(totalPrincipal) + ' تومان';
             document.getElementById('goal-profit').textContent = formatBigNum(totalProfit) + ' تومان';
-            document.getElementById('goal-months').textContent = toFa(months) + ' ماه';
+            document.getElementById('goal-months').textContent = toFa(Math.round(months)) + ' ماه';
             document.getElementById('goal-profit-percent').textContent = toFa(profitPercent.toFixed(1)) + '٪';
 
             document.getElementById('result-goal').classList.add('show');
@@ -1229,9 +1214,6 @@
             const buyFeeAmount = totalBuy * (buyFee / 100);
             const totalCost = totalBuy + buyFeeAmount;
 
-            // قیمت سربه‌سر: باید بعد از کسر کارمزد فروش، برابر کل هزینه خرید بشه
-            // X × Q × (1 - sellFee/100) = totalCost
-            // X = totalCost / (Q × (1 - sellFee/100))
             const breakevenPrice = totalCost / (quantity * (1 - sellFee / 100));
             const breakevenPercent = ((breakevenPrice - buyPrice) / buyPrice) * 100;
             const sellFeeAmount = breakevenPrice * quantity * (sellFee / 100);
@@ -1363,7 +1345,7 @@
 
             const rr = maxLossAmount > 0 ? (maxProfit / maxLossAmount) : 0;
 
-            document.getElementById('pos-size').textContent = formatBigNum(positionSize) + ' واحد';
+            document.getElementById('pos-size').textContent = formatNum(positionSize) + ' واحد';
             document.getElementById('pos-amount').textContent = formatBigNum(positionAmount) + ' تومان';
             document.getElementById('pos-maxloss').textContent = formatBigNum(maxLossAmount) + ' تومان';
             document.getElementById('pos-maxprofit').textContent = target > 0 ? formatBigNum(maxProfit) + ' تومان' : '--';
