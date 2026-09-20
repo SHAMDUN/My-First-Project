@@ -55,209 +55,18 @@
             100% { transform: translateX(-33.33%); }
         }
 
-        /* ============= Navbar ============= */
-        .sn-navbar {
-            position: fixed;
-            top: 0; left: 0; right: 0;
-            background: rgba(10, 10, 15, 0.92);
-            backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(212, 175, 55, 0.15);
-            z-index: 9998;
-            padding: 12px 0;
-        }
-        .sn-navbar-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 15px;
-        }
-        .sn-hamburger {
-            width: 42px; height: 42px;
-            border-radius: 12px;
-            background: rgba(212, 175, 55, 0.08);
-            border: 1px solid rgba(212, 175, 55, 0.25);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 4px;
-            cursor: pointer;
-            padding: 0;
-            transition: 0.3s;
-        }
-        .sn-hamburger:hover { background: rgba(212, 175, 55, 0.2); }
-        .sn-hamburger span {
-            display: block;
-            width: 18px; height: 2px;
-            background: var(--gold);
-            border-radius: 2px;
-        }
-        .sn-brand {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            text-decoration: none;
-            flex: 1;
-            justify-content: center;
-        }
-        .sn-brand-logo {
-            width: 38px; height: 38px;
-            border-radius: 50%;
-            border: 2px solid var(--gold);
-            object-fit: cover;
-        }
-        .sn-brand-text {
-            color: var(--gold);
-            font-size: 17px;
-            font-weight: 800;
-        }
-        .sn-user-area {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            min-width: 42px;
-            justify-content: flex-end;
-        }
-        .sn-login-btn {
-            color: var(--gold);
-            text-decoration: none;
-            font-size: 12px;
-            font-weight: 700;
-            padding: 9px 16px;
-            border-radius: 10px;
-            border: 1px solid rgba(212, 175, 55, 0.4);
-            background: rgba(212, 175, 55, 0.08);
-            transition: 0.3s;
-        }
-        .sn-login-btn:hover { background: rgba(212, 175, 55, 0.2); }
-        .sn-user-avatar {
-            width: 42px; height: 42px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, var(--gold), var(--gold-dark));
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--bg-primary);
-            font-weight: 900;
-            font-size: 15px;
-            border: 2px solid var(--gold);
-            text-decoration: none;
-            transition: 0.3s;
-        }
-        .sn-user-avatar:hover {
-            transform: scale(1.05);
-            box-shadow: 0 0 20px rgba(212, 175, 55, 0.4);
-        }
-
-        /* ============= Overlay + Sidebar ============= */
-        .sn-overlay {
-            position: fixed;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(0, 0, 0, 0.7);
-            backdrop-filter: blur(5px);
-            z-index: 9999;
-            opacity: 0;
-            visibility: hidden;
-            transition: 0.3s;
-        }
-        .sn-overlay.show { opacity: 1; visibility: visible; }
-        .sn-sidebar {
-            position: fixed;
-            top: 0;
-            right: -320px;
-            width: 300px;
-            height: 100vh;
-            background: linear-gradient(180deg, #14141c, #0a0a0f);
-            border-left: 1px solid rgba(212, 175, 55, 0.2);
-            z-index: 10000;
-            transition: right 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-            overflow-y: auto;
-            box-shadow: -10px 0 40px rgba(0, 0, 0, 0.5);
-        }
-        .sn-sidebar.show { right: 0; }
-        .sn-sidebar::-webkit-scrollbar { width: 4px; }
-        .sn-sidebar::-webkit-scrollbar-thumb {
-            background: rgba(212, 175, 55, 0.3);
-            border-radius: 10px;
-        }
-        .sn-sidebar-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px;
-            border-bottom: 1px solid rgba(212, 175, 55, 0.15);
-            position: sticky;
-            top: 0;
-            background: #14141c;
-            z-index: 2;
-        }
-        .sn-sidebar-header .sn-brand { justify-content: flex-start; }
-        .sn-close {
-            background: rgba(239, 68, 68, 0.1);
-            color: #ef4444;
-            border: 1px solid rgba(239, 68, 68, 0.3);
-            width: 34px; height: 34px;
-            border-radius: 10px;
-            cursor: pointer;
-            font-size: 16px;
-            font-family: inherit;
-        }
-        .sn-close:hover { background: rgba(239, 68, 68, 0.2); }
-        .sn-sidebar-content { padding: 15px; }
-        .sn-menu-section { display: flex; flex-direction: column; gap: 4px; }
-        .sn-menu-item {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 12px 14px;
-            border-radius: 12px;
-            text-decoration: none;
-            color: #cbd5e1;
-            font-size: 14px;
-            font-weight: 600;
-            transition: 0.25s;
-            border: 1px solid transparent;
-        }
-        .sn-menu-item:hover {
-            background: rgba(212, 175, 55, 0.08);
-            color: var(--gold);
-            border-color: rgba(212, 175, 55, 0.2);
-            transform: translateX(-4px);
-        }
-        .sn-menu-item.active {
-            background: rgba(212, 175, 55, 0.15);
-            color: var(--gold);
-            border-color: rgba(212, 175, 55, 0.4);
-        }
-        .sn-menu-icon { font-size: 20px; width: 26px; text-align: center; }
-        .sn-menu-label { flex: 1; }
-        .sn-menu-divider {
-            height: 1px;
-            background: rgba(212, 175, 55, 0.15);
-            margin: 15px 0;
-        }
-        .sn-logout { color: #f87171 !important; }
-        .sn-logout:hover {
-            background: rgba(239, 68, 68, 0.1) !important;
-            color: #ef4444 !important;
-            border-color: rgba(239, 68, 68, 0.3) !important;
-        }
-
-        /* ============= Ticker Bar ============= */
+        /* ============= Ticker Bar (زیر navbar) ============= */
         .ticker-bar {
             position: fixed;
             top: 66px;
             left: 0; right: 0;
-            background: linear-gradient(90deg, rgba(20, 20, 28, 0.95), rgba(26, 26, 36, 0.95));
+            background: linear-gradient(90deg, rgba(20, 20, 28, 0.98), rgba(26, 26, 36, 0.98));
             backdrop-filter: blur(10px);
             color: var(--white);
             padding: 8px 0;
             overflow: hidden;
             z-index: 9997;
-            border-bottom: 1px solid rgba(212, 175, 55, 0.15);
+            border-bottom: 1px solid rgba(212, 175, 55, 0.2);
         }
         .ticker-content {
             display: flex;
@@ -287,11 +96,11 @@
         /* ============= Page Header ============= */
         .page-header {
             text-align: center;
-            margin-bottom: 30px;
+            margin-bottom: 20px;
             animation: fadeInUp 0.6s ease-out;
         }
         .page-header h1 {
-            font-size: 36px;
+            font-size: 32px;
             font-weight: 900;
             margin-bottom: 10px;
             background: linear-gradient(135deg, var(--gold), var(--gold-light));
@@ -300,59 +109,77 @@
             background-clip: text;
         }
         .page-header p { color: var(--gray); font-size: 14px; }
-        .datetime-box {
-            display: inline-flex;
-            align-items: center;
+
+        /* ============= Quick Access Bar ============= */
+        .quick-access {
+            display: flex;
             gap: 10px;
-            background: rgba(20, 20, 28, 0.6);
-            border: 1px solid rgba(212, 175, 55, 0.2);
+            margin-bottom: 20px;
+            animation: fadeInUp 0.6s ease-out 0.05s backwards;
+            flex-wrap: wrap;
+        }
+        .quick-btn {
+            flex: 1;
+            min-width: 140px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 12px 16px;
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.1), rgba(212, 175, 55, 0.03));
+            border: 1px solid rgba(212, 175, 55, 0.25);
             border-radius: 12px;
-            padding: 10px 20px;
-            margin-top: 15px;
             color: var(--gold);
             font-size: 13px;
-            font-weight: 600;
+            font-weight: 700;
+            text-decoration: none;
+            transition: 0.3s;
+            font-family: inherit;
         }
-        .datetime-box .dot {
-            width: 8px;
-            height: 8px;
-            background: var(--green);
-            border-radius: 50%;
-            animation: pulse 1.5s infinite;
+        .quick-btn:hover {
+            background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+            color: var(--bg-primary);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(212, 175, 55, 0.3);
         }
+        .quick-btn .icon { font-size: 16px; }
 
         /* ============= Manager Card ============= */
         .manager-card {
             background: linear-gradient(135deg, rgba(212, 175, 55, 0.08), rgba(59, 130, 246, 0.04));
             border: 1px solid rgba(212, 175, 55, 0.25);
             border-radius: 20px;
-            padding: 25px;
-            margin-bottom: 24px;
+            padding: 20px;
+            margin-bottom: 20px;
             display: flex;
-            gap: 20px;
+            gap: 18px;
             align-items: center;
             animation: fadeInUp 0.6s ease-out 0.1s backwards;
         }
         .manager-avatar {
-            width: 90px;
-            height: 90px;
+            width: 75px; height: 75px;
             border-radius: 50%;
             border: 3px solid var(--gold);
             object-fit: cover;
             flex-shrink: 0;
-            box-shadow: 0 0 30px rgba(212, 175, 55, 0.3);
+            box-shadow: 0 0 25px rgba(212, 175, 55, 0.3);
+            background: linear-gradient(135deg, var(--gold), var(--gold-dark));
         }
         .manager-info { flex: 1; }
         .manager-name {
             color: var(--gold);
-            font-size: 18px;
+            font-size: 16px;
             font-weight: 800;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
             display: flex;
             align-items: center;
             gap: 8px;
         }
-        .manager-text { color: #cbd5e1; font-size: 13.5px; line-height: 1.9; }
+        .manager-text {
+            color: #cbd5e1;
+            font-size: 13px;
+            line-height: 1.8;
+        }
 
         /* ============= Tabs ============= */
         .market-tabs {
@@ -362,6 +189,7 @@
             overflow-x: auto;
             padding-bottom: 8px;
             scrollbar-width: thin;
+            animation: fadeInUp 0.6s ease-out 0.15s backwards;
         }
         .market-tabs::-webkit-scrollbar { height: 4px; }
         .market-tabs::-webkit-scrollbar-thumb {
@@ -411,9 +239,6 @@
             border-right: 4px solid var(--gold);
             text-align: right;
             transition: 0.3s;
-            text-decoration: none;
-            color: inherit;
-            display: block;
         }
         .price-card:hover {
             background: rgba(26, 26, 36, 1);
@@ -462,8 +287,6 @@
             margin-top: 6px;
             border: 1px solid rgba(59, 130, 246, 0.3);
         }
-
-        /* رنگ‌های خاص */
         .price-card.gold { border-right-color: #D4AF37; }
         .price-card.gold24 { border-right-color: #FFD700; }
         .price-card.melted { border-right-color: #B8860B; }
@@ -532,7 +355,7 @@
         .bubble-card .row .label { color: var(--gray); }
         .bubble-card .row .value { font-weight: 700; color: var(--white); }
         .bubble-value {
-            font-size: 18px;
+            font-size: 16px;
             font-weight: 800;
             text-align: center;
             margin-top: 15px;
@@ -561,7 +384,11 @@
             flex-wrap: wrap;
             gap: 10px;
         }
-        .chart-header h2 { color: var(--white); font-size: 17px; font-weight: 800; }
+        .chart-header h2 {
+            color: var(--white);
+            font-size: 17px;
+            font-weight: 800;
+        }
         .chart-tabs {
             display: flex;
             gap: 5px;
@@ -582,7 +409,10 @@
             font-family: inherit;
             transition: 0.3s;
         }
-        .chart-tab:hover { color: var(--gold); border-color: rgba(212, 175, 55, 0.4); }
+        .chart-tab:hover {
+            color: var(--gold);
+            border-color: rgba(212, 175, 55, 0.4);
+        }
         .chart-tab.active {
             background: linear-gradient(135deg, var(--gold), var(--gold-dark));
             color: var(--bg-primary);
@@ -600,13 +430,20 @@
             font-family: inherit;
             transition: 0.3s;
         }
-        .fullscreen-btn:hover { background: var(--gold); color: var(--bg-primary); }
-        #tvchart { width: 100%; height: 550px; border-radius: 12px; overflow: hidden; }
+        .fullscreen-btn:hover {
+            background: var(--gold);
+            color: var(--bg-primary);
+        }
+        #tvchart {
+            width: 100%;
+            height: 550px;
+            border-radius: 12px;
+            overflow: hidden;
+        }
         .chart-fullscreen {
             position: fixed !important;
             top: 0 !important; left: 0 !important; right: 0 !important; bottom: 0 !important;
-            width: 100vw !important;
-            height: 100vh !important;
+            width: 100vw !important; height: 100vh !important;
             z-index: 999999 !important;
             background: var(--bg-primary) !important;
             padding: 10px !important;
@@ -641,8 +478,18 @@
             text-align: center;
             margin-bottom: 24px;
         }
-        .cta-section h2 { color: var(--white); font-size: 22px; font-weight: 900; margin-bottom: 12px; }
-        .cta-section p { color: var(--gray); font-size: 14px; margin-bottom: 20px; line-height: 1.8; }
+        .cta-section h2 {
+            color: var(--white);
+            font-size: 22px;
+            font-weight: 900;
+            margin-bottom: 12px;
+        }
+        .cta-section p {
+            color: var(--gray);
+            font-size: 14px;
+            margin-bottom: 20px;
+            line-height: 1.8;
+        }
         .cta-btn {
             display: inline-block;
             background: linear-gradient(135deg, var(--gold), var(--gold-dark));
@@ -675,8 +522,7 @@
             margin-bottom: 15px;
         }
         .footer-social a {
-            width: 44px;
-            height: 44px;
+            width: 44px; height: 44px;
             border-radius: 12px;
             background: rgba(212, 175, 55, 0.08);
             border: 1px solid rgba(212, 175, 55, 0.2);
@@ -694,7 +540,6 @@
         /* ============= Responsive ============= */
         @media (max-width: 900px) {
             .price-grid { grid-template-columns: repeat(2, 1fr); }
-            .bubble-grid { grid-template-columns: 1fr; }
             .manager-card { flex-direction: column; text-align: center; }
         }
         @media (max-width: 600px) {
@@ -703,85 +548,14 @@
             .price-grid { grid-template-columns: 1fr; }
             #tvchart { height: 400px; }
             .chart-tab { font-size: 10px; padding: 5px 8px; }
-            .sn-sidebar { width: 280px; right: -300px; }
             .market-tab { font-size: 11px; padding: 8px 12px; }
+            .quick-btn { font-size: 12px; padding: 10px 12px; }
         }
     </style>
 </head>
 <body>
 
-    <!-- Navbar -->
-    <nav class="sn-navbar">
-        <div class="sn-navbar-container">
-            <button class="sn-hamburger" id="snHamburger" aria-label="منو">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
-            <a href="index.html" class="sn-brand">
-                <img src="519.png" alt="شمعدون" class="sn-brand-logo">
-                <span class="sn-brand-text">شمعدون</span>
-            </a>
-            <div class="sn-user-area" id="snUserArea">
-            </div>
-        </div>
-    </nav>
-
-    <div class="sn-overlay" id="snOverlay"></div>
-
-    <aside class="sn-sidebar" id="snSidebar">
-        <div class="sn-sidebar-header">
-            <a href="index.html" class="sn-brand" style="justify-content:flex-start;">
-                <img src="519.png" alt="شمعدون" class="sn-brand-logo">
-                <span class="sn-brand-text">شمعدون</span>
-            </a>
-            <button class="sn-close" id="snClose">✕</button>
-        </div>
-        <div class="sn-sidebar-content">
-            <div class="sn-menu-section">
-                <a href="index.html" class="sn-menu-item"><span class="sn-menu-icon">🏠</span><span class="sn-menu-label">صفحه اصلی</span></a>
-                <a href="home.html" class="sn-menu-item"><span class="sn-menu-icon">📊</span><span class="sn-menu-label">نمای بازار</span></a>
-                <a href="bourse.html" class="sn-menu-item"><span class="sn-menu-icon">📈</span><span class="sn-menu-label">بورس ایران</span></a>
-                <a href="courses.html" class="sn-menu-item"><span class="sn-menu-icon">📚</span><span class="sn-menu-label">دوره‌های آموزشی</span></a>
-                <a href="personality-test.html" class="sn-menu-item"><span class="sn-menu-icon">🧠</span><span class="sn-menu-label">آزمون خودشناسی مالی</span></a>
-                <a href="assistant.html" class="sn-menu-item"><span class="sn-menu-icon">🤖</span><span class="sn-menu-label">دستیار هوشمند</span></a>
-            </div>
-            <div class="sn-menu-divider"></div>
-            <div class="sn-menu-section">
-                <a href="dashboard.html" class="sn-menu-item"><span class="sn-menu-icon">👤</span><span class="sn-menu-label">پنل کاربری</span></a>
-                <a href="admin.html" class="sn-menu-item" id="snAdminLink" style="display:none; color:#fca5a5;"><span class="sn-menu-icon">🎯</span><span class="sn-menu-label">پنل ادمین</span></a>
-                <a href="#" class="sn-menu-item sn-logout" id="snLogoutBtn" style="display:none;"><span class="sn-menu-icon">🚪</span><span class="sn-menu-label">خروج</span></a>
-            </div>
-            <div class="sn-menu-divider"></div>
-            <div class="sn-menu-section">
-                <a href="https://instagram.com/shamdun.trade" target="_blank" rel="noopener" class="sn-menu-item">
-                    <span class="sn-menu-icon">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-                            <defs>
-                                <radialGradient id="ig-grad" cx="30%" cy="107%" r="150%">
-                                    <stop offset="0%" stop-color="#fdf497"/>
-                                    <stop offset="5%" stop-color="#fdf497"/>
-                                    <stop offset="45%" stop-color="#fd5949"/>
-                                    <stop offset="60%" stop-color="#d6249f"/>
-                                    <stop offset="90%" stop-color="#285AEB"/>
-                                </radialGradient>
-                            </defs>
-                            <rect x="2" y="2" width="20" height="20" rx="5" fill="url(#ig-grad)"/>
-                            <circle cx="12" cy="12" r="4" stroke="#fff" stroke-width="2" fill="none"/>
-                            <circle cx="17.5" cy="6.5" r="1.3" fill="#fff"/>
-                        </svg>
-                    </span>
-                    <span class="sn-menu-label">اینستاگرام</span>
-                </a>
-                <a href="https://t.me/nabzebazar_shamdun" target="_blank" rel="noopener" class="sn-menu-item">
-                    <span class="sn-menu-icon" style="font-size:18px;">✈️</span>
-                    <span class="sn-menu-label">تلگرام</span>
-                </a>
-            </div>
-        </div>
-    </aside>
-
-    <!-- Ticker Bar -->
+    <!-- Ticker Bar (زیر navbar جدید) -->
     <div class="ticker-bar">
         <div class="ticker-content" id="tickerContent">
             <span class="ticker-item">⏳ در حال دریافت قیمت‌ها...</span>
@@ -790,20 +564,31 @@
 
     <!-- Main Container -->
     <div class="main-container">
-
         <!-- Page Header -->
         <div class="page-header">
             <h1>📊 نمای بازار</h1>
             <p>قیمت‌های لحظه‌ای طلا، ارز، فلزات و انرژی</p>
-            <div class="datetime-box">
-                <span class="dot"></span>
-                <span id="dateTime">--</span>
-            </div>
+        </div>
+
+        <!-- Quick Access -->
+        <div class="quick-access">
+            <a href="courses.html" class="quick-btn">
+                <span class="icon">📚</span> دوره‌های آموزشی
+            </a>
+            <a href="personality-test.html" class="quick-btn">
+                <span class="icon">🧠</span> تست شخصیت مالی
+            </a>
+            <a href="news.html" class="quick-btn">
+                <span class="icon">📰</span> اخبار اقتصادی
+            </a>
+            <a href="dictionary.html" class="quick-btn">
+                <span class="icon">🎓</span> دانش‌نامه
+            </a>
         </div>
 
         <!-- Manager Card -->
         <div class="manager-card">
-            <img src="me.png" alt="مدیر آکادمی" class="manager-avatar">
+            <img src="me.png" alt="مدیر آکادمی" class="manager-avatar" onerror="this.style.display='none'">
             <div class="manager-info">
                 <div class="manager-name">👋 سلام! من مهدی‌ام، سازنده‌ی شمعدون</div>
                 <div class="manager-text">
@@ -1089,7 +874,7 @@
             </div>
         </div>
 
-        <!-- Bubble Section - فقط نقره ۹۹۹ -->
+        <!-- Bubble Section -->
         <div class="bubble-section">
             <div class="section-title">💎 قیمت نقره ۹۹۹</div>
             <div class="bubble-card">
@@ -1139,7 +924,6 @@
             <p>دوره‌های آموزشی آکادمی شمعدون، مسیر حرفه‌ای شدن رو از صفر تا صد برات هموار می‌کنه.</p>
             <a href="courses.html" class="cta-btn">مشاهده دوره‌ها ←</a>
         </div>
-
     </div>
 
     <!-- Footer -->
@@ -1169,93 +953,18 @@
             </a>
         </div>
         © ۱۴۰۵ آکادمی شمعدون | تمامی حقوق محفوظ است
+    </footer>
+
+    <!-- Navbar مشترک -->
+    <script src="navbar.js"></script>
 
     <script src="https://s3.tradingview.com/tv.js"></script>
     <script>
         // ==========================================
         // تنظیمات
         // ==========================================
-        const SUPABASE_URL = 'https://jcwwilatvstjrohvhtss.supabase.co';
-        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Impjd3dpbGF0dnN0anJvaHZodHNzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODk3MDY4NTYsImV4cCI6MjEwNTI4Mjg1Nn0.eUC89RJy6-60nNGrSeYeDADzLxz-kWTGy4DbNGVi6MM';
         const BRS_API = 'BvUj3cMKWNBK87KW9xhNccCThmfVbd8u';
-        const ADMIN_EMAIL = 'beat.market.office@gmail.com';
         const OUNCE_TO_GRAM = 31.1035;
-
-        // ==========================================
-        // Navbar
-        // ==========================================
-        function setupNavbar() {
-            const hamburger = document.getElementById('snHamburger');
-            const sidebar = document.getElementById('snSidebar');
-            const overlay = document.getElementById('snOverlay');
-            const closeBtn = document.getElementById('snClose');
-
-            hamburger.addEventListener('click', () => {
-                sidebar.classList.add('show');
-                overlay.classList.add('show');
-            });
-            closeBtn.addEventListener('click', () => {
-                sidebar.classList.remove('show');
-                overlay.classList.remove('show');
-            });
-            overlay.addEventListener('click', () => {
-                sidebar.classList.remove('show');
-                overlay.classList.remove('show');
-            });
-            document.addEventListener('keydown', (e) => {
-                if (e.key === 'Escape') {
-                    sidebar.classList.remove('show');
-                    overlay.classList.remove('show');
-                }
-            });
-
-            const currentPath = window.location.pathname.split('/').pop() || 'index.html';
-            document.querySelectorAll('.sn-menu-item').forEach(item => {
-                if (item.getAttribute('href') === currentPath) {
-                    item.classList.add('active');
-                }
-            });
-        }
-
-        async function checkUser() {
-            try {
-                const client = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-                const { data } = await client.auth.getSession();
-
-                const userArea = document.getElementById('snUserArea');
-                const logoutBtn = document.getElementById('snLogoutBtn');
-
-                if (data && data.session && data.session.user) {
-                    const user = data.session.user;
-                    const fullName = user.user_metadata?.full_name || user.email || 'کاربر';
-                    const firstLetter = fullName.charAt(0).toUpperCase();
-
-                    userArea.innerHTML = `
-                        <a href="dashboard.html" class="sn-user-avatar" title="${escapeHtml(fullName)}">
-                            ${firstLetter}
-                        </a>
-                    `;
-
-                    if (logoutBtn) {
-                        logoutBtn.style.display = 'flex';
-                        logoutBtn.addEventListener('click', async (e) => {
-                            e.preventDefault();
-                            if (confirm('می‌خوای خارج بشی؟')) {
-                                await client.auth.signOut();
-                                window.location.href = 'login.html';
-                            }
-                        });
-                    }
-
-                    if (user.email === ADMIN_EMAIL) {
-                        const adminLink = document.getElementById('snAdminLink');
-                        if (adminLink) adminLink.style.display = 'flex';
-                    }
-                }
-            } catch (e) {
-                console.log('Navbar error:', e);
-            }
-        }
 
         // ==========================================
         // ابزارها
@@ -1272,26 +981,14 @@
                 const n = Number(num);
                 if (isNaN(n)) return '--';
                 let str;
-                if (decimals > 0) {
-                    str = n.toFixed(decimals);
-                } else {
-                    str = Math.round(n).toString();
-                }
+                if (decimals > 0) { str = n.toFixed(decimals); }
+                else { str = Math.round(n).toString(); }
                 const parts = str.split('.');
                 parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
                 str = parts.join('.');
                 const persianDigits = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
                 return str.replace(/\d/g, d => persianDigits[d]);
-            } catch (e) {
-                return '--';
-            }
-        }
-
-        function escapeHtml(text) {
-            if (!text) return '';
-            const div = document.createElement('div');
-            div.textContent = text;
-            return div.innerHTML;
+            } catch (e) { return '--'; }
         }
 
         function setChange(elId, changePercent) {
@@ -1319,18 +1016,6 @@
         }
 
         // ==========================================
-        // تاریخ و ساعت
-        // ==========================================
-        function updateDateTime() {
-            const now = new Date();
-            const options = { year: 'numeric', month: 'long', day: 'numeric', weekday: 'long' };
-            const persianDate = new Intl.DateTimeFormat('fa-IR', options).format(now);
-            const timeString = now.toLocaleTimeString('fa-IR', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
-            const el = document.getElementById('dateTime');
-            if (el) el.textContent = persianDate + ' - ' + timeString;
-        }
-
-        // ==========================================
         // Tab Switching
         // ==========================================
         function switchMarket(marketId, btn) {
@@ -1352,6 +1037,7 @@
             const container = document.getElementById('tvchart');
             if (!container) return;
             container.innerHTML = '';
+
             tvWidget = new TradingView.widget({
                 "container_id": "tvchart",
                 "autosize": true,
@@ -1380,6 +1066,7 @@
         function toggleFullscreen() {
             const chartSection = document.getElementById('chartSection');
             const btn = document.getElementById('fullscreenBtn');
+
             if (chartSection.classList.contains('chart-fullscreen')) {
                 chartSection.classList.remove('chart-fullscreen');
                 btn.innerHTML = '⛶ تمام‌صفحه';
@@ -1410,7 +1097,6 @@
         let globalUSD = 0;
         let globalGold18Market = 0;
 
-        // وزن سکه‌ها (گرم) - عیار ۰.۹
         const COIN_WEIGHTS = {
             'coin-emami': 8.133,
             'coin-bahar': 8.133,
@@ -1420,7 +1106,6 @@
         };
 
         async function fetchBrsApi() {
-            // 1. Gold + Currency
             try {
                 const res = await fetch(`https://Api.BrsApi.ir/Market/Gold_Currency.php?key=${BRS_API}`);
                 const data = await res.json();
@@ -1436,14 +1121,11 @@
                         IR_COIN_QUARTER: { price: 'coin-quarter-price', change: 'coin-quarter-change' },
                         IR_COIN_1G: { price: 'coin-1g-price', change: 'coin-1g-change' },
                     };
-
                     data.gold.forEach(item => {
                         if (items[item.symbol]) {
                             setPrice(items[item.symbol].price, item.price, 'تومان');
                             setChange(items[item.symbol].change, item.change_percent);
-                            if (item.symbol === 'IR_GOLD_18K') {
-                                globalGold18Market = parseFloat(item.price);
-                            }
+                            if (item.symbol === 'IR_GOLD_18K') globalGold18Market = parseFloat(item.price);
                         }
                     });
                 }
@@ -1463,22 +1145,16 @@
                         SAR: { price: 'sar-price', change: 'sar-change' },
                         QAR: { price: 'qar-price', change: 'qar-change' },
                     };
-
                     data.currency.forEach(item => {
                         if (currencyMap[item.symbol]) {
                             setPrice(currencyMap[item.symbol].price, item.price, 'تومان');
                             setChange(currencyMap[item.symbol].change, item.change_percent);
-                            if (item.symbol === 'USD') {
-                                globalUSD = parseFloat(item.price);
-                            }
+                            if (item.symbol === 'USD') globalUSD = parseFloat(item.price);
                         }
                     });
                 }
-            } catch (e) {
-                console.log('BrsApi Gold_Currency error:', e);
-            }
+            } catch (e) { console.log('BrsApi Gold_Currency error:', e); }
 
-            // 2. Commodity
             try {
                 const res = await fetch(`https://Api.BrsApi.ir/Market/Commodity.php?key=${BRS_API}`);
                 const data = await res.json();
@@ -1490,7 +1166,6 @@
                         XPTUSD: { price: 'ounce-platinum-price', change: 'ounce-platinum-change' },
                         XPDUSD: { price: 'ounce-palladium-price', change: 'ounce-palladium-change' },
                     };
-
                     data.metal_precious.forEach(item => {
                         if (preciousMap[item.symbol]) {
                             setPrice(preciousMap[item.symbol].price, item.price, 'دلار', 2);
@@ -1509,7 +1184,6 @@
                         Pb: { price: 'lead-price', change: 'lead-change' },
                         Ni: { price: 'nickel-price', change: 'nickel-change' },
                     };
-
                     data.metal_base.forEach(item => {
                         if (baseMap[item.symbol]) {
                             setPrice(baseMap[item.symbol].price, item.price, 'دلار', 0);
@@ -1526,7 +1200,6 @@
                         RBOB: { price: 'rbob-price', change: 'rbob-change' },
                         GASOIL: { price: 'gasoil-price', change: 'gasoil-change' },
                     };
-
                     data.energy.forEach(item => {
                         if (energyMap[item.symbol]) {
                             setPrice(energyMap[item.symbol].price, item.price, 'دلار', 2);
@@ -1534,11 +1207,8 @@
                         }
                     });
                 }
-            } catch (e) {
-                console.log('BrsApi Commodity error:', e);
-            }
+            } catch (e) { console.log('BrsApi Commodity error:', e); }
 
-            // محاسبه ارزش ذاتی نقره ۹۹۹ و پلاتین و پالادیوم (گرم)
             if (globalOunceSilver > 0 && globalUSD > 0) {
                 const silver999Gram = (globalOunceSilver * globalUSD * 0.999) / OUNCE_TO_GRAM;
                 setPrice('silver999-price', Math.round(silver999Gram), 'تومان');
@@ -1558,7 +1228,6 @@
                 }
             }
 
-            // محاسبه حباب‌ها
             calculateBubbles();
         }
 
@@ -1588,18 +1257,15 @@
                         setChange(cryptoMap[key].change, data[key].usd_24h_change);
                     }
                 });
-            } catch (e) {
-                console.log('Crypto error:', e);
-            }
+            } catch (e) { console.log('Crypto error:', e); }
         }
 
         // ==========================================
-        // محاسبه حباب طلا + سکه‌ها
+        // محاسبه حباب
         // ==========================================
         function calculateBubbles() {
             if (globalOunceGold <= 0 || globalUSD <= 0) return;
 
-            // ===== حباب طلا ۱۸ عیار =====
             const gold18Calc = (globalOunceGold * globalUSD * 0.75) / OUNCE_TO_GRAM;
             if (globalGold18Market > 0) {
                 const bubble = ((globalGold18Market - gold18Calc) / gold18Calc) * 100;
@@ -1610,7 +1276,6 @@
                 }
             }
 
-            // ===== حباب سکه‌ها =====
             const coinsMap = {
                 'coin-emami': { price: 'coin-emami-price', bubble: 'coin-emami-bubble' },
                 'coin-bahar': { price: 'coin-bahar-price', bubble: 'coin-bahar-bubble' },
@@ -1623,21 +1288,17 @@
                 const weight = COIN_WEIGHTS[key];
                 const marketEl = document.getElementById(coinsMap[key].price);
                 const bubbleEl = document.getElementById(coinsMap[key].bubble);
-
                 if (!marketEl || !bubbleEl) return;
 
                 const marketPrice = parseFloat(marketEl.dataset.raw || 0);
                 if (marketPrice <= 0) return;
 
-                // ارزش ذاتی سکه: (انس طلا × دلار × 0.9 × وزن) ÷ 31.1035
                 const intrinsic = (globalOunceGold * globalUSD * 0.9 * weight) / OUNCE_TO_GRAM;
                 const bubble = ((marketPrice - intrinsic) / intrinsic) * 100;
-
                 bubbleEl.textContent = '💎 حباب: ' + (bubble >= 0 ? '+' : '') + toPersianNumber(bubble.toFixed(2)) + '٪';
                 bubbleEl.className = 'bubble-inline ' + (bubble > 0.5 ? 'up' : bubble < -0.5 ? 'down' : 'neutral');
             });
 
-            // ===== نقره ۹۹۹ (فقط ارزش ذاتی) =====
             if (globalOunceSilver > 0) {
                 const silver999Calc = (globalOunceSilver * globalUSD * 0.999) / OUNCE_TO_GRAM;
                 setPrice('bubble-silver-ounce', globalOunceSilver, 'دلار', 2);
@@ -1657,40 +1318,33 @@
             if (gold18El && gold18El.textContent !== '--') {
                 tickerHTML += `<span class="ticker-item">🥇 طلا ۱۸: <span class="value">${gold18El.textContent}</span> ${gold18Chg?.textContent || ''}</span>`;
             }
-
             const usdEl = document.getElementById('usd-price');
             const usdChg = document.getElementById('usd-change');
             if (usdEl && usdEl.textContent !== '--') {
                 tickerHTML += `<span class="ticker-item">💵 دلار: <span class="value">${usdEl.textContent}</span> ${usdChg?.textContent || ''}</span>`;
             }
-
             const ounceEl = document.getElementById('ounce-gold-price');
             if (ounceEl && ounceEl.textContent !== '--') {
                 tickerHTML += `<span class="ticker-item">🏅 انس طلا: <span class="value">${ounceEl.textContent}</span></span>`;
             }
-
             const silverEl = document.getElementById('ounce-silver-price');
             if (silverEl && silverEl.textContent !== '--') {
                 tickerHTML += `<span class="ticker-item">🥈 انس نقره: <span class="value">${silverEl.textContent}</span></span>`;
             }
-
             const btcEl = document.getElementById('btc-price');
             const btcChg = document.getElementById('btc-change');
             if (btcEl && btcEl.textContent !== '--') {
                 tickerHTML += `<span class="ticker-item">₿ بیت‌کوین: <span class="value">${btcEl.textContent}</span> ${btcChg?.textContent || ''}</span>`;
             }
-
             const ethEl = document.getElementById('eth-price');
             const ethChg = document.getElementById('eth-change');
             if (ethEl && ethEl.textContent !== '--') {
                 tickerHTML += `<span class="ticker-item">⟠ اتریوم: <span class="value">${ethEl.textContent}</span> ${ethChg?.textContent || ''}</span>`;
             }
-
             const platEl = document.getElementById('ounce-platinum-price');
             if (platEl && platEl.textContent !== '--') {
                 tickerHTML += `<span class="ticker-item">🔶 پلاتین: <span class="value">${platEl.textContent}</span></span>`;
             }
-
             const brentEl = document.getElementById('brent-price');
             if (brentEl && brentEl.textContent !== '--') {
                 tickerHTML += `<span class="ticker-item">🛢️ برنت: <span class="value">${brentEl.textContent}</span></span>`;
@@ -1708,13 +1362,7 @@
         // راه‌اندازی
         // ==========================================
         document.addEventListener('DOMContentLoaded', async () => {
-            setupNavbar();
-            checkUser();
-            updateDateTime();
-            setInterval(updateDateTime, 1000);
-
             initChart('BINANCE:BTCUSDT');
-
             await fetchBrsApi();
             await fetchCrypto();
             updateTicker();
@@ -1727,4 +1375,4 @@
         });
     </script>
 </body>
-</html>    </footer>
+</html>
