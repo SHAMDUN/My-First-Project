@@ -1,91 +1,121 @@
 <!DOCTYPE html>
-<html lang="fa">
+<html lang="fa" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>دوره‌های آموزشی | آکادمی شمعدون</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css">
+    <meta name="theme-color" content="#d4af37">
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <style>
+        :root {
+            --bg-primary: #0a0a0f;
+            --bg-secondary: #14141c;
+            --bg-card: #1a1a24;
+            --gold: #d4af37;
+            --gold-light: #f4d47c;
+            --gold-dark: #a8862a;
+            --green: #10b981;
+            --red: #ef4444;
+            --blue: #3b82f6;
+            --white: #f8fafc;
+            --gray: #94a3b8;
+        }
         * { margin: 0; padding: 0; box-sizing: border-box; }
-
         body {
-            font-family: Tahoma, sans-serif;
-            background-color: #0f172a;
+            font-family: 'Vazirmatn', Tahoma, sans-serif;
+            background-color: var(--bg-primary);
             background-image: 
-                radial-gradient(circle at 0% 0%, rgba(245, 158, 11, 0.12) 0%, transparent 40%),
-                radial-gradient(circle at 100% 100%, rgba(59, 130, 246, 0.08) 0%, transparent 40%),
-                linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
-            background-size: 100% 100%, 100% 100%, 50px 50px, 50px 50px;
+                radial-gradient(circle at 0% 0%, rgba(212, 175, 55, 0.08) 0%, transparent 40%),
+                radial-gradient(circle at 100% 100%, rgba(59, 130, 246, 0.06) 0%, transparent 40%),
+                linear-gradient(rgba(255, 255, 255, 0.015) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
+            background-size: 100% 100%, 100% 100%, 60px 60px, 60px 60px;
             background-attachment: fixed;
+            color: var(--white);
             min-height: 100vh;
             direction: rtl;
-            padding: 20px 15px;
+            overflow-x: hidden;
+        }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        .container { max-width: 900px; margin: 0 auto; }
-
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 25px;
-            flex-wrap: wrap;
-            gap: 15px;
+        .main-container { max-width: 1200px; margin: 0 auto; padding: 100px 20px 40px; }
+        .page-header { text-align: center; margin-bottom: 30px; animation: fadeInUp 0.6s ease-out; }
+        .page-header h1 {
+            font-size: 36px; font-weight: 900; margin-bottom: 10px;
+            background: linear-gradient(135deg, var(--gold), var(--gold-light));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
-        .header h1 { color: #f59e0b; font-size: 24px; }
-        .header a {
-            color: #94a3b8;
-            text-decoration: none;
-            font-size: 14px;
-            padding: 8px 16px;
-            border: 2px solid #334155;
-            border-radius: 25px;
-            transition: 0.3s;
-            background: rgba(30, 41, 59, 0.7);
-            backdrop-filter: blur(10px);
-        }
-        .header a:hover { background: #334155; color: #fff; }
+        .page-header p { color: var(--gray); font-size: 14px; }
 
+        /* ===== کارت وضعیت دانشجو ===== */
         .student-status {
-            background: rgba(30, 41, 59, 0.85);
-            backdrop-filter: blur(15px);
-            border-radius: 20px;
+            background: linear-gradient(135deg, var(--bg-card), var(--bg-secondary));
+            border: 1px solid rgba(212, 175, 55, 0.15);
+            border-right: 4px solid var(--gold);
+            border-radius: 18px;
             padding: 20px;
-            margin-bottom: 25px;
-            border: 1px solid rgba(255,255,255,0.05);
+            margin-bottom: 20px;
             display: flex;
             align-items: center;
             gap: 15px;
             flex-wrap: wrap;
+            animation: fadeInUp 0.6s ease-out;
         }
         .status-icon {
-            width: 50px;
-            height: 50px;
+            width: 55px; height: 55px;
             border-radius: 50%;
-            background: linear-gradient(135deg, #f59e0b, #d97706);
+            background: linear-gradient(135deg, var(--gold), var(--gold-dark));
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 24px;
+            font-size: 26px;
             flex-shrink: 0;
         }
         .status-content { flex: 1; min-width: 200px; }
-        .status-content h2 { color: #f1f5f9; font-size: 17px; margin-bottom: 5px; }
-        .status-content p { color: #94a3b8; font-size: 13px; line-height: 1.6; }
-        .status-content .highlight { color: #f59e0b; font-weight: bold; }
-
-        .info-banner {
-            background: linear-gradient(135deg, rgba(245, 158, 11, 0.15), rgba(217, 119, 6, 0.1));
-            border: 1px solid rgba(245, 158, 11, 0.3);
-            border-radius: 20px;
-            padding: 20px;
-            margin-bottom: 25px;
-            text-align: right;
+        .status-content h2 {
+            color: var(--white);
+            font-size: 17px;
+            font-weight: 800;
+            margin-bottom: 6px;
         }
-        .info-banner h3 { color: #f59e0b; font-size: 16px; margin-bottom: 12px; }
-        .info-banner p { color: #cbd5e1; font-size: 13px; line-height: 1.9; margin-bottom: 8px; }
-        .info-banner ul { list-style: none; padding-right: 0; margin: 8px 0; }
+        .status-content p {
+            color: var(--gray);
+            font-size: 13px;
+            line-height: 1.7;
+        }
+        .status-content .highlight {
+            color: var(--gold);
+            font-weight: 800;
+        }
+
+        /* ===== بنر توضیحی ===== */
+        .info-banner {
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.1), rgba(212, 175, 55, 0.03));
+            border: 1px solid rgba(212, 175, 55, 0.25);
+            border-radius: 18px;
+            padding: 20px;
+            margin-bottom: 20px;
+            animation: fadeInUp 0.6s ease-out 0.1s backwards;
+        }
+        .info-banner h3 {
+            color: var(--gold);
+            font-size: 16px;
+            font-weight: 800;
+            margin-bottom: 12px;
+        }
+        .info-banner p {
+            color: #cbd5e1;
+            font-size: 13px;
+            line-height: 1.9;
+            margin-bottom: 8px;
+        }
+        .info-banner strong { color: var(--gold); font-weight: 800; }
+        .info-banner ul { list-style: none; margin: 8px 0; }
         .info-banner li {
             color: #cbd5e1;
             font-size: 13px;
@@ -95,83 +125,92 @@
         }
         .info-banner li::before {
             content: "◆";
-            color: #f59e0b;
+            color: var(--gold);
             position: absolute;
             right: 0;
             font-size: 10px;
         }
+        .info-banner li strong { color: var(--gold); }
 
+        /* ===== فیلترها ===== */
         .filters {
             display: flex;
             gap: 8px;
             margin-bottom: 20px;
             flex-wrap: wrap;
+            animation: fadeInUp 0.6s ease-out 0.15s backwards;
         }
         .filter-btn {
-            background: rgba(30, 41, 59, 0.7);
-            color: #94a3b8;
-            border: 1px solid #334155;
-            padding: 8px 16px;
-            border-radius: 20px;
+            background: rgba(20, 20, 28, 0.6);
+            color: var(--gray);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 10px 18px;
+            border-radius: 12px;
             font-size: 13px;
+            font-weight: 700;
+            font-family: inherit;
             cursor: pointer;
-            font-family: Tahoma, sans-serif;
             transition: 0.3s;
         }
-        .filter-btn.active { background: #f59e0b; color: #0f172a; border-color: #f59e0b; }
-        .filter-btn:hover:not(.active) { background: rgba(245, 158, 11, 0.15); color: #f59e0b; }
+        .filter-btn.active {
+            background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+            color: var(--bg-primary);
+            border-color: var(--gold);
+            box-shadow: 0 5px 20px rgba(212, 175, 55, 0.3);
+        }
+        .filter-btn:hover:not(.active) {
+            color: var(--gold);
+            border-color: rgba(212, 175, 55, 0.4);
+        }
 
+        /* ===== گرید دوره‌ها ===== */
         .courses-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 15px;
+            gap: 18px;
             margin-bottom: 25px;
         }
-
         .course-card {
-            background: rgba(30, 41, 59, 0.85);
-            backdrop-filter: blur(15px);
-            border-radius: 20px;
+            background: linear-gradient(135deg, var(--bg-card), var(--bg-secondary));
+            border: 1px solid rgba(212, 175, 55, 0.15);
+            border-radius: 18px;
             overflow: hidden;
-            border: 1px solid rgba(255,255,255,0.05);
             transition: 0.3s;
             cursor: pointer;
             position: relative;
+            display: flex;
+            flex-direction: column;
         }
         .course-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 15px 40px rgba(0,0,0,0.4);
-            border-color: rgba(245, 158, 11, 0.3);
+            border-color: rgba(212, 175, 55, 0.5);
+            box-shadow: 0 15px 40px rgba(212, 175, 55, 0.15);
         }
-        .course-card.locked { opacity: 0.7; }
-        .course-card.locked:hover { transform: none; cursor: not-allowed; }
-
+        .course-card.locked {
+            opacity: 0.65;
+        }
+        .course-card.locked:hover {
+            transform: none;
+            cursor: not-allowed;
+            border-color: rgba(212, 175, 55, 0.15);
+            box-shadow: none;
+        }
         .course-image {
             height: 130px;
-            background: linear-gradient(135deg, #1e293b, #0f172a);
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.15), rgba(20, 20, 28, 0.9));
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 50px;
+            font-size: 55px;
             position: relative;
-        }
-        .course-image::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            height: 50%;
-            background: linear-gradient(transparent, rgba(30, 41, 59, 0.9));
         }
         .lock-overlay {
             position: absolute;
-            top: 10px;
-            right: 10px;
+            top: 12px;
+            right: 12px;
             background: rgba(239, 68, 68, 0.9);
             color: #fff;
-            width: 35px;
-            height: 35px;
+            width: 36px; height: 36px;
             border-radius: 50%;
             display: flex;
             align-items: center;
@@ -181,73 +220,150 @@
         }
         .free-badge {
             position: absolute;
-            top: 10px;
-            left: 10px;
-            background: linear-gradient(135deg, #22c55e, #16a34a);
+            top: 12px;
+            left: 12px;
+            background: linear-gradient(135deg, var(--green), #059669);
             color: #fff;
-            padding: 4px 12px;
-            border-radius: 15px;
+            padding: 5px 12px;
+            border-radius: 12px;
             font-size: 11px;
-            font-weight: bold;
+            font-weight: 800;
             z-index: 2;
         }
         .new-badge {
             position: absolute;
-            top: 10px;
-            left: 10px;
-            background: linear-gradient(135deg, #3b82f6, #2563eb);
+            top: 12px;
+            left: 12px;
+            background: linear-gradient(135deg, var(--blue), #1d4ed8);
             color: #fff;
-            padding: 4px 12px;
-            border-radius: 15px;
+            padding: 5px 12px;
+            border-radius: 12px;
             font-size: 11px;
-            font-weight: bold;
+            font-weight: 800;
             z-index: 2;
         }
-
-        .course-content { padding: 15px; }
-        .course-level { color: #f59e0b; font-size: 11px; font-weight: bold; margin-bottom: 5px; }
-        .course-title { color: #f1f5f9; font-size: 15px; font-weight: bold; margin-bottom: 8px; line-height: 1.4; }
-        .course-desc { color: #94a3b8; font-size: 12px; line-height: 1.6; margin-bottom: 12px; }
-        .course-meta { display: flex; gap: 12px; margin-bottom: 12px; font-size: 11px; color: #94a3b8; flex-wrap: wrap; }
-        .course-meta span { display: flex; align-items: center; gap: 4px; }
+        .course-content { padding: 18px; flex: 1; display: flex; flex-direction: column; }
+        .course-level {
+            color: var(--gold);
+            font-size: 11px;
+            font-weight: 800;
+            margin-bottom: 6px;
+        }
+        .course-title {
+            color: var(--white);
+            font-size: 15px;
+            font-weight: 800;
+            margin-bottom: 10px;
+            line-height: 1.5;
+        }
+        .course-desc {
+            color: var(--gray);
+            font-size: 12.5px;
+            line-height: 1.7;
+            margin-bottom: 12px;
+            flex: 1;
+        }
+        .course-meta {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 12px;
+            font-size: 11px;
+            color: var(--gray);
+            flex-wrap: wrap;
+        }
+        .course-meta span {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
         .course-footer {
             display: flex;
             justify-content: space-between;
             align-items: center;
             padding-top: 12px;
-            border-top: 1px solid rgba(255,255,255,0.05);
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
         }
-        .course-price { color: #4ade80; font-weight: bold; font-size: 14px; }
-        .course-progress { font-size: 11px; color: #60a5fa; }
+        .course-price {
+            color: var(--green);
+            font-weight: 800;
+            font-size: 14px;
+        }
+        .course-progress {
+            font-size: 11px;
+            color: var(--blue);
+            font-weight: 700;
+        }
 
+        /* ===== آمار ===== */
         .stats-section {
-            background: rgba(30, 41, 59, 0.85);
-            backdrop-filter: blur(15px);
-            border-radius: 20px;
+            background: linear-gradient(135deg, var(--bg-card), var(--bg-secondary));
+            border: 1px solid rgba(212, 175, 55, 0.15);
+            border-radius: 18px;
             padding: 20px;
-            border: 1px solid rgba(255,255,255,0.05);
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
             gap: 15px;
             text-align: center;
         }
-        .stat-item .icon { font-size: 24px; margin-bottom: 5px; }
-        .stat-item .value { color: #f59e0b; font-size: 20px; font-weight: bold; }
-        .stat-item .label { color: #94a3b8; font-size: 11px; }
+        .stat-item .icon { font-size: 26px; margin-bottom: 6px; }
+        .stat-item .value {
+            color: var(--gold);
+            font-size: 22px;
+            font-weight: 900;
+            margin-bottom: 4px;
+        }
+        .stat-item .label {
+            color: var(--gray);
+            font-size: 11px;
+            font-weight: 600;
+        }
 
-        .loading { text-align: center; padding: 50px 20px; color: #94a3b8; }
+        /* ===== Loading ===== */
+        .loading {
+            text-align: center;
+            padding: 50px 20px;
+            color: var(--gray);
+            grid-column: 1 / -1;
+        }
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid rgba(212, 175, 55, 0.2);
+            border-top-color: var(--gold);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 15px;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
 
+        /* ===== Footer ===== */
+        .footer {
+            text-align: center;
+            padding: 30px 20px;
+            color: var(--gray);
+            font-size: 12px;
+            border-top: 1px solid rgba(212, 175, 55, 0.1);
+            margin-top: 40px;
+        }
+
+        /* ===== Responsive ===== */
         @media (max-width: 600px) {
-            .header h1 { font-size: 20px; }
+            .main-container { padding: 90px 15px 30px; }
+            .page-header h1 { font-size: 26px; }
             .courses-grid { grid-template-columns: 1fr; }
+            .info-banner { padding: 15px; }
+            .info-banner h3 { font-size: 14px; }
+            .info-banner p, .info-banner li { font-size: 12px; }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="header">
+
+    <div class="main-container">
+        <!-- Page Header -->
+        <div class="page-header">
             <h1>📚 دوره‌های آموزشی</h1>
-            <a href="dashboard.html">⬅ بازگشت</a>
+            <p>مسیر حرفه‌ای شدن در بازارهای مالی — از صفر تا صد</p>
         </div>
 
         <!-- کارت وضعیت دانشجو -->
@@ -263,17 +379,15 @@
         <div class="info-banner">
             <h3>📚 ساختار آموزشی آکادمی شمعدون</h3>
             <p>
-                دوره‌های آکادمی شمعدون بر اساس <strong style="color: #f59e0b;">اصول آموزشی استاندارد</strong> طراحی شدن.
-                هر دوره، <strong style="color: #f59e0b;">پیش‌نیاز دوره‌ی قبلی</strong> محسوب می‌شه و دسترسی به دوره‌ی بعدی،
-                <strong style="color: #f59e0b;">فقط بعد از تکمیل موفق دوره‌ی فعلی</strong> امکان‌پذیره.
+                دوره‌های آکادمی شمعدون بر اساس <strong>اصول آموزشی استاندارد</strong> طراحی شدن. هر دوره، <strong>پیش‌نیاز دوره‌ی قبلی</strong> محسوب می‌شه و دسترسی به دوره‌ی بعدی، <strong>فقط بعد از تکمیل موفق دوره‌ی فعلی</strong> امکان‌پذیره.
             </p>
-            <p><strong style="color: #f59e0b;">دلیل این ساختار:</strong></p>
+            <p><strong>دلیل این ساختار:</strong></p>
             <ul>
                 <li><strong>توالی منطقی:</strong> مفاهیم بازارهای مالی، وابسته به هم هستن. بدون درک پایه، مفاهیم پیشرفته قابل هضم نیستن.</li>
                 <li><strong>جلوگیری از سردرگمی:</strong> کاربری که مستقیم بره سراغ «ICT» بدون دونستن «پرایس اکشن»، فقط وقت و سرمایه‌اش رو از دست می‌ده.</li>
                 <li><strong>یادگیری عمیق:</strong> تکرار و مرور دروس قبلی، باعث تثبیت مطالب در ذهن می‌شه.</li>
             </ul>
-            <p style="color: #f59e0b; font-weight: bold; margin-top: 10px;">
+            <p style="color: var(--gold); font-weight: 800; margin-top: 10px;">
                 🎯 هدف ما: تربیت معامله‌گرهای حرفه‌ای و اصولی، نه معامله‌گرهای سطحی.
             </p>
         </div>
@@ -288,7 +402,7 @@
 
         <!-- لیست دوره‌ها -->
         <div class="courses-grid" id="coursesGrid">
-            <div class="loading">⏳ در حال بارگذاری دوره‌ها...</div>
+            <div class="loading"><div class="spinner"></div>⏳ در حال بارگذاری دوره‌ها...</div>
         </div>
 
         <!-- آمار -->
@@ -299,7 +413,7 @@
                 <div class="label">دوره آموزشی</div>
             </div>
             <div class="stat-item">
-                <div class="icon">🎓</div>
+                <div class="icon">🎁</div>
                 <div class="value" id="statFree">--</div>
                 <div class="label">دوره رایگان</div>
             </div>
@@ -316,11 +430,20 @@
         </div>
     </div>
 
+    <!-- Footer -->
+    <footer class="footer">
+        © ۱۴۰۵ آکادمی شمعدون | تمامی حقوق محفوظ است
+    </footer>
+
+    <!-- Navbar مشترک -->
+    <script src="navbar.js"></script>
+
     <script>
         const SUPABASE_URL = 'https://jcwwilatvstjrohvhtss.supabase.co';
         const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Impjd3dpbGF0dnN0anJvaHZodHNzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODk3MDY4NTYsImV4cCI6MjEwNTI4Mjg1Nn0.eUC89RJy6-60nNGrSeYeDADzLxz-kWTGy4DbNGVi6MM';
         const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-        // ===== دوره‌های ثابت (قدیمی) =====
+
+        // ===== دوره‌های ثابت =====
         const staticCourses = [
             { id: 1, title: 'اقتصاد کلان و خرد', desc: 'مفاهیم پایه اقتصاد، تورم، نرخ بهره و تأثیر آن‌ها بر بازارهای مالی', icon: '📊', level: 'beginner', levelText: '🟢 مبتدی', duration: '۲ ساعت', lessons: 8, price: 'رایگان', isFree: true, prerequisite: null },
             { id: 2, title: 'آشنایی با بازارهای مالی', desc: 'بورس، فارکس، کریپتو، طلا و مسکن - هر بازار چطور کار می‌کند؟', icon: '💹', level: 'beginner', levelText: '🟢 مبتدی', duration: '۲ ساعت', lessons: 10, price: 'رایگان', isFree: true, prerequisite: 1 },
@@ -329,17 +452,12 @@
             { id: 5, title: 'آشنایی با ارز دیجیتال', desc: 'بیت‌کوین، اتریوم، بلاک‌چین و کیف پول‌ها - ورود به دنیای کریپتو', icon: '₿', level: 'beginner', levelText: '🟢 مبتدی', duration: '۳ ساعت', lessons: 10, price: 'رایگان', isFree: true, prerequisite: 4 }
         ];
 
-        // ===== دوره‌های داینامیک (از Supabase) =====
         let dynamicCourses = [];
-
-        // ===== همه دوره‌ها =====
         let allCourses = [...staticCourses];
-
         let currentUser = null;
         let completedCourses = [];
         let inProgressCourses = [];
 
-        // ===== تبدیل level انگلیسی به متن فارسی =====
         function getLevelText(level) {
             if (level === 'مبتدی' || level === 'beginner') return '🟢 مبتدی';
             if (level === 'متوسط' || level === 'intermediate') return '🟡 متوسط';
@@ -354,7 +472,6 @@
             return 'beginner';
         }
 
-        // ===== بارگذاری دوره‌های Supabase =====
         async function loadDynamicCourses() {
             try {
                 const { data, error } = await supabaseClient
@@ -367,9 +484,8 @@
                     return;
                 }
 
-                // تبدیل به فرمت مورد نیاز
                 dynamicCourses = (data || []).map(c => ({
-                    id: 'db-' + c.id,  // ID جدا برای جلوگیری از تداخل
+                    id: 'db-' + c.id,
                     dbId: c.id,
                     title: c.title || 'بدون عنوان',
                     desc: c.description || 'توضیحات ثبت نشده',
@@ -381,7 +497,7 @@
                     price: 'رایگان',
                     isFree: true,
                     prerequisite: null,
-                    isNew: true  // نشان جدید
+                    isNew: true
                 }));
 
                 allCourses = [...staticCourses, ...dynamicCourses];
@@ -390,11 +506,9 @@
             }
         }
 
-        // ===== بارگذاری اطلاعات کاربر =====
         async function loadUserData() {
             try {
                 const { data: { session } } = await supabaseClient.auth.getSession();
-
                 if (!session) {
                     window.location.href = 'login.html';
                     return;
@@ -404,9 +518,7 @@
                 completedCourses = currentUser.user_metadata?.completed_courses || [];
                 inProgressCourses = currentUser.user_metadata?.in_progress_courses || [];
 
-                // بارگذاری دوره‌های Supabase
                 await loadDynamicCourses();
-
                 updateStudentStatus();
                 renderCourses();
                 loadStats();
@@ -416,7 +528,6 @@
             }
         }
 
-        // ===== نمایش وضعیت دانشجو =====
         function updateStudentStatus() {
             const statusTitle = document.getElementById('statusTitle');
             const statusText = document.getElementById('statusText');
@@ -431,7 +542,6 @@
             }
         }
 
-        // ===== نمایش دوره‌ها =====
         function renderCourses(filter = 'all') {
             const grid = document.getElementById('coursesGrid');
             let filteredCourses = allCourses;
@@ -462,7 +572,6 @@
                     progressHTML = '<span class="course-progress">📖 در حال یادگیری</span>';
                 }
 
-                // اگه دوره داینامیکه (از Supabase)، از dbId استفاده کن
                 const courseIdForClick = course.dbId ? course.dbId : course.id;
                 const isDynamic = !!course.dbId;
 
@@ -492,7 +601,6 @@
             }).join('');
         }
 
-        // ===== آمار =====
         async function loadStats() {
             try {
                 document.getElementById('statCourses').textContent = allCourses.length;
@@ -503,27 +611,22 @@
                     const { count, error } = await supabaseClient
                         .from('profiles')
                         .select('*', { count: 'exact', head: true });
-                    if (!error && count !== null) {
-                        studentCount = count;
-                    }
-                } catch (e) {
-                    console.error('خطا در شمارش کاربران:', e);
-                }
+                    if (!error && count !== null) studentCount = count;
+                } catch (e) { console.error('خطا در شمارش کاربران:', e); }
                 document.getElementById('statStudents').textContent = studentCount;
+
                 document.getElementById('statRating').textContent = '--';
             } catch (error) {
                 console.error('خطا در آمار:', error);
             }
         }
 
-        // ===== فیلتر دوره‌ها =====
         function filterCourses(level, btn) {
             document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
             renderCourses(level);
         }
 
-        // ===== رفتن به دوره =====
         function goToCourse(courseId, isDynamic = false) {
             if (!isDynamic) {
                 const course = staticCourses.find(c => c.id === courseId);
