@@ -1,0 +1,1021 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>سوالات متداول | آکادمی شمعدون</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css">
+    <meta name="theme-color" content="#d4af37">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style>
+        :root {
+            --bg-primary: #0a0a0f;
+            --bg-secondary: #14141c;
+            --bg-card: #1a1a24;
+            --gold: #d4af37;
+            --gold-light: #f4d47c;
+            --gold-dark: #a8862a;
+            --green: #10b981;
+            --red: #ef4444;
+            --blue: #3b82f6;
+            --purple: #8b5cf6;
+            --white: #f8fafc;
+            --gray: #94a3b8;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Vazirmatn', Tahoma, sans-serif;
+            background-color: var(--bg-primary);
+            background-image: 
+                radial-gradient(circle at 0% 0%, rgba(212, 175, 55, 0.08) 0%, transparent 40%),
+                radial-gradient(circle at 100% 100%, rgba(59, 130, 246, 0.06) 0%, transparent 40%),
+                linear-gradient(rgba(255, 255, 255, 0.015) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
+            background-size: 100% 100%, 100% 100%, 60px 60px, 60px 60px;
+            background-attachment: fixed;
+            color: var(--white);
+            min-height: 100vh;
+            direction: rtl;
+            overflow-x: hidden;
+        }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes slideDown {
+            from { opacity: 0; max-height: 0; }
+            to { opacity: 1; max-height: 500px; }
+        }
+
+        .main-container { max-width: 900px; margin: 0 auto; padding: 100px 20px 40px; }
+
+        /* ============= Header ============= */
+        .page-header {
+            text-align: center;
+            margin-bottom: 35px;
+            animation: fadeInUp 0.6s ease-out;
+        }
+        .page-header h1 {
+            font-size: 38px;
+            font-weight: 900;
+            margin-bottom: 12px;
+            background: linear-gradient(135deg, var(--gold), var(--gold-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .page-header p {
+            color: var(--gray);
+            font-size: 15px;
+            line-height: 1.8;
+        }
+
+        /* ============= Search ============= */
+        .search-box {
+            max-width: 600px;
+            margin: 0 auto 25px;
+            position: relative;
+        }
+        .search-box input {
+            width: 100%;
+            padding: 15px 50px 15px 20px;
+            background: rgba(20, 20, 28, 0.8);
+            border: 2px solid rgba(212, 175, 55, 0.2);
+            border-radius: 15px;
+            color: var(--white);
+            font-family: inherit;
+            font-size: 14px;
+            outline: none;
+            transition: 0.3s;
+        }
+        .search-box input:focus {
+            border-color: var(--gold);
+            box-shadow: 0 0 0 4px rgba(212, 175, 55, 0.1);
+        }
+        .search-box input::placeholder { color: var(--gray); }
+        .search-icon {
+            position: absolute;
+            right: 18px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 20px;
+            pointer-events: none;
+        }
+
+        /* ============= Category Tabs ============= */
+        .category-tabs {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 30px;
+            overflow-x: auto;
+            padding-bottom: 8px;
+            scrollbar-width: thin;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .category-tab {
+            padding: 11px 20px;
+            background: rgba(20, 20, 28, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            color: var(--gray);
+            font-family: inherit;
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.3s;
+            white-space: nowrap;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .category-tab:hover {
+            color: var(--gold);
+            border-color: rgba(212, 175, 55, 0.4);
+        }
+        .category-tab.active {
+            background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+            color: var(--bg-primary);
+            border-color: var(--gold);
+            box-shadow: 0 5px 20px rgba(212, 175, 55, 0.3);
+        }
+        .category-tab .count {
+            background: rgba(0, 0, 0, 0.2);
+            padding: 2px 8px;
+            border-radius: 8px;
+            font-size: 11px;
+        }
+        .category-tab.active .count {
+            background: rgba(0, 0, 0, 0.15);
+        }
+
+        /* ============= FAQ List ============= */
+        .faq-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 40px;
+        }
+        .faq-item {
+            background: linear-gradient(135deg, var(--bg-card), var(--bg-secondary));
+            border: 1px solid rgba(212, 175, 55, 0.15);
+            border-radius: 16px;
+            overflow: hidden;
+            transition: 0.3s;
+            animation: fadeInUp 0.4s ease-out backwards;
+        }
+        .faq-item:hover {
+            border-color: rgba(212, 175, 55, 0.4);
+        }
+        .faq-item.open {
+            border-color: var(--gold);
+            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.15);
+        }
+        .faq-question {
+            padding: 20px 24px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            transition: 0.3s;
+            user-select: none;
+        }
+        .faq-question:hover {
+            background: rgba(212, 175, 55, 0.03);
+        }
+        .faq-question-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex: 1;
+        }
+        .faq-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            background: rgba(212, 175, 55, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            flex-shrink: 0;
+        }
+        .faq-question-text {
+            color: var(--white);
+            font-size: 15px;
+            font-weight: 700;
+            line-height: 1.5;
+        }
+        .faq-toggle {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: rgba(212, 175, 55, 0.1);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--gold);
+            font-size: 18px;
+            font-weight: 900;
+            flex-shrink: 0;
+            transition: 0.3s;
+        }
+        .faq-item.open .faq-toggle {
+            background: var(--gold);
+            color: var(--bg-primary);
+            transform: rotate(45deg);
+        }
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease;
+        }
+        .faq-item.open .faq-answer {
+            max-height: 500px;
+        }
+        .faq-answer-content {
+            padding: 0 24px 22px 72px;
+            color: #cbd5e1;
+            font-size: 14px;
+            line-height: 2;
+        }
+        .faq-answer-content p {
+            margin-bottom: 12px;
+        }
+        .faq-answer-content p:last-child {
+            margin-bottom: 0;
+        }
+        .faq-answer-content strong {
+            color: var(--gold-light);
+            font-weight: 800;
+        }
+        .faq-answer-content ul,
+        .faq-answer-content ol {
+            margin: 10px 20px 10px 0;
+            padding-right: 20px;
+        }
+        .faq-answer-content li {
+            margin-bottom: 6px;
+        }
+        .faq-answer-content a {
+            color: var(--gold);
+            text-decoration: none;
+            font-weight: 700;
+        }
+        .faq-answer-content a:hover {
+            text-decoration: underline;
+        }
+
+        /* ============= Empty State ============= */
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--gray);
+        }
+        .empty-state .icon {
+            font-size: 60px;
+            margin-bottom: 15px;
+            opacity: 0.5;
+        }
+        .empty-state h3 {
+            color: var(--gold);
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+        .empty-state p {
+            font-size: 14px;
+        }
+
+        /* ============= CTA ============= */
+        .cta-box {
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.1), rgba(59, 130, 246, 0.05));
+            border: 1px solid rgba(212, 175, 55, 0.25);
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+            animation: fadeInUp 0.6s ease-out 0.3s backwards;
+        }
+        .cta-box h3 {
+            color: var(--white);
+            font-size: 20px;
+            font-weight: 900;
+            margin-bottom: 10px;
+        }
+        .cta-box p {
+            color: var(--gray);
+            font-size: 14px;
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+        .cta-box .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 14px 28px;
+            background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+            color: var(--bg-primary);
+            text-decoration: none;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 800;
+            transition: 0.3s;
+            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.3);
+        }
+        .cta-box .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(212, 175, 55, 0.5);
+        }
+
+        /* ============= Footer ============= */
+        .footer {
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--gray);
+            font-size: 12px;
+            border-top: 1px solid rgba(212, 175, 55, 0.1);
+            margin-top: 40px;
+        }
+        .footer-social {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+        .footer-social a {
+            width: 46px;
+            height: 46px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: 0.3s;
+            overflow: hidden;
+        }
+        .footer-social a svg {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+        .footer-social a:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(212, 175, 55, 0.3);
+        }
+
+        /* ============= Responsive ============= */
+        @media (max-width: 600px) {
+            .main-container { padding: 90px 15px 30px; }
+            .page-header h1 { font-size: 26px; }
+            .page-header p { font-size: 13px; }
+            .faq-question { padding: 16px 18px; }
+            .faq-question-text { font-size: 13.5px; }
+            .faq-answer-content { padding: 0 18px 18px 18px; font-size: 13px; }
+            .faq-icon { width: 32px; height: 32px; font-size: 16px; }
+            .faq-toggle { width: 28px; height: 28px; font-size: 16px; }
+            .cta-box { padding: 25px 20px; }
+            .cta-box h3 { font-size: 17px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="main-container">
+        <!-- Header -->
+        <div class="page-header">
+            <h1>❓ سوالات متداول</h1>
+            <p>پاسخ سوالات پرتکرار کاربران آکادمی شمعدون</p>
+        </div>
+
+        <!-- Search -->
+        <div class="search-box">
+            <input type="text" id="searchInput" placeholder="جستجو در سوالات..." oninput="handleSearch()">
+            <span class="search-icon">🔍</span>
+        </div>
+
+        <!-- Categories -->
+        <div class="category-tabs" id="categoryTabs"></div>
+
+        <!-- FAQ List -->
+        <div class="faq-list" id="faqList"></div>
+
+        <!-- CTA -->
+        <div class="cta-box">
+            <h3>💬 سوال دیگه‌ای داری؟</h3>
+            <p>اگه جواب سوالت رو پیدا نکردی، با ما در تماس باش. تیم پشتیبانی سریع جواب میده.</p>
+            <a href="contact.html" class="btn">📞 تماس با ما</a>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-social">
+            <a href="https://instagram.com/shamdun.trade" target="_blank" rel="noopener" title="اینستاگرام">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <radialGradient id="ig-faq" cx="30%" cy="107%" r="150%">
+                            <stop offset="0%" stop-color="#fdf497"/>
+                            <stop offset="5%" stop-color="#fdf497"/>
+                            <stop offset="45%" stop-color="#fd5949"/>
+                            <stop offset="60%" stop-color="#d6249f"/>
+                            <stop offset="90%" stop-color="#285AEB"/>
+                        </radialGradient>
+                    </defs>
+                    <rect width="24" height="24" rx="6" fill="url(#ig-faq)"/>
+                    <circle cx="12" cy="12" r="4.5" stroke="#fff" stroke-width="2" fill="none"/>
+                    <circle cx="17.5" cy="6.5" r="1.5" fill="#fff"/>
+                </svg>
+            </a>
+            <a href="https://t.me/nabzebazar_shamdun" target="_blank" rel="noopener" title="تلگرام">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="12" cy="12" r="12" fill="#0088cc"/>
+                    <path d="M5.5 11.5L17.5 6.5L15 17L12 13L10 16.5L9.8 12L16 8L7.5 11L5.5 11.5Z" fill="#fff"/>
+                </svg>
+            </a>
+        </div>
+        © ۱۴۰۵ آکادمی شمعدون | تمامی حقوق محفوظ است
+    </footer>
+
+    <script src="navbar.js"></script>
+
+    <script>
+        // ==========================================
+        // FAQ Data
+        // ==========================================
+        const FAQ_DATA = [
+            // ===== حساب کاربری =====
+            {
+                category: 'account',
+                icon: '🔐',
+                question: 'چطور توی آکادمی شمعدون ثبت‌نام کنم؟',
+                answer: `
+                    <p>برای ثبت‌نام مراحل زیر رو انجام بده:</p>
+                    <ol>
+                        <li>روی دکمه <strong>«ورود / ثبت‌نام»</strong> توی صفحه اصلی بزن</li>
+                        <li>تب <strong>«ثبت‌نام»</strong> رو انتخاب کن</li>
+                        <li>نام، ایمیل و رمز عبور خودت رو وارد کن</li>
+                        <li>دکمه <strong>«ایجاد حساب کاربری»</strong> رو بزن</li>
+                    </ol>
+                    <p>همین! بعد از ثبت‌نام، به صورت خودکار وارد پنل کاربری میشی.</p>
+                `
+            },
+            {
+                category: 'account',
+                icon: '🔑',
+                question: 'رمز عبورم رو فراموش کردم، چیکار کنم؟',
+                answer: `
+                    <p>نگران نباش! با این مراحل رمزت رو بازیابی کن:</p>
+                    <ol>
+                        <li>توی صفحه ورود، روی <strong>«رمز عبور خود را فراموش کرده‌اید؟»</strong> بزن</li>
+                        <li>ایمیل خودت رو وارد کن</li>
+                        <li>یه لینک بازیابی برات ایمیل میشه</li>
+                        <li>روی لینک بزن و رمز جدید بذار</li>
+                    </ol>
+                    <p>⚠️ اگه ایمیل بازیابی رو دریافت نکردی، <strong>پوشه اسپم</strong> رو چک کن.</p>
+                `
+            },
+            {
+                category: 'account',
+                icon: '✏️',
+                question: 'چطور نام خودم رو تغییر بدم؟',
+                answer: `
+                    <p>برای ویرایش نام:</p>
+                    <ol>
+                        <li>برو به <strong>پنل کاربری</strong></li>
+                        <li>روی دکمه <strong>«✏️ ویرایش نام»</strong> بزن</li>
+                        <li>نام جدیدت رو وارد کن</li>
+                        <li>دکمه <strong>«💾 ذخیره»</strong> رو بزن</li>
+                    </ol>
+                `
+            },
+            {
+                category: 'account',
+                icon: '🔒',
+                question: 'چطور رمز عبورم رو تغییر بدم؟',
+                answer: `
+                    <p>برای تغییر رمز:</p>
+                    <ol>
+                        <li>برو به <strong>پنل کاربری</strong></li>
+                        <li>روی دکمه <strong>«🔒 تغییر رمز»</strong> بزن</li>
+                        <li>رمز جدید (حداقل ۶ کاراکتر) و تکرارش رو وارد کن</li>
+                        <li>دکمه <strong>«💾 ذخیره»</strong> رو بزن</li>
+                    </ol>
+                `
+            },
+            {
+                category: 'account',
+                icon: '🚪',
+                question: 'چطور از حسابم خارج بشم؟',
+                answer: `
+                    <p>دو راه داری:</p>
+                    <ul>
+                        <li>از منوی کناری (همبرگر) روی <strong>«🚪 خروج»</strong> بزن</li>
+                        <li>یا از پنل کاربری روی دکمه <strong>«🚪 خروج»</strong> بزن</li>
+                    </ul>
+                    <p>بعد از خروج، به صفحه اصلی برمی‌گردی.</p>
+                `
+            },
+            {
+                category: 'account',
+                icon: '👑',
+                question: 'چطور ادمین بشم؟',
+                answer: `
+                    <p>دسترسی ادمین فقط برای <strong>مدیر آکادمی</strong> است و از طریق ایمیل رسمی فعال میشه.</p>
+                    <p>اگه علاقه‌مند به همکاری هستی، از طریق صفحه <a href="contact.html">تماس با ما</a> درخواستت رو بفرست.</p>
+                `
+            },
+
+            // ===== دوره‌ها =====
+            {
+                category: 'courses',
+                icon: '📚',
+                question: 'دوره‌های آکادمی رایگان هستن؟',
+                answer: `
+                    <p>بله! <strong>همه دوره‌های فعلی آکادمی شمعدون کاملاً رایگان</strong> هستن.</p>
+                    <p>هدف ما اینه که هیچ‌کس به خاطر هزینه، از یادگیری بازارهای مالی محروم نشه.</p>
+                    <p>دوره‌های رایگان شامل:</p>
+                    <ul>
+                        <li>📊 اقتصاد کلان و خرد</li>
+                        <li>💹 آشنایی با بازارهای مالی</li>
+                        <li>📈 مبانی تحلیل تکنیکال</li>
+                        <li>🛡️ مدیریت ریسک مقدماتی</li>
+                        <li>₿ آشنایی با ارز دیجیتال</li>
+                    </ul>
+                `
+            },
+            {
+                category: 'courses',
+                icon: '🎓',
+                question: 'چطور توی یه دوره ثبت‌نام کنم؟',
+                answer: `
+                    <p>مراحل ثبت‌نام در دوره:</p>
+                    <ol>
+                        <li>برو به صفحه <strong>دوره‌های آموزشی</strong></li>
+                        <li>روی دوره مورد نظر کلیک کن</li>
+                        <li>دکمه <strong>«🎓 ثبت‌نام رایگان»</strong> رو بزن</li>
+                        <li>حالا می‌تونی به همه درس‌های دوره دسترسی داشته باشی</li>
+                    </ol>
+                `
+            },
+            {
+                category: 'courses',
+                icon: '🔒',
+                question: 'چرا بعضی دوره‌ها قفل هستن؟',
+                answer: `
+                    <p>دوره‌ها <strong>مرحله‌ای</strong> طراحی شدن و هر دوره پیش‌نیاز دوره قبلیه.</p>
+                    <p>به عنوان مثال، برای دسترسی به دوره <strong>«مدیریت ریسک مقدماتی»</strong>، ابتدا باید دوره <strong>«مبانی تحلیل تکنیکال»</strong> رو تکمیل کنی.</p>
+                    <p>💡 دلیل این ساختار: بدون درک مفاهیم پایه، مفاهیم پیشرفته قابل هضم نیستن.</p>
+                `
+            },
+            {
+                category: 'courses',
+                icon: '✅',
+                question: 'چطور یه درس رو تکمیل کنم؟',
+                answer: `
+                    <p>در هر درس، پایین صفحه دکمه <strong>«✅ تکمیل این درس»</strong> وجود داره.</p>
+                    <p>بعد از زدن این دکمه، پیشرفتت ذخیره میشه و می‌تونی به درس بعدی بری.</p>
+                    <p>وقتی همه درس‌های یه دوره تکمیل بشن، اون دوره به عنوان <strong>«تکمیل‌شده»</strong> علامت‌گذاری میشه.</p>
+                `
+            },
+            {
+                category: 'courses',
+                icon: '⭐',
+                question: 'چطور به دوره‌ها امتیاز بدم؟',
+                answer: `
+                    <p>بعد از <strong>تکمیل کامل یه دوره</strong>، فرم بازخورد باز میشه:</p>
+                    <ol>
+                        <li>امتیاز ستاره‌ای بد (از ۱ تا ۵)</li>
+                        <li>متن نظرت رو بنویس (اختیاری)</li>
+                        <li>اگه دوست داشتی، پیشنهاد دوره تکمیلی بده</li>
+                        <li>دکمه <strong>«📤 ثبت بازخورد»</strong> رو بزن</li>
+                    </ol>
+                    <p>نظرت ممکنه توی صفحه <a href="about.html">درباره ما</a> نمایش داده بشه!</p>
+                `
+            },
+            {
+                category: 'courses',
+                icon: '📱',
+                question: 'دوره‌ها روی موبایل هم کار می‌کنن؟',
+                answer: `
+                    <p>بله! کل پلتفرم آکادمی شمعدون <strong>ریسپانسیو</strong> هست و روی همه دستگاه‌ها (موبایل، تبلت، لپ‌تاپ، دسکتاپ) به خوبی کار می‌کنه.</p>
+                    <p>حتی می‌تونی پلتفرم رو روی موبایل <strong>نصب کنی</strong> (PWA) و مثل یه اپلیکیشن ازش استفاده کنی.</p>
+                `
+            },
+
+            // ===== مالی و سرمایه‌گذاری =====
+            {
+                category: 'finance',
+                icon: '💰',
+                question: 'حداقل سرمایه برای شروع چقدره؟',
+                answer: `
+                    <p>هیچ حداقلی وجود نداره! می‌تونی از <strong>۱۰۰ هزار تومان</strong> شروع کنی.</p>
+                    <p>مهم اینه که:</p>
+                    <ul>
+                        <li>اول یاد بگیری و آموزش ببینی</li>
+                        <li>با مبلغ کم شروع کنی</li>
+                        <li>هرگز پولی که بهش نیاز داری رو سرمایه‌گذاری نکنی</li>
+                    </ul>
+                `
+            },
+            {
+                category: 'finance',
+                icon: '🎯',
+                question: 'کدوم بازار برای شروع مناسبه؟',
+                answer: `
+                    <p>بستگی به <strong>پروفایل ریسک</strong> و <strong>دانش</strong> تو داره.</p>
+                    <p>پیشنهاد ما:</p>
+                    <ul>
+                        <li>🛡️ <strong>محافظه‌کار:</strong> طلا، دلار، صندوق درآمد ثابت</li>
+                        <li>⚖️ <strong>متعادل:</strong> ترکیب طلا + بورس + ارز</li>
+                        <li>🚀 <strong>جسور:</strong> بورس + کریپتو + ارز</li>
+                    </ul>
+                    <p>📌 برای تعیین پروفایل ریسکت، <a href="personality-test.html">تست شخصیت مالی</a> رو انجام بده.</p>
+                `
+            },
+            {
+                category: 'finance',
+                icon: '📊',
+                question: 'چطور سرمایه‌گذاری اصولی شروع کنم؟',
+                answer: `
+                    <p>مراحل پیشنهادی:</p>
+                    <ol>
+                        <li><strong>آموزش ببین</strong> — دوره‌های رایگان آکادمی رو ببین</li>
+                        <li><strong>صندوق اضطراری بساز</strong> — معادل ۶ ماه هزینه زندگی</li>
+                        <li><strong>تست شخصیت مالی</strong> بده تا پروفایلت رو بشناسی</li>
+                        <li><strong>با مبلغ کم شروع کن</strong> — ریسک رو تجربه کن</li>
+                        <li><strong>تنوع‌بخشی کن</strong> — همه پول رو توی یه بازار نذار</li>
+                    </ol>
+                `
+            },
+            {
+                category: 'finance',
+                icon: '⚠️',
+                question: 'آیا آکادمی سیگنال می‌ده؟',
+                answer: `
+                    <p><strong>خیر!</strong> آکادمی شمعدون هیچ‌وقت سیگنال خرید یا فروش نمی‌ده.</p>
+                    <p>تحلیل‌هایی که منتشر می‌کنیم <strong>فقط جنبه آموزشی</strong> دارن و به معنی توصیه قطعی نیستن.</p>
+                    <p>هیچ‌کس نمی‌تونه آینده بازار رو پیش‌بینی کنه. تصمیم نهایی باید بر اساس <strong>تحلیل شخصی</strong> و <strong>مدیریت ریسک</strong> خودت باشه.</p>
+                `
+            },
+            {
+                category: 'finance',
+                icon: '🛡️',
+                question: 'چطور سرمایه‌ام رو از دست ندم؟',
+                answer: `
+                    <p>قوانین طلایی مدیریت ریسک:</p>
+                    <ul>
+                        <li>✅ حداکثر <strong>۲٪</strong> سرمایه‌ات رو در هر معامله ریسک کن</li>
+                        <li>✅ همیشه <strong>حد ضرر</strong> بذار</li>
+                        <li>✅ <strong>تنوع‌بخشی</strong> کن (همه پول توی یه دارایی نذار)</li>
+                        <li>✅ از <strong>اهرم بالا</strong> دوری کن</li>
+                        <li>✅ <strong>صندوق اضطراری</strong> داشته باش</li>
+                        <li>✅ بر اساس <strong>احساسات</strong> تصمیم نگیر</li>
+                    </ul>
+                `
+            },
+            {
+                category: 'finance',
+                icon: '💎',
+                question: 'قیمت‌های لحظه‌ای از کجا میان؟',
+                answer: `
+                    <p>داده‌های قیمتی آکادمی از منابع معتبر زیر تأمین میشن:</p>
+                    <ul>
+                        <li>🥇 <strong>طلا و ارز:</strong> BrsApi</li>
+                        <li>₿ <strong>کریپتو:</strong> CoinGecko</li>
+                        <li>📊 <strong>بورس:</strong> TSETMC (بورس تهران)</li>
+                    </ul>
+                    <p>قیمت‌ها به صورت لحظه‌ای به‌روزرسانی میشن.</p>
+                `
+            },
+
+            // ===== تحلیل و بازار =====
+            {
+                category: 'analysis',
+                icon: '📊',
+                question: 'تحلیل‌های سایت هر چند وقت یه بار به‌روز میشن؟',
+                answer: `
+                    <p>تحلیل‌ها دو دسته هستن:</p>
+                    <ul>
+                        <li>🔥 <strong>تحلیل روزانه</strong> — هر روز صبح منتشر میشه</li>
+                        <li>📈 <strong>تحلیل هفتگی</strong> — هر شنبه منتشر میشه</li>
+                    </ul>
+                    <p>می‌تونی از صفحه <a href="analysis.html">تحلیل اقتصادی</a> همه رو ببینی.</p>
+                `
+            },
+            {
+                category: 'analysis',
+                icon: '🤖',
+                question: 'تحلیل هوشمند چیه؟',
+                answer: `
+                    <p>تحلیل هوشمند ترکیبی از <strong>هوش مصنوعی</strong> و <strong>داده‌های لحظه‌ای بازار</strong> است که به صورت خودکار تولید میشه.</p>
+                    <p>این تحلیل‌ها شامل:</p>
+                    <ul>
+                        <li>وضعیت کلی بازار</li>
+                        <li>سطوح کلیدی</li>
+                        <li>سیگنال‌های تکنیکال</li>
+                        <li>پیشنهادات مدیریت ریسک</li>
+                    </ul>
+                    <p>⚠️ باز هم تأکید می‌کنیم: این تحلیل‌ها سیگنال قطعی نیستن.</p>
+                `
+            },
+            {
+                category: 'analysis',
+                icon: '📉',
+                question: 'چطور چارت‌ها رو ببینم؟',
+                answer: `
+                    <p>دو نوع چارت داریم:</p>
+                    <ol>
+                        <li><a href="home.html">نمای بازار</a> — چارت TradingView برای کریپتو، طلا، نفت، مس</li>
+                        <li><a href="bourse.html">بورس ایران</a> — چارت سهام بورس تهران با تمام ابزارهای تحلیل تکنیکال</li>
+                    </ol>
+                `
+            },
+            {
+                category: 'analysis',
+                icon: '📰',
+                question: 'اخبار از کدوم منابع میان؟',
+                answer: `
+                    <p>اخبار از <strong>۱۶ منبع معتبر</strong> داخلی و بین‌المللی جمع‌آوری میشن:</p>
+                    <ul>
+                        <li>اقتصاد آنلاین</li>
+                        <li>دنیای اقتصاد</li>
+                        <li>شانا</li>
+                        <li>صدای بورس</li>
+                        <li>ایراسین، ایسنا، ایبنا</li>
+                        <li>خبرآنلاین، مهر، تجارت‌نیوز</li>
+                        <li>CoinDesk, ForexLive, Federal Reserve</li>
+                        <li>و ...</li>
+                    </ul>
+                    <p>اخبار به صورت خودکار دسته‌بندی میشن: ارز، بورس، کریپتو، اقتصادی، جهانی.</p>
+                `
+            },
+            {
+                category: 'analysis',
+                icon: '📚',
+                question: 'دانش‌نامه چیه و به چه دردی می‌خوره؟',
+                answer: `
+                    <p>دانش‌نامه اقتصادی یه <strong>مرجع اصطلاحات</strong> بازارهای مالیه که شامل:</p>
+                    <ul>
+                        <li>📚 اقتصاد کلان (تورم، نقدینگی، GDP)</li>
+                        <li>📈 بورس ایران (شاخص کل، P/E، EPS)</li>
+                        <li>💵 ارز و طلا (انس، حباب، دلار نیمایی)</li>
+                        <li>₿ ارز دیجیتال (بیت‌کوین، DeFi، NFT)</li>
+                        <li>📊 تحلیل تکنیکال (حمایت، RSI، فیبوناچی)</li>
+                    </ul>
+                    <p>هر اصطلاح با <strong>تعریف + مثال</strong> توضیح داده شده.</p>
+                `
+            },
+            {
+                category: 'analysis',
+                icon: '🧮',
+                question: 'ماشین‌حساب مالی چیکار می‌کنه؟',
+                answer: `
+                    <p>ماشین‌حساب مالی آکادمی <strong>۸ ابزار کاربردی</strong> داره:</p>
+                    <ul>
+                        <li>💰 DCA (سرمایه‌گذاری دوره‌ای)</li>
+                        <li>🏦 سود مرکب</li>
+                        <li>🎯 هدف مالی</li>
+                        <li>⚖️ مقایسه دو سرمایه‌گذاری</li>
+                        <li>📉 محاسبه تورم</li>
+                        <li>⚖️ نقطه سربه‌سر</li>
+                        <li>🎲 تحلیل ریسک</li>
+                        <li>🎯 مدیریت پوزیشن</li>
+                    </ul>
+                    <p>لینک: <a href="calculator.html">ماشین‌حساب مالی</a></p>
+                `
+            },
+
+            // ===== پرتفوی =====
+            {
+                category: 'portfolio',
+                icon: '💼',
+                question: 'پرتفوی من چیه؟',
+                answer: `
+                    <p><strong>پرتفوی من</strong> یه داشبورد مدیریت سرمایه‌گذاریه که بهت اجازه میده:</p>
+                    <ul>
+                        <li>📊 دارایی‌هات رو ثبت کنی (طلا، ارز، سهام، کریپتو...)</li>
+                        <li>📈 سود/ضرر لحظه‌ای ببینی</li>
+                        <li>📉 نمودار تخصیص دارایی‌ها رو ببینی</li>
+                        <li>🤖 تحلیل هوشمند از سبدت بگیری</li>
+                    </ul>
+                    <p>لینک: <a href="portfolio.html">پرتفوی من</a></p>
+                `
+            },
+            {
+                category: 'portfolio',
+                icon: '➕',
+                question: 'چطور دارایی به پرتفویم اضافه کنم؟',
+                answer: `
+                    <p>مراحل:</p>
+                    <ol>
+                        <li>برو به <a href="portfolio.html">پرتفوی من</a></li>
+                        <li>روی دکمه <strong>«➕ افزودن دارایی جدید»</strong> بزن</li>
+                        <li>دسته‌بندی و دارایی رو انتخاب کن</li>
+                        <li>مقدار، قیمت خرید و تاریخ خرید رو وارد کن</li>
+                        <li>دکمه <strong>«💾 ذخیره»</strong> رو بزن</li>
+                    </ol>
+                    <p>💡 برای سرعت بیشتر، از دکمه‌های <strong>Quick Add</strong> (طلا، دلار، BTC...) استفاده کن.</p>
+                `
+            },
+            {
+                category: 'portfolio',
+                icon: '📊',
+                question: 'قیمت‌های پرتفوی از کجا میان؟',
+                answer: `
+                    <p>قیمت‌ها <strong>خودکار</strong> از منابع معتبر لود میشن:</p>
+                    <ul>
+                        <li>🥇 طلا، سکه، ارز → BrsApi</li>
+                        <li>🥈 نقره ۹۹۹ → محاسبه از انس نقره × دلار</li>
+                        <li>₿ کریپتو → CoinGecko</li>
+                        <li>📊 سهام بورس → TSETMC</li>
+                    </ul>
+                    <p>هر بار که صفحه رو باز کنی، قیمت‌ها به‌روز میشن.</p>
+                `
+            },
+            {
+                category: 'portfolio',
+                icon: '📤',
+                question: 'چطور از پرتفویم خروجی بگیرم؟',
+                answer: `
+                    <p>دکمه <strong>«📤 خروجی CSV»</strong> رو توی صفحه پرتفوی بزن.</p>
+                    <p>یه فایل CSV با اطلاعات کامل (نام دارایی، مقدار، قیمت خرید، سود/ضرر، ...) دانلود میشه که می‌تونی توی <strong>Excel</strong> بازش کنی.</p>
+                `
+            },
+            {
+                category: 'portfolio',
+                icon: '🤖',
+                question: 'تحلیل AI پرتفوی چطور کار می‌کنه؟',
+                answer: `
+                    <p>وقتی روی دکمه <strong>«🤖 تحلیل کن با AI»</strong> بزنی:</p>
+                    <ol>
+                        <li>اطلاعات سبدت جمع‌آوری میشه</li>
+                        <li>به هوش مصنوعی ارسال میشه</li>
+                        <li>تحلیل حرفه‌ای دریافت میشه که شامل:
+                            <ul>
+                                <li>خلاصه سبد</li>
+                                <li>تحلیل تخصیص دارایی‌ها</li>
+                                <li>ریسک‌ها</li>
+                                <li>پیشنهادات بهبود</li>
+                            </ul>
+                        </li>
+                    </ol>
+                    <p>⏱️ زمان تحلیل: ~۱۰ ثانیه</p>
+                `
+            },
+            {
+                category: 'portfolio',
+                icon: '💎',
+                question: 'نقره ۹۹۹ و تتر گلد چطور محاسبه میشن؟',
+                answer: `
+                    <p><strong>نقره ۹۹۹:</strong> از فرمول زیر محاسبه میشه:</p>
+                    <p style="background:rgba(212,175,55,0.1); padding:10px; border-radius:8px; direction:ltr; text-align:left;">
+                        Silver 999 = (Ounce Silver × USD × 0.999) ÷ 31.1035
+                    </p>
+                    <p><strong>تتر گلد (XAUT) و پی‌اکس گلد (PAXG):</strong> از CoinGecko به دلار لود میشن و به تومان تبدیل میشن.</p>
+                `
+            }
+        ];
+
+        // ==========================================
+        // Category Info
+        // ==========================================
+        const CATEGORIES = {
+            all: { name: 'همه', icon: '📚' },
+            account: { name: 'حساب کاربری', icon: '🔐' },
+            courses: { name: 'دوره‌ها', icon: '📚' },
+            finance: { name: 'مالی و سرمایه', icon: '💰' },
+            analysis: { name: 'تحلیل و بازار', icon: '📊' },
+            portfolio: { name: 'پرتفوی', icon: '💼' }
+        };
+
+        let currentCategory = 'all';
+        let currentSearch = '';
+
+        // ==========================================
+        // Render Category Tabs
+        // ==========================================
+        function renderCategoryTabs() {
+            const tabs = document.getElementById('categoryTabs');
+            const counts = { all: FAQ_DATA.length };
+
+            FAQ_DATA.forEach(item => {
+                counts[item.category] = (counts[item.category] || 0) + 1;
+            });
+
+            let html = '';
+            Object.keys(CATEGORIES).forEach(key => {
+                const cat = CATEGORIES[key];
+                const count = counts[key] || 0;
+                if (key === 'all' || count > 0) {
+                    html += `
+                        <button class="category-tab ${currentCategory === key ? 'active' : ''}" onclick="switchCategory('${key}', this)">
+                            <span>${cat.icon} ${cat.name}</span>
+                            <span class="count">${toFa(count)}</span>
+                        </button>
+                    `;
+                }
+            });
+
+            tabs.innerHTML = html;
+        }
+
+        // ==========================================
+        // Render FAQ List
+        // ==========================================
+        function renderFAQ() {
+            const list = document.getElementById('faqList');
+            let filtered = FAQ_DATA;
+
+            if (currentCategory !== 'all') {
+                filtered = filtered.filter(item => item.category === currentCategory);
+            }
+
+            if (currentSearch) {
+                const term = currentSearch.toLowerCase();
+                filtered = filtered.filter(item =>
+                    item.question.toLowerCase().includes(term) ||
+                    item.answer.toLowerCase().includes(term)
+                );
+            }
+
+            if (filtered.length === 0) {
+                list.innerHTML = `
+                    <div class="empty-state">
+                        <div class="icon">🔍</div>
+                        <h3>سوالی پیدا نشد</h3>
+                        <p>جستجوی دیگری امتحان کن یا با ما تماس بگیر</p>
+                    </div>
+                `;
+                return;
+            }
+
+            list.innerHTML = filtered.map((item, idx) => `
+                <div class="faq-item" style="animation-delay: ${Math.min(idx * 0.03, 0.5)}s">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <div class="faq-question-left">
+                            <div class="faq-icon">${item.icon}</div>
+                            <div class="faq-question-text">${item.question}</div>
+                        </div>
+                        <div class="faq-toggle">+</div>
+                    </div>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            ${item.answer}
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // ==========================================
+        // Toggle FAQ Item
+        // ==========================================
+        function toggleFAQ(questionEl) {
+            const item = questionEl.parentElement;
+            const wasOpen = item.classList.contains('open');
+
+            // بستن همه
+            document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+
+            // اگه بسته بود، باز کن
+            if (!wasOpen) {
+                item.classList.add('open');
+            }
+        }
+
+        // ==========================================
+        // Switch Category
+        // ==========================================
+        function switchCategory(category, btn) {
+            currentCategory = category;
+            document.querySelectorAll('.category-tab').forEach(b => b.classList.remove('active'));
+            if (btn) btn.classList.add('active');
+            renderFAQ();
+        }
+
+        // ==========================================
+        // Search
+        // ==========================================
+        function handleSearch() {
+            currentSearch = document.getElementById('searchInput').value.trim();
+            renderFAQ();
+        }
+
+        // ==========================================
+        // Utility
+        // ==========================================
+        function toFa(num) {
+            if (num === null || num === undefined) return '۰';
+            const persianDigits = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
+            return String(num).replace(/\d/g, d => persianDigits[d]);
+        }
+
+        // ==========================================
+        // Init
+        // ==========================================
+        document.addEventListener('DOMContentLoaded', () => {
+            renderCategoryTabs();
+            renderFAQ();
+        });
+    </script>
+</body>
+</html>
