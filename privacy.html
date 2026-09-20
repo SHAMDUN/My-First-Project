@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>حریم خصوصی | آکادمی شمعدون</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css">
+    <meta name="theme-color" content="#d4af37">
+    <style>
+        :root {
+            --bg-primary: #0a0a0f;
+            --bg-secondary: #14141c;
+            --bg-card: #1a1a24;
+            --gold: #d4af37;
+            --gold-light: #f4d47c;
+            --gold-dark: #a8862a;
+            --green: #10b981;
+            --red: #ef4444;
+            --blue: #3b82f6;
+            --white: #f8fafc;
+            --gray: #94a3b8;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Vazirmatn', Tahoma, sans-serif;
+            background-color: var(--bg-primary);
+            background-image: 
+                radial-gradient(circle at 0% 0%, rgba(212, 175, 55, 0.08) 0%, transparent 40%),
+                radial-gradient(circle at 100% 100%, rgba(59, 130, 246, 0.06) 0%, transparent 40%),
+                linear-gradient(rgba(255, 255, 255, 0.015) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
+            background-size: 100% 100%, 100% 100%, 60px 60px, 60px 60px;
+            background-attachment: fixed;
+            color: var(--white);
+            min-height: 100vh;
+            direction: rtl;
+            overflow-x: hidden;
+        }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .main-container { max-width: 1100px; margin: 0 auto; padding: 100px 20px 40px; }
+
+        /* ============= Header ============= */
+        .page-header {
+            text-align: center;
+            margin-bottom: 40px;
+            animation: fadeInUp 0.6s ease-out;
+        }
+        .page-header h1 {
+            font-size: 38px;
+            font-weight: 900;
+            margin-bottom: 12px;
+            background: linear-gradient(135deg, var(--gold), var(--gold-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .page-header p {
+            color: var(--gray);
+            font-size: 14px;
+        }
+        .update-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(212, 175, 55, 0.1);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            border-radius: 20px;
+            padding: 8px 18px;
+            margin-top: 12px;
+            color: var(--gold);
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        /* ============= Layout ============= */
+        .content-layout {
+            display: grid;
+            grid-template-columns: 260px 1fr;
+            gap: 30px;
+            align-items: start;
+        }
+
+        /* ============= Sidebar (TOC) ============= */
+        .toc-sidebar {
+            position: sticky;
+            top: 100px;
+            background: linear-gradient(135deg, var(--bg-card), var(--bg-secondary));
+            border: 1px solid rgba(212, 175, 55, 0.15);
+            border-radius: 18px;
+            padding: 20px;
+            animation: fadeInUp 0.6s ease-out 0.1s backwards;
+            max-height: calc(100vh - 120px);
+            overflow-y: auto;
+        }
+        .toc-sidebar::-webkit-scrollbar { width: 4px; }
+        .toc-sidebar::-webkit-scrollbar-thumb {
+            background: rgba(212, 175, 55, 0.3);
+            border-radius: 10px;
+        }
+        .toc-title {
+            color: var(--gold);
+            font-size: 13px;
+            font-weight: 800;
+            margin-bottom: 15px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid rgba(212, 175, 55, 0.15);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .toc-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+        .toc-list a {
+            color: var(--gray);
+            text-decoration: none;
+            font-size: 13px;
+            padding: 9px 12px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: 0.25s;
+            border-right: 3px solid transparent;
+        }
+        .toc-list a:hover,
+        .toc-list a.active {
+            color: var(--gold);
+            background: rgba(212, 175, 55, 0.08);
+            border-right-color: var(--gold);
+            padding-right: 15px;
+        }
+        .toc-list a .num {
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            background: rgba(212, 175, 55, 0.15);
+            color: var(--gold);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            font-weight: 800;
+            flex-shrink: 0;
+        }
+
+        /* ============= Main Content ============= */
+        .main-content {
+            background: linear-gradient(135deg, var(--bg-card), var(--bg-secondary));
+            border: 1px solid rgba(212, 175, 55, 0.15);
+            border-radius: 20px;
+            padding: 40px;
+            animation: fadeInUp 0.6s ease-out 0.15s backwards;
+        }
+
+        .intro-box {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.08), rgba(59, 130, 246, 0.02));
+            border: 1px solid rgba(59, 130, 246, 0.25);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 35px;
+            display: flex;
+            gap: 15px;
+            align-items: flex-start;
+        }
+        .intro-box .icon {
+            font-size: 28px;
+            flex-shrink: 0;
+        }
+        .intro-box p {
+            color: #cbd5e1;
+            font-size: 14px;
+            line-height: 1.9;
+        }
+        .intro-box strong { color: var(--gold-light); }
+
+        .privacy-section {
+            margin-bottom: 40px;
+            scroll-margin-top: 100px;
+        }
+        .privacy-section:last-child {
+            margin-bottom: 0;
+        }
+        .privacy-section h2 {
+            color: var(--gold);
+            font-size: 20px;
+            font-weight: 900;
+            margin-bottom: 18px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid rgba(212, 175, 55, 0.2);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .privacy-section h2 .num {
+            width: 32px;
+            height: 32px;
+            border-radius: 10px;
+            background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+            color: var(--bg-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: 900;
+            flex-shrink: 0;
+        }
+        .privacy-section h3 {
+            color: var(--gold-light);
+            font-size: 15px;
+            font-weight: 800;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+        .privacy-section p {
+            color: #cbd5e1;
+            font-size: 14px;
+            line-height: 2;
+            margin-bottom: 12px;
+        }
+        .privacy-section strong {
+            color: var(--gold-light);
+            font-weight: 800;
+        }
+        .privacy-section ul,
+        .privacy-section ol {
+            margin: 12px 20px 15px 0;
+            padding-right: 15px;
+        }
+        .privacy-section li {
+            color: #cbd5e1;
+            font-size: 14px;
+            line-height: 2;
+            margin-bottom: 6px;
+        }
+        .privacy-section a {
+            color: var(--gold);
+            text-decoration: none;
+            font-weight: 700;
+        }
+        .privacy-section a:hover {
+            text-decoration: underline;
+        }
+
+        .highlight-box {
+            background: rgba(16, 185, 129, 0.08);
+            border-right: 4px solid var(--green);
+            border-radius: 10px;
+            padding: 15px 18px;
+            margin: 15px 0;
+            color: #a7f3d0;
+            font-size: 13.5px;
+            line-height: 1.9;
+        }
+        .highlight-box strong { color: var(--green); }
+
+        .warning-box {
+            background: rgba(239, 68, 68, 0.08);
+            border-right: 4px solid var(--red);
+            border-radius: 10px;
+            padding: 15px 18px;
+            margin: 15px 0;
+            color: #fca5a5;
+            font-size: 13.5px;
+            line-height: 1.9;
+        }
+        .warning-box strong { color: var(--red); }
+
+        /* ============= CTA ============= */
+        .cta-box {
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.1), rgba(59, 130, 246, 0.05));
+            border: 1px solid rgba(212, 175, 55, 0.25);
+            border-radius: 18px;
+            padding: 28px;
+            text-align: center;
+            margin-top: 40px;
+        }
+        .cta-box h3 {
+            color: var(--white);
+            font-size: 18px;
+            font-weight: 900;
+            margin-bottom: 8px;
+        }
+        .cta-box p {
+            color: var(--gray);
+            font-size: 13px;
+            line-height: 1.8;
+            margin-bottom: 18px;
+        }
+        .cta-box .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 13px 26px;
+            background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+            color: var(--bg-primary);
+            text-decoration: none;
+            border-radius: 12px;
+            font-size: 13.5px;
+            font-weight: 800;
+            transition: 0.3s;
+            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.3);
+        }
+        .cta-box .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(212, 175, 55, 0.5);
+        }
+
+        /* ============= Footer ============= */
+        .footer {
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--gray);
+            font-size: 12px;
+            border-top: 1px solid rgba(212, 175, 55, 0.1);
+            margin-top: 40px;
+        }
+        .footer-social {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+        .footer-social a {
+            width: 46px;
+            height: 46px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: 0.3s;
+            overflow: hidden;
+        }
+        .footer-social a svg {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+        .footer-social a:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(212, 175, 55, 0.3);
+        }
+
+        /* ============= Responsive ============= */
+        @media (max-width: 900px) {
+            .content-layout {
+                grid-template-columns: 1fr;
+            }
+            .toc-sidebar {
+                position: static;
+                max-height: none;
+            }
+            .main-content { padding: 25px; }
+        }
+        @media (max-width: 600px) {
+            .main-container { padding: 90px 15px 30px; }
+            .page-header h1 { font-size: 26px; }
+            .main-content { padding: 20px 18px; }
+            .privacy-section h2 { font-size: 17px; }
+            .privacy-section p,
+            .privacy-section li { font-size: 13px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="main-container">
+        <!-- Header -->
+        <div class="page-header">
+            <h1>🔒 سیاست حریم خصوصی</h1>
+            <p>نحوه جمع‌آوری، استفاده و حفاظت از اطلاعات شما</p>
+            <div class="update-badge">
+                📅 آخرین به‌روزرسانی: ۲۹ شهریور ۱۴۰۵
+            </div>
+        </div>
+
+        <!-- Content Layout -->
+        <div class="content-layout">
+
+            <!-- TOC Sidebar -->
+            <aside class="toc-sidebar">
+                <div class="toc-title">
+                    📑 فهرست مطالب
+                </div>
+                <ul class="toc-list">
+                    <li><a href="#intro" onclick="setActive(this)"><span class="num">۰</span> مقدمه</a></li>
+                    <li><a href="#info" onclick="setActive(this)"><span class="num">۱</span> اطلاعاتی که جمع می‌کنیم</a></li>
+                    <li><a href="#usage" onclick="setActive(this)"><span class="num">۲</span> نحوه استفاده</a></li>
+                    <li><a href="#share" onclick="setActive(this)"><span class="num">۳</span> اشتراک‌گذاری</a></li>
+                    <li><a href="#security" onclick="setActive(this)"><span class="num">۴</span> امنیت داده‌ها</a></li>
+                    <li><a href="#cookies" onclick="setActive(this)"><span class="num">۵</span> کوکی‌ها</a></li>
+                    <li><a href="#rights" onclick="setActive(this)"><span class="num">۶</span> حقوق شما</a></li>
+                    <li><a href="#children" onclick="setActive(this)"><span class="num">۷</span> کودکان</a></li>
+                    <li><a href="#changes" onclick="setActive(this)"><span class="num">۸</span> تغییرات</a></li>
+                    <li><a href="#contact" onclick="setActive(this)"><span class="num">۹</span> تماس با ما</a></li>
+                </ul>
+            </aside>
+
+            <!-- Main Content -->
+            <main class="main-content">
+
+                <!-- Intro -->
+                <div class="intro-box">
+                    <div class="icon">💡</div>
+                    <p>
+                        در <strong>آکادمی شمعدون</strong>، حریم خصوصی شما برای ما اهمیت بالایی داره.
+                        این سند توضیح می‌ده که چه اطلاعاتی جمع می‌کنیم، چرا جمع می‌کنیم و چطور از اون‌ها محافظت می‌کنیم.
+                        با استفاده از پلتفرم، با این سیاست موافقت می‌کنی.
+                    </p>
+                </div>
+
+                <!-- 0. مقدمه -->
+                <section class="privacy-section" id="intro">
+                    <h2><span class="num">۰</span> مقدمه</h2>
+                    <p>
+                        آکادمی شمعدون (که در این سند «ما»، «آکادمی» یا «شمعدون» نامیده میشه) یک پلتفرم آموزش و تحلیل بازارهای مالیه.
+                        این سیاست حریم خصوصی توضیح می‌ده که در حین استفاده از خدمات ما (وب‌سایت، اپلیکیشن، ابزارها)، چه اطلاعاتی از شما جمع‌آوری و چگونه استفاده میشه.
+                    </p>
+                    <p>
+                        <strong>تعهد ما:</strong> حفاظت از اطلاعات شخصی شما و شفافیت کامل در مورد نحوه استفاده از اون‌ها.
+                    </p>
+                </section>
+
+                <!-- 1. اطلاعات -->
+                <section class="privacy-section" id="info">
+                    <h2><span class="num">۱</span> اطلاعاتی که جمع می‌کنیم</h2>
+
+                    <h3>📝 اطلاعاتی که خودت می‌دی:</h3>
+                    <ul>
+                        <li><strong>اطلاعات حساب:</strong> نام، ایمیل، رمز عبور (رمز به صورت رمزنگاری‌شده ذخیره میشه)</li>
+                        <li><strong>اطلاعات پروفایل:</strong> نام نمایشی، عکس پروفایل (اختیاری)</li>
+                        <li><strong>اطلاعات پرتفوی:</strong> دارایی‌هایی که ثبت می‌کنی (طلا، ارز، سهام، کریپتو...)</li>
+                        <li><strong>بازخوردها:</strong> نظرات، امتیازات و پیشنهاداتی که در مورد دوره‌ها می‌دی</li>
+                    </ul>
+
+                    <h3>🔄 اطلاعاتی که خودکار جمع میشه:</h3>
+                    <ul>
+                        <li><strong>اطلاعات دستگاه:</strong> نوع مرورگر، سیستم‌عامل، اندازه صفحه</li>
+                        <li><strong>آدرس IP:</strong> برای امنیت و جلوگیری از تقلب</li>
+                        <li><strong>اطلاعات استفاده:</strong> صفحاتی که می‌بینی، زمان بازدید، کلیک‌ها</li>
+                        <li><strong>محل جغرافیایی:</strong> فقط در سطح کشور (برای بهبود خدمات)</li>
+                    </ul>
+
+                    <div class="highlight-box">
+                        <strong>✅ نکته مهم:</strong>
+                        ما هرگز اطلاعات حساس مثل شماره کارت بانکی، رمز دوم، CVV2 یا اطلاعات هویتی کامل رو درخواست نمی‌کنیم.
+                        اگه جایی ازت این اطلاعات خواسته شد، مطمئن شو که از طرف ما نیست!
+                    </div>
+                </section>
+
+                <!-- 2. استفاده -->
+                <section class="privacy-section" id="usage">
+                    <h2><span class="num">۲</span> نحوه استفاده از اطلاعات</h2>
+
+                    <p>از اطلاعات شما برای موارد زیر استفاده می‌کنیم:</p>
+
+                    <h3>🎯 ارائه خدمات:</h3>
+                    <ul>
+                        <li>ایجاد و مدیریت حساب کاربری</li>
+                        <li>دسترسی به دوره‌ها و محتوای آموزشی</li>
+                        <li>ذخیره پرتفوی و نمایش سود/ضرر</li>
+                        <li>تولید تحلیل هوشمند سبد سرمایه‌گذاری</li>
+                    </ul>
+
+                    <h3>📈 بهبود خدمات:</h3>
+                    <ul>
+                        <li>تحلیل رفتار کاربران برای بهبود UX</li>
+                        <li>رفع باگ‌ها و مشکلات فنی</li>
+                        <li>توسعه قابلیت‌های جدید</li>
+                    </ul>
+
+                    <h3>📧 ارتباط با شما:</h3>
+                    <ul>
+                        <li>ارسال ایمیل‌های تأییدی (فعال‌سازی حساب، بازیابی رمز)</li>
+                        <li>اطلاع‌رسانی درباره تغییرات مهم</li>
+                        <li>ارسال محتوای آموزشی (فقط با اجازه شما)</li>
+                    </ul>
+
+                    <h3>🛡️ امنیت:</h3>
+                    <ul>
+                        <li>تشخیص و جلوگیری از تقلب</li>
+                        <li>محافظت از حساب شما در برابر دسترسی غیرمجاز</li>
+                    </ul>
+                </section>
+
+                <!-- 3. اشتراک‌گذاری -->
+                <section class="privacy-section" id="share">
+                    <h2><span class="num">۳</span> اشتراک‌گذاری با دیگران</h2>
+
+                    <div class="highlight-box">
+                        <strong>✅ تعهد ما:</strong>
+                        ما هرگز اطلاعات شخصی شما رو <strong>نمی‌فروشیم</strong> و با شرکت‌های تبلیغاتی <strong>به اشتراک نمی‌ذاریم</strong>.
+                    </div>
+
+                    <p>اطلاعات شما فقط در موارد زیر با دیگران به اشتراک گذاشته میشه:</p>
+
+                    <h3>🔧 ارائه‌دهندگان خدمات:</h3>
+                    <ul>
+                        <li><strong>Supabase:</strong> برای ذخیره‌سازی امن داده‌ها و احراز هویت</li>
+                        <li><strong>سرویس‌های API قیمت:</strong> برای دریافت قیمت‌های لحظه‌ای (فقط داده‌های عمومی)</li>
+                        <li><strong>AvalAI:</strong> برای تحلیل هوشمند سبد (فقط اطلاعات دارایی‌ها، نه اطلاعات شخصی)</li>
+                    </ul>
+
+                    <h3>⚖️ الزامات قانونی:</h3>
+                    <p>
+                        اگه مقامات قانونی درخواست رسمی کنن، ممکنه اطلاعات رو ارائه بدیم.
+                        ولی این کار فقط با حکم قضایی و در چارچوب قانون انجام میشه.
+                    </p>
+                </section>
+
+                <!-- 4. امنیت -->
+                <section class="privacy-section" id="security">
+                    <h2><span class="num">۴</span> امنیت داده‌ها</h2>
+
+                    <p>ما از بالاترین استانداردهای امنیتی برای محافظت از اطلاعات شما استفاده می‌کنیم:</p>
+
+                    <h3>🔐 رمزنگاری:</h3>
+                    <ul>
+                        <li>همه ارتباطات با <strong>HTTPS/SSL</strong> رمزنگاری میشن</li>
+                        <li>رمز عبورها با الگوریتم‌های قوی <strong>هش</strong> میشن</li>
+                        <li>داده‌های حساس در سطح پایگاه داده رمزنگاری میشن</li>
+                    </ul>
+
+                    <h3>🛡️ زیرساخت امن:</h3>
+                    <ul>
+                        <li>استفاده از <strong>Row Level Security</strong> در Supabase</li>
+                        <li>هر کاربر فقط به داده‌های خودش دسترسی داره</li>
+                        <li>مانیتورینگ مستمر برای تشخیص تهدیدات</li>
+                    </ul>
+
+                    <div class="warning-box">
+                        <strong>⚠️ مسئولیت شما:</strong>
+                        رمز عبورت رو محرمانه نگه دار و از رمزهای قوی (ترکیب حروف، اعداد و نمادها) استفاده کن.
+                        ما هیچ‌وقت رمزت رو ازت نمی‌پرسیم.
+                    </div>
+                </section>
+
+                <!-- 5. کوکی‌ها -->
+                <section class="privacy-section" id="cookies">
+                    <h2><span class="num">۵</span> کوکی‌ها و ذخیره‌سازی محلی</h2>
+
+                    <p>ما از کوکی‌ها و localStorage برای موارد زیر استفاده می‌کنیم:</p>
+
+                    <h3>🍪 کوکی‌های ضروری:</h3>
+                    <ul>
+                        <li>نگه‌داشتن وضعیت ورود شما (session)</li>
+                        <li>ذخیره تنظیمات شخصی</li>
+                    </ul>
+
+                    <h3>💾 LocalStorage:</h3>
+                    <ul>
+                        <li>کش کردن داده‌های چارت (برای سرعت بالاتر)</li>
+                        <li>ذخیره وضعیت‌های UI</li>
+                    </ul>
+
+                    <p>
+                        می‌تونی کوکی‌ها رو از تنظیمات مرورگرت حذف کنی، ولی این ممکنه تجربه کاربری رو محدود کنه.
+                    </p>
+                </section>
+
+                <!-- 6. حقوق -->
+                <section class="privacy-section" id="rights">
+                    <h2><span class="num">۶</span> حقوق شما</h2>
+
+                    <p>شما این حقوق رو داری:</p>
+
+                    <h3>✅ حق دسترسی:</h3>
+                    <p>می‌تونی هر وقت بخوای اطلاعاتی که ازت داریم رو ببینی (از پنل کاربری).</p>
+
+                    <h3>✅ حق اصلاح:</h3>
+                    <p>می‌تونی اطلاعاتت رو ویرایش کنی (نام، ایمیل، رمز و...).</p>
+
+                    <h3>✅ حق حذف:</h3>
+                    <p>می‌تونی درخواست حذف کامل حساب و اطلاعاتت رو بدی.</p>
+
+                    <h3>✅ حق اعتراض:</h3>
+                    <p>می‌تونی نسبت به هر نوع استفاده از اطلاعاتت اعتراض کنی.</p>
+
+                    <h3>✅ حق انتقال:</h3>
+                    <p>می‌تونی خروجی اطلاعاتت رو (CSV، JSON) دریافت کنی.</p>
+
+                    <div class="highlight-box">
+                        <strong>💡 برای اعمال این حقوق:</strong>
+                        از طریق <a href="contact.html">صفحه تماس با ما</a> درخواستت رو بفرست.
+                        حداکثر ۷ روز کاری پاسخ می‌دیم.
+                    </div>
+                </section>
+
+                <!-- 7. کودکان -->
+                <section class="privacy-section" id="children">
+                    <h2><span class="num">۷</span> کودکان</h2>
+
+                    <p>
+                        خدمات ما برای افراد <strong>بالای ۱۸ سال</strong> طراحی شده.
+                        ما به صورت آگاهانه اطلاعات کودکان زیر ۱۸ سال رو جمع‌آوری نمی‌کنیم.
+                    </p>
+                    <p>
+                        اگه متوجه شدیم که اطلاعاتی از کودک زیر ۱۸ سال دریافت شده،
+                        بلافاصله حذف میشه. اگه والدین متوجه این موضوع شدن، از طریق
+                        <a href="contact.html">صفحه تماس</a> اطلاع بدن.
+                    </p>
+                </section>
+
+                <!-- 8. تغییرات -->
+                <section class="privacy-section" id="changes">
+                    <h2><span class="num">۸</span> تغییرات در این سیاست</h2>
+
+                    <p>
+                        ممکنه این سیاست در طول زمان تغییر کنه. در صورت تغییرات مهم:
+                    </p>
+                    <ul>
+                        <li>تاریخ «آخرین به‌روزرسانی» بالای صفحه تغییر می‌کنه</li>
+                        <li>اطلاع‌رسانی از طریق ایمیل یا نوتیفیکیشن در سایت انجام میشه</li>
+                        <li>تغییرات مهم حداقل <strong>۷ روز قبل</strong> اعلام میشن</li>
+                    </ul>
+                    <p>
+                        با ادامه استفاده از خدمات ما پس از تغییرات، به صورت خودکار با نسخه جدید موافقت می‌کنی.
+                    </p>
+                </section>
+
+                <!-- 9. تماس -->
+                <section class="privacy-section" id="contact">
+                    <h2><span class="num">۹</span> تماس با ما</h2>
+
+                    <p>اگه هر سوال، نگرانی یا درخواستی در مورد حریم خصوصی داری، با ما تماس بگیر:</p>
+
+                    <ul>
+                        <li>📧 <strong>ایمیل:</strong> از طریق <a href="contact.html">فرم تماس</a></li>
+                        <li>📷 <strong>اینستاگرام:</strong> <a href="https://instagram.com/shamdun.trade" target="_blank" rel="noopener">@shamdun.trade</a></li>
+                        <li>✈️ <strong>تلگرام:</strong> <a href="https://t.me/nabzebazar_shamdun" target="_blank" rel="noopener">@nabzebazar_shamdun</a></li>
+                    </ul>
+
+                    <p>
+                        تیم ما حداکثر <strong>۷ روز کاری</strong> به درخواست‌های مربوط به حریم خصوصی پاسخ می‌ده.
+                    </p>
+                </section>
+
+                <!-- CTA -->
+                <div class="cta-box">
+                    <h3>💬 سوال دیگه‌ای داری؟</h3>
+                    <p>اگه در مورد حریم خصوصی یا اطلاعات شخصی سوالی داری، با ما در تماس باش.</p>
+                    <a href="contact.html" class="btn">📞 تماس با ما</a>
+                </div>
+
+            </main>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-social">
+            <a href="https://instagram.com/shamdun.trade" target="_blank" rel="noopener" title="اینستاگرام">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <radialGradient id="ig-privacy" cx="30%" cy="107%" r="150%">
+                            <stop offset="0%" stop-color="#fdf497"/>
+                            <stop offset="5%" stop-color="#fdf497"/>
+                            <stop offset="45%" stop-color="#fd5949"/>
+                            <stop offset="60%" stop-color="#d6249f"/>
+                            <stop offset="90%" stop-color="#285AEB"/>
+                        </radialGradient>
+                    </defs>
+                    <rect width="24" height="24" rx="6" fill="url(#ig-privacy)"/>
+                    <circle cx="12" cy="12" r="4.5" stroke="#fff" stroke-width="2" fill="none"/>
+                    <circle cx="17.5" cy="6.5" r="1.5" fill="#fff"/>
+                </svg>
+            </a>
+            <a href="https://t.me/nabzebazar_shamdun" target="_blank" rel="noopener" title="تلگرام">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="12" cy="12" r="12" fill="#0088cc"/>
+                    <path d="M5.5 11.5L17.5 6.5L15 17L12 13L10 16.5L9.8 12L16 8L7.5 11L5.5 11.5Z" fill="#fff"/>
+                </svg>
+            </a>
+        </div>
+        © ۱۴۰۵ آکادمی شمعدون | تمامی حقوق محفوظ است
+    </footer>
+
+    <script src="navbar.js"></script>
+
+    <script>
+        // ==========================================
+        // Active TOC on Scroll
+        // ==========================================
+        function setActive(link) {
+            document.querySelectorAll('.toc-list a').forEach(a => a.classList.remove('active'));
+            link.classList.add('active');
+        }
+
+        // اسکرول اسپای
+        window.addEventListener('scroll', () => {
+            const sections = document.querySelectorAll('.privacy-section');
+            const scrollPos = window.scrollY + 150;
+
+            let currentId = '';
+            sections.forEach(section => {
+                if (section.offsetTop <= scrollPos) {
+                    currentId = section.id;
+                }
+            });
+
+            if (currentId) {
+                document.querySelectorAll('.toc-list a').forEach(a => {
+                    a.classList.remove('active');
+                    if (a.getAttribute('href') === '#' + currentId) {
+                        a.classList.add('active');
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>
