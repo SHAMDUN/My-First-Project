@@ -864,7 +864,7 @@
             const rr = maxProfit > 0 ? (maxProfit / maxLossAmount) : 0;
             const profitLoss = (target - entry) / (entry - stop);
 
-            document.getElementById('pos-size').textContent = formatNum(positionSize) + ' واحد';
+            document.getElementById('pos-size').textContent = formatBigNum(positionSize) + ' واحد';
             document.getElementById('pos-amount').textContent = formatBigNum(positionAmount) + ' تومان';
             document.getElementById('pos-maxloss').textContent = formatBigNum(maxLossAmount) + ' تومان';
             document.getElementById('pos-maxprofit').textContent = target > 0 ? formatBigNum(maxProfit) + ' تومان' : '--';
