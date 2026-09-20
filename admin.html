@@ -4,27 +4,45 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>پنل ادمین | آکادمی شمعدون</title>
-    
-    <!-- Supabase -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css">
+    <meta name="theme-color" content="#d4af37">
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    
-    <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/dompurify@3.0.6/dist/purify.min.js"></script>
     <style>
+        :root {
+            --bg-primary: #0a0a0f;
+            --bg-secondary: #14141c;
+            --bg-card: #1a1a24;
+            --gold: #d4af37;
+            --gold-light: #f4d47c;
+            --gold-dark: #a8862a;
+            --green: #10b981;
+            --red: #ef4444;
+            --blue: #3b82f6;
+            --white: #f8fafc;
+            --gray: #94a3b8;
+        }
         * { margin: 0; padding: 0; box-sizing: border-box; }
-
         body {
-            font-family: Tahoma, sans-serif;
-            background: #0f172a;
-            color: #f1f5f9;
+            font-family: 'Vazirmatn', Tahoma, sans-serif;
+            background-color: var(--bg-primary);
+            background-image: 
+                radial-gradient(circle at 0% 0%, rgba(212, 175, 55, 0.08) 0%, transparent 40%),
+                radial-gradient(circle at 100% 100%, rgba(59, 130, 246, 0.06) 0%, transparent 40%);
+            background-size: 100% 100%, 100% 100%;
+            background-attachment: fixed;
+            color: var(--white);
             min-height: 100vh;
             direction: rtl;
         }
 
+        /* ===== Header ===== */
         .admin-header {
-            background: linear-gradient(135deg, #1e293b, #0f172a);
-            border-bottom: 2px solid #f59e0b;
+            background: rgba(20, 20, 28, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 2px solid rgba(212, 175, 55, 0.3);
             padding: 15px 20px;
             display: flex;
             justify-content: space-between;
@@ -32,82 +50,81 @@
             position: sticky;
             top: 0;
             z-index: 100;
+            flex-wrap: wrap;
+            gap: 10px;
         }
-
-        .admin-header h1 { color: #f59e0b; font-size: 20px; }
-
+        .admin-header h1 { color: var(--gold); font-size: 20px; font-weight: 800; }
         .admin-user {
             display: flex;
             align-items: center;
             gap: 10px;
             font-size: 13px;
-            color: #94a3b8;
+            color: var(--gray);
         }
-
         .logout-btn {
-            background: rgba(239, 68, 68, 0.2);
-            color: #ef4444;
-            border: 1px solid #ef4444;
+            background: rgba(239, 68, 68, 0.1);
+            color: var(--red);
+            border: 1px solid rgba(239, 68, 68, 0.4);
             padding: 8px 14px;
             border-radius: 8px;
             cursor: pointer;
-            font-family: Tahoma;
+            font-family: inherit;
             font-size: 12px;
+            font-weight: 700;
             transition: 0.3s;
         }
-        .logout-btn:hover { background: rgba(239, 68, 68, 0.3); }
+        .logout-btn:hover { background: rgba(239, 68, 68, 0.25); }
 
+        /* ===== Tabs ===== */
         .tabs {
             display: flex;
             gap: 5px;
             padding: 15px 20px 0;
             overflow-x: auto;
             scrollbar-width: none;
-            border-bottom: 1px solid rgba(255,255,255,0.05);
+            border-bottom: 1px solid rgba(212, 175, 55, 0.1);
         }
         .tabs::-webkit-scrollbar { display: none; }
-
         .tab-btn {
             background: transparent;
-            color: #94a3b8;
+            color: var(--gray);
             border: none;
             padding: 12px 18px;
             cursor: pointer;
-            font-family: Tahoma;
+            font-family: inherit;
             font-size: 14px;
-            font-weight: bold;
+            font-weight: 700;
             border-radius: 10px 10px 0 0;
             white-space: nowrap;
             transition: 0.3s;
             border-bottom: 3px solid transparent;
         }
-        .tab-btn:hover { color: #f59e0b; }
+        .tab-btn:hover { color: var(--gold); }
         .tab-btn.active {
-            color: #f59e0b;
-            border-bottom-color: #f59e0b;
-            background: rgba(245, 158, 11, 0.05);
+            color: var(--gold);
+            border-bottom-color: var(--gold);
+            background: rgba(212, 175, 55, 0.05);
         }
 
-        .container { max-width: 1100px; margin: 0 auto; padding: 20px; }
-
+        /* ===== Container ===== */
+        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
         .tab-content { display: none; animation: fadeIn 0.3s ease; }
         .tab-content.active { display: block; }
-
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
+        /* ===== Stats ===== */
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
             gap: 15px;
             margin-bottom: 25px;
         }
-
         .stat-card {
-            background: linear-gradient(135deg, rgba(30, 41, 59, 0.8), rgba(15, 23, 42, 0.8));
-            border: 1px solid rgba(245, 158, 11, 0.2);
+            background: linear-gradient(135deg, var(--bg-card), var(--bg-secondary));
+            border: 1px solid rgba(212, 175, 55, 0.2);
             border-radius: 15px;
             padding: 20px;
             text-align: center;
@@ -115,129 +132,121 @@
         }
         .stat-card:hover {
             transform: translateY(-3px);
-            border-color: #f59e0b;
-            box-shadow: 0 10px 30px rgba(245, 158, 11, 0.2);
+            border-color: var(--gold);
+            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.2);
         }
-
         .stat-card .icon { font-size: 32px; margin-bottom: 10px; }
         .stat-card .value {
-            color: #f59e0b;
+            color: var(--gold);
             font-size: 28px;
-            font-weight: bold;
+            font-weight: 900;
             margin-bottom: 5px;
         }
-        .stat-card .label { color: #94a3b8; font-size: 13px; }
+        .stat-card .label { color: var(--gray); font-size: 13px; }
 
+        /* ===== Chart ===== */
         .chart-box {
-            background: rgba(30, 41, 59, 0.6);
+            background: linear-gradient(135deg, var(--bg-card), var(--bg-secondary));
             border-radius: 15px;
             padding: 20px;
-            border: 1px solid rgba(255,255,255,0.05);
+            border: 1px solid rgba(212, 175, 55, 0.15);
             margin-bottom: 20px;
         }
-        .chart-box h3 { color: #f1f5f9; margin-bottom: 15px; font-size: 16px; }
+        .chart-box h3 { color: var(--white); margin-bottom: 15px; font-size: 16px; }
 
+        /* ===== Data Table ===== */
         .data-table {
             width: 100%;
-            background: rgba(30, 41, 59, 0.6);
+            background: linear-gradient(135deg, var(--bg-card), var(--bg-secondary));
             border-radius: 15px;
             overflow: hidden;
-            border: 1px solid rgba(255,255,255,0.05);
+            border: 1px solid rgba(212, 175, 55, 0.15);
         }
-
         .data-table th {
-            background: rgba(245, 158, 11, 0.1);
-            color: #f59e0b;
+            background: rgba(212, 175, 55, 0.1);
+            color: var(--gold);
             padding: 14px;
             text-align: right;
             font-size: 13px;
-            font-weight: bold;
+            font-weight: 800;
         }
-
         .data-table td {
             padding: 14px;
-            border-top: 1px solid rgba(255,255,255,0.05);
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
             color: #cbd5e1;
             font-size: 13px;
         }
+        .data-table tr:hover td { background: rgba(212, 175, 55, 0.03); }
 
-        .data-table tr:hover td { background: rgba(245, 158, 11, 0.03); }
-
+        /* ===== Buttons ===== */
         .btn {
             padding: 10px 18px;
             border-radius: 10px;
             border: none;
             cursor: pointer;
-            font-family: Tahoma;
+            font-family: inherit;
             font-size: 13px;
-            font-weight: bold;
+            font-weight: 800;
             transition: 0.3s;
             display: inline-flex;
             align-items: center;
             gap: 6px;
         }
-
         .btn-primary {
-            background: linear-gradient(135deg, #f59e0b, #d97706);
-            color: #0f172a;
+            background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+            color: var(--bg-primary);
         }
         .btn-primary:hover {
             transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(245, 158, 11, 0.4);
+            box-shadow: 0 8px 20px rgba(212, 175, 55, 0.4);
         }
-
         .btn-danger {
             background: rgba(239, 68, 68, 0.15);
-            color: #ef4444;
+            color: var(--red);
             border: 1px solid rgba(239, 68, 68, 0.3);
         }
         .btn-danger:hover { background: rgba(239, 68, 68, 0.25); }
-
         .btn-success {
-            background: rgba(34, 197, 94, 0.15);
-            color: #4ade80;
-            border: 1px solid rgba(34, 197, 94, 0.3);
+            background: rgba(16, 185, 129, 0.15);
+            color: var(--green);
+            border: 1px solid rgba(16, 185, 129, 0.3);
         }
-        .btn-success:hover { background: rgba(34, 197, 94, 0.25); }
-
+        .btn-success:hover { background: rgba(16, 185, 129, 0.25); }
         .btn-secondary {
             background: rgba(148, 163, 184, 0.1);
             color: #cbd5e1;
             border: 1px solid rgba(148, 163, 184, 0.2);
         }
         .btn-secondary:hover { background: rgba(148, 163, 184, 0.2); }
-
         .btn-small { padding: 6px 12px; font-size: 12px; }
 
+        /* ===== Forms ===== */
         .form-box {
-            background: rgba(30, 41, 59, 0.6);
+            background: linear-gradient(135deg, var(--bg-card), var(--bg-secondary));
             border-radius: 15px;
             padding: 20px;
             margin-bottom: 20px;
-            border: 1px solid rgba(245, 158, 11, 0.2);
+            border: 1px solid rgba(212, 175, 55, 0.2);
         }
-
-        .form-box h3 { color: #f59e0b; margin-bottom: 15px; font-size: 16px; }
-
+        .form-box h3 { color: var(--gold); margin-bottom: 15px; font-size: 16px; }
         .form-group { margin-bottom: 12px; }
-
         .form-group label {
             display: block;
             color: #cbd5e1;
             font-size: 13px;
             margin-bottom: 6px;
+            font-weight: 700;
         }
-
         .form-group input,
         .form-group textarea,
         .form-group select {
             width: 100%;
             padding: 10px 14px;
-            background: rgba(15, 23, 42, 0.8);
-            border: 1px solid rgba(255,255,255,0.1);
+            background: rgba(10, 10, 15, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 10px;
-            color: #f1f5f9;
-            font-family: Tahoma;
+            color: var(--white);
+            font-family: inherit;
             font-size: 13px;
             transition: 0.3s;
         }
@@ -245,49 +254,52 @@
         .form-group textarea:focus,
         .form-group select:focus {
             outline: none;
-            border-color: #f59e0b;
-            box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.1);
+            border-color: var(--gold);
+            box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.1);
         }
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
 
-        .form-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 12px;
-        }
-
+        /* ===== Modal ===== */
         .modal-overlay {
             display: none;
             position: fixed;
             inset: 0;
-            background: rgba(0,0,0,0.7);
+            background: rgba(0, 0, 0, 0.8);
             backdrop-filter: blur(5px);
             z-index: 1000;
             align-items: center;
             justify-content: center;
             padding: 20px;
+            overflow-y: auto;
         }
         .modal-overlay.show { display: flex; }
-
         .modal {
-            background: #1e293b;
+            background: var(--bg-card);
             border-radius: 20px;
             padding: 25px;
-            max-width: 500px;
+            max-width: 600px;
             width: 100%;
             max-height: 90vh;
             overflow-y: auto;
-            border: 1px solid rgba(245, 158, 11, 0.3);
+            border: 1px solid rgba(212, 175, 55, 0.3);
         }
-
-        .modal h2 { color: #f59e0b; margin-bottom: 20px; font-size: 18px; }
-
+        .modal.large { max-width: 1000px; }
+        .modal h2 {
+            color: var(--gold);
+            margin-bottom: 20px;
+            font-size: 18px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid rgba(212, 175, 55, 0.15);
+        }
         .modal-actions {
             display: flex;
             gap: 10px;
             margin-top: 20px;
             justify-content: flex-end;
+            flex-wrap: wrap;
         }
 
+        /* ===== Login Screen ===== */
         .login-screen {
             display: flex;
             align-items: center;
@@ -295,293 +307,512 @@
             min-height: 100vh;
             padding: 20px;
         }
-
         .login-card {
-            background: rgba(30, 41, 59, 0.9);
-            border: 2px solid #f59e0b;
+            background: linear-gradient(135deg, var(--bg-card), var(--bg-secondary));
+            border: 2px solid rgba(212, 175, 55, 0.4);
             border-radius: 20px;
             padding: 30px;
             max-width: 400px;
             width: 100%;
-            box-shadow: 0 20px 60px rgba(245, 158, 11, 0.3);
+            box-shadow: 0 20px 60px rgba(212, 175, 55, 0.3);
         }
-
         .login-card h1 {
-            color: #f59e0b;
+            color: var(--gold);
             text-align: center;
             margin-bottom: 25px;
             font-size: 22px;
+            font-weight: 900;
         }
 
-        .loading { text-align: center; padding: 40px; color: #94a3b8; }
+        /* ===== Blog Editor ===== */
+        .blog-editor {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+        .blog-editor textarea {
+            min-height: 400px;
+            font-family: 'Courier New', monospace;
+            direction: ltr;
+            text-align: left;
+            font-size: 13px;
+            line-height: 1.7;
+        }
+        .blog-preview {
+            background: rgba(10, 10, 15, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 15px;
+            min-height: 400px;
+            max-height: 500px;
+            overflow-y: auto;
+            color: #cbd5e1;
+            font-size: 13.5px;
+            line-height: 1.9;
+        }
+        .blog-preview h1 {
+            color: var(--gold);
+            font-size: 22px;
+            margin: 15px 0 10px;
+            border-bottom: 2px solid rgba(212, 175, 55, 0.3);
+            padding-bottom: 8px;
+        }
+        .blog-preview h2 {
+            color: var(--gold-light);
+            font-size: 18px;
+            margin: 15px 0 8px;
+        }
+        .blog-preview h3 {
+            color: #cbd5e1;
+            font-size: 15px;
+            margin: 12px 0 6px;
+        }
+        .blog-preview p { margin-bottom: 10px; }
+        .blog-preview ul,
+        .blog-preview ol {
+            margin: 10px 20px 10px 0;
+            padding-right: 15px;
+        }
+        .blog-preview li { margin-bottom: 4px; }
+        .blog-preview code {
+            background: rgba(212, 175, 55, 0.1);
+            padding: 2px 6px;
+            border-radius: 4px;
+            color: var(--gold-light);
+            font-family: 'Courier New', monospace;
+        }
+        .blog-preview pre {
+            background: rgba(0, 0, 0, 0.5);
+            padding: 12px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 10px 0;
+            direction: ltr;
+            text-align: left;
+        }
+        .blog-preview blockquote {
+            border-right: 3px solid var(--gold);
+            padding-right: 12px;
+            margin: 10px 0;
+            color: var(--gold-light);
+            font-style: italic;
+        }
+        .blog-preview a {
+            color: var(--blue);
+            text-decoration: underline;
+        }
+        .blog-preview strong { color: var(--white); }
 
+        /* ===== Loading ===== */
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: var(--gray);
+        }
         .spinner {
-            width: 40px;
-            height: 40px;
-            border: 4px solid rgba(245, 158, 11, 0.2);
-            border-top-color: #f59e0b;
+            width: 40px; height: 40px;
+            border: 4px solid rgba(212, 175, 55, 0.2);
+            border-top-color: var(--gold);
             border-radius: 50%;
             animation: spin 1s linear infinite;
             margin: 0 auto 15px;
         }
         @keyframes spin { to { transform: rotate(360deg); } }
 
+        /* ===== Toast ===== */
         .toast {
             position: fixed;
             bottom: 20px;
             left: 50%;
             transform: translateX(-50%) translateY(100px);
-            background: #1e293b;
-            color: #f1f5f9;
+            background: var(--bg-card);
+            color: var(--white);
             padding: 14px 24px;
             border-radius: 12px;
-            border-right: 4px solid #f59e0b;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+            border-right: 4px solid var(--gold);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
             z-index: 2000;
             transition: 0.4s;
             font-size: 14px;
+            font-weight: 700;
+            max-width: 90vw;
         }
         .toast.show { transform: translateX(-50%) translateY(0); }
-        .toast.success { border-right-color: #4ade80; }
-        .toast.error { border-right-color: #ef4444; }
+        .toast.success { border-right-color: var(--green); }
+        .toast.error { border-right-color: var(--red); }
 
+        /* ===== Category Tags ===== */
+        .tag {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 8px;
+            font-size: 11px;
+            font-weight: 700;
+            background: rgba(212, 175, 55, 0.15);
+            color: var(--gold);
+            margin: 2px;
+        }
+        .status-badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 8px;
+            font-size: 11px;
+            font-weight: 800;
+        }
+        .status-published {
+            background: rgba(16, 185, 129, 0.15);
+            color: var(--green);
+        }
+        .status-draft {
+            background: rgba(148, 163, 184, 0.15);
+            color: var(--gray);
+        }
+        .featured-badge {
+            background: rgba(212, 175, 55, 0.2);
+            color: var(--gold);
+            padding: 3px 8px;
+            border-radius: 6px;
+            font-size: 10px;
+            font-weight: 800;
+        }
+
+        /* ===== Tab Actions Bar ===== */
+        .tab-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .tab-actions h2 { color: var(--gold); font-size: 18px; }
+
+        /* ===== Responsive ===== */
+        @media (max-width: 900px) {
+            .blog-editor { grid-template-columns: 1fr; }
+        }
         @media (max-width: 600px) {
             .admin-header h1 { font-size: 16px; }
             .admin-user span { display: none; }
             .form-row { grid-template-columns: 1fr; }
             .data-table { font-size: 12px; }
             .data-table th, .data-table td { padding: 10px 8px; }
+            .modal { padding: 18px; }
         }
     </style>
 </head>
 <body>
 
-<!-- صفحه لاگین ادمین -->
-<div id="loginScreen" class="login-screen">
-    <div class="login-card">
-        <h1>🔐 ورود ادمین</h1>
-        <div class="form-group">
-            <label>ایمیل</label>
-            <input type="email" id="adminEmail" placeholder="admin@example.com">
-        </div>
-        <div class="form-group">
-            <label>رمز عبور</label>
-            <input type="password" id="adminPassword" placeholder="••••••••">
-        </div>
-        <button class="btn btn-primary" style="width:100%; justify-content:center; margin-top:10px;" onclick="loginAdmin()">
-            ورود
-        </button>
-        <p id="loginError" style="color:#ef4444; text-align:center; margin-top:15px; font-size:13px;"></p>
-    </div>
-</div>
-
-<!-- پنل ادمین -->
-<div id="adminPanel" style="display:none;">
-
-    <header class="admin-header">
-        <h1>🎯 پنل ادمین شمعدون</h1>
-        <div class="admin-user">
-            <span id="adminEmailShow"></span>
-            <button class="logout-btn" onclick="logoutAdmin()">🚪 خروج</button>
-        </div>
-    </header>
-
-    <div class="tabs">
-        <button class="tab-btn active" onclick="switchTab('dashboard', this)">📊 داشبورد</button>
-        <button class="tab-btn" onclick="switchTab('comments', this)">💬 نظرات</button>
-        <button class="tab-btn" onclick="switchTab('courses', this)">📚 دوره‌ها</button>
-        <button class="tab-btn" onclick="switchTab('lessons', this)">📖 دروس</button>
-        <button class="tab-btn" onclick="switchTab('users', this)">👥 کاربران</button>
-    </div>
-
-    <div class="container">
-
-        <!-- تب داشبورد -->
-        <div id="tab-dashboard" class="tab-content active">
-            <div class="stats-grid">
-                <div class="stat-card">
-                    <div class="icon">👥</div>
-                    <div class="value" id="statUsers">-</div>
-                    <div class="label">کاربران</div>
-                </div>
-                <div class="stat-card">
-                    <div class="icon">📚</div>
-                    <div class="value" id="statCourses">-</div>
-                    <div class="label">دوره‌ها</div>
-                </div>
-                <div class="stat-card">
-                    <div class="icon">📖</div>
-                    <div class="value" id="statLessons">-</div>
-                    <div class="label">دروس</div>
-                </div>
-                <div class="stat-card">
-                    <div class="icon">⭐</div>
-                    <div class="value" id="statScores">-</div>
-                    <div class="label">امتیازات</div>
-                </div>
-                <div class="stat-card">
-                    <div class="icon">💬</div>
-                    <div class="value" id="statComments">-</div>
-                    <div class="label">نظرات</div>
-                </div>
-            </div>
-
-            <div class="chart-box">
-                <h3>📈 امتیازات ۷ روز گذشته</h3>
-                <canvas id="scoresChart" height="100"></canvas>
-            </div>
-        </div>
-
-        <!-- تب نظرات -->
-        <div id="tab-comments" class="tab-content">
-            <h2 style="margin-bottom:15px; color:#f59e0b;">💬 نظرات کاربران</h2>
-            <div id="commentsList" class="loading">
-                <div class="spinner"></div>
-                در حال بارگذاری...
-            </div>
-        </div>
-
-        <!-- تب دوره‌ها -->
-        <div id="tab-courses" class="tab-content">
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
-                <h2 style="color:#f59e0b;">📚 مدیریت دوره‌ها</h2>
-                <button class="btn btn-primary" onclick="openCourseModal()">➕ دوره جدید</button>
-            </div>
-            <div id="coursesList" class="loading">
-                <div class="spinner"></div>
-                در حال بارگذاری...
-            </div>
-        </div>
-
-        <!-- تب دروس -->
-        <div id="tab-lessons" class="tab-content">
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
-                <h2 style="color:#f59e0b;">📖 مدیریت دروس</h2>
-                <button class="btn btn-primary" onclick="openLessonModal()">➕ درس جدید</button>
-            </div>
-            <div id="lessonsList" class="loading">
-                <div class="spinner"></div>
-                در حال بارگذاری...
-            </div>
-        </div>
-
-        <!-- تب کاربران -->
-        <div id="tab-users" class="tab-content">
-            <h2 style="margin-bottom:15px; color:#f59e0b;">👥 کاربران</h2>
-            <input type="text" id="userSearch" placeholder="🔍 جستجوی کاربر..." 
-                   style="width:100%; padding:12px; background:rgba(15,23,42,0.8); border:1px solid rgba(255,255,255,0.1); border-radius:10px; color:#f1f5f9; font-family:Tahoma; margin-bottom:15px;"
-                   oninput="filterUsers()">
-            <div id="usersList" class="loading">
-                <div class="spinner"></div>
-                در حال بارگذاری...
-            </div>
-        </div>
-
-    </div>
-</div>
-
-<!-- مودال دوره -->
-<div id="courseModal" class="modal-overlay">
-    <div class="modal">
-        <h2 id="courseModalTitle">➕ دوره جدید</h2>
-        <input type="hidden" id="courseId">
-        <div class="form-group">
-            <label>عنوان دوره *</label>
-            <input type="text" id="courseTitle">
-        </div>
-        <div class="form-group">
-            <label>توضیحات</label>
-            <textarea id="courseDesc" rows="3"></textarea>
-        </div>
-        <div class="form-row">
+    <!-- ===== Login Screen ===== -->
+    <div id="loginScreen" class="login-screen">
+        <div class="login-card">
+            <h1>🔐 ورود ادمین</h1>
             <div class="form-group">
-                <label>آیکون (ایموجی)</label>
-                <input type="text" id="courseIcon" placeholder="📚">
+                <label>ایمیل</label>
+                <input type="email" id="adminEmail" placeholder="admin@example.com">
             </div>
             <div class="form-group">
-                <label>سطح</label>
-                <select id="courseLevel">
-                    <option value="مبتدی">مبتدی</option>
-                    <option value="متوسط">متوسط</option>
-                    <option value="پیشرفته">پیشرفته</option>
-                </select>
+                <label>رمز عبور</label>
+                <input type="password" id="adminPassword" placeholder="••••••••">
             </div>
-        </div>
-        <div class="modal-actions">
-            <button class="btn btn-secondary" onclick="closeModal('courseModal')">لغو</button>
-            <button class="btn btn-primary" onclick="saveCourse()">💾 ذخیره</button>
+            <button class="btn btn-primary" style="width:100%; justify-content:center; margin-top:10px;" onclick="loginAdmin()">
+                ورود
+            </button>
+            <p id="loginError" style="color:#ef4444; text-align:center; margin-top:15px; font-size:13px;"></p>
         </div>
     </div>
-</div>
 
-<!-- مودال درس -->
-<div id="lessonModal" class="modal-overlay">
-    <div class="modal">
-        <h2 id="lessonModalTitle">➕ درس جدید</h2>
-        <input type="hidden" id="lessonId">
-
-        <div class="form-group">
-            <label>دوره مربوطه *</label>
-            <select id="lessonCourse"></select>
-        </div>
-
-        <div class="form-group">
-            <label>عنوان درس *</label>
-            <input type="text" id="lessonTitle">
-        </div>
-
-        <div class="form-group">
-            <label>محتوا (HTML قابل قبول)</label>
-            <textarea id="lessonContent" rows="5"></textarea>
-        </div>
-
-        <div class="form-row">
-            <div class="form-group">
-                <label>🎥 لینک ویدیو (اختیاری)</label>
-                <input type="text" id="lessonVideo" placeholder="https://...">
+    <!-- ===== Admin Panel ===== -->
+    <div id="adminPanel" style="display:none;">
+        <header class="admin-header">
+            <h1>🎯 پنل ادمین شمعدون</h1>
+            <div class="admin-user">
+                <span id="adminEmailShow"></span>
+                <button class="logout-btn" onclick="logoutAdmin()">🚪 خروج</button>
             </div>
-            <div class="form-group">
-                <label>ترتیب</label>
-                <input type="number" id="lessonOrder" value="1">
+        </header>
+
+        <div class="tabs">
+            <button class="tab-btn active" onclick="switchTab('dashboard', this)">📊 داشبورد</button>
+            <button class="tab-btn" onclick="switchTab('blog', this)">📝 مقالات</button>
+            <button class="tab-btn" onclick="switchTab('comments', this)">💬 نظرات</button>
+            <button class="tab-btn" onclick="switchTab('courses', this)">📚 دوره‌ها</button>
+            <button class="tab-btn" onclick="switchTab('lessons', this)">📖 دروس</button>
+            <button class="tab-btn" onclick="switchTab('users', this)">👥 کاربران</button>
+        </div>
+
+        <div class="container">
+
+            <!-- ===== تب داشبورد ===== -->
+            <div id="tab-dashboard" class="tab-content active">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="icon">👥</div>
+                        <div class="value" id="statUsers">-</div>
+                        <div class="label">کاربران</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="icon">📚</div>
+                        <div class="value" id="statCourses">-</div>
+                        <div class="label">دوره‌ها</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="icon">📖</div>
+                        <div class="value" id="statLessons">-</div>
+                        <div class="label">دروس</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="icon">📝</div>
+                        <div class="value" id="statPosts">-</div>
+                        <div class="label">مقالات</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="icon">⭐</div>
+                        <div class="value" id="statScores">-</div>
+                        <div class="label">امتیازات</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="icon">💬</div>
+                        <div class="value" id="statComments">-</div>
+                        <div class="label">نظرات</div>
+                    </div>
+                </div>
+
+                <div class="chart-box">
+                    <h3>📈 امتیازات ۷ روز گذشته</h3>
+                    <canvas id="scoresChart" height="100"></canvas>
+                </div>
             </div>
-        </div>
 
-        <div class="form-group">
-            <label>🖼️ لینک تصویر (اختیاری)</label>
-            <input type="text" id="lessonImage" placeholder="files/image.jpg یا https://...">
-        </div>
+            <!-- ===== تب مقالات ===== -->
+            <div id="tab-blog" class="tab-content">
+                <div class="tab-actions">
+                    <h2>📝 مدیریت مقالات</h2>
+                    <button class="btn btn-primary" onclick="openBlogModal()">➕ مقاله جدید</button>
+                </div>
+                <div id="blogList" class="loading">
+                    <div class="spinner"></div>
+                    در حال بارگذاری...
+                </div>
+            </div>
 
-        <div class="form-group">
-            <label>📄 لینک PDF (اختیاری)</label>
-            <input type="text" id="lessonPdf" placeholder="files/lesson.pdf یا https://...">
-        </div>
+            <!-- ===== تب نظرات ===== -->
+            <div id="tab-comments" class="tab-content">
+                <h2 style="margin-bottom:15px; color:var(--gold);">💬 نظرات کاربران</h2>
+                <div id="commentsList" class="loading">
+                    <div class="spinner"></div>
+                    در حال بارگذاری...
+                </div>
+            </div>
 
-        <div class="form-group">
-            <label>📝 لینک Word (اختیاری)</label>
-            <input type="text" id="lessonWord" placeholder="files/lesson.docx یا https://...">
-        </div>
+            <!-- ===== تب دوره‌ها ===== -->
+            <div id="tab-courses" class="tab-content">
+                <div class="tab-actions">
+                    <h2>📚 مدیریت دوره‌ها</h2>
+                    <button class="btn btn-primary" onclick="openCourseModal()">➕ دوره جدید</button>
+                </div>
+                <div id="coursesList" class="loading">
+                    <div class="spinner"></div>
+                    در حال بارگذاری...
+                </div>
+            </div>
 
-        <div class="form-group">
-            <label>📊 لینک PowerPoint (اختیاری)</label>
-            <input type="text" id="lessonPowerpoint" placeholder="files/lesson.pptx یا https://...">
-        </div>
+            <!-- ===== تب دروس ===== -->
+            <div id="tab-lessons" class="tab-content">
+                <div class="tab-actions">
+                    <h2>📖 مدیریت دروس</h2>
+                    <button class="btn btn-primary" onclick="openLessonModal()">➕ درس جدید</button>
+                </div>
+                <div id="lessonsList" class="loading">
+                    <div class="spinner"></div>
+                    در حال بارگذاری...
+                </div>
+            </div>
 
-        <div class="form-group">
-            <label>📚 لینک جزوه (اختیاری)</label>
-            <input type="text" id="lessonNotes" placeholder="files/notes.pdf یا https://...">
-        </div>
+            <!-- ===== تب کاربران ===== -->
+            <div id="tab-users" class="tab-content">
+                <h2 style="margin-bottom:15px; color:var(--gold);">👥 کاربران</h2>
+                <input type="text" id="userSearch" placeholder="🔍 جستجوی کاربر..."
+                    style="width:100%; padding:12px; background:rgba(10,10,15,0.8); border:1px solid rgba(255,255,255,0.1); border-radius:10px; color:var(--white); font-family:inherit; margin-bottom:15px;"
+                    oninput="filterUsers()">
+                <div id="usersList" class="loading">
+                    <div class="spinner"></div>
+                    در حال بارگذاری...
+                </div>
+            </div>
 
-        <div class="modal-actions">
-            <button class="btn btn-secondary" onclick="closeModal('lessonModal')">لغو</button>
-            <button class="btn btn-primary" onclick="saveLesson()">💾 ذخیره</button>
         </div>
     </div>
-</div>
 
-<div id="toast" class="toast"></div>
+    <!-- ===== Modal: Course ===== -->
+    <div id="courseModal" class="modal-overlay">
+        <div class="modal">
+            <h2 id="courseModalTitle">➕ دوره جدید</h2>
+            <input type="hidden" id="courseId">
+            <div class="form-group">
+                <label>عنوان دوره *</label>
+                <input type="text" id="courseTitle">
+            </div>
+            <div class="form-group">
+                <label>توضیحات</label>
+                <textarea id="courseDesc" rows="3"></textarea>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>آیکون (ایموجی)</label>
+                    <input type="text" id="courseIcon" placeholder="📚">
+                </div>
+                <div class="form-group">
+                    <label>سطح</label>
+                    <select id="courseLevel">
+                        <option value="مبتدی">مبتدی</option>
+                        <option value="متوسط">متوسط</option>
+                        <option value="پیشرفته">پیشرفته</option>
+                    </select>
+                </div>
+            </div>
+            <div class="modal-actions">
+                <button class="btn btn-secondary" onclick="closeModal('courseModal')">لغو</button>
+                <button class="btn btn-primary" onclick="saveCourse()">💾 ذخیره</button>
+            </div>
+        </div>
+    </div>
 
-<script src="supabase-config.js"></script>
-<script src="admin.js"></script>
+    <!-- ===== Modal: Lesson ===== -->
+    <div id="lessonModal" class="modal-overlay">
+        <div class="modal">
+            <h2 id="lessonModalTitle">➕ درس جدید</h2>
+            <input type="hidden" id="lessonId">
+            <div class="form-group">
+                <label>دوره مربوطه *</label>
+                <select id="lessonCourse"></select>
+            </div>
+            <div class="form-group">
+                <label>عنوان درس *</label>
+                <input type="text" id="lessonTitle">
+            </div>
+            <div class="form-group">
+                <label>محتوا (HTML قابل قبول)</label>
+                <textarea id="lessonContent" rows="5"></textarea>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>🎥 لینک ویدیو (اختیاری)</label>
+                    <input type="text" id="lessonVideo" placeholder="https://...">
+                </div>
+                <div class="form-group">
+                    <label>ترتیب</label>
+                    <input type="number" id="lessonOrder" value="1">
+                </div>
+            </div>
+            <div class="form-group">
+                <label>🖼️ لینک تصویر (اختیاری)</label>
+                <input type="text" id="lessonImage" placeholder="files/image.jpg یا https://...">
+            </div>
+            <div class="form-group">
+                <label>📄 لینک PDF (اختیاری)</label>
+                <input type="text" id="lessonPdf" placeholder="files/lesson.pdf یا https://...">
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>📝 لینک Word (اختیاری)</label>
+                    <input type="text" id="lessonWord" placeholder="files/lesson.docx">
+                </div>
+                <div class="form-group">
+                    <label>📊 لینک PowerPoint (اختیاری)</label>
+                    <input type="text" id="lessonPowerpoint" placeholder="files/lesson.pptx">
+                </div>
+            </div>
+            <div class="form-group">
+                <label>📚 لینک جزوه (اختیاری)</label>
+                <input type="text" id="lessonNotes" placeholder="files/notes.pdf">
+            </div>
+            <div class="modal-actions">
+                <button class="btn btn-secondary" onclick="closeModal('lessonModal')">لغو</button>
+                <button class="btn btn-primary" onclick="saveLesson()">💾 ذخیره</button>
+            </div>
+        </div>
+    </div>
 
+    <!-- ===== Modal: Blog Post ===== -->
+    <div id="blogModal" class="modal-overlay">
+        <div class="modal large">
+            <h2 id="blogModalTitle">➕ مقاله جدید</h2>
+            <input type="hidden" id="blogId">
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label>عنوان مقاله *</label>
+                    <input type="text" id="blogTitle" placeholder="مثال: پرایس اکشن چیست؟" oninput="autoSlug()">
+                </div>
+                <div class="form-group">
+                    <label>Slug (آدرس یکتا) *</label>
+                    <input type="text" id="blogSlug" placeholder="what-is-price-action" style="direction:ltr; text-align:left;">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>خلاصه مقاله * <span style="color:var(--gray); font-weight:400;">(برای کارت مقاله)</span></label>
+                <textarea id="blogExcerpt" rows="2" placeholder="در این مقاله یاد می‌گیری..."></textarea>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label>دسته‌بندی *</label>
+                    <select id="blogCategory">
+                        <option value="آموزش">📚 آموزش</option>
+                        <option value="تحلیل تکنیکال">📈 تحلیل تکنیکال</option>
+                        <option value="تحلیل بنیادی">🔬 تحلیل بنیادی</option>
+                        <option value="روانشناسی">🧠 روانشناسی بازار</option>
+                        <option value="ابزارها">🛠️ معرفی ابزارها</option>
+                        <option value="اخبار">📰 اخبار</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>زمان مطالعه (دقیقه)</label>
+                    <input type="number" id="blogReadTime" value="5" min="1" max="120">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>برچسب‌ها <span style="color:var(--gray); font-weight:400;">(با کاما جدا کن)</span></label>
+                <input type="text" id="blogTags" placeholder="پرایس اکشن, تحلیل تکنیکال, مبتدی">
+            </div>
+
+            <div class="form-group">
+                <label>🖼️ لینک تصویر شاخص (اختیاری)</label>
+                <input type="text" id="blogCoverImage" placeholder="files/cover.jpg یا https://..." style="direction:ltr; text-align:left;">
+            </div>
+
+            <div class="form-group" style="display:flex; align-items:center; gap:10px; padding:12px; background:rgba(10,10,15,0.6); border-radius:10px;">
+                <input type="checkbox" id="blogFeatured" style="width:18px; height:18px; accent-color:var(--gold); cursor:pointer;">
+                <label for="blogFeatured" style="margin:0; cursor:pointer;">⭐ این مقاله ویژه باشد (در بالای صفحه نمایش داده شود)</label>
+            </div>
+
+            <div class="form-group">
+                <label>📝 متن مقاله (Markdown) *</label>
+                <div class="blog-editor">
+                    <textarea id="blogContent" placeholder="# عنوان&#10;&#10;متن مقاله..." oninput="updatePreview()"></textarea>
+                    <div class="blog-preview" id="blogPreview">
+                        <p style="color:var(--gray); text-align:center; padding-top:150px;">
+                            👁️ پیش‌نمایش اینجا نمایش داده می‌شود
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-actions">
+                <button class="btn btn-secondary" onclick="closeModal('blogModal')">لغو</button>
+                <button class="btn btn-success" onclick="saveBlogPost('draft')">💾 ذخیره پیش‌نویس</button>
+                <button class="btn btn-primary" onclick="saveBlogPost('published')">🚀 انتشار</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== Toast ===== -->
+    <div id="toast" class="toast"></div>
+
+    <script src="supabase-config.js"></script>
+    <script src="admin.js"></script>
 </body>
 </html>
