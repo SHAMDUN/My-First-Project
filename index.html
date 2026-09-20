@@ -6,6 +6,7 @@
     <title>آکادمی شمعدون | بازار رو بفهم، تحلیل کن، بعد معامله کن</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css">
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="navbar.js" defer></script>
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#d4af37">
     <link rel="apple-touch-icon" href="icon-192.png">
@@ -89,71 +90,6 @@
             font-size: 12px;
         }
         .admin-logout-btn:hover { background: rgba(255, 255, 255, 0.35); }
-
-        .navbar {
-            position: fixed;
-            top: 0; left: 0; right: 0;
-            background: rgba(10, 10, 15, 0.85);
-            backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(212, 175, 55, 0.15);
-            z-index: 1000;
-            padding: 12px 0;
-            transition: 0.3s;
-        }
-        .navbar.scrolled {
-            background: rgba(10, 10, 15, 0.95);
-            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
-        }
-        .nav-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .nav-logo {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            text-decoration: none;
-        }
-        .nav-logo-img {
-            width: 40px; height: 40px;
-            border-radius: 50%;
-            border: 2px solid var(--gold);
-            object-fit: cover;
-        }
-        .nav-logo-text {
-            color: var(--gold);
-            font-size: 18px;
-            font-weight: 800;
-        }
-        .nav-links {
-            display: flex;
-            gap: 25px;
-            align-items: center;
-        }
-        .nav-links a {
-            color: var(--gray);
-            text-decoration: none;
-            font-size: 14px;
-            font-weight: 500;
-            transition: 0.3s;
-            position: relative;
-        }
-        .nav-links a:hover { color: var(--gold); }
-        .nav-cta {
-            background: linear-gradient(135deg, var(--gold), var(--gold-dark));
-            color: var(--bg-primary) !important;
-            padding: 9px 20px;
-            border-radius: 10px;
-            font-weight: 700 !important;
-        }
-        .nav-cta:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(212, 175, 55, 0.4);
-        }
 
         .hero {
             min-height: 100vh;
@@ -309,11 +245,7 @@
         .stat-value { color: var(--gold); font-size: 36px; font-weight: 900; margin-bottom: 6px; }
         .stat-label { color: var(--gray); font-size: 13px; font-weight: 500; }
 
-        .section {
-            padding: 90px 20px;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
+        .section { padding: 90px 20px; max-width: 1200px; margin: 0 auto; }
         .section-header { text-align: center; margin-bottom: 60px; }
         .section-badge {
             display: inline-block;
@@ -346,6 +278,7 @@
             max-width: 600px;
             margin: 0 auto;
         }
+
         .features-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -562,7 +495,8 @@
         }
         .course-level {
             position: absolute;
-            top: 12px; right: 12px;
+            top: 12px;
+            right: 12px;
             background: rgba(16, 185, 129, 0.9);
             color: #fff;
             padding: 4px 10px;
@@ -571,8 +505,20 @@
             font-weight: 700;
         }
         .course-content { padding: 20px; }
-        .course-title { color: var(--white); font-size: 16px; font-weight: 800; margin-bottom: 10px; line-height: 1.5; }
-        .course-desc { color: var(--gray); font-size: 12.5px; line-height: 1.7; margin-bottom: 15px; min-height: 42px; }
+        .course-title {
+            color: var(--white);
+            font-size: 16px;
+            font-weight: 800;
+            margin-bottom: 10px;
+            line-height: 1.5;
+        }
+        .course-desc {
+            color: var(--gray);
+            font-size: 12.5px;
+            line-height: 1.7;
+            margin-bottom: 15px;
+            min-height: 42px;
+        }
         .course-footer {
             display: flex;
             justify-content: space-between;
@@ -623,8 +569,7 @@
         .footer-brand p { color: var(--gray); font-size: 13px; line-height: 1.8; margin-bottom: 20px; }
         .footer-social { display: flex; gap: 10px; }
         .footer-social a {
-            width: 44px;
-            height: 44px;
+            width: 44px; height: 44px;
             border-radius: 12px;
             background: rgba(212, 175, 55, 0.08);
             border: 1px solid rgba(212, 175, 55, 0.2);
@@ -681,7 +626,6 @@
             .hero-container, .ai-signal-container { grid-template-columns: 1fr; gap: 40px; }
             .hero h1 { font-size: 36px; }
             .features-grid, .why-us-grid, .courses-grid, .stats-container { grid-template-columns: 1fr 1fr; }
-            .nav-links { display: none; }
             .section-title, .cta-title { font-size: 28px; }
             .footer-container { grid-template-columns: 1fr 1fr; }
         }
@@ -701,26 +645,6 @@
         <div class="admin-topbar-text">👑 شما به عنوان ادمین وارد شده‌اید</div>
         <button class="admin-logout-btn" onclick="adminLogout()">🚪 خروج</button>
     </div>
-
-    <!-- نوار بالای سایت -->
-    <nav class="navbar" id="navbar">
-        <div class="nav-container">
-            <a href="#" class="nav-logo">
-                <img src="519.png" alt="شمعدون" class="nav-logo-img">
-                <span class="nav-logo-text">شمعدون</span>
-            </a>
-            <div class="nav-links" id="navLinks">
-                <a href="#features">ویژگی‌ها</a>
-                <a href="#courses">دوره‌ها</a>
-                <a href="#ai-signal">ربات هوشمند</a>
-                <a href="about.html">درباره ما</a>
-                <a href="news.html">اخبار</a>
-            </div>
-            <div id="navAuth" style="display:flex; gap:10px; align-items:center;">
-                <a href="login.html" class="nav-cta">✨ شروع رایگان</a>
-            </div>
-        </div>
-    </nav>
 
     <!-- هیرو -->
     <section class="hero">
@@ -1000,7 +924,7 @@
 
     <!-- Toast -->
     <div class="toast" id="toast"></div>
-    
+
     <script>
         // ==========================================
         // تنظیمات Supabase
@@ -1008,33 +932,19 @@
         const SUPABASE_URL = 'https://jcwwilatvstjrohvhtss.supabase.co';
         const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Impjd3dpbGF0dnN0anJvaHZodHNzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODk3MDY4NTYsImV4cCI6MjEwNTI4Mjg1Nn0.eUC89RJy6-60nNGrSeYeDADzLxz-kWTGy4DbNGVi6MM';
         const ADMIN_EMAIL = 'beat.market.office@gmail.com';
-
         const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
         // ==========================================
-        // چک کردن وضعیت ادمین و کاربر
+        // چک کردن وضعیت ادمین (فقط برای نوار قرمز بالا)
         // ==========================================
-        async function checkAuth() {
+        async function checkAdminTopbar() {
             try {
                 const { data, error } = await supabaseClient.auth.getSession();
                 if (error) return;
-
                 if (data && data.session && data.session.user) {
                     const user = data.session.user;
-                    const userEmail = user.email;
-                    const userName = user.user_metadata?.full_name || 'کاربر';
-
-                    if (userEmail === ADMIN_EMAIL) {
+                    if (user.email === ADMIN_EMAIL) {
                         document.getElementById('adminTopbar').classList.add('show');
-                        document.getElementById('navAuth').innerHTML = `
-                            <a href="admin.html" class="nav-cta" style="background: linear-gradient(135deg, #dc2626, #b91c1c); color: #fff !important;">
-                                🎯 پنل ادمین
-                            </a>
-                        `;
-                    } else {
-                        document.getElementById('navAuth').innerHTML = `
-                            <a href="dashboard.html" class="nav-cta">👤 ${escapeHtml(userName)}</a>
-                        `;
                     }
                 }
             } catch (err) {
@@ -1056,7 +966,6 @@
                 const { count: usersCount, error: e1 } = await supabaseClient
                     .from('profiles')
                     .select('*', { count: 'exact', head: true });
-
                 if (!e1 && usersCount !== null) {
                     document.getElementById('statUsers').textContent = toPersianNum('+' + usersCount);
                 }
@@ -1064,7 +973,6 @@
                 const { count: coursesCount, error: e2 } = await supabaseClient
                     .from('courses')
                     .select('*', { count: 'exact', head: true });
-
                 if (!e2 && coursesCount !== null) {
                     document.getElementById('statCourses').textContent = toPersianNum(coursesCount + 5);
                 }
@@ -1072,7 +980,6 @@
                 const { data: ratings, error: e3 } = await supabaseClient
                     .from('course_ratings')
                     .select('rating');
-
                 if (!e3 && ratings && ratings.length > 0) {
                     const validRatings = ratings.filter(r => r.rating != null);
                     if (validRatings.length > 0) {
@@ -1084,7 +991,6 @@
                 const { count: commentsCount, error: e4 } = await supabaseClient
                     .from('course_ratings')
                     .select('*', { count: 'exact', head: true });
-
                 if (!e4 && commentsCount !== null) {
                     document.getElementById('statComments').textContent = toPersianNum(commentsCount);
                 }
@@ -1178,7 +1084,6 @@
                         </a>
                     `;
                 }).join('');
-
             } catch (err) {
                 console.log('Courses error:', err);
             }
@@ -1193,45 +1098,29 @@
             div.textContent = text;
             return div.innerHTML;
         }
-
         function toPersianNum(num) {
             if (!num) return '--';
             const persianDigits = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
             return String(num).replace(/\d/g, d => persianDigits[d]);
         }
-
         function getLevelText(level) {
             if (level === 'مبتدی' || level === 'beginner') return '🟢 مبتدی';
             if (level === 'متوسط' || level === 'intermediate') return '🟡 متوسط';
             if (level === 'پیشرفته' || level === 'advanced') return '🔴 پیشرفته';
             return '🟢 مبتدی';
         }
-
         function getLevelColor(level) {
             if (level === 'مبتدی' || level === 'beginner') return 'rgba(16, 185, 129, 0.9)';
             if (level === 'متوسط' || level === 'intermediate') return 'rgba(245, 158, 11, 0.9)';
             if (level === 'پیشرفته' || level === 'advanced') return 'rgba(239, 68, 68, 0.9)';
             return 'rgba(16, 185, 129, 0.9)';
         }
-
         function showToast(msg) {
             const toast = document.getElementById('toast');
             toast.textContent = msg;
             toast.classList.add('show');
             setTimeout(() => toast.classList.remove('show'), 3000);
         }
-
-        // ==========================================
-        // Navbar scroll effect
-        // ==========================================
-        window.addEventListener('scroll', () => {
-            const navbar = document.getElementById('navbar');
-            if (window.scrollY > 50) {
-                navbar.classList.add('scrolled');
-            } else {
-                navbar.classList.remove('scrolled');
-            }
-        });
 
         // ==========================================
         // Smooth scroll
@@ -1252,7 +1141,7 @@
         // راه‌اندازی
         // ==========================================
         document.addEventListener('DOMContentLoaded', () => {
-            checkAuth();
+            checkAdminTopbar();
             loadStats();
             loadCourses();
         });
@@ -1268,6 +1157,5 @@
             });
         }
     </script>
-
 </body>
 </html>
