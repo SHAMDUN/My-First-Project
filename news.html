@@ -294,7 +294,6 @@
             justify-content: center;
             font-size: 60px;
             overflow: hidden;
-            position: relative;
         }
         .news-image img {
             width: 100%;
@@ -316,13 +315,24 @@
             margin-bottom: 10px;
             font-size: 11px;
             color: var(--gray);
+            flex-wrap: wrap;
         }
         .news-meta .source {
-            background: rgba(212, 175, 55, 0.15);
-            color: var(--gold);
             padding: 3px 10px;
             border-radius: 10px;
             font-weight: 700;
+        }
+        .news-meta .source.eghtesadonline {
+            background: rgba(59, 130, 246, 0.15);
+            color: #60a5fa;
+        }
+        .news-meta .source.donya {
+            background: rgba(212, 175, 55, 0.15);
+            color: var(--gold);
+        }
+        .news-meta .source.shana {
+            background: rgba(16, 185, 129, 0.15);
+            color: #4ade80;
         }
         .news-meta .date {
             display: flex;
@@ -365,9 +375,6 @@
         .news-read-more {
             color: var(--gold);
             font-weight: 700;
-            display: flex;
-            align-items: center;
-            gap: 4px;
         }
 
         .loading {
@@ -439,9 +446,6 @@
             font-size: 15px;
             font-weight: 800;
             margin-bottom: 8px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
         }
         .dict-def {
             color: #cbd5e1;
@@ -468,469 +472,312 @@
     </style>
 </head>
 <body>
-
     <!-- Navbar -->
     <nav class="sn-navbar">
         <div class="sn-navbar-container">
-            <button class="sn-hamburger" id="snHamburger" aria-label="منو">
+            <button class="sn-hamburger" onclick="toggleSidebar()">
                 <span></span>
                 <span></span>
                 <span></span>
             </button>
             <a href="index.html" class="sn-brand">
-                <img src="519.png" alt="شمعدون" class="sn-brand-logo">
-                <span class="sn-brand-text">شمعدون</span>
+                <img src="logo.jpg" alt="شمعدون" class="sn-brand-logo" onerror="this.style.display='none'">
+                <span class="sn-brand-text">آکادمی شمعدون</span>
             </a>
-            <div class="sn-user-area" id="snUserArea"></div>
+            <div class="sn-user-area" id="userArea">
+                <a href="login.html" class="sn-user-avatar">؟</a>
+            </div>
         </div>
     </nav>
 
-    <div class="sn-overlay" id="snOverlay"></div>
-
+    <!-- Sidebar -->
+    <div class="sn-overlay" id="snOverlay" onclick="toggleSidebar()"></div>
     <aside class="sn-sidebar" id="snSidebar">
         <div class="sn-sidebar-header">
-            <a href="index.html" class="sn-brand" style="justify-content:flex-start;">
-                <img src="519.png" alt="شمعدون" class="sn-brand-logo">
+            <a href="index.html" class="sn-brand">
+                <img src="logo.jpg" alt="شمعدون" class="sn-brand-logo" onerror="this.style.display='none'">
                 <span class="sn-brand-text">شمعدون</span>
             </a>
-            <button class="sn-close" id="snClose">✕</button>
+            <button class="sn-close" onclick="toggleSidebar()">✕</button>
         </div>
         <div class="sn-sidebar-content">
             <div class="sn-menu-section">
-                <a href="index.html" class="sn-menu-item"><span class="sn-menu-icon">🏠</span><span class="sn-menu-label">صفحه اصلی</span></a>
-                <a href="home.html" class="sn-menu-item"><span class="sn-menu-icon">📊</span><span class="sn-menu-label">نمای بازار</span></a>
-                <a href="bourse.html" class="sn-menu-item"><span class="sn-menu-icon">📈</span><span class="sn-menu-label">بورس ایران</span></a>
-                <a href="news.html" class="sn-menu-item active"><span class="sn-menu-icon">📰</span><span class="sn-menu-label">اخبار اقتصادی</span></a>
-                <a href="courses.html" class="sn-menu-item"><span class="sn-menu-icon">📚</span><span class="sn-menu-label">دوره‌های آموزشی</span></a>
-                <a href="personality-test.html" class="sn-menu-item"><span class="sn-menu-icon">🧠</span><span class="sn-menu-label">آزمون خودشناسی مالی</span></a>
-                <a href="assistant.html" class="sn-menu-item"><span class="sn-menu-icon">🤖</span><span class="sn-menu-label">دستیار هوشمند</span></a>
-            </div>
-            <div class="sn-menu-divider"></div>
-            <div class="sn-menu-section">
-                <a href="dashboard.html" class="sn-menu-item"><span class="sn-menu-icon">👤</span><span class="sn-menu-label">پنل کاربری</span></a>
-                <a href="admin.html" class="sn-menu-item" id="snAdminLink" style="display:none; color:#fca5a5;"><span class="sn-menu-icon">🎯</span><span class="sn-menu-label">پنل ادمین</span></a>
-                <a href="#" class="sn-menu-item sn-logout" id="snLogoutBtn" style="display:none;"><span class="sn-menu-icon">🚪</span><span class="sn-menu-label">خروج</span></a>
+                <a href="index.html" class="sn-menu-item">
+                    <span class="sn-menu-icon">🏠</span>
+                    <span class="sn-menu-label">صفحه اصلی</span>
+                </a>
+                <a href="news.html" class="sn-menu-item active">
+                    <span class="sn-menu-icon">📰</span>
+                    <span class="sn-menu-label">اخبار اقتصادی</span>
+                </a>
+                <a href="dictionary.html" class="sn-menu-item">
+                    <span class="sn-menu-icon">📚</span>
+                    <span class="sn-menu-label">دیکشنری</span>
+                </a>
+                <a href="profile.html" class="sn-menu-item">
+                    <span class="sn-menu-icon">👤</span>
+                    <span class="sn-menu-label">پروفایل من</span>
+                </a>
+                <div class="sn-menu-divider"></div>
+                <a href="#" onclick="logout(); return false;" class="sn-menu-item sn-logout">
+                    <span class="sn-menu-icon">🚪</span>
+                    <span class="sn-menu-label">خروج</span>
+                </a>
             </div>
         </div>
     </aside>
 
-    <div class="main-container">
-        <div class="page-header">
+    <!-- Main Content -->
+    <main class="main-container">
+        <header class="page-header">
             <h1>📰 اخبار اقتصادی</h1>
-            <p>آخرین اخبار اقتصادی، بازار سرمایه، ارز و طلا و ارز دیجیتال</p>
-        </div>
+            <p>آخرین اخبار از منابع معتبر اقتصادی ایران</p>
+        </header>
 
+        <!-- Tabs -->
         <div class="news-tabs">
-            <button class="news-tab active" onclick="switchTab('all', this)">📰 همه اخبار</button>
-            <button class="news-tab" onclick="switchTab('economy', this)">🏦 اقتصاد کلان</button>
-            <button class="news-tab" onclick="switchTab('bourse', this)">📈 بازار سرمایه</button>
-            <button class="news-tab" onclick="switchTab('currency', this)">💵 ارز و طلا</button>
-            <button class="news-tab" onclick="switchTab('crypto', this)">🪙 ارز دیجیتال</button>
-            <button class="news-tab" onclick="switchTab('dict', this)">📚 دیکشنری اصطلاحات</button>
+            <button class="news-tab active" onclick="switchTab('all', this)">
+                <span>🌐</span> همه اخبار
+            </button>
+            <button class="news-tab" onclick="switchTab('eghtesadonline', this)">
+                <span>💼</span> اقتصاد آنلاین
+            </button>
+            <button class="news-tab" onclick="switchTab('donya', this)">
+                <span>🌍</span> دنیای اقتصاد
+            </button>
+            <button class="news-tab" onclick="switchTab('shana', this)">
+                <span>🛢️</span> شانا
+            </button>
+            <button class="news-tab" onclick="switchTab('dict', this)">
+                <span>📚</span> دیکشنری
+            </button>
         </div>
 
-        <div class="news-section active" id="section-all">
-            <div class="news-grid" id="newsGrid-all">
-                <div class="loading"><div class="spinner"></div>⏳ در حال دریافت اخبار...</div>
+        <!-- News Sections -->
+        <section id="section-all" class="news-section active">
+            <div class="news-grid" id="grid-all">
+                <div class="loading">
+                    <div class="spinner"></div>
+                    <p>در حال بارگذاری اخبار...</p>
+                </div>
             </div>
-        </div>
+        </section>
 
-        <div class="news-section" id="section-economy">
-            <div class="news-grid" id="newsGrid-economy">
-                <div class="loading"><div class="spinner"></div>⏳ در حال فیلتر اخبار...</div>
+        <section id="section-eghtesadonline" class="news-section">
+            <div class="news-grid" id="grid-eghtesadonline">
+                <div class="loading">
+                    <div class="spinner"></div>
+                    <p>در حال بارگذاری...</p>
+                </div>
             </div>
-        </div>
+        </section>
 
-        <div class="news-section" id="section-bourse">
-            <div class="news-grid" id="newsGrid-bourse">
-                <div class="loading"><div class="spinner"></div>⏳ در حال فیلتر اخبار...</div>
+        <section id="section-donya" class="news-section">
+            <div class="news-grid" id="grid-donya">
+                <div class="loading">
+                    <div class="spinner"></div>
+                    <p>در حال بارگذاری...</p>
+                </div>
             </div>
-        </div>
+        </section>
 
-        <div class="news-section" id="section-currency">
-            <div class="news-grid" id="newsGrid-currency">
-                <div class="loading"><div class="spinner"></div>⏳ در حال فیلتر اخبار...</div>
+        <section id="section-shana" class="news-section">
+            <div class="news-grid" id="grid-shana">
+                <div class="loading">
+                    <div class="spinner"></div>
+                    <p>در حال بارگذاری...</p>
+                </div>
             </div>
-        </div>
+        </section>
 
-        <div class="news-section" id="section-crypto">
-            <div class="news-grid" id="newsGrid-crypto">
-                <div class="loading"><div class="spinner"></div>⏳ در حال فیلتر اخبار...</div>
-            </div>
-        </div>
-
-        <div class="dict-section" id="section-dict">
+        <!-- Dictionary Section -->
+        <section id="section-dict" class="dict-section">
             <div class="dict-categories">
-                <button class="dict-cat-btn active" onclick="switchDictCat('economy', this)">🏦 اقتصاد کلان</button>
-                <button class="dict-cat-btn" onclick="switchDictCat('bourse', this)">📈 بورس</button>
-                <button class="dict-cat-btn" onclick="switchDictCat('currency', this)">💵 ارز و طلا</button>
-                <button class="dict-cat-btn" onclick="switchDictCat('crypto', this)">🪙 ارز دیجیتال</button>
-                <button class="dict-cat-btn" onclick="switchDictCat('analysis', this)">📊 تحلیل تکنیکال</button>
+                <button class="dict-cat-btn active" onclick="filterDict('all', this)">همه</button>
+                <button class="dict-cat-btn" onclick="filterDict('بورس', this)">بورس</button>
+                <button class="dict-cat-btn" onclick="filterDict('ارز', this)">ارز</button>
+                <button class="dict-cat-btn" onclick="filterDict('طلا', this)">طلا</button>
+                <button class="dict-cat-btn" onclick="filterDict('نفت', this)">نفت</button>
+                <button class="dict-cat-btn" onclick="filterDict('اقتصاد کلان', this)">اقتصاد کلان</button>
             </div>
-            <div class="dict-grid" id="dictGrid">
-                <div class="loading"><div class="spinner"></div></div>
-            </div>
-        </div>
-    </div>
+            <div class="dict-grid" id="dictGrid"></div>
+        </section>
+    </main>
 
     <footer class="footer">
-        © ۱۴۰۵ آکادمی شمعدون | تمامی حقوق محفوظ است
+        <p>© ۱۴۰۴ آکادمی شمعدون — تمامی حقوق محفوظ است</p>
     </footer>
 
     <script>
-        const ADMIN_EMAIL = 'beat.market.office@gmail.com';
-        const SUPABASE_URL = 'https://jcwwilatvstjrohvhtss.supabase.co';
-        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Impjd3dpbGF0dnN0anJvaHZodHNzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODk3MDY4NTYsImV4cCI6MjEwNTI4Mjg1Nn0.eUC89RJy6-60nNGrSeYeDADzLxz-kWTGy4DbNGVi6MM';
-        const EDGE_URL = 'https://jcwwilatvstjrohvhtss.supabase.co/functions/v1/bright-api';
-
-        let allNews = [];
-
-        function setupNavbar() {
-            const hamburger = document.getElementById('snHamburger');
-            const sidebar = document.getElementById('snSidebar');
-            const overlay = document.getElementById('snOverlay');
-            const closeBtn = document.getElementById('snClose');
-
-            hamburger.addEventListener('click', () => {
-                sidebar.classList.add('show');
-                overlay.classList.add('show');
-            });
-            closeBtn.addEventListener('click', () => {
-                sidebar.classList.remove('show');
-                overlay.classList.remove('show');
-            });
-            overlay.addEventListener('click', () => {
-                sidebar.classList.remove('show');
-                overlay.classList.remove('show');
-            });
-            document.addEventListener('keydown', (e) => {
-                if (e.key === 'Escape') {
-                    sidebar.classList.remove('show');
-                    overlay.classList.remove('show');
-                }
-            });
+        // ====== Supabase Init ======
+        const SUPABASE_URL = 'YOUR_SUPABASE_URL';
+        const SUPABASE_ANON_KEY = 'YOUR_SUPABASE_ANON_KEY';
+        let supabaseClient = null;
+        if (window.supabase) {
+            supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
         }
 
-        async function checkUser() {
+        // ====== Sidebar ======
+        function toggleSidebar() {
+            document.getElementById('snSidebar').classList.toggle('show');
+            document.getElementById('snOverlay').classList.toggle('show');
+        }
+
+        // ====== Auth Check ======
+        async function checkAuth() {
+            if (!supabaseClient) return;
+            const { data: { session } } = await supabaseClient.auth.getSession();
+            const userArea = document.getElementById('userArea');
+            if (session && session.user) {
+                const email = session.user.email || '';
+                const initial = email.charAt(0).toUpperCase() || '👤';
+                userArea.innerHTML = `<a href="profile.html" class="sn-user-avatar" title="${email}">${initial}</a>`;
+            } else {
+                userArea.innerHTML = `<a href="login.html" class="sn-user-avatar">؟</a>`;
+            }
+        }
+
+        async function logout() {
+            if (supabaseClient) await supabaseClient.auth.signOut();
+            window.location.href = 'login.html';
+        }
+
+        // ====== Tabs ======
+        function switchTab(tab, btn) {
+            document.querySelectorAll('.news-tab').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+
+            document.querySelectorAll('.news-section, .dict-section').forEach(s => s.classList.remove('active'));
+
+            if (tab === 'dict') {
+                document.getElementById('section-dict').classList.add('active');
+                if (!document.getElementById('dictGrid').hasChildNodes()) loadDictionary();
+            } else {
+                const section = document.getElementById('section-' + tab);
+                if (section) section.classList.add('active');
+                if (tab !== 'all') loadNews(tab);
+                else loadAllNews();
+            }
+        }
+
+        // ====== News Loader ======
+        const loadedSources = new Set();
+
+        function sourceClass(src) {
+            if (src.includes('eghtesad')) return 'eghtesadonline';
+            if (src.includes('donya')) return 'donya';
+            if (src.includes('shana')) return 'shana';
+            return '';
+        }
+
+        function formatDate(str) {
+            if (!str) return '';
             try {
-                const client = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-                const { data } = await client.auth.getSession();
-                const userArea = document.getElementById('snUserArea');
-                userArea.innerHTML = '';
-
-                if (data && data.session && data.session.user) {
-                    const user = data.session.user;
-                    const fullName = user.user_metadata?.full_name || user.email || 'کاربر';
-                    const firstLetter = fullName.charAt(0).toUpperCase();
-
-                    userArea.innerHTML = `
-                        <a href="dashboard.html" class="sn-user-avatar" title="${escapeHtml(fullName)}">
-                            ${firstLetter}
-                        </a>
-                    `;
-
-                    if (user.email === ADMIN_EMAIL) {
-                        const adminLink = document.getElementById('snAdminLink');
-                        if (adminLink) adminLink.style.display = 'flex';
-                    }
-
-                    const logoutBtn = document.getElementById('snLogoutBtn');
-                    if (logoutBtn) {
-                        logoutBtn.style.display = 'flex';
-                        logoutBtn.addEventListener('click', async (e) => {
-                            e.preventDefault();
-                            if (confirm('می‌خوای خارج بشی؟')) {
-                                await client.auth.signOut();
-                                window.location.href = 'login.html';
-                            }
-                        });
-                    }
-                }
-            } catch (e) {
-                console.log('Navbar error:', e);
-            }
+                const d = new Date(str);
+                return d.toLocaleDateString('fa-IR', { year: 'numeric', month: 'short', day: 'numeric' });
+            } catch { return ''; }
         }
 
-        function escapeHtml(text) {
-            if (!text) return '';
-            const div = document.createElement('div');
-            div.textContent = text;
-            return div.innerHTML;
-        }
-
-        function formatDate(dateStr) {
-            try {
-                const d = new Date(dateStr);
-                const now = new Date();
-                const diff = Math.floor((now - d) / 1000 / 60);
-
-                if (diff < 1) return 'همین الان';
-                if (diff < 60) return `${diff} دقیقه پیش`;
-                if (diff < 1440) return `${Math.floor(diff / 60)} ساعت پیش`;
-                if (diff < 10080) return `${Math.floor(diff / 1440)} روز پیش`;
-
-                return new Intl.DateTimeFormat('fa-IR', {
-                    year: 'numeric', month: 'short', day: 'numeric'
-                }).format(d);
-            } catch (e) {
-                return dateStr;
-            }
-        }
-
-        // ==========================================
-        // دسته‌بندی سخت‌گیرانه - فقط اقتصادی
-        // ==========================================
-        function categorizeNews(title, description) {
-            const text = (title + ' ' + description).toLowerCase();
-
-            // ===== ارز دیجیتال =====
-            if (text.match(/بیت\s?کوین|اتریوم|ارز\s?دیجیتال|رمزارز|بلاکچین|کریپتو|سولانا|ریپل|دوج\s?کوین|استیبل\s?کوین|تتر|کیف\s?پول\s?دیجیتال|ماینر|استخراج\s?رمزارز/) ||
-                text.includes('crypto') || text.includes('bitcoin') || text.includes('blockchain')) {
-                return 'crypto';
-            }
-
-            // ===== ارز و طلا =====
-            if (text.match(/قیمت\s?دلار|نرخ\s?دلار|قیمت\s?یورو|قیمت\s?طلا|قیمت\s?سکه|قیمت\s?نقره|بازار\s?ارز|بازار\s?طلا|صرافی|انس\s?طلا|حباب\s?طلا|نرخ\s?ارز|دلار\s?آزاد|طلا\s?۱۸|سکه\s?امامی|سکه\s?بهار|ارز\s?آمریکا|نرخ\s?تتر/) ||
-                text.includes('usd') || text.includes('xauusd')) {
-                return 'currency';
-            }
-
-            // ===== بازار سرمایه =====
-            if (text.match(/بورس|سهام|شاخص\s?کل|فرابورس|تالار\s?شیشه|حق\s?تقدم|معاملات\s?سهام|بازار\s?سرمایه|سود\s?سهام|eps|p\/e|نماد\s?بورس|شاخص\s?بورس|ارزش\s?معاملات/) ||
-                text.includes('stock market') || text.includes('بورس\s?تهران')) {
-                return 'bourse';
-            }
-
-            // ===== اقتصاد کلان =====
-            if (text.match(/اقتصاد\s?کلان|تورم|نقدینگی|بانک\s?مرکزی|نرخ\s?بهره|بودجه\s?دولت|مالیات|صادرات|واردات|تولید\s?ناخالص|اشتغال|بیکاری|رکود\s?اقتصادی|رشد\s?اقتصادی|سیاست\s?پولی|سیاست\s?مالی|کسری\s?بودجه|یارانه|هدفمندی\s?یارانه|تسهیلات\s?بانکی|سود\s?بانکی|اعتبار|GDP|اقتصاد\s?ایران|اقتصاد\s?جهان|وزیر\s?اقتصاد/) ||
-                text.includes('gdp') || text.includes('inflation') || text.includes('economy')) {
-                return 'economy';
-            }
-
-            // ===== سایر (ورزش، سیاست، فرهنگ و...) → حذف کامل =====
-            return null;
-        }
-
-        function getCategoryLabel(cat) {
-            const labels = {
-                'crypto': '🪙 ارز دیجیتال',
-                'currency': '💵 ارز و طلا',
-                'bourse': '📈 بازار سرمایه',
-                'economy': '🏦 اقتصاد کلان'
-            };
-            return labels[cat] || '📰 خبر';
-        }
-
-        function parseRSS(xmlText) {
-            try {
-                const parser = new DOMParser();
-                const xml = parser.parseFromString(xmlText, 'text/xml');
-
-                if (xml.querySelector('parsererror')) return [];
-
-                const items = xml.querySelectorAll('item');
-                const news = [];
-
-                items.forEach(item => {
-                    const title = item.querySelector('title')?.textContent || '';
-                    const link = item.querySelector('link')?.textContent || '';
-                    const description = item.querySelector('description')?.textContent || '';
-                    const pubDate = item.querySelector('pubDate')?.textContent || '';
-                    const category = item.querySelector('category')?.textContent || '';
-                    const enclosure = item.querySelector('enclosure');
-                    const imageUrl = enclosure?.getAttribute('url') || '';
-
-                    if (title && link) {
-                        const cat = categorizeNews(title, description);
-                        // فقط اگه توی دسته اقتصادی بود، اضافه کن
-                        if (cat !== null) {
-                            news.push({
-                                title: title.trim(),
-                                link: link.trim(),
-                                description: description.trim(),
-                                pubDate: pubDate.trim(),
-                                category: category.trim(),
-                                image: imageUrl,
-                                cat: cat
-                            });
-                        }
-                    }
-                });
-
-                return news;
-            } catch (e) {
-                console.error('Parse error:', e);
-                return [];
-            }
-        }
-
-        async function loadNews() {
-            const grids = ['all', 'economy', 'bourse', 'currency', 'crypto'];
-
-            grids.forEach(g => {
-                const el = document.getElementById('newsGrid-' + g);
-                if (el) el.innerHTML = '<div class="loading"><div class="spinner"></div>⏳ در حال دریافت اخبار...</div>';
-            });
-
-            try {
-                const res = await fetch(`${EDGE_URL}?source=proxy&url=${encodeURIComponent('https://www.irna.ir/rss')}`);
-                const data = await res.json();
-
-                if (!data.success || !data.data) {
-                    throw new Error('خطا در دریافت داده');
-                }
-
-                allNews = parseRSS(data.data);
-
-                if (allNews.length === 0) {
-                    grids.forEach(g => {
-                        const el = document.getElementById('newsGrid-' + g);
-                        if (el) el.innerHTML = '<div class="loading">📭 خبر اقتصادی جدیدی یافت نشد</div>';
-                    });
-                    return;
-                }
-
-                renderNews('all', allNews.slice(0, 40));
-                renderNews('economy', allNews.filter(n => n.cat === 'economy').slice(0, 30));
-                renderNews('bourse', allNews.filter(n => n.cat === 'bourse').slice(0, 30));
-                renderNews('currency', allNews.filter(n => n.cat === 'currency').slice(0, 30));
-                renderNews('crypto', allNews.filter(n => n.cat === 'crypto').slice(0, 30));
-
-            } catch (e) {
-                console.error('Load news error:', e);
-                grids.forEach(g => {
-                    const el = document.getElementById('newsGrid-' + g);
-                    if (el) el.innerHTML = '<div class="loading">❌ خطا: ' + e.message + '</div>';
-                });
-            }
-        }
-
-        function renderNews(sectionId, newsList) {
-            const grid = document.getElementById('newsGrid-' + sectionId);
-            if (!grid) return;
-
-            if (newsList.length === 0) {
-                grid.innerHTML = '<div class="loading">📭 خبری در این دسته یافت نشد</div>';
+        function renderNews(items, gridId) {
+            const grid = document.getElementById(gridId);
+            if (!items || items.length === 0) {
+                grid.innerHTML = `<div class="loading"><p>📭 خبری یافت نشد</p></div>`;
                 return;
             }
-
-            grid.innerHTML = newsList.map((n, idx) => `
-                <a href="${escapeHtml(n.link)}" target="_blank" rel="noopener" class="news-card" style="animation: fadeInUp 0.4s ease-out ${idx * 0.03}s backwards;">
-                    ${n.image ? `
-                        <div class="news-image">
-                            <img src="${escapeHtml(n.image)}" alt="" onerror="this.parentElement.innerHTML='📰'">
-                        </div>
-                    ` : `
-                        <div class="news-image">📰</div>
-                    `}
+            grid.innerHTML = items.map(n => `
+                <a class="news-card" href="${n.link || '#'}" target="_blank" rel="noopener">
+                    <div class="news-image">
+                        ${n.image ? `<img src="${n.image}" alt="" onerror="this.parentElement.innerHTML='📰'">` : '📰'}
+                    </div>
                     <div class="news-content">
                         <div class="news-meta">
-                            <span class="source">🇮🇷 ایرنا</span>
-                            <span class="date">⏰ ${formatDate(n.pubDate)}</span>
+                            <span class="source ${sourceClass(n.source || '')}">${n.source || 'خبر'}</span>
+                            <span class="date">📅 ${formatDate(n.published_at || n.date)}</span>
                         </div>
-                        <div class="news-title">${escapeHtml(n.title)}</div>
-                        <div class="news-desc">${escapeHtml(n.description.substring(0, 200))}</div>
+                        <h3 class="news-title">${n.title || ''}</h3>
+                        <p class="news-desc">${n.description || n.summary || ''}</p>
                         <div class="news-footer">
-                            <span class="news-category">${getCategoryLabel(n.cat)}</span>
-                            <span class="news-read-more">مشاهده ←</span>
+                            <span class="news-category">${n.category || 'اقتصادی'}</span>
+                            <span class="news-read-more">ادامه ←</span>
                         </div>
                     </div>
                 </a>
             `).join('');
         }
 
-        function switchTab(tabId, btn) {
-            document.querySelectorAll('.news-tab').forEach(t => t.classList.remove('active'));
-            btn.classList.add('active');
+        async function loadNews(source) {
+            const gridId = 'grid-' + source;
+            const grid = document.getElementById(gridId);
+            if (!grid || loadedSources.has(source)) return;
+            grid.innerHTML = `<div class="loading"><div class="spinner"></div><p>در حال بارگذاری...</p></div>`;
 
-            document.querySelectorAll('.news-section, .dict-section').forEach(s => s.classList.remove('active'));
-
-            const target = document.getElementById('section-' + tabId);
-            if (target) target.classList.add('active');
+            try {
+                const res = await fetch(`/api/news?source=${source}`);
+                const data = await res.json();
+                renderNews(data.items || data, gridId);
+                loadedSources.add(source);
+            } catch (e) {
+                grid.innerHTML = `<div class="loading"><p>⚠️ خطا در دریافت اخبار</p></div>`;
+            }
         }
 
-        // ==========================================
-        // دیکشنری
-        // ==========================================
-        const DICTIONARY = {
-            economy: [
-                { term: 'تورم', def: 'افزایش مداوم و عمومی سطح قیمت‌ها در اقتصاد که باعث کاهش قدرت خرید پول می‌شود.' },
-                { term: 'نقدینگی', def: 'مجموع پول در گردش و سپرده‌های بانکی که در اختیار مردم و بنگاه‌هاست.' },
-                { term: 'نرخ بهره', def: 'درصدی که بانک مرکزی برای وام دادن به بانک‌ها تعیین می‌کند و بر تمام اقتصاد اثر می‌گذارد.' },
-                { term: 'تولید ناخالص داخلی (GDP)', def: 'ارزش کل کالاها و خدمات تولیدشده در یک کشور در یک دوره زمانی مشخص.' },
-                { term: 'سیاست پولی', def: 'اقدامات بانک مرکزی برای کنترل نقدینگی و تورم از طریق نرخ بهره و ذخایر بانکی.' },
-                { term: 'سیاست مالی', def: 'تصمیمات دولت در مورد مالیات و هزینه‌های عمومی برای تأثیر بر اقتصاد.' },
-                { term: 'کسری بودجه', def: 'وقتی هزینه‌های دولت از درآمدهایش بیشتر شود.' },
-                { term: 'رکود', def: 'دوره‌ای که اقتصاد رشد منفی دارد و بیکاری افزایش می‌یابد.' },
-            ],
-            bourse: [
-                { term: 'شاخص کل (TEDPIX)', def: 'معیاری برای سنجش عملکرد کلی بازار بورس. افزایش آن یعنی رشد کلی قیمت سهام.' },
-                { term: 'نماد', def: 'هر شرکت در بورس با یک نام کوتاه مشخص می‌شود. مثل «فولاد» و «شپنا».' },
-                { term: 'حق تقدم', def: 'حقی که به سهامداران فعلی داده می‌شود تا سهام جدید را با تخفیف بخرند.' },
-                { term: 'فرابورس', def: 'بازار خارج از بورس که شرایط پذیرش ساده‌تری دارد.' },
-                { term: 'P/E', def: 'نسبت قیمت سهام به سود هر سهم. نشان‌دهنده گران یا ارزان بودن سهم.' },
-                { term: 'EPS', def: 'سود هر سهم — کل سود شرکت تقسیم بر تعداد سهام.' },
-                { term: 'ارزش بازار', def: 'قیمت هر سهم ضرب در تعداد کل سهام شرکت.' },
-                { term: 'حجم مبنا', def: 'حداقل تعداد سهامی که باید در روز معامله بشه تا قیمت تغییر کنه.' },
-            ],
-            currency: [
-                { term: 'انس طلا (XAUUSD)', def: 'قیمت جهانی یک اونس طلا به دلار آمریکا. مبنای قیمت‌گذاری طلا در ایران.' },
-                { term: 'حباب طلا', def: 'تفاوت بین قیمت بازار طلا و ارزش ذاتی آن. حباب مثبت یعنی گران‌تر از ارزش واقعی.' },
-                { term: 'ارزش ذاتی', def: 'قیمتی که با محاسبه قیمت جهانی و نرخ ارز به دست می‌آید، بدون حباب.' },
-                { term: 'دلار آزاد', def: 'نرخ دلار در بازار آزاد (غیررسمی).' },
-                { term: 'دلار نیمایی', def: 'نرخ دلار در سامانه نیما که برای صادرکنندگان و واردکنندگان رسمی است.' },
-                { term: 'تتر (USDT)', def: 'ارز دیجیتال باثبات که ارزشش همیشه نزدیک یک دلار آمریکاست.' },
-                { term: 'سکه امامی', def: 'سکه طلای بهار آزادی طرح جدید که توسط بانک مرکزی ضرب می‌شود.' },
-                { term: 'طلای آب‌شده', def: 'طلا ذوب‌شده که به صورت شمش یا قطعه فروخته می‌شود.' },
-            ],
-            crypto: [
-                { term: 'بیت‌کوین (BTC)', def: 'اولین و بزرگترین ارز دیجیتال جهان با عرضه محدود ۲۱ میلیون واحد.' },
-                { term: 'اتریوم (ETH)', def: 'دومین ارز دیجیتال بزرگ که از قراردادهای هوشمند پشتیبانی می‌کند.' },
-                { term: 'سولانا (SOL)', def: 'بلاکچین سریع با کارمزد پایین که برای اپلیکیشن‌های DeFi استفاده می‌شود.' },
-                { term: 'استیبل‌کوین', def: 'ارز دیجیتالی که ارزشش به یک دارایی (مثل دلار) گره خورده.' },
-                { term: 'کیف پول سرد', def: 'کیف پول آفلاین که امنیت بالاتری داره ولی برای تراکنش روزانه مناسب نیست.' },
-                { term: 'کیف پول گرم', def: 'کیف پول متصل به اینترنت که برای استفاده روزانه راحته ولی امنیت کمتری داره.' },
-                { term: 'نهنگ (Whale)', def: 'کاربری که مقدار زیادی ارز دیجیتال داره و تراکنش‌هاش روی قیمت اثر می‌ذاره.' },
-                { term: 'DeFi', def: 'امور مالی غیرمتمرکز — سرویس‌های مالی بدون واسطه که روی بلاکچین اجرا می‌شن.' },
-            ],
-            analysis: [
-                { term: 'پرایس اکشن', def: 'روش تحلیل بر اساس حرکات قیمت و الگوهای کندلی، بدون استفاده از اندیکاتور.' },
-                { term: 'حمایت', def: 'سطحی که قیمت به آن می‌رسد و احتمال برگشت به بالا وجود دارد.' },
-                { term: 'مقاومت', def: 'سطحی که قیمت به آن می‌رسد و احتمال برگشت به پایین وجود دارد.' },
-                { term: 'خط روند', def: 'خطی که کف‌ها یا سقف‌های قیمت را به هم وصل می‌کند و جهت روند را نشان می‌دهد.' },
-                { term: 'کندل استیک', def: 'نمایش گرافیکی قیمت که شامل باز، بسته، بالا و پایین در یک دوره زمانی است.' },
-                { term: 'RSI', def: 'اندیکاتوری که قدرت خرید و فروش را بین ۰ تا ۱۰۰ نشان می‌دهد. بالای ۷۰ اشباع خرید و زیر ۳۰ اشباع فروش.' },
-                { term: 'MACD', def: 'اندیکاتوری برای تشخیص روند و نقاط ورود و خروج از دو میانگین متحرک استفاده می‌کند.' },
-                { term: 'فیبوناچی', def: 'ابزاری برای پیدا کردن سطوح برگشت قیمت بر اساس نسبت‌های ریاضی.' },
-            ],
-        };
+        async function loadAllNews() {
+            const grid = document.getElementById('grid-all');
+            grid.innerHTML = `<div class="loading"><div class="spinner"></div><p>در حال بارگذاری...</p></div>`;
+            try {
+                const res = await fetch('/api/news');
+                const data = await res.json();
+                renderNews(data.items || data, 'grid-all');
+            } catch (e) {
+                grid.innerHTML = `<div class="loading"><p>⚠️ خطا در دریافت اخبار</p></div>`;
+            }
+        }
 
-        function renderDict(cat) {
+        // ====== Dictionary ======
+        const dictData = [
+            { term: 'بورس', def: 'بازاری سازمان‌یافته که در آن اوراق بهادار مانند سهام و اوراق قرضه معامله می‌شود.', cat: 'بورس' },
+            { term: 'شاخص کل', def: 'معیاری برای سنجش عملکرد کلی بازار بورس که تغییرات قیمت سهام را نشان می‌دهد.', cat: 'بورس' },
+            { term: 'سهام', def: 'بخشی از مالکیت یک شرکت که قابل خرید و فروش است.', cat: 'بورس' },
+            { term: 'نرخ ارز', def: 'قیمت تبدیل یک واحد پول به پول دیگر در بازار.', cat: 'ارز' },
+            { term: 'دلار آزاد', def: 'نرخ دلار در بازار غیررسمی که معمولاً بالاتر از نرخ رسمی است.', cat: 'ارز' },
+            { term: 'طلا ۱۸ عیار', def: 'طلای خالص با عیار ۷۵۰ که رایج‌ترین واحد معاملاتی در ایران است.', cat: 'طلا' },
+            { term: 'انس طلا', def: 'واحد جهانی سنجش طلا که معادل ۳۱.۱ گرم است.', cat: 'طلا' },
+            { term: 'نفت خام', def: 'نفت استخراج‌شده از زمین که برای پالایش و تبدیل به فرآورده‌ها استفاده می‌شود.', cat: 'نفت' },
+            { term: 'اوپک', def: 'سازمان کشورهای صادرکننده نفت که سیاست‌های تولید و قیمت را تنظیم می‌کند.', cat: 'نفت' },
+            { term: 'تورم', def: 'افزایش مداوم سطح عمومی قیمت‌ها که باعث کاهش قدرت خرید می‌شود.', cat: 'اقتصاد کلان' },
+            { term: 'تولید ناخالص داخلی (GDP)', def: 'ارزش کل کالاها و خدمات تولیدشده در یک کشور طی یک دوره زمانی.', cat: 'اقتصاد کلان' },
+            { term: 'نقدینگی', def: 'مجموع پول در گردش و سپرده‌های بانکی در اقتصاد.', cat: 'اقتصاد کلان' }
+        ];
+
+        function renderDict(filter) {
             const grid = document.getElementById('dictGrid');
-            const items = DICTIONARY[cat] || [];
-
-            grid.innerHTML = items.map((item, idx) => `
-                <div class="dict-card" style="animation: fadeInUp 0.4s ease-out ${idx * 0.03}s backwards;">
-                    <div class="dict-term">📖 ${escapeHtml(item.term)}</div>
-                    <div class="dict-def">${escapeHtml(item.def)}</div>
+            const items = filter === 'all' ? dictData : dictData.filter(d => d.cat === filter);
+            if (items.length === 0) {
+                grid.innerHTML = `<div class="loading"><p>موردی یافت نشد</p></div>`;
+                return;
+            }
+            grid.innerHTML = items.map(d => `
+                <div class="dict-card">
+                    <div class="dict-term">📖 ${d.term}</div>
+                    <div class="dict-def">${d.def}</div>
                 </div>
             `).join('');
         }
 
-        function switchDictCat(cat, btn) {
+        function filterDict(cat, btn) {
             document.querySelectorAll('.dict-cat-btn').forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
             renderDict(cat);
         }
 
-        document.addEventListener('DOMContentLoaded', async () => {
-            setupNavbar();
-            checkUser();
+        function loadDictionary() {
+            renderDict('all');
+        }
 
-            await loadNews();
-            renderDict('economy');
-
-            setInterval(loadNews, 600000);
+        // ====== Init ======
+        document.addEventListener('DOMContentLoaded', () => {
+            checkAuth();
+            loadAllNews();
         });
     </script>
 </body>
