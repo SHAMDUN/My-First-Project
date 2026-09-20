@@ -49,186 +49,13 @@
             50% { opacity: 0.5; transform: scale(1.3); }
         }
 
-        /* ============= Navbar ============= */
-        .sn-navbar {
-            position: fixed;
-            top: 0; left: 0; right: 0;
-            background: rgba(10, 10, 15, 0.92);
-            backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(212, 175, 55, 0.15);
-            z-index: 9998;
-            padding: 12px 0;
-        }
-        .sn-navbar-container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 0 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 15px;
-        }
-        .sn-hamburger {
-            width: 42px; height: 42px;
-            border-radius: 12px;
-            background: rgba(212, 175, 55, 0.08);
-            border: 1px solid rgba(212, 175, 55, 0.25);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 4px;
-            cursor: pointer;
-            padding: 0;
-        }
-        .sn-hamburger:hover { background: rgba(212, 175, 55, 0.2); }
-        .sn-hamburger span {
-            display: block;
-            width: 18px; height: 2px;
-            background: var(--gold);
-            border-radius: 2px;
-        }
-        .sn-brand {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            text-decoration: none;
-            flex: 1;
-            justify-content: center;
-        }
-        .sn-brand-logo {
-            width: 38px; height: 38px;
-            border-radius: 50%;
-            border: 2px solid var(--gold);
-            object-fit: cover;
-        }
-        .sn-brand-text {
-            color: var(--gold);
-            font-size: 17px;
-            font-weight: 800;
-        }
-        .sn-user-area {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            min-width: 42px;
-            justify-content: flex-end;
-        }
-        .sn-user-avatar {
-            width: 42px; height: 42px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, var(--gold), var(--gold-dark));
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--bg-primary);
-            font-weight: 900;
-            font-size: 15px;
-            border: 2px solid var(--gold);
-            text-decoration: none;
-        }
-
-        /* ============= Sidebar ============= */
-        .sn-overlay {
-            position: fixed;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(0, 0, 0, 0.7);
-            backdrop-filter: blur(5px);
-            z-index: 9999;
-            opacity: 0;
-            visibility: hidden;
-            transition: 0.3s;
-        }
-        .sn-overlay.show { opacity: 1; visibility: visible; }
-        .sn-sidebar {
-            position: fixed;
-            top: 0;
-            right: -320px;
-            width: 300px;
-            height: 100vh;
-            background: linear-gradient(180deg, #14141c, #0a0a0f);
-            border-left: 1px solid rgba(212, 175, 55, 0.2);
-            z-index: 10000;
-            transition: right 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-            overflow-y: auto;
-            box-shadow: -10px 0 40px rgba(0, 0, 0, 0.5);
-        }
-        .sn-sidebar.show { right: 0; }
-        .sn-sidebar-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px;
-            border-bottom: 1px solid rgba(212, 175, 55, 0.15);
-            position: sticky;
-            top: 0;
-            background: #14141c;
-            z-index: 2;
-        }
-        .sn-sidebar-header .sn-brand { justify-content: flex-start; }
-        .sn-close {
-            background: rgba(239, 68, 68, 0.1);
-            color: #ef4444;
-            border: 1px solid rgba(239, 68, 68, 0.3);
-            width: 34px; height: 34px;
-            border-radius: 10px;
-            cursor: pointer;
-            font-size: 16px;
-            font-family: inherit;
-        }
-        .sn-sidebar-content { padding: 15px; }
-        .sn-menu-section { display: flex; flex-direction: column; gap: 4px; }
-        .sn-menu-item {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 12px 14px;
-            border-radius: 12px;
-            text-decoration: none;
-            color: #cbd5e1;
-            font-size: 14px;
-            font-weight: 600;
-            transition: 0.25s;
-            border: 1px solid transparent;
-        }
-        .sn-menu-item:hover {
-            background: rgba(212, 175, 55, 0.08);
-            color: var(--gold);
-            border-color: rgba(212, 175, 55, 0.2);
-            transform: translateX(-4px);
-        }
-        .sn-menu-item.active {
-            background: rgba(212, 175, 55, 0.15);
-            color: var(--gold);
-            border-color: rgba(212, 175, 55, 0.4);
-        }
-        .sn-menu-icon { font-size: 20px; width: 26px; text-align: center; }
-        .sn-menu-label { flex: 1; }
-        .sn-menu-divider {
-            height: 1px;
-            background: rgba(212, 175, 55, 0.15);
-            margin: 15px 0;
-        }
-        .sn-logout { color: #f87171 !important; }
-
         /* ============= Main ============= */
-        .main-container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 100px 20px 40px;
-        }
-        .page-header {
-            text-align: center;
-            margin-bottom: 30px;
-            animation: fadeInUp 0.6s ease-out;
-        }
+        .main-container { max-width: 1400px; margin: 0 auto; padding: 100px 20px 40px; }
+        .page-header { text-align: center; margin-bottom: 30px; animation: fadeInUp 0.6s ease-out; }
         .page-header h1 {
-            font-size: 36px;
-            font-weight: 900;
-            margin-bottom: 10px;
+            font-size: 36px; font-weight: 900; margin-bottom: 10px;
             background: linear-gradient(135deg, var(--gold), var(--gold-light));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
             background-clip: text;
         }
         .page-header p { color: var(--gray); font-size: 14px; }
@@ -279,11 +106,7 @@
             flex: 1;
             min-width: 150px;
         }
-        .filter-group label {
-            color: var(--gray);
-            font-size: 11px;
-            font-weight: 600;
-        }
+        .filter-group label { color: var(--gray); font-size: 11px; font-weight: 600; }
         .filter-input {
             padding: 10px 14px;
             background: rgba(10, 10, 15, 0.6);
@@ -426,16 +249,8 @@
             flex-wrap: wrap;
             gap: 10px;
         }
-        .table-container {
-            overflow-x: auto;
-            max-height: 600px;
-            overflow-y: auto;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 13px;
-        }
+        .table-container { overflow-x: auto; max-height: 600px; overflow-y: auto; }
+        table { width: 100%; border-collapse: collapse; font-size: 13px; }
         thead {
             position: sticky;
             top: 0;
@@ -470,14 +285,9 @@
         td.center { text-align: center; }
 
         /* ============= Loading ============= */
-        .loading {
-            text-align: center;
-            padding: 60px 20px;
-            color: var(--gray);
-        }
+        .loading { text-align: center; padding: 60px 20px; color: var(--gray); }
         .spinner {
-            width: 40px;
-            height: 40px;
+            width: 40px; height: 40px;
             border: 4px solid rgba(212, 175, 55, 0.2);
             border-top-color: var(--gold);
             border-radius: 50%;
@@ -520,11 +330,7 @@
             flex-wrap: wrap;
             gap: 10px;
         }
-        .modal-header h2 {
-            color: var(--gold);
-            font-size: 22px;
-            font-weight: 900;
-        }
+        .modal-header h2 { color: var(--gold); font-size: 22px; font-weight: 900; }
         .modal-header h2 small {
             color: var(--gray);
             font-size: 13px;
@@ -560,16 +366,8 @@
             flex-wrap: wrap;
             gap: 10px;
         }
-        .chart-header h3 {
-            color: var(--gold);
-            font-size: 15px;
-            font-weight: 800;
-        }
-        .chart-actions {
-            display: flex;
-            gap: 5px;
-            flex-wrap: wrap;
-        }
+        .chart-header h3 { color: var(--gold); font-size: 15px; font-weight: 800; }
+        .chart-actions { display: flex; gap: 5px; flex-wrap: wrap; }
         .chart-tab {
             background: rgba(10, 10, 15, 0.6);
             color: var(--gray);
@@ -603,12 +401,10 @@
         .fullscreen-btn:hover { background: var(--gold); color: var(--bg-primary); }
         #modalChart { width: 100%; height: 400px; }
 
-        /* تمام‌صفحه چارت */
         .chart-container.fullscreen {
             position: fixed !important;
             top: 0 !important; left: 0 !important; right: 0 !important; bottom: 0 !important;
-            width: 100vw !important;
-            height: 100vh !important;
+            width: 100vw !important; height: 100vh !important;
             z-index: 200000 !important;
             background: var(--bg-primary) !important;
             padding: 15px !important;
@@ -655,16 +451,8 @@
         .info-card .value.down { color: var(--red); }
 
         /* ============= Order Book ============= */
-        .orderbook-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-        }
-        .orderbook {
-            background: rgba(10, 10, 15, 0.5);
-            border-radius: 12px;
-            padding: 12px;
-        }
+        .orderbook-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        .orderbook { background: rgba(10, 10, 15, 0.5); border-radius: 12px; padding: 12px; }
         .orderbook h4 {
             font-size: 13px;
             font-weight: 800;
@@ -715,59 +503,13 @@
             .modal-header h2 { font-size: 18px; }
             #modalChart { height: 280px; }
             th, td { padding: 8px 6px; font-size: 12px; }
-            .sn-sidebar { width: 280px; right: -300px; }
         }
     </style>
 </head>
 <body>
 
-    <!-- Navbar -->
-    <nav class="sn-navbar">
-        <div class="sn-navbar-container">
-            <button class="sn-hamburger" id="snHamburger" aria-label="منو">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
-            <a href="index.html" class="sn-brand">
-                <img src="519.png" alt="شمعدون" class="sn-brand-logo">
-                <span class="sn-brand-text">شمعدون</span>
-            </a>
-            <div class="sn-user-area" id="snUserArea"></div>
-        </div>
-    </nav>
-
-    <div class="sn-overlay" id="snOverlay"></div>
-
-    <aside class="sn-sidebar" id="snSidebar">
-        <div class="sn-sidebar-header">
-            <a href="index.html" class="sn-brand" style="justify-content:flex-start;">
-                <img src="519.png" alt="شمعدون" class="sn-brand-logo">
-                <span class="sn-brand-text">شمعدون</span>
-            </a>
-            <button class="sn-close" id="snClose">✕</button>
-        </div>
-        <div class="sn-sidebar-content">
-            <div class="sn-menu-section">
-                <a href="index.html" class="sn-menu-item"><span class="sn-menu-icon">🏠</span><span class="sn-menu-label">صفحه اصلی</span></a>
-                <a href="home.html" class="sn-menu-item"><span class="sn-menu-icon">📊</span><span class="sn-menu-label">نمای بازار</span></a>
-                <a href="bourse.html" class="sn-menu-item active"><span class="sn-menu-icon">📈</span><span class="sn-menu-label">بورس ایران</span></a>
-                <a href="courses.html" class="sn-menu-item"><span class="sn-menu-icon">📚</span><span class="sn-menu-label">دوره‌های آموزشی</span></a>
-                <a href="personality-test.html" class="sn-menu-item"><span class="sn-menu-icon">🧠</span><span class="sn-menu-label">آزمون خودشناسی مالی</span></a>
-                <a href="assistant.html" class="sn-menu-item"><span class="sn-menu-icon">🤖</span><span class="sn-menu-label">دستیار هوشمند</span></a>
-            </div>
-            <div class="sn-menu-divider"></div>
-            <div class="sn-menu-section">
-                <a href="dashboard.html" class="sn-menu-item"><span class="sn-menu-icon">👤</span><span class="sn-menu-label">پنل کاربری</span></a>
-                <a href="admin.html" class="sn-menu-item" id="snAdminLink" style="display:none; color:#fca5a5;"><span class="sn-menu-icon">🎯</span><span class="sn-menu-label">پنل ادمین</span></a>
-                <a href="#" class="sn-menu-item sn-logout" id="snLogoutBtn" style="display:none;"><span class="sn-menu-icon">🚪</span><span class="sn-menu-label">خروج</span></a>
-            </div>
-        </div>
-    </aside>
-
     <!-- Main Container -->
     <div class="main-container">
-
         <!-- Page Header -->
         <div class="page-header">
             <h1>📈 بورس ایران</h1>
@@ -804,7 +546,6 @@
                 <span>🏆 رتبه‌بندی سود و ضرر</span>
                 <span style="color: var(--gray); font-size: 11px; font-weight: 400;">برای تغییر بازه، روی دکمه‌ها بزن</span>
             </h3>
-            
             <div class="ranking-controls">
                 <button class="ranking-btn up active" data-period="1w" data-order="desc" onclick="changeRanking('1w', 'desc', this)">📈 بیشترین سود ۱ هفته</button>
                 <button class="ranking-btn down" data-period="1w" data-order="asc" onclick="changeRanking('1w', 'asc', this)">📉 بیشترین ضرر ۱ هفته</button>
@@ -813,7 +554,6 @@
                 <button class="ranking-btn up" data-period="3m" data-order="desc" onclick="changeRanking('3m', 'desc', this)">📈 بیشترین سود ۳ ماه</button>
                 <button class="ranking-btn down" data-period="3m" data-order="asc" onclick="changeRanking('3m', 'asc', this)">📉 بیشترین ضرر ۳ ماه</button>
             </div>
-
             <div class="ranking-grid">
                 <div class="ranking-list" id="topGainers">
                     <h4>📈 بیشترین سود</h4>
@@ -890,7 +630,6 @@
                 </table>
             </div>
         </div>
-
     </div>
 
     <!-- Modal -->
@@ -953,7 +692,6 @@
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
 
@@ -962,464 +700,341 @@
         © ۱۴۰۵ آکادمی شمعدون | تمامی حقوق محفوظ است
     </footer>
 
-<script>
-    // ==========================================
-    // تنظیمات
-    // ==========================================
-    const BRS_API = 'BvUj3cMKWNBK87KW9xhNccCThmfVbd8u';
-    const ADMIN_EMAIL = 'beat.market.office@gmail.com';
-    const SUPABASE_URL = 'https://jcwwilatvstjrohvhtss.supabase.co';
-    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Impjd3dpbGF0dnN0anJvaHZodHNzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODk3MDY4NTYsImV4cCI6MjEwNTI4Mjg1Nn0.eUC89RJy6-60nNGrSeYeDADzLxz-kWTGy4DbNGVi6MM';
-
-    const ALL_SYMBOLS_URL = `https://Api.BrsApi.ir/Tsetmc/AllSymbols.php?key=${BRS_API}&type=1`;
-    const CANDLE_URL = (l18, type) => `https://Api.BrsApi.ir/Tsetmc/Candlestick.php?key=${BRS_API}&l18=${encodeURIComponent(l18)}&type=${type}`;
-
-    // ==========================================
-    // متغیرهای جهانی
-    // ==========================================
-    let allSymbols = [];
-    let filteredSymbols = [];
-    let currentSort = { field: 'tval', order: 'desc' };
-    let currentSymbol = null;
-    let currentDailyData = [];
-    let modalChart = null;
-    let modalCandleSeries = null;
-    let modalChartInitialized = false;
-    let currentTimeframe = 'daily';
-    let currentRankingPeriod = '1w';
-    let currentRankingOrder = 'desc';
-    let rankingCache = {};
-
-    // ==========================================
-    // Navbar
-    // ==========================================
-    function setupNavbar() {
-        const hamburger = document.getElementById('snHamburger');
-        const sidebar = document.getElementById('snSidebar');
-        const overlay = document.getElementById('snOverlay');
-        const closeBtn = document.getElementById('snClose');
-
-        hamburger.addEventListener('click', () => {
-            sidebar.classList.add('show');
-            overlay.classList.add('show');
-        });
-        closeBtn.addEventListener('click', () => {
-            sidebar.classList.remove('show');
-            overlay.classList.remove('show');
-        });
-        overlay.addEventListener('click', () => {
-            sidebar.classList.remove('show');
-            overlay.classList.remove('show');
-        });
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') {
-                sidebar.classList.remove('show');
-                overlay.classList.remove('show');
-                if (document.getElementById('symbolModal').classList.contains('show')) {
-                    closeModal();
-                }
-                const chartContainer = document.getElementById('chartContainer');
-                if (chartContainer.classList.contains('fullscreen')) {
-                    toggleChartFullscreen();
-                }
-            }
-        });
-    }
-
-    async function checkUser() {
-        try {
-            const client = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-            const { data } = await client.auth.getSession();
-            const userArea = document.getElementById('snUserArea');
-            userArea.innerHTML = '';
-
-            if (data && data.session && data.session.user) {
-                const user = data.session.user;
-                const fullName = user.user_metadata?.full_name || user.email || 'کاربر';
-                const firstLetter = fullName.charAt(0).toUpperCase();
-
-                userArea.innerHTML = `
-                    <a href="dashboard.html" class="sn-user-avatar" title="${escapeHtml(fullName)}">
-                        ${firstLetter}
-                    </a>
-                `;
-
-                if (user.email === ADMIN_EMAIL) {
-                    const adminLink = document.getElementById('snAdminLink');
-                    if (adminLink) adminLink.style.display = 'flex';
-                }
-
-                const logoutBtn = document.getElementById('snLogoutBtn');
-                if (logoutBtn) {
-                    logoutBtn.style.display = 'flex';
-                    logoutBtn.addEventListener('click', async (e) => {
-                        e.preventDefault();
-                        if (confirm('می‌خوای خارج بشی؟')) {
-                            await client.auth.signOut();
-                            window.location.href = 'login.html';
-                        }
-                    });
-                }
-            }
-        } catch (e) {
-            console.log('Navbar error:', e);
-        }
-    }
-
-    // ==========================================
-    // ابزارها
-    // ==========================================
-    function toPersianNumber(num) {
-        if (num === null || num === undefined || isNaN(num)) return '--';
-        const persianDigits = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
-        return num.toString().replace(/\d/g, d => persianDigits[d]);
-    }
-
-    function formatNumber(num, decimals = 0) {
-        if (num === null || num === undefined || isNaN(num)) return '--';
-        try {
-            const n = Number(num);
-            if (isNaN(n)) return '--';
-            let str;
-            if (decimals > 0) {
-                str = n.toFixed(decimals);
-            } else {
-                str = Math.round(n).toString();
-            }
-            const parts = str.split('.');
-            parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-            str = parts.join('.');
-            const persianDigits = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
-            return str.replace(/\d/g, d => persianDigits[d]);
-        } catch (e) {
-            return '--';
-        }
-    }
-
-    function formatVolume(num) {
-        if (!num && num !== 0) return '--';
-        const n = Number(num);
-        if (n >= 1e9) return toPersianNumber((n / 1e9).toFixed(2)) + ' میلیارد';
-        if (n >= 1e6) return toPersianNumber((n / 1e6).toFixed(2)) + ' میلیون';
-        if (n >= 1e3) return toPersianNumber((n / 1e3).toFixed(1)) + ' هزار';
-        return toPersianNumber(n);
-    }
-
-    function escapeHtml(text) {
-        if (!text) return '';
-        const div = document.createElement('div');
-        div.textContent = text;
-        return div.innerHTML;
-    }
-
-    // ==========================================
-    // تشخیص نوع نماد
-    // ==========================================
-    function getSymbolType(symbol) {
-        const name = (symbol.l18 || '').trim();
-        const fullName = (symbol.l30 || '').trim();
-
-        // حق تقدم
-        if (fullName.includes('حق تقدم') || fullName.includes('حقتقدم')) {
-            return 'right';
-        }
-        // اختیار معامله
-        if (fullName.includes('اختیار') || fullName.includes('اختيار')) {
-            return 'option';
-        }
-        // صندوق
-        if (fullName.includes('صندوق') || fullName.includes('ETF') || fullName.includes('سرمایه‌گذاری قابل معامله')) {
-            return 'fund';
-        }
-        // اوراق
-        if (fullName.includes('اوراق') || fullName.includes('مشارکت') || fullName.includes('اجاره')) {
-            return 'bond';
-        }
-        return 'stock';
-    }
-
-    // ==========================================
-    // بارگذاری داده‌ها
-    // ==========================================
-    async function loadAllSymbols() {
-        const tableBody = document.getElementById('tableBody');
-        const tableInfo = document.getElementById('tableInfo');
-
-        tableInfo.textContent = '⏳ در حال دریافت داده‌ها از BrsApi...';
-
-        try {
-            const res = await fetch(ALL_SYMBOLS_URL);
-            const data = await res.json();
-
-            if (!Array.isArray(data)) {
-                throw new Error('پاسخ نامعتبر');
-            }
-
-            allSymbols = data.filter(s => s.l18 && s.l18.trim() !== '');
-            allSymbols.forEach(s => { s.type = getSymbolType(s); });
-
-            populateSectorFilter();
-            calculateStats();
-            applyFilters();
-
-            tableInfo.textContent = `✅ ${toPersianNumber(allSymbols.length)} نماد بارگذاری شد`;
-
-            // بارگذاری رتبه‌بندی
-            loadRanking();
-        } catch (e) {
-            console.error('Error loading symbols:', e);
-            tableBody.innerHTML = `
-                <tr>
-                    <td colspan="10" class="center">
-                        <div class="loading">❌ خطا در دریافت داده‌ها: ${e.message}</div>
-                    </td>
-                </tr>
-            `;
-            tableInfo.textContent = '❌ خطا';
-        }
-    }
-
-    function populateSectorFilter() {
-        const sectors = new Set();
-        allSymbols.forEach(s => {
-            if (s.cs && s.cs.trim()) sectors.add(s.cs.trim());
-        });
-
-        const select = document.getElementById('sectorFilter');
-        const sorted = Array.from(sectors).sort();
-        select.innerHTML = '<option value="all">همه گروه‌ها</option>' +
-            sorted.map(s => `<option value="${escapeHtml(s)}">${escapeHtml(s)}</option>`).join('');
-    }
-
-    function calculateStats() {
-        const total = allSymbols.length;
-        const positive = allSymbols.filter(s => (s.pcp || 0) > 0).length;
-        const negative = allSymbols.filter(s => (s.pcp || 0) < 0).length;
-        const totalValue = allSymbols.reduce((sum, s) => sum + (s.tval || 0), 0);
-
-        document.getElementById('statTotal').textContent = toPersianNumber(total);
-        document.getElementById('statPositive').textContent = toPersianNumber(positive);
-        document.getElementById('statNegative').textContent = toPersianNumber(negative);
-        document.getElementById('statValue').textContent = toPersianNumber((totalValue / 1e10).toFixed(1)) + ' همت';
-    }
-
-    // ==========================================
-    // فیلترها
-    // ==========================================
-    function applyFilters() {
-        const search = document.getElementById('searchInput').value.trim().toLowerCase();
-        const sector = document.getElementById('sectorFilter').value;
-        const type = document.getElementById('typeFilter').value;
-
-        filteredSymbols = allSymbols.filter(s => {
-            if (search) {
-                const nameMatch = (s.l18 || '').toLowerCase().includes(search);
-                const fullMatch = (s.l30 || '').toLowerCase().includes(search);
-                if (!nameMatch && !fullMatch) return false;
-            }
-            if (sector !== 'all' && (s.cs || '').trim() !== sector) return false;
-            if (type !== 'all' && s.type !== type) return false;
-            return true;
-        });
-
-        sortSymbols();
-        renderTable();
-    }
-
-    function sortSymbols() {
-        const { field, order } = currentSort;
-        filteredSymbols.sort((a, b) => {
-            let valA = a[field];
-            let valB = b[field];
-
-            if (typeof valA === 'string') {
-                valA = (valA || '').trim();
-                valB = (valB || '').trim();
-                return order === 'asc'
-                    ? valA.localeCompare(valB, 'fa')
-                    : valB.localeCompare(valA, 'fa');
-            }
-
-            valA = Number(valA) || 0;
-            valB = Number(valB) || 0;
-            return order === 'asc' ? valA - valB : valB - valA;
-        });
-    }
-
-    function sortBy(field, th) {
-        if (currentSort.field === field) {
-            currentSort.order = currentSort.order === 'desc' ? 'asc' : 'desc';
-        } else {
-            currentSort.field = field;
-            currentSort.order = 'desc';
-        }
-        document.querySelectorAll('th').forEach(t => t.classList.remove('sorted'));
-        if (th) th.classList.add('sorted');
-        sortSymbols();
-        renderTable();
-    }
-
-    function resetFilters() {
-        document.getElementById('searchInput').value = '';
-        document.getElementById('sectorFilter').value = 'all';
-        document.getElementById('typeFilter').value = 'all';
-        currentSort = { field: 'tval', order: 'desc' };
-        applyFilters();
-    }
-
-    // ==========================================
-    // نمایش جدول
-    // ==========================================
-    function renderTable() {
-        const tbody = document.getElementById('tableBody');
-
-        if (filteredSymbols.length === 0) {
-            tbody.innerHTML = `
-                <tr><td colspan="10" class="center">
-                    <div class="loading">❌ نمادی با این فیلترها یافت نشد</div>
-                </td></tr>
-            `;
-            return;
-        }
-
-        const limited = filteredSymbols.slice(0, 200);
-
-        tbody.innerHTML = limited.map((s, idx) => {
-            const pc = s.pc ? (s.pc / 10) : 0;
-            const pl = s.pl ? (s.pl / 10) : 0;
-            const pcp = Number(s.pcp) || 0;
-            const pcpClass = pcp > 0 ? 'up' : pcp < 0 ? 'down' : '';
-            const pcpText = (pcp > 0 ? '+' : '') + toPersianNumber(pcp.toFixed(2)) + '٪';
-
-            return `
-                <tr onclick="openModal('${escapeHtml(s.l18)}')">
-                    <td class="center">${toPersianNumber(idx + 1)}</td>
-                    <td class="symbol">${escapeHtml(s.l18 || '--')}</td>
-                    <td>${formatNumber(pc)}</td>
-                    <td>${formatNumber(pl)}</td>
-                    <td class="${pcpClass}">${pcpText}</td>
-                    <td>${formatVolume(s.tvol)}</td>
-                    <td>${formatVolume(s.tval)}</td>
-                    <td>${s.pe ? toPersianNumber(Number(s.pe).toFixed(1)) : '--'}</td>
-                    <td>${s.eps ? toPersianNumber(Math.round(s.eps)) : '--'}</td>
-                    <td>${toPersianNumber(s.tno || 0)}</td>
-                </tr>
-            `;
-        }).join('');
-
-        if (filteredSymbols.length > 200) {
-            tbody.innerHTML += `
-                <tr>
-                    <td colspan="10" class="center" style="padding: 15px; color: var(--gray); font-size: 12px;">
-                        نمایش ۲۰۰ نماد اول از ${toPersianNumber(filteredSymbols.length)} نماد
-                    </td>
-                </tr>
-            `;
-        }
-    }
-
-    // ==========================================
-    // رتبه‌بندی
-    // ==========================================
-    async function loadRanking() {
-        const topEl = document.getElementById('topGainers');
-        const loseEl = document.getElementById('topLosers');
-
-        // چک کش
-        if (rankingCache[currentRankingPeriod]) {
-            renderRanking(rankingCache[currentRankingPeriod]);
-            return;
-        }
-
-        topEl.innerHTML = '<div class="loading"><div class="spinner"></div></div>';
-        loseEl.innerHTML = '<div class="loading"><div class="spinner"></div></div>';
-
-        // انتخاب ۲۰ نماد برتر برای رتبه‌بندی (بر اساس ارزش معاملات)
-        const topSymbols = [...allSymbols]
-            .sort((a, b) => (b.tval || 0) - (a.tval || 0))
-            .slice(0, 20);
-
-        const daysMap = { '1w': 5, '1m': 22, '3m': 66 };
-        const days = daysMap[currentRankingPeriod] || 5;
-
-        const results = [];
-
-        for (const symbol of topSymbols) {
-            try {
-                const res = await fetch(CANDLE_URL(symbol.l18, 2));
-                const data = await res.json();
-
-                if (!data.candle_daily || data.candle_daily.length < days + 1) continue;
-
-                const candles = data.candle_daily;
-                const latest = candles[candles.length - 1];
-                const old = candles[Math.max(0, candles.length - 1 - days)];
-
-                const change = ((latest.close - old.close) / old.close) * 100;
-
-                results.push({
-                    name: symbol.l18,
-                    l18: symbol.l18,
-                    change: change
-                });
-
-                // تأخیر کوچیک برای جلوگیری از محدودیت
-                await new Promise(r => setTimeout(r, 100));
-            } catch (e) {
-                console.log('Error ranking:', symbol.l18, e);
-            }
-        }
-
-        rankingCache[currentRankingPeriod] = results;
-        renderRanking(results);
-    }
-
-    function renderRanking(results) {
-        const topEl = document.getElementById('topGainers');
-        const loseEl = document.getElementById('topLosers');
-
-        if (results.length === 0) {
-            topEl.innerHTML = '<h4>📈 بیشترین سود</h4><div class="loading">داده‌ای موجود نیست</div>';
-            loseEl.innerHTML = '<h4>📉 بیشترین ضرر</h4><div class="loading">داده‌ای موجود نیست</div>';
-            return;
-        }
-
-        const sorted = [...results].sort((a, b) => b.change - a.change);
-        const gainers = sorted.slice(0, 10);
-        const losers = sorted.slice(-10).reverse();
-
-        topEl.innerHTML = `
-            <h4>📈 بیشترین سود</h4>
-            ${gainers.map(r => `
-                <div class="ranking-item" onclick="openModal('${escapeHtml(r.name)}')">
-                    <span class="name">${escapeHtml(r.name)}</span>
-                    <span class="change up">+${toPersianNumber(r.change.toFixed(2))}٪</span>
-                </div>
-            `).join('')}
-        `;
-
-        loseEl.innerHTML = `
-            <h4>📉 بیشترین ضرر</h4>
-            ${losers.map(r => `
-                <div class="ranking-item" onclick="openModal('${escapeHtml(r.name)}')">
-                    <span class="name">${escapeHtml(r.name)}</span>
-                    <span class="change down">${toPersianNumber(r.change.toFixed(2))}٪</span>
-                </div>
-            `).join('')}
-        `;
-    }
-
-    function changeRanking(period, order, btn) {
-        document.querySelectorAll('.ranking-btn').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        currentRankingPeriod = period;
-        currentRankingOrder = order;
-        loadRanking();
-    }
-
-</script>
+    <!-- Navbar مشترک -->
+    <script src="navbar.js"></script>
 
     <script>
+        // ==========================================
+        // تنظیمات
+        // ==========================================
+        const BRS_API = 'BvUj3cMKWNBK87KW9xhNccCThmfVbd8u';
+        const ALL_SYMBOLS_URL = `https://Api.BrsApi.ir/Tsetmc/AllSymbols.php?key=${BRS_API}&type=1`;
+        const CANDLE_URL = (l18, type) => `https://Api.BrsApi.ir/Tsetmc/Candlestick.php?key=${BRS_API}&l18=${encodeURIComponent(l18)}&type=${type}`;
+
+        // ==========================================
+        // متغیرهای جهانی
+        // ==========================================
+        let allSymbols = [];
+        let filteredSymbols = [];
+        let currentSort = { field: 'tval', order: 'desc' };
+        let currentSymbol = null;
+        let currentDailyData = [];
+        let modalChart = null;
+        let modalCandleSeries = null;
+        let modalChartInitialized = false;
+        let currentTimeframe = 'daily';
+        let currentRankingPeriod = '1w';
+        let currentRankingOrder = 'desc';
+        let rankingCache = {};
+
+        // ==========================================
+        // ابزارها
+        // ==========================================
+        function toPersianNumber(num) {
+            if (num === null || num === undefined || isNaN(num)) return '--';
+            const persianDigits = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
+            return num.toString().replace(/\d/g, d => persianDigits[d]);
+        }
+
+        function formatNumber(num, decimals = 0) {
+            if (num === null || num === undefined || isNaN(num)) return '--';
+            try {
+                const n = Number(num);
+                if (isNaN(n)) return '--';
+                let str;
+                if (decimals > 0) { str = n.toFixed(decimals); }
+                else { str = Math.round(n).toString(); }
+                const parts = str.split('.');
+                parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+                str = parts.join('.');
+                const persianDigits = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
+                return str.replace(/\d/g, d => persianDigits[d]);
+            } catch (e) { return '--'; }
+        }
+
+        function formatVolume(num) {
+            if (!num && num !== 0) return '--';
+            const n = Number(num);
+            if (n >= 1e9) return toPersianNumber((n / 1e9).toFixed(2)) + ' میلیارد';
+            if (n >= 1e6) return toPersianNumber((n / 1e6).toFixed(2)) + ' میلیون';
+            if (n >= 1e3) return toPersianNumber((n / 1e3).toFixed(1)) + ' هزار';
+            return toPersianNumber(n);
+        }
+
+        function escapeHtml(text) {
+            if (!text) return '';
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        // ==========================================
+        // تشخیص نوع نماد
+        // ==========================================
+        function getSymbolType(symbol) {
+            const name = (symbol.l18 || '').trim();
+            const fullName = (symbol.l30 || '').trim();
+            if (fullName.includes('حق تقدم') || fullName.includes('حقتقدم')) return 'right';
+            if (fullName.includes('اختیار') || fullName.includes('اختيار')) return 'option';
+            if (fullName.includes('صندوق') || fullName.includes('ETF') || fullName.includes('سرمایه‌گذاری قابل معامله')) return 'fund';
+            if (fullName.includes('اوراق') || fullName.includes('مشارکت') || fullName.includes('اجاره')) return 'bond';
+            return 'stock';
+        }
+
+        // ==========================================
+        // بارگذاری داده‌ها
+        // ==========================================
+        async function loadAllSymbols() {
+            const tableBody = document.getElementById('tableBody');
+            const tableInfo = document.getElementById('tableInfo');
+            tableInfo.textContent = '⏳ در حال دریافت داده‌ها از BrsApi...';
+
+            try {
+                const res = await fetch(ALL_SYMBOLS_URL);
+                const data = await res.json();
+
+                if (!Array.isArray(data)) throw new Error('پاسخ نامعتبر');
+
+                allSymbols = data.filter(s => s.l18 && s.l18.trim() !== '');
+                allSymbols.forEach(s => { s.type = getSymbolType(s); });
+
+                populateSectorFilter();
+                calculateStats();
+                applyFilters();
+
+                tableInfo.textContent = `✅ ${toPersianNumber(allSymbols.length)} نماد بارگذاری شد`;
+                loadRanking();
+            } catch (e) {
+                console.error('Error loading symbols:', e);
+                tableBody.innerHTML = `
+                    <tr>
+                        <td colspan="10" class="center">
+                            <div class="loading">❌ خطا در دریافت داده‌ها: ${e.message}</div>
+                        </td>
+                    </tr>
+                `;
+                tableInfo.textContent = '❌ خطا';
+            }
+        }
+
+        function populateSectorFilter() {
+            const sectors = new Set();
+            allSymbols.forEach(s => {
+                if (s.cs && s.cs.trim()) sectors.add(s.cs.trim());
+            });
+            const select = document.getElementById('sectorFilter');
+            const sorted = Array.from(sectors).sort();
+            select.innerHTML = '<option value="all">همه گروه‌ها</option>' +
+                sorted.map(s => `<option value="${escapeHtml(s)}">${escapeHtml(s)}</option>`).join('');
+        }
+
+        function calculateStats() {
+            const total = allSymbols.length;
+            const positive = allSymbols.filter(s => (s.pcp || 0) > 0).length;
+            const negative = allSymbols.filter(s => (s.pcp || 0) < 0).length;
+            const totalValue = allSymbols.reduce((sum, s) => sum + (s.tval || 0), 0);
+
+            document.getElementById('statTotal').textContent = toPersianNumber(total);
+            document.getElementById('statPositive').textContent = toPersianNumber(positive);
+            document.getElementById('statNegative').textContent = toPersianNumber(negative);
+            document.getElementById('statValue').textContent = toPersianNumber((totalValue / 1e10).toFixed(1)) + ' همت';
+        }
+
+        // ==========================================
+        // فیلترها
+        // ==========================================
+        function applyFilters() {
+            const search = document.getElementById('searchInput').value.trim().toLowerCase();
+            const sector = document.getElementById('sectorFilter').value;
+            const type = document.getElementById('typeFilter').value;
+
+            filteredSymbols = allSymbols.filter(s => {
+                if (search) {
+                    const nameMatch = (s.l18 || '').toLowerCase().includes(search);
+                    const fullMatch = (s.l30 || '').toLowerCase().includes(search);
+                    if (!nameMatch && !fullMatch) return false;
+                }
+                if (sector !== 'all' && (s.cs || '').trim() !== sector) return false;
+                if (type !== 'all' && s.type !== type) return false;
+                return true;
+            });
+
+            sortSymbols();
+            renderTable();
+        }
+
+        function sortSymbols() {
+            const { field, order } = currentSort;
+            filteredSymbols.sort((a, b) => {
+                let valA = a[field];
+                let valB = b[field];
+                if (typeof valA === 'string') {
+                    valA = (valA || '').trim();
+                    valB = (valB || '').trim();
+                    return order === 'asc' ? valA.localeCompare(valB, 'fa') : valB.localeCompare(valA, 'fa');
+                }
+                valA = Number(valA) || 0;
+                valB = Number(valB) || 0;
+                return order === 'asc' ? valA - valB : valB - valA;
+            });
+        }
+
+        function sortBy(field, th) {
+            if (currentSort.field === field) {
+                currentSort.order = currentSort.order === 'desc' ? 'asc' : 'desc';
+            } else {
+                currentSort.field = field;
+                currentSort.order = 'desc';
+            }
+            document.querySelectorAll('th').forEach(t => t.classList.remove('sorted'));
+            if (th) th.classList.add('sorted');
+            sortSymbols();
+            renderTable();
+        }
+
+        function resetFilters() {
+            document.getElementById('searchInput').value = '';
+            document.getElementById('sectorFilter').value = 'all';
+            document.getElementById('typeFilter').value = 'all';
+            currentSort = { field: 'tval', order: 'desc' };
+            applyFilters();
+        }
+
+        // ==========================================
+        // نمایش جدول
+        // ==========================================
+        function renderTable() {
+            const tbody = document.getElementById('tableBody');
+            if (filteredSymbols.length === 0) {
+                tbody.innerHTML = `
+                    <tr><td colspan="10" class="center">
+                        <div class="loading">❌ نمادی با این فیلترها یافت نشد</div>
+                    </td></tr>
+                `;
+                return;
+            }
+
+            const limited = filteredSymbols.slice(0, 200);
+            tbody.innerHTML = limited.map((s, idx) => {
+                const pc = s.pc ? (s.pc / 10) : 0;
+                const pl = s.pl ? (s.pl / 10) : 0;
+                const pcp = Number(s.pcp) || 0;
+                const pcpClass = pcp > 0 ? 'up' : pcp < 0 ? 'down' : '';
+                const pcpText = (pcp > 0 ? '+' : '') + toPersianNumber(pcp.toFixed(2)) + '٪';
+
+                return `
+                    <tr onclick="openModal('${escapeHtml(s.l18)}')">
+                        <td class="center">${toPersianNumber(idx + 1)}</td>
+                        <td class="symbol">${escapeHtml(s.l18 || '--')}</td>
+                        <td>${formatNumber(pc)}</td>
+                        <td>${formatNumber(pl)}</td>
+                        <td class="${pcpClass}">${pcpText}</td>
+                        <td>${formatVolume(s.tvol)}</td>
+                        <td>${formatVolume(s.tval)}</td>
+                        <td>${s.pe ? toPersianNumber(Number(s.pe).toFixed(1)) : '--'}</td>
+                        <td>${s.eps ? toPersianNumber(Math.round(s.eps)) : '--'}</td>
+                        <td>${toPersianNumber(s.tno || 0)}</td>
+                    </tr>
+                `;
+            }).join('');
+
+            if (filteredSymbols.length > 200) {
+                tbody.innerHTML += `
+                    <tr>
+                        <td colspan="10" class="center" style="padding: 15px; color: var(--gray); font-size: 12px;">
+                            نمایش ۲۰۰ نماد اول از ${toPersianNumber(filteredSymbols.length)} نماد
+                        </td>
+                    </tr>
+                `;
+            }
+        }
+
+        // ==========================================
+        // رتبه‌بندی
+        // ==========================================
+        async function loadRanking() {
+            const topEl = document.getElementById('topGainers');
+            const loseEl = document.getElementById('topLosers');
+
+            if (rankingCache[currentRankingPeriod]) {
+                renderRanking(rankingCache[currentRankingPeriod]);
+                return;
+            }
+
+            topEl.innerHTML = '<div class="loading"><div class="spinner"></div></div>';
+            loseEl.innerHTML = '<div class="loading"><div class="spinner"></div></div>';
+
+            const topSymbols = [...allSymbols]
+                .sort((a, b) => (b.tval || 0) - (a.tval || 0))
+                .slice(0, 20);
+
+            const daysMap = { '1w': 5, '1m': 22, '3m': 66 };
+            const days = daysMap[currentRankingPeriod] || 5;
+            const results = [];
+
+            for (const symbol of topSymbols) {
+                try {
+                    const res = await fetch(CANDLE_URL(symbol.l18, 2));
+                    const data = await res.json();
+                    if (!data.candle_daily || data.candle_daily.length < days + 1) continue;
+                    const candles = data.candle_daily;
+                    const latest = candles[candles.length - 1];
+                    const old = candles[Math.max(0, candles.length - 1 - days)];
+                    const change = ((latest.close - old.close) / old.close) * 100;
+                    results.push({ name: symbol.l18, l18: symbol.l18, change: change });
+                    await new Promise(r => setTimeout(r, 100));
+                } catch (e) {
+                    console.log('Error ranking:', symbol.l18, e);
+                }
+            }
+
+            rankingCache[currentRankingPeriod] = results;
+            renderRanking(results);
+        }
+
+        function renderRanking(results) {
+            const topEl = document.getElementById('topGainers');
+            const loseEl = document.getElementById('topLosers');
+
+            if (results.length === 0) {
+                topEl.innerHTML = '<h4>📈 بیشترین سود</h4><div class="loading">داده‌ای موجود نیست</div>';
+                loseEl.innerHTML = '<h4>📉 بیشترین ضرر</h4><div class="loading">داده‌ای موجود نیست</div>';
+                return;
+            }
+
+            const sorted = [...results].sort((a, b) => b.change - a.change);
+            const gainers = sorted.slice(0, 10);
+            const losers = sorted.slice(-10).reverse();
+
+            topEl.innerHTML = `
+                <h4>📈 بیشترین سود</h4>
+                ${gainers.map(r => `
+                    <div class="ranking-item" onclick="openModal('${escapeHtml(r.name)}')">
+                        <span class="name">${escapeHtml(r.name)}</span>
+                        <span class="change up">+${toPersianNumber(r.change.toFixed(2))}٪</span>
+                    </div>
+                `).join('')}
+            `;
+
+            loseEl.innerHTML = `
+                <h4>📉 بیشترین ضرر</h4>
+                ${losers.map(r => `
+                    <div class="ranking-item" onclick="openModal('${escapeHtml(r.name)}')">
+                        <span class="name">${escapeHtml(r.name)}</span>
+                        <span class="change down">${toPersianNumber(r.change.toFixed(2))}٪</span>
+                    </div>
+                `).join('')}
+            `;
+        }
+
+        function changeRanking(period, order, btn) {
+            document.querySelectorAll('.ranking-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            currentRankingPeriod = period;
+            currentRankingOrder = order;
+            loadRanking();
+        }
+
         // ==========================================
         // تبدیل تاریخ شمسی به میلادی
         // ==========================================
@@ -1463,7 +1078,6 @@
             if (!symbol) return;
 
             currentSymbol = symbol;
-
             document.getElementById('modalSymbolName').textContent = symbol.l18 || '--';
             document.getElementById('modalSymbolFull').textContent = symbol.l30 || '';
 
@@ -1475,7 +1089,6 @@
             document.getElementById('symbolModal').classList.add('show');
             document.body.style.overflow = 'hidden';
 
-            // ساخت چارت
             setTimeout(async () => {
                 initModalChart();
                 await loadChartData(symbol.l18);
@@ -1505,7 +1118,6 @@
             const pmax = s.pmax ? (s.pmax / 10) : 0;
             const pcc = s.pcc || 0;
             const pcp = s.pcp || 0;
-
             const pcpClass = pcp > 0 ? 'up' : pcp < 0 ? 'down' : '';
             const pccClass = pcc > 0 ? 'up' : pcc < 0 ? 'down' : '';
             const pcpText = (pcp > 0 ? '+' : '') + toPersianNumber(Number(pcp).toFixed(2)) + '٪';
@@ -1541,7 +1153,6 @@
             const buyN = s.Buy_N_Volume || 0;
             const sellI = s.Sell_I_Volume || 0;
             const sellN = s.Sell_N_Volume || 0;
-
             const totalBuy = buyI + buyN;
             const totalSell = sellI + sellN;
 
@@ -1565,12 +1176,10 @@
         function renderOrderBook(s) {
             let buyHTML = '';
             let sellHTML = '';
-
             for (let i = 1; i <= 5; i++) {
                 const qd = s[`qd${i}`] || 0;
                 const pd = s[`pd${i}`] || 0;
                 const zd = s[`zd${i}`] || 0;
-
                 const qo = s[`qo${i}`] || 0;
                 const po = s[`po${i}`] || 0;
                 const zo = s[`zo${i}`] || 0;
@@ -1582,7 +1191,6 @@
                         <span class="count">${zd ? toPersianNumber(zd) + ' سفارش' : ''}</span>
                     </div>
                 `;
-
                 sellHTML += `
                     <div class="orderbook-row">
                         <span class="price">${po ? formatNumber(po / 10) : '--'}</span>
@@ -1591,7 +1199,6 @@
                     </div>
                 `;
             }
-
             document.getElementById('buyOrders').innerHTML = buyHTML;
             document.getElementById('sellOrders').innerHTML = sellHTML;
         }
@@ -1601,11 +1208,9 @@
         // ==========================================
         function initModalChart() {
             if (modalChartInitialized) return;
-
             try {
                 const container = document.getElementById('modalChart');
                 if (!container) return;
-
                 const width = container.clientWidth || 800;
 
                 modalChart = LightweightCharts.createChart(container, {
@@ -1624,9 +1229,7 @@
                         secondsVisible: false,
                         borderColor: 'rgba(212, 175, 55, 0.3)'
                     },
-                    rightPriceScale: {
-                        borderColor: 'rgba(212, 175, 55, 0.3)'
-                    }
+                    rightPriceScale: { borderColor: 'rgba(212, 175, 55, 0.3)' }
                 });
 
                 modalCandleSeries = modalChart.addCandlestickSeries({
@@ -1640,8 +1243,7 @@
                 modalChartInitialized = true;
             } catch (e) {
                 console.error('Chart init error:', e);
-                document.getElementById('modalChart').innerHTML = 
-                    '<div class="loading">❌ خطا در ساخت چارت: ' + e.message + '</div>';
+                document.getElementById('modalChart').innerHTML = '<div class="loading">❌ خطا در ساخت چارت: ' + e.message + '</div>';
             }
         }
 
@@ -1649,7 +1251,6 @@
             const container = document.getElementById('modalChart');
             container.innerHTML = '<div class="loading"><div class="spinner"></div>در حال دریافت داده چارت...</div>';
 
-            // چک کش localStorage
             const cacheKey = `chart_${l18}_type2`;
             const cached = localStorage.getItem(cacheKey);
             const cacheTime = localStorage.getItem(cacheKey + '_time');
@@ -1659,9 +1260,7 @@
                     currentDailyData = JSON.parse(cached);
                     renderModalChart(currentTimeframe);
                     return;
-                } catch (e) {
-                    console.log('Cache parse error');
-                }
+                } catch (e) { console.log('Cache parse error'); }
             }
 
             try {
@@ -1680,15 +1279,11 @@
 
                 currentDailyData = data.candle_daily;
 
-                // ذخیره در کش
                 try {
                     localStorage.setItem(cacheKey, JSON.stringify(currentDailyData));
                     localStorage.setItem(cacheKey + '_time', Date.now().toString());
-                } catch (e) {
-                    console.log('Cache save error');
-                }
+                } catch (e) { console.log('Cache save error'); }
 
-                // ساخت مجدد چارت (چون innerHTML عوض شد)
                 modalChartInitialized = false;
                 initModalChart();
                 renderModalChart(currentTimeframe);
@@ -1701,7 +1296,6 @@
         function renderModalChart(timeframe) {
             if (!currentDailyData || currentDailyData.length === 0) return;
 
-            // تبدیل به فرمت LightweightCharts
             const validData = currentDailyData
                 .map(item => ({
                     time: dateToTimestamp(item.date),
@@ -1714,20 +1308,12 @@
                 .sort((a, b) => a.time - b.time);
 
             let chartData = [];
-
-            if (timeframe === 'daily') {
-                chartData = validData.slice(-200);
-            } else if (timeframe === 'weekly') {
-                chartData = groupByWeek(validData);
-            } else if (timeframe === 'monthly') {
-                chartData = groupByMonth(validData);
-            } else if (timeframe === '3m') {
-                chartData = groupByMonths(validData, 3);
-            } else if (timeframe === '6m') {
-                chartData = groupByMonths(validData, 6);
-            } else if (timeframe === 'yearly') {
-                chartData = groupByYear(validData);
-            }
+            if (timeframe === 'daily') chartData = validData.slice(-200);
+            else if (timeframe === 'weekly') chartData = groupByWeek(validData);
+            else if (timeframe === 'monthly') chartData = groupByMonth(validData);
+            else if (timeframe === '3m') chartData = groupByMonths(validData, 3);
+            else if (timeframe === '6m') chartData = groupByMonths(validData, 6);
+            else if (timeframe === 'yearly') chartData = groupByYear(validData);
 
             if (chartData.length > 0 && modalCandleSeries) {
                 modalCandleSeries.setData(chartData);
@@ -1738,24 +1324,15 @@
         function groupByWeek(data) {
             const grouped = [];
             let current = null;
-
             data.forEach(item => {
                 const date = new Date(item.time * 1000);
                 const weekStart = new Date(date);
                 weekStart.setDate(date.getDate() - date.getDay());
                 weekStart.setHours(0, 0, 0, 0);
                 const weekKey = weekStart.getTime();
-
                 if (!current || current.key !== weekKey) {
                     if (current) grouped.push(current);
-                    current = {
-                        key: weekKey,
-                        time: item.time,
-                        open: item.open,
-                        high: item.high,
-                        low: item.low,
-                        close: item.close
-                    };
+                    current = { key: weekKey, time: item.time, open: item.open, high: item.high, low: item.low, close: item.close };
                 } else {
                     current.high = Math.max(current.high, item.high);
                     current.low = Math.min(current.low, item.low);
@@ -1769,21 +1346,12 @@
         function groupByMonth(data) {
             const grouped = [];
             let current = null;
-
             data.forEach(item => {
                 const date = new Date(item.time * 1000);
                 const monthKey = date.getFullYear() * 100 + date.getMonth();
-
                 if (!current || current.key !== monthKey) {
                     if (current) grouped.push(current);
-                    current = {
-                        key: monthKey,
-                        time: item.time,
-                        open: item.open,
-                        high: item.high,
-                        low: item.low,
-                        close: item.close
-                    };
+                    current = { key: monthKey, time: item.time, open: item.open, high: item.high, low: item.low, close: item.close };
                 } else {
                     current.high = Math.max(current.high, item.high);
                     current.low = Math.min(current.low, item.low);
@@ -1798,28 +1366,17 @@
             const grouped = [];
             let current = null;
             let count = 0;
-
             for (let i = 0; i < data.length; i++) {
                 if (count === 0 || !current) {
                     if (current) grouped.push(current);
-                    current = {
-                        time: data[i].time,
-                        open: data[i].open,
-                        high: data[i].high,
-                        low: data[i].low,
-                        close: data[i].close
-                    };
+                    current = { time: data[i].time, open: data[i].open, high: data[i].high, low: data[i].low, close: data[i].close };
                     count = 1;
                 } else {
                     current.high = Math.max(current.high, data[i].high);
                     current.low = Math.min(current.low, data[i].low);
                     current.close = data[i].close;
                     count++;
-                    if (count >= n) {
-                        grouped.push(current);
-                        current = null;
-                        count = 0;
-                    }
+                    if (count >= n) { grouped.push(current); current = null; count = 0; }
                 }
             }
             if (current) grouped.push(current);
@@ -1829,20 +1386,11 @@
         function groupByYear(data) {
             const grouped = [];
             let current = null;
-
             data.forEach(item => {
                 const yearKey = new Date(item.time * 1000).getFullYear();
-
                 if (!current || current.key !== yearKey) {
                     if (current) grouped.push(current);
-                    current = {
-                        key: yearKey,
-                        time: item.time,
-                        open: item.open,
-                        high: item.high,
-                        low: item.low,
-                        close: item.close
-                    };
+                    current = { key: yearKey, time: item.time, open: item.open, high: item.high, low: item.low, close: item.close };
                 } else {
                     current.high = Math.max(current.high, item.high);
                     current.low = Math.min(current.low, item.low);
@@ -1874,7 +1422,6 @@
                 document.body.style.overflow = 'hidden';
             }
 
-            // Resize chart
             setTimeout(() => {
                 if (modalChart) {
                     const chartEl = document.getElementById('modalChart');
@@ -1891,18 +1438,13 @@
         // راه‌اندازی
         // ==========================================
         document.addEventListener('DOMContentLoaded', async () => {
-            setupNavbar();
-            checkUser();
-
             document.getElementById('searchInput').addEventListener('input', applyFilters);
             document.getElementById('sectorFilter').addEventListener('change', applyFilters);
             document.getElementById('typeFilter').addEventListener('change', applyFilters);
-
             await loadAllSymbols();
             setInterval(loadAllSymbols, 120000);
         });
 
-        // Resize
         window.addEventListener('resize', () => {
             if (modalChart && modalChartInitialized) {
                 const container = document.getElementById('modalChart');
