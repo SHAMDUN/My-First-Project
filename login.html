@@ -4,13 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ورود / ثبت‌نام | آکادمی شمعدون</title>
-    
-    <!-- فونت وزیرمتن -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css">
-    
-    <!-- Supabase -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    
     <style>
         :root {
             --bg-primary: #0a0a0f;
@@ -25,10 +20,8 @@
             --white: #f8fafc;
             --gray: #94a3b8;
         }
-
         * { margin: 0; padding: 0; box-sizing: border-box; }
         html { scroll-behavior: smooth; }
-
         body {
             font-family: 'Vazirmatn', Tahoma, sans-serif;
             background-color: var(--bg-primary);
@@ -45,8 +38,6 @@
             flex-direction: column;
             overflow-x: hidden;
         }
-
-        /* ============= انیمیشن‌ها ============= */
         @keyframes fadeInUp {
             from { opacity: 0; transform: translateY(30px); }
             to { opacity: 1; transform: translateY(0); }
@@ -72,9 +63,7 @@
             50% { background-position: 100% 50%; }
             100% { background-position: 0% 50%; }
         }
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
+        @keyframes spin { to { transform: rotate(360deg); } }
 
         /* ============= Navbar ============= */
         .navbar {
@@ -93,37 +82,62 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            gap: 12px;
         }
         .nav-logo {
             display: flex;
             align-items: center;
             gap: 10px;
             text-decoration: none;
+            flex-shrink: 0;
         }
         .nav-logo-img {
             width: 40px; height: 40px;
             border-radius: 50%;
             border: 2px solid var(--gold);
             object-fit: cover;
+            background: linear-gradient(135deg, var(--gold), var(--gold-dark));
         }
         .nav-logo-text {
             color: var(--gold);
             font-size: 18px;
             font-weight: 800;
         }
-        .nav-back {
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-shrink: 0;
+        }
+        .nav-back,
+        .nav-dict {
             color: var(--gray);
             text-decoration: none;
             font-size: 13px;
+            font-weight: 600;
             padding: 8px 16px;
             border: 1px solid rgba(212, 175, 55, 0.3);
             border-radius: 20px;
             transition: 0.3s;
+            white-space: nowrap;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
         }
-        .nav-back:hover {
+        .nav-back:hover,
+        .nav-dict:hover {
             color: var(--gold);
             border-color: var(--gold);
             background: rgba(212, 175, 55, 0.1);
+        }
+        .nav-dict {
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.15), rgba(212, 175, 55, 0.05));
+            color: var(--gold);
+            border-color: rgba(212, 175, 55, 0.4);
+        }
+        .nav-dict:hover {
+            background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+            color: var(--bg-primary);
         }
 
         /* ============= Layout ============= */
@@ -141,9 +155,7 @@
         }
 
         /* ============= سمت راست: Branding ============= */
-        .branding-side {
-            animation: fadeInUp 0.8s ease-out;
-        }
+        .branding-side { animation: fadeInUp 0.8s ease-out; }
         .branding-content { max-width: 550px; }
         .branding-logo {
             display: flex;
@@ -158,6 +170,7 @@
             object-fit: cover;
             box-shadow: 0 0 40px rgba(212, 175, 55, 0.4);
             animation: float 3s ease-in-out infinite;
+            background: linear-gradient(135deg, var(--gold), var(--gold-dark));
         }
         .branding-logo-text {
             display: flex;
@@ -226,9 +239,7 @@
             border: 1px solid rgba(212, 175, 55, 0.15);
             border-radius: 16px;
         }
-        .branding-stat {
-            text-align: center;
-        }
+        .branding-stat { text-align: center; }
         .branding-stat-value {
             color: var(--gold);
             font-size: 22px;
@@ -242,9 +253,7 @@
         }
 
         /* ============= سمت چپ: Form ============= */
-        .form-side {
-            animation: fadeInUp 0.8s ease-out 0.2s backwards;
-        }
+        .form-side { animation: fadeInUp 0.8s ease-out 0.2s backwards; }
         .login-card {
             background: linear-gradient(135deg, rgba(26, 26, 36, 0.95), rgba(20, 20, 28, 0.95));
             backdrop-filter: blur(20px);
@@ -284,7 +293,7 @@
             transition: 0.3s;
             border: none;
             background: transparent;
-            font-family: 'Vazirmatn', Tahoma, sans-serif;
+            font-family: inherit;
         }
         .tab.active {
             background: linear-gradient(135deg, var(--gold), var(--gold-dark));
@@ -293,7 +302,6 @@
         }
         .tab:hover:not(.active) { color: var(--gold); }
 
-        /* ===== پیام ===== */
         .message {
             padding: 12px 16px;
             border-radius: 12px;
@@ -317,7 +325,6 @@
             display: block;
         }
 
-        /* ===== فیلدهای فرم ===== */
         .form-group {
             margin-bottom: 20px;
             position: relative;
@@ -330,9 +337,7 @@
             margin-bottom: 10px;
             font-weight: 600;
         }
-        .input-wrapper {
-            position: relative;
-        }
+        .input-wrapper { position: relative; }
         .input-icon {
             position: absolute;
             right: 16px;
@@ -353,21 +358,16 @@
             font-size: 14px;
             outline: none;
             transition: 0.3s;
-            font-family: 'Vazirmatn', Tahoma, sans-serif;
+            font-family: inherit;
         }
         .form-input:focus {
             border-color: var(--gold);
             background: rgba(10, 10, 15, 0.9);
             box-shadow: 0 0 0 4px rgba(212, 175, 55, 0.1);
         }
-        .form-input:focus + .input-icon {
-            color: var(--gold);
-        }
-        .form-input::placeholder {
-            color: rgba(148, 163, 184, 0.5);
-        }
+        .form-input:focus + .input-icon { color: var(--gold); }
+        .form-input::placeholder { color: rgba(148, 163, 184, 0.5); }
 
-        /* دکمه نمایش رمز */
         .toggle-password {
             position: absolute;
             left: 12px;
@@ -387,7 +387,6 @@
             background: rgba(212, 175, 55, 0.1);
         }
 
-        /* ===== چک‌باکس ===== */
         .checkbox-wrapper {
             display: flex;
             align-items: flex-start;
@@ -401,8 +400,7 @@
             z-index: 2;
         }
         .checkbox-wrapper input[type="checkbox"] {
-            width: 18px;
-            height: 18px;
+            width: 18px; height: 18px;
             accent-color: var(--gold);
             cursor: pointer;
             flex-shrink: 0;
@@ -421,7 +419,6 @@
         }
         .checkbox-wrapper a:hover { text-decoration: underline; }
 
-        /* ===== دکمه ارسال ===== */
         .btn-submit {
             width: 100%;
             padding: 16px;
@@ -434,7 +431,7 @@
             font-weight: 800;
             cursor: pointer;
             transition: 0.3s;
-            font-family: 'Vazirmatn', Tahoma, sans-serif;
+            font-family: inherit;
             margin-top: 10px;
             position: relative;
             overflow: hidden;
@@ -453,15 +450,12 @@
         .btn-submit::before {
             content: '';
             position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
+            top: 0; left: -100%;
+            width: 100%; height: 100%;
             background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
             animation: shine 3s infinite;
         }
 
-        /* ===== لینک کمکی ===== */
         .forgot-link {
             display: block;
             text-align: center;
@@ -475,11 +469,9 @@
         }
         .forgot-link:hover { color: var(--gold); }
 
-        /* ===== اسپینر ===== */
         .loading-spinner {
             display: inline-block;
-            width: 16px;
-            height: 16px;
+            width: 16px; height: 16px;
             border: 2px solid var(--bg-primary);
             border-top-color: transparent;
             border-radius: 50%;
@@ -487,10 +479,8 @@
             margin-right: 8px;
             vertical-align: middle;
         }
-
         .hidden { display: none !important; }
 
-        /* ============= Footer ============= */
         .footer {
             text-align: center;
             padding: 20px;
@@ -500,7 +490,6 @@
             background: rgba(10, 10, 15, 0.5);
         }
 
-        /* ============= ریسپانسیو ============= */
         @media (max-width: 900px) {
             .main-container {
                 grid-template-columns: 1fr;
@@ -517,8 +506,23 @@
             .branding-title { font-size: 26px; }
             .branding-features { display: none; }
             .login-card { padding: 30px 25px; }
-            .branding-stats { grid-template-columns: repeat(3, 1fr); gap: 10px; padding: 15px; }
+            .branding-stats {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 10px;
+                padding: 15px;
+            }
             .branding-stat-value { font-size: 18px; }
+            .nav-container { padding: 0 12px; gap: 8px; }
+            .nav-logo-text { display: none; }
+            .nav-back,
+            .nav-dict {
+                padding: 7px 10px;
+                font-size: 11px;
+            }
+            .nav-back span:last-child,
+            .nav-dict span:last-child {
+                display: none;
+            }
         }
     </style>
 </head>
@@ -528,21 +532,28 @@
     <nav class="navbar">
         <div class="nav-container">
             <a href="index.html" class="nav-logo">
-                <img src="519.png" alt="شمعدون" class="nav-logo-img">
+                <img src="519.png" alt="شمعدون" class="nav-logo-img" onerror="this.style.display='none'">
                 <span class="nav-logo-text">شمعدون</span>
             </a>
-            <a href="index.html" class="nav-back">⬅ بازگشت به صفحه اصلی</a>
+            <div class="nav-actions">
+                <a href="dictionary.html" class="nav-dict" title="دانش‌نامه اقتصادی">
+                    <span>🎓</span>
+                    <span>دانش‌نامه</span>
+                </a>
+                <a href="index.html" class="nav-back" title="بازگشت به صفحه اصلی">
+                    <span>⬅</span>
+                    <span>بازگشت</span>
+                </a>
+            </div>
         </div>
     </nav>
 
-    <!-- Main Container -->
     <div class="main-container">
-
         <!-- سمت راست: Branding -->
         <div class="branding-side">
             <div class="branding-content">
                 <div class="branding-logo">
-                    <img src="519.png" alt="شمعدون" class="branding-logo-img">
+                    <img src="519.png" alt="شمعدون" class="branding-logo-img" onerror="this.style.display='none'">
                     <div class="branding-logo-text">
                         <h2>شمعدون</h2>
                         <span>پنل تحلیلی بازار</span>
@@ -582,14 +593,11 @@
         <!-- سمت چپ: Form -->
         <div class="form-side">
             <div class="login-card">
-
-                <!-- تب‌ها -->
                 <div class="form-tabs">
                     <button class="tab active" id="tabLogin" onclick="switchTab('login')">🔐 ورود</button>
                     <button class="tab" id="tabSignup" onclick="switchTab('signup')">✨ ثبت‌نام</button>
                 </div>
 
-                <!-- پیام -->
                 <div class="message" id="message"></div>
 
                 <!-- فرم ورود -->
@@ -645,36 +653,25 @@
                     </div>
                     <button type="submit" class="btn-submit" id="signupBtn">ایجاد حساب کاربری</button>
                 </form>
-
             </div>
         </div>
-
     </div>
 
-    <!-- Footer -->
     <footer class="footer">
         © ۱۴۰۵ آکادمی شمعدون | تمامی حقوق محفوظ است
     </footer>
 
     <script>
-        // ==========================================
-        // تنظیمات Supabase
-        // ==========================================
         const SUPABASE_URL = 'https://jcwwilatvstjrohvhtss.supabase.co';
         const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Impjd3dpbGF0dnN0anJvaHZodHNzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODk3MDY4NTYsImV4cCI6MjEwNTI4Mjg1Nn0.eUC89RJy6-60nNGrSeYeDADzLxz-kWTGy4DbNGVi6MM';
-
         const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-        // ==========================================
-        // سوییچ بین تب‌ها
-        // ==========================================
         function switchTab(tab) {
             const loginForm = document.getElementById('loginForm');
             const signupForm = document.getElementById('signupForm');
             const tabLogin = document.getElementById('tabLogin');
             const tabSignup = document.getElementById('tabSignup');
             const message = document.getElementById('message');
-
             message.className = 'message';
 
             if (tab === 'login') {
@@ -690,9 +687,6 @@
             }
         }
 
-        // ==========================================
-        // نمایش/مخفی رمز
-        // ==========================================
         function togglePassword(inputId, btn) {
             const input = document.getElementById(inputId);
             if (input.type === 'password') {
@@ -704,18 +698,12 @@
             }
         }
 
-        // ==========================================
-        // نمایش پیام
-        // ==========================================
         function showMessage(text, type) {
             const message = document.getElementById('message');
             message.textContent = text;
             message.className = 'message ' + type;
         }
 
-        // ==========================================
-        // ورود
-        // ==========================================
         async function handleLogin(event) {
             event.preventDefault();
             const email = document.getElementById('loginEmail').value.trim();
@@ -749,9 +737,6 @@
             }
         }
 
-        // ==========================================
-        // ثبت‌نام
-        // ==========================================
         async function handleSignup(event) {
             event.preventDefault();
             const name = document.getElementById('signupName').value.trim();
@@ -768,9 +753,7 @@
                     email: email,
                     password: password,
                     options: {
-                        data: {
-                            full_name: name
-                        }
+                        data: { full_name: name }
                     }
                 });
 
@@ -791,9 +774,6 @@
             }
         }
 
-        // ==========================================
-        // ترجمه خطاها
-        // ==========================================
         function translateError(msg) {
             const translations = {
                 'Invalid login credentials': 'ایمیل یا رمز عبور اشتباه است',
@@ -807,11 +787,7 @@
             return translations[msg] || msg;
         }
 
-        // ==========================================
-        // بارگذاری آمار واقعی از Supabase
-        // ==========================================
         async function loadStats() {
-            // تعداد کاربران
             try {
                 const { count: usersCount, error: e1 } = await supabaseClient
                     .from('profiles')
@@ -826,7 +802,6 @@
                 document.getElementById('brandStatUsers').textContent = '---';
             }
 
-            // تعداد دوره‌ها
             try {
                 const { count: coursesCount, error: e2 } = await supabaseClient
                     .from('courses')
@@ -841,7 +816,6 @@
                 document.getElementById('brandStatCourses').textContent = '---';
             }
 
-            // میانگین رضایت
             try {
                 const { data: ratings, error: e3 } = await supabaseClient
                     .from('course_ratings')
@@ -863,18 +837,12 @@
             }
         }
 
-        // ==========================================
-        // ابزار
-        // ==========================================
         function toPersianNum(num) {
             if (!num) return '---';
             const persianDigits = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
             return String(num).replace(/\d/g, d => persianDigits[d]);
         }
 
-        // ==========================================
-        // چک کردن سشن (اگه کاربر لاگین بود)
-        // ==========================================
         async function checkSession() {
             const { data } = await supabaseClient.auth.getSession();
             if (data.session) {
@@ -882,17 +850,11 @@
             }
         }
 
-        // ==========================================
-        // راه‌اندازی
-        // ==========================================
         document.addEventListener('DOMContentLoaded', () => {
             checkSession();
             loadStats();
         });
 
-        // ==========================================
-        // Service Worker (PWA)
-        // ==========================================
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
                 navigator.serviceWorker.register('/My-First-Project/service-worker.js')
@@ -901,6 +863,5 @@
             });
         }
     </script>
-
 </body>
 </html>
