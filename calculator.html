@@ -41,9 +41,9 @@
             from { opacity: 0; transform: translateY(30px); }
             to { opacity: 1; transform: translateY(0); }
         }
-        @keyframes pulse {
-            0%, 100% { opacity: 1; transform: scale(1); }
-            50% { opacity: 0.5; transform: scale(1.3); }
+        @keyframes slideDown {
+            from { opacity: 0; max-height: 0; }
+            to { opacity: 1; max-height: 1000px; }
         }
 
         .main-container { max-width: 900px; margin: 0 auto; padding: 100px 20px 40px; }
@@ -61,12 +61,42 @@
         }
         .page-header p { color: var(--gray); font-size: 14px; }
 
+        /* ===== گروه‌بندی تب‌ها ===== */
+        .tabs-groups {
+            margin-bottom: 25px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        .tabs-group {
+            background: rgba(20, 20, 28, 0.5);
+            border: 1px solid rgba(212, 175, 55, 0.1);
+            border-radius: 16px;
+            padding: 12px;
+        }
+        .tabs-group-title {
+            color: var(--gray);
+            font-size: 11px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+            padding-right: 8px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .tabs-group-title::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: rgba(212, 175, 55, 0.15);
+        }
         .calc-tabs {
             display: flex;
             gap: 8px;
-            margin-bottom: 25px;
             overflow-x: auto;
-            padding-bottom: 8px;
+            padding-bottom: 4px;
             scrollbar-width: thin;
         }
         .calc-tabs::-webkit-scrollbar { height: 4px; }
@@ -75,12 +105,12 @@
             border-radius: 10px;
         }
         .calc-tab {
-            padding: 12px 20px;
-            background: rgba(20, 20, 28, 0.6);
+            padding: 10px 16px;
+            background: rgba(10, 10, 15, 0.6);
             border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: 12px;
             color: var(--gray);
-            font-size: 13px;
+            font-size: 12.5px;
             font-weight: 700;
             font-family: inherit;
             cursor: pointer;
@@ -104,6 +134,46 @@
         .calc-section { display: none; }
         .calc-section.active { display: block; animation: fadeInUp 0.4s ease-out; }
 
+        /* ===== کارت آموزشی ===== */
+        .edu-card {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.08), rgba(59, 130, 246, 0.02));
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            border-radius: 16px;
+            padding: 16px 18px;
+            margin-bottom: 20px;
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+        }
+        .edu-icon {
+            font-size: 24px;
+            flex-shrink: 0;
+            line-height: 1;
+        }
+        .edu-content { flex: 1; }
+        .edu-title {
+            color: #60a5fa;
+            font-size: 13px;
+            font-weight: 800;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .edu-text {
+            color: #cbd5e1;
+            font-size: 12.5px;
+            line-height: 1.8;
+            margin-bottom: 8px;
+        }
+        .edu-usage {
+            color: var(--gray);
+            font-size: 11.5px;
+            line-height: 1.7;
+        }
+        .edu-usage strong { color: var(--gold); }
+
+        /* ===== کارت محاسبه ===== */
         .calc-card {
             background: linear-gradient(135deg, var(--bg-card), var(--bg-secondary));
             border: 1px solid rgba(212, 175, 55, 0.15);
@@ -111,21 +181,14 @@
             padding: 25px;
             margin-bottom: 20px;
         }
-
         .calc-card h2 {
             color: var(--gold);
             font-size: 20px;
             font-weight: 800;
-            margin-bottom: 8px;
+            margin-bottom: 20px;
             display: flex;
             align-items: center;
             gap: 10px;
-        }
-        .calc-card .description {
-            color: var(--gray);
-            font-size: 13px;
-            line-height: 1.7;
-            margin-bottom: 20px;
             padding-bottom: 15px;
             border-bottom: 1px solid rgba(212, 175, 55, 0.15);
         }
@@ -136,8 +199,6 @@
             gap: 15px;
             margin-bottom: 20px;
         }
-        .form-grid.full { grid-template-columns: 1fr; }
-
         .form-group { display: flex; flex-direction: column; gap: 6px; }
         .form-group label {
             color: var(--white);
@@ -152,7 +213,6 @@
             color: var(--gray);
             font-weight: 400;
         }
-
         .form-input {
             padding: 12px 14px;
             background: rgba(10, 10, 15, 0.6);
@@ -172,10 +232,7 @@
             box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.1);
         }
         .form-input::placeholder { color: rgba(148, 163, 184, 0.4); }
-
-        select.form-input {
-            cursor: pointer;
-        }
+        select.form-input { cursor: pointer; }
 
         .calc-btn {
             width: 100%;
@@ -206,7 +263,6 @@
             animation: fadeInUp 0.4s ease-out;
         }
         .result-card.show { display: block; }
-
         .result-card h3 {
             color: var(--green);
             font-size: 16px;
@@ -230,6 +286,7 @@
         }
         .result-item.gold { border-right-color: var(--gold); }
         .result-item.red { border-right-color: var(--red); }
+        .result-item.blue { border-right-color: var(--blue); }
         .result-item .label {
             color: var(--gray);
             font-size: 11px;
@@ -244,6 +301,7 @@
         .result-item .value.gold { color: var(--gold); }
         .result-item .value.green { color: var(--green); }
         .result-item .value.red { color: var(--red); }
+        .result-item .value.blue { color: #60a5fa; }
 
         .result-highlight {
             grid-column: 1 / -1;
@@ -291,16 +349,43 @@
             flex-shrink: 0;
         }
 
-        .badge {
-            display: inline-block;
-            padding: 3px 10px;
-            border-radius: 10px;
-            font-size: 10px;
-            font-weight: 800;
+        .vs-badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--gold);
+            color: var(--bg-primary);
+            width: 50px; height: 50px;
+            border-radius: 50%;
+            font-weight: 900;
+            font-size: 14px;
+            margin: 0 auto;
         }
-        .badge.up { background: rgba(16, 185, 129, 0.2); color: var(--green); }
-        .badge.down { background: rgba(239, 68, 68, 0.2); color: var(--red); }
-        .badge.neutral { background: rgba(148, 163, 184, 0.2); color: var(--gray); }
+
+        .comparison-container {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            gap: 12px;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .comparison-side {
+            background: rgba(10, 10, 15, 0.5);
+            padding: 15px;
+            border-radius: 12px;
+            text-align: center;
+        }
+        .comparison-side h4 {
+            color: var(--gold);
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+        .comparison-side .value {
+            font-size: 18px;
+            font-weight: 900;
+            color: var(--white);
+        }
 
         .footer {
             text-align: center;
@@ -318,6 +403,10 @@
             .result-grid { grid-template-columns: 1fr; }
             .result-highlight .value { font-size: 22px; }
             .calc-card { padding: 18px; }
+            .comparison-container {
+                grid-template-columns: 1fr;
+            }
+            .edu-card { padding: 14px; }
         }
     </style>
 </head>
@@ -329,21 +418,46 @@
             <p>ابزار حرفه‌ای تحلیل سرمایه‌گذاری و مدیریت ریسک</p>
         </div>
 
-        <div class="calc-tabs">
-            <button class="calc-tab active" onclick="switchTab('dca', this)">💰 DCA</button>
-            <button class="calc-tab" onclick="switchTab('compound', this)">🏦 سود مرکب</button>
-            <button class="calc-tab" onclick="switchTab('risk', this)">🎲 ریسک</button>
-            <button class="calc-tab" onclick="switchTab('position', this)">🎯 پوزیشن</button>
-            <button class="calc-tab" onclick="switchTab('gold', this)">🥇 طلا</button>
+        <!-- ===== گروه‌بندی تب‌ها ===== -->
+        <div class="tabs-groups">
+            <div class="tabs-group">
+                <div class="tabs-group-title">💼 سرمایه‌گذاری</div>
+                <div class="calc-tabs">
+                    <button class="calc-tab active" onclick="switchTab('dca', this)">💰 DCA</button>
+                    <button class="calc-tab" onclick="switchTab('compound', this)">🏦 سود مرکب</button>
+                    <button class="calc-tab" onclick="switchTab('goal', this)">🎯 هدف مالی</button>
+                    <button class="calc-tab" onclick="switchTab('compare', this)">⚖️ مقایسه</button>
+                </div>
+            </div>
+            <div class="tabs-group">
+                <div class="tabs-group-title">🔍 تحلیل</div>
+                <div class="calc-tabs">
+                    <button class="calc-tab" onclick="switchTab('inflation', this)">📉 تورم</button>
+                    <button class="calc-tab" onclick="switchTab('breakeven', this)">⚖️ سربه‌سر</button>
+                    <button class="calc-tab" onclick="switchTab('risk', this)">🎲 ریسک</button>
+                    <button class="calc-tab" onclick="switchTab('position', this)">🎯 پوزیشن</button>
+                </div>
+            </div>
         </div>
 
         <!-- ============ تب ۱: DCA ============ -->
         <div class="calc-section active" id="section-dca">
+            <div class="edu-card">
+                <div class="edu-icon">📖</div>
+                <div class="edu-content">
+                    <div class="edu-title">این ابزار چیکار می‌کنه؟</div>
+                    <div class="edu-text">
+                        اگه هر ماه یه مبلغ ثابت سرمایه‌گذاری کنی (مثلاً ۵ میلیون)، با سود مرکب چقدر می‌شه؟ این روش «DCA» یا سرمایه‌گذاری دوره‌ای نام داره.
+                    </div>
+                    <div class="edu-usage">
+                        <strong>💡 کاربرد:</strong>
+                        برنامه‌ریزی پس‌انداز ماهانه، دیدن قدرت سود مرکب در بلندمدت، مقایسه بازدهی با نرخ‌های مختلف
+                    </div>
+                </div>
+            </div>
+
             <div class="calc-card">
                 <h2>💰 سرمایه‌گذاری دوره‌ای (DCA)</h2>
-                <div class="description">
-                    اگه هر ماه یه مبلغ ثابت سرمایه‌گذاری کنی، با سود مرکب چقدر می‌شه؟ (Dollar-Cost Averaging)
-                </div>
                 <div class="form-grid">
                     <div class="form-group">
                         <label>💵 سرمایه‌گذاری ماهانه <span class="help">(تومان)</span></label>
@@ -358,7 +472,7 @@
                         <input type="number" id="dca-rate" class="form-input" placeholder="۳۰" step="0.1">
                     </div>
                     <div class="form-group">
-                        <label>💹 موجودی فعلی <span class="help">(اختیاری، تومان)</span></label>
+                        <label>💹 موجودی فعلی <span class="help">(اختیاری)</span></label>
                         <input type="text" id="dca-initial" class="form-input" placeholder="۰" inputmode="numeric">
                     </div>
                 </div>
@@ -366,12 +480,12 @@
             </div>
             <div class="result-card" id="result-dca">
                 <h3>✅ نتیجه محاسبه</h3>
-                <div class="result-highlight">
-                    <div class="label">💎 سرمایه نهایی شما</div>
-                    <div class="value" id="dca-final">--</div>
-                    <div class="sub" id="dca-profit-sub">--</div>
-                </div>
                 <div class="result-grid">
+                    <div class="result-highlight">
+                        <div class="label">💎 سرمایه نهایی شما</div>
+                        <div class="value" id="dca-final">--</div>
+                        <div class="sub" id="dca-profit-sub">--</div>
+                    </div>
                     <div class="result-item">
                         <div class="label">📊 کل اصل سرمایه</div>
                         <div class="value" id="dca-principal">--</div>
@@ -389,19 +503,27 @@
                         <div class="value" id="dca-avg">--</div>
                     </div>
                 </div>
-                <div class="info-note">
-                    سود مرکب باعث میشه سودت هم سود بسازه. هرچی مدت طولانی‌تر باشه، تأثیرش بیشتره.
-                </div>
             </div>
         </div>
 
         <!-- ============ تب ۲: سود مرکب ============ -->
         <div class="calc-section" id="section-compound">
+            <div class="edu-card">
+                <div class="edu-icon">📖</div>
+                <div class="edu-content">
+                    <div class="edu-title">این ابزار چیکار می‌کنه؟</div>
+                    <div class="edu-text">
+                        اگه یه مبلغ رو با نرخ سود مشخص سرمایه‌گذاری کنی، با سود مرکب (سودی که خودش هم سود می‌سازه) چقدر می‌شه؟
+                    </div>
+                    <div class="edu-usage">
+                        <strong>💡 کاربرد:</strong>
+                        محاسبه سود سپرده بانکی، پیش‌بینی بازدهی بلندمدت، مقایسه نرخ‌های مختلف
+                    </div>
+                </div>
+            </div>
+
             <div class="calc-card">
                 <h2>🏦 سود مرکب و سپرده</h2>
-                <div class="description">
-                    اگه یه مبلغ رو با نرخ سود مشخص سرمایه‌گذاری کنی، با سود مرکب چقدر میشه؟
-                </div>
                 <div class="form-grid">
                     <div class="form-group">
                         <label>💰 مبلغ اصل <span class="help">(تومان)</span></label>
@@ -430,12 +552,12 @@
             </div>
             <div class="result-card" id="result-compound">
                 <h3>✅ نتیجه محاسبه</h3>
-                <div class="result-highlight">
-                    <div class="label">💎 مبلغ نهایی شما</div>
-                    <div class="value" id="cmp-final">--</div>
-                    <div class="sub" id="cmp-profit-sub">--</div>
-                </div>
                 <div class="result-grid">
+                    <div class="result-highlight">
+                        <div class="label">💎 مبلغ نهایی شما</div>
+                        <div class="value" id="cmp-final">--</div>
+                        <div class="sub" id="cmp-profit-sub">--</div>
+                    </div>
                     <div class="result-item">
                         <div class="label">💰 اصل سرمایه</div>
                         <div class="value" id="cmp-principal-result">--</div>
@@ -453,19 +575,299 @@
                         <div class="value" id="cmp-daily">--</div>
                     </div>
                 </div>
-                <div class="info-note">
-                    هرچی تعداد محاسبه سود در سال بیشتر باشه (ماهانه vs سالانه)، سود نهایی بیشتره.
+            </div>
+        </div>
+
+        <!-- ============ تب ۳: هدف مالی ============ -->
+        <div class="calc-section" id="section-goal">
+            <div class="edu-card">
+                <div class="edu-icon">📖</div>
+                <div class="edu-content">
+                    <div class="edu-title">این ابزار چیکار می‌کنه؟</div>
+                    <div class="edu-text">
+                        می‌خوای ۳ سال دیگه ۱ میلیارد تومان داشته باشی؟ این ابزار می‌گه ماهی چقدر باید پس‌انداز کنی تا به هدفت برسی.
+                    </div>
+                    <div class="edu-usage">
+                        <strong>💡 کاربرد:</strong>
+                        برنامه‌ریزی مالی هدف‌محور، پس‌انداز برای خرید خانه/ماشین، ساخت سرمایه بلندمدت
+                    </div>
+                </div>
+            </div>
+
+            <div class="calc-card">
+                <h2>🎯 هدف مالی</h2>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>🎯 هدف نهایی <span class="help">(تومان)</span></label>
+                        <input type="text" id="goal-target" class="form-input" placeholder="۱,۰۰۰,۰۰۰,۰۰۰" inputmode="numeric">
+                    </div>
+                    <div class="form-group">
+                        <label>⏳ مدت زمان <span class="help">(سال)</span></label>
+                        <input type="number" id="goal-years" class="form-input" placeholder="۳" min="0.5" max="50" step="0.5">
+                    </div>
+                    <div class="form-group">
+                        <label>📈 بازدهی سالانه <span class="help">(٪)</span></label>
+                        <input type="number" id="goal-rate" class="form-input" placeholder="۳۰" step="0.1">
+                    </div>
+                    <div class="form-group">
+                        <label>💹 موجودی فعلی <span class="help">(اختیاری)</span></label>
+                        <input type="text" id="goal-initial" class="form-input" placeholder="۰" inputmode="numeric">
+                    </div>
+                </div>
+                <button class="calc-btn" onclick="calcGoal()">🎯 محاسبه پس‌انداز لازم</button>
+            </div>
+            <div class="result-card" id="result-goal">
+                <h3>✅ نتیجه محاسبه</h3>
+                <div class="result-grid">
+                    <div class="result-highlight">
+                        <div class="label">💰 پس‌انداز ماهانه لازم</div>
+                        <div class="value" id="goal-monthly">--</div>
+                        <div class="sub" id="goal-monthly-sub">--</div>
+                    </div>
+                    <div class="result-item">
+                        <div class="label">💎 کل اصل سرمایه‌گذاری</div>
+                        <div class="value" id="goal-principal">--</div>
+                    </div>
+                    <div class="result-item">
+                        <div class="label">📈 سود مرکب</div>
+                        <div class="value green" id="goal-profit">--</div>
+                    </div>
+                    <div class="result-item">
+                        <div class="label">📅 تعداد ماه</div>
+                        <div class="value gold" id="goal-months">--</div>
+                    </div>
+                    <div class="result-item">
+                        <div class="label">📊 درصد سود به هدف</div>
+                        <div class="value blue" id="goal-profit-percent">--</div>
+                    </div>
+                </div>
+                <div class="info-note" id="goal-note">
+                    هرچی زودتر شروع کنی، بهره مرکب بیشتر کار می‌کنه و پس‌انداز ماهانه‌ت کمتر میشه.
                 </div>
             </div>
         </div>
 
-        <!-- ============ تب ۳: ریسک ============ -->
+        <!-- ============ تب ۴: مقایسه ============ -->
+        <div class="calc-section" id="section-compare">
+            <div class="edu-card">
+                <div class="edu-icon">📖</div>
+                <div class="edu-content">
+                    <div class="edu-title">این ابزار چیکار می‌کنه؟</div>
+                    <div class="edu-text">
+                        دو گزینه سرمایه‌گذاری مختلف رو کنار هم بذار و ببین کدوم بهتره. مثلاً «بورس با ۳۰٪ بازدهی» vs «طلا با ۲۵٪ بازدهی» توی ۵ سال.
+                    </div>
+                    <div class="edu-usage">
+                        <strong>💡 کاربرد:</strong>
+                        تصمیم‌گیری بین دو بازار، مقایسه بازدهی با نرخ‌های مختلف، انتخاب بهترین گزینه
+                    </div>
+                </div>
+            </div>
+
+            <div class="calc-card">
+                <h2>⚖️ مقایسه دو سرمایه‌گذاری</h2>
+                <div class="comparison-container">
+                    <div class="comparison-side">
+                        <h4>🅰️ گزینه اول</h4>
+                        <div class="form-group" style="margin-bottom:10px;">
+                            <label>مبلغ <span class="help">(تومان)</span></label>
+                            <input type="text" id="cmp-a-amount" class="form-input" placeholder="۱۰۰,۰۰۰,۰۰۰" inputmode="numeric">
+                        </div>
+                        <div class="form-group">
+                            <label>بازدهی سالانه <span class="help">(٪)</span></label>
+                            <input type="number" id="cmp-a-rate" class="form-input" placeholder="۳۰" step="0.1">
+                        </div>
+                    </div>
+                    <div class="vs-badge">VS</div>
+                    <div class="comparison-side">
+                        <h4>🅱️ گزینه دوم</h4>
+                        <div class="form-group" style="margin-bottom:10px;">
+                            <label>مبلغ <span class="help">(تومان)</span></label>
+                            <input type="text" id="cmp-b-amount" class="form-input" placeholder="۱۰۰,۰۰۰,۰۰۰" inputmode="numeric">
+                        </div>
+                        <div class="form-group">
+                            <label>بازدهی سالانه <span class="help">(٪)</span></label>
+                            <input type="number" id="cmp-b-rate" class="form-input" placeholder="۲۵" step="0.1">
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group" style="margin-bottom:20px;">
+                    <label>⏳ مدت زمان <span class="help">(سال)</span></label>
+                    <input type="number" id="cmp-years2" class="form-input" placeholder="۵" min="0.1" max="50" step="0.5">
+                </div>
+                <button class="calc-btn" onclick="calcCompare()">⚖️ مقایسه کن</button>
+            </div>
+            <div class="result-card" id="result-compare">
+                <h3>✅ نتیجه مقایسه</h3>
+                <div class="result-grid">
+                    <div class="result-item blue">
+                        <div class="label">🅰️ گزینه اول - مبلغ نهایی</div>
+                        <div class="value blue" id="cmp-a-final">--</div>
+                    </div>
+                    <div class="result-item gold">
+                        <div class="label">🅱️ گزینه دوم - مبلغ نهایی</div>
+                        <div class="value gold" id="cmp-b-final">--</div>
+                    </div>
+                    <div class="result-highlight" id="cmp-winner-highlight" style="display:none;">
+                        <div class="label">🏆 برنده</div>
+                        <div class="value" id="cmp-winner">--</div>
+                        <div class="sub" id="cmp-difference">--</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============ تب ۵: تورم ============ -->
+        <div class="calc-section" id="section-inflation">
+            <div class="edu-card">
+                <div class="edu-icon">📖</div>
+                <div class="edu-content">
+                    <div class="edu-title">این ابزار چیکار می‌کنه؟</div>
+                    <div class="edu-text">
+                        اگه تورم ۴۰٪ باشه، ۱۰۰ میلیون تومان امروز، ۱ سال دیگه چقدر ارزش داره؟ این ابزار قدرت خرید پولت رو در طول زمان محاسبه می‌کنه.
+                    </div>
+                    <div class="edu-usage">
+                        <strong>💡 کاربرد:</strong>
+                        فهم تأثیر تورم روی پس‌انداز، مقایسه بازدهی با تورم، تصمیم‌گیری برای سرمایه‌گذاری
+                    </div>
+                </div>
+            </div>
+
+            <div class="calc-card">
+                <h2>📉 محاسبه تورم و قدرت خرید</h2>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>💰 مبلغ فعلی <span class="help">(تومان)</span></label>
+                        <input type="text" id="inf-amount" class="form-input" placeholder="۱۰۰,۰۰۰,۰۰۰" inputmode="numeric">
+                    </div>
+                    <div class="form-group">
+                        <label>📈 نرخ تورم سالانه <span class="help">(٪)</span></label>
+                        <input type="number" id="inf-rate" class="form-input" placeholder="۴۰" step="0.1">
+                    </div>
+                    <div class="form-group">
+                        <label>⏳ مدت زمان <span class="help">(سال)</span></label>
+                        <input type="number" id="inf-years" class="form-input" placeholder="۳" min="0.1" max="50" step="0.5">
+                    </div>
+                </div>
+                <button class="calc-btn" onclick="calcInflation()">📉 محاسبه کن</button>
+            </div>
+            <div class="result-card" id="result-inflation">
+                <h3>✅ نتیجه محاسبه</h3>
+                <div class="result-grid">
+                    <div class="result-highlight">
+                        <div class="label">💸 قدرت خرید در پایان دوره</div>
+                        <div class="value" id="inf-result">--</div>
+                        <div class="sub" id="inf-result-sub">--</div>
+                    </div>
+                    <div class="result-item red">
+                        <div class="label">📉 کاهش ارزش پول</div>
+                        <div class="value red" id="inf-loss">--</div>
+                    </div>
+                    <div class="result-item gold">
+                        <div class="label">📈 مبلغ معادل برای حفظ ارزش</div>
+                        <div class="value gold" id="inf-needed">--</div>
+                    </div>
+                    <div class="result-item">
+                        <div class="label">💵 ارزش هر ۱ میلیون امروز</div>
+                        <div class="value" id="inf-per-million">--</div>
+                    </div>
+                    <div class="result-item">
+                        <div class="label">⚡ بازدهی لازم برای تورم</div>
+                        <div class="value blue" id="inf-return-needed">--</div>
+                    </div>
+                </div>
+                <div class="info-note">
+                    این محاسبه فرض می‌کنه تورم ثابته. در واقعیت تورم نوسان داره ولی محاسبه تقریبی کمک‌کننده‌ست.
+                </div>
+            </div>
+        </div>
+
+        <!-- ============ تب ۶: سربه‌سر ============ -->
+        <div class="calc-section" id="section-breakeven">
+            <div class="edu-card">
+                <div class="edu-icon">📖</div>
+                <div class="edu-content">
+                    <div class="edu-title">این ابزار چیکار می‌کنه؟</div>
+                    <div class="edu-text">
+                        وقتی سهم می‌خری، کارگزاری کارمزد می‌گیره. این ابزار می‌گه سهم باید چند درصد رشد کنه تا تو به سربه‌سر برسی و از اون به بعد سود کنی.
+                    </div>
+                    <div class="edu-usage">
+                        <strong>💡 کاربرد:</strong>
+                        فهم هزینه‌های واقعی معامله، محاسبه دقیق سود، مقایسه کارگزاری‌های مختلف
+                    </div>
+                </div>
+            </div>
+
+            <div class="calc-card">
+                <h2>⚖️ نقطه سربه‌سر (Break-even)</h2>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>💵 قیمت خرید <span class="help">(تومان)</span></label>
+                        <input type="text" id="be-buy-price" class="form-input" placeholder="۱,۰۰۰,۰۰۰" inputmode="numeric">
+                    </div>
+                    <div class="form-group">
+                        <label>📊 تعداد سهام</label>
+                        <input type="number" id="be-quantity" class="form-input" placeholder="۱۰۰" min="1">
+                    </div>
+                    <div class="form-group">
+                        <label>💼 کارمزد خرید <span class="help">(٪)</span></label>
+                        <input type="number" id="be-buy-fee" class="form-input" placeholder="۰.۴۵" step="0.01" value="0.45">
+                    </div>
+                    <div class="form-group">
+                        <label>💼 کارمزد فروش <span class="help">(٪)</span></label>
+                        <input type="number" id="be-sell-fee" class="form-input" placeholder="۰.۸۸" step="0.01" value="0.88">
+                    </div>
+                </div>
+                <button class="calc-btn" onclick="calcBreakeven()">⚖️ محاسبه نقطه سربه‌سر</button>
+            </div>
+            <div class="result-card" id="result-breakeven">
+                <h3>✅ نتیجه محاسبه</h3>
+                <div class="result-grid">
+                    <div class="result-highlight">
+                        <div class="label">🎯 قیمت سربه‌سر</div>
+                        <div class="value" id="be-breakeven-price">--</div>
+                        <div class="sub" id="be-breakeven-percent">--</div>
+                    </div>
+                    <div class="result-item">
+                        <div class="label">💰 کل هزینه خرید</div>
+                        <div class="value" id="be-total-buy">--</div>
+                    </div>
+                    <div class="result-item">
+                        <div class="label">💸 کارمزد خرید</div>
+                        <div class="value red" id="be-buy-fee-amount">--</div>
+                    </div>
+                    <div class="result-item">
+                        <div class="label">💸 کارمزد فروش (تخمینی)</div>
+                        <div class="value red" id="be-sell-fee-amount">--</div>
+                    </div>
+                    <div class="result-item">
+                        <div class="label">📊 کل کارمزد</div>
+                        <div class="value red" id="be-total-fee">--</div>
+                    </div>
+                </div>
+                <div class="info-note">
+                    هر معامله سود در بورس ایران معمولاً حدود ۱.۳٪ کارمزد داره (خرید + فروش). برای سود کردن باید حداقل این مقدار رو پوشش بدی.
+                </div>
+            </div>
+        </div>
+
+        <!-- ============ تب ۷: ریسک ============ -->
         <div class="calc-section" id="section-risk">
+            <div class="edu-card">
+                <div class="edu-icon">📖</div>
+                <div class="edu-content">
+                    <div class="edu-title">این ابزار چیکار می‌کنه؟</div>
+                    <div class="edu-text">
+                        سرمایه‌ات رو چطور بین دارایی‌های مختلف (طلا، سهام، ارز، کریپتو) پخش کنی تا ریسک متعادل باشه و به بهترین بازدهی برسی؟
+                    </div>
+                    <div class="edu-usage">
+                        <strong>💡 کاربرد:</strong>
+                        تنوع‌بخشی به سبد سرمایه‌گذاری، کاهش ریسک، انتخاب تخصیص متناسب با شخصیت مالی
+                    </div>
+                </div>
+            </div>
+
             <div class="calc-card">
                 <h2>🎲 تحلیل ریسک و تخصیص دارایی</h2>
-                <div class="description">
-                    سرمایه‌ات رو چطور بین دارایی‌های مختلف پخش کنی تا ریسک متعادل باشه؟
-                </div>
                 <div class="form-grid">
                     <div class="form-group">
                         <label>💵 کل سرمایه <span class="help">(تومان)</span></label>
@@ -481,7 +883,7 @@
                         </select>
                     </div>
                 </div>
-                <button class="calc-btn" onclick="calcRisk()">🚀 محاسبه تخصیص بهینه</button>
+                <button class="calc-btn" onclick="calcRisk()">🎲 محاسبه تخصیص بهینه</button>
             </div>
             <div class="result-card" id="result-risk">
                 <h3>✅ سبد پیشنهادی</h3>
@@ -492,13 +894,24 @@
             </div>
         </div>
 
-        <!-- ============ تب ۴: پوزیشن ============ -->
+        <!-- ============ تب ۸: پوزیشن ============ -->
         <div class="calc-section" id="section-position">
+            <div class="edu-card">
+                <div class="edu-icon">📖</div>
+                <div class="edu-content">
+                    <div class="edu-title">این ابزار چیکار می‌کنه؟</div>
+                    <div class="edu-text">
+                        چقدر سرمایه‌گذاری کنی که اگه حد ضرر خورد، ضررت قابل مدیریت باشه؟ این ابزار حجم پوزیشن بهینه و نسبت ریسک به ریوارد رو محاسبه می‌کنه.
+                    </div>
+                    <div class="edu-usage">
+                        <strong>💡 کاربرد:</strong>
+                        مدیریت ریسک هر معامله، جلوگیری از ضررهای بزرگ، محاسبه نسبت سود به ضرر (R/R)
+                    </div>
+                </div>
+            </div>
+
             <div class="calc-card">
                 <h2>🎯 مدیریت پوزیشن و ریسک</h2>
-                <div class="description">
-                    چقدر سرمایه‌گذاری کنی که اگه حد ضرر خورد، ضررت قابل مدیریت باشه؟
-                </div>
                 <div class="form-grid">
                     <div class="form-group">
                         <label>💵 کل سرمایه <span class="help">(تومان)</span></label>
@@ -513,7 +926,7 @@
                         <input type="text" id="pos-entry" class="form-input" placeholder="۱,۰۰۰,۰۰۰" inputmode="numeric">
                     </div>
                     <div class="form-group">
-                        <label>🛑 حد ضرر <span class="help">(قیمت یا ٪)</span></label>
+                        <label>🛑 حد ضرر</label>
                         <input type="text" id="pos-stop" class="form-input" placeholder="۹۵۰,۰۰۰" inputmode="numeric">
                     </div>
                     <div class="form-group">
@@ -521,12 +934,12 @@
                         <input type="text" id="pos-target" class="form-input" placeholder="۱,۲۰۰,۰۰۰" inputmode="numeric">
                     </div>
                 </div>
-                <button class="calc-btn" onclick="calcPosition()">🚀 محاسبه</button>
+                <button class="calc-btn" onclick="calcPosition()">🎯 محاسبه</button>
             </div>
             <div class="result-card" id="result-position">
                 <h3>✅ نتیجه</h3>
                 <div class="result-grid">
-                    <div class="result-item">
+                    <div class="result-item gold">
                         <div class="label">📊 حجم پوزیشن</div>
                         <div class="value gold" id="pos-size">--</div>
                     </div>
@@ -534,7 +947,7 @@
                         <div class="label">💰 مبلغ سرمایه‌گذاری</div>
                         <div class="value" id="pos-amount">--</div>
                     </div>
-                    <div class="result-item">
+                    <div class="result-item red">
                         <div class="label">🔴 حداکثر ضرر</div>
                         <div class="value red" id="pos-maxloss">--</div>
                     </div>
@@ -542,67 +955,14 @@
                         <div class="label">🟢 سود بالقوه</div>
                         <div class="value green" id="pos-maxprofit">--</div>
                     </div>
-                    <div class="result-item">
+                    <div class="result-item gold">
                         <div class="label">⚖️ نسبت ریسک به ریوارد</div>
                         <div class="value gold" id="pos-rr">--</div>
                     </div>
-                    <div class="result-item">
+                    <div class="result-item red">
                         <div class="label">📉 فاصله حد ضرر</div>
                         <div class="value red" id="pos-stop-distance">--</div>
                     </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- ============ تب ۵: طلا ============ -->
-        <div class="calc-section" id="section-gold">
-            <div class="calc-card">
-                <h2>🥇 حباب‌سنجی طلا و سکه</h2>
-                <div class="description">
-                    قیمت فعلی طلا/سکه چقدر بالاتر یا پایین‌تر از ارزش واقعیشه؟
-                </div>
-                <div class="form-grid">
-                    <div class="form-group">
-                        <label>💵 انس طلا (دلار)</label>
-                        <input type="number" id="gold-ounce" class="form-input" placeholder="۲۶۵۰" step="0.01">
-                    </div>
-                    <div class="form-group">
-                        <label>💵 دلار آزاد (تومان)</label>
-                        <input type="text" id="gold-usd" class="form-input" placeholder="۹۱,۰۰۰" inputmode="numeric">
-                    </div>
-                    <div class="form-group">
-                        <label>🥇 قیمت طلای ۱۸ عیار <span class="help">(گرم)</span></label>
-                        <input type="text" id="gold-18k" class="form-input" placeholder="۵,۸۰۰,۰۰۰" inputmode="numeric">
-                    </div>
-                    <div class="form-group">
-                        <label>🪙 قیمت سکه امامی</label>
-                        <input type="text" id="gold-coin" class="form-input" placeholder="۶۰,۰۰۰,۰۰۰" inputmode="numeric">
-                    </div>
-                </div>
-                <button class="calc-btn" onclick="calcGold()">🚀 محاسبه حباب</button>
-            </div>
-            <div class="result-card" id="result-gold">
-                <h3>✅ نتیجه حباب‌سنجی</h3>
-                <div class="result-grid">
-                    <div class="result-item gold">
-                        <div class="label">💎 ارزش ذاتی طلای ۱۸ عیار</div>
-                        <div class="value gold" id="gold-18k-intrinsic">--</div>
-                    </div>
-                    <div class="result-item">
-                        <div class="label">📊 حباب طلای ۱۸ عیار</div>
-                        <div class="value" id="gold-18k-bubble">--</div>
-                    </div>
-                    <div class="result-item gold">
-                        <div class="label">💎 ارزش ذاتی سکه امامی</div>
-                        <div class="value gold" id="gold-coin-intrinsic">--</div>
-                    </div>
-                    <div class="result-item">
-                        <div class="label">📊 حباب سکه امامی</div>
-                        <div class="value" id="gold-coin-bubble">--</div>
-                    </div>
-                </div>
-                <div class="info-note">
-                    حباب مثبت = قیمت گران‌تر از ارزش واقعی | حباب منفی = قیمت ارزان‌تر از ارزش واقعی
                 </div>
             </div>
         </div>
@@ -633,21 +993,19 @@
         function formatBigNum(num) {
             if (!num || isNaN(num)) return '--';
             const n = Number(num);
-            if (n >= 1e12) return formatNum(n / 1e12) + ' همت';
-            if (n >= 1e9) return formatNum(n / 1e9) + ' میلیارد';
-            if (n >= 1e6) return formatNum(n / 1e6) + ' میلیون';
-            if (n >= 1e3) return formatNum(n / 1e3) + ' هزار';
+            if (Math.abs(n) >= 1e12) return formatNum(n / 1e12) + ' همت';
+            if (Math.abs(n) >= 1e9) return formatNum(n / 1e9) + ' میلیارد';
+            if (Math.abs(n) >= 1e6) return formatNum(n / 1e6) + ' میلیون';
+            if (Math.abs(n) >= 1e3) return formatNum(n / 1e3) + ' هزار';
             return formatNum(n);
         }
 
         function parseNum(str) {
             if (!str) return 0;
-            // حذف کاراکترهای غیرعددی
             const cleaned = String(str).replace(/[^\d]/g, '');
             return cleaned ? parseInt(cleaned, 10) : 0;
         }
 
-        // فرمت خودکار ورودی‌ها
         document.querySelectorAll('input[inputmode="numeric"]').forEach(input => {
             input.addEventListener('input', function() {
                 const value = this.value.replace(/\D/g, '');
@@ -686,9 +1044,8 @@
             }
 
             const monthlyRate = annualRate / 100 / 12;
-
-            // FV = Pmt × [((1+r)^n - 1) / r] + P × (1+r)^n
             let futureValue;
+
             if (monthlyRate === 0) {
                 futureValue = monthly * months + initial;
             } else {
@@ -705,7 +1062,6 @@
             document.getElementById('dca-profit-sub').textContent = totalProfit > 0 
                 ? `سود: ${formatBigNum(totalProfit)} تومان در ${toFa(months)} ماه`
                 : '';
-
             document.getElementById('dca-principal').textContent = formatBigNum(totalPrincipal);
             document.getElementById('dca-profit').textContent = formatBigNum(totalProfit);
             document.getElementById('dca-ratio').textContent = toFa(ratio.toFixed(2)) + ' برابر';
@@ -729,7 +1085,6 @@
             }
 
             const r = annualRate / 100;
-            // A = P(1 + r/n)^(nt)
             const finalAmount = principal * Math.pow(1 + r / n, n * years);
             const totalProfit = finalAmount - principal;
             const totalReturn = ((finalAmount / principal - 1) * 100);
@@ -737,7 +1092,6 @@
 
             document.getElementById('cmp-final').textContent = formatNum(finalAmount) + ' تومان';
             document.getElementById('cmp-profit-sub').textContent = `سود: ${formatBigNum(totalProfit)} تومان در ${toFa(years)} سال`;
-
             document.getElementById('cmp-principal-result').textContent = formatBigNum(principal);
             document.getElementById('cmp-profit').textContent = formatBigNum(totalProfit);
             document.getElementById('cmp-total-return').textContent = toFa(totalReturn.toFixed(2)) + '٪';
@@ -747,45 +1101,192 @@
         }
 
         // ==========================================
-        // ۳. ریسک
+        // ۳. هدف مالی
+        // ==========================================
+        function calcGoal() {
+            const target = parseNum(document.getElementById('goal-target').value);
+            const years = parseFloat(document.getElementById('goal-years').value) || 0;
+            const annualRate = parseFloat(document.getElementById('goal-rate').value) || 0;
+            const initial = parseNum(document.getElementById('goal-initial').value);
+
+            if (target <= 0 || years <= 0) {
+                alert('لطفاً هدف نهایی و مدت زمان رو وارد کن');
+                return;
+            }
+
+            const months = years * 12;
+            const monthlyRate = annualRate / 100 / 12;
+
+            // PMT = (FV - PV × (1+r)^n) × r / ((1+r)^n - 1)
+            let monthlySaving;
+            if (monthlyRate === 0) {
+                monthlySaving = (target - initial) / months;
+            } else {
+                const factor = Math.pow(1 + monthlyRate, months);
+                const futureValueOfInitial = initial * factor;
+                const remaining = target - futureValueOfInitial;
+                monthlySaving = (remaining * monthlyRate) / (factor - 1);
+            }
+
+            const totalPrincipal = (monthlySaving * months) + initial;
+            const totalProfit = target - totalPrincipal;
+            const profitPercent = target > 0 ? (totalProfit / target * 100) : 0;
+
+            document.getElementById('goal-monthly').textContent = formatNum(monthlySaving) + ' تومان';
+            document.getElementById('goal-monthly-sub').textContent = `در ${toFa(months)} ماه آینده`;
+            document.getElementById('goal-principal').textContent = formatBigNum(totalPrincipal) + ' تومان';
+            document.getElementById('goal-profit').textContent = formatBigNum(totalProfit) + ' تومان';
+            document.getElementById('goal-months').textContent = toFa(months) + ' ماه';
+            document.getElementById('goal-profit-percent').textContent = toFa(profitPercent.toFixed(1)) + '٪';
+
+            document.getElementById('result-goal').classList.add('show');
+        }
+
+        // ==========================================
+        // ۴. مقایسه
+        // ==========================================
+        function calcCompare() {
+            const aAmount = parseNum(document.getElementById('cmp-a-amount').value);
+            const aRate = parseFloat(document.getElementById('cmp-a-rate').value) || 0;
+            const bAmount = parseNum(document.getElementById('cmp-b-amount').value);
+            const bRate = parseFloat(document.getElementById('cmp-b-rate').value) || 0;
+            const years = parseFloat(document.getElementById('cmp-years2').value) || 0;
+
+            if (aAmount <= 0 || bAmount <= 0 || years <= 0) {
+                alert('لطفاً مبلغ‌ها و مدت زمان رو وارد کن');
+                return;
+            }
+
+            const aFinal = aAmount * Math.pow(1 + aRate / 100, years);
+            const bFinal = bAmount * Math.pow(1 + bRate / 100, years);
+
+            document.getElementById('cmp-a-final').textContent = formatBigNum(aFinal) + ' تومان';
+            document.getElementById('cmp-b-final').textContent = formatBigNum(bFinal) + ' تومان';
+
+            const winnerEl = document.getElementById('cmp-winner-highlight');
+            const winnerText = document.getElementById('cmp-winner');
+            const diffText = document.getElementById('cmp-difference');
+
+            if (aFinal > bFinal) {
+                winnerText.textContent = '🅰️ گزینه اول برنده شد!';
+                diffText.textContent = `اختلاف: ${formatBigNum(aFinal - bFinal)} تومان بیشتر`;
+            } else if (bFinal > aFinal) {
+                winnerText.textContent = '🅱️ گزینه دوم برنده شد!';
+                diffText.textContent = `اختلاف: ${formatBigNum(bFinal - aFinal)} تومان بیشتر`;
+            } else {
+                winnerText.textContent = '⚖️ مساوی!';
+                diffText.textContent = 'هر دو گزینه نتیجه یکسان دارن';
+            }
+
+            winnerEl.style.display = 'block';
+            document.getElementById('result-compare').classList.add('show');
+        }
+
+        // ==========================================
+        // ۵. تورم
+        // ==========================================
+        function calcInflation() {
+            const amount = parseNum(document.getElementById('inf-amount').value);
+            const rate = parseFloat(document.getElementById('inf-rate').value) || 0;
+            const years = parseFloat(document.getElementById('inf-years').value) || 0;
+
+            if (amount <= 0 || rate <= 0 || years <= 0) {
+                alert('لطفاً مبلغ، نرخ تورم و مدت زمان رو وارد کن');
+                return;
+            }
+
+            // قدرت خرید آینده = مبلغ / (1 + نرخ)^سال
+            const futurePower = amount / Math.pow(1 + rate / 100, years);
+            const loss = amount - futurePower;
+            const needed = amount * Math.pow(1 + rate / 100, years);
+            const perMillion = 1000000 / Math.pow(1 + rate / 100, years);
+
+            document.getElementById('inf-result').textContent = formatNum(futurePower) + ' تومان';
+            document.getElementById('inf-result-sub').textContent = `یعنی به اندازه ${formatBigNum(futurePower)} امروز ارزش داره`;
+            document.getElementById('inf-loss').textContent = formatBigNum(loss) + ' تومان';
+            document.getElementById('inf-needed').textContent = formatBigNum(needed) + ' تومان';
+            document.getElementById('inf-per-million').textContent = formatNum(perMillion) + ' تومان';
+            document.getElementById('inf-return-needed').textContent = toFa(rate.toFixed(1)) + '٪';
+
+            document.getElementById('result-inflation').classList.add('show');
+        }
+
+        // ==========================================
+        // ۶. سربه‌سر
+        // ==========================================
+        function calcBreakeven() {
+            const buyPrice = parseNum(document.getElementById('be-buy-price').value);
+            const quantity = parseInt(document.getElementById('be-quantity').value) || 0;
+            const buyFee = parseFloat(document.getElementById('be-buy-fee').value) || 0;
+            const sellFee = parseFloat(document.getElementById('be-sell-fee').value) || 0;
+
+            if (buyPrice <= 0 || quantity <= 0) {
+                alert('لطفاً قیمت خرید و تعداد سهام رو وارد کن');
+                return;
+            }
+
+            const totalBuy = buyPrice * quantity;
+            const buyFeeAmount = totalBuy * (buyFee / 100);
+            const totalCost = totalBuy + buyFeeAmount;
+
+            // قیمت سربه‌سر: باید بعد از کسر کارمزد فروش، برابر کل هزینه خرید بشه
+            // X × Q × (1 - sellFee/100) = totalCost
+            // X = totalCost / (Q × (1 - sellFee/100))
+            const breakevenPrice = totalCost / (quantity * (1 - sellFee / 100));
+            const breakevenPercent = ((breakevenPrice - buyPrice) / buyPrice) * 100;
+            const sellFeeAmount = breakevenPrice * quantity * (sellFee / 100);
+            const totalFee = buyFeeAmount + sellFeeAmount;
+
+            document.getElementById('be-breakeven-price').textContent = formatNum(breakevenPrice) + ' تومان';
+            document.getElementById('be-breakeven-percent').textContent = `حداقل ${toFa(breakevenPercent.toFixed(2))}٪ رشد لازمه`;
+            document.getElementById('be-total-buy').textContent = formatBigNum(totalBuy) + ' تومان';
+            document.getElementById('be-buy-fee-amount').textContent = formatBigNum(buyFeeAmount) + ' تومان';
+            document.getElementById('be-sell-fee-amount').textContent = formatBigNum(sellFeeAmount) + ' تومان';
+            document.getElementById('be-total-fee').textContent = formatBigNum(totalFee) + ' تومان';
+
+            document.getElementById('result-breakeven').classList.add('show');
+        }
+
+        // ==========================================
+        // ۷. ریسک
         // ==========================================
         const portfolios = {
             conservative: {
                 name: '🛡️ محافظه‌کار',
                 assets: [
-                    { label: '🏦 درآمد ثابت (صندوق‌های ETF)', percent: 50, color: 'green' },
-                    { label: '🥇 طلا و نقره', percent: 10, color: 'gold' },
-                    { label: '💵 ارز (دلار، یورو)', percent: 25, color: 'gold' },
-                    { label: '📊 سهام کم‌ریسک', percent: 15, color: 'green' }
+                    { label: '🏦 درآمد ثابت (صندوق‌های ETF)', percent: 50 },
+                    { label: '🥇 طلا و نقره', percent: 10 },
+                    { label: '💵 ارز (دلار، یورو)', percent: 25 },
+                    { label: '📊 سهام کم‌ریسک', percent: 15 }
                 ]
             },
             balanced: {
                 name: '⚖️ متعادل',
                 assets: [
-                    { label: '🏦 درآمد ثابت (صندوق‌های ETF)', percent: 30, color: 'green' },
-                    { label: '🥇 طلا و نقره', percent: 20, color: 'gold' },
-                    { label: '📊 سهام بورس', percent: 30, color: 'green' },
-                    { label: '💵 ارز (دلار، یورو)', percent: 20, color: 'gold' }
+                    { label: '🏦 درآمد ثابت', percent: 30 },
+                    { label: '🥇 طلا و نقره', percent: 20 },
+                    { label: '📊 سهام بورس', percent: 30 },
+                    { label: '💵 ارز (دلار، یورو)', percent: 20 }
                 ]
             },
             aggressive: {
                 name: '🚀 جسور',
                 assets: [
-                    { label: '🏦 درآمد ثابت', percent: 15, color: 'green' },
-                    { label: '🥇 طلا و نقره', percent: 25, color: 'gold' },
-                    { label: '📊 سهام بورس', percent: 35, color: 'green' },
-                    { label: '₿ ارز دیجیتال', percent: 10, color: 'gold' },
-                    { label: '💵 ارز', percent: 15, color: 'gold' }
+                    { label: '🏦 درآمد ثابت', percent: 15 },
+                    { label: '🥇 طلا و نقره', percent: 25 },
+                    { label: '📊 سهام بورس', percent: 35 },
+                    { label: '₿ ارز دیجیتال', percent: 10 },
+                    { label: '💵 ارز', percent: 15 }
                 ]
             },
             professional: {
                 name: '🎯 حرفه‌ای',
                 assets: [
-                    { label: '🏦 درآمد ثابت', percent: 10, color: 'green' },
-                    { label: '🥇 طلا و نقره', percent: 20, color: 'gold' },
-                    { label: '📊 سهام بورس', percent: 35, color: 'green' },
-                    { label: '₿ ارز دیجیتال', percent: 25, color: 'gold' },
-                    { label: '💵 ارز', percent: 10, color: 'gold' }
+                    { label: '🏦 درآمد ثابت', percent: 10 },
+                    { label: '🥇 طلا و نقره', percent: 20 },
+                    { label: '📊 سهام بورس', percent: 35 },
+                    { label: '₿ ارز دیجیتال', percent: 25 },
+                    { label: '💵 ارز', percent: 10 }
                 ]
             }
         };
@@ -806,8 +1307,7 @@
             profile.assets.forEach(asset => {
                 const amount = total * (asset.percent / 100);
                 const div = document.createElement('div');
-                div.className = 'result-item ' + (asset.color === 'gold' ? 'gold' : '');
-                div.style.borderRight = `3px solid var(--${asset.color === 'gold' ? 'gold' : 'green'})`;
+                div.className = 'result-item gold';
                 div.innerHTML = `
                     <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
                         <div class="label" style="font-size:13px; margin:0;">${asset.label}</div>
@@ -831,7 +1331,7 @@
         }
 
         // ==========================================
-        // ۴. پوزیشن
+        // ۸. پوزیشن
         // ==========================================
         function calcPosition() {
             const total = parseNum(document.getElementById('pos-total').value);
@@ -861,8 +1361,7 @@
                 maxProfit = positionSize * Math.abs(target - entry);
             }
 
-            const rr = maxProfit > 0 ? (maxProfit / maxLossAmount) : 0;
-            const profitLoss = (target - entry) / (entry - stop);
+            const rr = maxLossAmount > 0 ? (maxProfit / maxLossAmount) : 0;
 
             document.getElementById('pos-size').textContent = formatBigNum(positionSize) + ' واحد';
             document.getElementById('pos-amount').textContent = formatBigNum(positionAmount) + ' تومان';
@@ -872,62 +1371,6 @@
             document.getElementById('pos-stop-distance').textContent = toFa(stopPercent.toFixed(2)) + '٪';
 
             document.getElementById('result-position').classList.add('show');
-        }
-
-        // ==========================================
-        // ۵. طلا
-        // ==========================================
-        function calcGold() {
-            const ounce = parseFloat(document.getElementById('gold-ounce').value) || 0;
-            const usd = parseNum(document.getElementById('gold-usd').value);
-            const gold18 = parseNum(document.getElementById('gold-18k').value);
-            const coin = parseNum(document.getElementById('gold-coin').value);
-
-            if (ounce <= 0 || usd <= 0) {
-                alert('لطفاً انس طلا و نرخ دلار رو وارد کن');
-                return;
-            }
-
-            const OUNCE_TO_GRAM = 31.1035;
-
-            // ارزش ذاتی طلای ۱۸ عیار (عیار 0.75)
-            const intrinsic18 = (ounce * usd * 0.75) / OUNCE_TO_GRAM;
-
-            // ارزش ذاتی سکه امامی (وزن 8.133 گرم، عیار 0.9)
-            const intrinsicCoin = (ounce * usd * 0.9 * 8.133) / OUNCE_TO_GRAM;
-
-            // حباب طلا ۱۸
-            let bubble18 = 0;
-            if (gold18 > 0) {
-                bubble18 = ((gold18 - intrinsic18) / intrinsic18) * 100;
-            }
-
-            // حباب سکه
-            let bubbleCoin = 0;
-            if (coin > 0) {
-                bubbleCoin = ((coin - intrinsicCoin) / intrinsicCoin) * 100;
-            }
-
-            document.getElementById('gold-18k-intrinsic').textContent = formatNum(intrinsic18) + ' تومان';
-            document.getElementById('gold-coin-intrinsic').textContent = formatNum(intrinsicCoin) + ' تومان';
-
-            const bubble18El = document.getElementById('gold-18k-bubble');
-            if (gold18 > 0) {
-                bubble18El.innerHTML = `${bubble18 >= 0 ? '+' : ''}${toFa(bubble18.toFixed(2))}٪ ${bubble18 > 0 ? '🔴' : '🟢'}`;
-                bubble18El.className = 'value ' + (bubble18 > 0.5 ? 'red' : bubble18 < -0.5 ? 'green' : '');
-            } else {
-                bubble18El.textContent = '--';
-            }
-
-            const bubbleCoinEl = document.getElementById('gold-coin-bubble');
-            if (coin > 0) {
-                bubbleCoinEl.innerHTML = `${bubbleCoin >= 0 ? '+' : ''}${toFa(bubbleCoin.toFixed(2))}٪ ${bubbleCoin > 0 ? '🔴' : '🟢'}`;
-                bubbleCoinEl.className = 'value ' + (bubbleCoin > 0.5 ? 'red' : bubbleCoin < -0.5 ? 'green' : '');
-            } else {
-                bubbleCoinEl.textContent = '--';
-            }
-
-            document.getElementById('result-gold').classList.add('show');
         }
     </script>
 </body>
