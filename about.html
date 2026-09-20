@@ -523,12 +523,8 @@
         }
 
         /* ============= TESTIMONIALS ============= */
-        .testimonials-section {
-            display: none;
-        }
-        .testimonials-section.show {
-            display: block;
-        }
+        .testimonials-section { display: none; }
+        .testimonials-section.show { display: block; }
         .testimonials-summary {
             text-align: center;
             padding: 30px;
@@ -567,6 +563,8 @@
             border-radius: 20px;
             padding: 25px;
             transition: 0.3s;
+            display: flex;
+            flex-direction: column;
         }
         .testimonial-card:hover {
             border-color: rgba(212, 175, 55, 0.4);
@@ -583,7 +581,14 @@
             font-size: 14px;
             line-height: 1.9;
             margin-bottom: 18px;
-            min-height: 80px;
+            flex: 1;
+            min-height: 60px;
+        }
+        .testimonial-text.no-comment {
+            color: var(--gray);
+            font-style: italic;
+            font-size: 13px;
+            opacity: 0.7;
         }
         .testimonial-author {
             display: flex;
@@ -1124,10 +1129,12 @@
                 document.getElementById('statCourses').textContent = '۵';
             }
 
+            // میانگین از همه نظرات (حتی بدون متن)
             try {
                 const { data: ratings } = await db
                     .from('course_ratings')
                     .select('rating');
+
                 if (ratings && ratings.length > 0) {
                     const valid = ratings.filter(r => r.rating != null);
                     if (valid.length > 0) {
@@ -1145,7 +1152,7 @@
         }
 
         // ==========================================
-        // Load Testimonials
+        // Load Testimonials (همه نظرات)
         // ==========================================
         async function loadTestimonials() {
             const content = document.getElementById('testimonialsContent');
@@ -1155,28 +1162,25 @@
                 const { data, error } = await db
                     .from('course_ratings')
                     .select('rating, comment, created_at, user_id')
-                    .not('comment', 'is', null)
                     .order('created_at', { ascending: false })
-                    .limit(6);
+                    .limit(9);
 
                 if (error) throw error;
 
-                // فیلتر: فقط اونایی که متن واقعی دارن
+                // فیلتر: فقط نظراتی که امتیاز معتبر دارن
                 const validRatings = (data || []).filter(r =>
-                    r.comment && r.comment.trim().length > 5 && r.rating
+                    r.rating && r.rating >= 1 && r.rating <= 5
                 );
 
                 if (validRatings.length === 0) {
-                    // اگه نظری نبود، کل بخش مخفی میشه
                     section.classList.remove('show');
                     return;
                 }
 
-                // محاسبه میانگین
+                // محاسبه میانگین از همه نظرات
                 const avg = validRatings.reduce((sum, r) => sum + r.rating, 0) / validRatings.length;
                 const totalCount = validRatings.length;
 
-                // ساخت ستاره‌ها
                 const fullStars = Math.round(avg);
                 const starsStr = '★'.repeat(fullStars) + '☆'.repeat(5 - fullStars);
 
@@ -1185,10 +1189,17 @@
                     const userId = r.user_id || '';
                     const avatarLetter = userId ? userId.charAt(0).toUpperCase() : '؟';
 
+                    // متن نظر: اگه بود نشون بده، اگه نبود پیام پیش‌فرض
+                    const hasComment = r.comment && r.comment.trim().length > 0;
+                    const commentText = hasComment
+                        ? `«${escapeHtml(r.comment.trim())}»`
+                        : 'فقط امتیاز داده — بدون متن';
+                    const commentClass = hasComment ? 'testimonial-text' : 'testimonial-text no-comment';
+
                     return `
                         <div class="testimonial-card">
                             <div class="testimonial-stars-card">${cardStars}</div>
-                            <p class="testimonial-text">«${escapeHtml(r.comment)}»</p>
+                            <p class="${commentClass}">${commentText}</p>
                             <div class="testimonial-author">
                                 <div class="testimonial-avatar">${avatarLetter}</div>
                                 <div class="testimonial-info">
@@ -1217,7 +1228,6 @@
                     </div>
                 `;
 
-                // نمایش بخش
                 section.classList.add('show');
 
             } catch (e) {
