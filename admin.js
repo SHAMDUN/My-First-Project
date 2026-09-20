@@ -1,6 +1,6 @@
 // ==========================================
-// پنل ادمین شمعدون - نسخه ۳.۰
-// شامل: مقالات، تحلیل‌ها، دستیار AI
+// پنل ادمین شمعدون - نسخه ۴.۰
+// شامل: مقالات، تحلیل‌ها، دستیار AI، صندوق پیام
 // ==========================================
 
 let currentUser = null;
@@ -8,7 +8,9 @@ let coursesCache = [];
 let usersCache = [];
 let blogPostsCache = [];
 let analysesCache = [];
+let messagesCache = [];
 let currentAnalysisFilter = 'all';
+let currentMessageFilter = 'all';
 let selectedAIType = 'daily-gold';
 let currentAIOutput = '';
 let scoresChart = null;
@@ -66,6 +68,7 @@ function showPanel() {
     loadUsers();
     loadBlogPosts();
     loadAnalyses();
+    loadMessages();
     initAIData();
 }
 
@@ -117,6 +120,36 @@ function formatDate(iso) {
     return `${d.getFullYear()}/${d.getMonth() + 1}/${d.getDate()}`;
 }
 
+function formatFullDate(iso) {
+    if (!iso) return '-';
+    try {
+        return new Intl.DateTimeFormat('fa-IR', {
+            year: 'numeric', month: 'long', day: 'numeric',
+            hour: '2-digit', minute: '2-digit'
+        }).format(new Date(iso));
+    } catch (e) {
+        return '-';
+    }
+}
+
+function timeAgo(iso) {
+    if (!iso) return '';
+    try {
+        const d = new Date(iso);
+        const now = new Date();
+        const diff = Math.floor((now - d) / 1000 / 60);
+
+        if (diff < 1) return 'همین الان';
+        if (diff < 60) return `${toFa(diff)} دقیقه پیش`;
+        if (diff < 1440) return `${toFa(Math.floor(diff / 60))} ساعت پیش`;
+        if (diff < 10080) return `${toFa(Math.floor(diff / 1440))} روز پیش`;
+
+        return formatFullDate(iso);
+    } catch (e) {
+        return '';
+    }
+}
+
 function toFa(num) {
     if (num === null || num === undefined) return '۰';
     const persianDigits = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
@@ -162,11 +195,20 @@ async function loadDashboard() {
             statAnalysesEl.textContent = e5 ? 'خطا' : (analysisCount || 0);
         }
 
-        const { data: ratings, error: e6 } = await db
+        // NEW: آمار پیام‌ها
+        const { count: messageCount, error: e6 } = await db
+            .from('contact_messages')
+            .select('*', { count: 'exact', head: true });
+        const statMessagesEl = document.getElementById('statMessages');
+        if (statMessagesEl) {
+            statMessagesEl.textContent = e6 ? 'خطا' : (messageCount || 0);
+        }
+
+        const { data: ratings, error: e7 } = await db
             .from('course_ratings')
             .select('rating');
 
-        if (e6 || !ratings || ratings.length === 0) {
+        if (e7 || !ratings || ratings.length === 0) {
             document.getElementById('statScores').textContent = '0';
         } else {
             const validRatings = ratings.filter(r => r.rating != null);
@@ -178,10 +220,10 @@ async function loadDashboard() {
             }
         }
 
-        const { count: commentCount, error: e7 } = await db
+        const { count: commentCount, error: e8 } = await db
             .from('course_ratings')
             .select('*', { count: 'exact', head: true });
-        document.getElementById('statComments').textContent = e7 ? 'خطا' : (commentCount || 0);
+        document.getElementById('statComments').textContent = e8 ? 'خطا' : (commentCount || 0);
 
         await loadScoresChart();
     } catch (err) {
@@ -267,8 +309,231 @@ async function loadScoresChart() {
 }
 
 // ==========================================
-// نظرات
+// ============ صندوق پیام ============
 // ==========================================
+
+async function loadMessages() {
+    const container = document.getElementById('messagesList');
+    if (!container) return;
+
+    try {
+        const { data, error } = await db
+            .from('contact_messages')
+            .select('*')
+            .order('created_at', { ascending: false });
+
+        if (error) {
+            console.error('Messages load error:', error);
+            container.innerHTML = '<p style="color:#ef4444; padding:20px; text-align:center;">❌ خطا: ' + error.message + '</p>';
+            return;
+        }
+
+        messagesCache = data || [];
+
+        // بروزرسانی بج
+        updateMessagesBadge();
+
+        if (messagesCache.length === 0) {
+            container.innerHTML = `
+                <div class="loading" style="padding: 60px 20px;">
+                    📭 هنوز پیامی دریافت نشده
+                </div>
+            `;
+            return;
+        }
+
+        renderMessages();
+    } catch (e) {
+        console.error('Messages error:', e);
+        container.innerHTML = '<p style="color:#ef4444; padding:20px; text-align:center;">❌ خطا در بارگذاری پیام‌ها</p>';
+    }
+}
+
+function updateMessagesBadge() {
+    const newCount = messagesCache.filter(m => m.status === 'new').length;
+    const badge = document.getElementById('messagesBadge');
+
+    if (!badge) return;
+
+    if (newCount > 0) {
+        badge.textContent = toFa(newCount);
+        badge.classList.add('show');
+    } else {
+        badge.classList.remove('show');
+    }
+}
+
+function renderMessages() {
+    const container = document.getElementById('messagesList');
+    if (!container) return;
+
+    let filtered = messagesCache;
+
+    if (currentMessageFilter === 'new') {
+        filtered = messagesCache.filter(m => m.status === 'new');
+    } else if (currentMessageFilter === 'read') {
+        filtered = messagesCache.filter(m => m.status === 'read');
+    }
+
+    if (filtered.length === 0) {
+        container.innerHTML = `
+            <div class="loading" style="padding: 60px 20px;">
+                📭 پیامی در این دسته یافت نشد
+            </div>
+        `;
+        return;
+    }
+
+    container.innerHTML = filtered.map(m => {
+        const isNew = m.status === 'new';
+        const subject = m.subject || 'بدون موضوع';
+        const messagePreview = (m.message || '').substring(0, 150);
+
+        return `
+            <div class="message-card ${isNew ? 'new' : ''}" onclick="viewMessage('${m.id}')">
+                <div class="message-card-header">
+                    <div class="message-card-name">
+                        👤 ${escapeHtml(m.name || 'ناشناس')}
+                        ${isNew ? '<span class="new-badge">جدید</span>' : ''}
+                    </div>
+                    <div class="message-card-date">⏰ ${timeAgo(m.created_at)}</div>
+                </div>
+                <div class="message-card-subject">📌 ${escapeHtml(subject)}</div>
+                <div class="message-card-text">${escapeHtml(messagePreview)}${m.message && m.message.length > 150 ? '...' : ''}</div>
+                <div class="message-card-footer">
+                    <button class="btn btn-small btn-primary" onclick="event.stopPropagation(); viewMessage('${m.id}')">👁️ مشاهده</button>
+                    <button class="btn btn-small btn-danger" onclick="event.stopPropagation(); deleteMessage('${m.id}')">🗑️ حذف</button>
+                </div>
+            </div>
+        `;
+    }).join('');
+}
+
+function filterMessages(filter, btn) {
+    currentMessageFilter = filter;
+    document.querySelectorAll('.filter-tab').forEach(b => b.classList.remove('active'));
+    if (btn) btn.classList.add('active');
+    renderMessages();
+}
+
+async function viewMessage(id) {
+    const msg = messagesCache.find(m => m.id === id);
+    if (!msg) return;
+
+    // علامت خوانده‌شده
+    if (msg.status === 'new') {
+        await markMessageAsRead(id);
+    }
+
+    document.getElementById('messageModalTitle').textContent = '📬 مشاهده پیام';
+    document.getElementById('viewMessageId').value = id;
+
+    const content = document.getElementById('messageDetailContent');
+
+    content.innerHTML = `
+        <div class="message-detail-box">
+            <div class="message-detail-row">
+                <span class="label">👤 نام:</span>
+                <span class="value">${escapeHtml(msg.name || 'ناشناس')}</span>
+            </div>
+            <div class="message-detail-row">
+                <span class="label">📧 ایمیل:</span>
+                <span class="value">
+                    <a href="mailto:${escapeHtml(msg.email)}">${escapeHtml(msg.email)}</a>
+                </span>
+            </div>
+            <div class="message-detail-row">
+                <span class="label">📌 موضوع:</span>
+                <span class="value">${escapeHtml(msg.subject || 'بدون موضوع')}</span>
+            </div>
+            <div class="message-detail-row">
+                <span class="label">📅 تاریخ:</span>
+                <span class="value">${formatFullDate(msg.created_at)}</span>
+            </div>
+            <div class="message-detail-row">
+                <span class="label">📊 وضعیت:</span>
+                <span class="value">
+                    <span class="status-badge ${msg.status === 'new' ? 'status-draft' : 'status-published'}">
+                        ${msg.status === 'new' ? '🆕 جدید' : '✅ خوانده‌شده'}
+                    </span>
+                </span>
+            </div>
+        </div>
+
+        <div style="color:var(--gray); font-size:12px; margin-bottom:8px;">💬 متن پیام:</div>
+        <div class="message-body">${escapeHtml(msg.message || '')}</div>
+    `;
+
+    document.getElementById('messageModal').classList.add('show');
+}
+
+async function markMessageAsRead(id) {
+    const { error } = await db
+        .from('contact_messages')
+        .update({ status: 'read' })
+        .eq('id', id);
+
+    if (error) {
+        console.error('Mark as read error:', error);
+        return;
+    }
+
+    // آپدیت local cache
+    const msg = messagesCache.find(m => m.id === id);
+    if (msg) msg.status = 'read';
+
+    updateMessagesBadge();
+    renderMessages();
+}
+
+async function deleteMessage(id) {
+    if (!confirm('مطمئنی می‌خوای این پیام رو حذف کنی؟')) return;
+
+    const { error } = await db
+        .from('contact_messages')
+        .delete()
+        .eq('id', id);
+
+    if (error) {
+        showToast('❌ خطا: ' + error.message, 'error');
+        return;
+    }
+
+    showToast('🗑️ پیام حذف شد');
+    messagesCache = messagesCache.filter(m => m.id !== id);
+    updateMessagesBadge();
+    renderMessages();
+    loadDashboard();
+}
+
+async function deleteCurrentMessage() {
+    const id = document.getElementById('viewMessageId').value;
+    if (!id) return;
+
+    if (!confirm('مطمئنی می‌خوای این پیام رو حذف کنی؟')) return;
+
+    const { error } = await db
+        .from('contact_messages')
+        .delete()
+        .eq('id', id);
+
+    if (error) {
+        showToast('❌ خطا: ' + error.message, 'error');
+        return;
+    }
+
+    showToast('🗑️ پیام حذف شد');
+    closeModal('messageModal');
+    messagesCache = messagesCache.filter(m => m.id !== id);
+    updateMessagesBadge();
+    renderMessages();
+    loadDashboard();
+}
+
+// ==========================================
+// ============ نظرات ============
+// ==========================================
+
 async function loadComments() {
     const container = document.getElementById('commentsList');
     const { data, error } = await db
@@ -925,14 +1190,12 @@ function openAnalysisModal() {
     document.getElementById('analysisId').value = '';
     document.getElementById('analysisType').value = 'daily';
 
-    // تاریخ امروز
     const today = new Date();
     const yyyy = today.getFullYear();
     const mm = String(today.getMonth() + 1).padStart(2, '0');
     const dd = String(today.getDate()).padStart(2, '0');
     document.getElementById('analysisDate').value = `${yyyy}-${mm}-${dd}`;
 
-    // ساعت فعلی
     const hh = String(today.getHours()).padStart(2, '0');
     const min = String(today.getMinutes()).padStart(2, '0');
     document.getElementById('analysisTime').value = `${hh}:${min}`;
@@ -1495,7 +1758,6 @@ async function generateAIAnalysis() {
 
         currentAIOutput = aiText;
 
-        // نمایش خروجی
         try {
             const rawHtml = marked.parse(aiText);
             output.innerHTML = DOMPurify.sanitize(rawHtml);
@@ -1528,10 +1790,8 @@ function copyAIOutput() {
 function sendToAnalysisForm() {
     if (!currentAIOutput) return;
 
-    // باز کردن مودال تحلیل
     openAnalysisModal();
 
-    // پر کردن فیلدها
     const typeMap = {
         'daily-gold': 'daily',
         'daily-global': 'daily',
@@ -1542,7 +1802,6 @@ function sendToAnalysisForm() {
     document.getElementById('analysisType').value = typeMap[selectedAIType] || 'daily';
     document.getElementById('analysisContent').value = currentAIOutput;
 
-    // تنظیم عنوان
     const titles = {
         'daily-gold': 'تحلیل روزانه طلا و نقره',
         'daily-global': 'تحلیل روزانه انس و کریپتو',
@@ -1551,7 +1810,6 @@ function sendToAnalysisForm() {
     };
     document.getElementById('analysisTitle').value = titles[selectedAIType] || 'تحلیل بازار';
 
-    // تنظیم مدت اعتبار
     if (typeMap[selectedAIType] === 'weekly') {
         document.getElementById('analysisValidity').value = 'تا شنبه بعد';
     } else {
@@ -1559,7 +1817,6 @@ function sendToAnalysisForm() {
     }
 
     updateAnalysisPreview();
-
     showToast('✅ محتوا به فرم تحلیل منتقل شد');
 }
 
