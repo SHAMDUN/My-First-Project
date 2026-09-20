@@ -8,6 +8,8 @@
     <meta name="theme-color" content="#d4af37">
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/dompurify@3.0.6/dist/purify.min.js"></script>
     <style>
         :root {
             --bg-primary: #0a0a0f;
@@ -45,10 +47,6 @@
         @keyframes fadeInUp {
             from { opacity: 0; transform: translateY(30px); }
             to { opacity: 1; transform: translateY(0); }
-        }
-        @keyframes slideDown {
-            from { opacity: 0; max-height: 0; }
-            to { opacity: 1; max-height: 2000px; }
         }
         @keyframes spin { to { transform: rotate(360deg); } }
 
@@ -98,8 +96,6 @@
             padding: 20px;
             text-align: center;
             transition: 0.3s;
-            position: relative;
-            overflow: hidden;
         }
         .summary-card:hover {
             transform: translateY(-4px);
@@ -231,7 +227,7 @@
             height: 300px;
         }
 
-        /* ===== Portfolio Table ===== */
+        /* ===== Portfolio Section ===== */
         .portfolio-section {
             background: linear-gradient(135deg, var(--bg-card), var(--bg-secondary));
             border: 1px solid rgba(212, 175, 55, 0.15);
@@ -287,12 +283,8 @@
             font-size: 16px;
             transition: transform 0.3s;
         }
-        .category-group.collapsed .category-toggle {
-            transform: rotate(-90deg);
-        }
-        .category-group.collapsed .category-content {
-            display: none;
-        }
+        .category-group.collapsed .category-toggle { transform: rotate(-90deg); }
+        .category-group.collapsed .category-content { display: none; }
 
         /* ===== Asset Card ===== */
         .asset-card {
@@ -300,9 +292,7 @@
             border-top: 1px solid rgba(255, 255, 255, 0.03);
             transition: 0.3s;
         }
-        .asset-card:hover {
-            background: rgba(212, 175, 55, 0.03);
-        }
+        .asset-card:hover { background: rgba(212, 175, 55, 0.03); }
         .asset-card-top {
             display: flex;
             justify-content: space-between;
@@ -447,10 +437,7 @@
             align-items: flex-start;
             animation: fadeInUp 0.6s ease-out 0.35s backwards;
         }
-        .ai-icon {
-            font-size: 36px;
-            flex-shrink: 0;
-        }
+        .ai-icon { font-size: 36px; flex-shrink: 0; }
         .ai-content { flex: 1; }
         .ai-title {
             color: #60a5fa;
@@ -464,25 +451,6 @@
             line-height: 1.9;
             margin-bottom: 15px;
         }
-        .ai-suggestions {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-        .ai-suggestion-item {
-            display: flex;
-            gap: 8px;
-            align-items: flex-start;
-            padding: 10px 14px;
-            background: rgba(10, 10, 15, 0.5);
-            border-radius: 10px;
-            border-right: 3px solid #60a5fa;
-            color: #cbd5e1;
-            font-size: 12.5px;
-            line-height: 1.7;
-        }
-        .ai-suggestion-item.warning { border-right-color: var(--gold); }
-        .ai-suggestion-item.danger { border-right-color: var(--red); }
         .ai-analyze-btn {
             background: linear-gradient(135deg, #3b82f6, #2563eb);
             color: #fff;
@@ -507,7 +475,7 @@
             cursor: not-allowed;
         }
 
-        /* ===== Compare Section ===== */
+        /* ===== Compare ===== */
         .compare-section {
             background: linear-gradient(135deg, var(--bg-card), var(--bg-secondary));
             border: 1px solid rgba(212, 175, 55, 0.15);
@@ -521,9 +489,6 @@
             font-size: 16px;
             font-weight: 800;
             margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
         }
         .compare-desc {
             color: var(--gray);
@@ -558,7 +523,6 @@
             font-size: 18px;
             font-weight: 800;
             margin-bottom: 4px;
-            font-variant-numeric: tabular-nums;
         }
         .compare-card .value.up { color: var(--green); }
         .compare-card .value.down { color: var(--red); }
@@ -708,7 +672,7 @@
         © ۱۴۰۵ آکادمی شمعدون | تمامی حقوق محفوظ است
     </footer>
 
-    <!-- ===== Modal: Add/Edit Asset ===== -->
+    <!-- Modal: Add/Edit Asset -->
     <div class="modal-overlay" id="assetModal">
         <div class="modal">
             <h2 id="assetModalTitle">➕ افزودن دارایی</h2>
@@ -730,9 +694,7 @@
 
             <div class="form-group">
                 <label>دارایی *</label>
-                <select id="assetSelect" onchange="onAssetChange()">
-                    <!-- توسط JS پر میشه -->
-                </select>
+                <select id="assetSelect" onchange="onAssetChange()"></select>
             </div>
 
             <div class="form-row">
@@ -772,8 +734,6 @@
 
     <script src="navbar.js"></script>
     <script src="supabase-config.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/dompurify@3.0.6/dist/purify.min.js"></script>
 
     <script>
         // ==========================================
@@ -784,93 +744,93 @@
         const AVALAI_API_URL = 'https://api.avalai.ir/v1/chat/completions';
 
         // ==========================================
-        // Assets Definition (دسته‌بندی و دارایی‌ها)
+        // Assets Definition
         // ==========================================
         const ASSETS = {
             gold: {
                 name: 'طلا و فلزات گرانبها',
                 icon: '🥇',
                 items: [
-                    { symbol: 'gold18', name: 'طلا ۱۸ عیار', unit: 'گرم', icon: '🥇', api: 'brsapi-gold18' },
-                    { symbol: 'gold24', name: 'طلا ۲۴ عیار', unit: 'گرم', icon: '🥇', api: 'brsapi-gold24' },
-                    { symbol: 'gold-melted', name: 'طلای آب‌شده', unit: 'مثقال', icon: '🟡', api: 'brsapi-melted' },
-                    { symbol: 'coin-emami', name: 'سکه امامی', unit: 'عدد', icon: '🪙', api: 'brsapi-coin-emami' },
-                    { symbol: 'coin-bahar', name: 'سکه بهار آزادی', unit: 'عدد', icon: '🏅', api: 'brsapi-coin-bahar' },
-                    { symbol: 'coin-half', name: 'نیم سکه', unit: 'عدد', icon: '🥈', api: 'brsapi-coin-half' },
-                    { symbol: 'coin-quarter', name: 'ربع سکه', unit: 'عدد', icon: '🥉', api: 'brsapi-coin-quarter' },
-                    { symbol: 'coin-1g', name: 'سکه گرمی', unit: 'عدد', icon: '⭕', api: 'brsapi-coin-1g' },
-                    { symbol: 'silver999', name: 'نقره ۹۹۹', unit: 'گرم', icon: '🥈', api: 'calc-silver999' },
-                    { symbol: 'ounce-gold', name: 'انس طلا', unit: 'انس', icon: '🏅', api: 'brsapi-ounce-gold' },
-                    { symbol: 'ounce-silver', name: 'انس نقره', unit: 'انس', icon: '🥈', api: 'brsapi-ounce-silver' },
-                    { symbol: 'ounce-platinum', name: 'انس پلاتین', unit: 'انس', icon: '🔶', api: 'brsapi-ounce-platinum' },
-                    { symbol: 'ounce-palladium', name: 'انس پالادیوم', unit: 'انس', icon: '💎', api: 'brsapi-ounce-palladium' }
+                    { symbol: 'gold18', name: 'طلا ۱۸ عیار', unit: 'گرم', icon: '🥇' },
+                    { symbol: 'gold24', name: 'طلا ۲۴ عیار', unit: 'گرم', icon: '🥇' },
+                    { symbol: 'gold-melted', name: 'طلای آب‌شده', unit: 'مثقال', icon: '🟡' },
+                    { symbol: 'coin-emami', name: 'سکه امامی', unit: 'عدد', icon: '🪙' },
+                    { symbol: 'coin-bahar', name: 'سکه بهار آزادی', unit: 'عدد', icon: '🏅' },
+                    { symbol: 'coin-half', name: 'نیم سکه', unit: 'عدد', icon: '🥈' },
+                    { symbol: 'coin-quarter', name: 'ربع سکه', unit: 'عدد', icon: '🥉' },
+                    { symbol: 'coin-1g', name: 'سکه گرمی', unit: 'عدد', icon: '⭕' },
+                    { symbol: 'silver999', name: 'نقره ۹۹۹', unit: 'گرم', icon: '🥈' },
+                    { symbol: 'ounce-gold', name: 'انس طلا', unit: 'انس', icon: '🏅' },
+                    { symbol: 'ounce-silver', name: 'انس نقره', unit: 'انس', icon: '🥈' },
+                    { symbol: 'ounce-platinum', name: 'انس پلاتین', unit: 'انس', icon: '🔶' },
+                    { symbol: 'ounce-palladium', name: 'انس پالادیوم', unit: 'انس', icon: '💎' }
                 ]
             },
             currency: {
                 name: 'ارز',
                 icon: '💵',
                 items: [
-                    { symbol: 'usd', name: 'دلار آزاد', unit: 'عدد', icon: '💵', api: 'brsapi-usd' },
-                    { symbol: 'usdt', name: 'تتر', unit: 'عدد', icon: '💚', api: 'brsapi-usdt' },
-                    { symbol: 'eur', name: 'یورو', unit: 'عدد', icon: '💶', api: 'brsapi-eur' },
-                    { symbol: 'gbp', name: 'پوند انگلیس', unit: 'عدد', icon: '💷', api: 'brsapi-gbp' },
-                    { symbol: 'aed', name: 'درهم امارات', unit: 'عدد', icon: '🇦🇪', api: 'brsapi-aed' },
-                    { symbol: 'try', name: 'لیر ترکیه', unit: 'عدد', icon: '🇹🇷', api: 'brsapi-try' },
-                    { symbol: 'cny', name: 'یوان چین', unit: 'عدد', icon: '🇨🇳', api: 'brsapi-cny' }
+                    { symbol: 'usd', name: 'دلار آزاد', unit: 'عدد', icon: '💵' },
+                    { symbol: 'usdt', name: 'تتر', unit: 'عدد', icon: '💚' },
+                    { symbol: 'eur', name: 'یورو', unit: 'عدد', icon: '💶' },
+                    { symbol: 'gbp', name: 'پوند انگلیس', unit: 'عدد', icon: '💷' },
+                    { symbol: 'aed', name: 'درهم امارات', unit: 'عدد', icon: '🇦🇪' },
+                    { symbol: 'try', name: 'لیر ترکیه', unit: 'عدد', icon: '🇹🇷' },
+                    { symbol: 'cny', name: 'یوان چین', unit: 'عدد', icon: '🇨🇳' }
                 ]
             },
             crypto: {
                 name: 'کریپتوکارنسی',
                 icon: '₿',
                 items: [
-                    { symbol: 'btc', name: 'بیت‌کوین', unit: 'عدد', icon: 'https://cryptologos.cc/logos/bitcoin-btc-logo.png', api: 'coingecko-bitcoin' },
-                    { symbol: 'eth', name: 'اتریوم', unit: 'عدد', icon: 'https://cryptologos.cc/logos/ethereum-eth-logo.png', api: 'coingecko-ethereum' },
-                    { symbol: 'xaut', name: 'تتر گلد', unit: 'عدد', icon: 'https://cryptologos.cc/logos/tether-gold-xaut-logo.png', api: 'coingecko-tether-gold' },
-                    { symbol: 'paxg', name: 'پی‌اکس گلد', unit: 'عدد', icon: 'https://cryptologos.cc/logos/pax-gold-paxg-logo.png', api: 'coingecko-pax-gold' },
-                    { symbol: 'usdt-erc', name: 'تتر ERC20', unit: 'عدد', icon: 'https://cryptologos.cc/logos/tether-usdt-logo.png', api: 'coingecko-tether' },
-                    { symbol: 'usdc', name: 'یو‌اس‌دی‌سی', unit: 'عدد', icon: 'https://cryptologos.cc/logos/usd-coin-usdc-logo.png', api: 'coingecko-usd-coin' },
-                    { symbol: 'sol', name: 'سولانا', unit: 'عدد', icon: 'https://cryptologos.cc/logos/solana-sol-logo.png', api: 'coingecko-solana' },
-                    { symbol: 'xrp', name: 'ریپل', unit: 'عدد', icon: 'https://cryptologos.cc/logos/xrp-xrp-logo.png', api: 'coingecko-ripple' },
-                    { symbol: 'doge', name: 'دوج‌کوین', unit: 'عدد', icon: 'https://cryptologos.cc/logos/dogecoin-doge-logo.png', api: 'coingecko-dogecoin' },
-                    { symbol: 'ada', name: 'کاردانو', unit: 'عدد', icon: 'https://cryptologos.cc/logos/cardano-ada-logo.png', api: 'coingecko-cardano' },
-                    { symbol: 'bnb', name: 'BNB', unit: 'عدد', icon: 'https://cryptologos.cc/logos/bnb-bnb-logo.png', api: 'coingecko-binancecoin' },
-                    { symbol: 'trx', name: 'ترون', unit: 'عدد', icon: 'https://cryptologos.cc/logos/tron-trx-logo.png', api: 'coingecko-tron' },
-                    { symbol: 'avax', name: 'آوالانچ', unit: 'عدد', icon: 'https://cryptologos.cc/logos/avalanche-avax-logo.png', api: 'coingecko-avalanche-2' }
+                    { symbol: 'btc', name: 'بیت‌کوین', unit: 'عدد', icon: 'https://cryptologos.cc/logos/bitcoin-btc-logo.png' },
+                    { symbol: 'eth', name: 'اتریوم', unit: 'عدد', icon: 'https://cryptologos.cc/logos/ethereum-eth-logo.png' },
+                    { symbol: 'xaut', name: 'تتر گلد', unit: 'عدد', icon: 'https://cryptologos.cc/logos/tether-gold-xaut-logo.png' },
+                    { symbol: 'paxg', name: 'پی‌اکس گلد', unit: 'عدد', icon: 'https://cryptologos.cc/logos/pax-gold-paxg-logo.png' },
+                    { symbol: 'usdt-erc', name: 'تتر ERC20', unit: 'عدد', icon: 'https://cryptologos.cc/logos/tether-usdt-logo.png' },
+                    { symbol: 'usdc', name: 'یو‌اس‌دی‌سی', unit: 'عدد', icon: 'https://cryptologos.cc/logos/usd-coin-usdc-logo.png' },
+                    { symbol: 'sol', name: 'سولانا', unit: 'عدد', icon: 'https://cryptologos.cc/logos/solana-sol-logo.png' },
+                    { symbol: 'xrp', name: 'ریپل', unit: 'عدد', icon: 'https://cryptologos.cc/logos/xrp-xrp-logo.png' },
+                    { symbol: 'doge', name: 'دوج‌کوین', unit: 'عدد', icon: 'https://cryptologos.cc/logos/dogecoin-doge-logo.png' },
+                    { symbol: 'ada', name: 'کاردانو', unit: 'عدد', icon: 'https://cryptologos.cc/logos/cardano-ada-logo.png' },
+                    { symbol: 'bnb', name: 'BNB', unit: 'عدد', icon: 'https://cryptologos.cc/logos/bnb-bnb-logo.png' },
+                    { symbol: 'trx', name: 'ترون', unit: 'عدد', icon: 'https://cryptologos.cc/logos/tron-trx-logo.png' },
+                    { symbol: 'avax', name: 'آوالانچ', unit: 'عدد', icon: 'https://cryptologos.cc/logos/avalanche-avax-logo.png' }
                 ]
             },
             stock: {
                 name: 'بورس ایران',
                 icon: '📊',
                 items: [
-                    { symbol: 'custom-stock', name: 'سهام دیگر (دستی)', unit: 'سهم', icon: '📊', api: 'manual' }
+                    { symbol: 'custom-stock', name: 'سهام (دستی)', unit: 'سهم', icon: '📊' }
                 ]
             },
             fund: {
                 name: 'صندوق درآمد ثابت',
                 icon: '💼',
                 items: [
-                    { symbol: 'custom-fund', name: 'صندوق (دستی)', unit: 'واحد', icon: '💼', api: 'manual' }
+                    { symbol: 'custom-fund', name: 'صندوق (دستی)', unit: 'واحد', icon: '💼' }
                 ]
             },
             realestate: {
                 name: 'املاک',
                 icon: '🏠',
                 items: [
-                    { symbol: 'custom-realestate', name: 'ملک (دستی)', unit: 'متر', icon: '🏠', api: 'manual' }
+                    { symbol: 'custom-realestate', name: 'ملک (دستی)', unit: 'متر', icon: '🏠' }
                 ]
             },
             bank: {
                 name: 'سپرده بانکی',
                 icon: '🏦',
                 items: [
-                    { symbol: 'custom-bank', name: 'سپرده (دستی)', unit: 'تومان', icon: '🏦', api: 'manual' }
+                    { symbol: 'custom-bank', name: 'سپرده (دستی)', unit: 'تومان', icon: '🏦' }
                 ]
             },
             other: {
                 name: 'سایر',
                 icon: '🌟',
                 items: [
-                    { symbol: 'custom-other', name: 'سایر (دستی)', unit: 'عدد', icon: '🌟', api: 'manual' }
+                    { symbol: 'custom-other', name: 'سایر (دستی)', unit: 'عدد', icon: '🌟' }
                 ]
             }
         };
@@ -888,22 +848,41 @@
         // Utility Functions
         // ==========================================
         function toFa(num) {
-            if (num === null || num === undefined || isNaN(num)) return '۰';
+            if (num === null || num === undefined) return '۰';
             const persianDigits = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
             return String(num).replace(/\d/g, d => persianDigits[d]);
         }
 
         function formatNum(num, decimals = 0) {
-            if (num === null || num === undefined || isNaN(num)) return '۰';
+            if (num === null || num === undefined || num === '') return '۰';
             const n = Number(num);
-            const rounded = decimals > 0 ? n.toFixed(decimals) : Math.round(n);
-            const str = String(rounded).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-            return toFa(str);
+            if (isNaN(n)) return '۰';
+
+            let result;
+            if (decimals > 0) {
+                result = n.toFixed(decimals);
+                // حذف صفرهای اضافی در انتها
+                if (result.includes('.')) {
+                    result = result.replace(/0+$/, '').replace(/\.$/, '');
+                }
+            } else {
+                result = Math.round(n).toString();
+            }
+
+            // جداکننده هزارگان
+            const parts = result.split('.');
+            parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+            result = parts.join('.');
+
+            // تبدیل به فارسی
+            const persianDigits = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
+            return result.replace(/\d/g, d => persianDigits[d]);
         }
 
         function formatBigNum(num) {
-            if (!num && num !== 0) return '۰';
+            if (num === null || num === undefined || num === '') return '۰';
             const n = Number(num);
+            if (isNaN(n)) return '۰';
             if (Math.abs(n) >= 1e12) return formatNum(n / 1e12, 2) + ' همت';
             if (Math.abs(n) >= 1e9) return formatNum(n / 1e9, 2) + ' میلیارد';
             if (Math.abs(n) >= 1e6) return formatNum(n / 1e6, 2) + ' میلیون';
@@ -929,8 +908,21 @@
             document.getElementById(id).classList.remove('show');
         }
 
+        function formatDate(dateStr) {
+            if (!dateStr) return '—';
+            try {
+                const d = new Date(dateStr);
+                if (isNaN(d.getTime())) return '—';
+                return new Intl.DateTimeFormat('fa-IR', {
+                    year: 'numeric', month: 'short', day: 'numeric'
+                }).format(d);
+            } catch (e) {
+                return '—';
+            }
+        }
+
         // ==========================================
-        // Price Fetching from APIs
+        // Price Fetching
         // ==========================================
         async function fetchBrsApi(url) {
             const separator = url.includes('?') ? '&' : '?';
@@ -944,7 +936,7 @@
         async function loadPrices() {
             priceCache = {};
 
-            // ===== BrsApi: طلا و ارز =====
+            // BrsApi: طلا و ارز
             try {
                 const data = await fetchBrsApi('https://Api.BrsApi.ir/Market/Gold_Currency.php');
 
@@ -976,7 +968,7 @@
                 console.error('BrsApi Gold/Currency error:', e);
             }
 
-            // ===== BrsApi: Commodity (انس‌ها) =====
+            // BrsApi: Commodity (انس‌ها)
             try {
                 const data = await fetchBrsApi('https://Api.BrsApi.ir/Market/Commodity.php');
 
@@ -992,38 +984,41 @@
                 console.error('BrsApi Commodity error:', e);
             }
 
-            // ===== محاسبه نقره ۹۹۹ از انس × دلار =====
+            // محاسبه نقره ۹۹۹
             if (priceCache['ounce-silver'] && priceCache['usd']) {
                 const OUNCE_TO_GRAM = 31.1035;
                 priceCache['silver999'] = (priceCache['ounce-silver'] * priceCache['usd'] * 0.999) / OUNCE_TO_GRAM;
             }
 
-            // ===== CoinGecko: کریپتو =====
+            // CoinGecko: کریپتو
             try {
                 const ids = 'bitcoin,ethereum,tether-gold,pax-gold,tether,usd-coin,solana,ripple,dogecoin,cardano,binancecoin,tron,avalanche-2';
                 const res = await fetch(`https://api.coingecko.com/api/v3/simple/price?ids=${ids}&vs_currencies=usd`);
                 const data = await res.json();
+                const usdRate = priceCache['usd'] || 90000;
 
-                if (data.bitcoin) priceCache['btc'] = data.bitcoin.usd * (priceCache['usd'] || 90000);
-                if (data.ethereum) priceCache['eth'] = data.ethereum.usd * (priceCache['usd'] || 90000);
-                if (data['tether-gold']) priceCache['xaut'] = data['tether-gold'].usd * (priceCache['usd'] || 90000);
-                if (data['pax-gold']) priceCache['paxg'] = data['pax-gold'].usd * (priceCache['usd'] || 90000);
-                if (data.tether) priceCache['usdt-erc'] = data.tether.usd * (priceCache['usd'] || 90000);
-                if (data['usd-coin']) priceCache['usdc'] = data['usd-coin'].usd * (priceCache['usd'] || 90000);
-                if (data.solana) priceCache['sol'] = data.solana.usd * (priceCache['usd'] || 90000);
-                if (data.ripple) priceCache['xrp'] = data.ripple.usd * (priceCache['usd'] || 90000);
-                if (data.dogecoin) priceCache['doge'] = data.dogecoin.usd * (priceCache['usd'] || 90000);
-                if (data.cardano) priceCache['ada'] = data.cardano.usd * (priceCache['usd'] || 90000);
-                if (data.binancecoin) priceCache['bnb'] = data.binancecoin.usd * (priceCache['usd'] || 90000);
-                if (data.tron) priceCache['trx'] = data.tron.usd * (priceCache['usd'] || 90000);
-                if (data['avalanche-2']) priceCache['avax'] = data['avalanche-2'].usd * (priceCache['usd'] || 90000);
+                if (data.bitcoin) priceCache['btc'] = data.bitcoin.usd * usdRate;
+                if (data.ethereum) priceCache['eth'] = data.ethereum.usd * usdRate;
+                if (data['tether-gold']) priceCache['xaut'] = data['tether-gold'].usd * usdRate;
+                if (data['pax-gold']) priceCache['paxg'] = data['pax-gold'].usd * usdRate;
+                if (data.tether) priceCache['usdt-erc'] = data.tether.usd * usdRate;
+                if (data['usd-coin']) priceCache['usdc'] = data['usd-coin'].usd * usdRate;
+                if (data.solana) priceCache['sol'] = data.solana.usd * usdRate;
+                if (data.ripple) priceCache['xrp'] = data.ripple.usd * usdRate;
+                if (data.dogecoin) priceCache['doge'] = data.dogecoin.usd * usdRate;
+                if (data.cardano) priceCache['ada'] = data.cardano.usd * usdRate;
+                if (data.binancecoin) priceCache['bnb'] = data.binancecoin.usd * usdRate;
+                if (data.tron) priceCache['trx'] = data.tron.usd * usdRate;
+                if (data['avalanche-2']) priceCache['avax'] = data['avalanche-2'].usd * usdRate;
             } catch (e) {
                 console.error('CoinGecko error:', e);
             }
+
+            console.log('📊 Prices loaded:', priceCache);
         }
 
         // ==========================================
-        // Load Portfolio from Supabase
+        // Load Portfolio
         // ==========================================
         async function loadPortfolio() {
             const { data, error } = await db
@@ -1036,7 +1031,61 @@
                 return [];
             }
 
+            console.log('📋 Portfolio loaded:', data);
             return data || [];
+        }
+
+        // ==========================================
+        // Calculate Stats
+        // ==========================================
+        function calculateStats() {
+            let totalValue = 0;
+            let totalInvested = 0;
+            const categoryStats = {};
+
+            const portfolioWithPrices = portfolio.map(item => {
+                // تبدیل صریح به Number
+                const quantity = Number(item.quantity) || 0;
+                const buyPrice = Number(item.buy_price) || 0;
+                const currentPrice = Number(priceCache[item.asset_symbol]) || buyPrice;
+
+                const invested = quantity * buyPrice;
+                const value = quantity * currentPrice;
+                const profit = value - invested;
+                const profitPercent = invested > 0 ? (profit / invested) * 100 : 0;
+
+                totalValue += value;
+                totalInvested += invested;
+
+                if (!categoryStats[item.asset_category]) {
+                    categoryStats[item.asset_category] = { value: 0, count: 0 };
+                }
+                categoryStats[item.asset_category].value += value;
+                categoryStats[item.asset_category].count++;
+
+                return {
+                    ...item,
+                    quantity,
+                    buy_price: buyPrice,
+                    currentPrice,
+                    value,
+                    invested,
+                    profit,
+                    profitPercent
+                };
+            });
+
+            const totalProfit = totalValue - totalInvested;
+            const totalProfitPercent = totalInvested > 0 ? (totalProfit / totalInvested) * 100 : 0;
+
+            return {
+                totalValue,
+                totalInvested,
+                totalProfit,
+                totalProfitPercent,
+                categoryStats,
+                items: portfolioWithPrices
+            };
         }
 
         // ==========================================
@@ -1046,11 +1095,8 @@
             const container = document.getElementById('mainContent');
 
             try {
-                // لود قیمت‌ها و پرتفوی با هم
-                await Promise.all([
-                    loadPrices(),
-                    loadPortfolio().then(data => { portfolio = data; })
-                ]);
+                await loadPrices();
+                portfolio = await loadPortfolio();
 
                 if (portfolio.length === 0) {
                     renderEmptyState(container);
@@ -1096,46 +1142,6 @@
         }
 
         // ==========================================
-        // Calculate Stats
-        // ==========================================
-        function calculateStats() {
-            let totalValue = 0;
-            let totalInvested = 0;
-            const categoryStats = {};
-
-            const portfolioWithPrices = portfolio.map(item => {
-                const currentPrice = priceCache[item.asset_symbol] || item.buy_price;
-                const value = item.quantity * currentPrice;
-                const invested = item.quantity * item.buy_price;
-                const profit = value - invested;
-                const profitPercent = invested > 0 ? (profit / invested) * 100 : 0;
-
-                totalValue += value;
-                totalInvested += invested;
-
-                if (!categoryStats[item.asset_category]) {
-                    categoryStats[item.asset_category] = { value: 0, count: 0 };
-                }
-                categoryStats[item.asset_category].value += value;
-                categoryStats[item.asset_category].count++;
-
-                return { ...item, currentPrice, value, invested, profit, profitPercent };
-            });
-
-            const totalProfit = totalValue - totalInvested;
-            const totalProfitPercent = totalInvested > 0 ? (totalProfit / totalInvested) * 100 : 0;
-
-            return {
-                totalValue,
-                totalInvested,
-                totalProfit,
-                totalProfitPercent,
-                categoryStats,
-                items: portfolioWithPrices
-            };
-        }
-
-        // ==========================================
         // Render Full Page
         // ==========================================
         function renderFullPage(container, stats) {
@@ -1148,7 +1154,6 @@
                     <p>مدیریت و تحلیل هوشمند دارایی‌ها</p>
                 </div>
 
-                <!-- Summary -->
                 <div class="summary-grid">
                     <div class="summary-card">
                         <div class="icon">💰</div>
@@ -1156,7 +1161,7 @@
                         <div class="label">ارزش کل سبد</div>
                     </div>
                     <div class="summary-card">
-                        <div class="icon">📈</div>
+                        <div class="icon">${stats.totalProfit >= 0 ? '📈' : '📉'}</div>
                         <div class="value ${profitClass}">${profitSign}${formatBigNum(stats.totalProfit)}</div>
                         <div class="label">سود/ضرر کل</div>
                         <div class="badge ${stats.totalProfit >= 0 ? 'up' : 'down'}">${profitSign}${toFa(stats.totalProfitPercent.toFixed(1))}٪</div>
@@ -1174,24 +1179,21 @@
                     </div>
                 </div>
 
-                <!-- Actions -->
                 <div class="actions-bar">
                     <button class="btn btn-primary" onclick="openAddModal()">➕ افزودن دارایی جدید</button>
-                    <button class="btn btn-secondary" onclick="showToast('این قابلیت به‌زودی فعال میشه', 'info')">📥 ورود از CSV</button>
                     <button class="btn btn-secondary" onclick="exportCSV()">📤 خروجی CSV</button>
                 </div>
 
-                <!-- Quick Add -->
                 <div class="quick-add">
-                    ${Object.values(ASSETS).flatMap(cat => cat.items.slice(0, 2)).slice(0, 7).map(item => {
-                        const catKey = Object.keys(ASSETS).find(k => ASSETS[k].items.includes(item));
-                        return `<button class="quick-btn" onclick="quickAdd('${catKey}', '${item.symbol}')">${typeof item.icon === 'string' && item.icon.startsWith('http') ? '🪙' : item.icon} ${item.name}</button>`;
-                    }).join('')}
+                    <button class="quick-btn" onclick="quickAdd('gold', 'gold18')">🥇 طلا ۱۸ عیار</button>
+                    <button class="quick-btn" onclick="quickAdd('gold', 'coin-emami')">🪙 سکه امامی</button>
                     <button class="quick-btn" onclick="quickAdd('gold', 'silver999')">🥈 نقره ۹۹۹</button>
+                    <button class="quick-btn" onclick="quickAdd('currency', 'usd')">💵 دلار</button>
+                    <button class="quick-btn" onclick="quickAdd('currency', 'usdt')">💚 تتر</button>
+                    <button class="quick-btn" onclick="quickAdd('crypto', 'btc')">₿ بیت‌کوین</button>
                     <button class="quick-btn" onclick="quickAdd('crypto', 'eth')">⟠ اتریوم</button>
                 </div>
 
-                <!-- Charts -->
                 <div class="chart-section">
                     <div class="chart-grid">
                         <div>
@@ -1209,13 +1211,11 @@
                     </div>
                 </div>
 
-                <!-- Portfolio -->
                 <div class="portfolio-section">
                     <div class="chart-title" style="margin-bottom:20px;">📋 دارایی‌های من</div>
                     ${renderCategories(stats)}
                 </div>
 
-                <!-- AI Insight -->
                 <div class="ai-insight">
                     <div class="ai-icon">🤖</div>
                     <div class="ai-content">
@@ -1223,14 +1223,12 @@
                         <div class="ai-text" id="aiText">
                             برای دریافت تحلیل حرفه‌ای از سبد سرمایه‌گذاری خودت، روی دکمه زیر بزن.
                         </div>
-                        <div class="ai-suggestions" id="aiSuggestions" style="display:none;"></div>
                         <button class="ai-analyze-btn" id="aiAnalyzeBtn" onclick="analyzePortfolioWithAI()">
                             🤖 تحلیل کن با AI
                         </button>
                     </div>
                 </div>
 
-                <!-- Compare -->
                 <div class="compare-section">
                     <div class="compare-title">📊 مقایسه با بهترین سبد</div>
                     <div class="compare-desc">
@@ -1240,7 +1238,6 @@
                 </div>
             `;
 
-            // رندر نمودارها
             setTimeout(() => {
                 renderPieChart(stats);
                 renderBarChart(stats);
@@ -1300,12 +1297,10 @@
             // آیکون
             let iconHtml = '';
             if (item.asset_icon && item.asset_icon.startsWith('http')) {
-                iconHtml = `<img src="${item.asset_icon}" alt="${item.asset_name}" onerror="this.parentElement.innerHTML='<span class=\\'emoji\\'>🪙</span>'">`;
+                iconHtml = `<img src="${item.asset_icon}" alt="${escapeHtml(item.asset_name)}" onerror="this.parentElement.innerHTML='<span class=\\'emoji\\'>🪙</span>'">`;
             } else {
                 iconHtml = `<span class="emoji">${item.asset_icon || '📊'}</span>`;
             }
-
-            const buyDate = item.buy_date ? new Date(item.buy_date).toLocaleDateString('fa-IR') : '—';
 
             return `
                 <div class="asset-card">
@@ -1326,7 +1321,7 @@
                     <div class="asset-card-info">
                         <div class="info-item">
                             <div class="label">📦 مقدار</div>
-                            <div class="value">${formatNum(item.quantity, 4)} ${item.unit || ''}</div>
+                            <div class="value">${formatNum(item.quantity, 4)} ${escapeHtml(item.unit || '')}</div>
                         </div>
                         <div class="info-item">
                             <div class="label">💰 قیمت خرید</div>
@@ -1338,7 +1333,7 @@
                         </div>
                         <div class="info-item">
                             <div class="label">📅 تاریخ خرید</div>
-                            <div class="value">${toFa(buyDate)}</div>
+                            <div class="value">${formatDate(item.buy_date)}</div>
                         </div>
                         <div class="info-item">
                             <div class="label">💼 سرمایه اولیه</div>
@@ -1375,14 +1370,13 @@
         function renderPieChart(stats) {
             const ctx = document.getElementById('pieChart');
             if (!ctx) return;
-
             if (pieChart) pieChart.destroy();
 
             const labels = [];
             const data = [];
             const colors = ['#d4af37', '#10b981', '#8b5cf6', '#3b82f6', '#f97316', '#ec4899', '#06b6d4', '#84cc16'];
 
-            Object.entries(stats.categoryStats).forEach(([catKey, cat], idx) => {
+            Object.entries(stats.categoryStats).forEach(([catKey, cat]) => {
                 const catInfo = ASSETS[catKey];
                 labels.push(catInfo ? catInfo.name : catKey);
                 data.push(cat.value);
@@ -1427,7 +1421,7 @@
                                 label: function(context) {
                                     const value = context.parsed;
                                     const total = context.dataset.data.reduce((a, b) => a + b, 0);
-                                    const percent = ((value / total) * 100).toFixed(1);
+                                    const percent = total > 0 ? ((value / total) * 100).toFixed(1) : 0;
                                     return ` ${context.label}: ${formatBigNum(value)} (${toFa(percent)}٪)`;
                                 }
                             }
@@ -1441,7 +1435,6 @@
         function renderBarChart(stats) {
             const ctx = document.getElementById('barChart');
             if (!ctx) return;
-
             if (barChart) barChart.destroy();
 
             const items = stats.items.slice(0, 10);
@@ -1503,7 +1496,7 @@
         }
 
         // ==========================================
-        // Compare with Best Portfolio
+        // Compare
         // ==========================================
         function renderCompare(stats) {
             const grid = document.getElementById('compareGrid');
@@ -1511,21 +1504,21 @@
 
             const invested = stats.totalInvested;
 
-            // بازدهی فرضی ۶ ماهه
             const options = [
-                { label: '🥇 فقط طلا', return: 32.5, color: 'up' },
-                { label: '💵 فقط دلار', return: 8.7, color: 'up' },
-                { label: '📊 فقط بورس', return: 15.3, color: 'up' },
-                { label: '₿ فقط بیت‌کوین', return: 42.8, color: 'up' },
-                { label: '💼 سبد فعلی شما', return: stats.totalProfitPercent, color: stats.totalProfitPercent >= 0 ? 'up' : 'down', highlight: true }
+                { label: '🥇 فقط طلا', return: 32.5 },
+                { label: '💵 فقط دلار', return: 8.7 },
+                { label: '📊 فقط بورس', return: 15.3 },
+                { label: '₿ فقط بیت‌کوین', return: 42.8 },
+                { label: '💼 سبد فعلی شما', return: stats.totalProfitPercent, highlight: true }
             ];
 
             grid.innerHTML = options.map(opt => {
                 const finalValue = invested * (1 + opt.return / 100);
+                const returnClass = opt.return >= 0 ? 'up' : 'down';
                 return `
                     <div class="compare-card ${opt.highlight ? 'compare-highlight' : ''}">
                         <div class="label">${opt.label}</div>
-                        <div class="value ${opt.color}">${opt.return >= 0 ? '+' : ''}${toFa(opt.return.toFixed(1))}٪</div>
+                        <div class="value ${returnClass}">${opt.return >= 0 ? '+' : ''}${toFa(opt.return.toFixed(1))}٪</div>
                         <div class="desc">${formatBigNum(finalValue)} تومان</div>
                     </div>
                 `;
@@ -1538,17 +1531,14 @@
         async function analyzePortfolioWithAI() {
             const btn = document.getElementById('aiAnalyzeBtn');
             const aiText = document.getElementById('aiText');
-            const suggestions = document.getElementById('aiSuggestions');
 
             btn.disabled = true;
             btn.innerHTML = '⏳ در حال تحلیل...';
             aiText.textContent = 'در حال دریافت تحلیل از هوش مصنوعی...';
-            suggestions.style.display = 'none';
 
             try {
                 const stats = calculateStats();
 
-                // ساخت متن سبد
                 let portfolioText = '';
                 stats.items.forEach(item => {
                     portfolioText += `- ${item.asset_name}: ${item.quantity} ${item.unit || ''} | خرید: ${formatNum(item.buy_price)} | فعلی: ${formatNum(item.currentPrice)} | سود/ضرر: ${item.profit >= 0 ? '+' : ''}${formatNum(item.profit)} (${item.profitPercent.toFixed(2)}%)\n`;
@@ -1597,22 +1587,17 @@ ${portfolioText}
                     })
                 });
 
-                if (!response.ok) {
-                    throw new Error('خطا در ارتباط با AI');
-                }
+                if (!response.ok) throw new Error('خطا در ارتباط با AI');
 
                 const data = await response.json();
                 const aiResponse = data.choices[0].message.content;
 
-                // نمایش پاسخ
                 try {
                     const html = marked.parse(aiResponse);
                     aiText.innerHTML = DOMPurify.sanitize(html);
                 } catch {
                     aiText.textContent = aiResponse;
                 }
-
-                suggestions.style.display = 'none';
 
             } catch (e) {
                 console.error('AI error:', e);
@@ -1637,7 +1622,6 @@ ${portfolioText}
                 onAssetChange();
             }
 
-            // تاریخ امروز
             const today = new Date();
             const yyyy = today.getFullYear();
             const mm = String(today.getMonth() + 1).padStart(2, '0');
@@ -1682,11 +1666,14 @@ ${portfolioText}
             const id = document.getElementById('assetId').value;
             const category = document.getElementById('assetCategory').value;
             const symbol = document.getElementById('assetSelect').value;
-            const quantity = parseFloat(document.getElementById('assetQuantity').value);
+            const quantityRaw = document.getElementById('assetQuantity').value;
             const unit = document.getElementById('assetUnit').value;
-            const buyPrice = parseFloat(document.getElementById('assetBuyPrice').value);
+            const buyPriceRaw = document.getElementById('assetBuyPrice').value;
             const buyDate = document.getElementById('assetBuyDate').value;
             const notes = document.getElementById('assetNotes').value.trim();
+
+            const quantity = parseFloat(quantityRaw);
+            const buyPrice = parseFloat(buyPriceRaw);
 
             if (!quantity || quantity <= 0) {
                 showToast('❌ لطفاً مقدار معتبر وارد کن', 'error');
@@ -1800,7 +1787,6 @@ ${portfolioText}
             group.classList.toggle('collapsed');
         }
 
-        // بستن مودال با کلیک بیرون
         document.getElementById('assetModal').addEventListener('click', (e) => {
             if (e.target.id === 'assetModal') closeModal('assetModal');
         });
