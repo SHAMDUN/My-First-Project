@@ -106,6 +106,18 @@
             border-bottom-color: var(--gold);
             background: rgba(212, 175, 55, 0.05);
         }
+        /* ===== NEW: Badge ===== */
+        .tab-badge {
+            display: none;
+            background: var(--red);
+            color: #fff;
+            border-radius: 10px;
+            padding: 1px 7px;
+            font-size: 10px;
+            font-weight: 800;
+            margin-right: 5px;
+        }
+        .tab-badge.show { display: inline-block; }
 
         /* ===== Container ===== */
         .container { max-width: 1300px; margin: 0 auto; padding: 20px; }
@@ -137,12 +149,7 @@
             box-shadow: 0 10px 30px rgba(212, 175, 55, 0.2);
         }
         .stat-card .icon { font-size: 30px; margin-bottom: 10px; }
-        .stat-card .value {
-            color: var(--gold);
-            font-size: 26px;
-            font-weight: 900;
-            margin-bottom: 5px;
-        }
+        .stat-card .value { color: var(--gold); font-size: 26px; font-weight: 900; margin-bottom: 5px; }
         .stat-card .label { color: var(--gray); font-size: 13px; }
 
         /* ===== Chart ===== */
@@ -517,23 +524,11 @@
             border-color: var(--gold);
         }
         .analysis-type-card .icon { font-size: 28px; margin-bottom: 8px; }
-        .analysis-type-card .title {
-            color: var(--white);
-            font-size: 13px;
-            font-weight: 800;
-            margin-bottom: 4px;
-        }
-        .analysis-type-card .desc {
-            color: var(--gray);
-            font-size: 11px;
-        }
+        .analysis-type-card .title { color: var(--white); font-size: 13px; font-weight: 800; margin-bottom: 4px; }
+        .analysis-type-card .desc { color: var(--gray); font-size: 11px; }
 
         /* ===== Loading / Toast ===== */
-        .loading {
-            text-align: center;
-            padding: 40px;
-            color: var(--gray);
-        }
+        .loading { text-align: center; padding: 40px; color: var(--gray); }
         .spinner {
             width: 40px; height: 40px;
             border: 4px solid rgba(212, 175, 55, 0.2);
@@ -582,14 +577,8 @@
             font-size: 11px;
             font-weight: 800;
         }
-        .status-published {
-            background: rgba(16, 185, 129, 0.15);
-            color: var(--green);
-        }
-        .status-draft {
-            background: rgba(148, 163, 184, 0.15);
-            color: var(--gray);
-        }
+        .status-published { background: rgba(16, 185, 129, 0.15); color: var(--green); }
+        .status-draft { background: rgba(148, 163, 184, 0.15); color: var(--gray); }
         .type-badge {
             display: inline-block;
             padding: 4px 10px;
@@ -597,14 +586,8 @@
             font-size: 11px;
             font-weight: 800;
         }
-        .type-badge.daily {
-            background: rgba(245, 158, 11, 0.15);
-            color: #f59e0b;
-        }
-        .type-badge.weekly {
-            background: rgba(59, 130, 246, 0.15);
-            color: #60a5fa;
-        }
+        .type-badge.daily { background: rgba(245, 158, 11, 0.15); color: #f59e0b; }
+        .type-badge.weekly { background: rgba(59, 130, 246, 0.15); color: #60a5fa; }
         .featured-badge {
             background: rgba(212, 175, 55, 0.2);
             color: var(--gold);
@@ -649,6 +632,119 @@
             background: linear-gradient(135deg, var(--gold), var(--gold-dark));
             color: var(--bg-primary);
             border-color: var(--gold);
+        }
+
+        /* ===== NEW: Message Card ===== */
+        .message-card {
+            background: linear-gradient(135deg, var(--bg-card), var(--bg-secondary));
+            border: 1px solid rgba(212, 175, 55, 0.15);
+            border-radius: 15px;
+            padding: 18px;
+            margin-bottom: 12px;
+            transition: 0.3s;
+            cursor: pointer;
+            border-right: 4px solid rgba(148, 163, 184, 0.3);
+        }
+        .message-card:hover {
+            border-color: rgba(212, 175, 55, 0.5);
+            transform: translateX(-5px);
+            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.1);
+        }
+        .message-card.new {
+            border-right-color: var(--gold);
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.05), var(--bg-secondary));
+        }
+        .message-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .message-card-name {
+            color: var(--white);
+            font-size: 14px;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .message-card-name .new-badge {
+            background: var(--red);
+            color: #fff;
+            font-size: 9px;
+            padding: 2px 7px;
+            border-radius: 8px;
+            font-weight: 800;
+        }
+        .message-card-date {
+            color: var(--gray);
+            font-size: 11px;
+        }
+        .message-card-subject {
+            color: var(--gold-light);
+            font-size: 13px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+        .message-card-text {
+            color: #cbd5e1;
+            font-size: 13px;
+            line-height: 1.7;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+        }
+        .message-card-footer {
+            margin-top: 12px;
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        /* ===== Message Detail ===== */
+        .message-detail-box {
+            background: rgba(10, 10, 15, 0.5);
+            border-radius: 12px;
+            padding: 18px;
+            margin-bottom: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .message-detail-row {
+            display: flex;
+            gap: 10px;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            font-size: 13.5px;
+        }
+        .message-detail-row:last-child { border-bottom: none; }
+        .message-detail-row .label {
+            color: var(--gray);
+            font-weight: 700;
+            min-width: 90px;
+        }
+        .message-detail-row .value {
+            color: var(--white);
+            word-break: break-word;
+            flex: 1;
+        }
+        .message-detail-row .value a {
+            color: var(--gold);
+            text-decoration: none;
+        }
+        .message-detail-row .value a:hover { text-decoration: underline; }
+        .message-body {
+            background: rgba(10, 10, 15, 0.6);
+            border-radius: 12px;
+            padding: 18px;
+            color: #cbd5e1;
+            font-size: 14px;
+            line-height: 2;
+            white-space: pre-wrap;
+            margin-bottom: 15px;
         }
 
         /* ===== Responsive ===== */
@@ -704,6 +800,7 @@
             <button class="tab-btn" onclick="switchTab('blog', this)">📝 مقالات</button>
             <button class="tab-btn" onclick="switchTab('analysis', this)">📊 تحلیل‌ها</button>
             <button class="tab-btn" onclick="switchTab('ai-assistant', this)">🤖 دستیار AI</button>
+            <button class="tab-btn" onclick="switchTab('messages', this)">📬 صندوق پیام <span class="tab-badge" id="messagesBadge">0</span></button>
             <button class="tab-btn" onclick="switchTab('comments', this)">💬 نظرات</button>
             <button class="tab-btn" onclick="switchTab('courses', this)">📚 دوره‌ها</button>
             <button class="tab-btn" onclick="switchTab('lessons', this)">📖 دروس</button>
@@ -739,6 +836,11 @@
                         <div class="icon">📊</div>
                         <div class="value" id="statAnalyses">-</div>
                         <div class="label">تحلیل‌ها</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="icon">📬</div>
+                        <div class="value" id="statMessages">-</div>
+                        <div class="label">پیام‌ها</div>
                     </div>
                     <div class="stat-card">
                         <div class="icon">⭐</div>
@@ -796,7 +898,6 @@
                     <span style="color:var(--gray); font-size:12px;">تولید تحلیل خودکار با هوش مصنوعی</span>
                 </div>
 
-                <!-- نوع تحلیل -->
                 <div class="ai-section">
                     <h3>📋 نوع تحلیل</h3>
                     <div class="analysis-type-grid">
@@ -823,7 +924,6 @@
                     </div>
                 </div>
 
-                <!-- مدل AI -->
                 <div class="ai-model-selector">
                     <label>🧠 مدل:</label>
                     <select id="aiModelSelect">
@@ -835,7 +935,6 @@
                     </select>
                 </div>
 
-                <!-- داده‌های ورودی -->
                 <div class="ai-section">
                     <h3>📌 داده‌های ورودی (خودکار)</h3>
                     <div class="ai-data-box" id="aiDataBox">
@@ -846,12 +945,10 @@
                     </button>
                 </div>
 
-                <!-- دکمه تولید -->
                 <button class="btn btn-primary" style="width:100%; justify-content:center; padding:15px; font-size:15px;" onclick="generateAIAnalysis()" id="generateBtn">
                     🚀 تولید تحلیل با AI
                 </button>
 
-                <!-- خروجی AI -->
                 <div class="ai-section" style="margin-top:20px;">
                     <h3>📄 خروجی AI</h3>
                     <div class="ai-output" id="aiOutput">
@@ -867,6 +964,25 @@
                             📝 ارسال به فرم تحلیل
                         </button>
                     </div>
+                </div>
+            </div>
+
+            <!-- ===== تب صندوق پیام (NEW) ===== -->
+            <div id="tab-messages" class="tab-content">
+                <div class="tab-actions">
+                    <h2>📬 صندوق پیام</h2>
+                    <span style="color:var(--gray); font-size:12px;">پیام‌های دریافتی از فرم تماس با ما</span>
+                </div>
+
+                <div class="filter-tabs">
+                    <button class="filter-tab active" onclick="filterMessages('all', this)">📚 همه</button>
+                    <button class="filter-tab" onclick="filterMessages('new', this)">🆕 جدید</button>
+                    <button class="filter-tab" onclick="filterMessages('read', this)">👁️ خوانده‌شده</button>
+                </div>
+
+                <div id="messagesList" class="loading">
+                    <div class="spinner"></div>
+                    در حال بارگذاری...
                 </div>
             </div>
 
@@ -1176,6 +1292,21 @@
                 <button class="btn btn-secondary" onclick="closeModal('analysisModal')">لغو</button>
                 <button class="btn btn-success" onclick="saveAnalysis('draft')">💾 ذخیره پیش‌نویس</button>
                 <button class="btn btn-primary" onclick="saveAnalysis('published')">🚀 انتشار</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== NEW Modal: View Message ===== -->
+    <div id="messageModal" class="modal-overlay">
+        <div class="modal">
+            <h2 id="messageModalTitle">📬 مشاهده پیام</h2>
+            <input type="hidden" id="viewMessageId">
+
+            <div id="messageDetailContent"></div>
+
+            <div class="modal-actions">
+                <button class="btn btn-secondary" onclick="closeModal('messageModal')">بستن</button>
+                <button class="btn btn-danger" onclick="deleteCurrentMessage()">🗑️ حذف پیام</button>
             </div>
         </div>
     </div>
