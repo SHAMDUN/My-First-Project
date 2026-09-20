@@ -197,6 +197,10 @@
             color: var(--gold);
             border-color: var(--gold);
         }
+        .quick-btn img {
+            width: 18px; height: 18px;
+            object-fit: contain;
+        }
 
         /* ===== Charts ===== */
         .chart-section {
@@ -554,7 +558,7 @@
             border: 1px solid rgba(212, 175, 55, 0.3);
             border-radius: 20px;
             padding: 25px;
-            max-width: 500px;
+            max-width: 550px;
             width: 100%;
             max-height: 90vh;
             overflow-y: auto;
@@ -607,6 +611,91 @@
         }
         .modal-actions .btn { flex: 1; justify-content: center; }
 
+        /* ===== Stock Search ===== */
+        .stock-search-wrapper {
+            position: relative;
+        }
+        .stock-search-results {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            left: 0;
+            background: var(--bg-card);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            border-radius: 10px;
+            max-height: 300px;
+            overflow-y: auto;
+            z-index: 100;
+            margin-top: 4px;
+            display: none;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+        .stock-search-results.show { display: block; }
+        .stock-result-item {
+            padding: 10px 14px;
+            cursor: pointer;
+            transition: 0.2s;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+        }
+        .stock-result-item:hover {
+            background: rgba(212, 175, 55, 0.1);
+        }
+        .stock-result-item:last-child { border-bottom: none; }
+        .stock-result-item .stock-name {
+            color: var(--white);
+            font-size: 13px;
+            font-weight: 700;
+        }
+        .stock-result-item .stock-symbol {
+            color: var(--gray);
+            font-size: 11px;
+            font-family: monospace;
+            direction: ltr;
+        }
+        .stock-result-item .stock-price {
+            color: var(--gold);
+            font-size: 12px;
+            font-weight: 800;
+            direction: rtl;
+            text-align: left;
+            min-width: 90px;
+        }
+        .stock-result-item .stock-price small {
+            display: block;
+            color: var(--gray);
+            font-size: 9px;
+            font-weight: 400;
+        }
+        .stock-selected-box {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 14px;
+            background: rgba(212, 175, 55, 0.08);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            border-radius: 10px;
+            margin-bottom: 15px;
+            gap: 10px;
+        }
+        .stock-selected-box .info {
+            flex: 1;
+        }
+        .stock-selected-box .name {
+            color: var(--white);
+            font-size: 13px;
+            font-weight: 800;
+            margin-bottom: 4px;
+        }
+        .stock-selected-box .price {
+            color: var(--gold);
+            font-size: 12px;
+            font-weight: 700;
+        }
+
         /* ===== Toast ===== */
         .toast {
             position: fixed;
@@ -629,7 +718,6 @@
         .toast.success { border-right-color: var(--green); }
         .toast.error { border-right-color: var(--red); }
 
-        /* ===== Footer ===== */
         .footer {
             text-align: center;
             padding: 30px 20px;
@@ -692,10 +780,23 @@
                 </select>
             </div>
 
-            <div class="form-group">
+            <!-- Stock Search (فقط برای بورس) -->
+            <div class="form-group" id="stockSearchGroup" style="display:none;">
+                <label>🔍 جستجوی نماد بورس *</label>
+                <div class="stock-search-wrapper">
+                    <input type="text" id="stockSearchInput" placeholder="مثال: فولاد، شپنا، خودرو..." oninput="filterStockSymbols()" autocomplete="off">
+                    <div class="stock-search-results" id="stockSearchResults"></div>
+                </div>
+            </div>
+
+            <!-- Asset Select (برای بقیه دسته‌ها) -->
+            <div class="form-group" id="assetSelectGroup">
                 <label>دارایی *</label>
                 <select id="assetSelect" onchange="onAssetChange()"></select>
             </div>
+
+            <!-- Stock Selected Box -->
+            <div id="stockSelectedBox" style="display:none;"></div>
 
             <div class="form-row">
                 <div class="form-group">
@@ -771,7 +872,7 @@
                 icon: '💵',
                 items: [
                     { symbol: 'usd', name: 'دلار آزاد', unit: 'عدد', icon: '💵' },
-                    { symbol: 'usdt', name: 'تتر', unit: 'عدد', icon: '💚' },
+                    { symbol: 'usdt', name: 'تتر', unit: 'عدد', icon: 'https://cryptologos.cc/logos/tether-usdt-logo.png' },
                     { symbol: 'eur', name: 'یورو', unit: 'عدد', icon: '💶' },
                     { symbol: 'gbp', name: 'پوند انگلیس', unit: 'عدد', icon: '💷' },
                     { symbol: 'aed', name: 'درهم امارات', unit: 'عدد', icon: '🇦🇪' },
@@ -801,16 +902,12 @@
             stock: {
                 name: 'بورس ایران',
                 icon: '📊',
-                items: [
-                    { symbol: 'custom-stock', name: 'سهام (دستی)', unit: 'سهم', icon: '📊' }
-                ]
+                items: [] // از API پر میشه
             },
             fund: {
                 name: 'صندوق درآمد ثابت',
                 icon: '💼',
-                items: [
-                    { symbol: 'custom-fund', name: 'صندوق (دستی)', unit: 'واحد', icon: '💼' }
-                ]
+                items: [] // از API پر میشه
             },
             realestate: {
                 name: 'املاک',
@@ -841,6 +938,8 @@
         let currentUser = null;
         let portfolio = [];
         let priceCache = {};
+        let selectedStock = null;
+        let stockSymbolsLoaded = false;
         let pieChart = null;
         let barChart = null;
 
@@ -861,7 +960,6 @@
             let result;
             if (decimals > 0) {
                 result = n.toFixed(decimals);
-                // حذف صفرهای اضافی در انتها
                 if (result.includes('.')) {
                     result = result.replace(/0+$/, '').replace(/\.$/, '');
                 }
@@ -869,12 +967,10 @@
                 result = Math.round(n).toString();
             }
 
-            // جداکننده هزارگان
             const parts = result.split('.');
             parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
             result = parts.join('.');
 
-            // تبدیل به فارسی
             const persianDigits = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
             return result.replace(/\d/g, d => persianDigits[d]);
         }
@@ -933,6 +1029,49 @@
             return JSON.parse(text);
         }
 
+        async function loadStockSymbols() {
+            if (stockSymbolsLoaded) return;
+
+            try {
+                const data = await fetchBrsApi('https://Api.BrsApi.ir/Tsetmc/AllSymbols.php?type=1');
+
+                if (!Array.isArray(data)) return;
+
+                // فیلتر: فقط سهام، حق تقدم، صندوق
+                const stocks = data.filter(s => s.l18 && s.l18.trim());
+                const funds = stocks.filter(s => {
+                    const fullName = (s.l30 || '').trim();
+                    return fullName.includes('صندوق') || fullName.includes('ETF');
+                });
+                const regularStocks = stocks.filter(s => !funds.includes(s));
+
+                // پر کردن ASSETS.stock
+                ASSETS.stock.items = regularStocks.map(s => ({
+                    symbol: s.l18.trim(),
+                    name: s.l30 ? s.l30.trim() : s.l18.trim(),
+                    unit: 'سهم',
+                    icon: '📊',
+                    currentPrice: s.pc ? s.pc / 10 : 0,
+                    isin: s.isin
+                }));
+
+                // پر کردن ASSETS.fund
+                ASSETS.fund.items = funds.map(s => ({
+                    symbol: s.l18.trim(),
+                    name: s.l30 ? s.l30.trim() : s.l18.trim(),
+                    unit: 'واحد',
+                    icon: '💼',
+                    currentPrice: s.pc ? s.pc / 10 : 0
+                }));
+
+                stockSymbolsLoaded = true;
+                console.log(`✅ ${ASSETS.stock.items.length} نماد بورس و ${ASSETS.fund.items.length} صندوق لود شد`);
+
+            } catch (e) {
+                console.error('Stock symbols error:', e);
+            }
+        }
+
         async function loadPrices() {
             priceCache = {};
 
@@ -968,7 +1107,7 @@
                 console.error('BrsApi Gold/Currency error:', e);
             }
 
-            // BrsApi: Commodity (انس‌ها)
+            // BrsApi: Commodity
             try {
                 const data = await fetchBrsApi('https://Api.BrsApi.ir/Market/Commodity.php');
 
@@ -990,7 +1129,17 @@
                 priceCache['silver999'] = (priceCache['ounce-silver'] * priceCache['usd'] * 0.999) / OUNCE_TO_GRAM;
             }
 
-            // CoinGecko: کریپتو
+            // پر کردن priceCache با قیمت نمادهای بورس
+            if (stockSymbolsLoaded) {
+                ASSETS.stock.items.forEach(s => {
+                    if (s.currentPrice) priceCache[s.symbol] = s.currentPrice;
+                });
+                ASSETS.fund.items.forEach(s => {
+                    if (s.currentPrice) priceCache[s.symbol] = s.currentPrice;
+                });
+            }
+
+            // CoinGecko
             try {
                 const ids = 'bitcoin,ethereum,tether-gold,pax-gold,tether,usd-coin,solana,ripple,dogecoin,cardano,binancecoin,tron,avalanche-2';
                 const res = await fetch(`https://api.coingecko.com/api/v3/simple/price?ids=${ids}&vs_currencies=usd`);
@@ -1044,7 +1193,6 @@
             const categoryStats = {};
 
             const portfolioWithPrices = portfolio.map(item => {
-                // تبدیل صریح به Number
                 const quantity = Number(item.quantity) || 0;
                 const buyPrice = Number(item.buy_price) || 0;
                 const currentPrice = Number(priceCache[item.asset_symbol]) || buyPrice;
@@ -1095,6 +1243,7 @@
             const container = document.getElementById('mainContent');
 
             try {
+                await loadStockSymbols();
                 await loadPrices();
                 portfolio = await loadPortfolio();
 
@@ -1189,7 +1338,7 @@
                     <button class="quick-btn" onclick="quickAdd('gold', 'coin-emami')">🪙 سکه امامی</button>
                     <button class="quick-btn" onclick="quickAdd('gold', 'silver999')">🥈 نقره ۹۹۹</button>
                     <button class="quick-btn" onclick="quickAdd('currency', 'usd')">💵 دلار</button>
-                    <button class="quick-btn" onclick="quickAdd('currency', 'usdt')">💚 تتر</button>
+                    <button class="quick-btn" onclick="quickAdd('currency', 'usdt')"><img src="https://cryptologos.cc/logos/tether-usdt-logo.png" alt=""> تتر</button>
                     <button class="quick-btn" onclick="quickAdd('crypto', 'btc')">₿ بیت‌کوین</button>
                     <button class="quick-btn" onclick="quickAdd('crypto', 'eth')">⟠ اتریوم</button>
                 </div>
@@ -1294,7 +1443,6 @@
             const profitClass = item.profit >= 0 ? 'green' : 'red';
             const profitSign = item.profit >= 0 ? '+' : '';
 
-            // آیکون
             let iconHtml = '';
             if (item.asset_icon && item.asset_icon.startsWith('http')) {
                 iconHtml = `<img src="${item.asset_icon}" alt="${escapeHtml(item.asset_name)}" onerror="this.parentElement.innerHTML='<span class=\\'emoji\\'>🪙</span>'">`;
@@ -1615,9 +1763,11 @@ ${portfolioText}
             document.getElementById('assetModalTitle').textContent = '➕ افزودن دارایی';
             document.getElementById('assetId').value = '';
             document.getElementById('assetCategory').value = categoryKey;
+            selectedStock = null;
+
             onCategoryChange();
 
-            if (symbol) {
+            if (symbol && categoryKey !== 'stock') {
                 document.getElementById('assetSelect').value = symbol;
                 onAssetChange();
             }
@@ -1637,14 +1787,33 @@ ${portfolioText}
 
         function onCategoryChange() {
             const catKey = document.getElementById('assetCategory').value;
-            const cat = ASSETS[catKey];
-            const select = document.getElementById('assetSelect');
+            const stockSearchGroup = document.getElementById('stockSearchGroup');
+            const assetSelectGroup = document.getElementById('assetSelectGroup');
+            const stockSelectedBox = document.getElementById('stockSelectedBox');
 
-            select.innerHTML = cat.items.map(item => 
-                `<option value="${item.symbol}">${item.name}</option>`
-            ).join('');
+            selectedStock = null;
+            stockSelectedBox.style.display = 'none';
 
-            onAssetChange();
+            if (catKey === 'stock' || catKey === 'fund') {
+                // حالت جستجو
+                stockSearchGroup.style.display = 'block';
+                assetSelectGroup.style.display = 'none';
+                document.getElementById('stockSearchInput').value = '';
+                document.getElementById('stockSearchResults').classList.remove('show');
+                document.getElementById('assetUnit').value = catKey === 'stock' ? 'سهم' : 'واحد';
+            } else {
+                // حالت dropdown معمولی
+                stockSearchGroup.style.display = 'none';
+                assetSelectGroup.style.display = 'block';
+
+                const cat = ASSETS[catKey];
+                const select = document.getElementById('assetSelect');
+                select.innerHTML = cat.items.map(item => 
+                    `<option value="${item.symbol}">${item.name}</option>`
+                ).join('');
+
+                onAssetChange();
+            }
         }
 
         function onAssetChange() {
@@ -1658,14 +1827,86 @@ ${portfolioText}
             }
         }
 
+        // ==========================================
+        // Stock Search
+        // ==========================================
+        function filterStockSymbols() {
+            const query = document.getElementById('stockSearchInput').value.trim().toLowerCase();
+            const resultsBox = document.getElementById('stockSearchResults');
+            const catKey = document.getElementById('assetCategory').value;
+
+            if (!query || query.length < 2) {
+                resultsBox.classList.remove('show');
+                return;
+            }
+
+            const items = ASSETS[catKey]?.items || [];
+            const filtered = items
+                .filter(item => 
+                    item.name.toLowerCase().includes(query) || 
+                    item.symbol.toLowerCase().includes(query)
+                )
+                .slice(0, 30);
+
+            if (filtered.length === 0) {
+                resultsBox.innerHTML = '<div class="stock-result-item"><span class="stock-name">نتیجه‌ای یافت نشد</span></div>';
+                resultsBox.classList.add('show');
+                return;
+            }
+
+            resultsBox.innerHTML = filtered.map(item => `
+                <div class="stock-result-item" onclick="selectStock('${escapeHtml(item.symbol)}', '${escapeHtml(item.name)}', ${item.currentPrice || 0})">
+                    <div>
+                        <div class="stock-name">${escapeHtml(item.name)}</div>
+                        <div class="stock-symbol">${escapeHtml(item.symbol)}</div>
+                    </div>
+                    ${item.currentPrice ? `
+                        <div class="stock-price">
+                            ${formatNum(item.currentPrice)}
+                            <small>قیمت فعلی</small>
+                        </div>
+                    ` : ''}
+                </div>
+            `).join('');
+            resultsBox.classList.add('show');
+        }
+
+        function selectStock(symbol, name, price) {
+            selectedStock = { symbol, name, price };
+
+            document.getElementById('stockSearchInput').value = name;
+            document.getElementById('stockSearchResults').classList.remove('show');
+
+            // نمایش box انتخاب‌شده
+            const box = document.getElementById('stockSelectedBox');
+            box.innerHTML = `
+                <div class="stock-selected-box">
+                    <div class="info">
+                        <div class="name">📊 ${escapeHtml(name)}</div>
+                        <div class="price">${price ? 'قیمت فعلی: ' + formatNum(price) + ' تومان' : 'قیمت لحظه‌ای موجود نیست'}</div>
+                    </div>
+                    <button class="icon-btn danger" onclick="clearStockSelection()" title="حذف">✕</button>
+                </div>
+            `;
+            box.style.display = 'block';
+        }
+
+        function clearStockSelection() {
+            selectedStock = null;
+            document.getElementById('stockSearchInput').value = '';
+            document.getElementById('stockSelectedBox').style.display = 'none';
+        }
+
         function quickAdd(categoryKey, symbol) {
             openAddModal(categoryKey, symbol);
         }
 
+        // ==========================================
+        // Save Asset
+        // ==========================================
         async function saveAsset() {
             const id = document.getElementById('assetId').value;
             const category = document.getElementById('assetCategory').value;
-            const symbol = document.getElementById('assetSelect').value;
             const quantityRaw = document.getElementById('assetQuantity').value;
             const unit = document.getElementById('assetUnit').value;
             const buyPriceRaw = document.getElementById('assetBuyPrice').value;
@@ -1674,6 +1915,25 @@ ${portfolioText}
 
             const quantity = parseFloat(quantityRaw);
             const buyPrice = parseFloat(buyPriceRaw);
+
+            // تشخیص نماد
+            let symbol, assetName, assetIcon;
+
+            if (category === 'stock' || category === 'fund') {
+                if (!selectedStock) {
+                    showToast('❌ لطفاً یک نماد انتخاب کن', 'error');
+                    return;
+                }
+                symbol = selectedStock.symbol;
+                assetName = selectedStock.name;
+                assetIcon = '📊';
+            } else {
+                symbol = document.getElementById('assetSelect').value;
+                const cat = ASSETS[category];
+                const item = cat.items.find(i => i.symbol === symbol);
+                assetName = item ? item.name : symbol;
+                assetIcon = item && item.icon ? item.icon : '📊';
+            }
 
             if (!quantity || quantity <= 0) {
                 showToast('❌ لطفاً مقدار معتبر وارد کن', 'error');
@@ -1689,11 +1949,6 @@ ${portfolioText}
                 showToast('❌ لطفاً تاریخ خرید رو وارد کن', 'error');
                 return;
             }
-
-            const cat = ASSETS[category];
-            const item = cat.items.find(i => i.symbol === symbol);
-            const assetName = item ? item.name : symbol;
-            const assetIcon = item && item.icon ? item.icon : '📊';
 
             const payload = {
                 user_id: currentUser.id,
@@ -1732,9 +1987,35 @@ ${portfolioText}
             document.getElementById('assetModalTitle').textContent = '✏️ ویرایش دارایی';
             document.getElementById('assetId').value = item.id;
             document.getElementById('assetCategory').value = item.asset_category;
+
+            selectedStock = null;
             onCategoryChange();
-            document.getElementById('assetSelect').value = item.asset_symbol;
-            onAssetChange();
+
+            if (item.asset_category === 'stock' || item.asset_category === 'fund') {
+                // برای نماد بورس
+                const foundStock = ASSETS[item.asset_category]?.items.find(s => s.symbol === item.asset_symbol);
+                if (foundStock) {
+                    selectStock(foundStock.symbol, foundStock.name, foundStock.currentPrice);
+                } else {
+                    // اگه نماد در لیست نبود، دستی ست کن
+                    selectedStock = { symbol: item.asset_symbol, name: item.asset_name, price: 0 };
+                    document.getElementById('stockSearchInput').value = item.asset_name;
+                    document.getElementById('stockSelectedBox').innerHTML = `
+                        <div class="stock-selected-box">
+                            <div class="info">
+                                <div class="name">📊 ${escapeHtml(item.asset_name)}</div>
+                                <div class="price">نماد انتخابی</div>
+                            </div>
+                            <button class="icon-btn danger" onclick="clearStockSelection()">✕</button>
+                        </div>
+                    `;
+                    document.getElementById('stockSelectedBox').style.display = 'block';
+                }
+            } else {
+                document.getElementById('assetSelect').value = item.asset_symbol;
+                onAssetChange();
+            }
+
             document.getElementById('assetQuantity').value = item.quantity;
             document.getElementById('assetUnit').value = item.unit;
             document.getElementById('assetBuyPrice').value = item.buy_price;
@@ -1793,6 +2074,15 @@ ${portfolioText}
 
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape') closeModal('assetModal');
+        });
+
+        // بستن نتایج جستجو با کلیک بیرون
+        document.addEventListener('click', (e) => {
+            const resultsBox = document.getElementById('stockSearchResults');
+            const searchInput = document.getElementById('stockSearchInput');
+            if (resultsBox && searchInput && !resultsBox.contains(e.target) && e.target !== searchInput) {
+                resultsBox.classList.remove('show');
+            }
         });
 
         // ==========================================
