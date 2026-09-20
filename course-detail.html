@@ -1,66 +1,100 @@
 <!DOCTYPE html>
-<html lang="fa">
+<html lang="fa" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>جزئیات دوره | آکادمی شمعدون</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css">
+    <meta name="theme-color" content="#d4af37">
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <style>
+        :root {
+            --bg-primary: #0a0a0f;
+            --bg-secondary: #14141c;
+            --bg-card: #1a1a24;
+            --gold: #d4af37;
+            --gold-light: #f4d47c;
+            --gold-dark: #a8862a;
+            --blue: #3b82f6;
+            --green: #10b981;
+            --red: #ef4444;
+            --white: #f8fafc;
+            --gray: #94a3b8;
+        }
         * { margin: 0; padding: 0; box-sizing: border-box; }
-
         body {
-            font-family: Tahoma, sans-serif;
-            background-color: #0f172a;
+            font-family: 'Vazirmatn', Tahoma, sans-serif;
+            background-color: var(--bg-primary);
             background-image: 
-                radial-gradient(circle at 0% 0%, rgba(245, 158, 11, 0.12) 0%, transparent 40%),
-                radial-gradient(circle at 100% 100%, rgba(59, 130, 246, 0.08) 0%, transparent 40%),
-                linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
-            background-size: 100% 100%, 100% 100%, 50px 50px, 50px 50px;
+                radial-gradient(circle at 0% 0%, rgba(212, 175, 55, 0.08) 0%, transparent 40%),
+                radial-gradient(circle at 100% 100%, rgba(59, 130, 246, 0.06) 0%, transparent 40%),
+                linear-gradient(rgba(255, 255, 255, 0.015) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
+            background-size: 100% 100%, 100% 100%, 60px 60px, 60px 60px;
             background-attachment: fixed;
+            color: var(--white);
             min-height: 100vh;
             direction: rtl;
-            padding: 20px 15px;
+            overflow-x: hidden;
+        }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        .container { max-width: 900px; margin: 0 auto; }
+        .container { max-width: 900px; margin: 0 auto; padding: 100px 20px 40px; }
 
-        .header {
-            display: flex;
-            justify-content: space-between;
+        /* ===== Back Button ===== */
+        .back-btn {
+            display: inline-flex;
             align-items: center;
-            margin-bottom: 25px;
-            flex-wrap: wrap;
-            gap: 15px;
-        }
-        .header h1 { color: #f59e0b; font-size: 22px; }
-        .header a {
-            color: #94a3b8;
+            gap: 8px;
+            color: var(--gray);
             text-decoration: none;
-            font-size: 14px;
+            font-size: 13px;
+            font-weight: 700;
             padding: 8px 16px;
-            border: 2px solid #334155;
-            border-radius: 25px;
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            border-radius: 10px;
             transition: 0.3s;
-            background: rgba(30, 41, 59, 0.7);
-            backdrop-filter: blur(10px);
+            margin-bottom: 20px;
         }
-        .header a:hover { background: #334155; color: #fff; }
+        .back-btn:hover {
+            color: var(--gold);
+            border-color: var(--gold);
+            background: rgba(212, 175, 55, 0.05);
+        }
 
+        /* ===== Course Hero ===== */
         .course-hero {
-            background: rgba(30, 41, 59, 0.85);
-            backdrop-filter: blur(15px);
+            background: linear-gradient(135deg, var(--bg-card), var(--bg-secondary));
+            border: 1px solid rgba(212, 175, 55, 0.15);
             border-radius: 25px;
             padding: 30px 25px;
             margin-bottom: 25px;
-            border: 1px solid rgba(255,255,255,0.05);
             text-align: center;
+            animation: fadeInUp 0.6s ease-out;
         }
         .course-hero .icon { font-size: 70px; margin-bottom: 15px; }
-        .course-hero .level { color: #f59e0b; font-size: 13px; font-weight: bold; margin-bottom: 8px; }
-        .course-hero h1 { color: #f1f5f9; font-size: 24px; margin-bottom: 12px; }
-        .course-hero p { color: #94a3b8; font-size: 14px; line-height: 1.8; max-width: 600px; margin: 0 auto 15px; }
-
+        .course-hero .level {
+            color: var(--gold);
+            font-size: 13px;
+            font-weight: 800;
+            margin-bottom: 8px;
+        }
+        .course-hero h1 {
+            color: var(--white);
+            font-size: 24px;
+            font-weight: 900;
+            margin-bottom: 12px;
+        }
+        .course-hero p {
+            color: var(--gray);
+            font-size: 14px;
+            line-height: 1.8;
+            max-width: 600px;
+            margin: 0 auto 15px;
+        }
         .course-meta {
             display: flex;
             justify-content: center;
@@ -68,44 +102,68 @@
             flex-wrap: wrap;
             margin-bottom: 20px;
         }
-        .course-meta span { color: #cbd5e1; font-size: 13px; display: flex; align-items: center; gap: 5px; }
-        .course-price { font-size: 22px; font-weight: bold; color: #4ade80; margin-bottom: 15px; }
+        .course-meta span {
+            color: #cbd5e1;
+            font-size: 13px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .course-price {
+            font-size: 22px;
+            font-weight: 900;
+            color: var(--green);
+            margin-bottom: 15px;
+        }
 
         .enroll-btn {
-            background: linear-gradient(135deg, #f59e0b, #d97706);
-            color: #0f172a;
+            background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+            color: var(--bg-primary);
             border: none;
             padding: 15px 40px;
             border-radius: 15px;
             font-size: 16px;
-            font-weight: bold;
+            font-weight: 800;
             cursor: pointer;
-            font-family: Tahoma, sans-serif;
+            font-family: inherit;
             transition: 0.3s;
             display: inline-flex;
             align-items: center;
             gap: 8px;
         }
-        .enroll-btn:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(245, 158, 11, 0.4); }
-        .enroll-btn.enrolled { background: linear-gradient(135deg, #22c55e, #16a34a); }
-        .enroll-btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+        .enroll-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.4);
+        }
+        .enroll-btn.enrolled {
+            background: linear-gradient(135deg, var(--green), #059669);
+            color: #fff;
+        }
+        .enroll-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
 
+        /* ===== Section Title ===== */
         .section-title {
-            color: #f1f5f9;
+            color: var(--white);
             font-size: 18px;
+            font-weight: 800;
             margin-bottom: 15px;
-            border-bottom: 2px solid rgba(245, 158, 11, 0.3);
+            border-bottom: 2px solid rgba(212, 175, 55, 0.3);
             display: inline-block;
             padding-bottom: 5px;
         }
 
+        /* ===== Lessons List ===== */
         .lessons-list {
-            background: rgba(30, 41, 59, 0.85);
-            backdrop-filter: blur(15px);
+            background: linear-gradient(135deg, var(--bg-card), var(--bg-secondary));
+            border: 1px solid rgba(212, 175, 55, 0.15);
             border-radius: 20px;
             padding: 20px;
-            border: 1px solid rgba(255,255,255,0.05);
             margin-bottom: 25px;
+            animation: fadeInUp 0.6s ease-out 0.1s backwards;
         }
         .lesson-item {
             display: flex;
@@ -114,70 +172,99 @@
             padding: 12px 15px;
             border-radius: 12px;
             margin-bottom: 8px;
-            background: rgba(15, 23, 42, 0.6);
-            border: 1px solid rgba(255,255,255,0.05);
+            background: rgba(10, 10, 15, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.05);
             transition: 0.3s;
             cursor: pointer;
         }
-        .lesson-item:hover { background: rgba(15, 23, 42, 0.9); border-color: rgba(245, 158, 11, 0.3); }
-        .lesson-item.locked { opacity: 0.5; cursor: not-allowed; }
-        .lesson-item.locked:hover { background: rgba(15, 23, 42, 0.6); border-color: rgba(255,255,255,0.05); }
-
+        .lesson-item:hover {
+            background: rgba(10, 10, 15, 0.9);
+            border-color: rgba(212, 175, 55, 0.3);
+        }
+        .lesson-item.locked {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        .lesson-item.locked:hover {
+            background: rgba(10, 10, 15, 0.5);
+            border-color: rgba(255, 255, 255, 0.05);
+        }
         .lesson-number {
-            width: 30px;
-            height: 30px;
+            width: 30px; height: 30px;
             border-radius: 50%;
-            background: rgba(245, 158, 11, 0.2);
-            color: #f59e0b;
+            background: rgba(212, 175, 55, 0.2);
+            color: var(--gold);
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 12px;
-            font-weight: bold;
+            font-weight: 900;
             flex-shrink: 0;
         }
-        .lesson-item.completed .lesson-number { background: rgba(34, 197, 94, 0.2); color: #4ade80; }
-        .lesson-item.locked .lesson-number { background: rgba(100, 116, 139, 0.2); color: #64748b; }
-
+        .lesson-item.completed .lesson-number {
+            background: rgba(16, 185, 129, 0.2);
+            color: var(--green);
+        }
+        .lesson-item.locked .lesson-number {
+            background: rgba(100, 116, 139, 0.2);
+            color: #64748b;
+        }
         .lesson-info { flex: 1; }
-        .lesson-title { color: #f1f5f9; font-size: 14px; font-weight: bold; margin-bottom: 3px; }
-        .lesson-duration { color: #94a3b8; font-size: 11px; }
+        .lesson-title {
+            color: var(--white);
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 3px;
+        }
+        .lesson-duration { color: var(--gray); font-size: 11px; }
         .lesson-status { font-size: 18px; flex-shrink: 0; }
 
+        /* ===== Progress ===== */
         .progress-section {
-            background: rgba(30, 41, 59, 0.85);
-            backdrop-filter: blur(15px);
+            background: linear-gradient(135deg, var(--bg-card), var(--bg-secondary));
+            border: 1px solid rgba(212, 175, 55, 0.15);
             border-radius: 20px;
             padding: 20px;
-            border: 1px solid rgba(255,255,255,0.05);
             margin-bottom: 25px;
+            animation: fadeInUp 0.6s ease-out 0.15s backwards;
         }
         .progress-bar-container {
             width: 100%;
             height: 10px;
-            background: rgba(15, 23, 42, 0.8);
+            background: rgba(10, 10, 15, 0.8);
             border-radius: 10px;
             overflow: hidden;
             margin: 10px 0;
         }
         .progress-bar-fill {
             height: 100%;
-            background: linear-gradient(90deg, #f59e0b, #d97706);
+            background: linear-gradient(90deg, var(--gold), var(--gold-dark));
             border-radius: 10px;
             transition: width 0.5s ease;
         }
-        .progress-text { color: #94a3b8; font-size: 13px; display: flex; justify-content: space-between; }
+        .progress-text {
+            color: var(--gray);
+            font-size: 13px;
+            display: flex;
+            justify-content: space-between;
+        }
 
+        /* ===== Feedback ===== */
         .feedback-section {
-            background: rgba(30, 41, 59, 0.85);
-            backdrop-filter: blur(15px);
+            background: linear-gradient(135deg, var(--bg-card), var(--bg-secondary));
+            border: 1px solid rgba(212, 175, 55, 0.3);
             border-radius: 20px;
             padding: 25px;
             margin-bottom: 25px;
-            border: 1px solid rgba(245, 158, 11, 0.3);
+            animation: fadeInUp 0.6s ease-out 0.2s backwards;
         }
-
-        .rating-stars { display: flex; justify-content: center; gap: 8px; margin: 20px 0; direction: ltr; }
+        .rating-stars {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin: 20px 0;
+            direction: ltr;
+        }
         .rating-stars .star {
             font-size: 40px;
             color: #475569;
@@ -185,87 +272,116 @@
             transition: 0.2s;
             user-select: none;
         }
-        .rating-stars .star:hover, .rating-stars .star.active { color: #f59e0b; transform: scale(1.1); }
-
-        #feedbackComment, #suggestedTopic {
+        .rating-stars .star:hover,
+        .rating-stars .star.active {
+            color: var(--gold);
+            transform: scale(1.1);
+        }
+        #feedbackComment,
+        #suggestedTopic {
             width: 100%;
             padding: 12px 15px;
             border-radius: 12px;
-            border: 2px solid #334155;
-            background: rgba(15, 23, 42, 0.8);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            background: rgba(10, 10, 15, 0.8);
             color: #fff;
             font-size: 14px;
-            font-family: Tahoma, sans-serif;
+            font-family: inherit;
             outline: none;
             resize: vertical;
             margin-bottom: 15px;
-            box-sizing: border-box;
         }
-        #feedbackComment:focus, #suggestedTopic:focus { border-color: #f59e0b; }
-
+        #feedbackComment:focus,
+        #suggestedTopic:focus {
+            border-color: var(--gold);
+        }
         .checkbox-wrapper {
             display: flex;
             align-items: center;
             gap: 10px;
             padding: 12px;
-            background: rgba(15, 23, 42, 0.6);
+            background: rgba(10, 10, 15, 0.6);
             border-radius: 12px;
             margin-bottom: 15px;
             cursor: pointer;
         }
         .checkbox-wrapper input[type="checkbox"] {
-            width: 20px;
-            height: 20px;
-            accent-color: #f59e0b;
+            width: 20px; height: 20px;
+            accent-color: var(--gold);
             cursor: pointer;
         }
-        .checkbox-wrapper label { color: #cbd5e1; font-size: 13px; cursor: pointer; flex: 1; }
-
+        .checkbox-wrapper label {
+            color: #cbd5e1;
+            font-size: 13px;
+            cursor: pointer;
+            flex: 1;
+        }
         .btn-submit-feedback {
             width: 100%;
             padding: 14px;
-            background: linear-gradient(135deg, #f59e0b, #d97706);
-            color: #0f172a;
+            background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+            color: var(--bg-primary);
             border: none;
             border-radius: 12px;
             font-size: 15px;
-            font-weight: bold;
+            font-weight: 800;
             cursor: pointer;
-            font-family: Tahoma, sans-serif;
+            font-family: inherit;
             transition: 0.3s;
         }
-        .btn-submit-feedback:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(245, 158, 11, 0.4); }
+        .btn-submit-feedback:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(212, 175, 55, 0.4);
+        }
 
+        /* ===== Ratings ===== */
         .ratings-section {
-            background: rgba(30, 41, 59, 0.85);
-            backdrop-filter: blur(15px);
+            background: linear-gradient(135deg, var(--bg-card), var(--bg-secondary));
+            border: 1px solid rgba(212, 175, 55, 0.15);
             border-radius: 20px;
             padding: 25px;
             margin-bottom: 25px;
-            border: 1px solid rgba(255,255,255,0.05);
+            animation: fadeInUp 0.6s ease-out 0.25s backwards;
         }
         .ratings-summary {
             text-align: center;
             padding: 20px;
-            background: rgba(15, 23, 42, 0.6);
+            background: rgba(10, 10, 15, 0.6);
             border-radius: 15px;
             margin-bottom: 20px;
         }
-        .avg-number { color: #f59e0b; font-size: 42px; font-weight: bold; }
-        .avg-stars { color: #f59e0b; font-size: 24px; margin: 5px 0; }
-        .avg-count { color: #94a3b8; font-size: 13px; }
-
+        .avg-number {
+            color: var(--gold);
+            font-size: 42px;
+            font-weight: 900;
+        }
+        .avg-stars {
+            color: var(--gold);
+            font-size: 24px;
+            margin: 5px 0;
+        }
+        .avg-count { color: var(--gray); font-size: 13px; }
         .rating-item {
             padding: 15px;
-            background: rgba(15, 23, 42, 0.6);
+            background: rgba(10, 10, 15, 0.6);
             border-radius: 12px;
             margin-bottom: 10px;
-            border-right: 3px solid #f59e0b;
+            border-right: 3px solid var(--gold);
         }
-        .rating-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
-        .rating-stars-display { color: #f59e0b; font-size: 16px; }
+        .rating-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+        .rating-stars-display { color: var(--gold); font-size: 16px; }
         .rating-date { color: #64748b; font-size: 11px; }
-        .rating-comment { color: #cbd5e1; font-size: 13px; line-height: 1.7; margin: 0; }
+        .rating-comment {
+            color: #cbd5e1;
+            font-size: 13px;
+            line-height: 1.7;
+            margin: 0;
+        }
         .rating-advanced {
             margin-top: 8px;
             padding: 8px 12px;
@@ -275,22 +391,7 @@
             font-size: 12px;
         }
 
-        .back-btn {
-            display: inline-block;
-            background: rgba(30, 41, 59, 0.7);
-            color: #94a3b8;
-            padding: 12px 25px;
-            border-radius: 12px;
-            text-decoration: none;
-            font-size: 14px;
-            border: 1px solid #334155;
-            transition: 0.3s;
-            margin-top: 10px;
-        }
-        .back-btn:hover { background: #334155; color: #fff; }
-
-        .loading { text-align: center; padding: 50px 20px; color: #94a3b8; }
-
+        /* ===== Messages ===== */
         .message {
             padding: 15px;
             border-radius: 12px;
@@ -299,24 +400,44 @@
             text-align: center;
             display: none;
         }
-        .message.success { background: rgba(34, 197, 94, 0.2); color: #4ade80; border: 1px solid #22c55e; display: block; }
-        .message.error { background: rgba(239, 68, 68, 0.2); color: #f87171; border: 1px solid #ef4444; display: block; }
+        .message.success {
+            background: rgba(16, 185, 129, 0.2);
+            color: var(--green);
+            border: 1px solid var(--green);
+            display: block;
+        }
+        .message.error {
+            background: rgba(239, 68, 68, 0.2);
+            color: #f87171;
+            border: 1px solid var(--red);
+            display: block;
+        }
 
+        .loading {
+            text-align: center;
+            padding: 80px 20px;
+            color: var(--gray);
+            font-size: 16px;
+        }
+
+        /* ===== Responsive ===== */
         @media (max-width: 600px) {
+            .container { padding: 90px 15px 30px; }
             .course-hero h1 { font-size: 20px; }
             .course-hero .icon { font-size: 55px; }
         }
     </style>
 </head>
 <body>
+
     <div class="container" id="content">
         <div class="loading">⏳ در حال بارگذاری...</div>
     </div>
 
+    <script src="navbar.js"></script>
+    <script src="supabase-config.js"></script>
+
     <script>
-        const SUPABASE_URL = 'https://jcwwilatvstjrohvhtss.supabase.co';
-        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Impjd3dpbGF0dnN0anJvaHZodHNzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODk3MDY4NTYsImV4cCI6MjEwNTI4Mjg1Nn0.eUC89RJy6-60nNGrSeYeDADzLxz-kWTGy4DbNGVi6MM';
-        const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
         // ===== دوره‌های ثابت =====
         const staticCoursesData = {
             1: {
@@ -434,11 +555,13 @@
 
         // ===== بارگذاری =====
         async function init() {
-            const { data: { session } } = await supabaseClient.auth.getSession();
+            const { data: { session } } = await db.auth.getSession();
+
             if (!session) {
                 window.location.href = 'login.html';
                 return;
             }
+
             currentUser = session.user;
             completedCourses = currentUser.user_metadata?.completed_courses || [];
             inProgressCourses = currentUser.user_metadata?.in_progress_courses || [];
@@ -448,7 +571,7 @@
             const courseId = params.get('id');
             const type = params.get('type');
 
-            // ===== دوره داینامیک (از Supabase) =====
+            // ===== دوره داینامیک =====
             if (type === 'db' || courseId.startsWith('db-') || (!isNaN(parseInt(courseId)) && parseInt(courseId) > 100)) {
                 const dbId = parseInt(courseId);
                 await loadDynamicCourse(dbId);
@@ -460,8 +583,7 @@
             if (!staticId || !staticCoursesData[staticId]) {
                 document.getElementById('content').innerHTML = `
                     <div class="loading">
-                        ❌ دوره مورد نظر پیدا نشد.
-                        <br><br>
+                        ❌ دوره مورد نظر پیدا نشد.<br><br>
                         <a href="courses.html" class="back-btn">⬅ بازگشت به دوره‌ها</a>
                     </div>
                 `;
@@ -476,8 +598,7 @@
         // ===== بارگذاری دوره داینامیک =====
         async function loadDynamicCourse(dbId) {
             try {
-                // لود اطلاعات دوره
-                const { data: course, error: courseError } = await supabaseClient
+                const { data: course, error: courseError } = await db
                     .from('courses')
                     .select('*')
                     .eq('id', dbId)
@@ -486,22 +607,19 @@
                 if (courseError || !course) {
                     document.getElementById('content').innerHTML = `
                         <div class="loading">
-                            ❌ دوره مورد نظر پیدا نشد.
-                            <br><br>
+                            ❌ دوره مورد نظر پیدا نشد.<br><br>
                             <a href="courses.html" class="back-btn">⬅ بازگشت به دوره‌ها</a>
                         </div>
                     `;
                     return;
                 }
 
-                // لود دروس این دوره
-                const { data: lessons, error: lessonsError } = await supabaseClient
+                const { data: lessons } = await db
                     .from('lessons')
                     .select('*')
                     .eq('course_id', dbId)
                     .order('order_num', { ascending: true });
 
-                // تبدیل به فرمت مورد نیاز
                 currentCourse = {
                     id: 'db-' + course.id,
                     dbId: course.id,
@@ -522,12 +640,12 @@
 
                 isDynamicCourse = true;
                 await renderCourse(currentCourse);
+
             } catch (e) {
                 console.error('خطا:', e);
                 document.getElementById('content').innerHTML = `
                     <div class="loading">
-                        ❌ خطا در بارگذاری دوره.
-                        <br><br>
+                        ❌ خطا در بارگذاری دوره.<br><br>
                         <a href="courses.html" class="back-btn">⬅ بازگشت به دوره‌ها</a>
                     </div>
                 `;
@@ -543,10 +661,9 @@
 
         // ===== نمایش دوره =====
         async function renderCourse(course) {
-            // آیدی برای ذخیره در user_metadata
             const courseKey = isDynamicCourse ? course.dbId : course.id;
-
             const ratingsData = await loadCourseRatings(course.dbId || course.id);
+
             const isCompleted = completedCourses.includes(courseKey);
             const isInProgress = inProgressCourses.includes(courseKey);
             const isEnrolled = isCompleted || isInProgress;
@@ -576,8 +693,10 @@
                 const lessonNum = index + 1;
                 const isLessonCompleted = (completedLessons[courseKey] || []).includes(lessonNum);
                 const isLessonLocked = !isEnrolled;
+
                 return `
-                    <div class="lesson-item ${isLessonCompleted ? 'completed' : ''} ${isLessonLocked ? 'locked' : ''}" onclick="${isLessonLocked ? '' : `startLesson(${courseKey}, ${lessonNum})`}">
+                    <div class="lesson-item ${isLessonCompleted ? 'completed' : ''} ${isLessonLocked ? 'locked' : ''}" 
+                         onclick="${isLessonLocked ? '' : `startLesson(${courseKey}, ${lessonNum})`}">
                         <div class="lesson-number">${isLessonCompleted ? '✓' : lessonNum}</div>
                         <div class="lesson-info">
                             <div class="lesson-title">${escapeHtml(lesson.title)}</div>
@@ -589,10 +708,7 @@
             }).join('');
 
             document.getElementById('content').innerHTML = `
-                <div class="header">
-                    <h1>📚 جزئیات دوره</h1>
-                    <a href="courses.html">⬅ بازگشت به دوره‌ها</a>
-                </div>
+                <a href="courses.html" class="back-btn">⬅ بازگشت به دوره‌ها</a>
 
                 <div class="message" id="message"></div>
 
@@ -626,11 +742,11 @@
                 <div class="lessons-list">
                     <div class="section-title">📋 سرفصل‌های دوره</div>
                     ${!isEnrolled ? `
-                        <div style="text-align: center; color: #f59e0b; padding: 15px; background: rgba(245, 158, 11, 0.1); border-radius: 12px; margin-bottom: 15px; font-size: 13px;">
+                        <div style="text-align: center; color: var(--gold); padding: 15px; background: rgba(212, 175, 55, 0.1); border-radius: 12px; margin-bottom: 15px; font-size: 13px;">
                             🔒 برای دسترسی به درس‌ها، ابتدا در دوره ثبت‌نام کنید.
                         </div>
                     ` : ''}
-                    ${lessonsHTML.length === 0 ? '<p style="color:#94a3b8; text-align:center; padding:20px;">هنوز درسی برای این دوره ثبت نشده است.</p>' : lessonsHTML}
+                    ${lessonsHTML.length === 0 ? '<p style="color:var(--gray); text-align:center; padding:20px;">هنوز درسی برای این دوره ثبت نشده است.</p>' : lessonsHTML}
                 </div>
 
                 ${isCompleted ? renderFeedbackForm(courseKey) : ''}
@@ -645,7 +761,7 @@
         // ===== بارگذاری امتیازات =====
         async function loadCourseRatings(courseId) {
             try {
-                const { data, error } = await supabaseClient
+                const { data, error } = await db
                     .from('course_ratings')
                     .select('rating, comment, needs_advanced_course, suggested_topic, created_at, user_id')
                     .eq('course_id', courseId)
@@ -657,6 +773,7 @@
 
                 const avg = (data.reduce((sum, r) => sum + r.rating, 0) / data.length).toFixed(1);
                 return { avg: parseFloat(avg), count: data.length, ratings: data };
+
             } catch (e) {
                 return { avg: 0, count: 0, ratings: [] };
             }
@@ -667,7 +784,7 @@
             return `
                 <div class="feedback-section">
                     <div class="section-title">⭐ بازخورد شما</div>
-                    <p style="color: #94a3b8; font-size: 13px; margin-bottom: 15px;">
+                    <p style="color: var(--gray); font-size: 13px; margin-bottom: 15px;">
                         شما این دوره را با موفقیت تکمیل کردید! لطفاً بازخورد خود را ثبت کنید.
                     </p>
                     <div class="rating-stars" id="ratingStars">
@@ -699,6 +816,7 @@
                 const stars = '★'.repeat(r.rating) + '☆'.repeat(5 - r.rating);
                 const date = new Date(r.created_at).toLocaleDateString('fa-IR');
                 const showAdvanced = r.needs_advanced_course && r.suggested_topic;
+
                 return `
                     <div class="rating-item">
                         <div class="rating-header">
@@ -758,7 +876,7 @@
             const suggestedTopic = needsAdvanced ? document.getElementById('suggestedTopic').value.trim() : null;
 
             try {
-                const { error } = await supabaseClient
+                const { error } = await db
                     .from('course_ratings')
                     .upsert({
                         user_id: currentUser.id,
@@ -777,7 +895,11 @@
 
                 message.textContent = '✅ بازخورد شما با موفقیت ثبت شد!';
                 message.className = 'message success';
-                setTimeout(() => { window.location.reload(); }, 2000);
+
+                setTimeout(() => {
+                    window.location.reload();
+                }, 2000);
+
             } catch (e) {
                 message.textContent = '❌ خطای شبکه';
                 message.className = 'message error';
@@ -794,15 +916,19 @@
         async function enrollCourse(courseId) {
             try {
                 const newInProgress = [...inProgressCourses, courseId];
-                const { error } = await supabaseClient.auth.updateUser({
+
+                const { error } = await db.auth.updateUser({
                     data: { in_progress_courses: newInProgress }
                 });
+
                 if (error) {
                     alert('❌ خطا در ثبت‌نام: ' + error.message);
                     return;
                 }
+
                 inProgressCourses = newInProgress;
                 window.location.reload();
+
             } catch (e) {
                 alert('❌ خطای شبکه');
             }
