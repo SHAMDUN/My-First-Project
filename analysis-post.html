@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تحلیل | آکادمی شمعدون</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css">
+    <meta name="theme-color" content="#d4af37">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/dompurify@3.0.6/dist/purify.min.js"></script>
+    <style>
+        :root {
+            --bg-primary: #0a0a0f;
+            --bg-secondary: #14141c;
+            --bg-card: #1a1a24;
+            --gold: #d4af37;
+            --gold-light: #f4d47c;
+            --gold-dark: #a8862a;
+            --green: #10b981;
+            --red: #ef4444;
+            --blue: #3b82f6;
+            --white: #f8fafc;
+            --gray: #94a3b8;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Vazirmatn', Tahoma, sans-serif;
+            background-color: var(--bg-primary);
+            background-image: 
+                radial-gradient(circle at 0% 0%, rgba(212, 175, 55, 0.08) 0%, transparent 40%),
+                radial-gradient(circle at 100% 100%, rgba(59, 130, 246, 0.06) 0%, transparent 40%);
+            background-size: 100% 100%, 100% 100%;
+            background-attachment: fixed;
+            color: var(--white);
+            min-height: 100vh;
+            direction: rtl;
+            overflow-x: hidden;
+        }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        .main-container { max-width: 900px; margin: 0 auto; padding: 100px 20px 40px; }
+
+        /* ===== Back Button ===== */
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--gray);
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 700;
+            padding: 8px 16px;
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            border-radius: 10px;
+            transition: 0.3s;
+            margin-bottom: 25px;
+        }
+        .back-btn:hover {
+            color: var(--gold);
+            border-color: var(--gold);
+            background: rgba(212, 175, 55, 0.05);
+        }
+
+        /* ===== Article Header ===== */
+        .article-header {
+            margin-bottom: 30px;
+            animation: fadeInUp 0.6s ease-out;
+        }
+        .type-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 14px;
+            border-radius: 10px;
+            font-size: 12px;
+            font-weight: 800;
+            margin-bottom: 15px;
+            color: #fff;
+        }
+        .type-badge.daily {
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+        }
+        .type-badge.weekly {
+            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+        }
+        .article-title {
+            font-size: 34px;
+            font-weight: 900;
+            line-height: 1.5;
+            margin-bottom: 20px;
+            color: var(--white);
+        }
+        .article-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            color: var(--gray);
+            font-size: 13px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(212, 175, 55, 0.15);
+        }
+        .article-meta span {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .article-meta .validity {
+            color: var(--gold);
+            font-weight: 700;
+        }
+
+        /* ===== Cover Image ===== */
+        .cover-image {
+            width: 100%;
+            height: 400px;
+            border-radius: 20px;
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.2), rgba(20, 20, 28, 0.9));
+            background-size: cover;
+            background-position: center;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 100px;
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            animation: fadeInUp 0.6s ease-out 0.1s backwards;
+        }
+
+        /* ===== Signal & Levels ===== */
+        .signal-box {
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.08), rgba(212, 175, 55, 0.02));
+            border: 1px solid rgba(212, 175, 55, 0.25);
+            border-radius: 18px;
+            padding: 20px;
+            margin-bottom: 25px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            animation: fadeInUp 0.6s ease-out 0.15s backwards;
+        }
+        .signal-section h3 {
+            color: var(--gray);
+            font-size: 12px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        .signal-value {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 900;
+        }
+        .signal-value.up {
+            background: rgba(16, 185, 129, 0.15);
+            color: var(--green);
+            border: 1px solid rgba(16, 185, 129, 0.4);
+        }
+        .signal-value.down {
+            background: rgba(239, 68, 68, 0.15);
+            color: var(--red);
+            border: 1px solid rgba(239, 68, 68, 0.4);
+        }
+        .signal-value.neutral {
+            background: rgba(148, 163, 184, 0.15);
+            color: var(--gray);
+            border: 1px solid rgba(148, 163, 184, 0.4);
+        }
+        .levels-section .level-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 6px 0;
+            font-size: 13px;
+            border-bottom: 1px dashed rgba(255, 255, 255, 0.05);
+        }
+        .levels-section .level-row:last-child { border-bottom: none; }
+        .levels-section .level-row .label { color: var(--gray); }
+        .levels-section .level-row .value {
+            font-weight: 800;
+            font-variant-numeric: tabular-nums;
+        }
+        .levels-section .level-row .value.support { color: var(--green); }
+        .levels-section .level-row .value.resistance { color: var(--red); }
+
+        /* ===== Article Content ===== */
+        .article-content {
+            background: linear-gradient(135deg, var(--bg-card), var(--bg-secondary));
+            border: 1px solid rgba(212, 175, 55, 0.15);
+            border-radius: 20px;
+            padding: 35px;
+            line-height: 2;
+            font-size: 15.5px;
+            color: #cbd5e1;
+            animation: fadeInUp 0.6s ease-out 0.2s backwards;
+        }
+        .article-content h1 {
+            color: var(--gold);
+            font-size: 26px;
+            font-weight: 900;
+            margin: 30px 0 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid rgba(212, 175, 55, 0.3);
+            line-height: 1.5;
+        }
+        .article-content h1:first-child { margin-top: 0; }
+        .article-content h2 {
+            color: var(--gold-light);
+            font-size: 21px;
+            font-weight: 800;
+            margin: 25px 0 12px;
+            line-height: 1.5;
+        }
+        .article-content h3 {
+            color: var(--white);
+            font-size: 17px;
+            font-weight: 800;
+            margin: 20px 0 10px;
+        }
+        .article-content p {
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+        .article-content ul,
+        .article-content ol {
+            margin: 15px 20px 15px 0;
+            padding-right: 20px;
+        }
+        .article-content li {
+            margin-bottom: 8px;
+        }
+        .article-content strong {
+            color: var(--gold-light);
+            font-weight: 800;
+        }
+        .article-content em {
+            color: var(--gold);
+        }
+        .article-content code {
+            background: rgba(212, 175, 55, 0.15);
+            color: var(--gold-light);
+            padding: 2px 8px;
+            border-radius: 6px;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            direction: ltr;
+            display: inline-block;
+        }
+        .article-content pre {
+            background: rgba(0, 0, 0, 0.5);
+            padding: 15px;
+            border-radius: 12px;
+            overflow-x: auto;
+            margin: 15px 0;
+            direction: ltr;
+            text-align: left;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .article-content pre code {
+            background: transparent;
+            padding: 0;
+            color: #cbd5e1;
+            font-size: 13px;
+        }
+        .article-content blockquote {
+            border-right: 4px solid var(--gold);
+            background: rgba(212, 175, 55, 0.05);
+            padding: 15px 20px;
+            margin: 15px 0;
+            border-radius: 8px;
+            color: var(--gold-light);
+            font-style: italic;
+        }
+        .article-content a {
+            color: var(--blue);
+            text-decoration: underline;
+            text-decoration-color: rgba(59, 130, 246, 0.4);
+            transition: 0.3s;
+        }
+        .article-content a:hover {
+            color: var(--gold);
+            text-decoration-color: var(--gold);
+        }
+        .article-content hr {
+            border: none;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.4), transparent);
+            margin: 25px 0;
+        }
+        .article-content img {
+            max-width: 100%;
+            border-radius: 12px;
+            margin: 15px 0;
+        }
+        .article-content table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+            font-size: 14px;
+        }
+        .article-content table th {
+            background: rgba(212, 175, 55, 0.1);
+            color: var(--gold);
+            padding: 10px;
+            text-align: right;
+            border: 1px solid rgba(212, 175, 55, 0.2);
+        }
+        .article-content table td {
+            padding: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        /* ===== Tags ===== */
+        .tags-section {
+            margin-top: 30px;
+            padding-top: 25px;
+            border-top: 1px solid rgba(212, 175, 55, 0.15);
+            animation: fadeInUp 0.6s ease-out 0.3s backwards;
+        }
+        .tags-title {
+            color: var(--gray);
+            font-size: 13px;
+            margin-bottom: 12px;
+            font-weight: 700;
+        }
+        .tags-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .tag {
+            background: rgba(212, 175, 55, 0.1);
+            color: var(--gold);
+            border: 1px solid rgba(212, 175, 55, 0.25);
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+            text-decoration: none;
+            transition: 0.3s;
+        }
+        .tag:hover {
+            background: rgba(212, 175, 55, 0.25);
+            transform: translateY(-2px);
+        }
+
+        /* ===== Share ===== */
+        .share-section {
+            margin-top: 25px;
+            padding: 20px;
+            background: rgba(20, 20, 28, 0.5);
+            border-radius: 15px;
+            border: 1px solid rgba(212, 175, 55, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 15px;
+            animation: fadeInUp 0.6s ease-out 0.35s backwards;
+        }
+        .share-title {
+            color: var(--gray);
+            font-size: 13px;
+            font-weight: 700;
+        }
+        .share-buttons {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        .share-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 10px 16px;
+            border-radius: 10px;
+            font-size: 13px;
+            font-weight: 700;
+            text-decoration: none;
+            transition: 0.3s;
+            font-family: inherit;
+            border: none;
+            cursor: pointer;
+            color: var(--white);
+        }
+        .share-btn.telegram { background: #0088cc; }
+        .share-btn.telegram:hover { background: #006699; transform: translateY(-2px); }
+        .share-btn.whatsapp { background: #25d366; }
+        .share-btn.whatsapp:hover { background: #1da851; transform: translateY(-2px); }
+        .share-btn.copy { background: rgba(148, 163, 184, 0.15); border: 1px solid rgba(148, 163, 184, 0.3); color: var(--gray); }
+        .share-btn.copy:hover { background: rgba(148, 163, 184, 0.25); color: var(--white); }
+
+        /* ===== Warning Box ===== */
+        .warning-box {
+            margin-top: 25px;
+            background: rgba(239, 68, 68, 0.08);
+            border: 1px solid rgba(239, 68, 68, 0.25);
+            border-radius: 15px;
+            padding: 15px 20px;
+            color: #fca5a5;
+            font-size: 13px;
+            line-height: 1.8;
+            display: flex;
+            gap: 10px;
+            align-items: flex-start;
+            animation: fadeInUp 0.6s ease-out 0.4s backwards;
+        }
+        .warning-box::before {
+            content: '⚠️';
+            font-size: 18px;
+            flex-shrink: 0;
+        }
+
+        /* ===== Loading / Error ===== */
+        .loading-screen {
+            text-align: center;
+            padding: 100px 20px;
+            color: var(--gray);
+        }
+        .spinner {
+            width: 50px; height: 50px;
+            border: 4px solid rgba(212, 175, 55, 0.2);
+            border-top-color: var(--gold);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+        .error-screen {
+            text-align: center;
+            padding: 80px 20px;
+            color: var(--gray);
+        }
+        .error-screen .icon { font-size: 60px; margin-bottom: 15px; opacity: 0.5; }
+        .error-screen h2 { color: var(--gold); margin-bottom: 10px; }
+        .error-screen a {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 12px 25px;
+            background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+            color: var(--bg-primary);
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 800;
+            font-size: 14px;
+        }
+
+        /* ===== Footer ===== */
+        .footer {
+            text-align: center;
+            padding: 30px 20px;
+            color: var(--gray);
+            font-size: 12px;
+            border-top: 1px solid rgba(212, 175, 55, 0.1);
+            margin-top: 50px;
+        }
+
+        /* ===== Toast ===== */
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: var(--bg-card);
+            color: var(--white);
+            padding: 14px 24px;
+            border-radius: 12px;
+            border-right: 4px solid var(--gold);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+            z-index: 2000;
+            transition: 0.4s;
+            font-size: 14px;
+            font-weight: 700;
+        }
+        .toast.show { transform: translateX(-50%) translateY(0); }
+        .toast.success { border-right-color: var(--green); }
+
+        /* ===== Responsive ===== */
+        @media (max-width: 700px) {
+            .article-title { font-size: 24px; }
+            .article-content { padding: 22px 18px; font-size: 14.5px; }
+            .article-content h1 { font-size: 22px; }
+            .article-content h2 { font-size: 18px; }
+            .cover-image { height: 240px; font-size: 70px; }
+            .signal-box { grid-template-columns: 1fr; }
+        }
+        @media (max-width: 500px) {
+            .main-container { padding: 90px 15px 30px; }
+            .article-title { font-size: 20px; }
+            .share-section { flex-direction: column; align-items: stretch; }
+            .share-buttons { justify-content: center; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="main-container" id="mainContainer">
+        <div class="loading-screen">
+            <div class="spinner"></div>
+            ⏳ در حال بارگذاری تحلیل...
+        </div>
+    </div>
+
+    <footer class="footer">
+        © ۱۴۰۵ آکادمی شمعدون | تمامی حقوق محفوظ است
+    </footer>
+
+    <div id="toast" class="toast"></div>
+
+    <script src="navbar.js"></script>
+    <script src="supabase-config.js"></script>
+
+    <script>
+        // ==========================================
+        // ابزارها
+        // ==========================================
+        function toFa(num) {
+            if (num === null || num === undefined) return '۰';
+            const persianDigits = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
+            return String(num).replace(/\d/g, d => persianDigits[d]);
+        }
+
+        function escapeHtml(text) {
+            if (!text) return '';
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        function formatDate(iso) {
+            if (!iso) return '';
+            try {
+                const d = new Date(iso);
+                return new Intl.DateTimeFormat('fa-IR', {
+                    year: 'numeric', month: 'long', day: 'numeric'
+                }).format(d);
+            } catch (e) { return ''; }
+        }
+
+        function showToast(msg, type = 'success') {
+            const toast = document.getElementById('toast');
+            toast.textContent = msg;
+            toast.className = 'toast show ' + type;
+            setTimeout(() => toast.classList.remove('show'), 3000);
+        }
+
+        function getSlugFromUrl() {
+            const params = new URLSearchParams(window.location.search);
+            return params.get('slug');
+        }
+
+        function getSignalInfo(signal) {
+            if (signal === 'up') return { icon: '🟢', label: 'صعودی', class: 'up' };
+            if (signal === 'down') return { icon: '🔴', label: 'نزولی', class: 'down' };
+            return { icon: '⚪', label: 'خنثی', class: 'neutral' };
+        }
+
+        // ==========================================
+        // لود تحلیل
+        // ==========================================
+        async function loadAnalysis() {
+            const slug = getSlugFromUrl();
+            const container = document.getElementById('mainContainer');
+
+            if (!slug) {
+                showError('تحلیل پیدا نشد');
+                return;
+            }
+
+            try {
+                const { data, error } = await db
+                    .from('daily_analysis')
+                    .select('*')
+                    .eq('slug', slug)
+                    .eq('status', 'published')
+                    .single();
+
+                if (error || !data) {
+                    console.error('Analysis load error:', error);
+                    showError('تحلیل مورد نظر پیدا نشد');
+                    return;
+                }
+
+                renderAnalysis(data);
+                document.title = data.title + ' | آکادمی شمعدون';
+
+            } catch (e) {
+                console.error('Catch error:', e);
+                showError('خطا در بارگذاری تحلیل');
+            }
+        }
+
+        // ==========================================
+        // نمایش خطا
+        // ==========================================
+        function showError(msg) {
+            const container = document.getElementById('mainContainer');
+            container.innerHTML = `
+                <div class="error-screen">
+                    <div class="icon">🔍</div>
+                    <h2>${msg}</h2>
+                    <p>شاید آدرس اشتباهه یا تحلیل حذف شده</p>
+                    <a href="analysis.html">📊 بازگشت به تحلیل‌ها</a>
+                </div>
+            `;
+        }
+
+        // ==========================================
+        // رندر تحلیل
+        // ==========================================
+        function renderAnalysis(a) {
+            const container = document.getElementById('mainContainer');
+
+            // Markdown → HTML
+            let contentHtml = '';
+            try {
+                const rawHtml = marked.parse(a.content || '');
+                contentHtml = DOMPurify.sanitize(rawHtml);
+            } catch (e) {
+                console.error('Markdown error:', e);
+                contentHtml = '<p>خطا در نمایش متن تحلیل</p>';
+            }
+
+            // نوع تحلیل
+            const isWeekly = a.analysis_type === 'weekly';
+            const typeClass = isWeekly ? 'weekly' : 'daily';
+            const typeLabel = isWeekly ? '📈 تحلیل هفتگی' : '🔥 تحلیل روزانه';
+
+            // سیگنال
+            const signal = getSignalInfo(a.signal);
+            const signalHtml = a.signal ? `
+                <div class="signal-section">
+                    <h3>🎯 سیگنال تحلیل</h3>
+                    <div class="signal-value ${signal.class}">
+                        ${signal.icon} ${signal.label}
+                    </div>
+                </div>
+            ` : '';
+
+            // سطوح کلیدی
+            const hasLevels = a.support || a.resistance;
+            const levelsHtml = hasLevels ? `
+                <div class="levels-section">
+                    <h3>📏 سطوح کلیدی</h3>
+                    ${a.support ? `
+                        <div class="level-row">
+                            <span class="label">🟢 حمایت:</span>
+                            <span class="value support">${toFa(Number(a.support).toLocaleString())}</span>
+                        </div>
+                    ` : ''}
+                    ${a.resistance ? `
+                        <div class="level-row">
+                            <span class="label">🔴 مقاومت:</span>
+                            <span class="value resistance">${toFa(Number(a.resistance).toLocaleString())}</span>
+                        </div>
+                    ` : ''}
+                </div>
+            ` : '';
+
+            // سیگنال + سطوح
+            const signalBoxHtml = (signalHtml || levelsHtml) ? `
+                <div class="signal-box">
+                    ${signalHtml}
+                    ${levelsHtml}
+                </div>
+            ` : '';
+
+            // برچسب‌ها
+            const tagsHtml = (a.tags && a.tags.length > 0) ? `
+                <div class="tags-section">
+                    <div class="tags-title">🏷️ برچسب‌ها</div>
+                    <div class="tags-list">
+                        ${a.tags.map(t => `
+                            <a href="analysis.html" class="tag">${escapeHtml(t)}</a>
+                        `).join('')}
+                    </div>
+                </div>
+            ` : '';
+
+            // عکس شاخص
+            const coverHtml = `
+                <div class="cover-image" style="${a.cover_image ? `background-image: url('${a.cover_image}');` : ''}">
+                    ${a.cover_image ? '' : '📊'}
+                </div>
+            `;
+
+            // اشتراک‌گذاری
+            const shareUrl = encodeURIComponent(window.location.href);
+            const shareTitle = encodeURIComponent(a.title);
+
+            container.innerHTML = `
+                <a href="analysis.html" class="back-btn">← بازگشت به تحلیل‌ها</a>
+
+                <header class="article-header">
+                    <span class="type-badge ${typeClass}">${typeLabel}</span>
+                    <h1 class="article-title">${escapeHtml(a.title)}</h1>
+                    <div class="article-meta">
+                        <span>📅 ${formatDate(a.published_at || a.date || a.created_at)}</span>
+                        ${a.time ? `<span>⏰ ${escapeHtml(a.time)}</span>` : ''}
+                        ${a.validity ? `<span class="validity">⏳ ${escapeHtml(a.validity)}</span>` : ''}
+                        <span>✍️ ${escapeHtml(a.author_name || 'مدیر آکادمی')}</span>
+                    </div>
+                </header>
+
+                ${coverHtml}
+
+                ${signalBoxHtml}
+
+                <div class="article-content">
+                    ${contentHtml}
+                </div>
+
+                ${tagsHtml}
+
+                <div class="share-section">
+                    <div class="share-title">📤 این تحلیل رو به اشتراک بذار:</div>
+                    <div class="share-buttons">
+                        <a href="https://t.me/share/url?url=${shareUrl}&text=${shareTitle}" target="_blank" class="share-btn telegram">
+                            ✈️ تلگرام
+                        </a>
+                        <a href="https://wa.me/?text=${shareTitle}%20${shareUrl}" target="_blank" class="share-btn whatsapp">
+                            💬 واتساپ
+                        </a>
+                        <button class="share-btn copy" onclick="copyLink()">
+                            🔗 کپی لینک
+                        </button>
+                    </div>
+                </div>
+
+                <div class="warning-box">
+                    این تحلیل نظر شخصی مدیر آکادمی است و به معنی سیگنال قطعی خرید یا فروش نیست.
+                    سرمایه‌گذاری نیازمند تحلیل شخصی، مدیریت ریسک و مشورت با مشاور مالی است.
+                </div>
+            `;
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // ==========================================
+        // کپی لینک
+        // ==========================================
+        function copyLink() {
+            navigator.clipboard.writeText(window.location.href).then(() => {
+                showToast('✅ لینک کپی شد');
+            }).catch(() => {
+                showToast('❌ خطا در کپی لینک', 'error');
+            });
+        }
+
+        // ==========================================
+        // راه‌اندازی
+        // ==========================================
+        document.addEventListener('DOMContentLoaded', () => {
+            loadAnalysis();
+        });
+    </script>
+</body>
+</html>
