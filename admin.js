@@ -1,10 +1,11 @@
 // ==========================================
-// منطق پنل ادمین شمعدون
+// پنل ادمین شمعدون - با مدیریت مقالات
 // ==========================================
 
 let currentUser = null;
 let coursesCache = [];
 let usersCache = [];
+let blogPostsCache = [];
 let scoresChart = null;
 
 // ============ ورود ادمین ============
@@ -49,6 +50,7 @@ function showPanel() {
     loadCourses();
     loadLessons();
     loadUsers();
+    loadBlogPosts();
 }
 
 window.addEventListener('load', async () => {
@@ -62,8 +64,10 @@ window.addEventListener('load', async () => {
 function switchTab(tabName, btn) {
     document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
     document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-    document.getElementById('tab-' + tabName).classList.add('active');
-    btn.classList.add('active');
+
+    const target = document.getElementById('tab-' + tabName);
+    if (target) target.classList.add('active');
+    if (btn) btn.classList.add('active');
 }
 
 function showToast(msg, type = 'success') {
@@ -81,20 +85,35 @@ function closeModal(id) {
 async function loadDashboard() {
     try {
         // کاربران
-        const { count: userCount, error: e1 } = await db.from('profiles').select('*', { count: 'exact', head: true });
+        const { count: userCount, error: e1 } = await db
+            .from('profiles')
+            .select('*', { count: 'exact', head: true });
         document.getElementById('statUsers').textContent = e1 ? 'خطا' : (userCount || 0);
 
         // دوره‌ها
-        const { count: courseCount, error: e2 } = await db.from('courses').select('*', { count: 'exact', head: true });
+        const { count: courseCount, error: e2 } = await db
+            .from('courses')
+            .select('*', { count: 'exact', head: true });
         document.getElementById('statCourses').textContent = e2 ? 'خطا' : (courseCount || 0);
 
         // دروس
-        const { count: lessonCount, error: e3 } = await db.from('lessons').select('*', { count: 'exact', head: true });
+        const { count: lessonCount, error: e3 } = await db
+            .from('lessons')
+            .select('*', { count: 'exact', head: true });
         document.getElementById('statLessons').textContent = e3 ? 'خطا' : (lessonCount || 0);
 
-        // میانگین امتیازات ستاره‌ای
-        const { data: ratings, error: e4 } = await db.from('course_ratings').select('rating');
-        if (e4 || !ratings || ratings.length === 0) {
+        // مقالات
+        const { count: postCount, error: e4 } = await db
+            .from('blog_posts')
+            .select('*', { count: 'exact', head: true });
+        document.getElementById('statPosts').textContent = e4 ? 'خطا' : (postCount || 0);
+
+        // میانگین امتیازات
+        const { data: ratings, error: e5 } = await db
+            .from('course_ratings')
+            .select('rating');
+
+        if (e5 || !ratings || ratings.length === 0) {
             document.getElementById('statScores').textContent = '0';
         } else {
             const validRatings = ratings.filter(r => r.rating != null);
@@ -106,9 +125,11 @@ async function loadDashboard() {
             }
         }
 
-        // تعداد نظرات
-        const { count: commentCount, error: e5 } = await db.from('course_ratings').select('*', { count: 'exact', head: true });
-        document.getElementById('statComments').textContent = e5 ? 'خطا' : (commentCount || 0);
+        // نظرات
+        const { count: commentCount, error: e6 } = await db
+            .from('course_ratings')
+            .select('*', { count: 'exact', head: true });
+        document.getElementById('statComments').textContent = e6 ? 'خطا' : (commentCount || 0);
 
         await loadScoresChart();
     } catch (err) {
@@ -131,7 +152,6 @@ async function loadScoresChart() {
         return;
     }
 
-    // گروه‌بندی بر اساس تاریخ و محاسبه میانگین امتیاز هر روز
     const days = {};
     for (let i = 6; i >= 0; i--) {
         const d = new Date();
@@ -152,7 +172,8 @@ async function loadScoresChart() {
         const d = new Date(k);
         return `${d.getMonth() + 1}/${d.getDate()}`;
     });
-    const values = Object.values(days).map(d => 
+
+    const values = Object.values(days).map(d =>
         d.count > 0 ? (d.sum / d.count).toFixed(1) : 0
     );
 
@@ -166,22 +187,27 @@ async function loadScoresChart() {
             datasets: [{
                 label: 'میانگین امتیاز روزانه',
                 data: values,
-                borderColor: '#f59e0b',
-                backgroundColor: 'rgba(245, 158, 11, 0.1)',
+                borderColor: '#d4af37',
+                backgroundColor: 'rgba(212, 175, 55, 0.1)',
                 borderWidth: 3,
                 fill: true,
                 tension: 0.4,
-                pointBackgroundColor: '#f59e0b',
+                pointBackgroundColor: '#d4af37',
                 pointRadius: 5
             }]
         },
         options: {
             responsive: true,
-            plugins: { legend: { labels: { color: '#cbd5e1' } } },
+            plugins: {
+                legend: { labels: { color: '#cbd5e1', font: { family: 'Vazirmatn' } } }
+            },
             scales: {
-                x: { ticks: { color: '#94a3b8' }, grid: { color: 'rgba(255,255,255,0.05)' } },
-                y: { 
-                    ticks: { color: '#94a3b8' }, 
+                x: {
+                    ticks: { color: '#94a3b8', font: { family: 'Vazirmatn' } },
+                    grid: { color: 'rgba(255,255,255,0.05)' }
+                },
+                y: {
+                    ticks: { color: '#94a3b8', font: { family: 'Vazirmatn' } },
                     grid: { color: 'rgba(255,255,255,0.05)' },
                     beginAtZero: true,
                     max: 5
@@ -334,8 +360,8 @@ async function saveCourse() {
     if (!title) return showToast('عنوان الزامی است', 'error');
 
     const payload = { title, description, icon, level };
-
     let error;
+
     if (id) {
         ({ error } = await db.from('courses').update(payload).eq('id', id));
     } else {
@@ -356,6 +382,7 @@ async function deleteCourse(id) {
     if (error) return showToast('خطا: ' + error.message, 'error');
     showToast('دوره حذف شد');
     loadCourses();
+    loadDashboard();
 }
 
 // ============ دروس ============
@@ -425,6 +452,7 @@ async function openLessonModal() {
     select.innerHTML = data.map(c => `<option value="${c.id}">${c.title}</option>`).join('');
     document.getElementById('lessonModal').classList.add('show');
 }
+
 async function editLesson(id) {
     const { data: lesson } = await db.from('lessons').select('*').eq('id', id).single();
     if (!lesson) return;
@@ -443,7 +471,7 @@ async function editLesson(id) {
 
     const select = document.getElementById('lessonCourse');
     const { data: courses } = await db.from('courses').select('id, title').order('title');
-    select.innerHTML = (courses || []).map(c => 
+    select.innerHTML = (courses || []).map(c =>
         `<option value="${c.id}" ${c.id === lesson.course_id ? 'selected' : ''}>${c.title}</option>`
     ).join('');
 
@@ -465,17 +493,15 @@ async function saveLesson() {
 
     if (!title || !course_id) return showToast('عنوان و دوره الزامی است', 'error');
 
-    const payload = { 
-        course_id, 
-        title, 
-        content, 
+    const payload = {
+        course_id, title, content,
         video_url: video_url || null,
         image_url: image_url || null,
         pdf_url: pdf_url || null,
         word_url: word_url || null,
         powerpoint_url: powerpoint_url || null,
         notes_url: notes_url || null,
-        order_num 
+        order_num
     };
 
     let error;
@@ -502,6 +528,254 @@ async function deleteLesson(id) {
     loadDashboard();
 }
 
+// ==========================================
+// ============ مقالات وبلاگ ============
+// ==========================================
+
+async function loadBlogPosts() {
+    const container = document.getElementById('blogList');
+    if (!container) return;
+
+    const { data, error } = await db
+        .from('blog_posts')
+        .select('*')
+        .order('created_at', { ascending: false });
+
+    if (error) {
+        container.innerHTML = '<p style="color:#ef4444; padding:20px; text-align:center;">❌ خطا: ' + error.message + '</p>';
+        return;
+    }
+
+    blogPostsCache = data || [];
+
+    if (!data || data.length === 0) {
+        container.innerHTML = `
+            <p style="color:#94a3b8; text-align:center; padding:50px;">
+                📭 هنوز مقاله‌ای ثبت نشده<br>
+                <span style="font-size:12px;">روی «➕ مقاله جدید» بزن و اولین مقاله رو بساز</span>
+            </p>
+        `;
+        return;
+    }
+
+    container.innerHTML = `
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>عنوان</th>
+                    <th>دسته</th>
+                    <th>وضعیت</th>
+                    <th>ویژه</th>
+                    <th>تاریخ</th>
+                    <th>عملیات</th>
+                </tr>
+            </thead>
+            <tbody>
+                ${data.map(p => `
+                    <tr>
+                        <td style="max-width:250px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">
+                            ${escapeHtml(p.title || '')}
+                        </td>
+                        <td><span class="tag">${escapeHtml(p.category || '-')}</span></td>
+                        <td>
+                            <span class="status-badge ${p.status === 'published' ? 'status-published' : 'status-draft'}">
+                                ${p.status === 'published' ? '✅ منتشرشده' : '📝 پیش‌نویس'}
+                            </span>
+                        </td>
+                        <td>${p.featured ? '<span class="featured-badge">⭐ ویژه</span>' : '-'}</td>
+                        <td>${formatDate(p.created_at)}</td>
+                        <td style="white-space:nowrap;">
+                            <button class="btn btn-small btn-success" onclick="togglePublishStatus('${p.id}')" title="${p.status === 'published' ? 'لغو انتشار' : 'انتشار'}">
+                                ${p.status === 'published' ? '↩️' : '🚀'}
+                            </button>
+                            <button class="btn btn-small btn-primary" onclick="editBlogPost('${p.id}')" title="ویرایش">✏️</button>
+                            <button class="btn btn-small btn-danger" onclick="deleteBlogPost('${p.id}')" title="حذف">🗑️</button>
+                        </td>
+                    </tr>
+                `).join('')}
+            </tbody>
+        </table>
+    `;
+}
+
+function openBlogModal() {
+    document.getElementById('blogModalTitle').textContent = '➕ مقاله جدید';
+    document.getElementById('blogId').value = '';
+    document.getElementById('blogTitle').value = '';
+    document.getElementById('blogSlug').value = '';
+    document.getElementById('blogExcerpt').value = '';
+    document.getElementById('blogCategory').value = 'آموزش';
+    document.getElementById('blogReadTime').value = '5';
+    document.getElementById('blogTags').value = '';
+    document.getElementById('blogCoverImage').value = '';
+    document.getElementById('blogFeatured').checked = false;
+    document.getElementById('blogContent').value = '';
+    document.getElementById('blogPreview').innerHTML = '<p style="color:var(--gray); text-align:center; padding-top:150px;">👁️ پیش‌نمایش اینجا نمایش داده می‌شود</p>';
+    document.getElementById('blogModal').classList.add('show');
+}
+
+async function editBlogPost(id) {
+    const post = blogPostsCache.find(p => p.id === id);
+    if (!post) return;
+
+    document.getElementById('blogModalTitle').textContent = '✏️ ویرایش مقاله';
+    document.getElementById('blogId').value = post.id;
+    document.getElementById('blogTitle').value = post.title || '';
+    document.getElementById('blogSlug').value = post.slug || '';
+    document.getElementById('blogExcerpt').value = post.excerpt || '';
+    document.getElementById('blogCategory').value = post.category || 'آموزش';
+    document.getElementById('blogReadTime').value = post.read_time || 5;
+    document.getElementById('blogTags').value = (post.tags || []).join(', ');
+    document.getElementById('blogCoverImage').value = post.cover_image || '';
+    document.getElementById('blogFeatured').checked = post.featured || false;
+    document.getElementById('blogContent').value = post.content || '';
+
+    updatePreview();
+    document.getElementById('blogModal').classList.add('show');
+}
+
+function autoSlug() {
+    const title = document.getElementById('blogTitle').value;
+    const slugInput = document.getElementById('blogSlug');
+
+    // اگه کاربر دستی ویرایش کرده، دست نزن
+    if (slugInput.dataset.userEdited === 'true') return;
+
+    // تبدیل به slug انگلیسی
+    const slug = title
+        .trim()
+        .toLowerCase()
+        .replace(/[^\w\s-]/g, '')
+        .replace(/\s+/g, '-')
+        .replace(/-+/g, '-')
+        .substring(0, 60);
+
+    // اگه عنوان فارسی بود، یه slug تصادفی بساز
+    if (!slug || slug.length < 2) {
+        slugInput.value = 'post-' + Date.now();
+    } else {
+        slugInput.value = slug;
+    }
+}
+
+document.addEventListener('input', (e) => {
+    if (e.target.id === 'blogSlug') {
+        e.target.dataset.userEdited = 'true';
+    }
+});
+
+function updatePreview() {
+    const content = document.getElementById('blogContent').value;
+    const preview = document.getElementById('blogPreview');
+
+    if (!content.trim()) {
+        preview.innerHTML = '<p style="color:var(--gray); text-align:center; padding-top:150px;">👁️ پیش‌نمایش اینجا نمایش داده می‌شود</p>';
+        return;
+    }
+
+    try {
+        const html = marked.parse(content);
+        const cleanHtml = DOMPurify.sanitize(html);
+        preview.innerHTML = cleanHtml;
+    } catch (e) {
+        preview.innerHTML = '<p style="color:var(--red);">❌ خطا در پیش‌نمایش</p>';
+    }
+}
+
+async function saveBlogPost(status = 'draft') {
+    const id = document.getElementById('blogId').value;
+    const title = document.getElementById('blogTitle').value.trim();
+    const slug = document.getElementById('blogSlug').value.trim();
+    const excerpt = document.getElementById('blogExcerpt').value.trim();
+    const category = document.getElementById('blogCategory').value;
+    const readTime = parseInt(document.getElementById('blogReadTime').value) || 5;
+    const tagsStr = document.getElementById('blogTags').value.trim();
+    const coverImage = document.getElementById('blogCoverImage').value.trim();
+    const featured = document.getElementById('blogFeatured').checked;
+    const content = document.getElementById('blogContent').value.trim();
+
+    // اعتبارسنجی
+    if (!title) return showToast('عنوان مقاله الزامی است', 'error');
+    if (!slug) return showToast('Slug الزامی است', 'error');
+    if (!excerpt) return showToast('خلاصه مقاله الزامی است', 'error');
+    if (!content) return showToast('متن مقاله الزامی است', 'error');
+
+    // ساخت آرایه برچسب‌ها
+    const tags = tagsStr
+        ? tagsStr.split(',').map(t => t.trim()).filter(t => t)
+        : [];
+
+    const payload = {
+        title,
+        slug,
+        excerpt,
+        content,
+        category,
+        read_time: readTime,
+        tags,
+        cover_image: coverImage || null,
+        featured,
+        status,
+        author_name: 'مهدی',
+        author_email: currentUser?.email || ADMIN_EMAIL
+    };
+
+    // اگه منتشر می‌شه و هنوز published_at نداره
+    if (status === 'published') {
+        payload.published_at = new Date().toISOString();
+    }
+
+    let error;
+    if (id) {
+        // ویرایش
+        ({ error } = await db.from('blog_posts').update(payload).eq('id', id));
+    } else {
+        // ایجاد جدید
+        ({ error } = await db.from('blog_posts').insert(payload));
+    }
+
+    if (error) {
+        console.error('Save error:', error);
+        return showToast('خطا: ' + error.message, 'error');
+    }
+
+    showToast(status === 'published' ? '🚀 مقاله منتشر شد!' : '💾 پیش‌نویس ذخیره شد');
+    closeModal('blogModal');
+    loadBlogPosts();
+    loadDashboard();
+}
+
+async function togglePublishStatus(id) {
+    const post = blogPostsCache.find(p => p.id === id);
+    if (!post) return;
+
+    const newStatus = post.status === 'published' ? 'draft' : 'published';
+    const updates = { status: newStatus };
+
+    if (newStatus === 'published' && !post.published_at) {
+        updates.published_at = new Date().toISOString();
+    }
+
+    const { error } = await db.from('blog_posts').update(updates).eq('id', id);
+
+    if (error) return showToast('خطا: ' + error.message, 'error');
+
+    showToast(newStatus === 'published' ? '🚀 منتشر شد' : '↩️ به پیش‌نویس منتقل شد');
+    loadBlogPosts();
+}
+
+async function deleteBlogPost(id) {
+    if (!confirm('مطمئنی می‌خوای این مقاله رو حذف کنی؟\n\nاین عملیات قابل بازگشت نیست!')) return;
+
+    const { error } = await db.from('blog_posts').delete().eq('id', id);
+
+    if (error) return showToast('خطا: ' + error.message, 'error');
+
+    showToast('🗑️ مقاله حذف شد');
+    loadBlogPosts();
+    loadDashboard();
+}
+
 // ============ کاربران ============
 async function loadUsers() {
     const container = document.getElementById('usersList');
@@ -521,6 +795,7 @@ async function loadUsers() {
 
 function renderUsers(users) {
     const container = document.getElementById('usersList');
+
     if (!users || users.length === 0) {
         container.innerHTML = '<p style="color:#94a3b8; text-align:center; padding:30px;">کاربری یافت نشد</p>';
         return;
@@ -539,7 +814,7 @@ function renderUsers(users) {
                 ${users.map(u => `
                     <tr>
                         <td>${escapeHtml(u.email || '-')}</td>
-                        <td>${u.role === 'admin' ? '<span style="color:#f59e0b;">👑 ادمین</span>' : 'کاربر'}</td>
+                        <td>${u.role === 'admin' ? '<span style="color:#d4af37;">👑 ادمین</span>' : 'کاربر'}</td>
                         <td>${formatDate(u.created_at)}</td>
                     </tr>
                 `).join('')}
@@ -551,14 +826,22 @@ function renderUsers(users) {
 function filterUsers() {
     const q = document.getElementById('userSearch').value.trim().toLowerCase();
     if (!q) return renderUsers(usersCache);
-    const filtered = usersCache.filter(u => (u.email || '').toLowerCase().includes(q));
+
+    const filtered = usersCache.filter(u =>
+        (u.email || '').toLowerCase().includes(q)
+    );
     renderUsers(filtered);
 }
 
 // ============ ابزارها ============
 function escapeHtml(str) {
+    if (!str) return '';
     return String(str).replace(/[&<>"']/g, m => ({
-        '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        '"': '&quot;',
+        "'": '&#39;'
     }[m]));
 }
 
