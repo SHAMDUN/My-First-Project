@@ -1,0 +1,840 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تماس با ما | آکادمی شمعدون</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css">
+    <meta name="theme-color" content="#d4af37">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style>
+        :root {
+            --bg-primary: #0a0a0f;
+            --bg-secondary: #14141c;
+            --bg-card: #1a1a24;
+            --gold: #d4af37;
+            --gold-light: #f4d47c;
+            --gold-dark: #a8862a;
+            --green: #10b981;
+            --red: #ef4444;
+            --blue: #3b82f6;
+            --white: #f8fafc;
+            --gray: #94a3b8;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Vazirmatn', Tahoma, sans-serif;
+            background-color: var(--bg-primary);
+            background-image: 
+                radial-gradient(circle at 0% 0%, rgba(212, 175, 55, 0.08) 0%, transparent 40%),
+                radial-gradient(circle at 100% 100%, rgba(59, 130, 246, 0.06) 0%, transparent 40%),
+                linear-gradient(rgba(255, 255, 255, 0.015) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
+            background-size: 100% 100%, 100% 100%, 60px 60px, 60px 60px;
+            background-attachment: fixed;
+            color: var(--white);
+            min-height: 100vh;
+            direction: rtl;
+            overflow-x: hidden;
+        }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        @keyframes slideDown {
+            from { opacity: 0; max-height: 0; }
+            to { opacity: 1; max-height: 500px; }
+        }
+
+        .main-container { max-width: 900px; margin: 0 auto; padding: 100px 20px 40px; }
+
+        /* ============= Header ============= */
+        .page-header {
+            text-align: center;
+            margin-bottom: 40px;
+            animation: fadeInUp 0.6s ease-out;
+        }
+        .page-header h1 {
+            font-size: 38px;
+            font-weight: 900;
+            margin-bottom: 12px;
+            background: linear-gradient(135deg, var(--gold), var(--gold-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .page-header p {
+            color: var(--gray);
+            font-size: 15px;
+            line-height: 1.8;
+        }
+
+        /* ============= Contact Cards ============= */
+        .contact-cards {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-bottom: 40px;
+        }
+        .contact-card {
+            background: linear-gradient(135deg, var(--bg-card), var(--bg-secondary));
+            border: 1px solid rgba(212, 175, 55, 0.15);
+            border-radius: 18px;
+            padding: 25px 20px;
+            text-align: center;
+            transition: 0.3s;
+            text-decoration: none;
+            color: inherit;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+            animation: fadeInUp 0.6s ease-out backwards;
+        }
+        .contact-card:nth-child(1) { animation-delay: 0.1s; }
+        .contact-card:nth-child(2) { animation-delay: 0.15s; }
+        .contact-card:nth-child(3) { animation-delay: 0.2s; }
+        .contact-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(212, 175, 55, 0.5);
+            box-shadow: 0 15px 40px rgba(212, 175, 55, 0.15);
+        }
+        .contact-card .icon-wrapper {
+            width: 56px;
+            height: 56px;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        .contact-card .icon-wrapper svg {
+            width: 100%;
+            height: 100%;
+        }
+        .contact-card .title {
+            color: var(--white);
+            font-size: 15px;
+            font-weight: 800;
+        }
+        .contact-card .subtitle {
+            color: var(--gray);
+            font-size: 12px;
+            line-height: 1.6;
+        }
+
+        /* ============= Form Section ============= */
+        .form-section {
+            background: linear-gradient(135deg, var(--bg-card), var(--bg-secondary));
+            border: 1px solid rgba(212, 175, 55, 0.15);
+            border-radius: 22px;
+            padding: 35px;
+            margin-bottom: 40px;
+            animation: fadeInUp 0.6s ease-out 0.25s backwards;
+        }
+        .form-title {
+            color: var(--gold);
+            font-size: 20px;
+            font-weight: 900;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .form-desc {
+            color: var(--gray);
+            font-size: 13.5px;
+            margin-bottom: 25px;
+            line-height: 1.8;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+        .form-group label {
+            color: #cbd5e1;
+            font-size: 13px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .form-group label .required {
+            color: var(--red);
+            font-weight: 900;
+        }
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 13px 16px;
+            background: rgba(10, 10, 15, 0.8);
+            border: 2px solid rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            color: var(--white);
+            font-family: inherit;
+            font-size: 14px;
+            transition: 0.3s;
+            outline: none;
+        }
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            border-color: var(--gold);
+            background: rgba(10, 10, 15, 0.95);
+            box-shadow: 0 0 0 4px rgba(212, 175, 55, 0.1);
+        }
+        .form-group input.error,
+        .form-group select.error,
+        .form-group textarea.error {
+            border-color: var(--red);
+            box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.1);
+        }
+        .form-group textarea {
+            resize: vertical;
+            min-height: 130px;
+            line-height: 1.7;
+        }
+        .form-group select {
+            cursor: pointer;
+        }
+        .form-group .error-msg {
+            color: var(--red);
+            font-size: 11.5px;
+            font-weight: 700;
+            display: none;
+        }
+        .form-group.error .error-msg {
+            display: block;
+        }
+
+        .char-counter {
+            color: var(--gray);
+            font-size: 11px;
+            text-align: left;
+        }
+        .char-counter.warning {
+            color: var(--red);
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+            color: var(--bg-primary);
+            border: none;
+            border-radius: 12px;
+            font-family: inherit;
+            font-size: 15px;
+            font-weight: 900;
+            cursor: pointer;
+            transition: 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.3);
+            margin-top: 10px;
+        }
+        .submit-btn:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 40px rgba(212, 175, 55, 0.5);
+        }
+        .submit-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+        .submit-btn .spinner {
+            width: 18px;
+            height: 18px;
+            border: 3px solid rgba(10, 10, 15, 0.3);
+            border-top-color: var(--bg-primary);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        /* ============= FAQ CTA ============= */
+        .faq-cta {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.08), rgba(59, 130, 246, 0.02));
+            border: 1px solid rgba(59, 130, 246, 0.25);
+            border-radius: 18px;
+            padding: 25px;
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            flex-wrap: wrap;
+            animation: fadeInUp 0.6s ease-out 0.35s backwards;
+        }
+        .faq-cta .icon {
+            font-size: 40px;
+            flex-shrink: 0;
+        }
+        .faq-cta .content {
+            flex: 1;
+            min-width: 200px;
+        }
+        .faq-cta .content h4 {
+            color: #60a5fa;
+            font-size: 15px;
+            font-weight: 800;
+            margin-bottom: 6px;
+        }
+        .faq-cta .content p {
+            color: var(--gray);
+            font-size: 13px;
+            line-height: 1.7;
+        }
+        .faq-cta .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 12px 22px;
+            background: linear-gradient(135deg, #3b82f6, #2563eb);
+            color: #fff;
+            border-radius: 11px;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 800;
+            transition: 0.3s;
+            white-space: nowrap;
+        }
+        .faq-cta .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(59, 130, 246, 0.4);
+        }
+
+        /* ============= Toast ============= */
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%) translateY(150px);
+            background: var(--bg-card);
+            color: var(--white);
+            padding: 16px 26px;
+            border-radius: 14px;
+            border-right: 4px solid var(--gold);
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.5);
+            z-index: 2000;
+            transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            font-size: 14px;
+            font-weight: 700;
+            max-width: 90vw;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .toast.show {
+            transform: translateX(-50%) translateY(0);
+        }
+        .toast.success {
+            border-right-color: var(--green);
+        }
+        .toast.error {
+            border-right-color: var(--red);
+        }
+        .toast .icon {
+            font-size: 20px;
+        }
+
+        /* ============= Success State ============= */
+        .success-state {
+            display: none;
+            text-align: center;
+            padding: 40px 20px;
+            animation: fadeInUp 0.5s ease-out;
+        }
+        .success-state.show {
+            display: block;
+        }
+        .success-state .icon {
+            font-size: 70px;
+            margin-bottom: 20px;
+            display: block;
+        }
+        .success-state h3 {
+            color: var(--green);
+            font-size: 22px;
+            font-weight: 900;
+            margin-bottom: 12px;
+        }
+        .success-state p {
+            color: var(--gray);
+            font-size: 14px;
+            line-height: 1.9;
+            margin-bottom: 25px;
+        }
+        .success-state .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 13px 26px;
+            background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+            color: var(--bg-primary);
+            text-decoration: none;
+            border-radius: 12px;
+            font-size: 13.5px;
+            font-weight: 800;
+            border: none;
+            cursor: pointer;
+            font-family: inherit;
+            transition: 0.3s;
+        }
+        .success-state .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.4);
+        }
+
+        /* ============= Footer ============= */
+        .footer {
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--gray);
+            font-size: 12px;
+            border-top: 1px solid rgba(212, 175, 55, 0.1);
+            margin-top: 40px;
+        }
+        .footer-social {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+        .footer-social a {
+            width: 46px;
+            height: 46px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: 0.3s;
+            overflow: hidden;
+        }
+        .footer-social a svg {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+        .footer-social a:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(212, 175, 55, 0.3);
+        }
+
+        /* ============= Responsive ============= */
+        @media (max-width: 700px) {
+            .main-container { padding: 90px 15px 30px; }
+            .page-header h1 { font-size: 28px; }
+            .contact-cards { grid-template-columns: 1fr; }
+            .form-section { padding: 25px 20px; }
+            .form-row { grid-template-columns: 1fr; }
+            .faq-cta { flex-direction: column; text-align: center; }
+            .faq-cta .btn { width: 100%; justify-content: center; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="main-container">
+        <!-- Header -->
+        <div class="page-header">
+            <h1>📞 تماس با ما</h1>
+            <p>ما اینجاییم که کمکت کنیم. از راه‌های زیر با ما در ارتباط باش</p>
+        </div>
+
+        <!-- Contact Cards -->
+        <div class="contact-cards">
+            <a href="#form-section" class="contact-card" onclick="document.getElementById('form-section').scrollIntoView({behavior:'smooth'}); return false;">
+                <div class="icon-wrapper">
+                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <defs>
+                            <linearGradient id="email-card" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stop-color="#d4af37"/>
+                                <stop offset="100%" stop-color="#a8862a"/>
+                            </linearGradient>
+                        </defs>
+                        <rect x="2" y="4" width="20" height="16" rx="3" fill="url(#email-card)"/>
+                        <path d="M2 6L12 13L22 6" stroke="#0a0a0f" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </div>
+                <div class="title">📧 فرم تماس</div>
+                <div class="subtitle">پاسخ تا ۲۴ ساعت</div>
+            </a>
+
+            <a href="https://instagram.com/shamdun.trade" target="_blank" rel="noopener" class="contact-card">
+                <div class="icon-wrapper">
+                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <defs>
+                            <radialGradient id="ig-contact-card" cx="30%" cy="107%" r="150%">
+                                <stop offset="0%" stop-color="#fdf497"/>
+                                <stop offset="5%" stop-color="#fdf497"/>
+                                <stop offset="45%" stop-color="#fd5949"/>
+                                <stop offset="60%" stop-color="#d6249f"/>
+                                <stop offset="90%" stop-color="#285AEB"/>
+                            </radialGradient>
+                        </defs>
+                        <rect width="24" height="24" rx="6" fill="url(#ig-contact-card)"/>
+                        <circle cx="12" cy="12" r="4.5" stroke="#fff" stroke-width="2" fill="none"/>
+                        <circle cx="17.5" cy="6.5" r="1.5" fill="#fff"/>
+                    </svg>
+                </div>
+                <div class="title">📷 اینستاگرام</div>
+                <div class="subtitle">@shamdun.trade</div>
+            </a>
+
+            <a href="https://t.me/nabzebazar_shamdun" target="_blank" rel="noopener" class="contact-card">
+                <div class="icon-wrapper">
+                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="12" cy="12" r="12" fill="#0088cc"/>
+                        <path d="M5.5 11.5L17.5 6.5L15 17L12 13L10 16.5L9.8 12L16 8L7.5 11L5.5 11.5Z" fill="#fff"/>
+                    </svg>
+                </div>
+                <div class="title">✈️ تلگرام</div>
+                <div class="subtitle">@nabzebazar_shamdun</div>
+            </a>
+        </div>
+
+        <!-- Form Section -->
+        <div class="form-section" id="form-section">
+            <div id="formContainer">
+                <div class="form-title">📝 ارسال پیام</div>
+                <p class="form-desc">
+                    فرم زیر رو پر کن و پیامت رو بفرست. تیم پشتیبانی ما در اسرع وقت پاسخ میده.
+                </p>
+
+                <form id="contactForm" onsubmit="handleSubmit(event)">
+                    <div class="form-row">
+                        <div class="form-group" id="nameGroup">
+                            <label>👤 نام کامل <span class="required">*</span></label>
+                            <input type="text" id="nameInput" placeholder="مثال: علی رضایی" autocomplete="name">
+                            <div class="error-msg">لطفاً نام کامل خودت رو وارد کن (حداقل ۳ کاراکتر)</div>
+                        </div>
+
+                        <div class="form-group" id="emailGroup">
+                            <label>📧 ایمیل <span class="required">*</span></label>
+                            <input type="email" id="emailInput" placeholder="example@email.com" autocomplete="email" style="direction:ltr; text-align:left;">
+                            <div class="error-msg">لطفاً یک ایمیل معتبر وارد کن</div>
+                        </div>
+                    </div>
+
+                    <div class="form-group" id="subjectGroup">
+                        <label>📌 موضوع <span class="required">*</span></label>
+                        <select id="subjectInput">
+                            <option value="">— یک موضوع انتخاب کن —</option>
+                            <option value="🔐 مشکل حساب کاربری">🔐 مشکل حساب کاربری</option>
+                            <option value="📚 سوال درباره دوره‌ها">📚 سوال درباره دوره‌ها</option>
+                            <option value="💼 مشکل پرتفوی">💼 مشکل پرتفوی</option>
+                            <option value="💡 پیشنهاد و انتقاد">💡 پیشنهاد و انتقاد</option>
+                            <option value="🤝 درخواست همکاری">🤝 درخواست همکاری</option>
+                            <option value="📢 گزارش باگ">📢 گزارش باگ</option>
+                            <option value="❓ سایر">❓ سایر</option>
+                        </select>
+                        <div class="error-msg">لطفاً یک موضوع انتخاب کن</div>
+                    </div>
+
+                    <div class="form-group" id="messageGroup">
+                        <label>💬 پیام <span class="required">*</span></label>
+                        <textarea id="messageInput" placeholder="پیامت رو اینجا بنویس..." maxlength="1000" oninput="updateCharCounter()"></textarea>
+                        <div class="char-counter" id="charCounter">۰ / ۱۰۰۰</div>
+                        <div class="error-msg">لطفاً پیامت رو بنویس (حداقل ۱۰ کاراکتر)</div>
+                    </div>
+
+                    <button type="submit" class="submit-btn" id="submitBtn">
+                        🚀 ارسال پیام
+                    </button>
+                </form>
+            </div>
+
+            <!-- Success State -->
+            <div class="success-state" id="successState">
+                <span class="icon">✅</span>
+                <h3>پیام شما با موفقیت ارسال شد!</h3>
+                <p>
+                    ممنون که با ما تماس گرفتی 💛<br>
+                    تیم پشتیبانی تا <strong>۲۴ ساعت آینده</strong> پاسخ میده.
+                </p>
+                <button class="btn" onclick="resetForm()">
+                    📝 ارسال پیام جدید
+                </button>
+            </div>
+        </div>
+
+        <!-- FAQ CTA -->
+        <div class="faq-cta">
+            <div class="icon">❓</div>
+            <div class="content">
+                <h4>سوال پرتکرار داری؟</h4>
+                <p>قبل از تماس، یه سر به سوالات متداول بزن — شاید جوابت اونجا باشه</p>
+            </div>
+            <a href="faq.html" class="btn">📚 مشاهده سوالات ←</a>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-social">
+            <a href="https://instagram.com/shamdun.trade" target="_blank" rel="noopener" title="اینستاگرام">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <radialGradient id="ig-contact-ft" cx="30%" cy="107%" r="150%">
+                            <stop offset="0%" stop-color="#fdf497"/>
+                            <stop offset="5%" stop-color="#fdf497"/>
+                            <stop offset="45%" stop-color="#fd5949"/>
+                            <stop offset="60%" stop-color="#d6249f"/>
+                            <stop offset="90%" stop-color="#285AEB"/>
+                        </radialGradient>
+                    </defs>
+                    <rect width="24" height="24" rx="6" fill="url(#ig-contact-ft)"/>
+                    <circle cx="12" cy="12" r="4.5" stroke="#fff" stroke-width="2" fill="none"/>
+                    <circle cx="17.5" cy="6.5" r="1.5" fill="#fff"/>
+                </svg>
+            </a>
+            <a href="https://t.me/nabzebazar_shamdun" target="_blank" rel="noopener" title="تلگرام">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="12" cy="12" r="12" fill="#0088cc"/>
+                    <path d="M5.5 11.5L17.5 6.5L15 17L12 13L10 16.5L9.8 12L16 8L7.5 11L5.5 11.5Z" fill="#fff"/>
+                </svg>
+            </a>
+        </div>
+        © ۱۴۰۵ آکادمی شمعدون | تمامی حقوق محفوظ است
+    </footer>
+
+    <!-- Toast -->
+    <div class="toast" id="toast">
+        <span class="icon">ℹ️</span>
+        <span id="toastText">پیام</span>
+    </div>
+
+    <script src="navbar.js"></script>
+    <script src="supabase-config.js"></script>
+
+    <script>
+        // ==========================================
+        // Config
+        // ==========================================
+        const EDGE_FUNCTION_URL = 'https://jcwwilatvstjrohvhtss.supabase.co/functions/v1/send-telegram';
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Impjd3dpbGF0dnN0anJvaHZodHNzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODk3MDY4NTYsImV4cCI6MjEwNTI4Mjg1Nn0.eUC89RJy6-60nNGrSeYeDADzLxz-kWTGy4DbNGVi6MM';
+
+        let isSubmitting = false;
+
+        // ==========================================
+        // Utility
+        // ==========================================
+        function toFa(num) {
+            if (num === null || num === undefined) return '۰';
+            const persianDigits = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
+            return String(num).replace(/\d/g, d => persianDigits[d]);
+        }
+
+        function showToast(message, type = 'info') {
+            const toast = document.getElementById('toast');
+            const toastText = document.getElementById('toastText');
+            const icon = toast.querySelector('.icon');
+
+            toastText.textContent = message;
+            toast.className = 'toast show ' + type;
+
+            if (type === 'success') icon.textContent = '✅';
+            else if (type === 'error') icon.textContent = '❌';
+            else icon.textContent = 'ℹ️';
+
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 4000);
+        }
+
+        // ==========================================
+        // Character Counter
+        // ==========================================
+        function updateCharCounter() {
+            const input = document.getElementById('messageInput');
+            const counter = document.getElementById('charCounter');
+            const len = input.value.length;
+            const max = 1000;
+
+            counter.textContent = `${toFa(len)} / ${toFa(max)}`;
+
+            if (len > max * 0.9) {
+                counter.classList.add('warning');
+            } else {
+                counter.classList.remove('warning');
+            }
+        }
+
+        // ==========================================
+        // Validation
+        // ==========================================
+        function validateForm() {
+            let isValid = true;
+
+            // نام
+            const name = document.getElementById('nameInput').value.trim();
+            const nameGroup = document.getElementById('nameGroup');
+            if (name.length < 3) {
+                nameGroup.classList.add('error');
+                isValid = false;
+            } else {
+                nameGroup.classList.remove('error');
+            }
+
+            // ایمیل
+            const email = document.getElementById('emailInput').value.trim();
+            const emailGroup = document.getElementById('emailGroup');
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                emailGroup.classList.add('error');
+                isValid = false;
+            } else {
+                emailGroup.classList.remove('error');
+            }
+
+            // موضوع
+            const subject = document.getElementById('subjectInput').value;
+            const subjectGroup = document.getElementById('subjectGroup');
+            if (!subject) {
+                subjectGroup.classList.add('error');
+                isValid = false;
+            } else {
+                subjectGroup.classList.remove('error');
+            }
+
+            // پیام
+            const message = document.getElementById('messageInput').value.trim();
+            const messageGroup = document.getElementById('messageGroup');
+            if (message.length < 10) {
+                messageGroup.classList.add('error');
+                isValid = false;
+            } else {
+                messageGroup.classList.remove('error');
+            }
+
+            return isValid;
+        }
+
+        // حذف خطا با تایپ کاربر
+        document.addEventListener('DOMContentLoaded', () => {
+            ['nameInput', 'emailInput', 'subjectInput', 'messageInput'].forEach(id => {
+                const el = document.getElementById(id);
+                if (el) {
+                    el.addEventListener('input', () => {
+                        el.closest('.form-group').classList.remove('error');
+                    });
+                    el.addEventListener('change', () => {
+                        el.closest('.form-group').classList.remove('error');
+                    });
+                }
+            });
+        });
+
+        // ==========================================
+        // Submit Form
+        // ==========================================
+        async function handleSubmit(event) {
+            event.preventDefault();
+
+            if (isSubmitting) return;
+
+            // اعتبارسنجی
+            if (!validateForm()) {
+                showToast('لطفاً خطاهای فرم رو برطرف کن', 'error');
+                // اسکرول به اولین خطا
+                const firstError = document.querySelector('.form-group.error');
+                if (firstError) {
+                    firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
+                return;
+            }
+
+            const name = document.getElementById('nameInput').value.trim();
+            const email = document.getElementById('emailInput').value.trim();
+            const subject = document.getElementById('subjectInput').value;
+            const message = document.getElementById('messageInput').value.trim();
+
+            // غیرفعال کردن دکمه
+            isSubmitting = true;
+            const btn = document.getElementById('submitBtn');
+            btn.disabled = true;
+            btn.innerHTML = '<div class="spinner"></div> در حال ارسال...';
+
+            try {
+                // ۱. ذخیره در Supabase
+                const { error: dbError } = await db
+                    .from('contact_messages')
+                    .insert({
+                        name,
+                        email,
+                        subject,
+                        message,
+                        status: 'new'
+                    });
+
+                if (dbError) {
+                    console.error('DB error:', dbError);
+                    throw new Error('خطا در ذخیره پیام');
+                }
+
+                // ۲. ارسال به تلگرام از طریق Edge Function
+                try {
+                    const tgResponse = await fetch(EDGE_FUNCTION_URL, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${SUPABASE_ANON_KEY}`
+                        },
+                        body: JSON.stringify({ name, email, subject, message })
+                    });
+
+                    const tgData = await tgResponse.json();
+
+                    if (!tgData.success) {
+                        console.warn('Telegram notification failed:', tgData.error);
+                        // پیام ذخیره شد، ولی نوتیفیکیشن تلگرام نرسید
+                        // این خطا رو به کاربر نشون نمی‌دیم
+                    }
+                } catch (tgError) {
+                    console.warn('Telegram fetch error:', tgError);
+                    // بی‌خیال — پیام توی دیتابیس ذخیره شده
+                }
+
+                // ۳. نمایش حالت موفقیت
+                document.getElementById('formContainer').style.display = 'none';
+                document.getElementById('successState').classList.add('show');
+                document.getElementById('form-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+                // ۴. نمایش Toast
+                showToast('پیام شما با موفقیت ارسال شد!', 'success');
+
+            } catch (error) {
+                console.error('Submit error:', error);
+                showToast('خطا در ارسال پیام. لطفاً دوباره تلاش کن', 'error');
+            } finally {
+                isSubmitting = false;
+                btn.disabled = false;
+                btn.innerHTML = '🚀 ارسال پیام';
+            }
+        }
+
+        // ==========================================
+        // Reset Form
+        // ==========================================
+        function resetForm() {
+            document.getElementById('contactForm').reset();
+            document.getElementById('charCounter').textContent = '۰ / ۱۰۰۰';
+            document.getElementById('charCounter').classList.remove('warning');
+            document.getElementById('successState').classList.remove('show');
+            document.getElementById('formContainer').style.display = 'block';
+            document.getElementById('form-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+    </script>
+</body>
+</html>
