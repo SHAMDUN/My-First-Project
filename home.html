@@ -55,7 +55,6 @@
             100% { transform: translateX(-33.33%); }
         }
 
-        /* ============= Ticker Bar (زیر navbar) ============= */
         .ticker-bar {
             position: fixed;
             top: 66px;
@@ -86,55 +85,31 @@
         .ticker-item .change.up { color: var(--green); font-size: 11px; }
         .ticker-item .change.down { color: var(--red); font-size: 11px; }
 
-        /* ============= Main Container ============= */
-        .main-container {
-            max-width: 1100px;
-            margin: 0 auto;
-            padding: 130px 20px 40px;
-        }
+        .main-container { max-width: 1100px; margin: 0 auto; padding: 130px 20px 40px; }
 
-        /* ============= Page Header ============= */
-        .page-header {
-            text-align: center;
-            margin-bottom: 20px;
-            animation: fadeInUp 0.6s ease-out;
-        }
+        .page-header { text-align: center; margin-bottom: 20px; animation: fadeInUp 0.6s ease-out; }
         .page-header h1 {
-            font-size: 32px;
-            font-weight: 900;
-            margin-bottom: 10px;
+            font-size: 32px; font-weight: 900; margin-bottom: 10px;
             background: linear-gradient(135deg, var(--gold), var(--gold-light));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
             background-clip: text;
         }
         .page-header p { color: var(--gray); font-size: 14px; }
 
-        /* ============= Quick Access Bar ============= */
         .quick-access {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 20px;
+            display: flex; gap: 10px; margin-bottom: 20px;
             animation: fadeInUp 0.6s ease-out 0.05s backwards;
             flex-wrap: wrap;
         }
         .quick-btn {
-            flex: 1;
-            min-width: 140px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
+            flex: 1; min-width: 140px;
+            display: flex; align-items: center; justify-content: center; gap: 8px;
             padding: 12px 16px;
             background: linear-gradient(135deg, rgba(212, 175, 55, 0.1), rgba(212, 175, 55, 0.03));
             border: 1px solid rgba(212, 175, 55, 0.25);
             border-radius: 12px;
-            color: var(--gold);
-            font-size: 13px;
-            font-weight: 700;
-            text-decoration: none;
-            transition: 0.3s;
-            font-family: inherit;
+            color: var(--gold); font-size: 13px; font-weight: 700;
+            text-decoration: none; transition: 0.3s; font-family: inherit;
         }
         .quick-btn:hover {
             background: linear-gradient(135deg, var(--gold), var(--gold-dark));
@@ -144,101 +119,63 @@
         }
         .quick-btn .icon { font-size: 16px; }
 
-        /* ============= Manager Card ============= */
         .manager-card {
             background: linear-gradient(135deg, rgba(212, 175, 55, 0.08), rgba(59, 130, 246, 0.04));
             border: 1px solid rgba(212, 175, 55, 0.25);
-            border-radius: 20px;
-            padding: 20px;
-            margin-bottom: 20px;
-            display: flex;
-            gap: 18px;
-            align-items: center;
+            border-radius: 20px; padding: 20px; margin-bottom: 20px;
+            display: flex; gap: 18px; align-items: center;
             animation: fadeInUp 0.6s ease-out 0.1s backwards;
         }
         .manager-avatar {
-            width: 75px; height: 75px;
-            border-radius: 50%;
-            border: 3px solid var(--gold);
-            object-fit: cover;
-            flex-shrink: 0;
+            width: 75px; height: 75px; border-radius: 50%;
+            border: 3px solid var(--gold); object-fit: cover; flex-shrink: 0;
             box-shadow: 0 0 25px rgba(212, 175, 55, 0.3);
             background: linear-gradient(135deg, var(--gold), var(--gold-dark));
         }
         .manager-info { flex: 1; }
         .manager-name {
-            color: var(--gold);
-            font-size: 16px;
-            font-weight: 800;
-            margin-bottom: 8px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
+            color: var(--gold); font-size: 16px; font-weight: 800; margin-bottom: 8px;
+            display: flex; align-items: center; gap: 8px;
         }
-        .manager-text {
-            color: #cbd5e1;
-            font-size: 13px;
-            line-height: 1.8;
-        }
+        .manager-text { color: #cbd5e1; font-size: 13px; line-height: 1.8; }
 
-        /* ============= Tabs ============= */
         .market-tabs {
-            display: flex;
-            gap: 8px;
-            margin-bottom: 20px;
-            overflow-x: auto;
-            padding-bottom: 8px;
+            display: flex; gap: 8px; margin-bottom: 20px;
+            overflow-x: auto; padding-bottom: 8px;
             scrollbar-width: thin;
             animation: fadeInUp 0.6s ease-out 0.15s backwards;
         }
         .market-tabs::-webkit-scrollbar { height: 4px; }
         .market-tabs::-webkit-scrollbar-thumb {
-            background: rgba(212, 175, 55, 0.3);
-            border-radius: 10px;
+            background: rgba(212, 175, 55, 0.3); border-radius: 10px;
         }
         .market-tab {
             padding: 10px 18px;
             background: rgba(20, 20, 28, 0.6);
             border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 12px;
-            color: var(--gray);
-            font-size: 13px;
-            font-weight: 700;
-            font-family: inherit;
-            cursor: pointer;
-            transition: 0.3s;
-            white-space: nowrap;
-            display: flex;
-            align-items: center;
-            gap: 6px;
+            border-radius: 12px; color: var(--gray);
+            font-size: 13px; font-weight: 700; font-family: inherit;
+            cursor: pointer; transition: 0.3s; white-space: nowrap;
+            display: flex; align-items: center; gap: 6px;
         }
-        .market-tab:hover {
-            color: var(--gold);
-            border-color: rgba(212, 175, 55, 0.4);
-        }
+        .market-tab:hover { color: var(--gold); border-color: rgba(212, 175, 55, 0.4); }
         .market-tab.active {
             background: linear-gradient(135deg, var(--gold), var(--gold-dark));
-            color: var(--bg-primary);
-            border-color: var(--gold);
+            color: var(--bg-primary); border-color: var(--gold);
             box-shadow: 0 5px 20px rgba(212, 175, 55, 0.3);
         }
 
-        /* ============= Price Grid ============= */
         .price-section { display: none; }
         .price-section.active { display: block; animation: fadeInUp 0.4s ease-out; }
         .price-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 12px;
-            margin-bottom: 24px;
+            display: grid; grid-template-columns: repeat(3, 1fr);
+            gap: 12px; margin-bottom: 24px;
         }
         .price-card {
             background: linear-gradient(135deg, var(--bg-card), var(--bg-secondary));
-            padding: 15px;
-            border-radius: 15px;
+            padding: 15px; border-radius: 15px;
             border-right: 4px solid var(--gold);
-            text-align: right;
-            transition: 0.3s;
+            text-align: right; transition: 0.3s;
         }
         .price-card:hover {
             background: rgba(26, 26, 36, 1);
@@ -246,46 +183,28 @@
             box-shadow: 0 10px 30px rgba(212, 175, 55, 0.15);
         }
         .price-card .label {
-            font-size: 11.5px;
-            color: var(--gray);
-            margin-bottom: 6px;
-            display: flex;
-            align-items: center;
-            gap: 4px;
+            font-size: 11.5px; color: var(--gray); margin-bottom: 6px;
+            display: flex; align-items: center; gap: 4px;
         }
         .price-card .value {
-            font-size: 15px;
-            font-weight: 800;
-            color: var(--white);
+            font-size: 15px; font-weight: 800; color: var(--white);
             font-variant-numeric: tabular-nums;
         }
-        .price-card .change {
-            font-size: 11px;
-            margin-top: 6px;
-            font-weight: 700;
-        }
+        .price-card .change { font-size: 11px; margin-top: 6px; font-weight: 700; }
         .price-card .change.up { color: var(--green); }
         .price-card .change.down { color: var(--red); }
         .price-card .bubble-inline {
-            font-size: 10.5px;
-            margin-top: 5px;
-            font-weight: 700;
-            display: flex;
-            align-items: center;
-            gap: 4px;
+            font-size: 10.5px; margin-top: 5px; font-weight: 700;
+            display: flex; align-items: center; gap: 4px;
         }
         .price-card .bubble-inline.up { color: var(--green); }
         .price-card .bubble-inline.down { color: var(--red); }
         .price-card .bubble-inline.neutral { color: var(--gray); }
         .price-card .intrinsic-badge {
             display: inline-block;
-            background: rgba(59, 130, 246, 0.15);
-            color: #60a5fa;
-            font-size: 9px;
-            padding: 2px 8px;
-            border-radius: 6px;
-            margin-top: 6px;
-            border: 1px solid rgba(59, 130, 246, 0.3);
+            background: rgba(59, 130, 246, 0.15); color: #60a5fa;
+            font-size: 9px; padding: 2px 8px; border-radius: 6px;
+            margin-top: 6px; border: 1px solid rgba(59, 130, 246, 0.3);
         }
         .price-card.gold { border-right-color: #D4AF37; }
         .price-card.gold24 { border-right-color: #FFD700; }
@@ -293,7 +212,6 @@
         .price-card.coin { border-right-color: #FFA500; }
         .price-card.ounce { border-right-color: #FFD700; }
         .price-card.silver { border-right-color: #A8A8A8; }
-        .price-card.silver999 { border-right-color: #C0C0C0; }
         .price-card.platinum { border-right-color: #E5E4E2; }
         .price-card.palladium { border-right-color: #CED0DD; }
         .price-card.copper { border-right-color: #B87333; }
@@ -308,198 +226,109 @@
         .price-card.gbp { border-right-color: #8b5cf6; }
         .price-card.crypto { border-right-color: #f7931a; }
 
-        /* ============= Bubble Section ============= */
         .bubble-section {
             background: linear-gradient(135deg, var(--bg-card), var(--bg-secondary));
             border: 1px solid rgba(212, 175, 55, 0.15);
-            border-radius: 20px;
-            padding: 25px;
-            margin-bottom: 24px;
+            border-radius: 20px; padding: 25px; margin-bottom: 24px;
             animation: fadeInUp 0.6s ease-out 0.2s backwards;
         }
         .section-title {
-            color: var(--white);
-            font-size: 18px;
-            font-weight: 800;
-            margin-bottom: 20px;
-            padding-bottom: 12px;
+            color: var(--white); font-size: 18px; font-weight: 800;
+            margin-bottom: 20px; padding-bottom: 12px;
             border-bottom: 2px solid rgba(212, 175, 55, 0.3);
-            display: flex;
-            align-items: center;
-            gap: 8px;
+            display: flex; align-items: center; gap: 8px;
         }
         .bubble-card {
-            background: rgba(10, 10, 15, 0.5);
-            padding: 18px;
-            border-radius: 15px;
-            border-right: 4px solid var(--gold);
+            background: rgba(10, 10, 15, 0.5); padding: 18px;
+            border-radius: 15px; border-right: 4px solid var(--gold);
             text-align: right;
         }
         .bubble-card .title {
-            font-size: 14px;
-            color: var(--gold);
-            font-weight: 800;
-            margin-bottom: 12px;
-            display: flex;
-            align-items: center;
-            gap: 6px;
+            font-size: 14px; color: var(--gold); font-weight: 800;
+            margin-bottom: 12px; display: flex; align-items: center; gap: 6px;
         }
         .bubble-card .row {
-            display: flex;
-            justify-content: space-between;
-            padding: 6px 0;
-            font-size: 13px;
+            display: flex; justify-content: space-between;
+            padding: 6px 0; font-size: 13px;
             border-bottom: 1px dashed rgba(255, 255, 255, 0.05);
         }
         .bubble-card .row:last-child { border-bottom: none; }
         .bubble-card .row .label { color: var(--gray); }
         .bubble-card .row .value { font-weight: 700; color: var(--white); }
         .bubble-value {
-            font-size: 16px;
-            font-weight: 800;
-            text-align: center;
-            margin-top: 15px;
-            padding: 12px;
-            border-radius: 12px;
+            font-size: 16px; font-weight: 800; text-align: center;
+            margin-top: 15px; padding: 12px; border-radius: 12px;
             background: rgba(10, 10, 15, 0.6);
         }
         .bubble-positive { color: var(--green); }
         .bubble-negative { color: var(--red); }
         .bubble-neutral { color: var(--gray); }
 
-        /* ============= Chart Section ============= */
         .chart-section {
             background: linear-gradient(135deg, var(--bg-card), var(--bg-secondary));
             border: 1px solid rgba(212, 175, 55, 0.15);
-            border-radius: 20px;
-            padding: 20px;
-            margin-bottom: 24px;
+            border-radius: 20px; padding: 20px; margin-bottom: 24px;
             animation: fadeInUp 0.6s ease-out 0.3s backwards;
         }
         .chart-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-            flex-wrap: wrap;
-            gap: 10px;
+            display: flex; justify-content: space-between; align-items: center;
+            margin-bottom: 15px; flex-wrap: wrap; gap: 10px;
         }
-        .chart-header h2 {
-            color: var(--white);
-            font-size: 17px;
-            font-weight: 800;
-        }
+        .chart-header h2 { color: var(--white); font-size: 17px; font-weight: 800; }
         .chart-tabs {
-            display: flex;
-            gap: 5px;
-            flex-wrap: wrap;
-            align-items: center;
-            max-height: 120px;
-            overflow-y: auto;
+            display: flex; gap: 5px; flex-wrap: wrap;
+            align-items: center; max-height: 120px; overflow-y: auto;
         }
         .chart-tab {
-            background: rgba(10, 10, 15, 0.6);
-            color: var(--gray);
+            background: rgba(10, 10, 15, 0.6); color: var(--gray);
             border: 1px solid rgba(255, 255, 255, 0.08);
-            padding: 7px 12px;
-            border-radius: 8px;
-            font-size: 11px;
-            font-weight: 700;
-            cursor: pointer;
-            font-family: inherit;
-            transition: 0.3s;
+            padding: 7px 12px; border-radius: 8px;
+            font-size: 11px; font-weight: 700; cursor: pointer;
+            font-family: inherit; transition: 0.3s;
         }
-        .chart-tab:hover {
-            color: var(--gold);
-            border-color: rgba(212, 175, 55, 0.4);
-        }
+        .chart-tab:hover { color: var(--gold); border-color: rgba(212, 175, 55, 0.4); }
         .chart-tab.active {
             background: linear-gradient(135deg, var(--gold), var(--gold-dark));
-            color: var(--bg-primary);
-            border-color: var(--gold);
+            color: var(--bg-primary); border-color: var(--gold);
         }
         .fullscreen-btn {
-            background: rgba(10, 10, 15, 0.6);
-            color: var(--gold);
-            border: 1px solid var(--gold);
-            padding: 8px 14px;
-            border-radius: 8px;
-            font-size: 12px;
-            font-weight: 700;
-            cursor: pointer;
-            font-family: inherit;
-            transition: 0.3s;
+            background: rgba(10, 10, 15, 0.6); color: var(--gold);
+            border: 1px solid var(--gold); padding: 8px 14px;
+            border-radius: 8px; font-size: 12px; font-weight: 700;
+            cursor: pointer; font-family: inherit; transition: 0.3s;
         }
-        .fullscreen-btn:hover {
-            background: var(--gold);
-            color: var(--bg-primary);
-        }
-        #tvchart {
-            width: 100%;
-            height: 550px;
-            border-radius: 12px;
-            overflow: hidden;
-        }
+        .fullscreen-btn:hover { background: var(--gold); color: var(--bg-primary); }
+        #tvchart { width: 100%; height: 550px; border-radius: 12px; overflow: hidden; }
         .chart-fullscreen {
             position: fixed !important;
             top: 0 !important; left: 0 !important; right: 0 !important; bottom: 0 !important;
             width: 100vw !important; height: 100vh !important;
-            z-index: 999999 !important;
-            background: var(--bg-primary) !important;
-            padding: 10px !important;
-            margin: 0 !important;
-            border-radius: 0 !important;
-            display: flex !important;
-            flex-direction: column !important;
-            overflow: hidden !important;
+            z-index: 999999 !important; background: var(--bg-primary) !important;
+            padding: 10px !important; margin: 0 !important; border-radius: 0 !important;
+            display: flex !important; flex-direction: column !important; overflow: hidden !important;
         }
-        .chart-fullscreen .chart-header {
-            flex-shrink: 0 !important;
-            margin-bottom: 8px !important;
-        }
+        .chart-fullscreen .chart-header { flex-shrink: 0 !important; margin-bottom: 8px !important; }
         .chart-fullscreen .chart-header h2 { display: none !important; }
-        .chart-fullscreen .chart-tabs {
-            max-height: 60px !important;
-            overflow-y: auto !important;
-        }
+        .chart-fullscreen .chart-tabs { max-height: 60px !important; overflow-y: auto !important; }
         .chart-fullscreen #tvchart {
-            flex: 1 !important;
-            height: auto !important;
-            min-height: 0 !important;
-            width: 100% !important;
+            flex: 1 !important; height: auto !important;
+            min-height: 0 !important; width: 100% !important;
         }
 
-        /* ============= CTA ============= */
         .cta-section {
             background: linear-gradient(135deg, rgba(212, 175, 55, 0.1), rgba(59, 130, 246, 0.05));
             border: 1px solid rgba(212, 175, 55, 0.25);
-            border-radius: 20px;
-            padding: 30px;
-            text-align: center;
+            border-radius: 20px; padding: 30px; text-align: center;
             margin-bottom: 24px;
         }
-        .cta-section h2 {
-            color: var(--white);
-            font-size: 22px;
-            font-weight: 900;
-            margin-bottom: 12px;
-        }
-        .cta-section p {
-            color: var(--gray);
-            font-size: 14px;
-            margin-bottom: 20px;
-            line-height: 1.8;
-        }
+        .cta-section h2 { color: var(--white); font-size: 22px; font-weight: 900; margin-bottom: 12px; }
+        .cta-section p { color: var(--gray); font-size: 14px; margin-bottom: 20px; line-height: 1.8; }
         .cta-btn {
             display: inline-block;
             background: linear-gradient(135deg, var(--gold), var(--gold-dark));
-            color: var(--bg-primary);
-            padding: 14px 32px;
-            border-radius: 12px;
-            text-decoration: none;
-            font-size: 14px;
-            font-weight: 800;
-            transition: 0.3s;
+            color: var(--bg-primary); padding: 14px 32px;
+            border-radius: 12px; text-decoration: none;
+            font-size: 14px; font-weight: 800; transition: 0.3s;
             box-shadow: 0 10px 30px rgba(212, 175, 55, 0.3);
         }
         .cta-btn:hover {
@@ -507,28 +336,19 @@
             box-shadow: 0 15px 40px rgba(212, 175, 55, 0.5);
         }
 
-        /* ============= Footer ============= */
         .footer {
-            text-align: center;
-            padding: 30px 20px;
-            color: var(--gray);
-            font-size: 12px;
+            text-align: center; padding: 30px 20px;
+            color: var(--gray); font-size: 12px;
             border-top: 1px solid rgba(212, 175, 55, 0.1);
         }
         .footer-social {
-            display: flex;
-            justify-content: center;
-            gap: 12px;
-            margin-bottom: 15px;
+            display: flex; justify-content: center; gap: 12px; margin-bottom: 15px;
         }
         .footer-social a {
-            width: 44px; height: 44px;
-            border-radius: 12px;
+            width: 44px; height: 44px; border-radius: 12px;
             background: rgba(212, 175, 55, 0.08);
             border: 1px solid rgba(212, 175, 55, 0.2);
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            display: flex; align-items: center; justify-content: center;
             transition: 0.3s;
         }
         .footer-social a:hover {
@@ -537,7 +357,6 @@
             box-shadow: 0 8px 25px rgba(212, 175, 55, 0.3);
         }
 
-        /* ============= Responsive ============= */
         @media (max-width: 900px) {
             .price-grid { grid-template-columns: repeat(2, 1fr); }
             .manager-card { flex-direction: column; text-align: center; }
@@ -555,7 +374,7 @@
 </head>
 <body>
 
-    <!-- Ticker Bar (زیر navbar جدید) -->
+    <!-- Ticker Bar -->
     <div class="ticker-bar">
         <div class="ticker-content" id="tickerContent">
             <span class="ticker-item">⏳ در حال دریافت قیمت‌ها...</span>
@@ -564,13 +383,11 @@
 
     <!-- Main Container -->
     <div class="main-container">
-        <!-- Page Header -->
         <div class="page-header">
             <h1>📊 نمای بازار</h1>
             <p>قیمت‌های لحظه‌ای طلا، ارز، فلزات و انرژی</p>
         </div>
 
-        <!-- Quick Access -->
         <div class="quick-access">
             <a href="courses.html" class="quick-btn">
                 <span class="icon">📚</span> دوره‌های آموزشی
@@ -586,7 +403,6 @@
             </a>
         </div>
 
-        <!-- Manager Card -->
         <div class="manager-card">
             <img src="me.png" alt="مدیر آکادمی" class="manager-avatar" onerror="this.style.display='none'">
             <div class="manager-info">
@@ -597,7 +413,6 @@
             </div>
         </div>
 
-        <!-- Market Tabs -->
         <div class="market-tabs">
             <button class="market-tab active" onclick="switchMarket('gold', this)">🥇 طلا و سکه</button>
             <button class="market-tab" onclick="switchMarket('currency', this)">💵 ارزها</button>
@@ -607,7 +422,6 @@
             <button class="market-tab" onclick="switchMarket('crypto', this)">₿ ارز دیجیتال</button>
         </div>
 
-        <!-- Section 1: طلا و سکه -->
         <div class="price-section active" id="section-gold">
             <div class="price-grid">
                 <div class="price-card gold">
@@ -659,9 +473,8 @@
             </div>
         </div>
 
-        <!-- Section 2: ارزها -->
         <div class="price-section" id="section-currency">
-            <div class="price-grid" id="currency-grid">
+            <div class="price-grid">
                 <div class="price-card usd">
                     <div class="label">💵 دلار آمریکا</div>
                     <div class="value" id="usd-price">--</div>
@@ -725,7 +538,6 @@
             </div>
         </div>
 
-        <!-- Section 3: فلزات گرانبها -->
         <div class="price-section" id="section-precious">
             <div class="price-grid">
                 <div class="price-card ounce">
@@ -761,7 +573,6 @@
             </div>
         </div>
 
-        <!-- Section 4: فلزات پایه -->
         <div class="price-section" id="section-base">
             <div class="price-grid">
                 <div class="price-card copper">
@@ -792,7 +603,6 @@
             </div>
         </div>
 
-        <!-- Section 5: انرژی -->
         <div class="price-section" id="section-energy">
             <div class="price-grid">
                 <div class="price-card oil">
@@ -823,7 +633,6 @@
             </div>
         </div>
 
-        <!-- Section 6: ارز دیجیتال -->
         <div class="price-section" id="section-crypto">
             <div class="price-grid">
                 <div class="price-card crypto">
@@ -874,7 +683,6 @@
             </div>
         </div>
 
-        <!-- Bubble Section -->
         <div class="bubble-section">
             <div class="section-title">💎 قیمت نقره ۹۹۹</div>
             <div class="bubble-card">
@@ -888,7 +696,6 @@
             </div>
         </div>
 
-        <!-- Chart Section -->
         <div class="chart-section" id="chartSection">
             <div class="chart-header">
                 <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
@@ -918,7 +725,6 @@
             <div id="tvchart"></div>
         </div>
 
-        <!-- CTA -->
         <div class="cta-section">
             <h2>🎓 از تحلیل تا معامله حرفه‌ای</h2>
             <p>دوره‌های آموزشی آکادمی شمعدون، مسیر حرفه‌ای شدن رو از صفر تا صد برات هموار می‌کنه.</p>
@@ -926,7 +732,6 @@
         </div>
     </div>
 
-    <!-- Footer -->
     <footer class="footer">
         <div class="footer-social">
             <a href="https://instagram.com/shamdun.trade" target="_blank" rel="noopener" title="اینستاگرام">
@@ -961,9 +766,58 @@
     <script src="https://s3.tradingview.com/tv.js"></script>
     <script>
         // ==========================================
-        // تنظیمات
+        // API Keys با Key Rotation
         // ==========================================
-        const BRS_API = 'BvUj3cMKWNBK87KW9xhNccCThmfVbd8u';
+        const BRS_API_KEYS = [
+            'B4xp2gWXASUmB3n6WPHtJxhjyJkgcBJz',  // کلید جدید (فعال)
+            'BvUj3cMKWNBK87KW9xhNccCThmfVbd8u'   // کلید قدیمی (backup)
+        ];
+
+        let currentKeyIndex = 0;
+
+        // ==========================================
+        // fetch با چرخش خودکار کلید
+        // ==========================================
+        async function fetchWithRotation(baseUrl) {
+            const maxAttempts = BRS_API_KEYS.length;
+
+            for (let attempt = 0; attempt < maxAttempts; attempt++) {
+                const key = BRS_API_KEYS[currentKeyIndex];
+                const url = `${baseUrl}?key=${key}`;
+
+                try {
+                    const res = await fetch(url);
+
+                    if (!res.ok) {
+                        console.warn(`⚠️ کلید ${currentKeyIndex + 1} کد ${res.status} داد، می‌ریم کلید بعدی`);
+                        currentKeyIndex = (currentKeyIndex + 1) % BRS_API_KEYS.length;
+                        continue;
+                    }
+
+                    const text = await res.text();
+
+                    // چک کن پاسخ HTML نباشه
+                    if (text.trim().startsWith('<!DOCTYPE') || text.trim().startsWith('<html')) {
+                        console.warn(`⚠️ کلید ${currentKeyIndex + 1} پاسخ HTML داد، می‌ریم کلید بعدی`);
+                        currentKeyIndex = (currentKeyIndex + 1) % BRS_API_KEYS.length;
+                        continue;
+                    }
+
+                    const data = JSON.parse(text);
+
+                    // ✅ موفق - کلید فعلی رو نگه دار
+                    console.log(`✅ کلید ${currentKeyIndex + 1} کار کرد`);
+                    return data;
+
+                } catch (e) {
+                    console.warn(`⚠️ خطای شبکه با کلید ${currentKeyIndex + 1}:`, e.message);
+                    currentKeyIndex = (currentKeyIndex + 1) % BRS_API_KEYS.length;
+                }
+            }
+
+            throw new Error('❌ همه کلیدهای API شکست خوردن');
+        }
+
         const OUNCE_TO_GRAM = 31.1035;
 
         // ==========================================
@@ -1106,9 +960,9 @@
         };
 
         async function fetchBrsApi() {
+            // 1. Gold + Currency
             try {
-                const res = await fetch(`https://Api.BrsApi.ir/Market/Gold_Currency.php?key=${BRS_API}`);
-                const data = await res.json();
+                const data = await fetchWithRotation('https://Api.BrsApi.ir/Market/Gold_Currency.php');
 
                 if (data.gold && Array.isArray(data.gold)) {
                     const items = {
@@ -1153,11 +1007,11 @@
                         }
                     });
                 }
-            } catch (e) { console.log('BrsApi Gold_Currency error:', e); }
+            } catch (e) { console.error('❌ Gold_Currency error:', e.message); }
 
+            // 2. Commodity
             try {
-                const res = await fetch(`https://Api.BrsApi.ir/Market/Commodity.php?key=${BRS_API}`);
-                const data = await res.json();
+                const data = await fetchWithRotation('https://Api.BrsApi.ir/Market/Commodity.php');
 
                 if (data.metal_precious && Array.isArray(data.metal_precious)) {
                     const preciousMap = {
@@ -1207,8 +1061,9 @@
                         }
                     });
                 }
-            } catch (e) { console.log('BrsApi Commodity error:', e); }
+            } catch (e) { console.error('❌ Commodity error:', e.message); }
 
+            // محاسبه ارزش ذاتی
             if (globalOunceSilver > 0 && globalUSD > 0) {
                 const silver999Gram = (globalOunceSilver * globalUSD * 0.999) / OUNCE_TO_GRAM;
                 setPrice('silver999-price', Math.round(silver999Gram), 'تومان');
@@ -1257,7 +1112,7 @@
                         setChange(cryptoMap[key].change, data[key].usd_24h_change);
                     }
                 });
-            } catch (e) { console.log('Crypto error:', e); }
+            } catch (e) { console.error('❌ Crypto error:', e.message); }
         }
 
         // ==========================================
