@@ -1,0 +1,1828 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>پرتفوی من | آکادمی شمعدون</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css">
+    <meta name="theme-color" content="#d4af37">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --bg-primary: #0a0a0f;
+            --bg-secondary: #14141c;
+            --bg-card: #1a1a24;
+            --gold: #d4af37;
+            --gold-light: #f4d47c;
+            --gold-dark: #a8862a;
+            --green: #10b981;
+            --red: #ef4444;
+            --blue: #3b82f6;
+            --purple: #8b5cf6;
+            --orange: #f97316;
+            --pink: #ec4899;
+            --cyan: #06b6d4;
+            --white: #f8fafc;
+            --gray: #94a3b8;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Vazirmatn', Tahoma, sans-serif;
+            background-color: var(--bg-primary);
+            background-image: 
+                radial-gradient(circle at 0% 0%, rgba(212, 175, 55, 0.08) 0%, transparent 40%),
+                radial-gradient(circle at 100% 100%, rgba(59, 130, 246, 0.06) 0%, transparent 40%),
+                linear-gradient(rgba(255, 255, 255, 0.015) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
+            background-size: 100% 100%, 100% 100%, 60px 60px, 60px 60px;
+            background-attachment: fixed;
+            color: var(--white);
+            min-height: 100vh;
+            direction: rtl;
+            overflow-x: hidden;
+        }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes slideDown {
+            from { opacity: 0; max-height: 0; }
+            to { opacity: 1; max-height: 2000px; }
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        .main-container { max-width: 1200px; margin: 0 auto; padding: 100px 20px 40px; }
+
+        /* ===== Page Header ===== */
+        .page-header {
+            text-align: center;
+            margin-bottom: 30px;
+            animation: fadeInUp 0.6s ease-out;
+        }
+        .page-header h1 {
+            font-size: 36px; font-weight: 900; margin-bottom: 10px;
+            background: linear-gradient(135deg, var(--gold), var(--gold-light));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .page-header p { color: var(--gray); font-size: 14px; }
+
+        /* ===== Loading ===== */
+        .loading-screen {
+            text-align: center;
+            padding: 100px 20px;
+            color: var(--gray);
+        }
+        .spinner {
+            width: 50px; height: 50px;
+            border: 4px solid rgba(212, 175, 55, 0.2);
+            border-top-color: var(--gold);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+
+        /* ===== Summary Cards ===== */
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            margin-bottom: 25px;
+            animation: fadeInUp 0.6s ease-out 0.1s backwards;
+        }
+        .summary-card {
+            background: linear-gradient(135deg, var(--bg-card), var(--bg-secondary));
+            border: 1px solid rgba(212, 175, 55, 0.15);
+            border-radius: 18px;
+            padding: 20px;
+            text-align: center;
+            transition: 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+        .summary-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(212, 175, 55, 0.4);
+            box-shadow: 0 15px 40px rgba(212, 175, 55, 0.15);
+        }
+        .summary-card .icon { font-size: 28px; margin-bottom: 10px; }
+        .summary-card .value {
+            color: var(--white);
+            font-size: 22px;
+            font-weight: 900;
+            margin-bottom: 6px;
+            font-variant-numeric: tabular-nums;
+        }
+        .summary-card .value.gold { color: var(--gold); }
+        .summary-card .value.green { color: var(--green); }
+        .summary-card .value.red { color: var(--red); }
+        .summary-card .label { color: var(--gray); font-size: 12px; }
+        .summary-card .badge {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 10px;
+            font-size: 10px;
+            font-weight: 800;
+            margin-top: 8px;
+        }
+        .summary-card .badge.up { background: rgba(16, 185, 129, 0.15); color: var(--green); }
+        .summary-card .badge.down { background: rgba(239, 68, 68, 0.15); color: var(--red); }
+
+        /* ===== Actions ===== */
+        .actions-bar {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+            animation: fadeInUp 0.6s ease-out 0.15s backwards;
+        }
+        .btn {
+            padding: 12px 20px;
+            border-radius: 12px;
+            border: none;
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 13.5px;
+            font-weight: 800;
+            transition: 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+            color: var(--bg-primary);
+            flex: 1;
+            justify-content: center;
+            padding: 15px;
+            font-size: 15px;
+        }
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.4);
+        }
+        .btn-secondary {
+            background: rgba(20, 20, 28, 0.8);
+            color: var(--white);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .btn-secondary:hover {
+            border-color: rgba(212, 175, 55, 0.4);
+            color: var(--gold);
+        }
+
+        /* ===== Quick Add ===== */
+        .quick-add {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+            animation: fadeInUp 0.6s ease-out 0.2s backwards;
+        }
+        .quick-btn {
+            padding: 8px 14px;
+            background: rgba(20, 20, 28, 0.6);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            border-radius: 10px;
+            color: var(--gray);
+            font-size: 12px;
+            font-weight: 700;
+            font-family: inherit;
+            cursor: pointer;
+            transition: 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .quick-btn:hover {
+            background: rgba(212, 175, 55, 0.1);
+            color: var(--gold);
+            border-color: var(--gold);
+        }
+
+        /* ===== Charts ===== */
+        .chart-section {
+            background: linear-gradient(135deg, var(--bg-card), var(--bg-secondary));
+            border: 1px solid rgba(212, 175, 55, 0.15);
+            border-radius: 20px;
+            padding: 25px;
+            margin-bottom: 25px;
+            animation: fadeInUp 0.6s ease-out 0.25s backwards;
+        }
+        .chart-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+            align-items: center;
+        }
+        .chart-title {
+            color: var(--white);
+            font-size: 16px;
+            font-weight: 800;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .chart-wrapper {
+            position: relative;
+            height: 300px;
+        }
+
+        /* ===== Portfolio Table ===== */
+        .portfolio-section {
+            background: linear-gradient(135deg, var(--bg-card), var(--bg-secondary));
+            border: 1px solid rgba(212, 175, 55, 0.15);
+            border-radius: 20px;
+            padding: 25px;
+            margin-bottom: 25px;
+            animation: fadeInUp 0.6s ease-out 0.3s backwards;
+        }
+        .category-group {
+            margin-bottom: 20px;
+            border: 1px solid rgba(212, 175, 55, 0.1);
+            border-radius: 15px;
+            overflow: hidden;
+            background: rgba(10, 10, 15, 0.3);
+        }
+        .category-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 18px;
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.1), rgba(212, 175, 55, 0.03));
+            cursor: pointer;
+            transition: 0.3s;
+            user-select: none;
+        }
+        .category-header:hover {
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.15), rgba(212, 175, 55, 0.05));
+        }
+        .category-header-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .category-icon { font-size: 24px; }
+        .category-name {
+            color: var(--gold);
+            font-size: 15px;
+            font-weight: 800;
+        }
+        .category-count {
+            color: var(--gray);
+            font-size: 11px;
+            margin-right: 8px;
+        }
+        .category-total {
+            color: var(--white);
+            font-size: 14px;
+            font-weight: 800;
+            font-variant-numeric: tabular-nums;
+        }
+        .category-toggle {
+            color: var(--gray);
+            font-size: 16px;
+            transition: transform 0.3s;
+        }
+        .category-group.collapsed .category-toggle {
+            transform: rotate(-90deg);
+        }
+        .category-group.collapsed .category-content {
+            display: none;
+        }
+
+        /* ===== Asset Card ===== */
+        .asset-card {
+            padding: 18px;
+            border-top: 1px solid rgba(255, 255, 255, 0.03);
+            transition: 0.3s;
+        }
+        .asset-card:hover {
+            background: rgba(212, 175, 55, 0.03);
+        }
+        .asset-card-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .asset-card-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex: 1;
+            min-width: 200px;
+        }
+        .asset-icon-wrapper {
+            width: 46px; height: 46px;
+            border-radius: 12px;
+            background: rgba(212, 175, 55, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            overflow: hidden;
+        }
+        .asset-icon-wrapper img {
+            width: 32px; height: 32px;
+            object-fit: contain;
+        }
+        .asset-icon-wrapper .emoji { font-size: 24px; }
+        .asset-name-info h4 {
+            color: var(--white);
+            font-size: 15px;
+            font-weight: 800;
+            margin-bottom: 3px;
+        }
+        .asset-name-info .symbol {
+            color: var(--gray);
+            font-size: 11px;
+            font-family: monospace;
+            direction: ltr;
+        }
+        .asset-card-actions {
+            display: flex;
+            gap: 6px;
+        }
+        .icon-btn {
+            width: 34px; height: 34px;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(10, 10, 15, 0.6);
+            color: var(--gray);
+            cursor: pointer;
+            font-size: 14px;
+            transition: 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .icon-btn:hover {
+            border-color: var(--gold);
+            color: var(--gold);
+            background: rgba(212, 175, 55, 0.1);
+        }
+        .icon-btn.danger:hover {
+            border-color: var(--red);
+            color: var(--red);
+            background: rgba(239, 68, 68, 0.1);
+        }
+
+        .asset-card-info {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+        }
+        .info-item {
+            background: rgba(10, 10, 15, 0.5);
+            padding: 10px 12px;
+            border-radius: 10px;
+        }
+        .info-item .label {
+            color: var(--gray);
+            font-size: 10.5px;
+            margin-bottom: 4px;
+        }
+        .info-item .value {
+            color: var(--white);
+            font-size: 14px;
+            font-weight: 800;
+            font-variant-numeric: tabular-nums;
+        }
+        .info-item .value.green { color: var(--green); }
+        .info-item .value.red { color: var(--red); }
+        .info-item .value.gold { color: var(--gold); }
+
+        .asset-weight-bar {
+            margin-top: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .asset-weight-bar .bar {
+            flex: 1;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+        .asset-weight-bar .bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--gold), var(--gold-dark));
+            border-radius: 3px;
+            transition: width 0.5s;
+        }
+        .asset-weight-bar .percent {
+            color: var(--gold);
+            font-size: 12px;
+            font-weight: 800;
+            min-width: 45px;
+            text-align: left;
+        }
+
+        /* ===== Empty State ===== */
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--gray);
+        }
+        .empty-state .icon { font-size: 80px; margin-bottom: 20px; opacity: 0.5; }
+        .empty-state h2 { color: var(--gold); margin-bottom: 10px; font-size: 20px; }
+        .empty-state p { margin-bottom: 25px; font-size: 14px; }
+
+        /* ===== AI Insight ===== */
+        .ai-insight {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.08), rgba(59, 130, 246, 0.02));
+            border: 1px solid rgba(59, 130, 246, 0.25);
+            border-radius: 20px;
+            padding: 25px;
+            margin-bottom: 25px;
+            display: flex;
+            gap: 18px;
+            align-items: flex-start;
+            animation: fadeInUp 0.6s ease-out 0.35s backwards;
+        }
+        .ai-icon {
+            font-size: 36px;
+            flex-shrink: 0;
+        }
+        .ai-content { flex: 1; }
+        .ai-title {
+            color: #60a5fa;
+            font-size: 15px;
+            font-weight: 800;
+            margin-bottom: 12px;
+        }
+        .ai-text {
+            color: #cbd5e1;
+            font-size: 13.5px;
+            line-height: 1.9;
+            margin-bottom: 15px;
+        }
+        .ai-suggestions {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .ai-suggestion-item {
+            display: flex;
+            gap: 8px;
+            align-items: flex-start;
+            padding: 10px 14px;
+            background: rgba(10, 10, 15, 0.5);
+            border-radius: 10px;
+            border-right: 3px solid #60a5fa;
+            color: #cbd5e1;
+            font-size: 12.5px;
+            line-height: 1.7;
+        }
+        .ai-suggestion-item.warning { border-right-color: var(--gold); }
+        .ai-suggestion-item.danger { border-right-color: var(--red); }
+        .ai-analyze-btn {
+            background: linear-gradient(135deg, #3b82f6, #2563eb);
+            color: #fff;
+            padding: 12px 24px;
+            border-radius: 10px;
+            border: none;
+            font-family: inherit;
+            font-size: 13.5px;
+            font-weight: 800;
+            cursor: pointer;
+            transition: 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .ai-analyze-btn:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(59, 130, 246, 0.4);
+        }
+        .ai-analyze-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* ===== Compare Section ===== */
+        .compare-section {
+            background: linear-gradient(135deg, var(--bg-card), var(--bg-secondary));
+            border: 1px solid rgba(212, 175, 55, 0.15);
+            border-radius: 20px;
+            padding: 25px;
+            margin-bottom: 25px;
+            animation: fadeInUp 0.6s ease-out 0.4s backwards;
+        }
+        .compare-title {
+            color: var(--gold);
+            font-size: 16px;
+            font-weight: 800;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .compare-desc {
+            color: var(--gray);
+            font-size: 13px;
+            margin-bottom: 20px;
+            line-height: 1.7;
+        }
+        .compare-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 12px;
+        }
+        .compare-card {
+            background: rgba(10, 10, 15, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 15px;
+            text-align: center;
+            transition: 0.3s;
+        }
+        .compare-card:hover {
+            transform: translateY(-3px);
+            border-color: rgba(212, 175, 55, 0.3);
+        }
+        .compare-card .label {
+            color: var(--gray);
+            font-size: 11px;
+            margin-bottom: 8px;
+        }
+        .compare-card .value {
+            color: var(--white);
+            font-size: 18px;
+            font-weight: 800;
+            margin-bottom: 4px;
+            font-variant-numeric: tabular-nums;
+        }
+        .compare-card .value.up { color: var(--green); }
+        .compare-card .value.down { color: var(--red); }
+        .compare-card .desc {
+            color: var(--gray);
+            font-size: 10px;
+        }
+        .compare-highlight {
+            border: 2px solid var(--gold);
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.1), rgba(212, 175, 55, 0.02));
+        }
+
+        /* ===== Modal ===== */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            overflow-y: auto;
+        }
+        .modal-overlay.show { display: flex; }
+        .modal {
+            background: var(--bg-card);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            border-radius: 20px;
+            padding: 25px;
+            max-width: 500px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        .modal h2 {
+            color: var(--gold);
+            margin-bottom: 20px;
+            font-size: 18px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid rgba(212, 175, 55, 0.15);
+        }
+        .form-group { margin-bottom: 15px; }
+        .form-group label {
+            display: block;
+            color: #cbd5e1;
+            font-size: 13px;
+            margin-bottom: 6px;
+            font-weight: 700;
+        }
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 14px;
+            background: rgba(10, 10, 15, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            color: var(--white);
+            font-family: inherit;
+            font-size: 13px;
+            transition: 0.3s;
+        }
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--gold);
+            box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.1);
+        }
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+        .modal-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+            justify-content: flex-end;
+        }
+        .modal-actions .btn { flex: 1; justify-content: center; }
+
+        /* ===== Toast ===== */
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: var(--bg-card);
+            color: var(--white);
+            padding: 14px 24px;
+            border-radius: 12px;
+            border-right: 4px solid var(--gold);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+            z-index: 2000;
+            transition: 0.4s;
+            font-size: 14px;
+            font-weight: 700;
+            max-width: 90vw;
+        }
+        .toast.show { transform: translateX(-50%) translateY(0); }
+        .toast.success { border-right-color: var(--green); }
+        .toast.error { border-right-color: var(--red); }
+
+        /* ===== Footer ===== */
+        .footer {
+            text-align: center;
+            padding: 30px 20px;
+            color: var(--gray);
+            font-size: 12px;
+            border-top: 1px solid rgba(212, 175, 55, 0.1);
+            margin-top: 40px;
+        }
+
+        /* ===== Responsive ===== */
+        @media (max-width: 1000px) {
+            .summary-grid { grid-template-columns: repeat(2, 1fr); }
+            .chart-grid { grid-template-columns: 1fr; }
+            .asset-card-info { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (max-width: 600px) {
+            .main-container { padding: 90px 15px 30px; }
+            .page-header h1 { font-size: 26px; }
+            .summary-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
+            .summary-card { padding: 15px 10px; }
+            .summary-card .value { font-size: 16px; }
+            .asset-card-info { grid-template-columns: 1fr; }
+            .category-name { font-size: 13px; }
+            .category-total { font-size: 12px; }
+            .actions-bar .btn { font-size: 12px; padding: 10px; }
+            .quick-btn { font-size: 11px; padding: 6px 10px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="main-container" id="mainContent">
+        <div class="loading-screen">
+            <div class="spinner"></div>
+            ⏳ در حال بارگذاری پرتفوی...
+        </div>
+    </div>
+
+    <footer class="footer">
+        © ۱۴۰۵ آکادمی شمعدون | تمامی حقوق محفوظ است
+    </footer>
+
+    <!-- ===== Modal: Add/Edit Asset ===== -->
+    <div class="modal-overlay" id="assetModal">
+        <div class="modal">
+            <h2 id="assetModalTitle">➕ افزودن دارایی</h2>
+            <input type="hidden" id="assetId">
+
+            <div class="form-group">
+                <label>دسته‌بندی *</label>
+                <select id="assetCategory" onchange="onCategoryChange()">
+                    <option value="gold">🥇 طلا و فلزات گرانبها</option>
+                    <option value="currency">💵 ارز</option>
+                    <option value="crypto">₿ کریپتوکارنسی</option>
+                    <option value="stock">📊 بورس ایران</option>
+                    <option value="fund">💼 صندوق درآمد ثابت</option>
+                    <option value="realestate">🏠 املاک</option>
+                    <option value="bank">🏦 سپرده بانکی</option>
+                    <option value="other">🌟 سایر</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>دارایی *</label>
+                <select id="assetSelect" onchange="onAssetChange()">
+                    <!-- توسط JS پر میشه -->
+                </select>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label>مقدار *</label>
+                    <input type="number" id="assetQuantity" placeholder="۰" step="any" min="0">
+                </div>
+                <div class="form-group">
+                    <label>واحد</label>
+                    <input type="text" id="assetUnit" placeholder="گرم" readonly>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>قیمت خرید (هر واحد) - تومان *</label>
+                <input type="number" id="assetBuyPrice" placeholder="۰" step="any" min="0">
+            </div>
+
+            <div class="form-group">
+                <label>تاریخ خرید *</label>
+                <input type="date" id="assetBuyDate">
+            </div>
+
+            <div class="form-group">
+                <label>یادداشت (اختیاری)</label>
+                <textarea id="assetNotes" rows="2" placeholder="مثلاً: خرید از صرافی..."></textarea>
+            </div>
+
+            <div class="modal-actions">
+                <button class="btn btn-secondary" onclick="closeModal('assetModal')">لغو</button>
+                <button class="btn btn-primary" onclick="saveAsset()">💾 ذخیره</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="toast" class="toast"></div>
+
+    <script src="navbar.js"></script>
+    <script src="supabase-config.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/dompurify@3.0.6/dist/purify.min.js"></script>
+
+    <script>
+        // ==========================================
+        // Configuration
+        // ==========================================
+        const BRS_API_KEY = 'B4xp2gWXASUmB3n6WPHtJxhjyJkgcBJz';
+        const AVALAI_API_KEY = 'aa-B6ef1JQ4HnDNBMRw4598qRGOKr7z3TttiznZubQXfD2A1iMf';
+        const AVALAI_API_URL = 'https://api.avalai.ir/v1/chat/completions';
+
+        // ==========================================
+        // Assets Definition (دسته‌بندی و دارایی‌ها)
+        // ==========================================
+        const ASSETS = {
+            gold: {
+                name: 'طلا و فلزات گرانبها',
+                icon: '🥇',
+                items: [
+                    { symbol: 'gold18', name: 'طلا ۱۸ عیار', unit: 'گرم', icon: '🥇', api: 'brsapi-gold18' },
+                    { symbol: 'gold24', name: 'طلا ۲۴ عیار', unit: 'گرم', icon: '🥇', api: 'brsapi-gold24' },
+                    { symbol: 'gold-melted', name: 'طلای آب‌شده', unit: 'مثقال', icon: '🟡', api: 'brsapi-melted' },
+                    { symbol: 'coin-emami', name: 'سکه امامی', unit: 'عدد', icon: '🪙', api: 'brsapi-coin-emami' },
+                    { symbol: 'coin-bahar', name: 'سکه بهار آزادی', unit: 'عدد', icon: '🏅', api: 'brsapi-coin-bahar' },
+                    { symbol: 'coin-half', name: 'نیم سکه', unit: 'عدد', icon: '🥈', api: 'brsapi-coin-half' },
+                    { symbol: 'coin-quarter', name: 'ربع سکه', unit: 'عدد', icon: '🥉', api: 'brsapi-coin-quarter' },
+                    { symbol: 'coin-1g', name: 'سکه گرمی', unit: 'عدد', icon: '⭕', api: 'brsapi-coin-1g' },
+                    { symbol: 'silver999', name: 'نقره ۹۹۹', unit: 'گرم', icon: '🥈', api: 'calc-silver999' },
+                    { symbol: 'ounce-gold', name: 'انس طلا', unit: 'انس', icon: '🏅', api: 'brsapi-ounce-gold' },
+                    { symbol: 'ounce-silver', name: 'انس نقره', unit: 'انس', icon: '🥈', api: 'brsapi-ounce-silver' },
+                    { symbol: 'ounce-platinum', name: 'انس پلاتین', unit: 'انس', icon: '🔶', api: 'brsapi-ounce-platinum' },
+                    { symbol: 'ounce-palladium', name: 'انس پالادیوم', unit: 'انس', icon: '💎', api: 'brsapi-ounce-palladium' }
+                ]
+            },
+            currency: {
+                name: 'ارز',
+                icon: '💵',
+                items: [
+                    { symbol: 'usd', name: 'دلار آزاد', unit: 'عدد', icon: '💵', api: 'brsapi-usd' },
+                    { symbol: 'usdt', name: 'تتر', unit: 'عدد', icon: '💚', api: 'brsapi-usdt' },
+                    { symbol: 'eur', name: 'یورو', unit: 'عدد', icon: '💶', api: 'brsapi-eur' },
+                    { symbol: 'gbp', name: 'پوند انگلیس', unit: 'عدد', icon: '💷', api: 'brsapi-gbp' },
+                    { symbol: 'aed', name: 'درهم امارات', unit: 'عدد', icon: '🇦🇪', api: 'brsapi-aed' },
+                    { symbol: 'try', name: 'لیر ترکیه', unit: 'عدد', icon: '🇹🇷', api: 'brsapi-try' },
+                    { symbol: 'cny', name: 'یوان چین', unit: 'عدد', icon: '🇨🇳', api: 'brsapi-cny' }
+                ]
+            },
+            crypto: {
+                name: 'کریپتوکارنسی',
+                icon: '₿',
+                items: [
+                    { symbol: 'btc', name: 'بیت‌کوین', unit: 'عدد', icon: 'https://cryptologos.cc/logos/bitcoin-btc-logo.png', api: 'coingecko-bitcoin' },
+                    { symbol: 'eth', name: 'اتریوم', unit: 'عدد', icon: 'https://cryptologos.cc/logos/ethereum-eth-logo.png', api: 'coingecko-ethereum' },
+                    { symbol: 'xaut', name: 'تتر گلد', unit: 'عدد', icon: 'https://cryptologos.cc/logos/tether-gold-xaut-logo.png', api: 'coingecko-tether-gold' },
+                    { symbol: 'paxg', name: 'پی‌اکس گلد', unit: 'عدد', icon: 'https://cryptologos.cc/logos/pax-gold-paxg-logo.png', api: 'coingecko-pax-gold' },
+                    { symbol: 'usdt-erc', name: 'تتر ERC20', unit: 'عدد', icon: 'https://cryptologos.cc/logos/tether-usdt-logo.png', api: 'coingecko-tether' },
+                    { symbol: 'usdc', name: 'یو‌اس‌دی‌سی', unit: 'عدد', icon: 'https://cryptologos.cc/logos/usd-coin-usdc-logo.png', api: 'coingecko-usd-coin' },
+                    { symbol: 'sol', name: 'سولانا', unit: 'عدد', icon: 'https://cryptologos.cc/logos/solana-sol-logo.png', api: 'coingecko-solana' },
+                    { symbol: 'xrp', name: 'ریپل', unit: 'عدد', icon: 'https://cryptologos.cc/logos/xrp-xrp-logo.png', api: 'coingecko-ripple' },
+                    { symbol: 'doge', name: 'دوج‌کوین', unit: 'عدد', icon: 'https://cryptologos.cc/logos/dogecoin-doge-logo.png', api: 'coingecko-dogecoin' },
+                    { symbol: 'ada', name: 'کاردانو', unit: 'عدد', icon: 'https://cryptologos.cc/logos/cardano-ada-logo.png', api: 'coingecko-cardano' },
+                    { symbol: 'bnb', name: 'BNB', unit: 'عدد', icon: 'https://cryptologos.cc/logos/bnb-bnb-logo.png', api: 'coingecko-binancecoin' },
+                    { symbol: 'trx', name: 'ترون', unit: 'عدد', icon: 'https://cryptologos.cc/logos/tron-trx-logo.png', api: 'coingecko-tron' },
+                    { symbol: 'avax', name: 'آوالانچ', unit: 'عدد', icon: 'https://cryptologos.cc/logos/avalanche-avax-logo.png', api: 'coingecko-avalanche-2' }
+                ]
+            },
+            stock: {
+                name: 'بورس ایران',
+                icon: '📊',
+                items: [
+                    { symbol: 'custom-stock', name: 'سهام دیگر (دستی)', unit: 'سهم', icon: '📊', api: 'manual' }
+                ]
+            },
+            fund: {
+                name: 'صندوق درآمد ثابت',
+                icon: '💼',
+                items: [
+                    { symbol: 'custom-fund', name: 'صندوق (دستی)', unit: 'واحد', icon: '💼', api: 'manual' }
+                ]
+            },
+            realestate: {
+                name: 'املاک',
+                icon: '🏠',
+                items: [
+                    { symbol: 'custom-realestate', name: 'ملک (دستی)', unit: 'متر', icon: '🏠', api: 'manual' }
+                ]
+            },
+            bank: {
+                name: 'سپرده بانکی',
+                icon: '🏦',
+                items: [
+                    { symbol: 'custom-bank', name: 'سپرده (دستی)', unit: 'تومان', icon: '🏦', api: 'manual' }
+                ]
+            },
+            other: {
+                name: 'سایر',
+                icon: '🌟',
+                items: [
+                    { symbol: 'custom-other', name: 'سایر (دستی)', unit: 'عدد', icon: '🌟', api: 'manual' }
+                ]
+            }
+        };
+
+        // ==========================================
+        // Global State
+        // ==========================================
+        let currentUser = null;
+        let portfolio = [];
+        let priceCache = {};
+        let pieChart = null;
+        let barChart = null;
+
+        // ==========================================
+        // Utility Functions
+        // ==========================================
+        function toFa(num) {
+            if (num === null || num === undefined || isNaN(num)) return '۰';
+            const persianDigits = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
+            return String(num).replace(/\d/g, d => persianDigits[d]);
+        }
+
+        function formatNum(num, decimals = 0) {
+            if (num === null || num === undefined || isNaN(num)) return '۰';
+            const n = Number(num);
+            const rounded = decimals > 0 ? n.toFixed(decimals) : Math.round(n);
+            const str = String(rounded).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+            return toFa(str);
+        }
+
+        function formatBigNum(num) {
+            if (!num && num !== 0) return '۰';
+            const n = Number(num);
+            if (Math.abs(n) >= 1e12) return formatNum(n / 1e12, 2) + ' همت';
+            if (Math.abs(n) >= 1e9) return formatNum(n / 1e9, 2) + ' میلیارد';
+            if (Math.abs(n) >= 1e6) return formatNum(n / 1e6, 2) + ' میلیون';
+            if (Math.abs(n) >= 1e3) return formatNum(n / 1e3, 1) + ' هزار';
+            return formatNum(n);
+        }
+
+        function escapeHtml(text) {
+            if (!text) return '';
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        function showToast(msg, type = 'success') {
+            const toast = document.getElementById('toast');
+            toast.textContent = msg;
+            toast.className = 'toast show ' + type;
+            setTimeout(() => toast.classList.remove('show'), 3000);
+        }
+
+        function closeModal(id) {
+            document.getElementById(id).classList.remove('show');
+        }
+
+        // ==========================================
+        // Price Fetching from APIs
+        // ==========================================
+        async function fetchBrsApi(url) {
+            const separator = url.includes('?') ? '&' : '?';
+            const res = await fetch(`${url}${separator}key=${BRS_API_KEY}`);
+            if (!res.ok) throw new Error('API error');
+            const text = await res.text();
+            if (text.trim().startsWith('<!DOCTYPE')) throw new Error('Invalid response');
+            return JSON.parse(text);
+        }
+
+        async function loadPrices() {
+            priceCache = {};
+
+            // ===== BrsApi: طلا و ارز =====
+            try {
+                const data = await fetchBrsApi('https://Api.BrsApi.ir/Market/Gold_Currency.php');
+
+                if (data.gold && Array.isArray(data.gold)) {
+                    data.gold.forEach(g => {
+                        if (g.symbol === 'IR_GOLD_18K') priceCache['gold18'] = g.price;
+                        if (g.symbol === 'IR_GOLD_24K') priceCache['gold24'] = g.price;
+                        if (g.symbol === 'IR_GOLD_MELTED') priceCache['gold-melted'] = g.price;
+                        if (g.symbol === 'IR_COIN_EMAMI') priceCache['coin-emami'] = g.price;
+                        if (g.symbol === 'IR_COIN_BAHAR') priceCache['coin-bahar'] = g.price;
+                        if (g.symbol === 'IR_COIN_HALF') priceCache['coin-half'] = g.price;
+                        if (g.symbol === 'IR_COIN_QUARTER') priceCache['coin-quarter'] = g.price;
+                        if (g.symbol === 'IR_COIN_1G') priceCache['coin-1g'] = g.price;
+                    });
+                }
+
+                if (data.currency && Array.isArray(data.currency)) {
+                    data.currency.forEach(c => {
+                        if (c.symbol === 'USD') priceCache['usd'] = c.price;
+                        if (c.symbol === 'USDT_IRT') priceCache['usdt'] = c.price;
+                        if (c.symbol === 'EUR') priceCache['eur'] = c.price;
+                        if (c.symbol === 'GBP') priceCache['gbp'] = c.price;
+                        if (c.symbol === 'AED') priceCache['aed'] = c.price;
+                        if (c.symbol === 'TRY') priceCache['try'] = c.price;
+                        if (c.symbol === 'CNY') priceCache['cny'] = c.price;
+                    });
+                }
+            } catch (e) {
+                console.error('BrsApi Gold/Currency error:', e);
+            }
+
+            // ===== BrsApi: Commodity (انس‌ها) =====
+            try {
+                const data = await fetchBrsApi('https://Api.BrsApi.ir/Market/Commodity.php');
+
+                if (data.metal_precious && Array.isArray(data.metal_precious)) {
+                    data.metal_precious.forEach(m => {
+                        if (m.symbol === 'XAUUSD') priceCache['ounce-gold'] = m.price;
+                        if (m.symbol === 'XAGUSD') priceCache['ounce-silver'] = m.price;
+                        if (m.symbol === 'XPTUSD') priceCache['ounce-platinum'] = m.price;
+                        if (m.symbol === 'XPDUSD') priceCache['ounce-palladium'] = m.price;
+                    });
+                }
+            } catch (e) {
+                console.error('BrsApi Commodity error:', e);
+            }
+
+            // ===== محاسبه نقره ۹۹۹ از انس × دلار =====
+            if (priceCache['ounce-silver'] && priceCache['usd']) {
+                const OUNCE_TO_GRAM = 31.1035;
+                priceCache['silver999'] = (priceCache['ounce-silver'] * priceCache['usd'] * 0.999) / OUNCE_TO_GRAM;
+            }
+
+            // ===== CoinGecko: کریپتو =====
+            try {
+                const ids = 'bitcoin,ethereum,tether-gold,pax-gold,tether,usd-coin,solana,ripple,dogecoin,cardano,binancecoin,tron,avalanche-2';
+                const res = await fetch(`https://api.coingecko.com/api/v3/simple/price?ids=${ids}&vs_currencies=usd`);
+                const data = await res.json();
+
+                if (data.bitcoin) priceCache['btc'] = data.bitcoin.usd * (priceCache['usd'] || 90000);
+                if (data.ethereum) priceCache['eth'] = data.ethereum.usd * (priceCache['usd'] || 90000);
+                if (data['tether-gold']) priceCache['xaut'] = data['tether-gold'].usd * (priceCache['usd'] || 90000);
+                if (data['pax-gold']) priceCache['paxg'] = data['pax-gold'].usd * (priceCache['usd'] || 90000);
+                if (data.tether) priceCache['usdt-erc'] = data.tether.usd * (priceCache['usd'] || 90000);
+                if (data['usd-coin']) priceCache['usdc'] = data['usd-coin'].usd * (priceCache['usd'] || 90000);
+                if (data.solana) priceCache['sol'] = data.solana.usd * (priceCache['usd'] || 90000);
+                if (data.ripple) priceCache['xrp'] = data.ripple.usd * (priceCache['usd'] || 90000);
+                if (data.dogecoin) priceCache['doge'] = data.dogecoin.usd * (priceCache['usd'] || 90000);
+                if (data.cardano) priceCache['ada'] = data.cardano.usd * (priceCache['usd'] || 90000);
+                if (data.binancecoin) priceCache['bnb'] = data.binancecoin.usd * (priceCache['usd'] || 90000);
+                if (data.tron) priceCache['trx'] = data.tron.usd * (priceCache['usd'] || 90000);
+                if (data['avalanche-2']) priceCache['avax'] = data['avalanche-2'].usd * (priceCache['usd'] || 90000);
+            } catch (e) {
+                console.error('CoinGecko error:', e);
+            }
+        }
+
+        // ==========================================
+        // Load Portfolio from Supabase
+        // ==========================================
+        async function loadPortfolio() {
+            const { data, error } = await db
+                .from('user_portfolio')
+                .select('*')
+                .order('created_at', { ascending: false });
+
+            if (error) {
+                console.error('Portfolio load error:', error);
+                return [];
+            }
+
+            return data || [];
+        }
+
+        // ==========================================
+        // Main Render
+        // ==========================================
+        async function render() {
+            const container = document.getElementById('mainContent');
+
+            try {
+                // لود قیمت‌ها و پرتفوی با هم
+                await Promise.all([
+                    loadPrices(),
+                    loadPortfolio().then(data => { portfolio = data; })
+                ]);
+
+                if (portfolio.length === 0) {
+                    renderEmptyState(container);
+                    return;
+                }
+
+                const stats = calculateStats();
+                renderFullPage(container, stats);
+
+            } catch (e) {
+                console.error('Render error:', e);
+                container.innerHTML = `
+                    <div class="loading-screen">
+                        ❌ خطا در بارگذاری پرتفوی<br><br>
+                        <button class="btn btn-primary" onclick="location.reload()" style="max-width:200px; margin:0 auto;">🔄 تلاش مجدد</button>
+                    </div>
+                `;
+            }
+        }
+
+        function renderEmptyState(container) {
+            container.innerHTML = `
+                <div class="page-header">
+                    <h1>💼 پرتفوی من</h1>
+                    <p>مدیریت و تحلیل هوشمند دارایی‌ها</p>
+                </div>
+
+                <div class="actions-bar">
+                    <button class="btn btn-primary" onclick="openAddModal()">➕ افزودن اولین دارایی</button>
+                </div>
+
+                <div class="portfolio-section">
+                    <div class="empty-state">
+                        <div class="icon">💼</div>
+                        <h2>هنوز دارایی ثبت نکردی</h2>
+                        <p>اولین دارایی خودت رو اضافه کن تا سبدت رو ببینی</p>
+                        <button class="btn btn-primary" onclick="openAddModal()" style="max-width:250px; margin:0 auto;">
+                            ➕ افزودن دارایی
+                        </button>
+                    </div>
+                </div>
+            `;
+        }
+
+        // ==========================================
+        // Calculate Stats
+        // ==========================================
+        function calculateStats() {
+            let totalValue = 0;
+            let totalInvested = 0;
+            const categoryStats = {};
+
+            const portfolioWithPrices = portfolio.map(item => {
+                const currentPrice = priceCache[item.asset_symbol] || item.buy_price;
+                const value = item.quantity * currentPrice;
+                const invested = item.quantity * item.buy_price;
+                const profit = value - invested;
+                const profitPercent = invested > 0 ? (profit / invested) * 100 : 0;
+
+                totalValue += value;
+                totalInvested += invested;
+
+                if (!categoryStats[item.asset_category]) {
+                    categoryStats[item.asset_category] = { value: 0, count: 0 };
+                }
+                categoryStats[item.asset_category].value += value;
+                categoryStats[item.asset_category].count++;
+
+                return { ...item, currentPrice, value, invested, profit, profitPercent };
+            });
+
+            const totalProfit = totalValue - totalInvested;
+            const totalProfitPercent = totalInvested > 0 ? (totalProfit / totalInvested) * 100 : 0;
+
+            return {
+                totalValue,
+                totalInvested,
+                totalProfit,
+                totalProfitPercent,
+                categoryStats,
+                items: portfolioWithPrices
+            };
+        }
+
+        // ==========================================
+        // Render Full Page
+        // ==========================================
+        function renderFullPage(container, stats) {
+            const profitClass = stats.totalProfit >= 0 ? 'green' : 'red';
+            const profitSign = stats.totalProfit >= 0 ? '+' : '';
+
+            container.innerHTML = `
+                <div class="page-header">
+                    <h1>💼 پرتفوی من</h1>
+                    <p>مدیریت و تحلیل هوشمند دارایی‌ها</p>
+                </div>
+
+                <!-- Summary -->
+                <div class="summary-grid">
+                    <div class="summary-card">
+                        <div class="icon">💰</div>
+                        <div class="value gold">${formatBigNum(stats.totalValue)}</div>
+                        <div class="label">ارزش کل سبد</div>
+                    </div>
+                    <div class="summary-card">
+                        <div class="icon">📈</div>
+                        <div class="value ${profitClass}">${profitSign}${formatBigNum(stats.totalProfit)}</div>
+                        <div class="label">سود/ضرر کل</div>
+                        <div class="badge ${stats.totalProfit >= 0 ? 'up' : 'down'}">${profitSign}${toFa(stats.totalProfitPercent.toFixed(1))}٪</div>
+                    </div>
+                    <div class="summary-card">
+                        <div class="icon">📊</div>
+                        <div class="value">${formatBigNum(stats.totalInvested)}</div>
+                        <div class="label">سرمایه اولیه</div>
+                    </div>
+                    <div class="summary-card">
+                        <div class="icon">🏷️</div>
+                        <div class="value">${toFa(portfolio.length)}</div>
+                        <div class="label">تعداد دارایی</div>
+                        <div class="badge up">${toFa(Object.keys(stats.categoryStats).length)} دسته</div>
+                    </div>
+                </div>
+
+                <!-- Actions -->
+                <div class="actions-bar">
+                    <button class="btn btn-primary" onclick="openAddModal()">➕ افزودن دارایی جدید</button>
+                    <button class="btn btn-secondary" onclick="showToast('این قابلیت به‌زودی فعال میشه', 'info')">📥 ورود از CSV</button>
+                    <button class="btn btn-secondary" onclick="exportCSV()">📤 خروجی CSV</button>
+                </div>
+
+                <!-- Quick Add -->
+                <div class="quick-add">
+                    ${Object.values(ASSETS).flatMap(cat => cat.items.slice(0, 2)).slice(0, 7).map(item => {
+                        const catKey = Object.keys(ASSETS).find(k => ASSETS[k].items.includes(item));
+                        return `<button class="quick-btn" onclick="quickAdd('${catKey}', '${item.symbol}')">${typeof item.icon === 'string' && item.icon.startsWith('http') ? '🪙' : item.icon} ${item.name}</button>`;
+                    }).join('')}
+                    <button class="quick-btn" onclick="quickAdd('gold', 'silver999')">🥈 نقره ۹۹۹</button>
+                    <button class="quick-btn" onclick="quickAdd('crypto', 'eth')">⟠ اتریوم</button>
+                </div>
+
+                <!-- Charts -->
+                <div class="chart-section">
+                    <div class="chart-grid">
+                        <div>
+                            <div class="chart-title">📊 تخصیص دارایی‌ها</div>
+                            <div class="chart-wrapper">
+                                <canvas id="pieChart"></canvas>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="chart-title">📈 سود/ضرر هر دارایی</div>
+                            <div class="chart-wrapper">
+                                <canvas id="barChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Portfolio -->
+                <div class="portfolio-section">
+                    <div class="chart-title" style="margin-bottom:20px;">📋 دارایی‌های من</div>
+                    ${renderCategories(stats)}
+                </div>
+
+                <!-- AI Insight -->
+                <div class="ai-insight">
+                    <div class="ai-icon">🤖</div>
+                    <div class="ai-content">
+                        <div class="ai-title">تحلیل هوشمند سبد شما</div>
+                        <div class="ai-text" id="aiText">
+                            برای دریافت تحلیل حرفه‌ای از سبد سرمایه‌گذاری خودت، روی دکمه زیر بزن.
+                        </div>
+                        <div class="ai-suggestions" id="aiSuggestions" style="display:none;"></div>
+                        <button class="ai-analyze-btn" id="aiAnalyzeBtn" onclick="analyzePortfolioWithAI()">
+                            🤖 تحلیل کن با AI
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Compare -->
+                <div class="compare-section">
+                    <div class="compare-title">📊 مقایسه با بهترین سبد</div>
+                    <div class="compare-desc">
+                        اگه سرمایه اولیه‌ات (${formatBigNum(stats.totalInvested)} تومان) رو ۶ ماه پیش بین این ترکیب‌ها تقسیم می‌کردی، الان چقدر داشتی؟
+                    </div>
+                    <div class="compare-grid" id="compareGrid"></div>
+                </div>
+            `;
+
+            // رندر نمودارها
+            setTimeout(() => {
+                renderPieChart(stats);
+                renderBarChart(stats);
+                renderCompare(stats);
+            }, 100);
+        }
+
+        // ==========================================
+        // Render Categories
+        // ==========================================
+        function renderCategories(stats) {
+            const grouped = {};
+            stats.items.forEach(item => {
+                if (!grouped[item.asset_category]) {
+                    grouped[item.asset_category] = [];
+                }
+                grouped[item.asset_category].push(item);
+            });
+
+            return Object.entries(grouped).map(([catKey, items]) => {
+                const cat = ASSETS[catKey];
+                if (!cat) return '';
+
+                const categoryTotal = items.reduce((sum, i) => sum + i.value, 0);
+
+                return `
+                    <div class="category-group">
+                        <div class="category-header" onclick="toggleCategory(this)">
+                            <div class="category-header-left">
+                                <div class="category-icon">${cat.icon}</div>
+                                <div>
+                                    <div class="category-name">${cat.name}</div>
+                                    <div class="category-count">${toFa(items.length)} دارایی</div>
+                                </div>
+                            </div>
+                            <div style="display:flex; align-items:center; gap:15px;">
+                                <div class="category-total">${formatBigNum(categoryTotal)} تومان</div>
+                                <div class="category-toggle">▼</div>
+                            </div>
+                        </div>
+                        <div class="category-content">
+                            ${items.map(item => renderAssetCard(item, stats.totalValue)).join('')}
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // ==========================================
+        // Render Asset Card
+        // ==========================================
+        function renderAssetCard(item, totalValue) {
+            const weight = totalValue > 0 ? (item.value / totalValue) * 100 : 0;
+            const profitClass = item.profit >= 0 ? 'green' : 'red';
+            const profitSign = item.profit >= 0 ? '+' : '';
+
+            // آیکون
+            let iconHtml = '';
+            if (item.asset_icon && item.asset_icon.startsWith('http')) {
+                iconHtml = `<img src="${item.asset_icon}" alt="${item.asset_name}" onerror="this.parentElement.innerHTML='<span class=\\'emoji\\'>🪙</span>'">`;
+            } else {
+                iconHtml = `<span class="emoji">${item.asset_icon || '📊'}</span>`;
+            }
+
+            const buyDate = item.buy_date ? new Date(item.buy_date).toLocaleDateString('fa-IR') : '—';
+
+            return `
+                <div class="asset-card">
+                    <div class="asset-card-top">
+                        <div class="asset-card-left">
+                            <div class="asset-icon-wrapper">${iconHtml}</div>
+                            <div class="asset-name-info">
+                                <h4>${escapeHtml(item.asset_name)}</h4>
+                                <span class="symbol">${escapeHtml(item.asset_symbol)}</span>
+                            </div>
+                        </div>
+                        <div class="asset-card-actions">
+                            <button class="icon-btn" onclick="editAsset('${item.id}')" title="ویرایش">✏️</button>
+                            <button class="icon-btn danger" onclick="deleteAsset('${item.id}')" title="حذف">🗑️</button>
+                        </div>
+                    </div>
+
+                    <div class="asset-card-info">
+                        <div class="info-item">
+                            <div class="label">📦 مقدار</div>
+                            <div class="value">${formatNum(item.quantity, 4)} ${item.unit || ''}</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="label">💰 قیمت خرید</div>
+                            <div class="value">${formatNum(item.buy_price)} تومان</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="label">📈 قیمت فعلی</div>
+                            <div class="value gold">${formatNum(item.currentPrice)} تومان</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="label">📅 تاریخ خرید</div>
+                            <div class="value">${toFa(buyDate)}</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="label">💼 سرمایه اولیه</div>
+                            <div class="value">${formatBigNum(item.invested)}</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="label">💎 ارزش فعلی</div>
+                            <div class="value">${formatBigNum(item.value)}</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="label">${item.profit >= 0 ? '📈 سود' : '📉 ضرر'}</div>
+                            <div class="value ${profitClass}">${profitSign}${formatBigNum(Math.abs(item.profit))}</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="label">📊 درصد</div>
+                            <div class="value ${profitClass}">${profitSign}${toFa(item.profitPercent.toFixed(2))}٪</div>
+                        </div>
+                    </div>
+
+                    <div class="asset-weight-bar">
+                        <span style="color:var(--gray); font-size:11px;">وزن در سبد:</span>
+                        <div class="bar">
+                            <div class="bar-fill" style="width:${weight}%"></div>
+                        </div>
+                        <span class="percent">${toFa(weight.toFixed(1))}٪</span>
+                    </div>
+                </div>
+            `;
+        }
+
+        // ==========================================
+        // Charts
+        // ==========================================
+        function renderPieChart(stats) {
+            const ctx = document.getElementById('pieChart');
+            if (!ctx) return;
+
+            if (pieChart) pieChart.destroy();
+
+            const labels = [];
+            const data = [];
+            const colors = ['#d4af37', '#10b981', '#8b5cf6', '#3b82f6', '#f97316', '#ec4899', '#06b6d4', '#84cc16'];
+
+            Object.entries(stats.categoryStats).forEach(([catKey, cat], idx) => {
+                const catInfo = ASSETS[catKey];
+                labels.push(catInfo ? catInfo.name : catKey);
+                data.push(cat.value);
+            });
+
+            pieChart = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels,
+                    datasets: [{
+                        data,
+                        backgroundColor: colors.slice(0, labels.length),
+                        borderColor: '#1a1a24',
+                        borderWidth: 3,
+                        hoverOffset: 10
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                color: '#cbd5e1',
+                                font: { family: 'Vazirmatn', size: 12 },
+                                padding: 12,
+                                usePointStyle: true,
+                                pointStyle: 'circle'
+                            }
+                        },
+                        tooltip: {
+                            backgroundColor: '#1a1a24',
+                            titleColor: '#d4af37',
+                            bodyColor: '#f8fafc',
+                            borderColor: '#d4af37',
+                            borderWidth: 1,
+                            padding: 12,
+                            titleFont: { family: 'Vazirmatn', size: 13, weight: 'bold' },
+                            bodyFont: { family: 'Vazirmatn', size: 12 },
+                            callbacks: {
+                                label: function(context) {
+                                    const value = context.parsed;
+                                    const total = context.dataset.data.reduce((a, b) => a + b, 0);
+                                    const percent = ((value / total) * 100).toFixed(1);
+                                    return ` ${context.label}: ${formatBigNum(value)} (${toFa(percent)}٪)`;
+                                }
+                            }
+                        }
+                    },
+                    cutout: '65%'
+                }
+            });
+        }
+
+        function renderBarChart(stats) {
+            const ctx = document.getElementById('barChart');
+            if (!ctx) return;
+
+            if (barChart) barChart.destroy();
+
+            const items = stats.items.slice(0, 10);
+            const labels = items.map(i => i.asset_name);
+            const data = items.map(i => i.profit / 1e6);
+            const colors = items.map(i => i.profit >= 0 ? '#10b981' : '#ef4444');
+
+            barChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels,
+                    datasets: [{
+                        label: 'سود/ضرر (میلیون تومان)',
+                        data,
+                        backgroundColor: colors,
+                        borderColor: '#1a1a24',
+                        borderWidth: 2,
+                        borderRadius: 6
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            backgroundColor: '#1a1a24',
+                            titleColor: '#d4af37',
+                            bodyColor: '#f8fafc',
+                            borderColor: '#d4af37',
+                            borderWidth: 1,
+                            padding: 12,
+                            titleFont: { family: 'Vazirmatn', size: 12, weight: 'bold' },
+                            bodyFont: { family: 'Vazirmatn', size: 12 },
+                            callbacks: {
+                                label: function(context) {
+                                    const value = context.parsed.y;
+                                    return ` ${value >= 0 ? '+' : ''}${formatNum(value, 2)} میلیون تومان`;
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            ticks: { color: '#94a3b8', font: { family: 'Vazirmatn', size: 10 } },
+                            grid: { display: false }
+                        },
+                        y: {
+                            ticks: {
+                                color: '#94a3b8',
+                                font: { family: 'Vazirmatn', size: 11 },
+                                callback: v => v + 'M'
+                            },
+                            grid: { color: 'rgba(255, 255, 255, 0.05)' }
+                        }
+                    }
+                }
+            });
+        }
+
+        // ==========================================
+        // Compare with Best Portfolio
+        // ==========================================
+        function renderCompare(stats) {
+            const grid = document.getElementById('compareGrid');
+            if (!grid) return;
+
+            const invested = stats.totalInvested;
+
+            // بازدهی فرضی ۶ ماهه
+            const options = [
+                { label: '🥇 فقط طلا', return: 32.5, color: 'up' },
+                { label: '💵 فقط دلار', return: 8.7, color: 'up' },
+                { label: '📊 فقط بورس', return: 15.3, color: 'up' },
+                { label: '₿ فقط بیت‌کوین', return: 42.8, color: 'up' },
+                { label: '💼 سبد فعلی شما', return: stats.totalProfitPercent, color: stats.totalProfitPercent >= 0 ? 'up' : 'down', highlight: true }
+            ];
+
+            grid.innerHTML = options.map(opt => {
+                const finalValue = invested * (1 + opt.return / 100);
+                return `
+                    <div class="compare-card ${opt.highlight ? 'compare-highlight' : ''}">
+                        <div class="label">${opt.label}</div>
+                        <div class="value ${opt.color}">${opt.return >= 0 ? '+' : ''}${toFa(opt.return.toFixed(1))}٪</div>
+                        <div class="desc">${formatBigNum(finalValue)} تومان</div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // ==========================================
+        // AI Analysis
+        // ==========================================
+        async function analyzePortfolioWithAI() {
+            const btn = document.getElementById('aiAnalyzeBtn');
+            const aiText = document.getElementById('aiText');
+            const suggestions = document.getElementById('aiSuggestions');
+
+            btn.disabled = true;
+            btn.innerHTML = '⏳ در حال تحلیل...';
+            aiText.textContent = 'در حال دریافت تحلیل از هوش مصنوعی...';
+            suggestions.style.display = 'none';
+
+            try {
+                const stats = calculateStats();
+
+                // ساخت متن سبد
+                let portfolioText = '';
+                stats.items.forEach(item => {
+                    portfolioText += `- ${item.asset_name}: ${item.quantity} ${item.unit || ''} | خرید: ${formatNum(item.buy_price)} | فعلی: ${formatNum(item.currentPrice)} | سود/ضرر: ${item.profit >= 0 ? '+' : ''}${formatNum(item.profit)} (${item.profitPercent.toFixed(2)}%)\n`;
+                });
+
+                const prompt = `شما یک مشاور سرمایه‌گذاری حرفه‌ای هستید. سبد زیر را تحلیل کنید:
+
+📊 سبد کاربر:
+${portfolioText}
+
+💰 ارزش کل: ${formatNum(stats.totalValue)} تومان
+📈 سود/ضرر کل: ${stats.totalProfit >= 0 ? '+' : ''}${formatNum(stats.totalProfit)} (${stats.totalProfitPercent.toFixed(2)}%)
+
+🎯 تحلیل خود را در این قالب ارائه دهید:
+
+## 📊 خلاصه سبد
+[یک پاراگراف از وضعیت کلی]
+
+## ⚖️ تخصیص دارایی‌ها
+[تحلیل درصد هر دسته]
+
+## ⚠️ ریسک‌ها
+[3-4 ریسک اصلی]
+
+## 💡 پیشنهادات
+[3-4 پیشنهاد برای بهبود سبد]
+
+## 🎯 نتیجه
+[یک پاراگراف جمع‌بندی]
+
+مهم: تحلیل صرفاً جنبه آموزشی دارد و توصیه قطعی خرید یا فروش نیست.`;
+
+                const response = await fetch(AVALAI_API_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${AVALAI_API_KEY}`
+                    },
+                    body: JSON.stringify({
+                        model: 'gpt-5.6-luna',
+                        messages: [
+                            { role: 'system', content: 'شما یک مشاور سرمایه‌گذاری حرفه‌ای هستید.' },
+                            { role: 'user', content: prompt }
+                        ],
+                        max_tokens: 2000
+                    })
+                });
+
+                if (!response.ok) {
+                    throw new Error('خطا در ارتباط با AI');
+                }
+
+                const data = await response.json();
+                const aiResponse = data.choices[0].message.content;
+
+                // نمایش پاسخ
+                try {
+                    const html = marked.parse(aiResponse);
+                    aiText.innerHTML = DOMPurify.sanitize(html);
+                } catch {
+                    aiText.textContent = aiResponse;
+                }
+
+                suggestions.style.display = 'none';
+
+            } catch (e) {
+                console.error('AI error:', e);
+                aiText.innerHTML = `<span style="color:var(--red);">❌ خطا در تحلیل: ${e.message}</span>`;
+            }
+
+            btn.disabled = false;
+            btn.innerHTML = '🤖 تحلیل مجدد';
+        }
+
+        // ==========================================
+        // Add/Edit Asset
+        // ==========================================
+        function openAddModal(categoryKey = 'gold', symbol = null) {
+            document.getElementById('assetModalTitle').textContent = '➕ افزودن دارایی';
+            document.getElementById('assetId').value = '';
+            document.getElementById('assetCategory').value = categoryKey;
+            onCategoryChange();
+
+            if (symbol) {
+                document.getElementById('assetSelect').value = symbol;
+                onAssetChange();
+            }
+
+            // تاریخ امروز
+            const today = new Date();
+            const yyyy = today.getFullYear();
+            const mm = String(today.getMonth() + 1).padStart(2, '0');
+            const dd = String(today.getDate()).padStart(2, '0');
+            document.getElementById('assetBuyDate').value = `${yyyy}-${mm}-${dd}`;
+
+            document.getElementById('assetQuantity').value = '';
+            document.getElementById('assetBuyPrice').value = '';
+            document.getElementById('assetNotes').value = '';
+
+            document.getElementById('assetModal').classList.add('show');
+        }
+
+        function onCategoryChange() {
+            const catKey = document.getElementById('assetCategory').value;
+            const cat = ASSETS[catKey];
+            const select = document.getElementById('assetSelect');
+
+            select.innerHTML = cat.items.map(item => 
+                `<option value="${item.symbol}">${item.name}</option>`
+            ).join('');
+
+            onAssetChange();
+        }
+
+        function onAssetChange() {
+            const catKey = document.getElementById('assetCategory').value;
+            const symbol = document.getElementById('assetSelect').value;
+            const cat = ASSETS[catKey];
+            const item = cat.items.find(i => i.symbol === symbol);
+
+            if (item) {
+                document.getElementById('assetUnit').value = item.unit || '';
+            }
+        }
+
+        function quickAdd(categoryKey, symbol) {
+            openAddModal(categoryKey, symbol);
+        }
+
+        async function saveAsset() {
+            const id = document.getElementById('assetId').value;
+            const category = document.getElementById('assetCategory').value;
+            const symbol = document.getElementById('assetSelect').value;
+            const quantity = parseFloat(document.getElementById('assetQuantity').value);
+            const unit = document.getElementById('assetUnit').value;
+            const buyPrice = parseFloat(document.getElementById('assetBuyPrice').value);
+            const buyDate = document.getElementById('assetBuyDate').value;
+            const notes = document.getElementById('assetNotes').value.trim();
+
+            if (!quantity || quantity <= 0) {
+                showToast('❌ لطفاً مقدار معتبر وارد کن', 'error');
+                return;
+            }
+
+            if (!buyPrice || buyPrice <= 0) {
+                showToast('❌ لطفاً قیمت خرید معتبر وارد کن', 'error');
+                return;
+            }
+
+            if (!buyDate) {
+                showToast('❌ لطفاً تاریخ خرید رو وارد کن', 'error');
+                return;
+            }
+
+            const cat = ASSETS[category];
+            const item = cat.items.find(i => i.symbol === symbol);
+            const assetName = item ? item.name : symbol;
+            const assetIcon = item && item.icon ? item.icon : '📊';
+
+            const payload = {
+                user_id: currentUser.id,
+                asset_category: category,
+                asset_symbol: symbol,
+                asset_name: assetName,
+                asset_icon: assetIcon,
+                quantity,
+                unit,
+                buy_price: buyPrice,
+                buy_date: buyDate,
+                notes: notes || null
+            };
+
+            let error;
+            if (id) {
+                ({ error } = await db.from('user_portfolio').update(payload).eq('id', id));
+            } else {
+                ({ error } = await db.from('user_portfolio').insert(payload));
+            }
+
+            if (error) {
+                showToast('❌ خطا: ' + error.message, 'error');
+                return;
+            }
+
+            showToast(id ? '✅ دارایی ویرایش شد' : '✅ دارایی اضافه شد');
+            closeModal('assetModal');
+            await render();
+        }
+
+        async function editAsset(id) {
+            const item = portfolio.find(p => p.id === id);
+            if (!item) return;
+
+            document.getElementById('assetModalTitle').textContent = '✏️ ویرایش دارایی';
+            document.getElementById('assetId').value = item.id;
+            document.getElementById('assetCategory').value = item.asset_category;
+            onCategoryChange();
+            document.getElementById('assetSelect').value = item.asset_symbol;
+            onAssetChange();
+            document.getElementById('assetQuantity').value = item.quantity;
+            document.getElementById('assetUnit').value = item.unit;
+            document.getElementById('assetBuyPrice').value = item.buy_price;
+            document.getElementById('assetBuyDate').value = item.buy_date;
+            document.getElementById('assetNotes').value = item.notes || '';
+
+            document.getElementById('assetModal').classList.add('show');
+        }
+
+        async function deleteAsset(id) {
+            if (!confirm('مطمئنی می‌خوای این دارایی رو حذف کنی؟')) return;
+
+            const { error } = await db.from('user_portfolio').delete().eq('id', id);
+
+            if (error) {
+                showToast('❌ خطا: ' + error.message, 'error');
+                return;
+            }
+
+            showToast('🗑️ دارایی حذف شد');
+            await render();
+        }
+
+        // ==========================================
+        // CSV Export
+        // ==========================================
+        function exportCSV() {
+            const stats = calculateStats();
+
+            let csv = 'نام دارایی,نماد,دسته,مقدار,واحد,قیمت خرید,قیمت فعلی,سرمایه,ارزش فعلی,سود/ضرر,درصد,تاریخ خرید\n';
+
+            stats.items.forEach(item => {
+                csv += `"${item.asset_name}","${item.asset_symbol}","${ASSETS[item.asset_category]?.name || ''}",${item.quantity},"${item.unit}",${item.buy_price},${item.currentPrice},${item.invested},${item.value},${item.profit},${item.profitPercent.toFixed(2)},${item.buy_date}\n`;
+            });
+
+            const blob = new Blob(['\ufeff' + csv], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = `portfolio-${new Date().toISOString().split('T')[0]}.csv`;
+            link.click();
+
+            showToast('✅ فایل CSV دانلود شد');
+        }
+
+        // ==========================================
+        // UI Helpers
+        // ==========================================
+        function toggleCategory(header) {
+            const group = header.parentElement;
+            group.classList.toggle('collapsed');
+        }
+
+        // بستن مودال با کلیک بیرون
+        document.getElementById('assetModal').addEventListener('click', (e) => {
+            if (e.target.id === 'assetModal') closeModal('assetModal');
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeModal('assetModal');
+        });
+
+        // ==========================================
+        // Init
+        // ==========================================
+        document.addEventListener('DOMContentLoaded', async () => {
+            const { data: { session } } = await db.auth.getSession();
+
+            if (!session) {
+                window.location.href = 'login.html';
+                return;
+            }
+
+            currentUser = session.user;
+            await render();
+        });
+    </script>
+</body>
+</html>
