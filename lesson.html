@@ -1,110 +1,109 @@
 <!DOCTYPE html>
-<html lang="fa">
+<html lang="fa" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>درس | آکادمی شمعدون</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css">
+    <meta name="theme-color" content="#d4af37">
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <style>
+        :root {
+            --bg-primary: #0a0a0f;
+            --bg-secondary: #14141c;
+            --bg-card: #1a1a24;
+            --gold: #d4af37;
+            --gold-light: #f4d47c;
+            --gold-dark: #a8862a;
+            --green: #10b981;
+            --red: #ef4444;
+            --blue: #3b82f6;
+            --white: #f8fafc;
+            --gray: #94a3b8;
+        }
         * { margin: 0; padding: 0; box-sizing: border-box; }
-
         body {
-            font-family: Tahoma, sans-serif;
-            background-color: #0f172a;
+            font-family: 'Vazirmatn', Tahoma, sans-serif;
+            background-color: var(--bg-primary);
             background-image: 
-                radial-gradient(circle at 0% 0%, rgba(245, 158, 11, 0.12) 0%, transparent 40%),
-                radial-gradient(circle at 100% 100%, rgba(59, 130, 246, 0.08) 0%, transparent 40%),
-                linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
-            background-size: 100% 100%, 100% 100%, 50px 50px, 50px 50px;
+                radial-gradient(circle at 0% 0%, rgba(212, 175, 55, 0.08) 0%, transparent 40%),
+                radial-gradient(circle at 100% 100%, rgba(59, 130, 246, 0.06) 0%, transparent 40%),
+                linear-gradient(rgba(255, 255, 255, 0.015) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
+            background-size: 100% 100%, 100% 100%, 60px 60px, 60px 60px;
             background-attachment: fixed;
+            color: var(--white);
             min-height: 100vh;
             direction: rtl;
-            padding: 20px 15px;
+            overflow-x: hidden;
+        }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        .container { max-width: 800px; margin: 0 auto; }
+        .container { max-width: 800px; margin: 0 auto; padding: 100px 20px 40px; }
 
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-        .header-info { display: flex; align-items: center; gap: 10px; }
-        .header-icon {
-            width: 40px;
-            height: 40px;
-            border-radius: 12px;
-            background: linear-gradient(135deg, #f59e0b, #d97706);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 20px;
-        }
-        .header-title h1 { color: #f1f5f9; font-size: 15px; margin-bottom: 2px; }
-        .header-title p { color: #94a3b8; font-size: 12px; }
-        .header a {
-            color: #94a3b8;
-            text-decoration: none;
-            font-size: 13px;
-            padding: 8px 15px;
-            border: 1px solid #334155;
-            border-radius: 20px;
-            background: rgba(30, 41, 59, 0.7);
-            transition: 0.3s;
-        }
-        .header a:hover { background: #334155; color: #fff; }
-
+        /* ===== Progress ===== */
         .progress-section {
-            background: rgba(30, 41, 59, 0.85);
-            backdrop-filter: blur(15px);
+            background: linear-gradient(135deg, var(--bg-card), var(--bg-secondary));
+            border: 1px solid rgba(212, 175, 55, 0.15);
             border-radius: 15px;
             padding: 15px 20px;
             margin-bottom: 20px;
-            border: 1px solid rgba(255,255,255,0.05);
+            animation: fadeInUp 0.6s ease-out;
         }
         .progress-info {
             display: flex;
             justify-content: space-between;
             margin-bottom: 8px;
-            color: #94a3b8;
+            color: var(--gray);
             font-size: 13px;
         }
         .progress-bar {
             width: 100%;
             height: 8px;
-            background: rgba(15, 23, 42, 0.8);
+            background: rgba(10, 10, 15, 0.8);
             border-radius: 10px;
             overflow: hidden;
         }
         .progress-fill {
             height: 100%;
-            background: linear-gradient(90deg, #f59e0b, #d97706);
+            background: linear-gradient(90deg, var(--gold), var(--gold-dark));
             border-radius: 10px;
             transition: width 0.4s;
         }
 
+        /* ===== Lesson Card ===== */
         .lesson-card {
-            background: rgba(30, 41, 59, 0.85);
-            backdrop-filter: blur(15px);
+            background: linear-gradient(135deg, var(--bg-card), var(--bg-secondary));
+            border: 1px solid rgba(212, 175, 55, 0.15);
             border-radius: 20px;
             padding: 25px;
             margin-bottom: 20px;
-            border: 1px solid rgba(255,255,255,0.05);
+            animation: fadeInUp 0.6s ease-out 0.1s backwards;
         }
         .lesson-header {
             text-align: center;
             padding-bottom: 20px;
             margin-bottom: 20px;
-            border-bottom: 1px solid rgba(255,255,255,0.05);
+            border-bottom: 1px solid rgba(212, 175, 55, 0.15);
         }
-        .lesson-number { color: #f59e0b; font-size: 13px; font-weight: bold; margin-bottom: 8px; }
-        .lesson-title { color: #f1f5f9; font-size: 22px; margin-bottom: 10px; line-height: 1.4; }
+        .lesson-number {
+            color: var(--gold);
+            font-size: 13px;
+            font-weight: 800;
+            margin-bottom: 8px;
+        }
+        .lesson-title {
+            color: var(--white);
+            font-size: 22px;
+            font-weight: 900;
+            margin-bottom: 10px;
+            line-height: 1.4;
+        }
         .lesson-meta {
-            color: #94a3b8;
+            color: var(--gray);
             font-size: 13px;
             display: flex;
             justify-content: center;
@@ -112,52 +111,108 @@
             flex-wrap: wrap;
         }
 
-        /* ===== محتوای درس ===== */
-        .lesson-content { color: #cbd5e1; font-size: 15px; line-height: 2; }
-        .lesson-content h1 { color: #f59e0b; font-size: 22px; margin-top: 25px; margin-bottom: 15px; padding-bottom: 8px; border-bottom: 2px solid rgba(245, 158, 11, 0.3); }
-        .lesson-content h2 { color: #f59e0b; font-size: 18px; margin-top: 25px; margin-bottom: 12px; padding-bottom: 8px; border-bottom: 2px solid rgba(245, 158, 11, 0.2); }
-        .lesson-content h3 { color: #f1f5f9; font-size: 16px; margin-top: 20px; margin-bottom: 10px; }
+        /* ===== Lesson Content ===== */
+        .lesson-content {
+            color: #cbd5e1;
+            font-size: 15px;
+            line-height: 2;
+        }
+        .lesson-content h1 {
+            color: var(--gold);
+            font-size: 22px;
+            margin-top: 25px;
+            margin-bottom: 15px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid rgba(212, 175, 55, 0.3);
+        }
+        .lesson-content h2 {
+            color: var(--gold);
+            font-size: 18px;
+            margin-top: 25px;
+            margin-bottom: 12px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid rgba(212, 175, 55, 0.2);
+        }
+        .lesson-content h3 {
+            color: var(--white);
+            font-size: 16px;
+            font-weight: 800;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
         .lesson-content p { margin-bottom: 15px; }
-        .lesson-content ul, .lesson-content ol { padding-right: 25px; margin-bottom: 15px; }
+        .lesson-content ul,
+        .lesson-content ol {
+            padding-right: 25px;
+            margin-bottom: 15px;
+        }
         .lesson-content li { margin-bottom: 8px; }
-        .lesson-content strong { color: #f59e0b; }
+        .lesson-content strong { color: var(--gold); }
         .lesson-content em { color: #cbd5e1; font-style: italic; }
-        .lesson-content a { color: #60a5fa; text-decoration: underline; }
-        .lesson-content img { max-width: 100%; height: auto; border-radius: 12px; margin: 15px 0; box-shadow: 0 8px 25px rgba(0,0,0,0.3); display: block; }
+        .lesson-content a {
+            color: #60a5fa;
+            text-decoration: underline;
+        }
+        .lesson-content img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 12px;
+            margin: 15px 0;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+            display: block;
+        }
         .lesson-content blockquote {
-            border-right: 4px solid #f59e0b;
+            border-right: 4px solid var(--gold);
             padding: 15px 20px;
-            background: rgba(245, 158, 11, 0.08);
+            background: rgba(212, 175, 55, 0.08);
             border-radius: 10px;
             margin: 15px 0;
-            color: #f1f5f9;
+            color: var(--white);
         }
         .lesson-content code {
-            background: rgba(15, 23, 42, 0.8);
-            color: #f59e0b;
+            background: rgba(10, 10, 15, 0.8);
+            color: var(--gold);
             padding: 2px 8px;
             border-radius: 6px;
             font-family: monospace;
             font-size: 13px;
         }
         .lesson-content pre {
-            background: rgba(15, 23, 42, 0.9);
+            background: rgba(10, 10, 15, 0.9);
             padding: 15px;
             border-radius: 10px;
             overflow-x: auto;
             margin: 15px 0;
-            border: 1px solid #334155;
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
         .lesson-content pre code { background: none; padding: 0; }
-        .lesson-content hr { border: none; border-top: 1px solid rgba(255,255,255,0.1); margin: 20px 0; }
-        .lesson-content table { width: 100%; border-collapse: collapse; margin: 15px 0; font-size: 13px; }
-        .lesson-content th, .lesson-content td { border: 1px solid #334155; padding: 10px; text-align: center; }
-        .lesson-content th { background: rgba(245, 158, 11, 0.2); color: #f59e0b; }
+        .lesson-content hr {
+            border: none;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            margin: 20px 0;
+        }
+        .lesson-content table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+            font-size: 13px;
+        }
+        .lesson-content th,
+        .lesson-content td {
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 10px;
+            text-align: center;
+        }
+        .lesson-content th {
+            background: rgba(212, 175, 55, 0.2);
+            color: var(--gold);
+        }
         .lesson-content td { color: #cbd5e1; }
 
+        /* ===== Exercise Box ===== */
         .exercise-box {
-            background: rgba(34, 197, 94, 0.1);
-            border: 1px solid rgba(34, 197, 94, 0.3);
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid rgba(16, 185, 129, 0.3);
             border-radius: 15px;
             padding: 20px;
             margin-top: 25px;
@@ -165,25 +220,38 @@
         .exercise-box h3 {
             color: #4ade80;
             font-size: 16px;
+            font-weight: 800;
             margin-bottom: 12px;
             display: flex;
             align-items: center;
             gap: 8px;
         }
-        .exercise-box p, .exercise-box li { color: #cbd5e1; font-size: 14px; line-height: 1.8; }
+        .exercise-box p,
+        .exercise-box li {
+            color: #cbd5e1;
+            font-size: 14px;
+            line-height: 1.8;
+        }
         .exercise-box ul { padding-right: 20px; }
 
-        .nav-buttons { display: flex; gap: 10px; margin-top: 25px; flex-wrap: wrap; }
+        /* ===== Nav Buttons ===== */
+        .nav-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 25px;
+            flex-wrap: wrap;
+            animation: fadeInUp 0.6s ease-out 0.2s backwards;
+        }
         .btn {
             flex: 1;
             min-width: 130px;
             padding: 14px 20px;
             border-radius: 12px;
             font-size: 14px;
-            font-weight: bold;
+            font-weight: 800;
             cursor: pointer;
             transition: all 0.3s;
-            font-family: Tahoma, sans-serif;
+            font-family: inherit;
             border: none;
             display: flex;
             align-items: center;
@@ -191,17 +259,47 @@
             gap: 8px;
             text-decoration: none;
         }
-        .btn-primary { background: linear-gradient(135deg, #f59e0b, #d97706); color: #0f172a; }
-        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(245, 158, 11, 0.4); }
-        .btn-success { background: linear-gradient(135deg, #22c55e, #16a34a); color: #fff; }
-        .btn-success:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(34, 197, 94, 0.4); }
-        .btn-secondary { background: rgba(15, 23, 42, 0.6); color: #f1f5f9; border: 1px solid rgba(255,255,255,0.1); }
-        .btn-secondary:hover { background: rgba(15, 23, 42, 0.9); border-color: rgba(245, 158, 11, 0.3); }
-        .btn:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
+        .btn-primary {
+            background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+            color: var(--bg-primary);
+        }
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(212, 175, 55, 0.4);
+        }
+        .btn-success {
+            background: linear-gradient(135deg, var(--green), #059669);
+            color: #fff;
+        }
+        .btn-success:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(16, 185, 129, 0.4);
+        }
+        .btn-secondary {
+            background: rgba(10, 10, 15, 0.6);
+            color: var(--white);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .btn-secondary:hover {
+            background: rgba(10, 10, 15, 0.9);
+            border-color: rgba(212, 175, 55, 0.3);
+            color: var(--gold);
+        }
+        .btn:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+            transform: none;
+        }
 
-        .loading { text-align: center; padding: 50px 20px; color: #94a3b8; }
+        .loading {
+            text-align: center;
+            padding: 80px 20px;
+            color: var(--gray);
+            font-size: 16px;
+        }
 
         @media (max-width: 600px) {
+            .container { padding: 90px 15px 30px; }
             .lesson-title { font-size: 18px; }
             .lesson-content { font-size: 14px; }
             .lesson-content h2 { font-size: 16px; }
@@ -210,29 +308,31 @@
     </style>
 </head>
 <body>
+
     <div class="container" id="content">
         <div class="loading">⏳ در حال بارگذاری درس...</div>
     </div>
 
-    <script>
-        const SUPABASE_URL = 'https://jcwwilatvstjrohvhtss.supabase.co';
-        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Impjd3dpbGF0dnN0anJvaHZodHNzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODk3MDY4NTYsImV4cCI6MjEwNTI4Mjg1Nn0.eUC89RJy6-60nNGrSeYeDADzLxz-kWTGy4DbNGVi6MM';
-        const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    <script src="navbar.js"></script>
+    <script src="supabase-config.js"></script>
 
+    <script>
         let currentUser = null;
         let completedLessons = {};
         let courseData = null;
-        let courseKey = null;   // برای ذخیره در user_metadata
+        let courseKey = null;
         let lessonNum = null;
         let isDynamicCourse = false;
 
         // ===== بارگذاری =====
         async function init() {
-            const { data: { session } } = await supabaseClient.auth.getSession();
+            const { data: { session } } = await db.auth.getSession();
+
             if (!session) {
                 window.location.href = 'login.html';
                 return;
             }
+
             currentUser = session.user;
             completedLessons = currentUser.user_metadata?.completed_lessons || {};
 
@@ -246,19 +346,16 @@
                 return;
             }
 
-            // ===== تشخیص نوع دوره =====
             if (type === 'db' || courseParam.startsWith('db-')) {
-                // دوره داینامیک
                 const dbId = parseInt(courseParam.replace('db-', ''));
                 await loadDynamicLesson(dbId, lessonNum);
             } else {
-                // دوره ثابت
                 const staticId = parseInt(courseParam);
                 await loadStaticLesson(staticId, lessonNum);
             }
         }
 
-        // ===== دوره ثابت (از JSON) =====
+        // ===== دوره ثابت =====
         async function loadStaticLesson(courseId, lessonNum) {
             try {
                 const response = await fetch(`course-${courseId}.json`);
@@ -266,6 +363,7 @@
                     showError('❌ محتوای این دوره به زودی اضافه می‌شود.');
                     return;
                 }
+
                 courseData = await response.json();
                 const lesson = courseData.lessons[lessonNum - 1];
 
@@ -277,17 +375,17 @@
                 courseKey = courseId;
                 isDynamicCourse = false;
                 renderLesson(courseData, lesson, lessonNum);
+
             } catch (error) {
                 console.error('خطا در خواندن فایل:', error);
                 showError('❌ خطا در بارگذاری محتوای درس.');
             }
         }
 
-        // ===== دوره داینامیک (از Supabase) =====
+        // ===== دوره داینامیک =====
         async function loadDynamicLesson(dbId, lessonNum) {
             try {
-                // لود اطلاعات دوره
-                const { data: course, error: courseError } = await supabaseClient
+                const { data: course, error: courseError } = await db
                     .from('courses')
                     .select('*')
                     .eq('id', dbId)
@@ -298,8 +396,7 @@
                     return;
                 }
 
-                // لود دروس
-                const { data: lessons, error: lessonsError } = await supabaseClient
+                const { data: lessons, error: lessonsError } = await db
                     .from('lessons')
                     .select('*')
                     .eq('course_id', dbId)
@@ -316,7 +413,6 @@
                     return;
                 }
 
-                // تبدیل به فرمت مورد نیاز
                 courseData = {
                     title: course.title,
                     icon: course.icon || '📚',
@@ -328,8 +424,9 @@
                     }))
                 };
 
-                courseKey = dbId;  // برای ذخیره پیشرفت
+                courseKey = dbId;
                 isDynamicCourse = true;
+
                 renderLesson(courseData, {
                     title: lesson.title,
                     duration: '—',
@@ -340,7 +437,8 @@
                     word_url: lesson.word_url,
                     powerpoint_url: lesson.powerpoint_url,
                     notes_url: lesson.notes_url
-               }, lessonNum);
+                }, lessonNum);
+
             } catch (error) {
                 console.error('خطا:', error);
                 showError('❌ خطا در بارگذاری محتوای درس.');
@@ -351,9 +449,8 @@
         function showError(message) {
             document.getElementById('content').innerHTML = `
                 <div class="loading">
-                    ${message}
-                    <br><br>
-                    <a href="courses.html" style="color: #f59e0b;">⬅ بازگشت به دوره‌ها</a>
+                    ${message}<br><br>
+                    <a href="courses.html" style="color: var(--gold); text-decoration: none; font-weight: 700;">⬅ بازگشت به دوره‌ها</a>
                 </div>
             `;
         }
@@ -363,15 +460,13 @@
             const totalLessons = course.lessons.length;
             const progressPercent = Math.round((lessonNum / totalLessons) * 100);
             const isCompleted = (completedLessons[courseKey] || []).includes(lessonNum);
-
             const prevLesson = lessonNum > 1 ? lessonNum - 1 : null;
             const nextLesson = lessonNum < totalLessons ? lessonNum + 1 : null;
 
-            // ساخت لینک‌های دوره داینامیک
-            const courseUrl = isDynamicCourse 
+            const courseUrl = isDynamicCourse
                 ? `course-detail.html?id=${courseKey}&type=db`
                 : `course-detail.html?id=${courseKey}`;
-            
+
             const lessonUrlBase = isDynamicCourse
                 ? `lesson.html?course=db-${courseKey}&lesson=`
                 : `lesson.html?course=${courseKey}&lesson=`;
@@ -379,11 +474,11 @@
             // ویدیو
             const videoHTML = lesson.video_url ? `
                 <div style="margin: 20px 0;">
-                    <h3 style="color: #f59e0b; margin-bottom: 10px;">🎥 ویدیو آموزشی</h3>
+                    <h3 style="color: var(--gold); margin-bottom: 10px;">🎥 ویدیو آموزشی</h3>
                     <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 15px;">
-                        <iframe src="${lesson.video_url}" 
+                        <iframe src="${lesson.video_url}"
                                 style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; border-radius: 15px;"
-                               allowfullscreen></iframe>
+                                allowfullscreen></iframe>
                     </div>
                 </div>
             ` : '';
@@ -391,7 +486,7 @@
             // تصویر
             const imageHTML = lesson.image_url ? `
                 <div style="margin: 20px 0;">
-                    <img src="${lesson.image_url}" alt="${lesson.title}" 
+                    <img src="${lesson.image_url}" alt="${escapeHtml(lesson.title)}"
                          style="width: 100%; border-radius: 15px; box-shadow: 0 8px 25px rgba(0,0,0,0.3);">
                 </div>
             ` : '';
@@ -400,18 +495,18 @@
             const attachments = [];
             if (lesson.pdf_url) attachments.push({ icon: '📄', label: 'دانلود PDF', url: lesson.pdf_url, color: '#ef4444' });
             if (lesson.word_url) attachments.push({ icon: '📝', label: 'دانلود Word', url: lesson.word_url, color: '#3b82f6' });
-            if (lesson.powerpoint_url) attachments.push({ icon: '📊', label: 'دانلود PowerPoint', url: lesson.powerpoint_url, color: '#f59e0b' });
-            if (lesson.notes_url) attachments.push({ icon: '📚', label: 'دانلود جزوه', url: lesson.notes_url, color: '#22c55e' });
+            if (lesson.powerpoint_url) attachments.push({ icon: '📊', label: 'دانلود PowerPoint', url: lesson.powerpoint_url, color: '#d4af37' });
+            if (lesson.notes_url) attachments.push({ icon: '📚', label: 'دانلود جزوه', url: lesson.notes_url, color: '#10b981' });
 
             const attachmentsHTML = attachments.length > 0 ? `
-                <div style="margin: 20px 0; padding: 20px; background: rgba(15, 23, 42, 0.6); border-radius: 15px; border: 1px solid rgba(245, 158, 11, 0.3);">
-                    <h3 style="color: #f59e0b; margin-bottom: 15px;">📎 فایل‌های آموزشی</h3>
+                <div style="margin: 20px 0; padding: 20px; background: rgba(10, 10, 15, 0.6); border-radius: 15px; border: 1px solid rgba(212, 175, 55, 0.3);">
+                    <h3 style="color: var(--gold); margin-bottom: 15px; font-size: 15px;">📎 فایل‌های آموزشی</h3>
                     <div style="display: flex; flex-direction: column; gap: 10px;">
                         ${attachments.map(a => `
-                            <a href="${a.url}" target="_blank" download 
-                               style="display: flex; align-items: center; gap: 12px; padding: 12px 15px; background: rgba(15, 23, 42, 0.8); border: 1px solid rgba(255,255,255,0.1); border-radius: 10px; text-decoration: none; color: #f1f5f9; transition: 0.3s;">
+                            <a href="${a.url}" target="_blank" download
+                               style="display: flex; align-items: center; gap: 12px; padding: 12px 15px; background: rgba(10, 10, 15, 0.8); border: 1px solid rgba(255,255,255,0.1); border-radius: 10px; text-decoration: none; color: var(--white); transition: 0.3s;">
                                 <span style="font-size: 20px;">${a.icon}</span>
-                                <span style="flex: 1; font-size: 14px; font-weight: bold;">${a.label}</span>
+                                <span style="flex: 1; font-size: 14px; font-weight: 700;">${a.label}</span>
                                 <span style="color: ${a.color}; font-size: 18px;">⬇️</span>
                             </a>
                         `).join('')}
@@ -420,37 +515,25 @@
             ` : '';
 
             document.getElementById('content').innerHTML = `
-                <!-- هدر -->
-                <div class="header">
-                    <div class="header-info">
-                        <div class="header-icon">${course.icon}</div>
-                        <div class="header-title">
-                            <h1>${escapeHtml(course.title)}</h1>
-                            <p>درس ${lessonNum} از ${totalLessons}</p>
-                        </div>
-                    </div>
-                    <a href="${courseUrl}">⬅ بازگشت به دوره</a>
-                </div>
-
-                <!-- پیشرفت -->
+                <!-- Progress -->
                 <div class="progress-section">
                     <div class="progress-info">
-                        <span>پیشرفت دوره</span>
-                        <span>${progressPercent}٪</span>
+                        <span>${escapeHtml(course.icon)} ${escapeHtml(course.title)} — درس ${toFa(lessonNum)} از ${toFa(totalLessons)}</span>
+                        <span>${toFa(progressPercent)}٪</span>
                     </div>
                     <div class="progress-bar">
                         <div class="progress-fill" style="width: ${progressPercent}%"></div>
                     </div>
                 </div>
 
-                <!-- محتوای درس -->
+                <!-- Lesson Card -->
                 <div class="lesson-card">
                     <div class="lesson-header">
-                        <div class="lesson-number">📖 درس ${lessonNum}</div>
+                        <div class="lesson-number">📖 درس ${toFa(lessonNum)}</div>
                         <h1 class="lesson-title">${escapeHtml(lesson.title)}</h1>
                         <div class="lesson-meta">
                             <span>⏱️ ${lesson.duration}</span>
-                            ${isCompleted ? '<span style="color: #4ade80;">✅ تکمیل شده</span>' : ''}
+                            ${isCompleted ? '<span style="color: var(--green);">✅ تکمیل شده</span>' : ''}
                         </div>
                     </div>
 
@@ -461,9 +544,9 @@
                         ${lesson.content}
                     </div>
 
-                   ${attachmentsHTML}
+                    ${attachmentsHTML}
 
-                    <!-- تمرین -->
+                    <!-- Exercise -->
                     <div class="exercise-box">
                         <h3>✏️ تمرین این درس</h3>
                         <p>برای تثبیت مطالب این درس، موارد زیر را انجام دهید:</p>
@@ -475,35 +558,29 @@
                     </div>
                 </div>
 
-                <!-- دکمه‌های ناوبری -->
+                <!-- Nav Buttons -->
                 <div class="nav-buttons">
                     ${prevLesson ? `
-                        <a href="${lessonUrlBase}${prevLesson}" class="btn btn-secondary">
-                            ⬅ درس قبلی
-                        </a>
+                        <a href="${lessonUrlBase}${prevLesson}" class="btn btn-secondary">⬅ درس قبلی</a>
                     ` : `
                         <button class="btn btn-secondary" disabled>⬅ درس قبلی</button>
                     `}
 
                     ${!isCompleted ? `
-                        <button class="btn btn-success" onclick="markComplete(${courseKey}, ${lessonNum})">
-                            ✅ تکمیل این درس
-                        </button>
+                        <button class="btn btn-success" onclick="markComplete(${courseKey}, ${lessonNum})">✅ تکمیل این درس</button>
                     ` : `
                         <button class="btn btn-success" disabled>✅ تکمیل شده</button>
                     `}
 
                     ${nextLesson ? `
-                        <a href="${lessonUrlBase}${nextLesson}" class="btn btn-primary">
-                            درس بعدی ➡
-                        </a>
+                        <a href="${lessonUrlBase}${nextLesson}" class="btn btn-primary">درس بعدی ➡</a>
                     ` : `
-                        <a href="${courseUrl}" class="btn btn-primary">
-                            🎉 پایان دوره
-                        </a>
+                        <a href="${courseUrl}" class="btn btn-primary">🎉 پایان دوره</a>
                     `}
                 </div>
             `;
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
         // ===== تکمیل درس =====
@@ -515,10 +592,8 @@
                 }
                 completedLessons[courseKey] = courseLessons;
 
-                // بررسی تکمیل کل دوره
                 const totalLessons = courseData.lessons.length;
                 const isCourseComplete = courseLessons.length >= totalLessons;
-
                 const updates = { completed_lessons: completedLessons };
 
                 if (isCourseComplete) {
@@ -528,12 +603,11 @@
                     if (!completedCourses.includes(courseKey)) {
                         completedCourses.push(courseKey);
                     }
-
                     updates.completed_courses = completedCourses;
                     updates.in_progress_courses = inProgressCourses.filter(id => id !== courseKey);
                 }
 
-                const { error } = await supabaseClient.auth.updateUser({ data: updates });
+                const { error } = await db.auth.updateUser({ data: updates });
 
                 if (error) {
                     alert('❌ خطا در ذخیره: ' + error.message);
@@ -541,6 +615,7 @@
                 }
 
                 window.location.reload();
+
             } catch (e) {
                 alert('❌ خطای شبکه');
             }
@@ -551,6 +626,12 @@
             const div = document.createElement('div');
             div.textContent = text;
             return div.innerHTML;
+        }
+
+        function toFa(num) {
+            if (num === 0 || num === null || num === undefined) return '۰';
+            const persianDigits = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
+            return String(num).replace(/\d/g, d => persianDigits[d]);
         }
 
         init();
