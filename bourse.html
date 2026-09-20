@@ -558,67 +558,30 @@
 
     <script>
         // ==========================================
-        // API Keys با Key Rotation
+        // API Key
         // ==========================================
-        const BRS_API_KEYS = [
-            'B4xp2gWXASUmB3n6WPHtJxhjyJkgcBJz',  // کلید جدید (فعال)
-            'BvUj3cMKWNBK87KW9xhNccCThmfVbd8u'   // کلید قدیمی (backup)
-        ];
-
-        let currentKeyIndex = 0;
+        const BRS_API_KEY = 'B4xp2gWXASUmB3n6WPHtJxhjyJkgcBJz';
 
         // ==========================================
-        // fetch با چرخش خودکار کلید
+        // fetch API با کلید ثابت
         // ==========================================
-        async function fetchWithRotation(baseUrl) {
-            const maxAttempts = BRS_API_KEYS.length;
+        async function fetchBrsApi(baseUrl) {
+            const separator = baseUrl.includes('?') ? '&' : '?';
+            const url = `${baseUrl}${separator}key=${BRS_API_KEY}`;
 
-            for (let attempt = 0; attempt < maxAttempts; attempt++) {
-                const key = BRS_API_KEYS[currentKeyIndex];
-                const url = `${baseUrl}?key=${key}`;
+            const res = await fetch(url);
 
-                try {
-                    const res = await fetch(url);
-
-                    if (!res.ok) {
-                        console.warn(`⚠️ کلید ${currentKeyIndex + 1} کد ${res.status} داد، می‌ریم کلید بعدی`);
-                        currentKeyIndex = (currentKeyIndex + 1) % BRS_API_KEYS.length;
-                        continue;
-                    }
-
-                    const text = await res.text();
-
-                    // چک کن پاسخ HTML نباشه
-                    if (text.trim().startsWith('<!DOCTYPE') || text.trim().startsWith('<html')) {
-                        console.warn(`⚠️ کلید ${currentKeyIndex + 1} پاسخ HTML داد، می‌ریم کلید بعدی`);
-                        currentKeyIndex = (currentKeyIndex + 1) % BRS_API_KEYS.length;
-                        continue;
-                    }
-
-                    const data = JSON.parse(text);
-                    console.log(`✅ کلید ${currentKeyIndex + 1} کار کرد`);
-                    return data;
-
-                } catch (e) {
-                    console.warn(`⚠️ خطای شبکه با کلید ${currentKeyIndex + 1}:`, e.message);
-                    currentKeyIndex = (currentKeyIndex + 1) % BRS_API_KEYS.length;
-                }
+            if (!res.ok) {
+                throw new Error(`API خطا داد: کد ${res.status}`);
             }
 
-            throw new Error('❌ همه کلیدهای API شکست خوردن');
-        }
+            const text = await res.text();
 
-        // ==========================================
-        // URL Builders
-        // ==========================================
-        function getAllSymbolsUrl() {
-            const key = BRS_API_KEYS[currentKeyIndex];
-            return `https://Api.BrsApi.ir/Tsetmc/AllSymbols.php?key=${key}&type=1`;
-        }
+            if (text.trim().startsWith('<!DOCTYPE') || text.trim().startsWith('<html')) {
+                throw new Error('API پاسخ نامعتبر داد');
+            }
 
-        function getCandleUrl(l18, type) {
-            const key = BRS_API_KEYS[currentKeyIndex];
-            return `https://Api.BrsApi.ir/Tsetmc/Candlestick.php?key=${key}&l18=${encodeURIComponent(l18)}&type=${type}`;
+            return JSON.parse(text);
         }
 
         // ==========================================
@@ -697,7 +660,7 @@
             tableInfo.textContent = '⏳ در حال دریافت داده‌ها از BrsApi...';
 
             try {
-                const data = await fetchWithRotation('https://Api.BrsApi.ir/Tsetmc/AllSymbols.php?type=1');
+                const data = await fetchBrsApi('https://Api.BrsApi.ir/Tsetmc/AllSymbols.php?type=1');
 
                 if (!Array.isArray(data)) throw new Error('پاسخ نامعتبر');
 
@@ -874,7 +837,7 @@
 
             for (const symbol of topSymbols) {
                 try {
-                    const data = await fetchWithRotation(`https://Api.BrsApi.ir/Tsetmc/Candlestick.php?l18=${encodeURIComponent(symbol.l18)}&type=2`);
+                    const data = await fetchBrsApi(`https://Api.BrsApi.ir/Tsetmc/Candlestick.php?l18=${encodeURIComponent(symbol.l18)}&type=2`);
                     if (!data.candle_daily || data.candle_daily.length < days + 1) continue;
                     const candles = data.candle_daily;
                     const latest = candles[candles.length - 1];
@@ -1157,7 +1120,8 @@
             }
 
             try {
-                const data = await fetchWithRotation(`https://Api.BrsApi.ir/Tsetmc/Candlestick.php?l18=${encodeURIComponent(l18)}&type=2`);
+                // ⬇️ این خط اصلاح شد: fetchWithRotation → fetchBrsApi
+                const data = await fetchBrsApi(`https://Api.BrsApi.ir/Tsetmc/Candlestick.php?l18=${encodeURIComponent(l18)}&type=2`);
 
                 if (data.successful === false) {
                     container.innerHTML = '<div class="loading">❌ ' + (data.message_error || 'خطا در دریافت داده') + '</div>';
