@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>پرتفوی من | آکادمی شمعدون</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css">
+    <link rel="stylesheet" href="jalali-datepicker.css">
     <meta name="theme-color" content="#d4af37">
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -32,7 +33,7 @@
         body {
             font-family: 'Vazirmatn', Tahoma, sans-serif;
             background-color: var(--bg-primary);
-            background-image: 
+            background-image:
                 radial-gradient(circle at 0% 0%, rgba(212, 175, 55, 0.08) 0%, transparent 40%),
                 radial-gradient(circle at 100% 100%, rgba(59, 130, 246, 0.06) 0%, transparent 40%),
                 linear-gradient(rgba(255, 255, 255, 0.015) 1px, transparent 1px),
@@ -49,29 +50,23 @@
             to { opacity: 1; transform: translateY(0); }
         }
         @keyframes spin { to { transform: rotate(360deg); } }
-
-        .main-container { max-width: 1200px; margin: 0 auto; padding: 100px 20px 40px; }
-
-        /* ===== Page Header ===== */
-        .page-header {
-            text-align: center;
-            margin-bottom: 30px;
-            animation: fadeInUp 0.6s ease-out;
+        .main-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 100px 20px 40px;
         }
+        .page-header { text-align: center; margin-bottom: 30px; animation: fadeInUp 0.6s ease-out; }
         .page-header h1 {
-            font-size: 36px; font-weight: 900; margin-bottom: 10px;
+            font-size: 36px;
+            font-weight: 900;
+            margin-bottom: 10px;
             background: linear-gradient(135deg, var(--gold), var(--gold-light));
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
             background-clip: text;
         }
         .page-header p { color: var(--gray); font-size: 14px; }
-
-        /* ===== Loading ===== */
-        .loading-screen {
-            text-align: center;
-            padding: 100px 20px;
-            color: var(--gray);
-        }
+        .loading-screen { text-align: center; padding: 100px 20px; color: var(--gray); }
         .spinner {
             width: 50px; height: 50px;
             border: 4px solid rgba(212, 175, 55, 0.2);
@@ -80,8 +75,6 @@
             animation: spin 1s linear infinite;
             margin: 0 auto 20px;
         }
-
-        /* ===== Summary Cards ===== */
         .summary-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
@@ -124,8 +117,6 @@
         }
         .summary-card .badge.up { background: rgba(16, 185, 129, 0.15); color: var(--green); }
         .summary-card .badge.down { background: rgba(239, 68, 68, 0.15); color: var(--red); }
-
-        /* ===== Actions ===== */
         .actions-bar {
             display: flex;
             gap: 10px;
@@ -168,8 +159,6 @@
             border-color: rgba(212, 175, 55, 0.4);
             color: var(--gold);
         }
-
-        /* ===== Quick Add ===== */
         .quick-add {
             display: flex;
             gap: 8px;
@@ -197,12 +186,7 @@
             color: var(--gold);
             border-color: var(--gold);
         }
-        .quick-btn img {
-            width: 18px; height: 18px;
-            object-fit: contain;
-        }
-
-        /* ===== Charts ===== */
+        .quick-btn img { width: 18px; height: 18px; object-fit: contain; }
         .chart-section {
             background: linear-gradient(135deg, var(--bg-card), var(--bg-secondary));
             border: 1px solid rgba(212, 175, 55, 0.15);
@@ -226,12 +210,7 @@
             align-items: center;
             gap: 8px;
         }
-        .chart-wrapper {
-            position: relative;
-            height: 300px;
-        }
-
-        /* ===== Portfolio Section ===== */
+        .chart-wrapper { position: relative; height: 300px; }
         .portfolio-section {
             background: linear-gradient(135deg, var(--bg-card), var(--bg-secondary));
             border: 1px solid rgba(212, 175, 55, 0.15);
@@ -260,42 +239,15 @@
         .category-header:hover {
             background: linear-gradient(135deg, rgba(212, 175, 55, 0.15), rgba(212, 175, 55, 0.05));
         }
-        .category-header-left {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
+        .category-header-left { display: flex; align-items: center; gap: 12px; }
         .category-icon { font-size: 24px; }
-        .category-name {
-            color: var(--gold);
-            font-size: 15px;
-            font-weight: 800;
-        }
-        .category-count {
-            color: var(--gray);
-            font-size: 11px;
-            margin-right: 8px;
-        }
-        .category-total {
-            color: var(--white);
-            font-size: 14px;
-            font-weight: 800;
-            font-variant-numeric: tabular-nums;
-        }
-        .category-toggle {
-            color: var(--gray);
-            font-size: 16px;
-            transition: transform 0.3s;
-        }
+        .category-name { color: var(--gold); font-size: 15px; font-weight: 800; }
+        .category-count { color: var(--gray); font-size: 11px; margin-right: 8px; }
+        .category-total { color: var(--white); font-size: 14px; font-weight: 800; font-variant-numeric: tabular-nums; }
+        .category-toggle { color: var(--gray); font-size: 16px; transition: transform 0.3s; }
         .category-group.collapsed .category-toggle { transform: rotate(-90deg); }
         .category-group.collapsed .category-content { display: none; }
-
-        /* ===== Asset Card ===== */
-        .asset-card {
-            padding: 18px;
-            border-top: 1px solid rgba(255, 255, 255, 0.03);
-            transition: 0.3s;
-        }
+        .asset-card { padding: 18px; border-top: 1px solid rgba(255, 255, 255, 0.03); transition: 0.3s; }
         .asset-card:hover { background: rgba(212, 175, 55, 0.03); }
         .asset-card-top {
             display: flex;
@@ -305,13 +257,7 @@
             gap: 10px;
             flex-wrap: wrap;
         }
-        .asset-card-left {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            flex: 1;
-            min-width: 200px;
-        }
+        .asset-card-left { display: flex; align-items: center; gap: 12px; flex: 1; min-width: 200px; }
         .asset-icon-wrapper {
             width: 46px; height: 46px;
             border-radius: 12px;
@@ -322,27 +268,11 @@
             flex-shrink: 0;
             overflow: hidden;
         }
-        .asset-icon-wrapper img {
-            width: 32px; height: 32px;
-            object-fit: contain;
-        }
+        .asset-icon-wrapper img { width: 32px; height: 32px; object-fit: contain; }
         .asset-icon-wrapper .emoji { font-size: 24px; }
-        .asset-name-info h4 {
-            color: var(--white);
-            font-size: 15px;
-            font-weight: 800;
-            margin-bottom: 3px;
-        }
-        .asset-name-info .symbol {
-            color: var(--gray);
-            font-size: 11px;
-            font-family: monospace;
-            direction: ltr;
-        }
-        .asset-card-actions {
-            display: flex;
-            gap: 6px;
-        }
+        .asset-name-info h4 { color: var(--white); font-size: 15px; font-weight: 800; margin-bottom: 3px; }
+        .asset-name-info .symbol { color: var(--gray); font-size: 11px; font-family: monospace; direction: ltr; }
+        .asset-card-actions { display: flex; gap: 6px; }
         .icon-btn {
             width: 34px; height: 34px;
             border-radius: 10px;
@@ -366,7 +296,6 @@
             color: var(--red);
             background: rgba(239, 68, 68, 0.1);
         }
-
         .asset-card-info {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
@@ -377,11 +306,7 @@
             padding: 10px 12px;
             border-radius: 10px;
         }
-        .info-item .label {
-            color: var(--gray);
-            font-size: 10.5px;
-            margin-bottom: 4px;
-        }
+        .info-item .label { color: var(--gray); font-size: 10.5px; margin-bottom: 4px; }
         .info-item .value {
             color: var(--white);
             font-size: 14px;
@@ -391,7 +316,6 @@
         .info-item .value.green { color: var(--green); }
         .info-item .value.red { color: var(--red); }
         .info-item .value.gold { color: var(--gold); }
-
         .asset-weight-bar {
             margin-top: 12px;
             display: flex;
@@ -418,18 +342,10 @@
             min-width: 45px;
             text-align: left;
         }
-
-        /* ===== Empty State ===== */
-        .empty-state {
-            text-align: center;
-            padding: 60px 20px;
-            color: var(--gray);
-        }
+        .empty-state { text-align: center; padding: 60px 20px; color: var(--gray); }
         .empty-state .icon { font-size: 80px; margin-bottom: 20px; opacity: 0.5; }
         .empty-state h2 { color: var(--gold); margin-bottom: 10px; font-size: 20px; }
         .empty-state p { margin-bottom: 25px; font-size: 14px; }
-
-        /* ===== AI Insight ===== */
         .ai-insight {
             background: linear-gradient(135deg, rgba(59, 130, 246, 0.08), rgba(59, 130, 246, 0.02));
             border: 1px solid rgba(59, 130, 246, 0.25);
@@ -443,18 +359,8 @@
         }
         .ai-icon { font-size: 36px; flex-shrink: 0; }
         .ai-content { flex: 1; }
-        .ai-title {
-            color: #60a5fa;
-            font-size: 15px;
-            font-weight: 800;
-            margin-bottom: 12px;
-        }
-        .ai-text {
-            color: #cbd5e1;
-            font-size: 13.5px;
-            line-height: 1.9;
-            margin-bottom: 15px;
-        }
+        .ai-title { color: #60a5fa; font-size: 15px; font-weight: 800; margin-bottom: 12px; }
+        .ai-text { color: #cbd5e1; font-size: 13.5px; line-height: 1.9; margin-bottom: 15px; }
         .ai-analyze-btn {
             background: linear-gradient(135deg, #3b82f6, #2563eb);
             color: #fff;
@@ -474,12 +380,7 @@
             transform: translateY(-2px);
             box-shadow: 0 8px 25px rgba(59, 130, 246, 0.4);
         }
-        .ai-analyze-btn:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
-
-        /* ===== Compare ===== */
+        .ai-analyze-btn:disabled { opacity: 0.5; cursor: not-allowed; }
         .compare-section {
             background: linear-gradient(135deg, var(--bg-card), var(--bg-secondary));
             border: 1px solid rgba(212, 175, 55, 0.15);
@@ -488,18 +389,8 @@
             margin-bottom: 25px;
             animation: fadeInUp 0.6s ease-out 0.4s backwards;
         }
-        .compare-title {
-            color: var(--gold);
-            font-size: 16px;
-            font-weight: 800;
-            margin-bottom: 15px;
-        }
-        .compare-desc {
-            color: var(--gray);
-            font-size: 13px;
-            margin-bottom: 20px;
-            line-height: 1.7;
-        }
+        .compare-title { color: var(--gold); font-size: 16px; font-weight: 800; margin-bottom: 15px; }
+        .compare-desc { color: var(--gray); font-size: 13px; margin-bottom: 20px; line-height: 1.7; }
         .compare-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
@@ -517,29 +408,15 @@
             transform: translateY(-3px);
             border-color: rgba(212, 175, 55, 0.3);
         }
-        .compare-card .label {
-            color: var(--gray);
-            font-size: 11px;
-            margin-bottom: 8px;
-        }
-        .compare-card .value {
-            color: var(--white);
-            font-size: 18px;
-            font-weight: 800;
-            margin-bottom: 4px;
-        }
+        .compare-card .label { color: var(--gray); font-size: 11px; margin-bottom: 8px; }
+        .compare-card .value { color: var(--white); font-size: 18px; font-weight: 800; margin-bottom: 4px; }
         .compare-card .value.up { color: var(--green); }
         .compare-card .value.down { color: var(--red); }
-        .compare-card .desc {
-            color: var(--gray);
-            font-size: 10px;
-        }
+        .compare-card .desc { color: var(--gray); font-size: 10px; }
         .compare-highlight {
             border: 2px solid var(--gold);
             background: linear-gradient(135deg, rgba(212, 175, 55, 0.1), rgba(212, 175, 55, 0.02));
         }
-
-        /* ===== Modal ===== */
         .modal-overlay {
             display: none;
             position: fixed;
@@ -578,9 +455,7 @@
             margin-bottom: 6px;
             font-weight: 700;
         }
-        .form-group input,
-        .form-group select,
-        .form-group textarea {
+        .form-group input, .form-group select, .form-group textarea {
             width: 100%;
             padding: 12px 14px;
             background: rgba(10, 10, 15, 0.8);
@@ -591,30 +466,15 @@
             font-size: 13px;
             transition: 0.3s;
         }
-        .form-group input:focus,
-        .form-group select:focus,
-        .form-group textarea:focus {
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
             outline: none;
             border-color: var(--gold);
             box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.1);
         }
-        .form-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 12px;
-        }
-        .modal-actions {
-            display: flex;
-            gap: 10px;
-            margin-top: 20px;
-            justify-content: flex-end;
-        }
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+        .modal-actions { display: flex; gap: 10px; margin-top: 20px; justify-content: flex-end; }
         .modal-actions .btn { flex: 1; justify-content: center; }
-
-        /* ===== Stock Search ===== */
-        .stock-search-wrapper {
-            position: relative;
-        }
+        .stock-search-wrapper { position: relative; }
         .stock-search-results {
             position: absolute;
             top: 100%;
@@ -641,35 +501,12 @@
             align-items: center;
             gap: 10px;
         }
-        .stock-result-item:hover {
-            background: rgba(212, 175, 55, 0.1);
-        }
+        .stock-result-item:hover { background: rgba(212, 175, 55, 0.1); }
         .stock-result-item:last-child { border-bottom: none; }
-        .stock-result-item .stock-name {
-            color: var(--white);
-            font-size: 13px;
-            font-weight: 700;
-        }
-        .stock-result-item .stock-symbol {
-            color: var(--gray);
-            font-size: 11px;
-            font-family: monospace;
-            direction: ltr;
-        }
-        .stock-result-item .stock-price {
-            color: var(--gold);
-            font-size: 12px;
-            font-weight: 800;
-            direction: rtl;
-            text-align: left;
-            min-width: 90px;
-        }
-        .stock-result-item .stock-price small {
-            display: block;
-            color: var(--gray);
-            font-size: 9px;
-            font-weight: 400;
-        }
+        .stock-result-item .stock-name { color: var(--white); font-size: 13px; font-weight: 700; }
+        .stock-result-item .stock-symbol { color: var(--gray); font-size: 11px; font-family: monospace; direction: ltr; }
+        .stock-result-item .stock-price { color: var(--gold); font-size: 12px; font-weight: 800; direction: rtl; text-align: left; min-width: 90px; }
+        .stock-result-item .stock-price small { display: block; color: var(--gray); font-size: 9px; font-weight: 400; }
         .stock-selected-box {
             display: flex;
             justify-content: space-between;
@@ -681,22 +518,9 @@
             margin-bottom: 15px;
             gap: 10px;
         }
-        .stock-selected-box .info {
-            flex: 1;
-        }
-        .stock-selected-box .name {
-            color: var(--white);
-            font-size: 13px;
-            font-weight: 800;
-            margin-bottom: 4px;
-        }
-        .stock-selected-box .price {
-            color: var(--gold);
-            font-size: 12px;
-            font-weight: 700;
-        }
-
-        /* ===== Toast ===== */
+        .stock-selected-box .info { flex: 1; }
+        .stock-selected-box .name { color: var(--white); font-size: 13px; font-weight: 800; margin-bottom: 4px; }
+        .stock-selected-box .price { color: var(--gold); font-size: 12px; font-weight: 700; }
         .toast {
             position: fixed;
             bottom: 30px;
@@ -717,7 +541,6 @@
         .toast.show { transform: translateX(-50%) translateY(0); }
         .toast.success { border-right-color: var(--green); }
         .toast.error { border-right-color: var(--red); }
-
         .footer {
             text-align: center;
             padding: 30px 20px;
@@ -726,8 +549,6 @@
             border-top: 1px solid rgba(212, 175, 55, 0.1);
             margin-top: 40px;
         }
-
-        /* ===== Responsive ===== */
         @media (max-width: 1000px) {
             .summary-grid { grid-template-columns: repeat(2, 1fr); }
             .chart-grid { grid-template-columns: 1fr; }
@@ -748,276 +569,258 @@
     </style>
 </head>
 <body>
-
     <div class="main-container" id="mainContent">
-        <div class="loading-screen">
-            <div class="spinner"></div>
-            ⏳ در حال بارگذاری پرتفوی...
-        </div>
+    <div class="loading-screen">
+        <div class="spinner"></div>
+        ⏳ در حال بارگذاری پرتفوی...
     </div>
+</div>
 
-    <footer class="footer">
-        © ۱۴۰۵ آکادمی شمعدون | تمامی حقوق محفوظ است
-    </footer>
+<footer class="footer">
+    © ۱۴۰۵ آکادمی شمعدون | تمامی حقوق محفوظ است
+</footer>
 
-    <!-- Modal: Add/Edit Asset -->
-    <div class="modal-overlay" id="assetModal">
-        <div class="modal">
-            <h2 id="assetModalTitle">➕ افزودن دارایی</h2>
-            <input type="hidden" id="assetId">
+<!-- Modal: Add/Edit Asset -->
+<div class="modal-overlay" id="assetModal">
+    <div class="modal">
+        <h2 id="assetModalTitle">➕ افزودن دارایی</h2>
+        <input type="hidden" id="assetId">
 
-            <div class="form-group">
-                <label>دسته‌بندی *</label>
-                <select id="assetCategory" onchange="onCategoryChange()">
-                    <option value="gold">🥇 طلا و فلزات گرانبها</option>
-                    <option value="currency">💵 ارز</option>
-                    <option value="crypto">₿ کریپتوکارنسی</option>
-                    <option value="stock">📊 بورس ایران</option>
-                    <option value="fund">💼 صندوق درآمد ثابت</option>
-                    <option value="realestate">🏠 املاک</option>
-                    <option value="bank">🏦 سپرده بانکی</option>
-                    <option value="other">🌟 سایر</option>
-                </select>
-            </div>
+        <div class="form-group">
+            <label>دسته‌بندی *</label>
+            <select id="assetCategory" onchange="onCategoryChange()">
+                <option value="gold">🥇 طلا و فلزات گرانبها</option>
+                <option value="currency">💵 ارز</option>
+                <option value="crypto">₿ کریپتوکارنسی</option>
+                <option value="stock">📊 بورس ایران</option>
+                <option value="fund">💼 صندوق درآمد ثابت</option>
+                <option value="realestate">🏠 املاک</option>
+                <option value="bank">🏦 سپرده بانکی</option>
+                <option value="other">🌟 سایر</option>
+            </select>
+        </div>
 
-            <!-- Stock Search (فقط برای بورس) -->
-            <div class="form-group" id="stockSearchGroup" style="display:none;">
-                <label>🔍 جستجوی نماد بورس *</label>
-                <div class="stock-search-wrapper">
-                    <input type="text" id="stockSearchInput" placeholder="مثال: فولاد، شپنا، خودرو..." oninput="filterStockSymbols()" autocomplete="off">
-                    <div class="stock-search-results" id="stockSearchResults"></div>
-                </div>
-            </div>
-
-            <!-- Asset Select (برای بقیه دسته‌ها) -->
-            <div class="form-group" id="assetSelectGroup">
-                <label>دارایی *</label>
-                <select id="assetSelect" onchange="onAssetChange()"></select>
-            </div>
-
-            <!-- Stock Selected Box -->
-            <div id="stockSelectedBox" style="display:none;"></div>
-
-            <div class="form-row">
-                <div class="form-group">
-                    <label>مقدار *</label>
-                    <input type="number" id="assetQuantity" placeholder="۰" step="any" min="0">
-                </div>
-                <div class="form-group">
-                    <label>واحد</label>
-                    <input type="text" id="assetUnit" placeholder="گرم" readonly>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label>قیمت خرید (هر واحد) - تومان *</label>
-                <input type="number" id="assetBuyPrice" placeholder="۰" step="any" min="0">
-            </div>
-
-            <div class="form-group">
-                <label>تاریخ خرید *</label>
-                <input type="date" id="assetBuyDate">
-            </div>
-
-            <div class="form-group">
-                <label>یادداشت (اختیاری)</label>
-                <textarea id="assetNotes" rows="2" placeholder="مثلاً: خرید از صرافی..."></textarea>
-            </div>
-
-            <div class="modal-actions">
-                <button class="btn btn-secondary" onclick="closeModal('assetModal')">لغو</button>
-                <button class="btn btn-primary" onclick="saveAsset()">💾 ذخیره</button>
+        <!-- Stock Search (فقط برای بورس) -->
+        <div class="form-group" id="stockSearchGroup" style="display:none;">
+            <label>🔍 جستجوی نماد بورس *</label>
+            <div class="stock-search-wrapper">
+                <input type="text" id="stockSearchInput" placeholder="مثال: فولاد، شپنا، خودرو..." oninput="filterStockSymbols()" autocomplete="off">
+                <div class="stock-search-results" id="stockSearchResults"></div>
             </div>
         </div>
+
+        <!-- Asset Select (برای بقیه دسته‌ها) -->
+        <div class="form-group" id="assetSelectGroup">
+            <label>دارایی *</label>
+            <select id="assetSelect" onchange="onAssetChange()"></select>
+        </div>
+
+        <!-- Stock Selected Box -->
+        <div id="stockSelectedBox" style="display:none;"></div>
+
+        <div class="form-row">
+            <div class="form-group">
+                <label>مقدار *</label>
+                <input type="number" id="assetQuantity" placeholder="۰" step="any" min="0">
+            </div>
+            <div class="form-group">
+                <label>واحد</label>
+                <input type="text" id="assetUnit" placeholder="گرم" readonly>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>قیمت خرید (هر واحد) - تومان *</label>
+            <input type="number" id="assetBuyPrice" placeholder="۰" step="any" min="0">
+        </div>
+
+        <div class="form-group">
+            <label>تاریخ خرید *</label>
+            <input type="text" id="assetBuyDate" data-jalali-picker placeholder="انتخاب تاریخ شمسی">
+        </div>
+
+        <div class="form-group">
+            <label>یادداشت (اختیاری)</label>
+            <textarea id="assetNotes" rows="2" placeholder="مثلاً: خرید از صرافی..."></textarea>
+        </div>
+
+        <div class="modal-actions">
+            <button class="btn btn-secondary" onclick="closeModal('assetModal')">لغو</button>
+            <button class="btn btn-primary" onclick="saveAsset()">💾 ذخیره</button>
+        </div>
     </div>
+</div>
 
-    <div id="toast" class="toast"></div>
+<div id="toast" class="toast"></div>
 
-    <script src="navbar.js"></script>
-    <script src="supabase-config.js"></script>
+<script src="navbar.js"></script>
+<script src="supabase-config.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jalaali-js@1.2.6/dist/jalaali.min.js"></script>
+<script src="jalali-datepicker.js"></script>
+<script>
+    // ==========================================
+    // Configuration
+    // ==========================================
+    const BRS_API_KEY = 'B4xp2gWXASUmB3n6WPHtJxhjyJkgcBJz';
+    const AVALAI_API_KEY = 'aa-B6ef1JQ4HnDNBMRw4598qRGOKr7z3TttiznZubQXfD2A1iMf';
+    const AVALAI_API_URL = 'https://api.avalai.ir/v1/chat/completions';
 
-    <script>
-        // ==========================================
-        // Configuration
-        // ==========================================
-        const BRS_API_KEY = 'B4xp2gWXASUmB3n6WPHtJxhjyJkgcBJz';
-        const AVALAI_API_KEY = 'aa-B6ef1JQ4HnDNBMRw4598qRGOKr7z3TttiznZubQXfD2A1iMf';
-        const AVALAI_API_URL = 'https://api.avalai.ir/v1/chat/completions';
+    // ==========================================
+    // Assets Definition
+    // ==========================================
+    const ASSETS = {
+        gold: {
+            name: 'طلا و فلزات گرانبها',
+            icon: '🥇',
+            items: [
+                { symbol: 'gold18', name: 'طلا ۱۸ عیار', unit: 'گرم', icon: '🥇' },
+                { symbol: 'gold24', name: 'طلا ۲۴ عیار', unit: 'گرم', icon: '🥇' },
+                { symbol: 'gold-melted', name: 'طلای آب‌شده', unit: 'مثقال', icon: '🟡' },
+                { symbol: 'coin-emami', name: 'سکه امامی', unit: 'عدد', icon: '🪙' },
+                { symbol: 'coin-bahar', name: 'سکه بهار آزادی', unit: 'عدد', icon: '🏅' },
+                { symbol: 'coin-half', name: 'نیم سکه', unit: 'عدد', icon: '🥈' },
+                { symbol: 'coin-quarter', name: 'ربع سکه', unit: 'عدد', icon: '🥉' },
+                { symbol: 'coin-1g', name: 'سکه گرمی', unit: 'عدد', icon: '⭕' },
+                { symbol: 'silver999', name: 'نقره ۹۹۹', unit: 'گرم', icon: '🥈' },
+                { symbol: 'ounce-gold', name: 'انس طلا', unit: 'انس', icon: '🏅' },
+                { symbol: 'ounce-silver', name: 'انس نقره', unit: 'انس', icon: '🥈' },
+                { symbol: 'ounce-platinum', name: 'انس پلاتین', unit: 'انس', icon: '🔶' },
+                { symbol: 'ounce-palladium', name: 'انس پالادیوم', unit: 'انس', icon: '💎' }
+            ]
+        },
+        currency: {
+            name: 'ارز',
+            icon: '💵',
+            items: [
+                { symbol: 'usd', name: 'دلار آزاد', unit: 'عدد', icon: '💵' },
+                { symbol: 'usdt', name: 'تتر', unit: 'عدد', icon: 'https://cryptologos.cc/logos/tether-usdt-logo.png' },
+                { symbol: 'eur', name: 'یورو', unit: 'عدد', icon: '💶' },
+                { symbol: 'gbp', name: 'پوند انگلیس', unit: 'عدد', icon: '💷' },
+                { symbol: 'aed', name: 'درهم امارات', unit: 'عدد', icon: '🇦🇪' },
+                { symbol: 'try', name: 'لیر ترکیه', unit: 'عدد', icon: '🇹🇷' },
+                { symbol: 'cny', name: 'یوان چین', unit: 'عدد', icon: '🇨🇳' }
+            ]
+        },
+        crypto: {
+            name: 'کریپتوکارنسی',
+            icon: '₿',
+            items: [
+                { symbol: 'btc', name: 'بیت‌کوین', unit: 'عدد', icon: 'https://cryptologos.cc/logos/bitcoin-btc-logo.png' },
+                { symbol: 'eth', name: 'اتریوم', unit: 'عدد', icon: 'https://cryptologos.cc/logos/ethereum-eth-logo.png' },
+                { symbol: 'xaut', name: 'تتر گلد', unit: 'عدد', icon: 'https://cryptologos.cc/logos/tether-gold-xaut-logo.png' },
+                { symbol: 'paxg', name: 'پی‌اکس گلد', unit: 'عدد', icon: 'https://cryptologos.cc/logos/pax-gold-paxg-logo.png' },
+                { symbol: 'usdt-erc', name: 'تتر ERC20', unit: 'عدد', icon: 'https://cryptologos.cc/logos/tether-usdt-logo.png' },
+                { symbol: 'usdc', name: 'یو‌اس‌دی‌سی', unit: 'عدد', icon: 'https://cryptologos.cc/logos/usd-coin-usdc-logo.png' },
+                { symbol: 'sol', name: 'سولانا', unit: 'عدد', icon: 'https://cryptologos.cc/logos/solana-sol-logo.png' },
+                { symbol: 'xrp', name: 'ریپل', unit: 'عدد', icon: 'https://cryptologos.cc/logos/xrp-xrp-logo.png' },
+                { symbol: 'doge', name: 'دوج‌کوین', unit: 'عدد', icon: 'https://cryptologos.cc/logos/dogecoin-doge-logo.png' },
+                { symbol: 'ada', name: 'کاردانو', unit: 'عدد', icon: 'https://cryptologos.cc/logos/cardano-ada-logo.png' },
+                { symbol: 'bnb', name: 'BNB', unit: 'عدد', icon: 'https://cryptologos.cc/logos/bnb-bnb-logo.png' },
+                { symbol: 'trx', name: 'ترون', unit: 'عدد', icon: 'https://cryptologos.cc/logos/tron-trx-logo.png' },
+                { symbol: 'avax', name: 'آوالانچ', unit: 'عدد', icon: 'https://cryptologos.cc/logos/avalanche-avax-logo.png' }
+            ]
+        },
+        stock: { name: 'بورس ایران', icon: '📊', items: [] },
+        fund: { name: 'صندوق درآمد ثابت', icon: '💼', items: [] },
+        realestate: {
+            name: 'املاک',
+            icon: '🏠',
+            items: [{ symbol: 'custom-realestate', name: 'ملک (دستی)', unit: 'متر', icon: '🏠' }]
+        },
+        bank: {
+            name: 'سپرده بانکی',
+            icon: '🏦',
+            items: [{ symbol: 'custom-bank', name: 'سپرده (دستی)', unit: 'تومان', icon: '🏦' }]
+        },
+        other: {
+            name: 'سایر',
+            icon: '🌟',
+            items: [{ symbol: 'custom-other', name: 'سایر (دستی)', unit: 'عدد', icon: '🌟' }]
+        }
+    };
 
-        // ==========================================
-        // Assets Definition
-        // ==========================================
-        const ASSETS = {
-            gold: {
-                name: 'طلا و فلزات گرانبها',
-                icon: '🥇',
-                items: [
-                    { symbol: 'gold18', name: 'طلا ۱۸ عیار', unit: 'گرم', icon: '🥇' },
-                    { symbol: 'gold24', name: 'طلا ۲۴ عیار', unit: 'گرم', icon: '🥇' },
-                    { symbol: 'gold-melted', name: 'طلای آب‌شده', unit: 'مثقال', icon: '🟡' },
-                    { symbol: 'coin-emami', name: 'سکه امامی', unit: 'عدد', icon: '🪙' },
-                    { symbol: 'coin-bahar', name: 'سکه بهار آزادی', unit: 'عدد', icon: '🏅' },
-                    { symbol: 'coin-half', name: 'نیم سکه', unit: 'عدد', icon: '🥈' },
-                    { symbol: 'coin-quarter', name: 'ربع سکه', unit: 'عدد', icon: '🥉' },
-                    { symbol: 'coin-1g', name: 'سکه گرمی', unit: 'عدد', icon: '⭕' },
-                    { symbol: 'silver999', name: 'نقره ۹۹۹', unit: 'گرم', icon: '🥈' },
-                    { symbol: 'ounce-gold', name: 'انس طلا', unit: 'انس', icon: '🏅' },
-                    { symbol: 'ounce-silver', name: 'انس نقره', unit: 'انس', icon: '🥈' },
-                    { symbol: 'ounce-platinum', name: 'انس پلاتین', unit: 'انس', icon: '🔶' },
-                    { symbol: 'ounce-palladium', name: 'انس پالادیوم', unit: 'انس', icon: '💎' }
-                ]
-            },
-            currency: {
-                name: 'ارز',
-                icon: '💵',
-                items: [
-                    { symbol: 'usd', name: 'دلار آزاد', unit: 'عدد', icon: '💵' },
-                    { symbol: 'usdt', name: 'تتر', unit: 'عدد', icon: 'https://cryptologos.cc/logos/tether-usdt-logo.png' },
-                    { symbol: 'eur', name: 'یورو', unit: 'عدد', icon: '💶' },
-                    { symbol: 'gbp', name: 'پوند انگلیس', unit: 'عدد', icon: '💷' },
-                    { symbol: 'aed', name: 'درهم امارات', unit: 'عدد', icon: '🇦🇪' },
-                    { symbol: 'try', name: 'لیر ترکیه', unit: 'عدد', icon: '🇹🇷' },
-                    { symbol: 'cny', name: 'یوان چین', unit: 'عدد', icon: '🇨🇳' }
-                ]
-            },
-            crypto: {
-                name: 'کریپتوکارنسی',
-                icon: '₿',
-                items: [
-                    { symbol: 'btc', name: 'بیت‌کوین', unit: 'عدد', icon: 'https://cryptologos.cc/logos/bitcoin-btc-logo.png' },
-                    { symbol: 'eth', name: 'اتریوم', unit: 'عدد', icon: 'https://cryptologos.cc/logos/ethereum-eth-logo.png' },
-                    { symbol: 'xaut', name: 'تتر گلد', unit: 'عدد', icon: 'https://cryptologos.cc/logos/tether-gold-xaut-logo.png' },
-                    { symbol: 'paxg', name: 'پی‌اکس گلد', unit: 'عدد', icon: 'https://cryptologos.cc/logos/pax-gold-paxg-logo.png' },
-                    { symbol: 'usdt-erc', name: 'تتر ERC20', unit: 'عدد', icon: 'https://cryptologos.cc/logos/tether-usdt-logo.png' },
-                    { symbol: 'usdc', name: 'یو‌اس‌دی‌سی', unit: 'عدد', icon: 'https://cryptologos.cc/logos/usd-coin-usdc-logo.png' },
-                    { symbol: 'sol', name: 'سولانا', unit: 'عدد', icon: 'https://cryptologos.cc/logos/solana-sol-logo.png' },
-                    { symbol: 'xrp', name: 'ریپل', unit: 'عدد', icon: 'https://cryptologos.cc/logos/xrp-xrp-logo.png' },
-                    { symbol: 'doge', name: 'دوج‌کوین', unit: 'عدد', icon: 'https://cryptologos.cc/logos/dogecoin-doge-logo.png' },
-                    { symbol: 'ada', name: 'کاردانو', unit: 'عدد', icon: 'https://cryptologos.cc/logos/cardano-ada-logo.png' },
-                    { symbol: 'bnb', name: 'BNB', unit: 'عدد', icon: 'https://cryptologos.cc/logos/bnb-bnb-logo.png' },
-                    { symbol: 'trx', name: 'ترون', unit: 'عدد', icon: 'https://cryptologos.cc/logos/tron-trx-logo.png' },
-                    { symbol: 'avax', name: 'آوالانچ', unit: 'عدد', icon: 'https://cryptologos.cc/logos/avalanche-avax-logo.png' }
-                ]
-            },
-            stock: {
-                name: 'بورس ایران',
-                icon: '📊',
-                items: [] // از API پر میشه
-            },
-            fund: {
-                name: 'صندوق درآمد ثابت',
-                icon: '💼',
-                items: [] // از API پر میشه
-            },
-            realestate: {
-                name: 'املاک',
-                icon: '🏠',
-                items: [
-                    { symbol: 'custom-realestate', name: 'ملک (دستی)', unit: 'متر', icon: '🏠' }
-                ]
-            },
-            bank: {
-                name: 'سپرده بانکی',
-                icon: '🏦',
-                items: [
-                    { symbol: 'custom-bank', name: 'سپرده (دستی)', unit: 'تومان', icon: '🏦' }
-                ]
-            },
-            other: {
-                name: 'سایر',
-                icon: '🌟',
-                items: [
-                    { symbol: 'custom-other', name: 'سایر (دستی)', unit: 'عدد', icon: '🌟' }
-                ]
+    // ==========================================
+    // Global State
+    // ==========================================
+    let currentUser = null;
+    let portfolio = [];
+    let priceCache = {};
+    let selectedStock = null;
+    let stockSymbolsLoaded = false;
+    let pieChart = null;
+    let barChart = null;
+
+    // ==========================================
+    // Utility Functions
+    // ==========================================
+    function toFa(num) {
+        if (num === null || num === undefined) return '۰';
+        const persianDigits = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
+        return String(num).replace(/\d/g, d => persianDigits[d]);
+    }
+
+    function formatNum(num, decimals = 0) {
+        if (num === null || num === undefined || num === '') return '۰';
+        const n = Number(num);
+        if (isNaN(n)) return '۰';
+        let result;
+        if (decimals > 0) {
+            result = n.toFixed(decimals);
+            if (result.includes('.')) {
+                result = result.replace(/0+$/, '').replace(/\.$/, '');
             }
-        };
-
-        // ==========================================
-        // Global State
-        // ==========================================
-        let currentUser = null;
-        let portfolio = [];
-        let priceCache = {};
-        let selectedStock = null;
-        let stockSymbolsLoaded = false;
-        let pieChart = null;
-        let barChart = null;
-
-        // ==========================================
-        // Utility Functions
-        // ==========================================
-        function toFa(num) {
-            if (num === null || num === undefined) return '۰';
-            const persianDigits = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
-            return String(num).replace(/\d/g, d => persianDigits[d]);
+        } else {
+            result = Math.round(n).toString();
         }
+        const parts = result.split('.');
+        parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+        result = parts.join('.');
+        const persianDigits = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
+        return result.replace(/\d/g, d => persianDigits[d]);
+    }
 
-        function formatNum(num, decimals = 0) {
-            if (num === null || num === undefined || num === '') return '۰';
-            const n = Number(num);
-            if (isNaN(n)) return '۰';
+    function formatBigNum(num) {
+        if (num === null || num === undefined || num === '') return '۰';
+        const n = Number(num);
+        if (isNaN(n)) return '۰';
+        if (Math.abs(n) >= 1e12) return formatNum(n / 1e12, 2) + ' همت';
+        if (Math.abs(n) >= 1e9) return formatNum(n / 1e9, 2) + ' میلیارد';
+        if (Math.abs(n) >= 1e6) return formatNum(n / 1e6, 2) + ' میلیون';
+        if (Math.abs(n) >= 1e3) return formatNum(n / 1e3, 1) + ' هزار';
+        return formatNum(n);
+    }
 
-            let result;
-            if (decimals > 0) {
-                result = n.toFixed(decimals);
-                if (result.includes('.')) {
-                    result = result.replace(/0+$/, '').replace(/\.$/, '');
-                }
-            } else {
-                result = Math.round(n).toString();
+    function escapeHtml(text) {
+        if (!text) return '';
+        const div = document.createElement('div');
+        div.textContent = text;
+        return div.innerHTML;
+    }
+
+    function showToast(msg, type = 'success') {
+        const toast = document.getElementById('toast');
+        toast.textContent = msg;
+        toast.className = 'toast show ' + type;
+        setTimeout(() => toast.classList.remove('show'), 3000);
+    }
+
+    function closeModal(id) {
+        document.getElementById(id).classList.remove('show');
+    }
+
+    function formatDate(dateStr) {
+        if (!dateStr) return '—';
+        try {
+            if (window.jalaliHelpers && /^\d{4}-\d{2}-\d{2}$/.test(dateStr)) {
+                return window.jalaliHelpers.gregToJalaliStr(dateStr);
             }
-
-            const parts = result.split('.');
-            parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-            result = parts.join('.');
-
-            const persianDigits = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
-            return result.replace(/\d/g, d => persianDigits[d]);
+            const d = new Date(dateStr);
+            if (isNaN(d.getTime())) return '—';
+            return new Intl.DateTimeFormat('fa-IR', { year: 'numeric', month: 'short', day: 'numeric' }).format(d);
+        } catch (e) {
+            return '—';
         }
-
-        function formatBigNum(num) {
-            if (num === null || num === undefined || num === '') return '۰';
-            const n = Number(num);
-            if (isNaN(n)) return '۰';
-            if (Math.abs(n) >= 1e12) return formatNum(n / 1e12, 2) + ' همت';
-            if (Math.abs(n) >= 1e9) return formatNum(n / 1e9, 2) + ' میلیارد';
-            if (Math.abs(n) >= 1e6) return formatNum(n / 1e6, 2) + ' میلیون';
-            if (Math.abs(n) >= 1e3) return formatNum(n / 1e3, 1) + ' هزار';
-            return formatNum(n);
-        }
-
-        function escapeHtml(text) {
-            if (!text) return '';
-            const div = document.createElement('div');
-            div.textContent = text;
-            return div.innerHTML;
-        }
-
-        function showToast(msg, type = 'success') {
-            const toast = document.getElementById('toast');
-            toast.textContent = msg;
-            toast.className = 'toast show ' + type;
-            setTimeout(() => toast.classList.remove('show'), 3000);
-        }
-
-        function closeModal(id) {
-            document.getElementById(id).classList.remove('show');
-        }
-
-        function formatDate(dateStr) {
-            if (!dateStr) return '—';
-            try {
-                const d = new Date(dateStr);
-                if (isNaN(d.getTime())) return '—';
-                return new Intl.DateTimeFormat('fa-IR', {
-                    year: 'numeric', month: 'short', day: 'numeric'
-                }).format(d);
-            } catch (e) {
-                return '—';
-            }
-        }
-
-        // ==========================================
+    }        // ==========================================
         // Price Fetching
         // ==========================================
         async function fetchBrsApi(url) {
@@ -1031,13 +834,10 @@
 
         async function loadStockSymbols() {
             if (stockSymbolsLoaded) return;
-
             try {
                 const data = await fetchBrsApi('https://Api.BrsApi.ir/Tsetmc/AllSymbols.php?type=1');
-
                 if (!Array.isArray(data)) return;
 
-                // فیلتر: فقط سهام، حق تقدم، صندوق
                 const stocks = data.filter(s => s.l18 && s.l18.trim());
                 const funds = stocks.filter(s => {
                     const fullName = (s.l30 || '').trim();
@@ -1045,7 +845,6 @@
                 });
                 const regularStocks = stocks.filter(s => !funds.includes(s));
 
-                // پر کردن ASSETS.stock
                 ASSETS.stock.items = regularStocks.map(s => ({
                     symbol: s.l18.trim(),
                     name: s.l30 ? s.l30.trim() : s.l18.trim(),
@@ -1055,7 +854,6 @@
                     isin: s.isin
                 }));
 
-                // پر کردن ASSETS.fund
                 ASSETS.fund.items = funds.map(s => ({
                     symbol: s.l18.trim(),
                     name: s.l30 ? s.l30.trim() : s.l18.trim(),
@@ -1066,7 +864,6 @@
 
                 stockSymbolsLoaded = true;
                 console.log(`✅ ${ASSETS.stock.items.length} نماد بورس و ${ASSETS.fund.items.length} صندوق لود شد`);
-
             } catch (e) {
                 console.error('Stock symbols error:', e);
             }
@@ -1075,10 +872,8 @@
         async function loadPrices() {
             priceCache = {};
 
-            // BrsApi: طلا و ارز
             try {
                 const data = await fetchBrsApi('https://Api.BrsApi.ir/Market/Gold_Currency.php');
-
                 if (data.gold && Array.isArray(data.gold)) {
                     data.gold.forEach(g => {
                         if (g.symbol === 'IR_GOLD_18K') priceCache['gold18'] = g.price;
@@ -1091,7 +886,6 @@
                         if (g.symbol === 'IR_COIN_1G') priceCache['coin-1g'] = g.price;
                     });
                 }
-
                 if (data.currency && Array.isArray(data.currency)) {
                     data.currency.forEach(c => {
                         if (c.symbol === 'USD') priceCache['usd'] = c.price;
@@ -1103,14 +897,10 @@
                         if (c.symbol === 'CNY') priceCache['cny'] = c.price;
                     });
                 }
-            } catch (e) {
-                console.error('BrsApi Gold/Currency error:', e);
-            }
+            } catch (e) { console.error('BrsApi Gold/Currency error:', e); }
 
-            // BrsApi: Commodity
             try {
                 const data = await fetchBrsApi('https://Api.BrsApi.ir/Market/Commodity.php');
-
                 if (data.metal_precious && Array.isArray(data.metal_precious)) {
                     data.metal_precious.forEach(m => {
                         if (m.symbol === 'XAUUSD') priceCache['ounce-gold'] = m.price;
@@ -1119,33 +909,23 @@
                         if (m.symbol === 'XPDUSD') priceCache['ounce-palladium'] = m.price;
                     });
                 }
-            } catch (e) {
-                console.error('BrsApi Commodity error:', e);
-            }
+            } catch (e) { console.error('BrsApi Commodity error:', e); }
 
-            // محاسبه نقره ۹۹۹
             if (priceCache['ounce-silver'] && priceCache['usd']) {
                 const OUNCE_TO_GRAM = 31.1035;
                 priceCache['silver999'] = (priceCache['ounce-silver'] * priceCache['usd'] * 0.999) / OUNCE_TO_GRAM;
             }
 
-            // پر کردن priceCache با قیمت نمادهای بورس
             if (stockSymbolsLoaded) {
-                ASSETS.stock.items.forEach(s => {
-                    if (s.currentPrice) priceCache[s.symbol] = s.currentPrice;
-                });
-                ASSETS.fund.items.forEach(s => {
-                    if (s.currentPrice) priceCache[s.symbol] = s.currentPrice;
-                });
+                ASSETS.stock.items.forEach(s => { if (s.currentPrice) priceCache[s.symbol] = s.currentPrice; });
+                ASSETS.fund.items.forEach(s => { if (s.currentPrice) priceCache[s.symbol] = s.currentPrice; });
             }
 
-            // CoinGecko
             try {
                 const ids = 'bitcoin,ethereum,tether-gold,pax-gold,tether,usd-coin,solana,ripple,dogecoin,cardano,binancecoin,tron,avalanche-2';
                 const res = await fetch(`https://api.coingecko.com/api/v3/simple/price?ids=${ids}&vs_currencies=usd`);
                 const data = await res.json();
                 const usdRate = priceCache['usd'] || 90000;
-
                 if (data.bitcoin) priceCache['btc'] = data.bitcoin.usd * usdRate;
                 if (data.ethereum) priceCache['eth'] = data.ethereum.usd * usdRate;
                 if (data['tether-gold']) priceCache['xaut'] = data['tether-gold'].usd * usdRate;
@@ -1159,9 +939,7 @@
                 if (data.binancecoin) priceCache['bnb'] = data.binancecoin.usd * usdRate;
                 if (data.tron) priceCache['trx'] = data.tron.usd * usdRate;
                 if (data['avalanche-2']) priceCache['avax'] = data['avalanche-2'].usd * usdRate;
-            } catch (e) {
-                console.error('CoinGecko error:', e);
-            }
+            } catch (e) { console.error('CoinGecko error:', e); }
 
             console.log('📊 Prices loaded:', priceCache);
         }
@@ -1179,7 +957,6 @@
                 console.error('Portfolio load error:', error);
                 return [];
             }
-
             console.log('📋 Portfolio loaded:', data);
             return data || [];
         }
@@ -1196,7 +973,6 @@
                 const quantity = Number(item.quantity) || 0;
                 const buyPrice = Number(item.buy_price) || 0;
                 const currentPrice = Number(priceCache[item.asset_symbol]) || buyPrice;
-
                 const invested = quantity * buyPrice;
                 const value = quantity * currentPrice;
                 const profit = value - invested;
@@ -1211,29 +987,13 @@
                 categoryStats[item.asset_category].value += value;
                 categoryStats[item.asset_category].count++;
 
-                return {
-                    ...item,
-                    quantity,
-                    buy_price: buyPrice,
-                    currentPrice,
-                    value,
-                    invested,
-                    profit,
-                    profitPercent
-                };
+                return { ...item, quantity, buy_price: buyPrice, currentPrice, value, invested, profit, profitPercent };
             });
 
             const totalProfit = totalValue - totalInvested;
             const totalProfitPercent = totalInvested > 0 ? (totalProfit / totalInvested) * 100 : 0;
 
-            return {
-                totalValue,
-                totalInvested,
-                totalProfit,
-                totalProfitPercent,
-                categoryStats,
-                items: portfolioWithPrices
-            };
+            return { totalValue, totalInvested, totalProfit, totalProfitPercent, categoryStats, items: portfolioWithPrices };
         }
 
         // ==========================================
@@ -1241,7 +1001,6 @@
         // ==========================================
         async function render() {
             const container = document.getElementById('mainContent');
-
             try {
                 await loadStockSymbols();
                 await loadPrices();
@@ -1254,7 +1013,6 @@
 
                 const stats = calculateStats();
                 renderFullPage(container, stats);
-
             } catch (e) {
                 console.error('Render error:', e);
                 container.innerHTML = `
@@ -1465,7 +1223,6 @@
                             <button class="icon-btn danger" onclick="deleteAsset('${item.id}')" title="حذف">🗑️</button>
                         </div>
                     </div>
-
                     <div class="asset-card-info">
                         <div class="info-item">
                             <div class="label">📦 مقدار</div>
@@ -1500,7 +1257,6 @@
                             <div class="value ${profitClass}">${profitSign}${toFa(item.profitPercent.toFixed(2))}٪</div>
                         </div>
                     </div>
-
                     <div class="asset-weight-bar">
                         <span style="color:var(--gray); font-size:11px;">وزن در سبد:</span>
                         <div class="bar">
@@ -1651,7 +1407,6 @@
             if (!grid) return;
 
             const invested = stats.totalInvested;
-
             const options = [
                 { label: '🥇 فقط طلا', return: 32.5 },
                 { label: '💵 فقط دلار', return: 8.7 },
@@ -1679,14 +1434,12 @@
         async function analyzePortfolioWithAI() {
             const btn = document.getElementById('aiAnalyzeBtn');
             const aiText = document.getElementById('aiText');
-
             btn.disabled = true;
             btn.innerHTML = '⏳ در حال تحلیل...';
             aiText.textContent = 'در حال دریافت تحلیل از هوش مصنوعی...';
 
             try {
                 const stats = calculateStats();
-
                 let portfolioText = '';
                 stats.items.forEach(item => {
                     portfolioText += `- ${item.asset_name}: ${item.quantity} ${item.unit || ''} | خرید: ${formatNum(item.buy_price)} | فعلی: ${formatNum(item.currentPrice)} | سود/ضرر: ${item.profit >= 0 ? '+' : ''}${formatNum(item.profit)} (${item.profitPercent.toFixed(2)}%)\n`;
@@ -1736,7 +1489,6 @@ ${portfolioText}
                 });
 
                 if (!response.ok) throw new Error('خطا در ارتباط با AI');
-
                 const data = await response.json();
                 const aiResponse = data.choices[0].message.content;
 
@@ -1746,7 +1498,6 @@ ${portfolioText}
                 } catch {
                     aiText.textContent = aiResponse;
                 }
-
             } catch (e) {
                 console.error('AI error:', e);
                 aiText.innerHTML = `<span style="color:var(--red);">❌ خطا در تحلیل: ${e.message}</span>`;
@@ -1764,7 +1515,6 @@ ${portfolioText}
             document.getElementById('assetId').value = '';
             document.getElementById('assetCategory').value = categoryKey;
             selectedStock = null;
-
             onCategoryChange();
 
             if (symbol && categoryKey !== 'stock') {
@@ -1772,16 +1522,19 @@ ${portfolioText}
                 onAssetChange();
             }
 
+            // مقدار پیش‌فرض: امروز (میلادی ISO) → picker خودش شمسی نشون می‌ده
             const today = new Date();
             const yyyy = today.getFullYear();
             const mm = String(today.getMonth() + 1).padStart(2, '0');
             const dd = String(today.getDate()).padStart(2, '0');
-            document.getElementById('assetBuyDate').value = `${yyyy}-${mm}-${dd}`;
+            const todayIso = `${yyyy}-${mm}-${dd}`;
+            const dp = JalaliDatePicker.get('assetBuyDate');
+            if (dp) dp.setValue(todayIso);
+            else document.getElementById('assetBuyDate').value = todayIso;
 
             document.getElementById('assetQuantity').value = '';
             document.getElementById('assetBuyPrice').value = '';
             document.getElementById('assetNotes').value = '';
-
             document.getElementById('assetModal').classList.add('show');
         }
 
@@ -1795,23 +1548,17 @@ ${portfolioText}
             stockSelectedBox.style.display = 'none';
 
             if (catKey === 'stock' || catKey === 'fund') {
-                // حالت جستجو
                 stockSearchGroup.style.display = 'block';
                 assetSelectGroup.style.display = 'none';
                 document.getElementById('stockSearchInput').value = '';
                 document.getElementById('stockSearchResults').classList.remove('show');
                 document.getElementById('assetUnit').value = catKey === 'stock' ? 'سهم' : 'واحد';
             } else {
-                // حالت dropdown معمولی
                 stockSearchGroup.style.display = 'none';
                 assetSelectGroup.style.display = 'block';
-
                 const cat = ASSETS[catKey];
                 const select = document.getElementById('assetSelect');
-                select.innerHTML = cat.items.map(item => 
-                    `<option value="${item.symbol}">${item.name}</option>`
-                ).join('');
-
+                select.innerHTML = cat.items.map(item => `<option value="${item.symbol}">${item.name}</option>`).join('');
                 onAssetChange();
             }
         }
@@ -1821,7 +1568,6 @@ ${portfolioText}
             const symbol = document.getElementById('assetSelect').value;
             const cat = ASSETS[catKey];
             const item = cat.items.find(i => i.symbol === symbol);
-
             if (item) {
                 document.getElementById('assetUnit').value = item.unit || '';
             }
@@ -1842,10 +1588,7 @@ ${portfolioText}
 
             const items = ASSETS[catKey]?.items || [];
             const filtered = items
-                .filter(item => 
-                    item.name.toLowerCase().includes(query) || 
-                    item.symbol.toLowerCase().includes(query)
-                )
+                .filter(item => item.name.toLowerCase().includes(query) || item.symbol.toLowerCase().includes(query))
                 .slice(0, 30);
 
             if (filtered.length === 0) {
@@ -1873,11 +1616,9 @@ ${portfolioText}
 
         function selectStock(symbol, name, price) {
             selectedStock = { symbol, name, price };
-
             document.getElementById('stockSearchInput').value = name;
             document.getElementById('stockSearchResults').classList.remove('show');
 
-            // نمایش box انتخاب‌شده
             const box = document.getElementById('stockSelectedBox');
             box.innerHTML = `
                 <div class="stock-selected-box">
@@ -1910,15 +1651,17 @@ ${portfolioText}
             const quantityRaw = document.getElementById('assetQuantity').value;
             const unit = document.getElementById('assetUnit').value;
             const buyPriceRaw = document.getElementById('assetBuyPrice').value;
-            const buyDate = document.getElementById('assetBuyDate').value;
-            const notes = document.getElementById('assetNotes').value.trim();
 
+            // ✅ خواندن تاریخ از picker (میلادی ISO)
+            const input = document.getElementById('assetBuyDate');
+            const dp = JalaliDatePicker.get(input);
+            const buyDate = dp ? dp.getIsoValue() : (input.dataset.iso || input.value);
+
+            const notes = document.getElementById('assetNotes').value.trim();
             const quantity = parseFloat(quantityRaw);
             const buyPrice = parseFloat(buyPriceRaw);
 
-            // تشخیص نماد
             let symbol, assetName, assetIcon;
-
             if (category === 'stock' || category === 'fund') {
                 if (!selectedStock) {
                     showToast('❌ لطفاً یک نماد انتخاب کن', 'error');
@@ -1939,12 +1682,10 @@ ${portfolioText}
                 showToast('❌ لطفاً مقدار معتبر وارد کن', 'error');
                 return;
             }
-
             if (!buyPrice || buyPrice <= 0) {
                 showToast('❌ لطفاً قیمت خرید معتبر وارد کن', 'error');
                 return;
             }
-
             if (!buyDate) {
                 showToast('❌ لطفاً تاریخ خرید رو وارد کن', 'error');
                 return;
@@ -1987,17 +1728,14 @@ ${portfolioText}
             document.getElementById('assetModalTitle').textContent = '✏️ ویرایش دارایی';
             document.getElementById('assetId').value = item.id;
             document.getElementById('assetCategory').value = item.asset_category;
-
             selectedStock = null;
             onCategoryChange();
 
             if (item.asset_category === 'stock' || item.asset_category === 'fund') {
-                // برای نماد بورس
                 const foundStock = ASSETS[item.asset_category]?.items.find(s => s.symbol === item.asset_symbol);
                 if (foundStock) {
                     selectStock(foundStock.symbol, foundStock.name, foundStock.currentPrice);
                 } else {
-                    // اگه نماد در لیست نبود، دستی ست کن
                     selectedStock = { symbol: item.asset_symbol, name: item.asset_name, price: 0 };
                     document.getElementById('stockSearchInput').value = item.asset_name;
                     document.getElementById('stockSelectedBox').innerHTML = `
@@ -2019,9 +1757,13 @@ ${portfolioText}
             document.getElementById('assetQuantity').value = item.quantity;
             document.getElementById('assetUnit').value = item.unit;
             document.getElementById('assetBuyPrice').value = item.buy_price;
-            document.getElementById('assetBuyDate').value = item.buy_date;
-            document.getElementById('assetNotes').value = item.notes || '';
 
+            // ✅ مقدار ویرایش از picker (میلادی ISO)
+            const dp = JalaliDatePicker.get('assetBuyDate');
+            if (dp) dp.setValue(item.buy_date);
+            else document.getElementById('assetBuyDate').value = item.buy_date;
+
+            document.getElementById('assetNotes').value = item.notes || '';
             document.getElementById('assetModal').classList.add('show');
         }
 
@@ -2029,12 +1771,10 @@ ${portfolioText}
             if (!confirm('مطمئنی می‌خوای این دارایی رو حذف کنی؟')) return;
 
             const { error } = await db.from('user_portfolio').delete().eq('id', id);
-
             if (error) {
                 showToast('❌ خطا: ' + error.message, 'error');
                 return;
             }
-
             showToast('🗑️ دارایی حذف شد');
             await render();
         }
@@ -2044,9 +1784,7 @@ ${portfolioText}
         // ==========================================
         function exportCSV() {
             const stats = calculateStats();
-
             let csv = 'نام دارایی,نماد,دسته,مقدار,واحد,قیمت خرید,قیمت فعلی,سرمایه,ارزش فعلی,سود/ضرر,درصد,تاریخ خرید\n';
-
             stats.items.forEach(item => {
                 csv += `"${item.asset_name}","${item.asset_symbol}","${ASSETS[item.asset_category]?.name || ''}",${item.quantity},"${item.unit}",${item.buy_price},${item.currentPrice},${item.invested},${item.value},${item.profit},${item.profitPercent.toFixed(2)},${item.buy_date}\n`;
             });
@@ -2056,7 +1794,6 @@ ${portfolioText}
             link.href = URL.createObjectURL(blob);
             link.download = `portfolio-${new Date().toISOString().split('T')[0]}.csv`;
             link.click();
-
             showToast('✅ فایل CSV دانلود شد');
         }
 
@@ -2076,7 +1813,6 @@ ${portfolioText}
             if (e.key === 'Escape') closeModal('assetModal');
         });
 
-        // بستن نتایج جستجو با کلیک بیرون
         document.addEventListener('click', (e) => {
             const resultsBox = document.getElementById('stockSearchResults');
             const searchInput = document.getElementById('stockSearchInput');
@@ -2089,6 +1825,9 @@ ${portfolioText}
         // Init
         // ==========================================
         document.addEventListener('DOMContentLoaded', async () => {
+            // ✅ فعال‌سازی تقویم شمسی
+            JalaliDatePicker.initAll();
+
             const { data: { session } } = await db.auth.getSession();
 
             if (!session) {
