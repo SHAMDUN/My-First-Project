@@ -157,9 +157,7 @@
             transition: 0.3s; display: flex; align-items: center;
             justify-content: center; padding: 0; flex-shrink: 0;
         }
-        .theme-toggle:hover {
-            background: rgba(212, 175, 55, 0.2); transform: scale(1.05);
-        }
+        .theme-toggle:hover { background: rgba(212, 175, 55, 0.2); transform: scale(1.05); }
         .nav-overlay {
             display: none; position: fixed; inset: 0;
             background: rgba(0, 0, 0, 0.6); backdrop-filter: blur(5px);
@@ -191,9 +189,7 @@
             color: var(--text-secondary); text-decoration: none;
             font-size: 14px; font-weight: 600; transition: 0.25s; margin-bottom: 4px;
         }
-        .nav-mobile-menu a:hover {
-            background: rgba(212, 175, 55, 0.1); color: var(--gold);
-        }
+        .nav-mobile-menu a:hover { background: rgba(212, 175, 55, 0.1); color: var(--gold); }
         .live-market-bar {
             position: fixed; top: 64px; left: 0; right: 0;
             background: var(--navbar-bg-scrolled); backdrop-filter: blur(20px);
@@ -203,7 +199,7 @@
         }
         .live-market-track {
             display: flex; gap: 40px;
-            animation: scrollMarket 90s linear infinite;
+            animation: scrollMarket 120s linear infinite;
             padding-left: 100%; white-space: nowrap;
         }
         .live-market-track:hover { animation-play-state: paused; }
@@ -310,9 +306,7 @@
             width: 8px; height: 8px; border-radius: 50%;
             background: var(--border-default); transition: 0.3s; cursor: pointer;
         }
-        .hero-quote-dot.active {
-            background: var(--gold); width: 24px; border-radius: 4px;
-        }
+        .hero-quote-dot.active { background: var(--gold); width: 24px; border-radius: 4px; }
         .stats-section {
             padding: 60px 20px; background: rgba(20, 20, 28, 0.4);
             border-top: 1px solid var(--border-subtle);
@@ -461,7 +455,7 @@
                 <a href="news.html">اخبار</a>
             </div>
             <div class="nav-actions">
-                <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()" aria-label="تغییر تم" title="تغییر تم">
+                <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()" aria-label="تغییر تم">
                     <span id="themeIcon">🌙</span>
                 </button>
                 <div id="navAuth">
@@ -791,7 +785,7 @@
 </footer>
     <script>
         // ==========================================
-        // THEME SYSTEM
+        // THEME
         // ==========================================
         function initTheme() {
             const savedTheme = localStorage.getItem('shamdun-theme') || 'dark';
@@ -920,79 +914,101 @@
         }
 
         // ==========================================
-        // Live Market — 7 items from BrsApi
+        // LIVE MARKET — دقیقاً بر اساس home.html
         // ==========================================
-        async function getBrsApiKey() {
-            const cached = sessionStorage.getItem('api_BRS_API_KEY');
-            if (cached) return cached;
-            try {
-                const { data } = await supabaseClient
-                    .from('app_settings')
-                    .select('value')
-                    .eq('key', 'BRS_API_KEY')
-                    .single();
-                if (data && data.value) {
-                    sessionStorage.setItem('api_BRS_API_KEY', data.value);
-                    return data.value;
+        const LIVE_MARKET_KEYS = [
+            'B4xp2gWXASUmB3n6WPHtJxhjyJkgcBJz',
+            'BvUj3cMKWNBK87KW9xhNccCThmfVbd8u'
+        ];
+        let liveMarketKeyIndex = 0;
+
+        async function fetchLiveMarketApi(baseUrl) {
+            for (let attempt = 0; attempt < LIVE_MARKET_KEYS.length; attempt++) {
+                const key = LIVE_MARKET_KEYS[liveMarketKeyIndex];
+                try {
+                    const res = await fetch(`${baseUrl}?key=${key}`);
+                    if (!res.ok) {
+                        liveMarketKeyIndex = (liveMarketKeyIndex + 1) % LIVE_MARKET_KEYS.length;
+                        continue;
+                    }
+                    const text = await res.text();
+                    if (text.trim().startsWith('<!DOCTYPE') || text.trim().startsWith('<html')) {
+                        liveMarketKeyIndex = (liveMarketKeyIndex + 1) % LIVE_MARKET_KEYS.length;
+                        continue;
+                    }
+                    return JSON.parse(text);
+                } catch (e) {
+                    liveMarketKeyIndex = (liveMarketKeyIndex + 1) % LIVE_MARKET_KEYS.length;
                 }
-            } catch (e) { console.warn('BRS key fetch error:', e); }
-            return null;
+            }
+            throw new Error('همه کلیدها fail');
         }
 
         async function loadLiveMarket() {
             const track = document.getElementById('liveMarketTrack');
             if (!track) return;
+
             try {
-                const apiKey = await getBrsApiKey();
-                if (!apiKey) {
-                    track.innerHTML = `<div class="live-market-item"><span class="icon">⚠️</span><span class="name">کلید API تنظیم نشده</span></div>`;
-                    return;
-                }
                 const marketData = [];
 
-                // 1. Gold_Currency: طلا 18 + دلار + انس طلا + بیت‌کوین + اتریوم
+                // ۱. طلا ۱۸ + دلار + انس طلا از Gold_Currency
                 try {
-                    const r = await fetch(`https://Api.BrsApi.ir/Market/Gold_Currency.php?key=${apiKey}`);
-                    const d = await r.json();
+                    const d = await fetchLiveMarketApi('https://Api.BrsApi.ir/Market/Gold_Currency.php');
 
                     const gold18 = d.gold?.find(g => g.symbol === 'IR_GOLD_18K');
-                    if (gold18) marketData.push({ name: 'طلا ۱۸', icon: '🥇', price: gold18.price, change: gold18.change_percent || 0 });
+                    if (gold18) marketData.push({
+                        name: 'طلا ۱۸', icon: '🥇',
+                        price: gold18.price, change: gold18.change_percent || 0
+                    });
 
                     const usd = d.currency?.find(c => c.symbol === 'USD');
-                    if (usd) marketData.push({ name: 'دلار', icon: '💵', price: usd.price, change: usd.change_percent || 0 });
+                    if (usd) marketData.push({
+                        name: 'دلار', icon: '💵',
+                        price: usd.price, change: usd.change_percent || 0
+                    });
 
                     const xau = d.gold?.find(g => g.symbol === 'XAUUSD');
-                    if (xau) marketData.push({ name: 'انس طلا', icon: '🏅', price: xau.price, change: xau.change_percent || 0, unit: 'دلار' });
-
-                    const btc = d.cryptocurrency?.find(c => c.symbol === 'BTC');
-                    if (btc) marketData.push({ name: 'بیت‌کوین', icon: '₿', price: parseFloat(btc.price), change: btc.change_percent || 0, unit: 'دلار' });
-
-                    const eth = d.cryptocurrency?.find(c => c.symbol === 'ETH');
-                    if (eth) marketData.push({ name: 'اتریوم', icon: '⟠', price: parseFloat(eth.price), change: eth.change_percent || 0, unit: 'دلار' });
+                    if (xau) marketData.push({
+                        name: 'انس طلا', icon: '🏅',
+                        price: xau.price, change: xau.change_percent || 0, unit: 'دلار'
+                    });
                 } catch (e) { console.warn('Gold_Currency error:', e); }
 
-                // 2. Commodity: انس نقره
+                // ۲. انس نقره از Commodity
                 try {
-                    const r = await fetch(`https://Api.BrsApi.ir/Market/Commodity.php?key=${apiKey}`);
-                    const d = await r.json();
+                    const d = await fetchLiveMarketApi('https://Api.BrsApi.ir/Market/Commodity.php');
                     const xag = d.metal_precious?.find(m => m.symbol === 'XAGUSD');
-                    if (xag) marketData.push({ name: 'انس نقره', icon: '🥈', price: xag.price, change: xag.change_percent || 0, unit: 'دلار' });
+                    if (xag) marketData.push({
+                        name: 'انس نقره', icon: '🥈',
+                        price: xag.price, change: xag.change_percent || 0, unit: 'دلار'
+                    });
                 } catch (e) { console.warn('Commodity error:', e); }
 
-                // 3. Index: شاخص بورس (با type=1)
+                // ۳. کریپتو از CoinGecko
                 try {
-                    const r = await fetch(`https://Api.BrsApi.ir/Tsetmc/Index.php?key=${apiKey}&type=1`);
+                    const r = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum&vs_currencies=usd&include_24hr_change=true');
+                    const d = await r.json();
+                    if (d.bitcoin) marketData.push({
+                        name: 'بیت‌کوین', icon: '₿',
+                        price: d.bitcoin.usd, change: d.bitcoin.usd_24h_change || 0, unit: 'دلار'
+                    });
+                    if (d.ethereum) marketData.push({
+                        name: 'اتریوم', icon: '⟠',
+                        price: d.ethereum.usd, change: d.ethereum.usd_24h_change || 0, unit: 'دلار'
+                    });
+                } catch (e) { console.warn('CoinGecko error:', e); }
+
+                // ۴. شاخص بورس
+                try {
+                    const r = await fetch(`https://Api.BrsApi.ir/Tsetmc/Index.php?key=${LIVE_MARKET_KEYS[0]}&type=1`);
                     const d = await r.json();
                     if (Array.isArray(d) && d.length > 0) {
                         const idx = d.find(i => i.l18 === 'شاخص كل' || i.l30?.includes('کل')) || d[0];
-                        if (idx) {
-                            marketData.push({
-                                name: 'شاخص بورس',
-                                icon: '📈',
-                                price: idx.lastValue || idx.value || idx.pc || 0,
-                                change: idx.changePercent || idx.pcp || 0
-                            });
-                        }
+                        if (idx) marketData.push({
+                            name: 'شاخص بورس', icon: '📈',
+                            price: idx.lastValue || idx.value || idx.pc || 0,
+                            change: idx.changePercent || idx.pcp || 0
+                        });
                     }
                 } catch (e) { console.warn('Index error:', e); }
 
