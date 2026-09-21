@@ -27,7 +27,7 @@
         body {
             font-family: 'Vazirmatn', Tahoma, sans-serif;
             background-color: var(--bg-primary);
-            background-image: 
+            background-image:
                 radial-gradient(circle at 0% 0%, rgba(212, 175, 55, 0.08) 0%, transparent 40%),
                 radial-gradient(circle at 100% 100%, rgba(59, 130, 246, 0.06) 0%, transparent 40%),
                 linear-gradient(rgba(255, 255, 255, 0.015) 1px, transparent 1px),
@@ -48,54 +48,70 @@
             0%, 100% { opacity: 1; transform: scale(1); }
             50% { opacity: 0.5; transform: scale(1.3); }
         }
-
-        .main-container { max-width: 1400px; margin: 0 auto; padding: 100px 20px 40px; }
+        .main-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 100px 20px 40px;
+        }
         .page-header { text-align: center; margin-bottom: 30px; animation: fadeInUp 0.6s ease-out; }
         .page-header h1 {
-            font-size: 36px; font-weight: 900; margin-bottom: 10px;
+            font-size: 36px;
+            font-weight: 900;
+            margin-bottom: 10px;
             background: linear-gradient(135deg, var(--gold), var(--gold-light));
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
             background-clip: text;
         }
         .page-header p { color: var(--gray); font-size: 14px; }
-
         .stats-grid {
-            display: grid; grid-template-columns: repeat(4, 1fr);
-            gap: 12px; margin-bottom: 20px;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+            margin-bottom: 20px;
         }
         .stat-card {
             background: linear-gradient(135deg, var(--bg-card), var(--bg-secondary));
             border: 1px solid rgba(212, 175, 55, 0.15);
-            border-radius: 15px; padding: 15px;
-            text-align: center; border-right: 4px solid var(--gold);
+            border-radius: 15px;
+            padding: 15px;
+            text-align: center;
+            border-right: 4px solid var(--gold);
         }
         .stat-card .icon { font-size: 22px; margin-bottom: 6px; }
         .stat-card .value {
-            color: var(--gold); font-size: 18px; font-weight: 900;
-            margin-bottom: 4px; font-variant-numeric: tabular-nums;
+            color: var(--gold);
+            font-size: 18px;
+            font-weight: 900;
+            margin-bottom: 4px;
+            font-variant-numeric: tabular-nums;
         }
         .stat-card .value.up { color: var(--green); }
         .stat-card .value.down { color: var(--red); }
         .stat-card .label { color: var(--gray); font-size: 11px; }
-
         .filters-bar {
             background: linear-gradient(135deg, var(--bg-card), var(--bg-secondary));
             border: 1px solid rgba(212, 175, 55, 0.15);
-            border-radius: 15px; padding: 15px; margin-bottom: 20px;
-            display: flex; flex-wrap: wrap; gap: 10px; align-items: center;
+            border-radius: 15px;
+            padding: 15px;
+            margin-bottom: 20px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            align-items: center;
         }
-        .filter-group {
-            display: flex; flex-direction: column; gap: 5px;
-            flex: 1; min-width: 150px;
-        }
+        .filter-group { display: flex; flex-direction: column; gap: 5px; flex: 1; min-width: 150px; }
         .filter-group label { color: var(--gray); font-size: 11px; font-weight: 600; }
         .filter-input {
             padding: 10px 14px;
             background: rgba(10, 10, 15, 0.6);
             border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 10px; color: var(--white);
+            border-radius: 10px;
+            color: var(--white);
             font-family: 'Vazirmatn', Tahoma, sans-serif;
-            font-size: 13px; outline: none; transition: 0.3s;
+            font-size: 13px;
+            outline: none;
+            transition: 0.3s;
         }
         .filter-input:focus {
             border-color: var(--gold);
@@ -104,106 +120,144 @@
         .filter-btn {
             padding: 10px 20px;
             background: linear-gradient(135deg, var(--red), #b91c1c);
-            color: #fff; border: none; border-radius: 10px;
+            color: #fff;
+            border: none;
+            border-radius: 10px;
             font-family: 'Vazirmatn', Tahoma, sans-serif;
-            font-size: 13px; font-weight: 700;
-            cursor: pointer; transition: 0.3s; align-self: flex-end;
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.3s;
+            align-self: flex-end;
         }
         .filter-btn:hover {
             transform: translateY(-2px);
             box-shadow: 0 8px 25px rgba(239, 68, 68, 0.4);
         }
-
         .ranking-section {
             background: linear-gradient(135deg, var(--bg-card), var(--bg-secondary));
             border: 1px solid rgba(212, 175, 55, 0.15);
-            border-radius: 15px; padding: 20px; margin-bottom: 20px;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
         }
         .ranking-section h3 {
-            color: var(--gold); font-size: 16px; font-weight: 800;
-            margin-bottom: 15px; padding-bottom: 10px;
+            color: var(--gold);
+            font-size: 16px;
+            font-weight: 800;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
             border-bottom: 1px solid rgba(212, 175, 55, 0.2);
-            display: flex; align-items: center; gap: 8px; justify-content: space-between;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            justify-content: space-between;
         }
         .ranking-controls { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 15px; }
         .ranking-btn {
             padding: 8px 14px;
-            background: rgba(10, 10, 15, 0.6); color: var(--gray);
+            background: rgba(10, 10, 15, 0.6);
+            color: var(--gray);
             border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 8px;
             font-family: 'Vazirmatn', Tahoma, sans-serif;
-            font-size: 12px; font-weight: 700;
-            cursor: pointer; transition: 0.3s;
+            font-size: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.3s;
         }
         .ranking-btn:hover { color: var(--gold); border-color: rgba(212, 175, 55, 0.4); }
         .ranking-btn.active {
             background: linear-gradient(135deg, var(--gold), var(--gold-dark));
-            color: var(--bg-primary); border-color: var(--gold);
+            color: var(--bg-primary);
+            border-color: var(--gold);
         }
         .ranking-btn.up.active {
             background: linear-gradient(135deg, var(--green), #059669);
-            border-color: var(--green); color: #fff;
+            border-color: var(--green);
+            color: #fff;
         }
         .ranking-btn.down.active {
             background: linear-gradient(135deg, var(--red), #b91c1c);
-            border-color: var(--red); color: #fff;
+            border-color: var(--red);
+            color: #fff;
         }
         .ranking-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; }
         .ranking-list {
             background: rgba(10, 10, 15, 0.5);
-            border-radius: 12px; padding: 12px;
-            max-height: 400px; overflow-y: auto;
+            border-radius: 12px;
+            padding: 12px;
+            max-height: 400px;
+            overflow-y: auto;
         }
         .ranking-list h4 {
-            color: var(--gold); font-size: 13px;
-            margin-bottom: 10px; padding-bottom: 6px;
+            color: var(--gold);
+            font-size: 13px;
+            margin-bottom: 10px;
+            padding-bottom: 6px;
             border-bottom: 1px solid rgba(212, 175, 55, 0.15);
         }
         .ranking-item {
-            display: flex; justify-content: space-between; align-items: center;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             padding: 8px 10px;
             border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-            font-size: 12px; cursor: pointer; transition: 0.2s;
+            font-size: 12px;
+            cursor: pointer;
+            transition: 0.2s;
         }
         .ranking-item:hover { background: rgba(212, 175, 55, 0.05); }
         .ranking-item .name { color: var(--white); font-weight: 700; }
         .ranking-item .change { font-weight: 800; }
         .ranking-item .change.up { color: var(--green); }
         .ranking-item .change.down { color: var(--red); }
-
         .table-wrapper {
             background: linear-gradient(135deg, var(--bg-card), var(--bg-secondary));
             border: 1px solid rgba(212, 175, 55, 0.15);
-            border-radius: 15px; overflow: hidden; margin-bottom: 20px;
+            border-radius: 15px;
+            overflow: hidden;
+            margin-bottom: 20px;
         }
         .table-info {
             padding: 12px 20px;
             background: rgba(10, 10, 15, 0.4);
             border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-            color: var(--gray); font-size: 12px;
-            display: flex; justify-content: space-between;
-            align-items: center; flex-wrap: wrap; gap: 10px;
+            color: var(--gray);
+            font-size: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
         }
         .table-container { overflow-x: auto; max-height: 600px; overflow-y: auto; }
         table { width: 100%; border-collapse: collapse; font-size: 13px; }
         thead {
-            position: sticky; top: 0;
+            position: sticky;
+            top: 0;
             background: rgba(20, 20, 28, 0.98);
-            backdrop-filter: blur(10px); z-index: 10;
+            backdrop-filter: blur(10px);
+            z-index: 10;
         }
         th {
-            color: var(--gold); font-weight: 800;
-            padding: 12px 10px; text-align: right;
+            color: var(--gold);
+            font-weight: 800;
+            padding: 12px 10px;
+            text-align: right;
             font-size: 12px;
             border-bottom: 2px solid rgba(212, 175, 55, 0.3);
-            cursor: pointer; user-select: none; white-space: nowrap;
+            cursor: pointer;
+            user-select: none;
+            white-space: nowrap;
         }
         th:hover { background: rgba(212, 175, 55, 0.08); }
         th.sorted { color: var(--gold-light); }
         td {
             padding: 10px;
             border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-            color: #cbd5e1; white-space: nowrap;
+            color: #cbd5e1;
+            white-space: nowrap;
         }
         tr { transition: 0.2s; cursor: pointer; }
         tr:hover td { background: rgba(212, 175, 55, 0.05); color: var(--white); }
@@ -211,103 +265,150 @@
         td.up { color: var(--green); font-weight: 700; }
         td.down { color: var(--red); font-weight: 700; }
         td.center { text-align: center; }
-
         .loading { text-align: center; padding: 60px 20px; color: var(--gray); }
         .spinner {
-            width: 40px; height: 40px;
+            width: 40px;
+            height: 40px;
             border: 4px solid rgba(212, 175, 55, 0.2);
             border-top-color: var(--gold);
             border-radius: 50%;
             animation: spin 1s linear infinite;
             margin: 0 auto 15px;
         }
-
         .modal-overlay {
-            display: none; position: fixed;
-            top: 0; left: 0; right: 0; bottom: 0;
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
             background: rgba(0, 0, 0, 0.85);
             backdrop-filter: blur(10px);
             z-index: 100000;
-            align-items: center; justify-content: center;
-            padding: 15px; overflow-y: auto;
+            align-items: center;
+            justify-content: center;
+            padding: 15px;
+            overflow-y: auto;
         }
         .modal-overlay.show { display: flex; }
         .modal {
             background: var(--bg-card);
             border: 1px solid rgba(212, 175, 55, 0.3);
             border-radius: 20px;
-            max-width: 1100px; width: 100%;
-            max-height: 95vh; overflow-y: auto;
-            padding: 25px; margin: auto;
+            max-width: 1100px;
+            width: 100%;
+            max-height: 95vh;
+            overflow-y: auto;
+            padding: 25px;
+            margin: auto;
         }
         .modal-header {
-            display: flex; justify-content: space-between; align-items: center;
-            margin-bottom: 20px; padding-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
             border-bottom: 1px solid rgba(212, 175, 55, 0.2);
-            flex-wrap: wrap; gap: 10px;
+            flex-wrap: wrap;
+            gap: 10px;
         }
         .modal-header h2 { color: var(--gold); font-size: 22px; font-weight: 900; }
         .modal-header h2 small {
-            color: var(--gray); font-size: 13px;
-            font-weight: 400; display: block; margin-top: 4px;
+            color: var(--gray);
+            font-size: 13px;
+            font-weight: 400;
+            display: block;
+            margin-top: 4px;
         }
         .modal-close {
-            background: rgba(239, 68, 68, 0.1); color: var(--red);
+            background: rgba(239, 68, 68, 0.1);
+            color: var(--red);
             border: 1px solid rgba(239, 68, 68, 0.3);
-            width: 38px; height: 38px; border-radius: 10px;
-            cursor: pointer; font-size: 18px; font-family: inherit;
+            width: 38px;
+            height: 38px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 18px;
+            font-family: inherit;
         }
         .modal-close:hover { background: rgba(239, 68, 68, 0.25); }
-
         .chart-container {
             background: rgba(10, 10, 15, 0.5);
-            border-radius: 12px; padding: 12px;
-            margin-bottom: 20px; position: relative;
+            border-radius: 12px;
+            padding: 12px;
+            margin-bottom: 20px;
+            position: relative;
         }
         .chart-header {
-            display: flex; justify-content: space-between; align-items: center;
-            margin-bottom: 12px; flex-wrap: wrap; gap: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+            flex-wrap: wrap;
+            gap: 10px;
         }
         .chart-header h3 { color: var(--gold); font-size: 15px; font-weight: 800; }
         .chart-actions { display: flex; gap: 5px; flex-wrap: wrap; }
         .chart-tab {
-            background: rgba(10, 10, 15, 0.6); color: var(--gray);
+            background: rgba(10, 10, 15, 0.6);
+            color: var(--gray);
             border: 1px solid rgba(255, 255, 255, 0.08);
-            padding: 7px 12px; border-radius: 8px;
-            font-size: 11px; font-weight: 700;
-            cursor: pointer; font-family: inherit; transition: 0.3s;
+            padding: 7px 12px;
+            border-radius: 8px;
+            font-size: 11px;
+            font-weight: 700;
+            cursor: pointer;
+            font-family: inherit;
+            transition: 0.3s;
         }
         .chart-tab:hover { color: var(--gold); border-color: rgba(212, 175, 55, 0.4); }
         .chart-tab.active {
             background: linear-gradient(135deg, var(--gold), var(--gold-dark));
-            color: var(--bg-primary); border-color: var(--gold);
+            color: var(--bg-primary);
+            border-color: var(--gold);
         }
         .fullscreen-btn {
-            background: rgba(10, 10, 15, 0.6); color: var(--gold);
+            background: rgba(10, 10, 15, 0.6);
+            color: var(--gold);
             border: 1px solid var(--gold);
-            padding: 7px 14px; border-radius: 8px;
-            font-size: 11px; font-weight: 700;
-            cursor: pointer; font-family: inherit; transition: 0.3s;
+            padding: 7px 14px;
+            border-radius: 8px;
+            font-size: 11px;
+            font-weight: 700;
+            cursor: pointer;
+            font-family: inherit;
+            transition: 0.3s;
         }
         .fullscreen-btn:hover { background: var(--gold); color: var(--bg-primary); }
         #modalChart { width: 100%; height: 400px; }
         .chart-container.fullscreen {
             position: fixed !important;
-            top: 0 !important; left: 0 !important; right: 0 !important; bottom: 0 !important;
-            width: 100vw !important; height: 100vh !important;
-            z-index: 200000 !important; background: var(--bg-primary) !important;
-            padding: 15px !important; margin: 0 !important;
+            top: 0 !important;
+            left: 0 !important;
+            right: 0 !important;
+            bottom: 0 !important;
+            width: 100vw !important;
+            height: 100vh !important;
+            z-index: 200000 !important;
+            background: var(--bg-primary) !important;
+            padding: 15px !important;
+            margin: 0 !important;
             border-radius: 0 !important;
-            display: flex !important; flex-direction: column !important;
+            display: flex !important;
+            flex-direction: column !important;
         }
         .chart-container.fullscreen #modalChart {
-            flex: 1 !important; height: auto !important; min-height: 0 !important;
+            flex: 1 !important;
+            height: auto !important;
+            min-height: 0 !important;
         }
-
         .info-section { margin-bottom: 20px; }
         .info-section h3 {
-            color: var(--gold); font-size: 15px; font-weight: 800;
-            margin-bottom: 12px; padding-bottom: 8px;
+            color: var(--gold);
+            font-size: 15px;
+            font-weight: 800;
+            margin-bottom: 12px;
+            padding-bottom: 8px;
             border-bottom: 1px solid rgba(212, 175, 55, 0.15);
         }
         .info-grid {
@@ -317,30 +418,31 @@
         }
         .info-card {
             background: rgba(10, 10, 15, 0.5);
-            padding: 12px; border-radius: 12px;
+            padding: 12px;
+            border-radius: 12px;
             border-right: 3px solid var(--gold);
         }
         .info-card .label { color: var(--gray); font-size: 11px; margin-bottom: 5px; }
         .info-card .value {
-            color: var(--white); font-size: 14px; font-weight: 800;
+            color: var(--white);
+            font-size: 14px;
+            font-weight: 800;
             font-variant-numeric: tabular-nums;
         }
         .info-card .value.up { color: var(--green); }
         .info-card .value.down { color: var(--red); }
-
         .orderbook-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
         .orderbook { background: rgba(10, 10, 15, 0.5); border-radius: 12px; padding: 12px; }
-        .orderbook h4 {
-            font-size: 13px; font-weight: 800;
-            margin-bottom: 10px;
-            display: flex; align-items: center; gap: 6px;
-        }
+        .orderbook h4 { font-size: 13px; font-weight: 800; margin-bottom: 10px; display: flex; align-items: center; gap: 6px; }
         .orderbook.buy h4 { color: var(--green); }
         .orderbook.sell h4 { color: var(--red); }
         .orderbook-row {
-            display: flex; justify-content: space-between;
-            padding: 6px 10px; border-radius: 6px;
-            font-size: 12px; margin-bottom: 4px;
+            display: flex;
+            justify-content: space-between;
+            padding: 6px 10px;
+            border-radius: 6px;
+            font-size: 12px;
+            margin-bottom: 4px;
             font-variant-numeric: tabular-nums;
         }
         .orderbook.buy .orderbook-row { background: rgba(16, 185, 129, 0.08); }
@@ -348,14 +450,14 @@
         .orderbook-row .price { font-weight: 800; color: var(--white); }
         .orderbook-row .qty { color: var(--gray); }
         .orderbook-row .count { color: var(--gray); font-size: 11px; }
-
         .footer {
-            text-align: center; padding: 30px 20px;
-            color: var(--gray); font-size: 12px;
+            text-align: center;
+            padding: 30px 20px;
+            color: var(--gray);
+            font-size: 12px;
             border-top: 1px solid rgba(212, 175, 55, 0.1);
             margin-top: 40px;
         }
-
         @media (max-width: 900px) {
             .stats-grid { grid-template-columns: repeat(2, 1fr); }
             .ranking-grid { grid-template-columns: 1fr; }
@@ -374,7 +476,6 @@
     </style>
 </head>
 <body>
-
     <div class="main-container">
         <div class="page-header">
             <h1>📈 بورس ایران</h1>
@@ -553,351 +654,385 @@
     <footer class="footer">
         © ۱۴۰۵ آکادمی شمعدون | تمامی حقوق محفوظ است
     </footer>
+   <script src="navbar.js"></script>
+<script src="supabase-config.js"></script>
+<script>
+    // ==========================================
+    // API Key - از Supabase می‌خونیم (نه hardcode)
+    // ==========================================
+    let _brsApiKeyCache = null;
 
-    <script src="navbar.js"></script>
+    async function getBrsApiKey() {
+        // ۱. از حافظه
+        if (_brsApiKeyCache) return _brsApiKeyCache;
 
-    <script>
-        // ==========================================
-        // API Key
-        // ==========================================
-        const BRS_API_KEY = 'B4xp2gWXASUmB3n6WPHtJxhjyJkgcBJz';
-
-        // ==========================================
-        // fetch API با کلید ثابت
-        // ==========================================
-        async function fetchBrsApi(baseUrl) {
-            const separator = baseUrl.includes('?') ? '&' : '?';
-            const url = `${baseUrl}${separator}key=${BRS_API_KEY}`;
-
-            const res = await fetch(url);
-
-            if (!res.ok) {
-                throw new Error(`API خطا داد: کد ${res.status}`);
-            }
-
-            const text = await res.text();
-
-            if (text.trim().startsWith('<!DOCTYPE') || text.trim().startsWith('<html')) {
-                throw new Error('API پاسخ نامعتبر داد');
-            }
-
-            return JSON.parse(text);
+        // ۲. از sessionStorage
+        const cached = sessionStorage.getItem('api_BRS_API_KEY');
+        if (cached) {
+            _brsApiKeyCache = cached;
+            return cached;
         }
 
-        // ==========================================
-        // متغیرهای جهانی
-        // ==========================================
-        let allSymbols = [];
-        let filteredSymbols = [];
-        let currentSort = { field: 'tval', order: 'desc' };
-        let currentSymbol = null;
-        let currentDailyData = [];
-        let modalChart = null;
-        let modalCandleSeries = null;
-        let modalChartInitialized = false;
-        let currentTimeframe = 'daily';
-        let currentRankingPeriod = '1w';
-        let currentRankingOrder = 'desc';
-        let rankingCache = {};
+        // ۳. از Supabase
+        try {
+            const { data, error } = await db
+                .from('app_settings')
+                .select('value')
+                .eq('key', 'BRS_API_KEY')
+                .single();
 
-        // ==========================================
-        // ابزارها
-        // ==========================================
-        function toPersianNumber(num) {
-            if (num === null || num === undefined || isNaN(num)) return '--';
-            const persianDigits = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
-            return num.toString().replace(/\d/g, d => persianDigits[d]);
+            if (error) throw error;
+            if (!data || !data.value) throw new Error('کلید API در دیتابیس پیدا نشد');
+
+            _brsApiKeyCache = data.value;
+            sessionStorage.setItem('api_BRS_API_KEY', data.value);
+            return data.value;
+        } catch (e) {
+            console.error('getBrsApiKey error:', e);
+            throw new Error('خطا در دریافت کلید API: ' + e.message);
         }
+    }
 
-        function formatNumber(num, decimals = 0) {
-            if (num === null || num === undefined || isNaN(num)) return '--';
-            try {
-                const n = Number(num);
-                if (isNaN(n)) return '--';
-                let str;
-                if (decimals > 0) { str = n.toFixed(decimals); }
-                else { str = Math.round(n).toString(); }
-                const parts = str.split('.');
-                parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-                str = parts.join('.');
-                const persianDigits = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
-                return str.replace(/\d/g, d => persianDigits[d]);
-            } catch (e) { return '--'; }
+    // ==========================================
+    // fetch API با کلید از Supabase
+    // ==========================================
+    async function fetchBrsApi(baseUrl) {
+        const key = await getBrsApiKey();
+        const separator = baseUrl.includes('?') ? '&' : '?';
+        const url = `${baseUrl}${separator}key=${key}`;
+        const res = await fetch(url);
+        if (!res.ok) {
+            throw new Error(`API خطا داد: کد ${res.status}`);
         }
+        const text = await res.text();
+        if (text.trim().startsWith('<!DOCTYPE') || text.trim().startsWith('<html')) {
+            throw new Error('API پاسخ نامعتبر داد');
+        }
+        return JSON.parse(text);
+    }
 
-        function formatVolume(num) {
-            if (!num && num !== 0) return '--';
+    // ==========================================
+    // متغیرهای جهانی
+    // ==========================================
+    let allSymbols = [];
+    let filteredSymbols = [];
+    let currentSort = { field: 'tval', order: 'desc' };
+    let currentSymbol = null;
+    let currentDailyData = [];
+    let modalChart = null;
+    let modalCandleSeries = null;
+    let modalChartInitialized = false;
+    let currentTimeframe = 'daily';
+    let currentRankingPeriod = '1w';
+    let currentRankingOrder = 'desc';
+    let rankingCache = {};
+
+    // ==========================================
+    // ابزارها
+    // ==========================================
+    function toPersianNumber(num) {
+        if (num === null || num === undefined || isNaN(num)) return '--';
+        const persianDigits = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
+        return num.toString().replace(/\d/g, d => persianDigits[d]);
+    }
+
+    function formatNumber(num, decimals = 0) {
+        if (num === null || num === undefined || isNaN(num)) return '--';
+        try {
             const n = Number(num);
-            if (n >= 1e9) return toPersianNumber((n / 1e9).toFixed(2)) + ' میلیارد';
-            if (n >= 1e6) return toPersianNumber((n / 1e6).toFixed(2)) + ' میلیون';
-            if (n >= 1e3) return toPersianNumber((n / 1e3).toFixed(1)) + ' هزار';
-            return toPersianNumber(n);
-        }
-
-        function escapeHtml(text) {
-            if (!text) return '';
-            const div = document.createElement('div');
-            div.textContent = text;
-            return div.innerHTML;
-        }
-
-        function getSymbolType(symbol) {
-            const name = (symbol.l18 || '').trim();
-            const fullName = (symbol.l30 || '').trim();
-            if (fullName.includes('حق تقدم') || fullName.includes('حقتقدم')) return 'right';
-            if (fullName.includes('اختیار') || fullName.includes('اختيار')) return 'option';
-            if (fullName.includes('صندوق') || fullName.includes('ETF') || fullName.includes('سرمایه‌گذاری قابل معامله')) return 'fund';
-            if (fullName.includes('اوراق') || fullName.includes('مشارکت') || fullName.includes('اجاره')) return 'bond';
-            return 'stock';
-        }
-
-        // ==========================================
-        // بارگذاری داده‌ها
-        // ==========================================
-        async function loadAllSymbols() {
-            const tableBody = document.getElementById('tableBody');
-            const tableInfo = document.getElementById('tableInfo');
-            tableInfo.textContent = '⏳ در حال دریافت داده‌ها از BrsApi...';
-
-            try {
-                const data = await fetchBrsApi('https://Api.BrsApi.ir/Tsetmc/AllSymbols.php?type=1');
-
-                if (!Array.isArray(data)) throw new Error('پاسخ نامعتبر');
-
-                allSymbols = data.filter(s => s.l18 && s.l18.trim() !== '');
-                allSymbols.forEach(s => { s.type = getSymbolType(s); });
-
-                populateSectorFilter();
-                calculateStats();
-                applyFilters();
-
-                tableInfo.textContent = `✅ ${toPersianNumber(allSymbols.length)} نماد بارگذاری شد`;
-                loadRanking();
-            } catch (e) {
-                console.error('Error loading symbols:', e);
-                tableBody.innerHTML = `
-                    <tr>
-                        <td colspan="10" class="center">
-                            <div class="loading">❌ خطا در دریافت داده‌ها: ${e.message}</div>
-                        </td>
-                    </tr>
-                `;
-                tableInfo.textContent = '❌ خطا';
-            }
-        }
-
-        function populateSectorFilter() {
-            const sectors = new Set();
-            allSymbols.forEach(s => {
-                if (s.cs && s.cs.trim()) sectors.add(s.cs.trim());
-            });
-            const select = document.getElementById('sectorFilter');
-            const sorted = Array.from(sectors).sort();
-            select.innerHTML = '<option value="all">همه گروه‌ها</option>' +
-                sorted.map(s => `<option value="${escapeHtml(s)}">${escapeHtml(s)}</option>`).join('');
-        }
-
-        function calculateStats() {
-            const total = allSymbols.length;
-            const positive = allSymbols.filter(s => (s.pcp || 0) > 0).length;
-            const negative = allSymbols.filter(s => (s.pcp || 0) < 0).length;
-            const totalValue = allSymbols.reduce((sum, s) => sum + (s.tval || 0), 0);
-
-            document.getElementById('statTotal').textContent = toPersianNumber(total);
-            document.getElementById('statPositive').textContent = toPersianNumber(positive);
-            document.getElementById('statNegative').textContent = toPersianNumber(negative);
-            document.getElementById('statValue').textContent = toPersianNumber((totalValue / 1e10).toFixed(1)) + ' همت';
-        }
-
-        function applyFilters() {
-            const search = document.getElementById('searchInput').value.trim().toLowerCase();
-            const sector = document.getElementById('sectorFilter').value;
-            const type = document.getElementById('typeFilter').value;
-
-            filteredSymbols = allSymbols.filter(s => {
-                if (search) {
-                    const nameMatch = (s.l18 || '').toLowerCase().includes(search);
-                    const fullMatch = (s.l30 || '').toLowerCase().includes(search);
-                    if (!nameMatch && !fullMatch) return false;
-                }
-                if (sector !== 'all' && (s.cs || '').trim() !== sector) return false;
-                if (type !== 'all' && s.type !== type) return false;
-                return true;
-            });
-
-            sortSymbols();
-            renderTable();
-        }
-
-        function sortSymbols() {
-            const { field, order } = currentSort;
-            filteredSymbols.sort((a, b) => {
-                let valA = a[field];
-                let valB = b[field];
-                if (typeof valA === 'string') {
-                    valA = (valA || '').trim();
-                    valB = (valB || '').trim();
-                    return order === 'asc' ? valA.localeCompare(valB, 'fa') : valB.localeCompare(valA, 'fa');
-                }
-                valA = Number(valA) || 0;
-                valB = Number(valB) || 0;
-                return order === 'asc' ? valA - valB : valB - valA;
-            });
-        }
-
-        function sortBy(field, th) {
-            if (currentSort.field === field) {
-                currentSort.order = currentSort.order === 'desc' ? 'asc' : 'desc';
+            if (isNaN(n)) return '--';
+            let str;
+            if (decimals > 0) {
+                str = n.toFixed(decimals);
             } else {
-                currentSort.field = field;
-                currentSort.order = 'desc';
+                str = Math.round(n).toString();
             }
-            document.querySelectorAll('th').forEach(t => t.classList.remove('sorted'));
-            if (th) th.classList.add('sorted');
-            sortSymbols();
-            renderTable();
+            const parts = str.split('.');
+            parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+            str = parts.join('.');
+            const persianDigits = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
+            return str.replace(/\d/g, d => persianDigits[d]);
+        } catch (e) {
+            return '--';
         }
+    }
 
-        function resetFilters() {
-            document.getElementById('searchInput').value = '';
-            document.getElementById('sectorFilter').value = 'all';
-            document.getElementById('typeFilter').value = 'all';
-            currentSort = { field: 'tval', order: 'desc' };
+    function formatVolume(num) {
+        if (!num && num !== 0) return '--';
+        const n = Number(num);
+        if (n >= 1e9) return toPersianNumber((n / 1e9).toFixed(2)) + ' میلیارد';
+        if (n >= 1e6) return toPersianNumber((n / 1e6).toFixed(2)) + ' میلیون';
+        if (n >= 1e3) return toPersianNumber((n / 1e3).toFixed(1)) + ' هزار';
+        return toPersianNumber(n);
+    }
+
+    function escapeHtml(text) {
+        if (!text) return '';
+        const div = document.createElement('div');
+        div.textContent = text;
+        return div.innerHTML;
+    }
+
+    function getSymbolType(symbol) {
+        const name = (symbol.l18 || '').trim();
+        const fullName = (symbol.l30 || '').trim();
+        if (fullName.includes('حق تقدم') || fullName.includes('حقتقدم')) return 'right';
+        if (fullName.includes('اختیار') || fullName.includes('اختيار')) return 'option';
+        if (fullName.includes('صندوق') || fullName.includes('ETF') || fullName.includes('سرمایه‌گذاری قابل معامله')) return 'fund';
+        if (fullName.includes('اوراق') || fullName.includes('مشارکت') || fullName.includes('اجاره')) return 'bond';
+        return 'stock';
+    }
+
+    // ==========================================
+    // بارگذاری داده‌ها
+    // ==========================================
+    async function loadAllSymbols() {
+        const tableBody = document.getElementById('tableBody');
+        const tableInfo = document.getElementById('tableInfo');
+        tableInfo.textContent = '⏳ در حال دریافت داده‌ها از BrsApi...';
+
+        try {
+            const data = await fetchBrsApi('https://Api.BrsApi.ir/Tsetmc/AllSymbols.php?type=1');
+            if (!Array.isArray(data)) throw new Error('پاسخ نامعتبر');
+
+            allSymbols = data.filter(s => s.l18 && s.l18.trim() !== '');
+            allSymbols.forEach(s => {
+                s.type = getSymbolType(s);
+            });
+
+            populateSectorFilter();
+            calculateStats();
             applyFilters();
-        }
-
-        function renderTable() {
-            const tbody = document.getElementById('tableBody');
-            if (filteredSymbols.length === 0) {
-                tbody.innerHTML = `
-                    <tr><td colspan="10" class="center">
-                        <div class="loading">❌ نمادی با این فیلترها یافت نشد</div>
-                    </td></tr>
-                `;
-                return;
-            }
-
-            const limited = filteredSymbols.slice(0, 200);
-            tbody.innerHTML = limited.map((s, idx) => {
-                const pc = s.pc ? (s.pc / 10) : 0;
-                const pl = s.pl ? (s.pl / 10) : 0;
-                const pcp = Number(s.pcp) || 0;
-                const pcpClass = pcp > 0 ? 'up' : pcp < 0 ? 'down' : '';
-                const pcpText = (pcp > 0 ? '+' : '') + toPersianNumber(pcp.toFixed(2)) + '٪';
-
-                return `
-                    <tr onclick="openModal('${escapeHtml(s.l18)}')">
-                        <td class="center">${toPersianNumber(idx + 1)}</td>
-                        <td class="symbol">${escapeHtml(s.l18 || '--')}</td>
-                        <td>${formatNumber(pc)}</td>
-                        <td>${formatNumber(pl)}</td>
-                        <td class="${pcpClass}">${pcpText}</td>
-                        <td>${formatVolume(s.tvol)}</td>
-                        <td>${formatVolume(s.tval)}</td>
-                        <td>${s.pe ? toPersianNumber(Number(s.pe).toFixed(1)) : '--'}</td>
-                        <td>${s.eps ? toPersianNumber(Math.round(s.eps)) : '--'}</td>
-                        <td>${toPersianNumber(s.tno || 0)}</td>
-                    </tr>
-                `;
-            }).join('');
-
-            if (filteredSymbols.length > 200) {
-                tbody.innerHTML += `
-                    <tr>
-                        <td colspan="10" class="center" style="padding: 15px; color: var(--gray); font-size: 12px;">
-                            نمایش ۲۰۰ نماد اول از ${toPersianNumber(filteredSymbols.length)} نماد
-                        </td>
-                    </tr>
-                `;
-            }
-        }
-
-        // ==========================================
-        // رتبه‌بندی
-        // ==========================================
-        async function loadRanking() {
-            const topEl = document.getElementById('topGainers');
-            const loseEl = document.getElementById('topLosers');
-
-            if (rankingCache[currentRankingPeriod]) {
-                renderRanking(rankingCache[currentRankingPeriod]);
-                return;
-            }
-
-            topEl.innerHTML = '<div class="loading"><div class="spinner"></div></div>';
-            loseEl.innerHTML = '<div class="loading"><div class="spinner"></div></div>';
-
-            const topSymbols = [...allSymbols]
-                .sort((a, b) => (b.tval || 0) - (a.tval || 0))
-                .slice(0, 20);
-
-            const daysMap = { '1w': 5, '1m': 22, '3m': 66 };
-            const days = daysMap[currentRankingPeriod] || 5;
-            const results = [];
-
-            for (const symbol of topSymbols) {
-                try {
-                    const data = await fetchBrsApi(`https://Api.BrsApi.ir/Tsetmc/Candlestick.php?l18=${encodeURIComponent(symbol.l18)}&type=2`);
-                    if (!data.candle_daily || data.candle_daily.length < days + 1) continue;
-                    const candles = data.candle_daily;
-                    const latest = candles[candles.length - 1];
-                    const old = candles[Math.max(0, candles.length - 1 - days)];
-                    const change = ((latest.close - old.close) / old.close) * 100;
-                    results.push({ name: symbol.l18, l18: symbol.l18, change: change });
-                    await new Promise(r => setTimeout(r, 100));
-                } catch (e) {
-                    console.log('Error ranking:', symbol.l18, e);
-                }
-            }
-
-            rankingCache[currentRankingPeriod] = results;
-            renderRanking(results);
-        }
-
-        function renderRanking(results) {
-            const topEl = document.getElementById('topGainers');
-            const loseEl = document.getElementById('topLosers');
-
-            if (results.length === 0) {
-                topEl.innerHTML = '<h4>📈 بیشترین سود</h4><div class="loading">داده‌ای موجود نیست</div>';
-                loseEl.innerHTML = '<h4>📉 بیشترین ضرر</h4><div class="loading">داده‌ای موجود نیست</div>';
-                return;
-            }
-
-            const sorted = [...results].sort((a, b) => b.change - a.change);
-            const gainers = sorted.slice(0, 10);
-            const losers = sorted.slice(-10).reverse();
-
-            topEl.innerHTML = `
-                <h4>📈 بیشترین سود</h4>
-                ${gainers.map(r => `
-                    <div class="ranking-item" onclick="openModal('${escapeHtml(r.name)}')">
-                        <span class="name">${escapeHtml(r.name)}</span>
-                        <span class="change up">+${toPersianNumber(r.change.toFixed(2))}٪</span>
-                    </div>
-                `).join('')}
-            `;
-
-            loseEl.innerHTML = `
-                <h4>📉 بیشترین ضرر</h4>
-                ${losers.map(r => `
-                    <div class="ranking-item" onclick="openModal('${escapeHtml(r.name)}')">
-                        <span class="name">${escapeHtml(r.name)}</span>
-                        <span class="change down">${toPersianNumber(r.change.toFixed(2))}٪</span>
-                    </div>
-                `).join('')}
-            `;
-        }
-
-        function changeRanking(period, order, btn) {
-            document.querySelectorAll('.ranking-btn').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            currentRankingPeriod = period;
-            currentRankingOrder = order;
+            tableInfo.textContent = `✅ ${toPersianNumber(allSymbols.length)} نماد بارگذاری شد`;
             loadRanking();
+        } catch (e) {
+            console.error('Error loading symbols:', e);
+            tableBody.innerHTML = `
+                <tr>
+                    <td colspan="10" class="center">
+                        <div class="loading">❌ خطا در دریافت داده‌ها: ${e.message}</div>
+                    </td>
+                </tr>
+            `;
+            tableInfo.textContent = '❌ خطا';
+        }
+    }
+
+    function populateSectorFilter() {
+        const sectors = new Set();
+        allSymbols.forEach(s => {
+            if (s.cs && s.cs.trim()) sectors.add(s.cs.trim());
+        });
+        const select = document.getElementById('sectorFilter');
+        const sorted = Array.from(sectors).sort();
+        select.innerHTML = '<option value="all">همه گروه‌ها</option>' +
+            sorted.map(s => `<option value="${escapeHtml(s)}">${escapeHtml(s)}</option>`).join('');
+    }
+
+    function calculateStats() {
+        const total = allSymbols.length;
+        const positive = allSymbols.filter(s => (s.pcp || 0) > 0).length;
+        const negative = allSymbols.filter(s => (s.pcp || 0) < 0).length;
+        const totalValue = allSymbols.reduce((sum, s) => sum + (s.tval || 0), 0);
+
+        document.getElementById('statTotal').textContent = toPersianNumber(total);
+        document.getElementById('statPositive').textContent = toPersianNumber(positive);
+        document.getElementById('statNegative').textContent = toPersianNumber(negative);
+        document.getElementById('statValue').textContent = toPersianNumber((totalValue / 1e10).toFixed(1)) + ' همت';
+    }
+
+    function applyFilters() {
+        const search = document.getElementById('searchInput').value.trim().toLowerCase();
+        const sector = document.getElementById('sectorFilter').value;
+        const type = document.getElementById('typeFilter').value;
+
+        filteredSymbols = allSymbols.filter(s => {
+            if (search) {
+                const nameMatch = (s.l18 || '').toLowerCase().includes(search);
+                const fullMatch = (s.l30 || '').toLowerCase().includes(search);
+                if (!nameMatch && !fullMatch) return false;
+            }
+            if (sector !== 'all' && (s.cs || '').trim() !== sector) return false;
+            if (type !== 'all' && s.type !== type) return false;
+            return true;
+        });
+
+        sortSymbols();
+        renderTable();
+    }
+
+    function sortSymbols() {
+        const { field, order } = currentSort;
+        filteredSymbols.sort((a, b) => {
+            let valA = a[field];
+            let valB = b[field];
+
+            if (typeof valA === 'string') {
+                valA = (valA || '').trim();
+                valB = (valB || '').trim();
+                return order === 'asc' ? valA.localeCompare(valB, 'fa') : valB.localeCompare(valA, 'fa');
+            }
+
+            valA = Number(valA) || 0;
+            valB = Number(valB) || 0;
+            return order === 'asc' ? valA - valB : valB - valA;
+        });
+    }
+
+    function sortBy(field, th) {
+        if (currentSort.field === field) {
+            currentSort.order = currentSort.order === 'desc' ? 'asc' : 'desc';
+        } else {
+            currentSort.field = field;
+            currentSort.order = 'desc';
+        }
+        document.querySelectorAll('th').forEach(t => t.classList.remove('sorted'));
+        if (th) th.classList.add('sorted');
+        sortSymbols();
+        renderTable();
+    }
+
+    function resetFilters() {
+        document.getElementById('searchInput').value = '';
+        document.getElementById('sectorFilter').value = 'all';
+        document.getElementById('typeFilter').value = 'all';
+        currentSort = { field: 'tval', order: 'desc' };
+        applyFilters();
+    }
+
+    function renderTable() {
+        const tbody = document.getElementById('tableBody');
+        if (filteredSymbols.length === 0) {
+            tbody.innerHTML = `
+                <tr><td colspan="10" class="center">
+                    <div class="loading">❌ نمادی با این فیلترها یافت نشد</div>
+                </td></tr>
+            `;
+            return;
         }
 
-        // ==========================================
+        const limited = filteredSymbols.slice(0, 200);
+        tbody.innerHTML = limited.map((s, idx) => {
+            const pc = s.pc ? (s.pc / 10) : 0;
+            const pl = s.pl ? (s.pl / 10) : 0;
+            const pcp = Number(s.pcp) || 0;
+            const pcpClass = pcp > 0 ? 'up' : pcp < 0 ? 'down' : '';
+            const pcpText = (pcp > 0 ? '+' : '') + toPersianNumber(pcp.toFixed(2)) + '٪';
+
+            return `
+                <tr onclick="openModal('${escapeHtml(s.l18)}')">
+                    <td class="center">${toPersianNumber(idx + 1)}</td>
+                    <td class="symbol">${escapeHtml(s.l18 || '--')}</td>
+                    <td>${formatNumber(pc)}</td>
+                    <td>${formatNumber(pl)}</td>
+                    <td class="${pcpClass}">${pcpText}</td>
+                    <td>${formatVolume(s.tvol)}</td>
+                    <td>${formatVolume(s.tval)}</td>
+                    <td>${s.pe ? toPersianNumber(Number(s.pe).toFixed(1)) : '--'}</td>
+                    <td>${s.eps ? toPersianNumber(Math.round(s.eps)) : '--'}</td>
+                    <td>${toPersianNumber(s.tno || 0)}</td>
+                </tr>
+            `;
+        }).join('');
+
+        if (filteredSymbols.length > 200) {
+            tbody.innerHTML += `
+                <tr>
+                    <td colspan="10" class="center" style="padding: 15px; color: var(--gray); font-size: 12px;">
+                        نمایش ۲۰۰ نماد اول از ${toPersianNumber(filteredSymbols.length)} نماد
+                    </td>
+                </tr>
+            `;
+        }
+    }
+
+    // ==========================================
+    // رتبه‌بندی
+    // ==========================================
+    async function loadRanking() {
+        const topEl = document.getElementById('topGainers');
+        const loseEl = document.getElementById('topLosers');
+
+        if (rankingCache[currentRankingPeriod]) {
+            renderRanking(rankingCache[currentRankingPeriod]);
+            return;
+        }
+
+        topEl.innerHTML = '<div class="loading"><div class="spinner"></div></div>';
+        loseEl.innerHTML = '<div class="loading"><div class="spinner"></div></div>';
+
+        const topSymbols = [...allSymbols]
+            .sort((a, b) => (b.tval || 0) - (a.tval || 0))
+            .slice(0, 20);
+
+        const daysMap = { '1w': 5, '1m': 22, '3m': 66 };
+        const days = daysMap[currentRankingPeriod] || 5;
+        const results = [];
+
+        for (const symbol of topSymbols) {
+            try {
+                const data = await fetchBrsApi(`https://Api.BrsApi.ir/Tsetmc/Candlestick.php?l18=${encodeURIComponent(symbol.l18)}&type=2`);
+                if (!data.candle_daily || data.candle_daily.length < days + 1) continue;
+
+                const candles = data.candle_daily;
+                const latest = candles[candles.length - 1];
+                const old = candles[Math.max(0, candles.length - 1 - days)];
+                const change = ((latest.close - old.close) / old.close) * 100;
+
+                results.push({ name: symbol.l18, l18: symbol.l18, change: change });
+                await new Promise(r => setTimeout(r, 100));
+            } catch (e) {
+                console.log('Error ranking:', symbol.l18, e);
+            }
+        }
+
+        rankingCache[currentRankingPeriod] = results;
+        renderRanking(results);
+    }
+
+    function renderRanking(results) {
+        const topEl = document.getElementById('topGainers');
+        const loseEl = document.getElementById('topLosers');
+
+        if (results.length === 0) {
+            topEl.innerHTML = '<h4>📈 بیشترین سود</h4><div class="loading">داده‌ای موجود نیست</div>';
+            loseEl.innerHTML = '<h4>📉 بیشترین ضرر</h4><div class="loading">داده‌ای موجود نیست</div>';
+            return;
+        }
+
+        const sorted = [...results].sort((a, b) => b.change - a.change);
+        const gainers = sorted.slice(0, 10);
+        const losers = sorted.slice(-10).reverse();
+
+        topEl.innerHTML = `
+            <h4>📈 بیشترین سود</h4>
+            ${gainers.map(r => `
+                <div class="ranking-item" onclick="openModal('${escapeHtml(r.name)}')">
+                    <span class="name">${escapeHtml(r.name)}</span>
+                    <span class="change up">+${toPersianNumber(r.change.toFixed(2))}٪</span>
+                </div>
+            `).join('')}
+        `;
+
+        loseEl.innerHTML = `
+            <h4>📉 بیشترین ضرر</h4>
+            ${losers.map(r => `
+                <div class="ranking-item" onclick="openModal('${escapeHtml(r.name)}')">
+                    <span class="name">${escapeHtml(r.name)}</span>
+                    <span class="change down">${toPersianNumber(r.change.toFixed(2))}٪</span>
+                </div>
+            `).join('')}
+        `;
+    }
+
+    function changeRanking(period, order, btn) {
+        document.querySelectorAll('.ranking-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        currentRankingPeriod = period;
+        currentRankingOrder = order;
+        loadRanking();
+    }
+         // ==========================================
         // تاریخ شمسی → میلادی
         // ==========================================
         function jalaliToGregorian(jy, jm, jd) {
@@ -1014,7 +1149,6 @@
             const sellN = s.Sell_N_Volume || 0;
             const totalBuy = buyI + buyN;
             const totalSell = sellI + sellN;
-
             const buyIPercent = totalBuy > 0 ? (buyI / totalBuy * 100).toFixed(1) : 0;
             const buyNPercent = totalBuy > 0 ? (buyN / totalBuy * 100).toFixed(1) : 0;
             const sellIPercent = totalSell > 0 ? (sellI / totalSell * 100).toFixed(1) : 0;
@@ -1035,6 +1169,7 @@
         function renderOrderBook(s) {
             let buyHTML = '';
             let sellHTML = '';
+
             for (let i = 1; i <= 5; i++) {
                 const qd = s[`qd${i}`] || 0;
                 const pd = s[`pd${i}`] || 0;
@@ -1050,6 +1185,7 @@
                         <span class="count">${zd ? toPersianNumber(zd) + ' سفارش' : ''}</span>
                     </div>
                 `;
+
                 sellHTML += `
                     <div class="orderbook-row">
                         <span class="price">${po ? formatNumber(po / 10) : '--'}</span>
@@ -1058,6 +1194,7 @@
                     </div>
                 `;
             }
+
             document.getElementById('buyOrders').innerHTML = buyHTML;
             document.getElementById('sellOrders').innerHTML = sellHTML;
         }
@@ -1067,15 +1204,19 @@
         // ==========================================
         function initModalChart() {
             if (modalChartInitialized) return;
+
             try {
                 const container = document.getElementById('modalChart');
                 if (!container) return;
-                const width = container.clientWidth || 800;
 
+                const width = container.clientWidth || 800;
                 modalChart = LightweightCharts.createChart(container, {
                     width: width,
                     height: container.clientHeight || 400,
-                    layout: { background: { color: '#0a0a0f' }, textColor: '#94a3b8' },
+                    layout: {
+                        background: { color: '#0a0a0f' },
+                        textColor: '#94a3b8'
+                    },
                     grid: {
                         vertLines: { color: 'rgba(30, 41, 59, 0.5)' },
                         horzLines: { color: 'rgba(30, 41, 59, 0.5)' }
@@ -1085,7 +1226,9 @@
                         secondsVisible: false,
                         borderColor: 'rgba(212, 175, 55, 0.3)'
                     },
-                    rightPriceScale: { borderColor: 'rgba(212, 175, 55, 0.3)' }
+                    rightPriceScale: {
+                        borderColor: 'rgba(212, 175, 55, 0.3)'
+                    }
                 });
 
                 modalCandleSeries = modalChart.addCandlestickSeries({
@@ -1116,11 +1259,12 @@
                     currentDailyData = JSON.parse(cached);
                     renderModalChart(currentTimeframe);
                     return;
-                } catch (e) { console.log('Cache parse error'); }
+                } catch (e) {
+                    console.log('Cache parse error');
+                }
             }
 
             try {
-                // ⬇️ این خط اصلاح شد: fetchWithRotation → fetchBrsApi
                 const data = await fetchBrsApi(`https://Api.BrsApi.ir/Tsetmc/Candlestick.php?l18=${encodeURIComponent(l18)}&type=2`);
 
                 if (data.successful === false) {
@@ -1138,7 +1282,9 @@
                 try {
                     localStorage.setItem(cacheKey, JSON.stringify(currentDailyData));
                     localStorage.setItem(cacheKey + '_time', Date.now().toString());
-                } catch (e) { console.log('Cache save error'); }
+                } catch (e) {
+                    console.log('Cache save error');
+                }
 
                 modalChartInitialized = false;
                 initModalChart();
@@ -1180,12 +1326,14 @@
         function groupByWeek(data) {
             const grouped = [];
             let current = null;
+
             data.forEach(item => {
                 const date = new Date(item.time * 1000);
                 const weekStart = new Date(date);
                 weekStart.setDate(date.getDate() - date.getDay());
                 weekStart.setHours(0, 0, 0, 0);
                 const weekKey = weekStart.getTime();
+
                 if (!current || current.key !== weekKey) {
                     if (current) grouped.push(current);
                     current = { key: weekKey, time: item.time, open: item.open, high: item.high, low: item.low, close: item.close };
@@ -1195,6 +1343,7 @@
                     current.close = item.close;
                 }
             });
+
             if (current) grouped.push(current);
             return grouped.slice(-100);
         }
@@ -1202,9 +1351,11 @@
         function groupByMonth(data) {
             const grouped = [];
             let current = null;
+
             data.forEach(item => {
                 const date = new Date(item.time * 1000);
                 const monthKey = date.getFullYear() * 100 + date.getMonth();
+
                 if (!current || current.key !== monthKey) {
                     if (current) grouped.push(current);
                     current = { key: monthKey, time: item.time, open: item.open, high: item.high, low: item.low, close: item.close };
@@ -1214,6 +1365,7 @@
                     current.close = item.close;
                 }
             });
+
             if (current) grouped.push(current);
             return grouped.slice(-60);
         }
@@ -1222,6 +1374,7 @@
             const grouped = [];
             let current = null;
             let count = 0;
+
             for (let i = 0; i < data.length; i++) {
                 if (count === 0 || !current) {
                     if (current) grouped.push(current);
@@ -1232,9 +1385,14 @@
                     current.low = Math.min(current.low, data[i].low);
                     current.close = data[i].close;
                     count++;
-                    if (count >= n) { grouped.push(current); current = null; count = 0; }
+                    if (count >= n) {
+                        grouped.push(current);
+                        current = null;
+                        count = 0;
+                    }
                 }
             }
+
             if (current) grouped.push(current);
             return grouped.slice(-100);
         }
@@ -1242,8 +1400,10 @@
         function groupByYear(data) {
             const grouped = [];
             let current = null;
+
             data.forEach(item => {
                 const yearKey = new Date(item.time * 1000).getFullYear();
+
                 if (!current || current.key !== yearKey) {
                     if (current) grouped.push(current);
                     current = { key: yearKey, time: item.time, open: item.open, high: item.high, low: item.low, close: item.close };
@@ -1253,6 +1413,7 @@
                     current.close = item.close;
                 }
             });
+
             if (current) grouped.push(current);
             return grouped;
         }
@@ -1297,6 +1458,7 @@
             document.getElementById('searchInput').addEventListener('input', applyFilters);
             document.getElementById('sectorFilter').addEventListener('change', applyFilters);
             document.getElementById('typeFilter').addEventListener('change', applyFilters);
+
             await loadAllSymbols();
             setInterval(loadAllSymbols, 120000);
         });
@@ -1311,4 +1473,4 @@
         });
     </script>
 </body>
-</html>
+</html>   
