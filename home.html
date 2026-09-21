@@ -30,6 +30,7 @@
             --navbar-bg: rgba(10, 10, 15, 0.92);
         }
         
+        /* ===== تم روز ===== */
         [data-theme="light"] {
             --bg-primary: #f8fafc;
             --bg-secondary: #eef2f7;
@@ -78,6 +79,10 @@
             from { opacity: 0; transform: translateY(30px); }
             to { opacity: 1; transform: translateY(0); }
         }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.3); }
+        }
         @keyframes scrollTicker {
             0% { transform: translateX(0); }
             100% { transform: translateX(-33.33%); }
@@ -115,7 +120,9 @@
             font-size: 13px;
             font-weight: 600;
         }
-        .ticker-item .value { color: var(--gold); }
+        .ticker-item .value {
+            color: var(--gold);
+        }
         .ticker-item .change.up { color: var(--green); font-size: 11px; }
         .ticker-item .change.down { color: var(--red); font-size: 11px; }
         
@@ -212,7 +219,11 @@
             align-items: center;
             gap: 8px;
         }
-        .manager-text { color: var(--gray); font-size: 13px; line-height: 1.8; }
+        .manager-text {
+            color: var(--gray);
+            font-size: 13px;
+            line-height: 1.8;
+        }
         
         /* Market Tabs */
         .market-tabs {
@@ -251,7 +262,10 @@
             border-color: rgba(0, 0, 0, 0.08);
         }
         
-        .market-tab:hover { color: var(--gold); border-color: rgba(212, 175, 55, 0.4); }
+        .market-tab:hover {
+            color: var(--gold);
+            border-color: rgba(212, 175, 55, 0.4);
+        }
         .market-tab.active {
             background: linear-gradient(135deg, var(--gold), var(--gold-dark));
             color: #fff;
@@ -261,7 +275,10 @@
         
         /* Price Sections */
         .price-section { display: none; }
-        .price-section.active { display: block; animation: fadeInUp 0.4s ease-out; }
+        .price-section.active {
+            display: block;
+            animation: fadeInUp 0.4s ease-out;
+        }
         .price-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -283,7 +300,11 @@
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
         }
         
-        .price-card:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(212, 175, 55, 0.15); }
+        .price-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.15);
+        }
+        
         .price-card .label {
             font-size: 11.5px;
             color: var(--gray);
@@ -298,7 +319,11 @@
             color: var(--white);
             font-variant-numeric: tabular-nums;
         }
-        .price-card .change { font-size: 11px; margin-top: 6px; font-weight: 700; }
+        .price-card .change {
+            font-size: 11px;
+            margin-top: 6px;
+            font-weight: 700;
+        }
         .price-card .change.up { color: var(--green); }
         .price-card .change.down { color: var(--red); }
         .price-card .bubble-inline {
@@ -370,6 +395,7 @@
             align-items: center;
             gap: 8px;
         }
+        
         .bubble-card {
             background: rgba(10, 10, 15, 0.5);
             padding: 18px;
@@ -378,7 +404,9 @@
             text-align: right;
         }
         
-        [data-theme="light"] .bubble-card { background: rgba(248, 250, 252, 0.8); }
+        [data-theme="light"] .bubble-card {
+            background: rgba(248, 250, 252, 0.8);
+        }
         
         .bubble-card .title {
             font-size: 14px;
@@ -408,225 +436,13 @@
             border-radius: 12px;
             background: rgba(10, 10, 15, 0.6);
         }
-        
-        [data-theme="light"] .bubble-value { background: rgba(255, 255, 255, 0.9); }
-        
         .bubble-positive { color: var(--green); }
         .bubble-negative { color: var(--red); }
         .bubble-neutral { color: var(--gray); }
-        
-        /* Chart Section */
-        .chart-section {
-            background: linear-gradient(135deg, var(--bg-card), var(--bg-secondary));
-            border: 1px solid var(--border-subtle);
-            border-radius: 20px;
-            padding: 20px;
-            margin-bottom: 24px;
-            animation: fadeInUp 0.6s ease-out 0.3s backwards;
-        }
-        
-        [data-theme="light"] .chart-section {
-            background: linear-gradient(135deg, #ffffff, #eef2f7);
-            border-color: rgba(184, 134, 11, 0.15);
-        }
-        
-        .chart-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-        .chart-header h2 { color: var(--white); font-size: 17px; font-weight: 800; }
-        .chart-tabs {
-            display: flex;
-            gap: 5px;
-            flex-wrap: wrap;
-            align-items: center;
-            max-height: 120px;
-            overflow-y: auto;
-        }
-        .chart-tab {
-            background: rgba(10, 10, 15, 0.6);
-            color: var(--gray);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            padding: 7px 12px;
-            border-radius: 8px;
-            font-size: 11px;
-            font-weight: 700;
-            cursor: pointer;
-            font-family: inherit;
-            transition: 0.3s;
-        }
-        
-        [data-theme="light"] .chart-tab {
-            background: rgba(255, 255, 255, 0.8);
-            border-color: rgba(0, 0, 0, 0.08);
-        }
-        
-        .chart-tab:hover { color: var(--gold); border-color: rgba(212, 175, 55, 0.4); }
-        .chart-tab.active {
-            background: linear-gradient(135deg, var(--gold), var(--gold-dark));
-            color: #fff;
-            border-color: var(--gold);
-        }
-        
-        /* Fullscreen Button */
-        .fullscreen-btn {
-            background: rgba(10, 10, 15, 0.6);
-            color: var(--gold);
-            border: 1px solid var(--gold);
-            padding: 8px 14px;
-            border-radius: 8px;
-            font-size: 12px;
-            font-weight: 700;
-            cursor: pointer;
-            font-family: inherit;
-            transition: 0.3s;
-        }
-        
-        [data-theme="light"] .fullscreen-btn {
-            background: #ffffff;
-            color: var(--gold-dark);
-            border-color: var(--gold-dark);
-        }
-        
-        .fullscreen-btn:hover {
-            background: var(--gold);
-            color: #fff;
-        }
-        
-        [data-theme="light"] .fullscreen-btn:hover {
-            background: var(--gold);
-            color: #ffffff;
-        }
-        
-        #tvchart {
-            width: 100%;
-            height: 550px;
-            border-radius: 12px;
-            overflow: hidden;
-        }
-        
-        .chart-fullscreen {
-            position: fixed !important;
-            top: 0 !important; left: 0 !important;
-            right: 0 !important; bottom: 0 !important;
-            width: 100vw !important; height: 100vh !important;
-            z-index: 999999 !important;
-            background: var(--bg-primary) !important;
-            padding: 10px !important;
-            margin: 0 !important;
-            border-radius: 0 !important;
-            display: flex !important;
-            flex-direction: column !important;
-            overflow: hidden !important;
-        }
-        .chart-fullscreen .chart-header {
-            flex-shrink: 0 !important;
-            margin-bottom: 8px !important;
-        }
-        .chart-fullscreen .chart-header h2 { display: none !important; }
-        .chart-fullscreen .chart-tabs { max-height: 60px !important; overflow-y: auto !important; }
-        .chart-fullscreen #tvchart {
-            flex: 1 !important;
-            height: auto !important;
-            min-height: 0 !important;
-            width: 100% !important;
-        }
-        
-        /* CTA Section */
-        .cta-section {
-            background: linear-gradient(135deg, rgba(212, 175, 55, 0.1), rgba(59, 130, 246, 0.05));
-            border: 1px solid var(--border-gold);
-            border-radius: 20px;
-            padding: 30px;
-            text-align: center;
-            margin-bottom: 24px;
-        }
-        
-        [data-theme="light"] .cta-section {
-            background: linear-gradient(135deg, rgba(184, 134, 11, 0.08), rgba(37, 99, 235, 0.04));
-        }
-        
-        .cta-section h2 {
-            color: var(--white);
-            font-size: 22px;
-            font-weight: 900;
-            margin-bottom: 12px;
-        }
-        .cta-section p {
-            color: var(--gray);
-            font-size: 14px;
-            margin-bottom: 20px;
-            line-height: 1.8;
-        }
-        .cta-btn {
-            display: inline-block;
-            background: linear-gradient(135deg, var(--gold), var(--gold-dark));
-            color: #fff;
-            padding: 14px 32px;
-            border-radius: 12px;
-            text-decoration: none;
-            font-size: 14px;
-            font-weight: 800;
-            transition: 0.3s;
-            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.3);
-        }
-        .cta-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 40px rgba(212, 175, 55, 0.5);
-        }
-        
-        /* Footer */
-        .footer {
-            text-align: center;
-            padding: 30px 20px;
-            color: var(--gray);
-            font-size: 12px;
-            border-top: 1px solid var(--border-subtle);
-        }
-        .footer-social {
-            display: flex;
-            justify-content: center;
-            gap: 12px;
-            margin-bottom: 15px;
-        }
-        .footer-social a {
-            width: 44px; height: 44px;
-            border-radius: 12px;
-            background: rgba(212, 175, 55, 0.08);
-            border: 1px solid var(--border-gold);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: 0.3s;
-        }
-        .footer-social a:hover {
-            background: rgba(212, 175, 55, 0.2);
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(212, 175, 55, 0.3);
-        }
-        
-        /* Responsive */
-        @media (max-width: 900px) {
-            .price-grid { grid-template-columns: repeat(2, 1fr); }
-            .manager-card { flex-direction: column; text-align: center; }
-        }
-        @media (max-width: 600px) {
-            .main-container { padding: 130px 15px 30px; }
-            .page-header h1 { font-size: 26px; }
-            .price-grid { grid-template-columns: 1fr; }
-            #tvchart { height: 400px; }
-            .chart-tab { font-size: 10px; padding: 5px 8px; }
-            .market-tab { font-size: 11px; padding: 8px 12px; }
-            .quick-btn { font-size: 12px; padding: 10px 12px; }
-        }
     </style>
 </head>
 <body>
- <!-- Ticker Bar -->
+<!-- Ticker Bar -->
 <div class="ticker-bar">
     <div class="ticker-content" id="tickerContent">
         <span class="ticker-item">⏳ در حال دریافت قیمت‌ها...</span>
@@ -1024,506 +840,691 @@
         </a>
     </div>
     © ۱۴۰۵ آکادمی شمعدون | تمامی حقوق محفوظ است
-</footer>
-     <script src="navbar.js" defer></script>
-    <script>
-        // Fallback برای تم - در صورت خطای navbar.js
-        document.addEventListener('DOMContentLoaded', () => {
-            setTimeout(() => {
-                const themeBtn = document.getElementById('snThemeBtn');
-                if (themeBtn && !themeBtn.hasAttribute('data-bound')) {
-                    themeBtn.setAttribute('data-bound', 'true');
-                    themeBtn.addEventListener('click', () => {
-                        const current = document.documentElement.getAttribute('data-theme') || 'dark';
-                        const newTheme = current === 'dark' ? 'light' : 'dark';
-                        document.documentElement.setAttribute('data-theme', newTheme);
-                        localStorage.setItem('shamdun-theme', newTheme);
-                        const icon = document.getElementById('snThemeIcon');
-                        if (icon) icon.textContent = newTheme === 'dark' ? '🌙' : '☀️';
-                    });
-                }
-            }, 1000);
-        });
-    </script>
+</footer>   
+<style>
+    /* Chart Section */
+    .chart-section {
+        background: linear-gradient(135deg, var(--bg-card), var(--bg-secondary));
+        border: 1px solid var(--border-subtle);
+        border-radius: 20px;
+        padding: 20px;
+        margin-bottom: 24px;
+        animation: fadeInUp 0.6s ease-out 0.3s backwards;
+    }
     
-    <script src="https://s3.tradingview.com/tv.js"></script>
-    <script>
-        // ==========================================
-        // API Keys با Key Rotation
-        // ==========================================
-        const BRS_API_KEYS = [
-            'B4xp2gWXASUmB3n6WPHtJxhjyJkgcBJz',
-            'BvUj3cMKWNBK87KW9xhNccCThmfVbd8u'
-        ];
-        let currentKeyIndex = 0;
+    [data-theme="light"] .chart-section {
+        background: linear-gradient(135deg, #ffffff, #eef2f7);
+        border-color: rgba(184, 134, 11, 0.15);
+    }
+    
+    .chart-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 15px;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+    .chart-header h2 {
+        color: var(--white);
+        font-size: 17px;
+        font-weight: 800;
+    }
+    .chart-tabs {
+        display: flex;
+        gap: 5px;
+        flex-wrap: wrap;
+        align-items: center;
+        max-height: 120px;
+        overflow-y: auto;
+    }
+    .chart-tab {
+        background: rgba(10, 10, 15, 0.6);
+        color: var(--gray);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        padding: 7px 12px;
+        border-radius: 8px;
+        font-size: 11px;
+        font-weight: 700;
+        cursor: pointer;
+        font-family: inherit;
+        transition: 0.3s;
+    }
+    
+    [data-theme="light"] .chart-tab {
+        background: rgba(255, 255, 255, 0.8);
+        border-color: rgba(0, 0, 0, 0.08);
+    }
+    
+    .chart-tab:hover {
+        color: var(--gold);
+        border-color: rgba(212, 175, 55, 0.4);
+    }
+    .chart-tab.active {
+        background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+        color: #fff;
+        border-color: var(--gold);
+    }
+    .fullscreen-btn {
+        background: rgba(10, 10, 15, 0.6);
+        color: var(--gold);
+        border: 1px solid var(--gold);
+        padding: 8px 14px;
+        border-radius: 8px;
+        font-size: 12px;
+        font-weight: 700;
+        cursor: pointer;
+        font-family: inherit;
+        transition: 0.3s;
+    }
+    [data-theme="light"] .fullscreen-btn {
+        background: #ffffff;
+        color: var(--gold-dark);
+        border-color: var(--gold-dark);
+    }
+    .fullscreen-btn:hover {
+        background: var(--gold);
+        color: #fff;
+    }
+    [data-theme="light"] .fullscreen-btn:hover {
+        background: var(--gold);
+        color: #ffffff;
+    }
+    #tvchart {
+        width: 100%;
+        height: 550px;
+        border-radius: 12px;
+        overflow: hidden;
+    }
+    .chart-fullscreen {
+        position: fixed !important;
+        top: 0 !important; left: 0 !important;
+        right: 0 !important; bottom: 0 !important;
+        width: 100vw !important; height: 100vh !important;
+        z-index: 999999 !important;
+        background: var(--bg-primary) !important;
+        padding: 10px !important;
+        margin: 0 !important;
+        border-radius: 0 !important;
+        display: flex !important;
+        flex-direction: column !important;
+        overflow: hidden !important;
+    }
+    .chart-fullscreen .chart-header {
+        flex-shrink: 0 !important;
+        margin-bottom: 8px !important;
+    }
+    .chart-fullscreen .chart-header h2 {
+        display: none !important;
+    }
+    .chart-fullscreen .chart-tabs {
+        max-height: 60px !important;
+        overflow-y: auto !important;
+    }
+    .chart-fullscreen #tvchart {
+        flex: 1 !important;
+        height: auto !important;
+        min-height: 0 !important;
+        width: 100% !important;
+    }
+    
+    /* CTA Section */
+    .cta-section {
+        background: linear-gradient(135deg, rgba(212, 175, 55, 0.1), rgba(59, 130, 246, 0.05));
+        border: 1px solid var(--border-gold);
+        border-radius: 20px;
+        padding: 30px;
+        text-align: center;
+        margin-bottom: 24px;
+    }
+    
+    [data-theme="light"] .cta-section {
+        background: linear-gradient(135deg, rgba(184, 134, 11, 0.08), rgba(37, 99, 235, 0.04));
+    }
+    
+    .cta-section h2 {
+        color: var(--white);
+        font-size: 22px;
+        font-weight: 900;
+        margin-bottom: 12px;
+    }
+    .cta-section p {
+        color: var(--gray);
+        font-size: 14px;
+        margin-bottom: 20px;
+        line-height: 1.8;
+    }
+    .cta-btn {
+        display: inline-block;
+        background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+        color: #fff;
+        padding: 14px 32px;
+        border-radius: 12px;
+        text-decoration: none;
+        font-size: 14px;
+        font-weight: 800;
+        transition: 0.3s;
+        box-shadow: 0 10px 30px rgba(212, 175, 55, 0.3);
+    }
+    .cta-btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 15px 40px rgba(212, 175, 55, 0.5);
+    }
+    
+    /* Footer */
+    .footer {
+        text-align: center;
+        padding: 30px 20px;
+        color: var(--gray);
+        font-size: 12px;
+        border-top: 1px solid var(--border-subtle);
+    }
+    .footer-social {
+        display: flex;
+        justify-content: center;
+        gap: 12px;
+        margin-bottom: 15px;
+    }
+    .footer-social a {
+        width: 44px; height: 44px;
+        border-radius: 12px;
+        background: rgba(212, 175, 55, 0.08);
+        border: 1px solid var(--border-gold);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: 0.3s;
+    }
+    .footer-social a:hover {
+        background: rgba(212, 175, 55, 0.2);
+        transform: translateY(-3px);
+        box-shadow: 0 8px 25px rgba(212, 175, 55, 0.3);
+    }
+    
+    /* Responsive */
+    @media (max-width: 900px) {
+        .price-grid { grid-template-columns: repeat(2, 1fr); }
+        .manager-card { flex-direction: column; text-align: center; }
+    }
+    @media (max-width: 600px) {
+        .main-container { padding: 130px 15px 30px; }
+        .page-header h1 { font-size: 26px; }
+        .price-grid { grid-template-columns: 1fr; }
+        #tvchart { height: 400px; }
+        .chart-tab { font-size: 10px; padding: 5px 8px; }
+        .market-tab { font-size: 11px; padding: 8px 12px; }
+        .quick-btn { font-size: 12px; padding: 10px 12px; }
+    }
+</style>
 
-        async function fetchWithRotation(baseUrl) {
-            const maxAttempts = BRS_API_KEYS.length;
-            for (let attempt = 0; attempt < maxAttempts; attempt++) {
-                const key = BRS_API_KEYS[currentKeyIndex];
-                const url = `${baseUrl}?key=${key}`;
-                try {
-                    const res = await fetch(url);
-                    if (!res.ok) {
-                        console.warn(`⚠️ کلید ${currentKeyIndex + 1} کد ${res.status}`);
-                        currentKeyIndex = (currentKeyIndex + 1) % BRS_API_KEYS.length;
-                        continue;
-                    }
-                    const text = await res.text();
-                    if (text.trim().startsWith('<!DOCTYPE') || text.trim().startsWith('<html')) {
-                        console.warn(`⚠️ کلید ${currentKeyIndex + 1} HTML داد`);
-                        currentKeyIndex = (currentKeyIndex + 1) % BRS_API_KEYS.length;
-                        continue;
-                    }
-                    const data = JSON.parse(text);
-                    console.log(`✅ کلید ${currentKeyIndex + 1} کار کرد`);
-                    return data;
-                } catch (e) {
-                    console.warn(`⚠️ خطا با کلید ${currentKeyIndex + 1}:`, e.message);
+<script src="navbar.js" defer></script>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        setTimeout(() => {
+            const themeBtn = document.getElementById('snThemeBtn');
+            if (themeBtn && !themeBtn.hasAttribute('data-bound')) {
+                themeBtn.setAttribute('data-bound', 'true');
+                themeBtn.addEventListener('click', () => {
+                    const current = document.documentElement.getAttribute('data-theme') || 'dark';
+                    const newTheme = current === 'dark' ? 'light' : 'dark';
+                    document.documentElement.setAttribute('data-theme', newTheme);
+                    localStorage.setItem('shamdun-theme', newTheme);
+                    const icon = document.getElementById('snThemeIcon');
+                    if (icon) icon.textContent = newTheme === 'dark' ? '🌙' : '☀️';
+                });
+            }
+        }, 1000);
+    });
+</script>
+
+<script src="https://s3.tradingview.com/tv.js"></script>
+<script>
+    // ==========================================
+    // API Keys با Key Rotation
+    // ==========================================
+    const BRS_API_KEYS = [
+        'B4xp2gWXASUmB3n6WPHtJxhjyJkgcBJz',
+        'BvUj3cMKWNBK87KW9xhNccCThmfVbd8u'
+    ];
+    let currentKeyIndex = 0;
+
+    async function fetchWithRotation(baseUrl) {
+        const maxAttempts = BRS_API_KEYS.length;
+        for (let attempt = 0; attempt < maxAttempts; attempt++) {
+            const key = BRS_API_KEYS[currentKeyIndex];
+            const url = `${baseUrl}?key=${key}`;
+            try {
+                const res = await fetch(url);
+                if (!res.ok) {
+                    console.warn(`⚠️ کلید ${currentKeyIndex + 1} کد ${res.status}`);
                     currentKeyIndex = (currentKeyIndex + 1) % BRS_API_KEYS.length;
+                    continue;
                 }
-            }
-            throw new Error('❌ همه کلیدها fail');
-        }
-
-        const OUNCE_TO_GRAM = 31.1035;
-
-        // ==========================================
-        // ابزارها
-        // ==========================================
-        function toPersianNumber(num) {
-            if (num === null || num === undefined || isNaN(num)) return '--';
-            const persianDigits = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
-            return num.toString().replace(/\d/g, d => persianDigits[d]);
-        }
-
-        function formatNumber(num, decimals = 0) {
-            if (num === null || num === undefined || isNaN(num)) return '--';
-            try {
-                const n = Number(num);
-                if (isNaN(n)) return '--';
-                let str;
-                if (decimals > 0) {
-                    str = n.toFixed(decimals);
-                } else {
-                    str = Math.round(n).toString();
+                const text = await res.text();
+                if (text.trim().startsWith('<!DOCTYPE') || text.trim().startsWith('<html')) {
+                    console.warn(`⚠️ کلید ${currentKeyIndex + 1} HTML داد`);
+                    currentKeyIndex = (currentKeyIndex + 1) % BRS_API_KEYS.length;
+                    continue;
                 }
-                const parts = str.split('.');
-                parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-                str = parts.join('.');
-                const persianDigits = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
-                return str.replace(/\d/g, d => persianDigits[d]);
+                const data = JSON.parse(text);
+                console.log(`✅ کلید ${currentKeyIndex + 1} کار کرد`);
+                return data;
             } catch (e) {
-                return '--';
+                console.warn(`⚠️ خطا با کلید ${currentKeyIndex + 1}:`, e.message);
+                currentKeyIndex = (currentKeyIndex + 1) % BRS_API_KEYS.length;
             }
         }
+        throw new Error('❌ همه کلیدها fail');
+    }
 
-        function setChange(elId, changePercent) {
-            const el = document.getElementById(elId);
-            if (!el) return;
-            if (changePercent === null || changePercent === undefined || isNaN(changePercent)) {
-                el.textContent = '';
-                el.className = 'change';
-                return;
-            }
-            const sign = changePercent >= 0 ? '+' : '';
-            el.textContent = sign + toPersianNumber(Number(changePercent).toFixed(2)) + '٪';
-            el.className = 'change ' + (changePercent >= 0 ? 'up' : 'down');
-        }
+    const OUNCE_TO_GRAM = 31.1035;
 
-        function setPrice(elId, value, unit = '', decimals = 0) {
-            const el = document.getElementById(elId);
-            if (!el) return;
-            if (value === null || value === undefined || isNaN(value)) {
-                el.textContent = '--';
-                return;
-            }
-            el.textContent = formatNumber(value, decimals) + (unit ? ' ' + unit : '');
-            el.dataset.raw = Number(value);
-        }
+    function toPersianNumber(num) {
+        if (num === null || num === undefined || isNaN(num)) return '--';
+        const persianDigits = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
+        return num.toString().replace(/\d/g, d => persianDigits[d]);
+    }
 
-        // ==========================================
-        // Tab Switching
-        // ==========================================
-        function switchMarket(marketId, btn) {
-            document.querySelectorAll('.market-tab').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            document.querySelectorAll('.price-section').forEach(s => s.classList.remove('active'));
-            const section = document.getElementById('section-' + marketId);
-            if (section) section.classList.add('active');
-        }
-
-        // ==========================================
-        // TradingView Chart
-        // ==========================================
-        let tvWidget = null;
-        let currentChartSymbol = 'BINANCE:BTCUSDT';
-        let currentChartTheme = document.documentElement.getAttribute('data-theme') || 'dark';
-
-        function initChart(symbol) {
-            currentChartSymbol = symbol;
-            const container = document.getElementById('tvchart');
-            if (!container) return;
-            container.innerHTML = '';
-
-            const theme = document.documentElement.getAttribute('data-theme') || 'dark';
-            currentChartTheme = theme;
-
-            tvWidget = new TradingView.widget({
-                "container_id": "tvchart",
-                "autosize": true,
-                "symbol": symbol,
-                "interval": "60",
-                "timezone": "Asia/Tehran",
-                "theme": theme === 'light' ? 'light' : 'dark',
-                "style": "1",
-                "locale": "fa_IR",
-                "toolbar_bg": theme === 'light' ? '#ffffff' : '#1e293b',
-                "enable_publishing": false,
-                "hide_side_toolbar": false,
-                "allow_symbol_change": true,
-                "details": true,
-                "withdateranges": true,
-                "studies": ["RSI@tv-basicstudies"]
-            });
-        }
-
-        function switchChart(symbol, btn) {
-            document.querySelectorAll('.chart-tab').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            initChart(symbol);
-        }
-
-        function toggleFullscreen() {
-            const chartSection = document.getElementById('chartSection');
-            const btn = document.getElementById('fullscreenBtn');
-            if (chartSection.classList.contains('chart-fullscreen')) {
-                chartSection.classList.remove('chart-fullscreen');
-                btn.innerHTML = '⛶ تمام‌صفحه';
-                document.body.style.overflow = '';
-                setTimeout(() => initChart(currentChartSymbol), 100);
+    function formatNumber(num, decimals = 0) {
+        if (num === null || num === undefined || isNaN(num)) return '--';
+        try {
+            const n = Number(num);
+            if (isNaN(n)) return '--';
+            let str;
+            if (decimals > 0) {
+                str = n.toFixed(decimals);
             } else {
-                chartSection.classList.add('chart-fullscreen');
-                btn.innerHTML = '✕ خروج';
-                document.body.style.overflow = 'hidden';
-                setTimeout(() => initChart(currentChartSymbol), 100);
+                str = Math.round(n).toString();
+            }
+            const parts = str.split('.');
+            parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+            str = parts.join('.');
+            const persianDigits = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
+            return str.replace(/\d/g, d => persianDigits[d]);
+        } catch (e) {
+            return '--';
+        }
+    }
+
+    function setChange(elId, changePercent) {
+        const el = document.getElementById(elId);
+        if (!el) return;
+        if (changePercent === null || changePercent === undefined || isNaN(changePercent)) {
+            el.textContent = '';
+            el.className = 'change';
+            return;
+        }
+        const sign = changePercent >= 0 ? '+' : '';
+        el.textContent = sign + toPersianNumber(Number(changePercent).toFixed(2)) + '٪';
+        el.className = 'change ' + (changePercent >= 0 ? 'up' : 'down');
+    }
+
+    function setPrice(elId, value, unit = '', decimals = 0) {
+        const el = document.getElementById(elId);
+        if (!el) return;
+        if (value === null || value === undefined || isNaN(value)) {
+            el.textContent = '--';
+            return;
+        }
+        el.textContent = formatNumber(value, decimals) + (unit ? ' ' + unit : '');
+        el.dataset.raw = Number(value);
+    }
+
+    function switchMarket(marketId, btn) {
+        document.querySelectorAll('.market-tab').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        document.querySelectorAll('.price-section').forEach(s => s.classList.remove('active'));
+        const section = document.getElementById('section-' + marketId);
+        if (section) section.classList.add('active');
+    }
+
+    let tvWidget = null;
+    let currentChartSymbol = 'BINANCE:BTCUSDT';
+    let currentChartTheme = document.documentElement.getAttribute('data-theme') || 'dark';
+
+    function initChart(symbol) {
+        currentChartSymbol = symbol;
+        const container = document.getElementById('tvchart');
+        if (!container) return;
+        container.innerHTML = '';
+
+        const theme = document.documentElement.getAttribute('data-theme') || 'dark';
+        currentChartTheme = theme;
+
+        tvWidget = new TradingView.widget({
+            "container_id": "tvchart",
+            "autosize": true,
+            "symbol": symbol,
+            "interval": "60",
+            "timezone": "Asia/Tehran",
+            "theme": theme === 'light' ? 'light' : 'dark',
+            "style": "1",
+            "locale": "fa_IR",
+            "toolbar_bg": theme === 'light' ? '#ffffff' : '#1e293b',
+            "enable_publishing": false,
+            "hide_side_toolbar": false,
+            "allow_symbol_change": true,
+            "details": true,
+            "withdateranges": true,
+            "studies": ["RSI@tv-basicstudies"]
+        });
+    }
+
+    function switchChart(symbol, btn) {
+        document.querySelectorAll('.chart-tab').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        initChart(symbol);
+    }
+
+    function toggleFullscreen() {
+        const chartSection = document.getElementById('chartSection');
+        const btn = document.getElementById('fullscreenBtn');
+        if (chartSection.classList.contains('chart-fullscreen')) {
+            chartSection.classList.remove('chart-fullscreen');
+            btn.innerHTML = '⛶ تمام‌صفحه';
+            document.body.style.overflow = '';
+            setTimeout(() => initChart(currentChartSymbol), 100);
+        } else {
+            chartSection.classList.add('chart-fullscreen');
+            btn.innerHTML = '✕ خروج';
+            document.body.style.overflow = 'hidden';
+            setTimeout(() => initChart(currentChartSymbol), 100);
+        }
+    }
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+            const chartSection = document.getElementById('chartSection');
+            if (chartSection.classList.contains('chart-fullscreen')) {
+                toggleFullscreen();
             }
         }
+    });
 
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') {
-                const chartSection = document.getElementById('chartSection');
-                if (chartSection.classList.contains('chart-fullscreen')) {
-                    toggleFullscreen();
+    const themeObserver = new MutationObserver((mutations) => {
+        mutations.forEach((mutation) => {
+            if (mutation.attributeName === 'data-theme') {
+                const newTheme = document.documentElement.getAttribute('data-theme');
+                if (newTheme !== currentChartTheme) {
+                    setTimeout(() => initChart(currentChartSymbol), 200);
                 }
             }
         });
+    });
+    themeObserver.observe(document.documentElement, { attributes: true });
 
-        // ==========================================
-        // Theme change listener - برای چارت
-        // ==========================================
-        const themeObserver = new MutationObserver((mutations) => {
-            mutations.forEach((mutation) => {
-                if (mutation.attributeName === 'data-theme') {
-                    const newTheme = document.documentElement.getAttribute('data-theme');
-                    if (newTheme !== currentChartTheme) {
-                        setTimeout(() => initChart(currentChartSymbol), 200);
-                    }
-                }
-            });
-        });
-        themeObserver.observe(document.documentElement, { attributes: true });
+    let globalOunceGold = 0;
+    let globalOunceSilver = 0;
+    let globalUSD = 0;
+    let globalGold18Market = 0;
 
-        // ==========================================
-        // قیمت‌ها
-        // ==========================================
-        let globalOunceGold = 0;
-        let globalOunceSilver = 0;
-        let globalUSD = 0;
-        let globalGold18Market = 0;
+    const COIN_WEIGHTS = {
+        'coin-emami': 8.133,
+        'coin-bahar': 8.133,
+        'coin-half': 4.0665,
+        'coin-quarter': 2.03325,
+        'coin-1g': 1.0
+    };
 
-        const COIN_WEIGHTS = {
-            'coin-emami': 8.133,
-            'coin-bahar': 8.133,
-            'coin-half': 4.0665,
-            'coin-quarter': 2.03325,
-            'coin-1g': 1.0
-        };
-
-        async function fetchBrsApi() {
-            // 1. Gold + Currency
-            try {
-                const data = await fetchWithRotation('https://Api.BrsApi.ir/Market/Gold_Currency.php');
-                if (data.gold && Array.isArray(data.gold)) {
-                    const items = {
-                        IR_GOLD_18K: { price: 'gold18-price', change: 'gold18-change' },
-                        IR_GOLD_24K: { price: 'gold24-price', change: 'gold24-change' },
-                        IR_GOLD_MELTED: { price: 'melted-price', change: 'melted-change' },
-                        IR_COIN_EMAMI: { price: 'coin-emami-price', change: 'coin-emami-change' },
-                        IR_COIN_BAHAR: { price: 'coin-bahar-price', change: 'coin-bahar-change' },
-                        IR_COIN_HALF: { price: 'coin-half-price', change: 'coin-half-change' },
-                        IR_COIN_QUARTER: { price: 'coin-quarter-price', change: 'coin-quarter-change' },
-                        IR_COIN_1G: { price: 'coin-1g-price', change: 'coin-1g-change' },
-                    };
-                    data.gold.forEach(item => {
-                        if (items[item.symbol]) {
-                            setPrice(items[item.symbol].price, item.price, 'تومان');
-                            setChange(items[item.symbol].change, item.change_percent);
-                            if (item.symbol === 'IR_GOLD_18K') globalGold18Market = parseFloat(item.price);
-                        }
-                    });
-                }
-                if (data.currency && Array.isArray(data.currency)) {
-                    const currencyMap = {
-                        USDT_IRT: { price: 'usdt-price', change: 'usdt-change' },
-                        USD: { price: 'usd-price', change: 'usd-change' },
-                        EUR: { price: 'eur-price', change: 'eur-change' },
-                        GBP: { price: 'gbp-price', change: 'gbp-change' },
-                        AED: { price: 'aed-price', change: 'aed-change' },
-                        TRY: { price: 'try-price', change: 'try-change' },
-                        CNY: { price: 'cny-price', change: 'cny-change' },
-                        CAD: { price: 'cad-price', change: 'cad-change' },
-                        CHF: { price: 'chf-price', change: 'chf-change' },
-                        JPY: { price: 'jpy-price', change: 'jpy-change' },
-                        SAR: { price: 'sar-price', change: 'sar-change' },
-                        QAR: { price: 'qar-price', change: 'qar-change' },
-                    };
-                    data.currency.forEach(item => {
-                        if (currencyMap[item.symbol]) {
-                            setPrice(currencyMap[item.symbol].price, item.price, 'تومان');
-                            setChange(currencyMap[item.symbol].change, item.change_percent);
-                            if (item.symbol === 'USD') globalUSD = parseFloat(item.price);
-                        }
-                    });
-                }
-            } catch (e) {
-                console.error('❌ Gold_Currency error:', e.message);
-            }
-
-            // 2. Commodity
-            try {
-                const data = await fetchWithRotation('https://Api.BrsApi.ir/Market/Commodity.php');
-                if (data.metal_precious && Array.isArray(data.metal_precious)) {
-                    const preciousMap = {
-                        XAUUSD: { price: 'ounce-gold-price', change: 'ounce-gold-change' },
-                        XAGUSD: { price: 'ounce-silver-price', change: 'ounce-silver-change' },
-                        XPTUSD: { price: 'ounce-platinum-price', change: 'ounce-platinum-change' },
-                        XPDUSD: { price: 'ounce-palladium-price', change: 'ounce-palladium-change' },
-                    };
-                    data.metal_precious.forEach(item => {
-                        if (preciousMap[item.symbol]) {
-                            setPrice(preciousMap[item.symbol].price, item.price, 'دلار', 2);
-                            setChange(preciousMap[item.symbol].change, item.change_percent);
-                            if (item.symbol === 'XAUUSD') globalOunceGold = parseFloat(item.price);
-                            if (item.symbol === 'XAGUSD') globalOunceSilver = parseFloat(item.price);
-                        }
-                    });
-                }
-                if (data.metal_base && Array.isArray(data.metal_base)) {
-                    const baseMap = {
-                        Cu: { price: 'copper-price', change: 'copper-change' },
-                        Al: { price: 'aluminum-price', change: 'aluminum-change' },
-                        Zn: { price: 'zinc-price', change: 'zinc-change' },
-                        Pb: { price: 'lead-price', change: 'lead-change' },
-                        Ni: { price: 'nickel-price', change: 'nickel-change' },
-                    };
-                    data.metal_base.forEach(item => {
-                        if (baseMap[item.symbol]) {
-                            setPrice(baseMap[item.symbol].price, item.price, 'دلار', 0);
-                            setChange(baseMap[item.symbol].change, item.change_percent);
-                        }
-                    });
-                }
-                if (data.energy && Array.isArray(data.energy)) {
-                    const energyMap = {
-                        BRENT: { price: 'brent-price', change: 'brent-change' },
-                        WTI: { price: 'wti-price', change: 'wti-change' },
-                        GAS: { price: 'gas-price', change: 'gas-change' },
-                        RBOB: { price: 'rbob-price', change: 'rbob-change' },
-                        GASOIL: { price: 'gasoil-price', change: 'gasoil-change' },
-                    };
-                    data.energy.forEach(item => {
-                        if (energyMap[item.symbol]) {
-                            setPrice(energyMap[item.symbol].price, item.price, 'دلار', 2);
-                            setChange(energyMap[item.symbol].change, item.change_percent);
-                        }
-                    });
-                }
-            } catch (e) {
-                console.error('❌ Commodity error:', e.message);
-            }
-
-            // محاسبه ارزش ذاتی
-            if (globalOunceSilver > 0 && globalUSD > 0) {
-                const silver999Gram = (globalOunceSilver * globalUSD * 0.999) / OUNCE_TO_GRAM;
-                setPrice('silver999-price', Math.round(silver999Gram), 'تومان');
-
-                const platinumEl = document.getElementById('ounce-platinum-price');
-                const palladiumEl = document.getElementById('ounce-palladium-price');
-                const platinumPrice = platinumEl ? parseFloat(platinumEl.dataset.raw || 0) : 0;
-                const palladiumPrice = palladiumEl ? parseFloat(palladiumEl.dataset.raw || 0) : 0;
-
-                if (platinumPrice > 0) {
-                    const platGram = (platinumPrice * globalUSD) / OUNCE_TO_GRAM;
-                    setPrice('platinum-gram-price', Math.round(platGram), 'تومان');
-                }
-                if (palladiumPrice > 0) {
-                    const pallGram = (palladiumPrice * globalUSD) / OUNCE_TO_GRAM;
-                    setPrice('palladium-gram-price', Math.round(pallGram), 'تومان');
-                }
-            }
-
-            calculateBubbles();
-        }
-
-        // ==========================================
-        // ارز دیجیتال
-        // ==========================================
-        async function fetchCrypto() {
-            try {
-                const res = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum,solana,ripple,dogecoin,cardano,binancecoin,tron,avalanche-2&vs_currencies=usd&include_24hr_change=true');
-                const data = await res.json();
-                const cryptoMap = {
-                    bitcoin: { price: 'btc-price', change: 'btc-change' },
-                    ethereum: { price: 'eth-price', change: 'eth-change' },
-                    solana: { price: 'sol-price', change: 'sol-change' },
-                    ripple: { price: 'xrp-price', change: 'xrp-change' },
-                    dogecoin: { price: 'doge-price', change: 'doge-change' },
-                    cardano: { price: 'ada-price', change: 'ada-change' },
-                    binancecoin: { price: 'bnb-price', change: 'bnb-change' },
-                    tron: { price: 'trx-price', change: 'trx-change' },
-                    'avalanche-2': { price: 'avax-price', change: 'avax-change' },
+    async function fetchBrsApi() {
+        try {
+            const data = await fetchWithRotation('https://Api.BrsApi.ir/Market/Gold_Currency.php');
+            if (data.gold && Array.isArray(data.gold)) {
+                const items = {
+                    IR_GOLD_18K: { price: 'gold18-price', change: 'gold18-change' },
+                    IR_GOLD_24K: { price: 'gold24-price', change: 'gold24-change' },
+                    IR_GOLD_MELTED: { price: 'melted-price', change: 'melted-change' },
+                    IR_COIN_EMAMI: { price: 'coin-emami-price', change: 'coin-emami-change' },
+                    IR_COIN_BAHAR: { price: 'coin-bahar-price', change: 'coin-bahar-change' },
+                    IR_COIN_HALF: { price: 'coin-half-price', change: 'coin-half-change' },
+                    IR_COIN_QUARTER: { price: 'coin-quarter-price', change: 'coin-quarter-change' },
+                    IR_COIN_1G: { price: 'coin-1g-price', change: 'coin-1g-change' },
                 };
-                Object.keys(cryptoMap).forEach(key => {
-                    if (data[key]) {
-                        setPrice(cryptoMap[key].price, data[key].usd, 'دلار', 2);
-                        setChange(cryptoMap[key].change, data[key].usd_24h_change);
+                data.gold.forEach(item => {
+                    if (items[item.symbol]) {
+                        setPrice(items[item.symbol].price, item.price, 'تومان');
+                        setChange(items[item.symbol].change, item.change_percent);
+                        if (item.symbol === 'IR_GOLD_18K') globalGold18Market = parseFloat(item.price);
                     }
                 });
-            } catch (e) {
-                console.error('❌ Crypto error:', e.message);
+            }
+            if (data.currency && Array.isArray(data.currency)) {
+                const currencyMap = {
+                    USDT_IRT: { price: 'usdt-price', change: 'usdt-change' },
+                    USD: { price: 'usd-price', change: 'usd-change' },
+                    EUR: { price: 'eur-price', change: 'eur-change' },
+                    GBP: { price: 'gbp-price', change: 'gbp-change' },
+                    AED: { price: 'aed-price', change: 'aed-change' },
+                    TRY: { price: 'try-price', change: 'try-change' },
+                    CNY: { price: 'cny-price', change: 'cny-change' },
+                    CAD: { price: 'cad-price', change: 'cad-change' },
+                    CHF: { price: 'chf-price', change: 'chf-change' },
+                    JPY: { price: 'jpy-price', change: 'jpy-change' },
+                    SAR: { price: 'sar-price', change: 'sar-change' },
+                    QAR: { price: 'qar-price', change: 'qar-change' },
+                };
+                data.currency.forEach(item => {
+                    if (currencyMap[item.symbol]) {
+                        setPrice(currencyMap[item.symbol].price, item.price, 'تومان');
+                        setChange(currencyMap[item.symbol].change, item.change_percent);
+                        if (item.symbol === 'USD') globalUSD = parseFloat(item.price);
+                    }
+                });
+            }
+        } catch (e) {
+            console.error('❌ Gold_Currency error:', e.message);
+        }
+
+        try {
+            const data = await fetchWithRotation('https://Api.BrsApi.ir/Market/Commodity.php');
+            if (data.metal_precious && Array.isArray(data.metal_precious)) {
+                const preciousMap = {
+                    XAUUSD: { price: 'ounce-gold-price', change: 'ounce-gold-change' },
+                    XAGUSD: { price: 'ounce-silver-price', change: 'ounce-silver-change' },
+                    XPTUSD: { price: 'ounce-platinum-price', change: 'ounce-platinum-change' },
+                    XPDUSD: { price: 'ounce-palladium-price', change: 'ounce-palladium-change' },
+                };
+                data.metal_precious.forEach(item => {
+                    if (preciousMap[item.symbol]) {
+                        setPrice(preciousMap[item.symbol].price, item.price, 'دلار', 2);
+                        setChange(preciousMap[item.symbol].change, item.change_percent);
+                        if (item.symbol === 'XAUUSD') globalOunceGold = parseFloat(item.price);
+                        if (item.symbol === 'XAGUSD') globalOunceSilver = parseFloat(item.price);
+                    }
+                });
+            }
+            if (data.metal_base && Array.isArray(data.metal_base)) {
+                const baseMap = {
+                    Cu: { price: 'copper-price', change: 'copper-change' },
+                    Al: { price: 'aluminum-price', change: 'aluminum-change' },
+                    Zn: { price: 'zinc-price', change: 'zinc-change' },
+                    Pb: { price: 'lead-price', change: 'lead-change' },
+                    Ni: { price: 'nickel-price', change: 'nickel-change' },
+                };
+                data.metal_base.forEach(item => {
+                    if (baseMap[item.symbol]) {
+                        setPrice(baseMap[item.symbol].price, item.price, 'دلار', 0);
+                        setChange(baseMap[item.symbol].change, item.change_percent);
+                    }
+                });
+            }
+            if (data.energy && Array.isArray(data.energy)) {
+                const energyMap = {
+                    BRENT: { price: 'brent-price', change: 'brent-change' },
+                    WTI: { price: 'wti-price', change: 'wti-change' },
+                    GAS: { price: 'gas-price', change: 'gas-change' },
+                    RBOB: { price: 'rbob-price', change: 'rbob-change' },
+                    GASOIL: { price: 'gasoil-price', change: 'gasoil-change' },
+                };
+                data.energy.forEach(item => {
+                    if (energyMap[item.symbol]) {
+                        setPrice(energyMap[item.symbol].price, item.price, 'دلار', 2);
+                        setChange(energyMap[item.symbol].change, item.change_percent);
+                    }
+                });
+            }
+        } catch (e) {
+            console.error('❌ Commodity error:', e.message);
+        }
+
+        if (globalOunceSilver > 0 && globalUSD > 0) {
+            const silver999Gram = (globalOunceSilver * globalUSD * 0.999) / OUNCE_TO_GRAM;
+            setPrice('silver999-price', Math.round(silver999Gram), 'تومان');
+
+            const platinumEl = document.getElementById('ounce-platinum-price');
+            const palladiumEl = document.getElementById('ounce-palladium-price');
+            const platinumPrice = platinumEl ? parseFloat(platinumEl.dataset.raw || 0) : 0;
+            const palladiumPrice = palladiumEl ? parseFloat(palladiumEl.dataset.raw || 0) : 0;
+
+            if (platinumPrice > 0) {
+                const platGram = (platinumPrice * globalUSD) / OUNCE_TO_GRAM;
+                setPrice('platinum-gram-price', Math.round(platGram), 'تومان');
+            }
+            if (palladiumPrice > 0) {
+                const pallGram = (palladiumPrice * globalUSD) / OUNCE_TO_GRAM;
+                setPrice('palladium-gram-price', Math.round(pallGram), 'تومان');
             }
         }
 
-        // ==========================================
-        // محاسبه حباب
-        // ==========================================
-        function calculateBubbles() {
-            if (globalOunceGold <= 0 || globalUSD <= 0) return;
+        calculateBubbles();
+    }
 
-            const gold18Calc = (globalOunceGold * globalUSD * 0.75) / OUNCE_TO_GRAM;
-            if (globalGold18Market > 0) {
-                const bubble = ((globalGold18Market - gold18Calc) / gold18Calc) * 100;
-                const bubbleEl = document.getElementById('gold18-bubble');
-                if (bubbleEl) {
-                    bubbleEl.textContent = '💎 حباب: ' + (bubble >= 0 ? '+' : '') + toPersianNumber(bubble.toFixed(2)) + '٪';
-                    bubbleEl.className = 'bubble-inline ' + (bubble > 0.5 ? 'up' : bubble < -0.5 ? 'down' : 'neutral');
-                }
-            }
-
-            const coinsMap = {
-                'coin-emami': { price: 'coin-emami-price', bubble: 'coin-emami-bubble' },
-                'coin-bahar': { price: 'coin-bahar-price', bubble: 'coin-bahar-bubble' },
-                'coin-half': { price: 'coin-half-price', bubble: 'coin-half-bubble' },
-                'coin-quarter': { price: 'coin-quarter-price', bubble: 'coin-quarter-bubble' },
-                'coin-1g': { price: 'coin-1g-price', bubble: 'coin-1g-bubble' }
+    async function fetchCrypto() {
+        try {
+            const res = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum,solana,ripple,dogecoin,cardano,binancecoin,tron,avalanche-2&vs_currencies=usd&include_24hr_change=true');
+            const data = await res.json();
+            const cryptoMap = {
+                bitcoin: { price: 'btc-price', change: 'btc-change' },
+                ethereum: { price: 'eth-price', change: 'eth-change' },
+                solana: { price: 'sol-price', change: 'sol-change' },
+                ripple: { price: 'xrp-price', change: 'xrp-change' },
+                dogecoin: { price: 'doge-price', change: 'doge-change' },
+                cardano: { price: 'ada-price', change: 'ada-change' },
+                binancecoin: { price: 'bnb-price', change: 'bnb-change' },
+                tron: { price: 'trx-price', change: 'trx-change' },
+                'avalanche-2': { price: 'avax-price', change: 'avax-change' },
             };
+            Object.keys(cryptoMap).forEach(key => {
+                if (data[key]) {
+                    setPrice(cryptoMap[key].price, data[key].usd, 'دلار', 2);
+                    setChange(cryptoMap[key].change, data[key].usd_24h_change);
+                }
+            });
+        } catch (e) {
+            console.error('❌ Crypto error:', e.message);
+        }
+    }
 
-            Object.keys(coinsMap).forEach(key => {
-                const weight = COIN_WEIGHTS[key];
-                const marketEl = document.getElementById(coinsMap[key].price);
-                const bubbleEl = document.getElementById(coinsMap[key].bubble);
-                if (!marketEl || !bubbleEl) return;
+    function calculateBubbles() {
+        if (globalOunceGold <= 0 || globalUSD <= 0) return;
 
-                const marketPrice = parseFloat(marketEl.dataset.raw || 0);
-                if (marketPrice <= 0) return;
-
-                const intrinsic = (globalOunceGold * globalUSD * 0.9 * weight) / OUNCE_TO_GRAM;
-                const bubble = ((marketPrice - intrinsic) / intrinsic) * 100;
+        const gold18Calc = (globalOunceGold * globalUSD * 0.75) / OUNCE_TO_GRAM;
+        if (globalGold18Market > 0) {
+            const bubble = ((globalGold18Market - gold18Calc) / gold18Calc) * 100;
+            const bubbleEl = document.getElementById('gold18-bubble');
+            if (bubbleEl) {
                 bubbleEl.textContent = '💎 حباب: ' + (bubble >= 0 ? '+' : '') + toPersianNumber(bubble.toFixed(2)) + '٪';
                 bubbleEl.className = 'bubble-inline ' + (bubble > 0.5 ? 'up' : bubble < -0.5 ? 'down' : 'neutral');
-            });
-
-            if (globalOunceSilver > 0) {
-                const silver999Calc = (globalOunceSilver * globalUSD * 0.999) / OUNCE_TO_GRAM;
-                setPrice('bubble-silver-ounce', globalOunceSilver, 'دلار', 2);
-                setPrice('bubble-silver-usd', globalUSD, 'تومان');
-                setPrice('bubble-silver-calc', Math.round(silver999Calc), 'تومان');
             }
         }
 
-        // ==========================================
-        // Ticker
-        // ==========================================
-        async function updateTicker() {
-            let tickerHTML = '';
+        const coinsMap = {
+            'coin-emami': { price: 'coin-emami-price', bubble: 'coin-emami-bubble' },
+            'coin-bahar': { price: 'coin-bahar-price', bubble: 'coin-bahar-bubble' },
+            'coin-half': { price: 'coin-half-price', bubble: 'coin-half-bubble' },
+            'coin-quarter': { price: 'coin-quarter-price', bubble: 'coin-quarter-bubble' },
+            'coin-1g': { price: 'coin-1g-price', bubble: 'coin-1g-bubble' }
+        };
 
-            const gold18El = document.getElementById('gold18-price');
-            const gold18Chg = document.getElementById('gold18-change');
-            if (gold18El && gold18El.textContent !== '--') {
-                tickerHTML += `<span class="ticker-item">🥇 طلا ۱۸: <span class="value">${gold18El.textContent}</span> ${gold18Chg?.textContent || ''}</span>`;
-            }
+        Object.keys(coinsMap).forEach(key => {
+            const weight = COIN_WEIGHTS[key];
+            const marketEl = document.getElementById(coinsMap[key].price);
+            const bubbleEl = document.getElementById(coinsMap[key].bubble);
+            if (!marketEl || !bubbleEl) return;
 
-            const usdEl = document.getElementById('usd-price');
-            const usdChg = document.getElementById('usd-change');
-            if (usdEl && usdEl.textContent !== '--') {
-                tickerHTML += `<span class="ticker-item">💵 دلار: <span class="value">${usdEl.textContent}</span> ${usdChg?.textContent || ''}</span>`;
-            }
+            const marketPrice = parseFloat(marketEl.dataset.raw || 0);
+            if (marketPrice <= 0) return;
 
-            const ounceEl = document.getElementById('ounce-gold-price');
-            if (ounceEl && ounceEl.textContent !== '--') {
-                tickerHTML += `<span class="ticker-item">🏅 انس طلا: <span class="value">${ounceEl.textContent}</span></span>`;
-            }
+            const intrinsic = (globalOunceGold * globalUSD * 0.9 * weight) / OUNCE_TO_GRAM;
+            const bubble = ((marketPrice - intrinsic) / intrinsic) * 100;
+            bubbleEl.textContent = '💎 حباب: ' + (bubble >= 0 ? '+' : '') + toPersianNumber(bubble.toFixed(2)) + '٪';
+            bubbleEl.className = 'bubble-inline ' + (bubble > 0.5 ? 'up' : bubble < -0.5 ? 'down' : 'neutral');
+        });
 
-            const silverEl = document.getElementById('ounce-silver-price');
-            if (silverEl && silverEl.textContent !== '--') {
-                tickerHTML += `<span class="ticker-item">🥈 انس نقره: <span class="value">${silverEl.textContent}</span></span>`;
-            }
+        if (globalOunceSilver > 0) {
+            const silver999Calc = (globalOunceSilver * globalUSD * 0.999) / OUNCE_TO_GRAM;
+            setPrice('bubble-silver-ounce', globalOunceSilver, 'دلار', 2);
+            setPrice('bubble-silver-usd', globalUSD, 'تومان');
+            setPrice('bubble-silver-calc', Math.round(silver999Calc), 'تومان');
+        }
+    }
 
-            const btcEl = document.getElementById('btc-price');
-            const btcChg = document.getElementById('btc-change');
-            if (btcEl && btcEl.textContent !== '--') {
-                tickerHTML += `<span class="ticker-item">₿ بیت‌کوین: <span class="value">${btcEl.textContent}</span> ${btcChg?.textContent || ''}</span>`;
-            }
+    async function updateTicker() {
+        let tickerHTML = '';
 
-            const ethEl = document.getElementById('eth-price');
-            const ethChg = document.getElementById('eth-change');
-            if (ethEl && ethEl.textContent !== '--') {
-                tickerHTML += `<span class="ticker-item">⟠ اتریوم: <span class="value">${ethEl.textContent}</span> ${ethChg?.textContent || ''}</span>`;
-            }
-
-            const platEl = document.getElementById('ounce-platinum-price');
-            if (platEl && platEl.textContent !== '--') {
-                tickerHTML += `<span class="ticker-item">🔶 پلاتین: <span class="value">${platEl.textContent}</span></span>`;
-            }
-
-            const brentEl = document.getElementById('brent-price');
-            if (brentEl && brentEl.textContent !== '--') {
-                tickerHTML += `<span class="ticker-item">🛢️ برنت: <span class="value">${brentEl.textContent}</span></span>`;
-            }
-
-            if (!tickerHTML) {
-                tickerHTML = '<span class="ticker-item">⏳ در حال دریافت قیمت‌ها...</span>';
-            }
-
-            const el = document.getElementById('tickerContent');
-            if (el) el.innerHTML = tickerHTML + tickerHTML + tickerHTML;
+        const gold18El = document.getElementById('gold18-price');
+        const gold18Chg = document.getElementById('gold18-change');
+        if (gold18El && gold18El.textContent !== '--') {
+            tickerHTML += `<span class="ticker-item">🥇 طلا ۱۸: <span class="value">${gold18El.textContent}</span> ${gold18Chg?.textContent || ''}</span>`;
         }
 
-        // ==========================================
-        // راه‌اندازی
-        // ==========================================
-        document.addEventListener('DOMContentLoaded', async () => {
-            initChart('BINANCE:BTCUSDT');
+        const usdEl = document.getElementById('usd-price');
+        const usdChg = document.getElementById('usd-change');
+        if (usdEl && usdEl.textContent !== '--') {
+            tickerHTML += `<span class="ticker-item">💵 دلار: <span class="value">${usdEl.textContent}</span> ${usdChg?.textContent || ''}</span>`;
+        }
+
+        const ounceEl = document.getElementById('ounce-gold-price');
+        if (ounceEl && ounceEl.textContent !== '--') {
+            tickerHTML += `<span class="ticker-item">🏅 انس طلا: <span class="value">${ounceEl.textContent}</span></span>`;
+        }
+
+        const silverEl = document.getElementById('ounce-silver-price');
+        if (silverEl && silverEl.textContent !== '--') {
+            tickerHTML += `<span class="ticker-item">🥈 انس نقره: <span class="value">${silverEl.textContent}</span></span>`;
+        }
+
+        const btcEl = document.getElementById('btc-price');
+        const btcChg = document.getElementById('btc-change');
+        if (btcEl && btcEl.textContent !== '--') {
+            tickerHTML += `<span class="ticker-item">₿ بیت‌کوین: <span class="value">${btcEl.textContent}</span> ${btcChg?.textContent || ''}</span>`;
+        }
+
+        const ethEl = document.getElementById('eth-price');
+        const ethChg = document.getElementById('eth-change');
+        if (ethEl && ethEl.textContent !== '--') {
+            tickerHTML += `<span class="ticker-item">⟠ اتریوم: <span class="value">${ethEl.textContent}</span> ${ethChg?.textContent || ''}</span>`;
+        }
+
+        const platEl = document.getElementById('ounce-platinum-price');
+        if (platEl && platEl.textContent !== '--') {
+            tickerHTML += `<span class="ticker-item">🔶 پلاتین: <span class="value">${platEl.textContent}</span></span>`;
+        }
+
+        const brentEl = document.getElementById('brent-price');
+        if (brentEl && brentEl.textContent !== '--') {
+            tickerHTML += `<span class="ticker-item">🛢️ برنت: <span class="value">${brentEl.textContent}</span></span>`;
+        }
+
+        if (!tickerHTML) {
+            tickerHTML = '<span class="ticker-item">⏳ در حال دریافت قیمت‌ها...</span>';
+        }
+
+        const el = document.getElementById('tickerContent');
+        if (el) el.innerHTML = tickerHTML + tickerHTML + tickerHTML;
+    }
+
+    document.addEventListener('DOMContentLoaded', async () => {
+        initChart('BINANCE:BTCUSDT');
+        await fetchBrsApi();
+        await fetchCrypto();
+        updateTicker();
+        setInterval(async () => {
             await fetchBrsApi();
             await fetchCrypto();
             updateTicker();
-            setInterval(async () => {
-                await fetchBrsApi();
-                await fetchCrypto();
-                updateTicker();
-            }, 60000);
-        });
-    </script>
+        }, 60000);
+    });
+</script>
 </body>
-</html>   
+</html>    
