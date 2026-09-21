@@ -13,14 +13,12 @@
             --bg-primary: #0a0a0f;
             --bg-secondary: #14141c;
             --bg-card: #1a1a24;
-            --bg-hover: #22222e;
             --gold: #d4af37;
             --gold-light: #f4d47c;
             --gold-dark: #a8862a;
             --blue: #3b82f6;
             --green: #10b981;
             --red: #ef4444;
-            --purple: #8b5cf6;
             --text-primary: #f8fafc;
             --text-secondary: #cbd5e1;
             --text-muted: #94a3b8;
@@ -38,14 +36,12 @@
             --bg-primary: #f8fafc;
             --bg-secondary: #eef2f7;
             --bg-card: #ffffff;
-            --bg-hover: #f1f5f9;
             --gold: #b8860b;
             --gold-light: #d4af37;
             --gold-dark: #8b6508;
             --blue: #2563eb;
             --green: #059669;
             --red: #dc2626;
-            --purple: #7c3aed;
             --text-primary: #0f172a;
             --text-secondary: #334155;
             --text-muted: #64748b;
@@ -144,6 +140,7 @@
             color: #fff !important; padding: 9px 20px; border-radius: 10px;
             font-weight: 700 !important; text-decoration: none;
             font-size: 14px; transition: 0.3s; white-space: nowrap;
+            border: none; cursor: pointer; font-family: inherit;
         }
         .nav-cta:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(212, 175, 55, 0.4); }
         .theme-toggle {
@@ -158,8 +155,9 @@
             display: none; position: fixed; inset: 0;
             background: rgba(0, 0, 0, 0.6); backdrop-filter: blur(5px);
             z-index: 999; opacity: 0; transition: 0.3s;
+            pointer-events: none;
         }
-        .nav-overlay.show { opacity: 1; }
+        .nav-overlay.show { opacity: 1; pointer-events: auto; }
         .nav-mobile-menu {
             display: none; position: fixed; top: 0; right: -320px;
             width: 300px; height: 100vh; background: var(--mobile-menu-bg);
@@ -193,7 +191,10 @@
         .hero-container {
             max-width: 1200px; margin: 0 auto; width: 100%;
             display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center;
+            position: relative; z-index: 1;
         }
+        .hero-content { position: relative; z-index: 10; }
+        .hero-visual { position: relative; z-index: 1; }
         .hero-badge {
             display: inline-flex; align-items: center; gap: 8px;
             background: rgba(212, 175, 55, 0.1); border: 1px solid var(--border-gold);
@@ -217,13 +218,17 @@
             color: var(--text-muted); font-size: clamp(14px, 1.3vw, 17px);
             line-height: 1.9; margin-bottom: 32px; max-width: 500px;
         }
-        .hero-buttons { display: flex; gap: 14px; flex-wrap: wrap; }
+        .hero-buttons {
+            display: flex; gap: 14px; flex-wrap: wrap;
+            position: relative; z-index: 100;
+        }
         .btn {
             display: inline-flex; align-items: center; justify-content: center; gap: 10px;
             padding: 15px 30px; border-radius: 12px;
             font-family: inherit; font-size: 15px; font-weight: 700;
             text-decoration: none; cursor: pointer; border: none;
             transition: 0.3s; white-space: nowrap;
+            pointer-events: auto;
         }
         .btn-primary {
             background: linear-gradient(135deg, var(--gold), var(--gold-dark));
@@ -235,7 +240,6 @@
             border: 2px solid var(--gold);
         }
         .btn-outline:hover { background: rgba(212, 175, 55, 0.1); transform: translateY(-3px); }
-        .hero-visual { position: relative; }
         .hero-quote {
             background: linear-gradient(135deg, var(--bg-card), var(--bg-secondary));
             border: 1px solid var(--border-gold); border-radius: 20px;
@@ -270,7 +274,7 @@
         }
         .hero-quote-dot {
             width: 8px; height: 8px; border-radius: 50%;
-            background: var(--border-default); transition: 0.3s; cursor: pointer;
+            background: rgba(255, 255, 255, 0.2); transition: 0.3s; cursor: pointer;
         }
         .hero-quote-dot.active { background: var(--gold); width: 24px; border-radius: 4px; }
         .stats-section {
@@ -336,7 +340,7 @@
             text-align: center; transition: 0.3s;
         }
         .why-card:hover {
-            background: var(--bg-hover); border-color: var(--border-gold);
+            background: rgba(34, 34, 46, 0.9); border-color: var(--border-gold);
             transform: translateY(-5px);
         }
         .why-title { color: var(--text-primary); font-size: 16px; font-weight: 800; margin-bottom: 8px; }
@@ -358,6 +362,7 @@
             .why-grid { grid-template-columns: repeat(2, 1fr) !important; }
             .courses-grid { grid-template-columns: repeat(2, 1fr) !important; }
             .footer-grid { grid-template-columns: 1fr 1fr !important; gap: 25px !important; }
+            .footer-brand-col { grid-column: 1 / -1; }
             .section { padding: 60px 20px; }
             #ai-signal > div { grid-template-columns: 1fr !important; gap: 40px !important; }
         }
@@ -392,7 +397,6 @@
             .why-grid { grid-template-columns: 1fr !important; }
             .courses-grid { grid-template-columns: 1fr !important; }
             .footer-grid { grid-template-columns: 1fr 1fr !important; gap: 20px !important; }
-            .footer-brand-col { grid-column: 1 / -1; }
             footer { padding: 40px 15px 20px !important; }
         }
     </style>
@@ -423,7 +427,7 @@
                     <span id="themeIcon">🌙</span>
                 </button>
                 <div id="navAuth">
-                    <a href="login.html" class="nav-cta">✨ شروع رایگان</a>
+                    <button class="nav-cta" onclick="window.location.href='login.html'">✨ شروع رایگان</button>
                 </div>
             </div>
         </div>
@@ -446,7 +450,7 @@
         <a href="about.html">ℹ️ درباره ما</a>
         <a href="contact.html">📞 تماس با ما</a>
         <a href="dashboard.html">👤 پنل کاربری</a>
-        <a href="login.html" style="background: linear-gradient(135deg, var(--gold), var(--gold-dark)); color: #fff; justify-content: center; margin-top: 15px; font-weight: 800;">🚀 شروع رایگان</a>
+        <button style="background: linear-gradient(135deg, var(--gold), var(--gold-dark)); color: #fff; justify-content: center; margin-top: 15px; font-weight: 800; width: 100%; padding: 12px; border: none; border-radius: 12px; cursor: pointer; font-family: inherit; font-size: 14px;" onclick="window.location.href='login.html'">🚀 شروع رایگان</button>
     </aside>
     <!-- Hero -->
 <section class="hero">
@@ -465,8 +469,8 @@
                 آکادمی شمعدون، مسیر حرفه‌ای شدن در بازارهای مالی رو از صفر تا صد برات هموار می‌کنه. آموزش، تحلیل زنده، ابزار هوشمند — همه در یه جا.
             </p>
             <div class="hero-buttons">
-                <a href="login.html" class="btn btn-primary">🚀 شروع رایگان</a>
-                <a href="#features" class="btn btn-outline">📚 مشاهده امکانات</a>
+                <button type="button" class="btn btn-primary" onclick="window.location.href='login.html'">🚀 شروع رایگان</button>
+                <button type="button" class="btn btn-outline" onclick="document.getElementById('features').scrollIntoView({behavior:'smooth', block:'start'})">📚 مشاهده امکانات</button>
             </div>
         </div>
         <div class="hero-visual">
@@ -614,7 +618,7 @@
                     پشتیبانی از طلا، ارز دیجیتال و بورس
                 </li>
             </ul>
-            <a href="login.html" class="btn btn-primary">🤖 امتحان رایگان</a>
+            <button type="button" class="btn btn-primary" onclick="window.location.href='login.html'">🤖 امتحان رایگان</button>
         </div>
     </div>
 </section>
@@ -672,7 +676,7 @@
         </div>
     </div>
     <div style="text-align: center; margin-top: 40px;">
-        <a href="courses.html" class="btn btn-outline">مشاهده همه دوره‌ها ←</a>
+        <button type="button" class="btn btn-outline" onclick="window.location.href='courses.html'">مشاهده همه دوره‌ها ←</button>
     </div>
 </section>
 
@@ -684,9 +688,9 @@
     <p style="color: var(--text-muted); font-size: 17px; margin-bottom: 32px; max-width: 600px; margin-left: auto; margin-right: auto; line-height: 1.8;">
         همین امروز به بیش از هزار کاربر آکادمی شمعدون بپیوند و مسیر حرفه‌ای شدن رو شروع کن.
     </p>
-    <a href="login.html" class="btn btn-primary" style="font-size: 17px; padding: 18px 40px;">
+    <button type="button" class="btn btn-primary" style="font-size: 17px; padding: 18px 40px;" onclick="window.location.href='login.html'">
         🚀 شروع رایگان - همین حالا
-    </a>
+    </button>
 </section>
 
 <!-- Footer -->
@@ -822,9 +826,9 @@
                     const userName = user.user_metadata?.full_name || 'کاربر';
                     if (userEmail === ADMIN_EMAIL) {
                         document.getElementById('adminTopbar').classList.add('show');
-                        document.getElementById('navAuth').innerHTML = `<a href="admin.html" class="nav-cta" style="background: linear-gradient(135deg, #dc2626, #b91c1c); color: #fff !important;">🎯 پنل ادمین</a>`;
+                        document.getElementById('navAuth').innerHTML = `<button class="nav-cta" style="background: linear-gradient(135deg, #dc2626, #b91c1c); color: #fff !important;" onclick="window.location.href='admin.html'">🎯 پنل ادمین</button>`;
                     } else {
-                        document.getElementById('navAuth').innerHTML = `<a href="dashboard.html" class="nav-cta">👤 ${escapeHtml(userName)}</a>`;
+                        document.getElementById('navAuth').innerHTML = `<button class="nav-cta" onclick="window.location.href='dashboard.html'">👤 ${escapeHtml(userName)}</button>`;
                     }
                 }
             } catch (err) { console.log('Auth error:', err); }
