@@ -8,6 +8,8 @@
     <meta name="theme-color" content="#d4af37">
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/dompurify@3.0.6/dist/purify.min.js"></script>
     <style>
         :root {
             --bg-primary: #0a0a0f;
@@ -41,6 +43,9 @@
         @keyframes fadeInUp {
             from { opacity: 0; transform: translateY(30px); }
             to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
         }
         .main-container { max-width: 900px; margin: 0 auto; padding: 100px 20px 40px; }
         .page-header { text-align: center; margin-bottom: 30px; animation: fadeInUp 0.6s ease-out; }
@@ -316,174 +321,146 @@
             border-top: 1px solid rgba(212, 175, 55, 0.1);
             margin-top: 40px;
         }
-        /* ===== Inflation History ===== */
-        .inflation-year-row {
-            display: grid;
-            grid-template-columns: 100px 1fr;
-            gap: 12px;
+
+        /* ===== AI Analysis Card ===== */
+        .ai-card {
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.08), rgba(139, 92, 246, 0.02));
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            border-radius: 20px;
+            padding: 25px;
+            margin-top: 20px;
+            display: none;
+            animation: fadeInUp 0.4s ease-out;
+        }
+        .ai-card.show { display: block; }
+        .ai-card-header {
+            display: flex;
+            justify-content: space-between;
             align-items: center;
-            padding: 12px 0;
-            border-bottom: 1px dashed rgba(255, 255, 255, 0.05);
+            margin-bottom: 18px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(139, 92, 246, 0.2);
+            flex-wrap: wrap;
+            gap: 10px;
         }
-        .inflation-year-row:last-child { border-bottom: none; }
-        .inflation-year-row .year {
-            color: var(--gold);
-            font-size: 15px;
+        .ai-card-title {
+            color: #a78bfa;
+            font-size: 16px;
             font-weight: 800;
-            text-align: center;
-            background: rgba(212, 175, 55, 0.1);
-            padding: 8px;
-            border-radius: 10px;
-            border: 1px solid rgba(212, 175, 55, 0.2);
-        }
-        .inflation-year-row .input-wrapper {
             display: flex;
             align-items: center;
             gap: 8px;
         }
-        .inflation-year-row input { flex: 1; }
-        .inflation-year-row .suffix {
-            color: var(--gray);
-            font-size: 14px;
-            font-weight: 700;
-        }
-        .inflation-list-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 12px 15px;
-            background: rgba(10, 10, 15, 0.5);
-            border-radius: 12px;
-            border-right: 3px solid var(--gold);
-            margin-bottom: 8px;
-        }
-        .inflation-list-item .info {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-        .inflation-list-item .year-badge {
-            background: rgba(212, 175, 55, 0.15);
-            color: var(--gold);
-            padding: 4px 12px;
+        .ai-btn {
+            background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+            color: #fff;
+            padding: 10px 18px;
             border-radius: 10px;
+            border: none;
+            font-family: inherit;
             font-size: 13px;
             font-weight: 800;
-        }
-        .inflation-list-item .rate {
-            color: var(--white);
-            font-size: 15px;
-            font-weight: 800;
-        }
-        .inflation-list-item .type {
-            color: var(--gray);
-            font-size: 11px;
-        }
-        .inflation-list-item .actions {
-            display: flex;
+            cursor: pointer;
+            transition: 0.3s;
+            display: inline-flex;
+            align-items: center;
             gap: 6px;
         }
-        .inflation-list-item .icon-btn-small {
-            width: 32px;
-            height: 32px;
-            border-radius: 8px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            background: rgba(10, 10, 15, 0.5);
-            color: var(--gray);
-            cursor: pointer;
-            font-size: 14px;
-            transition: 0.3s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+        .ai-btn:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(139, 92, 246, 0.4);
         }
-        .inflation-list-item .icon-btn-small:hover {
-            border-color: var(--gold);
-            color: var(--gold);
-            background: rgba(212, 175, 55, 0.1);
-        }
-        .inflation-list-item .icon-btn-small.danger:hover {
-            border-color: var(--red);
-            color: var(--red);
-            background: rgba(239, 68, 68, 0.1);
-        }
-        .inflation-summary {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 12px;
-            margin-bottom: 20px;
-        }
-        .inflation-summary-card {
-            background: rgba(10, 10, 15, 0.5);
-            padding: 15px;
+        .ai-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+        .ai-output {
+            background: rgba(10, 10, 15, 0.6);
+            border: 1px solid rgba(139, 92, 246, 0.2);
             border-radius: 12px;
-            text-align: center;
-            border: 1px solid rgba(212, 175, 55, 0.15);
+            padding: 20px;
+            min-height: 100px;
+            max-height: 600px;
+            overflow-y: auto;
+            color: #cbd5e1;
+            font-size: 13.5px;
+            line-height: 1.9;
         }
-        .inflation-summary-card .label {
-            color: var(--gray);
-            font-size: 11px;
-            margin-bottom: 6px;
-        }
-        .inflation-summary-card .value {
-            color: var(--gold);
-            font-size: 20px;
-            font-weight: 900;
-            font-variant-numeric: tabular-nums;
-        }
-        .inflation-summary-card .value.green { color: var(--green); }
-        .inflation-summary-card .value.red { color: var(--red); }
-        .inflation-empty {
-            text-align: center;
-            padding: 30px 20px;
-            color: var(--gray);
-            font-size: 13px;
-        }
-        .inflation-empty .icon {
-            font-size: 40px;
-            margin-bottom: 10px;
-            opacity: 0.5;
-        }
-        .chart-wrapper-mini {
-            background: rgba(10, 10, 15, 0.5);
-            border-radius: 12px;
-            padding: 15px;
-            margin-top: 15px;
-            height: 280px;
-            position: relative;
-        }
-        .type-selector {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
-            margin-bottom: 20px;
-        }
-        .type-card {
-            background: rgba(10, 10, 15, 0.5);
-            border: 2px solid rgba(255, 255, 255, 0.08);
-            border-radius: 12px;
-            padding: 15px 10px;
-            cursor: pointer;
-            transition: 0.3s;
-            text-align: center;
-        }
-        .type-card:hover { border-color: rgba(212, 175, 55, 0.4); }
-        .type-card.active {
-            background: linear-gradient(135deg, rgba(212, 175, 55, 0.15), rgba(212, 175, 55, 0.05));
-            border-color: var(--gold);
-        }
-        .type-card .icon { font-size: 24px; margin-bottom: 8px; }
-        .type-card .title {
-            color: var(--white);
+        .ai-output h1 { color: #a78bfa; font-size: 18px; margin: 12px 0 8px; padding-bottom: 6px; border-bottom: 1px solid rgba(139, 92, 246, 0.2); }
+        .ai-output h2 { color: #c4b5fd; font-size: 15px; margin: 12px 0 6px; }
+        .ai-output h3 { color: #ddd6fe; font-size: 13.5px; margin: 10px 0 5px; }
+        .ai-output p { margin-bottom: 8px; }
+        .ai-output ul, .ai-output ol { margin: 8px 20px 8px 0; padding-right: 15px; }
+        .ai-output li { margin-bottom: 4px; }
+        .ai-output strong { color: #ddd6fe; font-weight: 800; }
+        .ai-output em { color: var(--gold); font-style: italic; }
+        .ai-output code {
+            background: rgba(139, 92, 246, 0.15);
+            color: #c4b5fd;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
             font-size: 12.5px;
-            font-weight: 800;
-            margin-bottom: 4px;
+            direction: ltr;
+            display: inline-block;
         }
-        .type-card .desc {
-            color: var(--gray);
-            font-size: 10.5px;
-            line-height: 1.5;
+        .ai-output pre {
+            background: rgba(0, 0, 0, 0.5);
+            padding: 12px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 10px 0;
+            direction: ltr;
+            text-align: left;
         }
+        .ai-output blockquote {
+            border-right: 3px solid #8b5cf6;
+            padding: 10px 15px;
+            margin: 10px 0;
+            background: rgba(139, 92, 246, 0.05);
+            border-radius: 6px;
+            color: #c4b5fd;
+        }
+        .ai-loading {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+            padding: 30px 20px;
+            color: #a78bfa;
+        }
+        .ai-loading .spinner {
+            width: 36px;
+            height: 36px;
+            border: 3px solid rgba(139, 92, 246, 0.2);
+            border-top-color: #8b5cf6;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        .ai-actions {
+            display: flex;
+            gap: 8px;
+            margin-top: 15px;
+            flex-wrap: wrap;
+        }
+        .ai-action-btn {
+            background: rgba(139, 92, 246, 0.1);
+            color: #a78bfa;
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            padding: 8px 14px;
+            border-radius: 10px;
+            font-family: inherit;
+            font-size: 12.5px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .ai-action-btn:hover {
+            background: rgba(139, 92, 246, 0.2);
+            border-color: #8b5cf6;
+            color: #c4b5fd;
+        }
+
         @media (max-width: 600px) {
             .main-container { padding: 90px 15px 30px; }
             .page-header h1 { font-size: 26px; }
@@ -493,9 +470,7 @@
             .calc-card { padding: 18px; }
             .comparison-container { grid-template-columns: 1fr; }
             .edu-card { padding: 14px; }
-            .inflation-year-row { grid-template-columns: 80px 1fr; }
-            .inflation-summary { grid-template-columns: 1fr; }
-            .type-selector { grid-template-columns: 1fr; }
+            .ai-card { padding: 18px; }
         }
     </style>
 </head>
@@ -592,6 +567,23 @@
                 </div>
             </div>
         </div>
+
+        <button class="ai-btn" id="ai-btn-dca" onclick="analyzeWithAI('dca')" style="width:100%; margin-top:15px; justify-content:center; padding:14px;">
+            🤖 تحلیل با AI
+        </button>
+
+        <div class="ai-card" id="ai-card-dca">
+            <div class="ai-card-header">
+                <div class="ai-card-title">🤖 تحلیل هوشمند</div>
+                <button class="ai-action-btn" onclick="copyAIAnalysis('dca')">📋 کپی</button>
+            </div>
+            <div class="ai-output" id="ai-output-dca">
+                <div class="ai-loading">
+                    <div class="spinner"></div>
+                    <div>در حال تحلیل...</div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <!-- ============ تب ۲: سود مرکب ============ -->
@@ -664,6 +656,23 @@
                 </div>
             </div>
         </div>
+
+        <button class="ai-btn" id="ai-btn-compound" onclick="analyzeWithAI('compound')" style="width:100%; margin-top:15px; justify-content:center; padding:14px;">
+            🤖 تحلیل با AI
+        </button>
+
+        <div class="ai-card" id="ai-card-compound">
+            <div class="ai-card-header">
+                <div class="ai-card-title">🤖 تحلیل هوشمند</div>
+                <button class="ai-action-btn" onclick="copyAIAnalysis('compound')">📋 کپی</button>
+            </div>
+            <div class="ai-output" id="ai-output-compound">
+                <div class="ai-loading">
+                    <div class="spinner"></div>
+                    <div>در حال تحلیل...</div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <!-- ============ تب ۳: هدف مالی ============ -->
@@ -731,6 +740,23 @@
             </div>
             <div class="info-note">
                 هرچی زودتر شروع کنی، بهره مرکب بیشتر کار می‌کنه و پس‌انداز ماهانه‌ت کمتر میشه.
+            </div>
+        </div>
+
+        <button class="ai-btn" id="ai-btn-goal" onclick="analyzeWithAI('goal')" style="width:100%; margin-top:15px; justify-content:center; padding:14px;">
+            🤖 تحلیل با AI
+        </button>
+
+        <div class="ai-card" id="ai-card-goal">
+            <div class="ai-card-header">
+                <div class="ai-card-title">🤖 تحلیل هوشمند</div>
+                <button class="ai-action-btn" onclick="copyAIAnalysis('goal')">📋 کپی</button>
+            </div>
+            <div class="ai-output" id="ai-output-goal">
+                <div class="ai-loading">
+                    <div class="spinner"></div>
+                    <div>در حال تحلیل...</div>
+                </div>
             </div>
         </div>
     </div>
@@ -802,6 +828,23 @@
                 </div>
             </div>
         </div>
+
+        <button class="ai-btn" id="ai-btn-compare" onclick="analyzeWithAI('compare')" style="width:100%; margin-top:15px; justify-content:center; padding:14px;">
+            🤖 تحلیل با AI
+        </button>
+
+        <div class="ai-card" id="ai-card-compare">
+            <div class="ai-card-header">
+                <div class="ai-card-title">🤖 تحلیل هوشمند</div>
+                <button class="ai-action-btn" onclick="copyAIAnalysis('compare')">📋 کپی</button>
+            </div>
+            <div class="ai-output" id="ai-output-compare">
+                <div class="ai-loading">
+                    <div class="spinner"></div>
+                    <div>در حال تحلیل...</div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <!-- ============ تب ۵: تورم ============ -->
@@ -867,9 +910,26 @@
                 این محاسبه فرض می‌کنه تورم ثابته. در واقعیت تورم نوسان داره ولی محاسبه تقریبی کمک‌کننده‌ست.
             </div>
         </div>
+
+        <button class="ai-btn" id="ai-btn-inflation" onclick="analyzeWithAI('inflation')" style="width:100%; margin-top:15px; justify-content:center; padding:14px;">
+            🤖 تحلیل با AI
+        </button>
+
+        <div class="ai-card" id="ai-card-inflation">
+            <div class="ai-card-header">
+                <div class="ai-card-title">🤖 تحلیل هوشمند</div>
+                <button class="ai-action-btn" onclick="copyAIAnalysis('inflation')">📋 کپی</button>
+            </div>
+            <div class="ai-output" id="ai-output-inflation">
+                <div class="ai-loading">
+                    <div class="spinner"></div>
+                    <div>در حال تحلیل...</div>
+                </div>
+            </div>
+        </div>
     </div>
 
-    <!-- ============ تب ۵.۵: تاریخچه تورم (NEW) ============ -->
+    <!-- ============ تب ۵.۵: تاریخچه تورم ============ -->
     <div class="calc-section" id="section-inflation-history">
         <div class="edu-card">
             <div class="edu-icon">📖</div>
@@ -1012,8 +1072,8 @@
             <div class="info-note" id="real-verdict"></div>
         </div>
     </div>
-    
-      <!-- ============ تب ۶: سربه‌سر ============ -->
+
+    <!-- ============ تب ۶: سربه‌سر ============ -->
     <div class="calc-section" id="section-breakeven">
         <div class="edu-card">
             <div class="edu-icon">📖</div>
@@ -1080,6 +1140,23 @@
                 هر معامله سود در بورس ایران معمولاً حدود ۱.۳٪ کارمزد داره (خرید + فروش). برای سود کردن باید حداقل این مقدار رو پوشش بدی.
             </div>
         </div>
+
+        <button class="ai-btn" id="ai-btn-breakeven" onclick="analyzeWithAI('breakeven')" style="width:100%; margin-top:15px; justify-content:center; padding:14px;">
+            🤖 تحلیل با AI
+        </button>
+
+        <div class="ai-card" id="ai-card-breakeven">
+            <div class="ai-card-header">
+                <div class="ai-card-title">🤖 تحلیل هوشمند</div>
+                <button class="ai-action-btn" onclick="copyAIAnalysis('breakeven')">📋 کپی</button>
+            </div>
+            <div class="ai-output" id="ai-output-breakeven">
+                <div class="ai-loading">
+                    <div class="spinner"></div>
+                    <div>در حال تحلیل...</div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <!-- ============ تب ۷: ریسک ============ -->
@@ -1122,6 +1199,23 @@
             <div id="risk-portfolio" style="display: flex; flex-direction: column; gap: 12px;"></div>
             <div class="info-note" id="risk-note">
                 این تخصیص بر اساس استانداردهای بین‌المللی و متناسب با بازار ایران پیشنهاد شده.
+            </div>
+        </div>
+
+        <button class="ai-btn" id="ai-btn-risk" onclick="analyzeWithAI('risk')" style="width:100%; margin-top:15px; justify-content:center; padding:14px;">
+            🤖 تحلیل با AI
+        </button>
+
+        <div class="ai-card" id="ai-card-risk">
+            <div class="ai-card-header">
+                <div class="ai-card-title">🤖 تحلیل هوشمند</div>
+                <button class="ai-action-btn" onclick="copyAIAnalysis('risk')">📋 کپی</button>
+            </div>
+            <div class="ai-output" id="ai-output-risk">
+                <div class="ai-loading">
+                    <div class="spinner"></div>
+                    <div>در حال تحلیل...</div>
+                </div>
             </div>
         </div>
     </div>
@@ -1197,6 +1291,23 @@
                 </div>
             </div>
         </div>
+
+        <button class="ai-btn" id="ai-btn-position" onclick="analyzeWithAI('position')" style="width:100%; margin-top:15px; justify-content:center; padding:14px;">
+            🤖 تحلیل با AI
+        </button>
+
+        <div class="ai-card" id="ai-card-position">
+            <div class="ai-card-header">
+                <div class="ai-card-title">🤖 تحلیل هوشمند</div>
+                <button class="ai-action-btn" onclick="copyAIAnalysis('position')">📋 کپی</button>
+            </div>
+            <div class="ai-output" id="ai-output-position">
+                <div class="ai-loading">
+                    <div class="spinner"></div>
+                    <div>در حال تحلیل...</div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 
@@ -1205,250 +1316,420 @@
 </footer>
 
 <script src="navbar.js"></script>
-    <script>
-        // ==========================================
-        // ابزارها
-        // ==========================================
-        function toFa(num) {
-            if (num === null || num === undefined || isNaN(num)) return '--';
-            const persianDigits = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
-            return String(num).replace(/\d/g, d => persianDigits[d]);
+<script>
+    // ==========================================
+    // ابزارها
+    // ==========================================
+    function toFa(num) {
+        if (num === null || num === undefined || isNaN(num)) return '--';
+        const persianDigits = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
+        return String(num).replace(/\d/g, d => persianDigits[d]);
+    }
+
+    function formatBigNum(num) {
+        if (num === null || num === undefined || isNaN(num)) return '--';
+        const n = Number(num);
+        if (!isFinite(n)) return '--';
+        const abs = Math.abs(n);
+        let result;
+        if (abs >= 1e12) result = (n / 1e12).toFixed(2) + ' همت';
+        else if (abs >= 1e9) result = (n / 1e9).toFixed(2) + ' میلیارد';
+        else if (abs >= 1e6) result = (n / 1e6).toFixed(2) + ' میلیون';
+        else if (abs >= 1e3) result = (n / 1e3).toFixed(1) + ' هزار';
+        else result = Math.round(n).toString();
+        result = result.replace(/\.?0+(\s|$)/g, '$1');
+        return toFa(result);
+    }
+
+    function formatNum(num) {
+        if (num === null || num === undefined || isNaN(num)) return '--';
+        const n = Math.round(Number(num));
+        if (!isFinite(n)) return '--';
+        return toFa(n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','));
+    }
+
+    function parseNum(str) {
+        if (!str) return 0;
+        const cleaned = String(str).replace(/[^\d]/g, '');
+        return cleaned ? parseInt(cleaned, 10) : 0;
+    }
+
+    document.querySelectorAll('input[inputmode="numeric"]').forEach(input => {
+        input.addEventListener('input', function() {
+            const value = this.value.replace(/\D/g, '');
+            if (value) {
+                this.value = parseInt(value).toLocaleString('en-US');
+            } else {
+                this.value = '';
+            }
+        });
+    });
+
+    // ==========================================
+    // تب‌ها
+    // ==========================================
+    function switchTab(tabId, btn) {
+        document.querySelectorAll('.calc-tab').forEach(t => t.classList.remove('active'));
+        btn.classList.add('active');
+        document.querySelectorAll('.calc-section').forEach(s => s.classList.remove('active'));
+        const target = document.getElementById('section-' + tabId);
+        if (target) target.classList.add('active');
+
+        if (tabId === 'inflation-history') {
+            renderInflationHistory();
+        }
+    }
+
+    // ==========================================
+    // ۱. DCA
+    // ==========================================
+    function calcDCA() {
+        const monthly = parseNum(document.getElementById('dca-monthly').value);
+        const months = parseInt(document.getElementById('dca-months').value) || 0;
+        const annualRate = parseFloat(document.getElementById('dca-rate').value) || 0;
+        const initial = parseNum(document.getElementById('dca-initial').value);
+
+        if (monthly <= 0 || months <= 0) {
+            alert('لطفاً مبلغ ماهانه و مدت زمان رو وارد کن');
+            return;
         }
 
-        function formatBigNum(num) {
-            if (num === null || num === undefined || isNaN(num)) return '--';
-            const n = Number(num);
-            if (!isFinite(n)) return '--';
-            const abs = Math.abs(n);
-            let result;
-            if (abs >= 1e12) result = (n / 1e12).toFixed(2) + ' همت';
-            else if (abs >= 1e9) result = (n / 1e9).toFixed(2) + ' میلیارد';
-            else if (abs >= 1e6) result = (n / 1e6).toFixed(2) + ' میلیون';
-            else if (abs >= 1e3) result = (n / 1e3).toFixed(1) + ' هزار';
-            else result = Math.round(n).toString();
-            result = result.replace(/\.?0+(\s|$)/g, '$1');
-            return toFa(result);
+        const monthlyRate = annualRate / 100 / 12;
+        let futureValue;
+        if (monthlyRate === 0) {
+            futureValue = monthly * months + initial;
+        } else {
+            const factor = Math.pow(1 + monthlyRate, months);
+            futureValue = monthly * ((factor - 1) / monthlyRate) + initial * factor;
         }
 
-        function formatNum(num) {
-            if (num === null || num === undefined || isNaN(num)) return '--';
-            const n = Math.round(Number(num));
-            if (!isFinite(n)) return '--';
-            return toFa(n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','));
+        const totalPrincipal = monthly * months + initial;
+        const totalProfit = futureValue - totalPrincipal;
+        const ratio = totalPrincipal > 0 ? (futureValue / totalPrincipal) : 0;
+        const avgMonthly = futureValue / months;
+
+        document.getElementById('dca-final').textContent = formatNum(futureValue) + ' تومان';
+        document.getElementById('dca-profit-sub').textContent = totalProfit > 0
+            ? `سود: ${formatBigNum(totalProfit)} تومان در ${toFa(months)} ماه`
+            : '';
+        document.getElementById('dca-principal').textContent = formatBigNum(totalPrincipal) + ' تومان';
+        document.getElementById('dca-profit').textContent = formatBigNum(totalProfit) + ' تومان';
+        document.getElementById('dca-ratio').textContent = toFa(ratio.toFixed(2)) + ' برابر';
+        document.getElementById('dca-avg').textContent = formatBigNum(avgMonthly) + ' تومان';
+        document.getElementById('result-dca').classList.add('show');
+
+        // ریست کارت AI
+        resetAICard('dca');
+    }
+
+    // ==========================================
+    // ۲. سود مرکب
+    // ==========================================
+    function calcCompound() {
+        const principal = parseNum(document.getElementById('cmp-principal').value);
+        const annualRate = parseFloat(document.getElementById('cmp-rate').value) || 0;
+        const years = parseFloat(document.getElementById('cmp-years').value) || 0;
+        const n = parseInt(document.getElementById('cmp-compound').value) || 1;
+
+        if (principal <= 0 || annualRate <= 0 || years <= 0) {
+            alert('لطفاً مبلغ، نرخ سود و مدت زمان رو وارد کن');
+            return;
         }
 
-        function parseNum(str) {
-            if (!str) return 0;
-            const cleaned = String(str).replace(/[^\d]/g, '');
-            return cleaned ? parseInt(cleaned, 10) : 0;
+        const r = annualRate / 100;
+        const finalAmount = principal * Math.pow(1 + r / n, n * years);
+        const totalProfit = finalAmount - principal;
+        const totalReturn = ((finalAmount / principal - 1) * 100);
+        const dailyProfit = totalProfit / (years * 365);
+
+        document.getElementById('cmp-final').textContent = formatNum(finalAmount) + ' تومان';
+        document.getElementById('cmp-profit-sub').textContent = `سود: ${formatBigNum(totalProfit)} تومان در ${toFa(years)} سال`;
+        document.getElementById('cmp-principal-result').textContent = formatBigNum(principal) + ' تومان';
+        document.getElementById('cmp-profit').textContent = formatBigNum(totalProfit) + ' تومان';
+        document.getElementById('cmp-total-return').textContent = toFa(totalReturn.toFixed(2)) + '٪';
+        document.getElementById('cmp-daily').textContent = formatBigNum(dailyProfit) + ' تومان';
+        document.getElementById('result-compound').classList.add('show');
+
+        resetAICard('compound');
+    }
+
+    // ==========================================
+    // ۳. هدف مالی
+    // ==========================================
+    function calcGoal() {
+        const target = parseNum(document.getElementById('goal-target').value);
+        const years = parseFloat(document.getElementById('goal-years').value) || 0;
+        const annualRate = parseFloat(document.getElementById('goal-rate').value) || 0;
+        const initial = parseNum(document.getElementById('goal-initial').value);
+
+        if (target <= 0 || years <= 0) {
+            alert('لطفاً هدف نهایی و مدت زمان رو وارد کن');
+            return;
         }
 
-        document.querySelectorAll('input[inputmode="numeric"]').forEach(input => {
-            input.addEventListener('input', function() {
-                const value = this.value.replace(/\D/g, '');
-                if (value) {
-                    this.value = parseInt(value).toLocaleString('en-US');
-                } else {
-                    this.value = '';
-                }
-            });
+        const months = years * 12;
+        const monthlyRate = annualRate / 100 / 12;
+        let monthlySaving;
+
+        if (monthlyRate === 0) {
+            monthlySaving = (target - initial) / months;
+        } else {
+            const factor = Math.pow(1 + monthlyRate, months);
+            const futureValueOfInitial = initial * factor;
+            const remaining = target - futureValueOfInitial;
+            monthlySaving = (remaining * monthlyRate) / (factor - 1);
+        }
+
+        const totalPrincipal = (monthlySaving * months) + initial;
+        const totalProfit = target - totalPrincipal;
+        const profitPercent = target > 0 ? (totalProfit / target * 100) : 0;
+
+        document.getElementById('goal-monthly').textContent = formatNum(monthlySaving) + ' تومان';
+        document.getElementById('goal-monthly-sub').textContent = `در ${toFa(Math.round(months))} ماه آینده`;
+        document.getElementById('goal-principal').textContent = formatBigNum(totalPrincipal) + ' تومان';
+        document.getElementById('goal-profit').textContent = formatBigNum(totalProfit) + ' تومان';
+        document.getElementById('goal-months').textContent = toFa(Math.round(months)) + ' ماه';
+        document.getElementById('goal-profit-percent').textContent = toFa(profitPercent.toFixed(1)) + '٪';
+        document.getElementById('result-goal').classList.add('show');
+
+        resetAICard('goal');
+    }
+
+    // ==========================================
+    // ۴. مقایسه
+    // ==========================================
+    function calcCompare() {
+        const aAmount = parseNum(document.getElementById('cmp-a-amount').value);
+        const aRate = parseFloat(document.getElementById('cmp-a-rate').value) || 0;
+        const bAmount = parseNum(document.getElementById('cmp-b-amount').value);
+        const bRate = parseFloat(document.getElementById('cmp-b-rate').value) || 0;
+        const years = parseFloat(document.getElementById('cmp-years2').value) || 0;
+
+        if (aAmount <= 0 || bAmount <= 0 || years <= 0) {
+            alert('لطفاً مبلغ‌ها و مدت زمان رو وارد کن');
+            return;
+        }
+
+        const aFinal = aAmount * Math.pow(1 + aRate / 100, years);
+        const bFinal = bAmount * Math.pow(1 + bRate / 100, years);
+
+        document.getElementById('cmp-a-final').textContent = formatBigNum(aFinal) + ' تومان';
+        document.getElementById('cmp-b-final').textContent = formatBigNum(bFinal) + ' تومان';
+
+        const winnerEl = document.getElementById('cmp-winner-highlight');
+        const winnerText = document.getElementById('cmp-winner');
+        const diffText = document.getElementById('cmp-difference');
+
+        if (aFinal > bFinal) {
+            winnerText.textContent = '🅰️ گزینه اول برنده شد!';
+            diffText.textContent = `اختلاف: ${formatBigNum(aFinal - bFinal)} تومان بیشتر`;
+        } else if (bFinal > aFinal) {
+            winnerText.textContent = '🅱️ گزینه دوم برنده شد!';
+            diffText.textContent = `اختلاف: ${formatBigNum(bFinal - aFinal)} تومان بیشتر`;
+        } else {
+            winnerText.textContent = '⚖️ مساوی!';
+            diffText.textContent = 'هر دو گزینه نتیجه یکسان دارن';
+        }
+
+        winnerEl.style.display = 'block';
+        document.getElementById('result-compare').classList.add('show');
+
+        resetAICard('compare');
+    }
+
+    // ==========================================
+    // ۵. تورم
+    // ==========================================
+    function calcInflation() {
+        const amount = parseNum(document.getElementById('inf-amount').value);
+        const rate = parseFloat(document.getElementById('inf-rate').value) || 0;
+        const years = parseFloat(document.getElementById('inf-years').value) || 0;
+
+        if (amount <= 0 || rate <= 0 || years <= 0) {
+            alert('لطفاً مبلغ، نرخ تورم و مدت زمان رو وارد کن');
+            return;
+        }
+
+        const futurePower = amount / Math.pow(1 + rate / 100, years);
+        const loss = amount - futurePower;
+        const needed = amount * Math.pow(1 + rate / 100, years);
+        const perMillion = 1000000 / Math.pow(1 + rate / 100, years);
+
+        document.getElementById('inf-result').textContent = formatNum(futurePower) + ' تومان';
+        document.getElementById('inf-result-sub').textContent = `یعنی به اندازه ${formatBigNum(futurePower)} امروز ارزش داره`;
+        document.getElementById('inf-loss').textContent = formatBigNum(loss) + ' تومان';
+        document.getElementById('inf-needed').textContent = formatBigNum(needed) + ' تومان';
+        document.getElementById('inf-per-million').textContent = formatNum(perMillion) + ' تومان';
+        document.getElementById('inf-return-needed').textContent = toFa(rate.toFixed(1)) + '٪';
+        document.getElementById('result-inflation').classList.add('show');
+
+        resetAICard('inflation');
+    }
+
+    // ==========================================
+    // ۶. سربه‌سر
+    // ==========================================
+    function calcBreakeven() {
+        const buyPrice = parseNum(document.getElementById('be-buy-price').value);
+        const quantity = parseInt(document.getElementById('be-quantity').value) || 0;
+        const buyFee = parseFloat(document.getElementById('be-buy-fee').value) || 0;
+        const sellFee = parseFloat(document.getElementById('be-sell-fee').value) || 0;
+
+        if (buyPrice <= 0 || quantity <= 0) {
+            alert('لطفاً قیمت خرید و تعداد سهام رو وارد کن');
+            return;
+        }
+
+        const totalBuy = buyPrice * quantity;
+        const buyFeeAmount = totalBuy * (buyFee / 100);
+        const totalCost = totalBuy + buyFeeAmount;
+        const breakevenPrice = totalCost / (quantity * (1 - sellFee / 100));
+        const breakevenPercent = ((breakevenPrice - buyPrice) / buyPrice) * 100;
+        const sellFeeAmount = breakevenPrice * quantity * (sellFee / 100);
+        const totalFee = buyFeeAmount + sellFeeAmount;
+
+        document.getElementById('be-breakeven-price').textContent = formatNum(breakevenPrice) + ' تومان';
+        document.getElementById('be-breakeven-percent').textContent = `حداقل ${toFa(breakevenPercent.toFixed(2))}٪ رشد لازمه`;
+        document.getElementById('be-total-buy').textContent = formatBigNum(totalBuy) + ' تومان';
+        document.getElementById('be-buy-fee-amount').textContent = formatBigNum(buyFeeAmount) + ' تومان';
+        document.getElementById('be-sell-fee-amount').textContent = formatBigNum(sellFeeAmount) + ' تومان';
+        document.getElementById('be-total-fee').textContent = formatBigNum(totalFee) + ' تومان';
+        document.getElementById('result-breakeven').classList.add('show');
+
+        resetAICard('breakeven');
+    }
+
+    // ==========================================
+    // ۷. ریسک
+    // ==========================================
+    const portfolios = {
+        conservative: {
+            name: '🛡️ محافظه‌کار',
+            assets: [
+                { label: '🏦 درآمد ثابت (صندوق‌های ETF)', percent: 50 },
+                { label: '🥇 طلا و نقره', percent: 10 },
+                { label: '💵 ارز (دلار، یورو)', percent: 25 },
+                { label: '📊 سهام کم‌ریسک', percent: 15 }
+            ]
+        },
+        balanced: {
+            name: '⚖️ متعادل',
+            assets: [
+                { label: '🏦 درآمد ثابت', percent: 30 },
+                { label: '🥇 طلا و نقره', percent: 20 },
+                { label: '📊 سهام بورس', percent: 30 },
+                { label: '💵 ارز (دلار، یورو)', percent: 20 }
+            ]
+        },
+        aggressive: {
+            name: '🚀 جسور',
+            assets: [
+                { label: '🏦 درآمد ثابت', percent: 15 },
+                { label: '🥇 طلا و نقره', percent: 25 },
+                { label: '📊 سهام بورس', percent: 35 },
+                { label: '₿ ارز دیجیتال', percent: 10 },
+                { label: '💵 ارز', percent: 15 }
+            ]
+        },
+        professional: {
+            name: '🎯 حرفه‌ای',
+            assets: [
+                { label: '🏦 درآمد ثابت', percent: 10 },
+                { label: '🥇 طلا و نقره', percent: 20 },
+                { label: '📊 سهام بورس', percent: 35 },
+                { label: '₿ ارز دیجیتال', percent: 25 },
+                { label: '💵 ارز', percent: 10 }
+            ]
+        }
+    };
+
+    function calcRisk() {
+        const total = parseNum(document.getElementById('risk-total').value);
+        const profileKey = document.getElementById('risk-profile').value;
+
+        if (total <= 0) {
+            alert('لطفاً کل سرمایه رو وارد کن');
+            return;
+        }
+
+        const profile = portfolios[profileKey];
+        const portfolioDiv = document.getElementById('risk-portfolio');
+        portfolioDiv.innerHTML = '';
+
+        profile.assets.forEach(asset => {
+            const amount = total * (asset.percent / 100);
+            const div = document.createElement('div');
+            div.className = 'result-item gold';
+            div.innerHTML = `
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+                    <div class="label" style="font-size:13px; margin:0;">${asset.label}</div>
+                    <div class="value gold" style="font-size:18px;">${toFa(asset.percent)}٪</div>
+                </div>
+                <div style="font-size:12px; color:var(--gray); margin-top:4px;">
+                    💰 ${formatBigNum(amount)} تومان
+                </div>
+                <div style="height:6px; background:rgba(10,10,15,0.6); border-radius:6px; margin-top:8px; overflow:hidden;">
+                    <div style="height:100%; width:${asset.percent}%; background:linear-gradient(90deg, var(--gold), var(--gold-light)); border-radius:6px;"></div>
+                </div>
+            `;
+            portfolioDiv.appendChild(div);
         });
 
-        // ==========================================
-        // تب‌ها
-        // ==========================================
-        function switchTab(tabId, btn) {
-            document.querySelectorAll('.calc-tab').forEach(t => t.classList.remove('active'));
-            btn.classList.add('active');
-            document.querySelectorAll('.calc-section').forEach(s => s.classList.remove('active'));
-            const target = document.getElementById('section-' + tabId);
-            if (target) target.classList.add('active');
+        document.getElementById('risk-note').innerHTML = `
+            <strong>پروفایل: ${profile.name}</strong> — این تخصیص بر اساس استانداردهای بین‌المللی و متناسب با بازار ایران پیشنهاد شده.
+        `;
+        document.getElementById('result-risk').classList.add('show');
 
-            // اگه تب تاریخچه تورم بود، لود کن
-            if (tabId === 'inflation-history') {
-                renderInflationHistory();
-            }
+        resetAICard('risk');
+    }
+
+    // ==========================================
+    // ۸. پوزیشن
+    // ==========================================
+    function calcPosition() {
+        const total = parseNum(document.getElementById('pos-total').value);
+        const riskPercent = parseFloat(document.getElementById('pos-risk-percent').value) || 0;
+        const entry = parseNum(document.getElementById('pos-entry').value);
+        const stop = parseNum(document.getElementById('pos-stop').value);
+        const target = parseNum(document.getElementById('pos-target').value);
+
+        if (total <= 0 || entry <= 0 || stop <= 0) {
+            alert('لطفاً سرمایه، قیمت ورود و حد ضرر رو وارد کن');
+            return;
         }
 
-        // ==========================================
-        // ۱. DCA
-        // ==========================================
-        function calcDCA() {
-            const monthly = parseNum(document.getElementById('dca-monthly').value);
-            const months = parseInt(document.getElementById('dca-months').value) || 0;
-            const annualRate = parseFloat(document.getElementById('dca-rate').value) || 0;
-            const initial = parseNum(document.getElementById('dca-initial').value);
-
-            if (monthly <= 0 || months <= 0) {
-                alert('لطفاً مبلغ ماهانه و مدت زمان رو وارد کن');
-                return;
-            }
-
-            const monthlyRate = annualRate / 100 / 12;
-            let futureValue;
-            if (monthlyRate === 0) {
-                futureValue = monthly * months + initial;
-            } else {
-                const factor = Math.pow(1 + monthlyRate, months);
-                futureValue = monthly * ((factor - 1) / monthlyRate) + initial * factor;
-            }
-
-            const totalPrincipal = monthly * months + initial;
-            const totalProfit = futureValue - totalPrincipal;
-            const ratio = totalPrincipal > 0 ? (futureValue / totalPrincipal) : 0;
-            const avgMonthly = futureValue / months;
-
-            document.getElementById('dca-final').textContent = formatNum(futureValue) + ' تومان';
-            document.getElementById('dca-profit-sub').textContent = totalProfit > 0
-                ? `سود: ${formatBigNum(totalProfit)} تومان در ${toFa(months)} ماه`
-                : '';
-            document.getElementById('dca-principal').textContent = formatBigNum(totalPrincipal) + ' تومان';
-            document.getElementById('dca-profit').textContent = formatBigNum(totalProfit) + ' تومان';
-            document.getElementById('dca-ratio').textContent = toFa(ratio.toFixed(2)) + ' برابر';
-            document.getElementById('dca-avg').textContent = formatBigNum(avgMonthly) + ' تومان';
-            document.getElementById('result-dca').classList.add('show');
+        if (entry === stop) {
+            alert('قیمت ورود و حد ضرر نباید یکسان باشن');
+            return;
         }
 
-        // ==========================================
-        // ۲. سود مرکب
-        // ==========================================
-        function calcCompound() {
-            const principal = parseNum(document.getElementById('cmp-principal').value);
-            const annualRate = parseFloat(document.getElementById('cmp-rate').value) || 0;
-            const years = parseFloat(document.getElementById('cmp-years').value) || 0;
-            const n = parseInt(document.getElementById('cmp-compound').value) || 1;
+        const maxLossAmount = total * (riskPercent / 100);
+        const stopDistance = Math.abs(entry - stop);
+        const stopPercent = (stopDistance / entry) * 100;
+        const positionSize = maxLossAmount / stopDistance;
+        const positionAmount = positionSize * entry;
 
-            if (principal <= 0 || annualRate <= 0 || years <= 0) {
-                alert('لطفاً مبلغ، نرخ سود و مدت زمان رو وارد کن');
-                return;
-            }
-
-            const r = annualRate / 100;
-            const finalAmount = principal * Math.pow(1 + r / n, n * years);
-            const totalProfit = finalAmount - principal;
-            const totalReturn = ((finalAmount / principal - 1) * 100);
-            const dailyProfit = totalProfit / (years * 365);
-
-            document.getElementById('cmp-final').textContent = formatNum(finalAmount) + ' تومان';
-            document.getElementById('cmp-profit-sub').textContent = `سود: ${formatBigNum(totalProfit)} تومان در ${toFa(years)} سال`;
-            document.getElementById('cmp-principal-result').textContent = formatBigNum(principal) + ' تومان';
-            document.getElementById('cmp-profit').textContent = formatBigNum(totalProfit) + ' تومان';
-            document.getElementById('cmp-total-return').textContent = toFa(totalReturn.toFixed(2)) + '٪';
-            document.getElementById('cmp-daily').textContent = formatBigNum(dailyProfit) + ' تومان';
-            document.getElementById('result-compound').classList.add('show');
+        let maxProfit = 0;
+        if (target > 0) {
+            maxProfit = positionSize * Math.abs(target - entry);
         }
 
+        const rr = maxLossAmount > 0 ? (maxProfit / maxLossAmount) : 0;
+
+        document.getElementById('pos-size').textContent = formatNum(positionSize) + ' واحد';
+        document.getElementById('pos-amount').textContent = formatBigNum(positionAmount) + ' تومان';
+        document.getElementById('pos-maxloss').textContent = formatBigNum(maxLossAmount) + ' تومان';
+        document.getElementById('pos-maxprofit').textContent = target > 0 ? formatBigNum(maxProfit) + ' تومان' : '--';
+        document.getElementById('pos-rr').textContent = rr > 0 ? '۱ : ' + toFa(rr.toFixed(2)) : '--';
+        document.getElementById('pos-stop-distance').textContent = toFa(stopPercent.toFixed(2)) + '٪';
+        document.getElementById('result-position').classList.add('show');
+
+        resetAICard('position');
+    }  
+         // ==========================================
+        // ۵.۵. تاریخچه تورم
         // ==========================================
-        // ۳. هدف مالی
-        // ==========================================
-        function calcGoal() {
-            const target = parseNum(document.getElementById('goal-target').value);
-            const years = parseFloat(document.getElementById('goal-years').value) || 0;
-            const annualRate = parseFloat(document.getElementById('goal-rate').value) || 0;
-            const initial = parseNum(document.getElementById('goal-initial').value);
-
-            if (target <= 0 || years <= 0) {
-                alert('لطفاً هدف نهایی و مدت زمان رو وارد کن');
-                return;
-            }
-
-            const months = years * 12;
-            const monthlyRate = annualRate / 100 / 12;
-            let monthlySaving;
-
-            if (monthlyRate === 0) {
-                monthlySaving = (target - initial) / months;
-            } else {
-                const factor = Math.pow(1 + monthlyRate, months);
-                const futureValueOfInitial = initial * factor;
-                const remaining = target - futureValueOfInitial;
-                monthlySaving = (remaining * monthlyRate) / (factor - 1);
-            }
-
-            const totalPrincipal = (monthlySaving * months) + initial;
-            const totalProfit = target - totalPrincipal;
-            const profitPercent = target > 0 ? (totalProfit / target * 100) : 0;
-
-            document.getElementById('goal-monthly').textContent = formatNum(monthlySaving) + ' تومان';
-            document.getElementById('goal-monthly-sub').textContent = `در ${toFa(Math.round(months))} ماه آینده`;
-            document.getElementById('goal-principal').textContent = formatBigNum(totalPrincipal) + ' تومان';
-            document.getElementById('goal-profit').textContent = formatBigNum(totalProfit) + ' تومان';
-            document.getElementById('goal-months').textContent = toFa(Math.round(months)) + ' ماه';
-            document.getElementById('goal-profit-percent').textContent = toFa(profitPercent.toFixed(1)) + '٪';
-            document.getElementById('result-goal').classList.add('show');
-        }
-
-        // ==========================================
-        // ۴. مقایسه
-        // ==========================================
-        function calcCompare() {
-            const aAmount = parseNum(document.getElementById('cmp-a-amount').value);
-            const aRate = parseFloat(document.getElementById('cmp-a-rate').value) || 0;
-            const bAmount = parseNum(document.getElementById('cmp-b-amount').value);
-            const bRate = parseFloat(document.getElementById('cmp-b-rate').value) || 0;
-            const years = parseFloat(document.getElementById('cmp-years2').value) || 0;
-
-            if (aAmount <= 0 || bAmount <= 0 || years <= 0) {
-                alert('لطفاً مبلغ‌ها و مدت زمان رو وارد کن');
-                return;
-            }
-
-            const aFinal = aAmount * Math.pow(1 + aRate / 100, years);
-            const bFinal = bAmount * Math.pow(1 + bRate / 100, years);
-
-            document.getElementById('cmp-a-final').textContent = formatBigNum(aFinal) + ' تومان';
-            document.getElementById('cmp-b-final').textContent = formatBigNum(bFinal) + ' تومان';
-
-            const winnerEl = document.getElementById('cmp-winner-highlight');
-            const winnerText = document.getElementById('cmp-winner');
-            const diffText = document.getElementById('cmp-difference');
-
-            if (aFinal > bFinal) {
-                winnerText.textContent = '🅰️ گزینه اول برنده شد!';
-                diffText.textContent = `اختلاف: ${formatBigNum(aFinal - bFinal)} تومان بیشتر`;
-            } else if (bFinal > aFinal) {
-                winnerText.textContent = '🅱️ گزینه دوم برنده شد!';
-                diffText.textContent = `اختلاف: ${formatBigNum(bFinal - aFinal)} تومان بیشتر`;
-            } else {
-                winnerText.textContent = '⚖️ مساوی!';
-                diffText.textContent = 'هر دو گزینه نتیجه یکسان دارن';
-            }
-
-            winnerEl.style.display = 'block';
-            document.getElementById('result-compare').classList.add('show');
-        }
-
-        // ==========================================
-        // ۵. تورم
-        // ==========================================
-        function calcInflation() {
-            const amount = parseNum(document.getElementById('inf-amount').value);
-            const rate = parseFloat(document.getElementById('inf-rate').value) || 0;
-            const years = parseFloat(document.getElementById('inf-years').value) || 0;
-
-            if (amount <= 0 || rate <= 0 || years <= 0) {
-                alert('لطفاً مبلغ، نرخ تورم و مدت زمان رو وارد کن');
-                return;
-            }
-
-            const futurePower = amount / Math.pow(1 + rate / 100, years);
-            const loss = amount - futurePower;
-            const needed = amount * Math.pow(1 + rate / 100, years);
-            const perMillion = 1000000 / Math.pow(1 + rate / 100, years);
-
-            document.getElementById('inf-result').textContent = formatNum(futurePower) + ' تومان';
-            document.getElementById('inf-result-sub').textContent = `یعنی به اندازه ${formatBigNum(futurePower)} امروز ارزش داره`;
-            document.getElementById('inf-loss').textContent = formatBigNum(loss) + ' تومان';
-            document.getElementById('inf-needed').textContent = formatBigNum(needed) + ' تومان';
-            document.getElementById('inf-per-million').textContent = formatNum(perMillion) + ' تومان';
-            document.getElementById('inf-return-needed').textContent = toFa(rate.toFixed(1)) + '٪';
-            document.getElementById('result-inflation').classList.add('show');
-        }
-
-        // ==========================================
-        // ۵.۵. تاریخچه تورم (NEW)
-        // ==========================================
-        let inflationType = 'point'; // 'point' | 'annual' | 'monthly'
+        let inflationType = 'point';
         let inflationHistory = [];
         let inflationChart = null;
 
@@ -1542,7 +1823,6 @@
             summaryCard.style.display = 'block';
             listCard.style.display = 'block';
 
-            // محاسبه تورم تجمعی
             let multiplier = 1;
             let sumRates = 0;
             inflationHistory.forEach(item => {
@@ -1557,7 +1837,6 @@
             document.getElementById('infTotalPercent').textContent = toFa(totalPercent.toFixed(1)) + '٪';
             document.getElementById('infAverageRate').textContent = toFa(avgRate.toFixed(1)) + '٪';
 
-            // لیست
             const sortedHistory = [...inflationHistory].sort((a, b) => b.year - a.year);
             listEl.innerHTML = sortedHistory.map(item => {
                 const typeLabel = item.type === 'point' ? '🎯 نقطه‌به‌نقطه' : item.type === 'annual' ? '📅 سالانه' : '📆 ماهانه';
@@ -1575,7 +1854,6 @@
                 `;
             }).join('');
 
-            // نمودار
             renderInflationChart();
         }
 
@@ -1676,7 +1954,6 @@
                 return;
             }
 
-            // محاسبه تورم تجمعی
             let multiplier = 1;
             inflationHistory.forEach(item => {
                 multiplier *= (1 + item.rate / 100);
@@ -1696,7 +1973,6 @@
             document.getElementById('real-real-value').textContent = formatNum(realValue) + ' تومان';
             document.getElementById('real-real-value-sub').textContent = `ارزش تعدیل‌شده با تورم ${toFa(multiplier.toFixed(2))} برابری`;
 
-            // حکم نهایی
             const verdictEl = document.getElementById('real-verdict');
             if (realReturn > 0) {
                 verdictEl.innerHTML = `<strong style="color:var(--green);">✅ عالی!</strong> سرمایه‌گذاری شما از تورم جلو زده. ارزش واقعی ${toFa(realReturn.toFixed(1))}٪ رشد کرده.`;
@@ -1710,158 +1986,406 @@
         }
 
         // ==========================================
-        // ۶. سربه‌سر
+        // 🤖 موتور AI
         // ==========================================
-        function calcBreakeven() {
-            const buyPrice = parseNum(document.getElementById('be-buy-price').value);
-            const quantity = parseInt(document.getElementById('be-quantity').value) || 0;
-            const buyFee = parseFloat(document.getElementById('be-buy-fee').value) || 0;
-            const sellFee = parseFloat(document.getElementById('be-sell-fee').value) || 0;
+        const HARDCODED_AVALAI_KEY = 'aa-B6ef1JQ4HnDNBMRw4598qRGOKr7z3TttiznZubQXfD2A1iMf';
+        const AVALAI_ENDPOINT = 'https://api.avalai.ir/v1/chat/completions';
+        const AI_MODEL = 'gpt-4o-mini';
 
-            if (buyPrice <= 0 || quantity <= 0) {
-                alert('لطفاً قیمت خرید و تعداد سهام رو وارد کن');
-                return;
-            }
-
-            const totalBuy = buyPrice * quantity;
-            const buyFeeAmount = totalBuy * (buyFee / 100);
-            const totalCost = totalBuy + buyFeeAmount;
-            const breakevenPrice = totalCost / (quantity * (1 - sellFee / 100));
-            const breakevenPercent = ((breakevenPrice - buyPrice) / buyPrice) * 100;
-            const sellFeeAmount = breakevenPrice * quantity * (sellFee / 100);
-            const totalFee = buyFeeAmount + sellFeeAmount;
-
-            document.getElementById('be-breakeven-price').textContent = formatNum(breakevenPrice) + ' تومان';
-            document.getElementById('be-breakeven-percent').textContent = `حداقل ${toFa(breakevenPercent.toFixed(2))}٪ رشد لازمه`;
-            document.getElementById('be-total-buy').textContent = formatBigNum(totalBuy) + ' تومان';
-            document.getElementById('be-buy-fee-amount').textContent = formatBigNum(buyFeeAmount) + ' تومان';
-            document.getElementById('be-sell-fee-amount').textContent = formatBigNum(sellFeeAmount) + ' تومان';
-            document.getElementById('be-total-fee').textContent = formatBigNum(totalFee) + ' تومان';
-            document.getElementById('result-breakeven').classList.add('show');
-        }
-
-        // ==========================================
-        // ۷. ریسک
-        // ==========================================
-        const portfolios = {
-            conservative: {
-                name: '🛡️ محافظه‌کار',
-                assets: [
-                    { label: '🏦 درآمد ثابت (صندوق‌های ETF)', percent: 50 },
-                    { label: '🥇 طلا و نقره', percent: 10 },
-                    { label: '💵 ارز (دلار، یورو)', percent: 25 },
-                    { label: '📊 سهام کم‌ریسک', percent: 15 }
-                ]
-            },
-            balanced: {
-                name: '⚖️ متعادل',
-                assets: [
-                    { label: '🏦 درآمد ثابت', percent: 30 },
-                    { label: '🥇 طلا و نقره', percent: 20 },
-                    { label: '📊 سهام بورس', percent: 30 },
-                    { label: '💵 ارز (دلار، یورو)', percent: 20 }
-                ]
-            },
-            aggressive: {
-                name: '🚀 جسور',
-                assets: [
-                    { label: '🏦 درآمد ثابت', percent: 15 },
-                    { label: '🥇 طلا و نقره', percent: 25 },
-                    { label: '📊 سهام بورس', percent: 35 },
-                    { label: '₿ ارز دیجیتال', percent: 10 },
-                    { label: '💵 ارز', percent: 15 }
-                ]
-            },
-            professional: {
-                name: '🎯 حرفه‌ای',
-                assets: [
-                    { label: '🏦 درآمد ثابت', percent: 10 },
-                    { label: '🥇 طلا و نقره', percent: 20 },
-                    { label: '📊 سهام بورس', percent: 35 },
-                    { label: '₿ ارز دیجیتال', percent: 25 },
-                    { label: '💵 ارز', percent: 10 }
-                ]
-            }
+        const aiState = {
+            dca: { data: null, text: '' },
+            compound: { data: null, text: '' },
+            goal: { data: null, text: '' },
+            compare: { data: null, text: '' },
+            inflation: { data: null, text: '' },
+            breakeven: { data: null, text: '' },
+            risk: { data: null, text: '' },
+            position: { data: null, text: '' }
         };
 
-        function calcRisk() {
-            const total = parseNum(document.getElementById('risk-total').value);
-            const profileKey = document.getElementById('risk-profile').value;
-
-            if (total <= 0) {
-                alert('لطفاً کل سرمایه رو وارد کن');
-                return;
+        async function getAvalaiKey() {
+            try {
+                if (window.supabase && window.SUPABASE_URL) {
+                    const { data } = await window.supabase
+                        .from('app_settings')
+                        .select('value')
+                        .eq('key', 'AVALAI_API_KEY')
+                        .single();
+                    if (data && data.value) return data.value;
+                }
+            } catch (e) {
+                console.warn('app_settings خوانده نشد:', e);
             }
-
-            const profile = portfolios[profileKey];
-            const portfolioDiv = document.getElementById('risk-portfolio');
-            portfolioDiv.innerHTML = '';
-
-            profile.assets.forEach(asset => {
-                const amount = total * (asset.percent / 100);
-                const div = document.createElement('div');
-                div.className = 'result-item gold';
-                div.innerHTML = `
-                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
-                        <div class="label" style="font-size:13px; margin:0;">${asset.label}</div>
-                        <div class="value gold" style="font-size:18px;">${toFa(asset.percent)}٪</div>
-                    </div>
-                    <div style="font-size:12px; color:var(--gray); margin-top:4px;">
-                        💰 ${formatBigNum(amount)} تومان
-                    </div>
-                    <div style="height:6px; background:rgba(10,10,15,0.6); border-radius:6px; margin-top:8px; overflow:hidden;">
-                        <div style="height:100%; width:${asset.percent}%; background:linear-gradient(90deg, var(--gold), var(--gold-light)); border-radius:6px;"></div>
-                    </div>
-                `;
-                portfolioDiv.appendChild(div);
-            });
-
-            document.getElementById('risk-note').innerHTML = `
-                <strong>پروفایل: ${profile.name}</strong> — این تخصیص بر اساس استانداردهای بین‌المللی و متناسب با بازار ایران پیشنهاد شده.
-            `;
-            document.getElementById('result-risk').classList.add('show');
+            return HARDCODED_AVALAI_KEY;
         }
 
-        // ==========================================
-        // ۸. پوزیشن
-        // ==========================================
-        function calcPosition() {
-            const total = parseNum(document.getElementById('pos-total').value);
-            const riskPercent = parseFloat(document.getElementById('pos-risk-percent').value) || 0;
-            const entry = parseNum(document.getElementById('pos-entry').value);
-            const stop = parseNum(document.getElementById('pos-stop').value);
-            const target = parseNum(document.getElementById('pos-target').value);
+        const AI_PROMPTS = {
+            dca: (d) => `شما یک مشاور مالی حرفه‌ای و دلسوز ایرانی هستید. کاربر این محاسبه DCA را انجام داده:
 
-            if (total <= 0 || entry <= 0 || stop <= 0) {
-                alert('لطفاً سرمایه، قیمت ورود و حد ضرر رو وارد کن');
+📊 اطلاعات محاسبه:
+- سرمایه‌گذاری ماهانه: ${formatNum(d.monthly)} تومان
+- مدت زمان: ${toFa(d.months)} ماه (${toFa((d.months/12).toFixed(1))} سال)
+- بازدهی سالانه فرضی: ${toFa(d.annualRate)}٪
+- موجودی فعلی: ${formatNum(d.initial)} تومان
+- اصل سرمایه کل: ${formatNum(d.totalPrincipal)} تومان
+- سود کل: ${formatNum(d.totalProfit)} تومان
+- سرمایه نهایی: ${formatNum(d.final)} تومان
+- نسبت رشد: ${toFa(d.ratio.toFixed(2))} برابر
+
+وظایف شما:
+1. آیا این برنامه واقع‌بینانه است؟
+2. آیا بازدهی ${toFa(d.annualRate)}٪ قابل تحقق است؟ چرا؟
+3. مهم‌ترین ریسک‌ها را بگو (تورم ایران، نوسان بازار، نقدشوندگی)
+4. ۳ پیشنهاد عملی و کاربردی بده
+5. یک جمع‌بندی صادقانه بنویس
+
+لحن: صمیمی، صادقانه، آموزشی. از ایموجی استفاده کن. حداکثر ۴۰۰ کلمه.
+⚠️ مهم: تحلیل صرفاً آموزشی است و توصیه سرمایه‌گذاری نیست.`,
+
+            compound: (d) => `شما یک مشاور مالی حرفه‌ای ایرانی هستید. کاربر این محاسبه سود مرکب را انجام داده:
+
+📊 اطلاعات:
+- اصل سرمایه: ${formatNum(d.principal)} تومان
+- نرخ سود سالانه: ${toFa(d.annualRate)}٪
+- مدت: ${toFa(d.years)} سال
+- تعداد محاسبه سود در سال: ${toFa(d.n)}
+- مبلغ نهایی: ${formatNum(d.final)} تومان
+- سود کل: ${formatNum(d.totalProfit)} تومان
+- بازدهی کل: ${toFa(d.totalReturn.toFixed(2))}٪
+
+وظایف:
+1. این نتیجه واقع‌بینانه است؟
+2. نرخ ${toFa(d.annualRate)}٪ با تورم ایران چطوره؟
+3. ریسک‌های پنهان را بگو
+4. ۳ پیشنهاد برای بهبود
+5. جمع‌بندی
+
+لحن صمیمی، ایموجی، حداکثر ۴۰۰ کلمه.
+⚠️ تحلیل آموزشی، نه توصیه سرمایه‌گذاری.`,
+
+            goal: (d) => `مشاور مالی ایرانی. کاربر هدف مالی گذاشته:
+
+📊 اطلاعات:
+- هدف: ${formatNum(d.target)} تومان
+- مدت: ${toFa(d.years)} سال
+- بازدهی فرضی: ${toFa(d.annualRate)}٪
+- موجودی فعلی: ${formatNum(d.initial)} تومان
+- پس‌انداز ماهانه لازم: ${formatNum(d.monthlySaving)} تومان
+- اصل کل: ${formatNum(d.totalPrincipal)} تومان
+- سود مرکب: ${formatNum(d.totalProfit)} تومان
+
+وظایف:
+1. این هدف دست‌یافتنی است؟
+2. مبلغ ماهانه ${formatNum(d.monthlySaving)} تومان برای کاربر منطقی است؟
+3. تأثیر تورم را بگو — آیا باید هدف را بالا ببرد؟
+4. ۳ راهکار عملی
+5. جمع‌بندی
+
+صمیمی، ایموجی، حداکثر ۴۰۰ کلمه.
+⚠️ آموزشی، نه توصیه.`,
+
+            compare: (d) => `مشاور مالی ایرانی. کاربر دو گزینه را مقایسه کرده:
+
+🅰️ گزینه اول:
+- مبلغ: ${formatNum(d.aAmount)} تومان
+- بازدهی: ${toFa(d.aRate)}٪
+- نتیجه: ${formatNum(d.aFinal)} تومان
+
+🅱️ گزینه دوم:
+- مبلغ: ${formatNum(d.bAmount)} تومان
+- بازدهی: ${toFa(d.bRate)}٪
+- نتیجه: ${formatNum(d.bFinal)} تومان
+
+⏳ مدت: ${toFa(d.years)} سال
+
+وظایف:
+1. برنده کیست؟ چرا؟
+2. آیا این تفاوت معنادار است؟
+3. ریسک هر گزینه چیست؟
+4. کاربر باید چطور تصمیم بگیرد؟ (نه فقط بازدهی!)
+5. جمع‌بندی
+
+صمیمی، ایموجی، حداکثر ۴۰۰ کلمه.
+⚠️ آموزشی.`,
+
+            inflation: (d) => `مشاور مالی ایرانی. کاربر تورم را محاسبه کرده:
+
+📊 اطلاعات:
+- مبلغ: ${formatNum(d.amount)} تومان
+- نرخ تورم سالانه: ${toFa(d.rate)}٪
+- مدت: ${toFa(d.years)} سال
+- قدرت خرید آینده: ${formatNum(d.futurePower)} تومان
+- کاهش ارزش: ${formatNum(d.loss)} تومان
+
+وظایف:
+1. این ارقام چه معنایی برای کاربر دارد؟
+2. آیا نرخ ${toFa(d.rate)}٪ برای ایران واقعی است؟
+3. چگونه از تورم فرار کنیم؟
+4. ۳ راهکار عملی
+5. جمع‌بندی
+
+صمیمی، ایموجی، حداکثر ۴۰۰ کلمه.
+⚠️ آموزشی.`,
+
+            breakeven: (d) => `مشاور مالی ایرانی. کاربر نقطه سربه‌سر را محاسبه کرده:
+
+📊 اطلاعات:
+- قیمت خرید: ${formatNum(d.buyPrice)} تومان
+- تعداد: ${toFa(d.quantity)}
+- کارمزد خرید: ${toFa(d.buyFee)}٪
+- کارمزد فروش: ${toFa(d.sellFee)}٪
+- قیمت سربه‌سر: ${formatNum(d.breakevenPrice)} تومان
+- رشد لازم: ${toFa(d.breakevenPercent.toFixed(2))}٪
+- کل کارمزد: ${formatNum(d.totalFee)} تومان
+
+وظایف:
+1. آیا این مقدار کارمزد منصفانه است؟
+2. رشد ${toFa(d.breakevenPercent.toFixed(2))}٪ چقدر سخت است؟
+3. نکات مهم برای معامله‌گر
+4. مقایسه با کارگزاری‌های مختلف
+5. جمع‌بندی
+
+صمیمی، ایموجی، حداکثر ۳۵۰ کلمه.
+⚠️ آموزشی.`,
+
+            risk: (d) => `مشاور مالی ایرانی. کاربر تحلیل ریسک انجام داده:
+
+📊 اطلاعات:
+- کل سرمایه: ${formatNum(d.total)} تومان
+- پروفایل: ${d.profileName}
+- تخصیص:
+${d.assets.map(a => `  • ${a.label}: ${toFa(a.percent)}٪ (${formatNum(d.total * a.percent / 100)} تومان)`).join('\n')}
+
+وظایف:
+1. این تخصیص مناسب پروفایل ${d.profileName} است؟
+2. آیا برای بازار ایران بهینه است؟
+3. چه چیزی کم دارد؟
+4. ۳ پیشنهاد برای بهبود
+5. جمع‌بندی
+
+صمیمی، ایموجی، حداکثر ۴۰۰ کلمه.
+⚠️ آموزشی.`,
+
+            position: (d) => `مشاور مالی ایرانی. کاربر پوزیشن‌سایزینگ انجام داده:
+
+📊 اطلاعات:
+- کل سرمایه: ${formatNum(d.total)} تومان
+- ریسک هر معامله: ${toFa(d.riskPercent)}٪
+- قیمت ورود: ${formatNum(d.entry)} تومان
+- حد ضرر: ${formatNum(d.stop)} تومان
+- حد سود: ${formatNum(d.target)} تومان
+- حجم پوزیشن: ${formatNum(d.positionSize)} واحد
+- مبلغ پوزیشن: ${formatNum(d.positionAmount)} تومان
+- حداکثر ضرر: ${formatNum(d.maxLoss)} تومان
+- سود بالقوه: ${formatNum(d.maxProfit)} تومان
+- نسبت R/R: ۱ به ${toFa(d.rr.toFixed(2))}
+
+وظایف:
+1. این R/R قابل قبول است؟ (حداقل ۱:۲ توصیه می‌شود)
+2. آیا ریسک ${toFa(d.riskPercent)}٪ منطقی است؟
+3. نکات مدیریت پوزیشن
+4. اشتباهات رایج
+5. جمع‌بندی
+
+صمیمی، ایموجی، حداکثر ۳۵۰ کلمه.
+⚠️ آموزشی.`
+        };
+
+        function collectAIData(type) {
+            try {
+                if (type === 'dca') {
+                    const monthly = parseNum(document.getElementById('dca-monthly').value);
+                    const months = parseInt(document.getElementById('dca-months').value) || 0;
+                    const annualRate = parseFloat(document.getElementById('dca-rate').value) || 0;
+                    const initial = parseNum(document.getElementById('dca-initial').value);
+                    const monthlyRate = annualRate / 100 / 12;
+                    let final;
+                    if (monthlyRate === 0) final = monthly * months + initial;
+                    else {
+                        const f = Math.pow(1 + monthlyRate, months);
+                        final = monthly * ((f - 1) / monthlyRate) + initial * f;
+                    }
+                    const totalPrincipal = monthly * months + initial;
+                    return { monthly, months, annualRate, initial, final, totalPrincipal, totalProfit: final - totalPrincipal, ratio: final / totalPrincipal };
+                }
+                if (type === 'compound') {
+                    const principal = parseNum(document.getElementById('cmp-principal').value);
+                    const annualRate = parseFloat(document.getElementById('cmp-rate').value) || 0;
+                    const years = parseFloat(document.getElementById('cmp-years').value) || 0;
+                    const n = parseInt(document.getElementById('cmp-compound').value) || 1;
+                    const final = principal * Math.pow(1 + annualRate / 100 / n, n * years);
+                    return { principal, annualRate, years, n, final, totalProfit: final - principal, totalReturn: (final / principal - 1) * 100 };
+                }
+                if (type === 'goal') {
+                    const target = parseNum(document.getElementById('goal-target').value);
+                    const years = parseFloat(document.getElementById('goal-years').value) || 0;
+                    const annualRate = parseFloat(document.getElementById('goal-rate').value) || 0;
+                    const initial = parseNum(document.getElementById('goal-initial').value);
+                    const months = years * 12;
+                    const mr = annualRate / 100 / 12;
+                    let monthlySaving;
+                    if (mr === 0) monthlySaving = (target - initial) / months;
+                    else {
+                        const f = Math.pow(1 + mr, months);
+                        monthlySaving = ((target - initial * f) * mr) / (f - 1);
+                    }
+                    const totalPrincipal = monthlySaving * months + initial;
+                    return { target, years, annualRate, initial, monthlySaving, totalPrincipal, totalProfit: target - totalPrincipal };
+                }
+                if (type === 'compare') {
+                    const aAmount = parseNum(document.getElementById('cmp-a-amount').value);
+                    const aRate = parseFloat(document.getElementById('cmp-a-rate').value) || 0;
+                    const bAmount = parseNum(document.getElementById('cmp-b-amount').value);
+                    const bRate = parseFloat(document.getElementById('cmp-b-rate').value) || 0;
+                    const years = parseFloat(document.getElementById('cmp-years2').value) || 0;
+                    return { aAmount, aRate, bAmount, bRate, years, aFinal: aAmount * Math.pow(1 + aRate / 100, years), bFinal: bAmount * Math.pow(1 + bRate / 100, years) };
+                }
+                if (type === 'inflation') {
+                    const amount = parseNum(document.getElementById('inf-amount').value);
+                    const rate = parseFloat(document.getElementById('inf-rate').value) || 0;
+                    const years = parseFloat(document.getElementById('inf-years').value) || 0;
+                    const futurePower = amount / Math.pow(1 + rate / 100, years);
+                    return { amount, rate, years, futurePower, loss: amount - futurePower };
+                }
+                if (type === 'breakeven') {
+                    const buyPrice = parseNum(document.getElementById('be-buy-price').value);
+                    const quantity = parseInt(document.getElementById('be-quantity').value) || 0;
+                    const buyFee = parseFloat(document.getElementById('be-buy-fee').value) || 0;
+                    const sellFee = parseFloat(document.getElementById('be-sell-fee').value) || 0;
+                    const totalBuy = buyPrice * quantity;
+                    const buyFeeAmount = totalBuy * (buyFee / 100);
+                    const breakevenPrice = (totalBuy + buyFeeAmount) / (quantity * (1 - sellFee / 100));
+                    return { buyPrice, quantity, buyFee, sellFee, breakevenPrice, breakevenPercent: ((breakevenPrice - buyPrice) / buyPrice) * 100, totalFee: buyFeeAmount + breakevenPrice * quantity * (sellFee / 100) };
+                }
+                if (type === 'risk') {
+                    const total = parseNum(document.getElementById('risk-total').value);
+                    const profileKey = document.getElementById('risk-profile').value;
+                    const profile = portfolios[profileKey];
+                    return { total, profileName: profile.name, assets: profile.assets };
+                }
+                if (type === 'position') {
+                    const total = parseNum(document.getElementById('pos-total').value);
+                    const riskPercent = parseFloat(document.getElementById('pos-risk-percent').value) || 0;
+                    const entry = parseNum(document.getElementById('pos-entry').value);
+                    const stop = parseNum(document.getElementById('pos-stop').value);
+                    const target = parseNum(document.getElementById('pos-target').value);
+                    const maxLoss = total * (riskPercent / 100);
+                    const stopDist = Math.abs(entry - stop);
+                    const positionSize = maxLoss / stopDist;
+                    const maxProfit = target > 0 ? positionSize * Math.abs(target - entry) : 0;
+                    return { total, riskPercent, entry, stop, target, positionSize, positionAmount: positionSize * entry, maxLoss, maxProfit, rr: maxLoss > 0 ? maxProfit / maxLoss : 0 };
+                }
+            } catch (e) {
+                console.error('collectAIData error:', e);
+            }
+            return null;
+        }
+
+        function resetAICard(type) {
+            const card = document.getElementById('ai-card-' + type);
+            const output = document.getElementById('ai-output-' + type);
+            const btn = document.getElementById('ai-btn-' + type);
+            if (card) card.classList.remove('show');
+            if (output) output.innerHTML = `<div class="ai-loading"><div class="spinner"></div><div>در حال تحلیل...</div></div>`;
+            if (btn) btn.disabled = false;
+            if (aiState[type]) { aiState[type].data = null; aiState[type].text = ''; }
+        }
+
+        async function analyzeWithAI(type) {
+            const btn = document.getElementById('ai-btn-' + type);
+            const card = document.getElementById('ai-card-' + type);
+            const output = document.getElementById('ai-output-' + type);
+
+            if (!btn || !card || !output) return;
+
+            const data = collectAIData(type);
+            if (!data) {
+                alert('ابتدا محاسبه را انجام بده');
                 return;
             }
 
-            if (entry === stop) {
-                alert('قیمت ورود و حد ضرر نباید یکسان باشن');
+            aiState[type].data = data;
+            card.classList.add('show');
+            btn.disabled = true;
+            btn.textContent = '⏳ در حال تحلیل...';
+            output.innerHTML = `<div class="ai-loading"><div class="spinner"></div><div>🤖 AI در حال بررسی محاسبه شماست...</div></div>`;
+            card.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+            try {
+                const apiKey = await getAvalaiKey();
+                const prompt = AI_PROMPTS[type](data);
+
+                const response = await fetch(AVALAI_ENDPOINT, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer ' + apiKey
+                    },
+                    body: JSON.stringify({
+                        model: AI_MODEL,
+                        messages: [
+                            { role: 'system', content: 'شما یک مشاور مالی حرفه‌ای ایرانی هستید که به زبان فارسی روان و صمیمی صحبت می‌کنید.' },
+                            { role: 'user', content: prompt }
+                        ],
+                        temperature: 0.7,
+                        max_tokens: 1500
+                    })
+                });
+
+                if (!response.ok) {
+                    const errText = await response.text();
+                    throw new Error(`خطای API (${response.status}): ${errText.slice(0, 200)}`);
+                }
+
+                const result = await response.json();
+                const text = result?.choices?.[0]?.message?.content || 'پاسخی دریافت نشد.';
+
+                aiState[type].text = text;
+
+                let html = text;
+                if (window.marked) {
+                    html = marked.parse(text);
+                }
+                if (window.DOMPurify) {
+                    html = DOMPurify.sanitize(html);
+                }
+                output.innerHTML = html;
+
+            } catch (err) {
+                console.error('AI error:', err);
+                output.innerHTML = `
+                    <div style="color:var(--red); padding:15px; text-align:center;">
+                        <div style="font-size:24px; margin-bottom:8px;">⚠️</div>
+                        <div style="font-weight:800; margin-bottom:6px;">خطا در تحلیل AI</div>
+                        <div style="font-size:12px; color:var(--gray);">${err.message}</div>
+                        <div style="font-size:11.5px; color:var(--gray); margin-top:10px;">ممکنه اینترنت یا API موقتاً مشکل داشته باشه. دوباره تلاش کن.</div>
+                    </div>
+                `;
+            } finally {
+                btn.disabled = false;
+                btn.textContent = '🤖 تحلیل با AI';
+            }
+        }
+
+        async function copyAIAnalysis(type) {
+            const state = aiState[type];
+            if (!state || !state.text) {
+                alert('ابتدا تحلیل با AI انجام بده');
                 return;
             }
-
-            const maxLossAmount = total * (riskPercent / 100);
-            const stopDistance = Math.abs(entry - stop);
-            const stopPercent = (stopDistance / entry) * 100;
-            const positionSize = maxLossAmount / stopDistance;
-            const positionAmount = positionSize * entry;
-
-            let maxProfit = 0;
-            if (target > 0) {
-                maxProfit = positionSize * Math.abs(target - entry);
+            try {
+                await navigator.clipboard.writeText(state.text);
+                const btns = document.querySelectorAll(`#ai-card-${type} .ai-action-btn`);
+                btns.forEach(b => {
+                    if (b.textContent.includes('کپی')) {
+                        const original = b.innerHTML;
+                        b.innerHTML = '✅ کپی شد!';
+                        setTimeout(() => { b.innerHTML = original; }, 1500);
+                    }
+                });
+            } catch (e) {
+                alert('کپی نشد. دستی انتخاب کن.');
             }
-
-            const rr = maxLossAmount > 0 ? (maxProfit / maxLossAmount) : 0;
-
-            document.getElementById('pos-size').textContent = formatNum(positionSize) + ' واحد';
-            document.getElementById('pos-amount').textContent = formatBigNum(positionAmount) + ' تومان';
-            document.getElementById('pos-maxloss').textContent = formatBigNum(maxLossAmount) + ' تومان';
-            document.getElementById('pos-maxprofit').textContent = target > 0 ? formatBigNum(maxProfit) + ' تومان' : '--';
-            document.getElementById('pos-rr').textContent = rr > 0 ? '۱ : ' + toFa(rr.toFixed(2)) : '--';
-            document.getElementById('pos-stop-distance').textContent = toFa(stopPercent.toFixed(2)) + '٪';
-            document.getElementById('result-position').classList.add('show');
         }
 
         // ==========================================
@@ -1872,4 +2396,4 @@
         });
     </script>
 </body>
-</html>    
+</html>   
