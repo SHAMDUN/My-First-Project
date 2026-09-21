@@ -1048,7 +1048,25 @@
         .quick-btn { font-size: 12px; padding: 10px 12px; }
     }
 </style>   
-    <script src="navbar.js"></script>
+    <script src="navbar.js" defer></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            setTimeout(() => {
+                const themeBtn = document.getElementById('snThemeBtn');
+                if (themeBtn && !themeBtn.hasAttribute('data-bound')) {
+                    themeBtn.setAttribute('data-bound', 'true');
+                    themeBtn.addEventListener('click', () => {
+                        const current = document.documentElement.getAttribute('data-theme') || 'dark';
+                        const newTheme = current === 'dark' ? 'light' : 'dark';
+                        document.documentElement.setAttribute('data-theme', newTheme);
+                        localStorage.setItem('shamdun-theme', newTheme);
+                        const icon = document.getElementById('snThemeIcon');
+                        if (icon) icon.textContent = newTheme === 'dark' ? '🌙' : '☀️';
+                    });
+                }
+            }, 1000);
+        });
+    </script>
     <script src="https://s3.tradingview.com/tv.js"></script>
     <script>
         // ==========================================
