@@ -27,7 +27,7 @@
         body {
             font-family: 'Vazirmatn', Tahoma, sans-serif;
             background-color: var(--bg-primary);
-            background-image: 
+            background-image:
                 radial-gradient(circle at 0% 0%, rgba(212, 175, 55, 0.08) 0%, transparent 40%),
                 radial-gradient(circle at 100% 100%, rgba(59, 130, 246, 0.06) 0%, transparent 40%);
             background-size: 100% 100%, 100% 100%;
@@ -42,9 +42,11 @@
             to { opacity: 1; transform: translateY(0); }
         }
         @keyframes spin { to { transform: rotate(360deg); } }
-
-        .main-container { max-width: 900px; margin: 0 auto; padding: 100px 20px 40px; }
-
+        .main-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 100px 20px 40px;
+        }
         /* ===== Back Button ===== */
         .back-btn {
             display: inline-flex;
@@ -65,7 +67,6 @@
             border-color: var(--gold);
             background: rgba(212, 175, 55, 0.05);
         }
-
         /* ===== Article Header ===== */
         .article-header {
             margin-bottom: 30px;
@@ -104,7 +105,25 @@
             align-items: center;
             gap: 5px;
         }
-
+        /* ===== Share Top (NEW) ===== */
+        .share-top {
+            margin-bottom: 25px;
+            padding: 15px 20px;
+            background: rgba(20, 20, 28, 0.5);
+            border-radius: 15px;
+            border: 1px solid rgba(212, 175, 55, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 12px;
+            animation: fadeInUp 0.6s ease-out 0.15s backwards;
+        }
+        .share-top .share-title {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--gray);
+        }
         /* ===== Cover Image ===== */
         .cover-image {
             width: 100%;
@@ -121,7 +140,6 @@
             border: 1px solid rgba(212, 175, 55, 0.2);
             animation: fadeInUp 0.6s ease-out 0.1s backwards;
         }
-
         /* ===== Article Content ===== */
         .article-content {
             background: linear-gradient(135deg, var(--bg-card), var(--bg-secondary));
@@ -160,21 +178,13 @@
             margin-bottom: 15px;
             text-align: justify;
         }
-        .article-content ul,
-        .article-content ol {
+        .article-content ul, .article-content ol {
             margin: 15px 20px 15px 0;
             padding-right: 20px;
         }
-        .article-content li {
-            margin-bottom: 8px;
-        }
-        .article-content strong {
-            color: var(--gold-light);
-            font-weight: 800;
-        }
-        .article-content em {
-            color: var(--gold);
-        }
+        .article-content li { margin-bottom: 8px; }
+        .article-content strong { color: var(--gold-light); font-weight: 800; }
+        .article-content em { color: var(--gold); }
         .article-content code {
             background: rgba(212, 175, 55, 0.15);
             color: var(--gold-light);
@@ -248,7 +258,6 @@
             padding: 10px;
             border: 1px solid rgba(255, 255, 255, 0.05);
         }
-
         /* ===== Tags ===== */
         .tags-section {
             margin-top: 30px;
@@ -282,7 +291,6 @@
             background: rgba(212, 175, 55, 0.25);
             transform: translateY(-2px);
         }
-
         /* ===== Share ===== */
         .share-section {
             margin-top: 25px;
@@ -326,9 +334,28 @@
         .share-btn.telegram:hover { background: #006699; transform: translateY(-2px); }
         .share-btn.whatsapp { background: #25d366; }
         .share-btn.whatsapp:hover { background: #1da851; transform: translateY(-2px); }
-        .share-btn.copy { background: rgba(148, 163, 184, 0.15); border: 1px solid rgba(148, 163, 184, 0.3); color: var(--gray); }
-        .share-btn.copy:hover { background: rgba(148, 163, 184, 0.25); color: var(--white); }
-
+        .share-btn.twitter { background: #000000; }
+        .share-btn.twitter:hover { background: #1a1a1a; transform: translateY(-2px); }
+        .share-btn.linkedin { background: #0077b5; }
+        .share-btn.linkedin:hover { background: #005885; transform: translateY(-2px); }
+        .share-btn.copy {
+            background: rgba(148, 163, 184, 0.15);
+            border: 1px solid rgba(148, 163, 184, 0.3);
+            color: var(--gray);
+        }
+        .share-btn.copy:hover {
+            background: rgba(148, 163, 184, 0.25);
+            color: var(--white);
+        }
+        .share-btn.native {
+            background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+            color: var(--bg-primary);
+            display: none;
+        }
+        .share-btn.native:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(212, 175, 55, 0.4);
+        }
         /* ===== Related Posts ===== */
         .related-section {
             margin-top: 45px;
@@ -400,7 +427,6 @@
             -webkit-box-orient: vertical;
             overflow: hidden;
         }
-
         /* ===== Loading / Error ===== */
         .loading-screen {
             text-align: center;
@@ -408,7 +434,8 @@
             color: var(--gray);
         }
         .spinner {
-            width: 50px; height: 50px;
+            width: 50px;
+            height: 50px;
             border: 4px solid rgba(212, 175, 55, 0.2);
             border-top-color: var(--gold);
             border-radius: 50%;
@@ -420,7 +447,11 @@
             padding: 80px 20px;
             color: var(--gray);
         }
-        .error-screen .icon { font-size: 60px; margin-bottom: 15px; opacity: 0.5; }
+        .error-screen .icon {
+            font-size: 60px;
+            margin-bottom: 15px;
+            opacity: 0.5;
+        }
         .error-screen h2 { color: var(--gold); margin-bottom: 10px; }
         .error-screen a {
             display: inline-block;
@@ -433,7 +464,6 @@
             font-weight: 800;
             font-size: 14px;
         }
-
         /* ===== Footer ===== */
         .footer {
             text-align: center;
@@ -443,7 +473,6 @@
             border-top: 1px solid rgba(212, 175, 55, 0.1);
             margin-top: 50px;
         }
-
         /* ===== Toast ===== */
         .toast {
             position: fixed;
@@ -463,7 +492,6 @@
         }
         .toast.show { transform: translateX(-50%) translateY(0); }
         .toast.success { border-right-color: var(--green); }
-
         /* ===== Responsive ===== */
         @media (max-width: 700px) {
             .article-title { font-size: 26px; }
@@ -472,6 +500,9 @@
             .article-content h2 { font-size: 18px; }
             .cover-image { height: 240px; font-size: 70px; }
             .related-grid { grid-template-columns: 1fr; }
+            .share-btn.native { display: inline-flex; }
+            .share-top { flex-direction: column; align-items: stretch; }
+            .share-top .share-buttons { justify-content: center; }
         }
         @media (max-width: 500px) {
             .main-container { padding: 90px 15px 30px; }
@@ -482,23 +513,18 @@
     </style>
 </head>
 <body>
-
     <div class="main-container" id="mainContainer">
         <div class="loading-screen">
             <div class="spinner"></div>
             ⏳ در حال بارگذاری مقاله...
         </div>
     </div>
-
     <footer class="footer">
         © ۱۴۰۵ آکادمی شمعدون | تمامی حقوق محفوظ است
     </footer>
-
     <div id="toast" class="toast"></div>
-
     <script src="navbar.js"></script>
     <script src="supabase-config.js"></script>
-
     <script>
         const CATEGORY_ICONS = {
             'آموزش': '📚',
@@ -529,10 +555,10 @@
             if (!iso) return '';
             try {
                 const d = new Date(iso);
-                return new Intl.DateTimeFormat('fa-IR', {
-                    year: 'numeric', month: 'long', day: 'numeric'
-                }).format(d);
-            } catch (e) { return ''; }
+                return new Intl.DateTimeFormat('fa-IR', { year: 'numeric', month: 'long', day: 'numeric' }).format(d);
+            } catch (e) {
+                return '';
+            }
         }
 
         function showToast(msg, type = 'success') {
@@ -623,18 +649,16 @@
             }
 
             // برچسب‌ها
-            const tagsHtml = (post.tags && post.tags.length > 0)
-                ? `
-                    <div class="tags-section">
-                        <div class="tags-title">🏷️ برچسب‌ها</div>
-                        <div class="tags-list">
-                            ${post.tags.map(t => `
-                                <a href="blog.html" class="tag">${escapeHtml(t)}</a>
-                            `).join('')}
-                        </div>
+            const tagsHtml = (post.tags && post.tags.length > 0) ? `
+                <div class="tags-section">
+                    <div class="tags-title">🏷️ برچسب‌ها</div>
+                    <div class="tags-list">
+                        ${post.tags.map(t => `
+                            <a href="blog.html" class="tag">${escapeHtml(t)}</a>
+                        `).join('')}
                     </div>
-                `
-                : '';
+                </div>
+            ` : '';
 
             // عکس شاخص
             const coverHtml = `
@@ -646,6 +670,30 @@
             // لینک‌های اشتراک‌گذاری
             const shareUrl = encodeURIComponent(window.location.href);
             const shareTitle = encodeURIComponent(post.title);
+            const shareRawUrl = window.location.href;
+            const shareRawTitle = post.title;
+
+            // دکمه‌های مشترک
+            const shareButtonsHtml = `
+                <a href="https://t.me/share/url?url=${shareUrl}&text=${shareTitle}" target="_blank" rel="noopener" class="share-btn telegram">
+                    ✈️ تلگرام
+                </a>
+                <a href="https://wa.me/?text=${shareTitle}%20${shareUrl}" target="_blank" rel="noopener" class="share-btn whatsapp">
+                    💬 واتساپ
+                </a>
+                <a href="https://twitter.com/intent/tweet?url=${shareUrl}&text=${shareTitle}" target="_blank" rel="noopener" class="share-btn twitter">
+                    🐦 توییتر
+                </a>
+                <a href="https://www.linkedin.com/sharing/share-offsite/?url=${shareUrl}" target="_blank" rel="noopener" class="share-btn linkedin">
+                    💼 لینکدین
+                </a>
+                <button class="share-btn copy" onclick="copyLink()">
+                    🔗 کپی لینک
+                </button>
+                <button class="share-btn native" onclick="nativeShare('${shareRawTitle.replace(/'/g, "\\'").replace(/"/g, '&quot;')}', '${shareRawUrl}')">
+                    📱 اشتراک
+                </button>
+            `;
 
             container.innerHTML = `
                 <a href="blog.html" class="back-btn">← بازگشت به وبلاگ</a>
@@ -663,6 +711,16 @@
                     </div>
                 </header>
 
+                <div class="share-top">
+                    <div class="share-title">📤 اشتراک‌گذاری سریع:</div>
+                    <div class="share-buttons">
+                        <a href="https://t.me/share/url?url=${shareUrl}&text=${shareTitle}" target="_blank" rel="noopener" class="share-btn telegram">✈️ تلگرام</a>
+                        <a href="https://wa.me/?text=${shareTitle}%20${shareUrl}" target="_blank" rel="noopener" class="share-btn whatsapp">💬 واتساپ</a>
+                        <button class="share-btn copy" onclick="copyLink()">🔗 کپی</button>
+                        <button class="share-btn native" onclick="nativeShare('${shareRawTitle.replace(/'/g, "\\'").replace(/"/g, '&quot;')}', '${shareRawUrl}')">📱 اشتراک</button>
+                    </div>
+                </div>
+
                 ${coverHtml}
 
                 <div class="article-content">
@@ -674,15 +732,7 @@
                 <div class="share-section">
                     <div class="share-title">📤 این مقاله رو به اشتراک بذار:</div>
                     <div class="share-buttons">
-                        <a href="https://t.me/share/url?url=${shareUrl}&text=${shareTitle}" target="_blank" class="share-btn telegram">
-                            ✈️ تلگرام
-                        </a>
-                        <a href="https://wa.me/?text=${shareTitle}%20${shareUrl}" target="_blank" class="share-btn whatsapp">
-                            💬 واتساپ
-                        </a>
-                        <button class="share-btn copy" onclick="copyLink()">
-                            🔗 کپی لینک
-                        </button>
+                        ${shareButtonsHtml}
                     </div>
                 </div>
 
@@ -704,6 +754,27 @@
             }).catch(() => {
                 showToast('❌ خطا در کپی لینک', 'error');
             });
+        }
+
+        // ==========================================
+        // اشتراک‌گذاری سیستم (Web Share API)
+        // ==========================================
+        async function nativeShare(title, url) {
+            if (navigator.share) {
+                try {
+                    await navigator.share({
+                        title: title,
+                        text: title + ' — آکادمی شمعدون',
+                        url: url
+                    });
+                } catch (e) {
+                    if (e.name !== 'AbortError') {
+                        console.error('Share error:', e);
+                    }
+                }
+            } else {
+                copyLink();
+            }
         }
 
         // ==========================================
@@ -741,7 +812,6 @@
                 }).join('');
 
                 section.style.display = 'block';
-
             } catch (e) {
                 console.error('Related posts error:', e);
             }
@@ -755,4 +825,4 @@
         });
     </script>
 </body>
-</html>
+</html>    
