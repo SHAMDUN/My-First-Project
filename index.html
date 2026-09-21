@@ -85,10 +85,6 @@
             0%, 100% { opacity: 1; transform: scale(1); }
             50% { opacity: 0.5; transform: scale(1.3); }
         }
-        @keyframes scrollMarket {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-100%); }
-        }
         .admin-topbar {
             display: none; position: fixed; top: 0; left: 0; right: 0;
             background: linear-gradient(135deg, rgba(239, 68, 68, 0.95), rgba(220, 38, 38, 0.95));
@@ -190,39 +186,9 @@
             font-size: 14px; font-weight: 600; transition: 0.25s; margin-bottom: 4px;
         }
         .nav-mobile-menu a:hover { background: rgba(212, 175, 55, 0.1); color: var(--gold); }
-        .live-market-bar {
-            position: fixed; top: 64px; left: 0; right: 0;
-            background: var(--navbar-bg-scrolled); backdrop-filter: blur(20px);
-            border-bottom: 1px solid var(--border-gold);
-            z-index: 998; overflow: hidden; height: 42px;
-            display: flex; align-items: center; transition: top 0.3s;
-        }
-        .live-market-track {
-            display: flex; gap: 40px;
-            animation: scrollMarket 120s linear infinite;
-            padding-left: 100%; white-space: nowrap;
-        }
-        .live-market-track:hover { animation-play-state: paused; }
-        .live-market-item {
-            display: inline-flex; align-items: center; gap: 8px;
-            font-size: 12.5px; font-weight: 700; white-space: nowrap;
-        }
-        .live-market-item .icon { font-size: 14px; }
-        .live-market-item .name { color: var(--text-muted); }
-        .live-market-item .price { color: var(--text-primary); font-variant-numeric: tabular-nums; }
-        .live-market-item .change {
-            font-weight: 800; padding: 2px 8px;
-            border-radius: 8px; font-size: 11px;
-        }
-        .live-market-item .change.up {
-            color: var(--green); background: rgba(16, 185, 129, 0.15);
-        }
-        .live-market-item .change.down {
-            color: var(--red); background: rgba(239, 68, 68, 0.15);
-        }
         .hero {
             min-height: 100vh; display: flex; align-items: center;
-            padding: 180px 20px 80px; position: relative;
+            padding: 140px 20px 80px; position: relative;
         }
         .hero-container {
             max-width: 1200px; margin: 0 auto; width: 100%;
@@ -381,7 +347,7 @@
             .nav-cta { padding: 8px 14px; font-size: 13px; }
             .nav-mobile-menu { display: block; }
             .nav-overlay { display: block; }
-            .hero { padding: 160px 20px 60px; min-height: auto; }
+            .hero { padding: 120px 20px 60px; min-height: auto; }
             .hero-container { grid-template-columns: 1fr; gap: 40px; }
             .hero-content { text-align: center; }
             .hero-badge { margin-left: auto; margin-right: auto; }
@@ -391,7 +357,7 @@
             .stats-container { grid-template-columns: repeat(2, 1fr); gap: 16px; }
             .why-grid { grid-template-columns: repeat(2, 1fr) !important; }
             .courses-grid { grid-template-columns: repeat(2, 1fr) !important; }
-            .footer-grid { grid-template-columns: 1fr 1fr !important; gap: 30px !important; }
+            .footer-grid { grid-template-columns: 1fr 1fr !important; gap: 25px !important; }
             .section { padding: 60px 20px; }
             #ai-signal > div { grid-template-columns: 1fr !important; gap: 40px !important; }
         }
@@ -402,10 +368,7 @@
             .nav-cta { padding: 7px 12px; font-size: 12px; }
             .theme-toggle { width: 38px; height: 38px; font-size: 16px; }
             .nav-hamburger { width: 38px; height: 38px; }
-            .live-market-bar { height: 38px; }
-            .live-market-item { font-size: 11.5px; }
-            .live-market-track { gap: 30px; }
-            .hero { padding: 140px 15px 40px; }
+            .hero { padding: 100px 15px 40px; }
             .hero h1 { font-size: 28px; line-height: 1.35; }
             .hero-desc { font-size: 14px; }
             .hero-badge { font-size: 11px; padding: 6px 12px; }
@@ -428,7 +391,8 @@
             .section-header { margin-bottom: 40px; }
             .why-grid { grid-template-columns: 1fr !important; }
             .courses-grid { grid-template-columns: 1fr !important; }
-            .footer-grid { grid-template-columns: 1fr !important; gap: 25px !important; }
+            .footer-grid { grid-template-columns: 1fr 1fr !important; gap: 20px !important; }
+            .footer-brand-col { grid-column: 1 / -1; }
             footer { padding: 40px 15px 20px !important; }
         }
     </style>
@@ -484,14 +448,6 @@
         <a href="dashboard.html">👤 پنل کاربری</a>
         <a href="login.html" style="background: linear-gradient(135deg, var(--gold), var(--gold-dark)); color: #fff; justify-content: center; margin-top: 15px; font-weight: 800;">🚀 شروع رایگان</a>
     </aside>
-    <div class="live-market-bar">
-        <div class="live-market-track" id="liveMarketTrack">
-            <div class="live-market-item">
-                <span class="icon">⏳</span>
-                <span class="name">در حال بارگذاری قیمت‌ها...</span>
-            </div>
-        </div>
-    </div>
     <!-- Hero -->
 <section class="hero">
     <div class="hero-container">
@@ -736,7 +692,7 @@
 <!-- Footer -->
 <footer style="background: var(--bg-secondary); border-top: 1px solid var(--border-gold); padding: 60px 20px 30px;">
     <div class="footer-grid" style="max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 40px; margin-bottom: 40px;">
-        <div>
+        <div class="footer-brand-col">
             <h3 style="color: var(--gold); font-size: 22px; font-weight: 800; margin-bottom: 15px;">🎯 شمعدون</h3>
             <p style="color: var(--text-muted); font-size: 13px; line-height: 1.8; margin-bottom: 20px;">
                 آکادمی آموزش و تحلیل بازارهای مالی. مسیر حرفه‌ای شدن در طلا، ارز دیجیتال، بورس و فارکس.
@@ -914,139 +870,6 @@
         }
 
         // ==========================================
-        // LIVE MARKET — دقیقاً بر اساس home.html
-        // ==========================================
-        const LIVE_MARKET_KEYS = [
-            'B4xp2gWXASUmB3n6WPHtJxhjyJkgcBJz',
-            'BvUj3cMKWNBK87KW9xhNccCThmfVbd8u'
-        ];
-        let liveMarketKeyIndex = 0;
-
-        async function fetchLiveMarketApi(baseUrl) {
-            for (let attempt = 0; attempt < LIVE_MARKET_KEYS.length; attempt++) {
-                const key = LIVE_MARKET_KEYS[liveMarketKeyIndex];
-                try {
-                    const res = await fetch(`${baseUrl}?key=${key}`);
-                    if (!res.ok) {
-                        liveMarketKeyIndex = (liveMarketKeyIndex + 1) % LIVE_MARKET_KEYS.length;
-                        continue;
-                    }
-                    const text = await res.text();
-                    if (text.trim().startsWith('<!DOCTYPE') || text.trim().startsWith('<html')) {
-                        liveMarketKeyIndex = (liveMarketKeyIndex + 1) % LIVE_MARKET_KEYS.length;
-                        continue;
-                    }
-                    return JSON.parse(text);
-                } catch (e) {
-                    liveMarketKeyIndex = (liveMarketKeyIndex + 1) % LIVE_MARKET_KEYS.length;
-                }
-            }
-            throw new Error('همه کلیدها fail');
-        }
-
-        async function loadLiveMarket() {
-            const track = document.getElementById('liveMarketTrack');
-            if (!track) return;
-
-            try {
-                const marketData = [];
-
-                // ۱. طلا ۱۸ + دلار + انس طلا از Gold_Currency
-                try {
-                    const d = await fetchLiveMarketApi('https://Api.BrsApi.ir/Market/Gold_Currency.php');
-
-                    const gold18 = d.gold?.find(g => g.symbol === 'IR_GOLD_18K');
-                    if (gold18) marketData.push({
-                        name: 'طلا ۱۸', icon: '🥇',
-                        price: gold18.price, change: gold18.change_percent || 0
-                    });
-
-                    const usd = d.currency?.find(c => c.symbol === 'USD');
-                    if (usd) marketData.push({
-                        name: 'دلار', icon: '💵',
-                        price: usd.price, change: usd.change_percent || 0
-                    });
-
-                    const xau = d.gold?.find(g => g.symbol === 'XAUUSD');
-                    if (xau) marketData.push({
-                        name: 'انس طلا', icon: '🏅',
-                        price: xau.price, change: xau.change_percent || 0, unit: 'دلار'
-                    });
-                } catch (e) { console.warn('Gold_Currency error:', e); }
-
-                // ۲. انس نقره از Commodity
-                try {
-                    const d = await fetchLiveMarketApi('https://Api.BrsApi.ir/Market/Commodity.php');
-                    const xag = d.metal_precious?.find(m => m.symbol === 'XAGUSD');
-                    if (xag) marketData.push({
-                        name: 'انس نقره', icon: '🥈',
-                        price: xag.price, change: xag.change_percent || 0, unit: 'دلار'
-                    });
-                } catch (e) { console.warn('Commodity error:', e); }
-
-                // ۳. کریپتو از CoinGecko
-                try {
-                    const r = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum&vs_currencies=usd&include_24hr_change=true');
-                    const d = await r.json();
-                    if (d.bitcoin) marketData.push({
-                        name: 'بیت‌کوین', icon: '₿',
-                        price: d.bitcoin.usd, change: d.bitcoin.usd_24h_change || 0, unit: 'دلار'
-                    });
-                    if (d.ethereum) marketData.push({
-                        name: 'اتریوم', icon: '⟠',
-                        price: d.ethereum.usd, change: d.ethereum.usd_24h_change || 0, unit: 'دلار'
-                    });
-                } catch (e) { console.warn('CoinGecko error:', e); }
-
-                // ۴. شاخص بورس
-                try {
-                    const r = await fetch(`https://Api.BrsApi.ir/Tsetmc/Index.php?key=${LIVE_MARKET_KEYS[0]}&type=1`);
-                    const d = await r.json();
-                    if (d && typeof d === 'object' && !Array.isArray(d)) {
-                        const price = d.index || d.lastValue || d.value || 0;
-                        const change = d.index_change_percent || d.changePercent || 
-                                       (d.index_change && d.index ? (d.index_change / d.index) * 100 : 0);
-                        if (price > 0) {
-                            marketData.push({
-                                name: 'شاخص بورس', icon: '📈',
-                                price: price,
-                                change: change || 0
-                            });
-                        }
-                    }
-                } catch (e) { console.warn('Index error:', e); }
-                if (marketData.length === 0) {
-                    track.innerHTML = `<div class="live-market-item"><span class="icon">⏳</span><span class="name">در حال دریافت...</span></div>`;
-                    return;
-                }
-
-                const itemsHTML = marketData.map(item => `
-                    <div class="live-market-item">
-                        <span class="icon">${item.icon}</span>
-                        <span class="name">${item.name}</span>
-                        <span class="price">${formatMarketPrice(item.price)}${item.unit === 'دلار' ? ' $' : ''}</span>
-                        <span class="change ${item.change >= 0 ? 'up' : 'down'}">${item.change >= 0 ? '+' : ''}${Number(item.change).toFixed(2)}%</span>
-                    </div>
-                `).join('');
-
-                track.innerHTML = itemsHTML + itemsHTML;
-            } catch (e) {
-                console.error('Live market error:', e);
-                track.innerHTML = `<div class="live-market-item"><span class="icon">⚠️</span><span class="name">خطا در دریافت</span></div>`;
-            }
-        }
-
-        function formatMarketPrice(num) {
-            if (!num && num !== 0) return '--';
-            const n = Number(num);
-            if (isNaN(n)) return '--';
-            if (n >= 1e9) return (n / 1e9).toFixed(2) + ' میلیارد';
-            if (n >= 1e6) return (n / 1e6).toFixed(1) + ' میلیون';
-            if (n >= 1e3) return (n / 1e3).toFixed(0) + ' هزار';
-            return n.toFixed(2);
-        }
-
-        // ==========================================
         // Stats
         // ==========================================
         async function loadStats() {
@@ -1179,7 +1002,6 @@
             checkAuth();
             loadStats();
             loadCourses();
-            loadLiveMarket();
             setInterval(rotateQuote, 8000);
         });
 
