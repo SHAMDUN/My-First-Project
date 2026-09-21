@@ -1,0 +1,207 @@
+/* ===== Jalali DatePicker — Golden Dark Theme ===== */
+.jdp-input {
+  cursor: pointer !important;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='18' height='18' viewBox='0 0 24 24' fill='none' stroke='%23d4af37' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><rect x='3' y='4' width='18' height='18' rx='2'/><line x1='16' y1='2' x2='16' y2='6'/><line x1='8' y1='2' x2='8' y2='6'/><line x1='3' y1='10' x2='21' y2='10'/></svg>") !important;
+  background-repeat: no-repeat !important;
+  background-position: left 12px center !important;
+  background-size: 18px !important;
+  padding-left: 40px !important;
+}
+
+.jdp-panel {
+  position: absolute;
+  z-index: 10000;
+  background: linear-gradient(135deg, #1a1a24, #14141c);
+  border: 1px solid rgba(212, 175, 55, 0.35);
+  border-radius: 16px;
+  padding: 14px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(212, 175, 55, 0.1);
+  font-family: 'Vazirmatn', Tahoma, sans-serif;
+  color: #f8fafc;
+  direction: rtl;
+  animation: jdpFadeIn 0.18s ease-out;
+  user-select: none;
+}
+
+@keyframes jdpFadeIn {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.jdp-header {
+  display: grid;
+  grid-template-columns: 32px 32px 1fr 32px 32px;
+  align-items: center;
+  gap: 4px;
+  margin-bottom: 12px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgba(212, 175, 55, 0.15);
+}
+
+.jdp-nav {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  border: 1px solid rgba(212, 175, 55, 0.2);
+  background: rgba(212, 175, 55, 0.05);
+  color: #d4af37;
+  font-size: 16px;
+  font-weight: 900;
+  cursor: pointer;
+  transition: 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: inherit;
+  line-height: 1;
+}
+
+.jdp-nav:hover {
+  background: rgba(212, 175, 55, 0.2);
+  border-color: #d4af37;
+  transform: scale(1.05);
+}
+
+.jdp-title {
+  display: flex;
+  gap: 6px;
+  justify-content: center;
+  align-items: center;
+}
+
+.jdp-select {
+  background: rgba(10, 10, 15, 0.8);
+  border: 1px solid rgba(212, 175, 55, 0.2);
+  border-radius: 8px;
+  color: #d4af37;
+  font-family: inherit;
+  font-size: 12.5px;
+  font-weight: 800;
+  padding: 6px 8px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.jdp-select:hover {
+  border-color: #d4af37;
+}
+
+.jdp-select:focus {
+  outline: none;
+  border-color: #d4af37;
+  box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.15);
+}
+
+.jdp-month-select { flex: 1; }
+.jdp-year-select { width: 90px; }
+
+.jdp-weekdays {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 2px;
+  margin-bottom: 6px;
+}
+
+.jdp-weekday {
+  text-align: center;
+  color: #94a3b8;
+  font-size: 11px;
+  font-weight: 800;
+  padding: 6px 0;
+}
+
+.jdp-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 2px;
+}
+
+.jdp-day {
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  color: #f8fafc;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: 0.15s;
+  font-variant-numeric: tabular-nums;
+}
+
+.jdp-day:hover {
+  background: rgba(212, 175, 55, 0.15);
+  color: #d4af37;
+}
+
+.jdp-day.jdp-empty {
+  cursor: default;
+  pointer-events: none;
+}
+
+.jdp-day.jdp-today {
+  border: 1px solid rgba(212, 175, 55, 0.5);
+  color: #d4af37;
+}
+
+.jdp-day.jdp-selected {
+  background: linear-gradient(135deg, #d4af37, #a8862a);
+  color: #0a0a0f;
+  font-weight: 900;
+  box-shadow: 0 4px 12px rgba(212, 175, 55, 0.4);
+}
+
+.jdp-day.jdp-selected:hover {
+  color: #0a0a0f;
+  background: linear-gradient(135deg, #f4d47c, #d4af37);
+}
+
+.jdp-footer {
+  display: flex;
+  gap: 6px;
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid rgba(212, 175, 55, 0.15);
+}
+
+.jdp-btn {
+  flex: 1;
+  padding: 8px;
+  border-radius: 8px;
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  background: rgba(212, 175, 55, 0.05);
+  color: #d4af37;
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.jdp-btn:hover {
+  background: rgba(212, 175, 55, 0.2);
+  border-color: #d4af37;
+}
+
+.jdp-btn-clear {
+  color: #ef4444;
+  border-color: rgba(239, 68, 68, 0.3);
+  background: rgba(239, 68, 68, 0.05);
+}
+
+.jdp-btn-clear:hover {
+  background: rgba(239, 68, 68, 0.15);
+  border-color: #ef4444;
+  color: #ef4444;
+}
+
+@media (max-width: 480px) {
+  .jdp-panel {
+    padding: 10px;
+    border-radius: 14px;
+  }
+  .jdp-day { font-size: 12px; }
+  .jdp-header { grid-template-columns: 28px 28px 1fr 28px 28px; }
+  .jdp-nav { width: 28px; height: 28px; font-size: 14px; }
+}
