@@ -1,8 +1,7 @@
 // ==========================================
 // Navbar مشترک - آکادمی شمعدون
-// نسخه نهایی - ساختار کامل
+// نسخه نهایی - با Theme Toggle و Search
 // ==========================================
-
 (function() {
     'use strict';
 
@@ -49,11 +48,13 @@
         .sn-navbar {
             position: fixed;
             top: 0; left: 0; right: 0;
-            background: rgba(10, 10, 15, 0.92);
+            background: var(--navbar-bg, rgba(10, 10, 15, 0.92));
             backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             border-bottom: 1px solid rgba(212, 175, 55, 0.15);
             z-index: 9998;
             padding: 12px 0;
+            transition: background 0.3s;
         }
         .sn-navbar-container {
             max-width: 1200px;
@@ -62,7 +63,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            gap: 15px;
+            gap: 10px;
         }
         .sn-hamburger {
             width: 42px; height: 42px;
@@ -79,9 +80,7 @@
             flex-shrink: 0;
             transition: 0.25s;
         }
-        .sn-hamburger:hover {
-            background: rgba(212, 175, 55, 0.2);
-        }
+        .sn-hamburger:hover { background: rgba(212, 175, 55, 0.2); }
         .sn-hamburger span {
             display: block;
             width: 18px; height: 2px;
@@ -106,7 +105,6 @@
             font-size: 17px;
             font-weight: 800;
         }
-
         /* دکمه دانش‌نامه */
         .sn-dict-btn {
             display: flex;
@@ -130,11 +128,35 @@
             color: #0a0a0f;
             box-shadow: 0 5px 20px rgba(212, 175, 55, 0.3);
         }
-
+        /* دکمه‌های اکشن (تم + جستجو) */
+        .sn-action-btn {
+            width: 42px; height: 42px;
+            border-radius: 12px;
+            background: rgba(212, 175, 55, 0.08);
+            border: 1px solid rgba(212, 175, 55, 0.25);
+            color: #d4af37;
+            font-size: 18px;
+            cursor: pointer;
+            transition: 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0;
+            flex-shrink: 0;
+            font-family: inherit;
+        }
+        .sn-action-btn:hover {
+            background: rgba(212, 175, 55, 0.2);
+            transform: scale(1.05);
+        }
+        .sn-action-btn svg {
+            stroke: #d4af37;
+        }
+        /* ناحیه کاربر */
         .sn-user-area {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
             min-width: 42px;
             justify-content: flex-end;
             flex-shrink: 0;
@@ -149,10 +171,9 @@
             border: 1px solid rgba(212, 175, 55, 0.4);
             background: rgba(212, 175, 55, 0.08);
             transition: 0.25s;
+            white-space: nowrap;
         }
-        .sn-login-btn:hover {
-            background: rgba(212, 175, 55, 0.2);
-        }
+        .sn-login-btn:hover { background: rgba(212, 175, 55, 0.2); }
         .sn-user-avatar {
             width: 42px; height: 42px;
             border-radius: 50%;
@@ -166,24 +187,23 @@
             border: 2px solid #d4af37;
             text-decoration: none;
         }
+        /* Overlay */
         .sn-overlay {
             position: fixed;
             top: 0; left: 0; right: 0; bottom: 0;
             background: rgba(0, 0, 0, 0.7);
             backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
             z-index: 9999;
             opacity: 0;
             visibility: hidden;
             transition: 0.3s;
         }
-        .sn-overlay.show {
-            opacity: 1;
-            visibility: visible;
-        }
+        .sn-overlay.show { opacity: 1; visibility: visible; }
+        /* Sidebar */
         .sn-sidebar {
             position: fixed;
-            top: 0;
-            right: -340px;
+            top: 0; right: -340px;
             width: 320px;
             height: 100vh;
             background: linear-gradient(180deg, #14141c, #0a0a0f);
@@ -193,9 +213,7 @@
             overflow-y: auto;
             box-shadow: -10px 0 40px rgba(0, 0, 0, 0.5);
         }
-        .sn-sidebar.show {
-            right: 0;
-        }
+        .sn-sidebar.show { right: 0; }
         .sn-sidebar-header {
             display: flex;
             justify-content: space-between;
@@ -218,18 +236,10 @@
             font-family: inherit;
             transition: 0.25s;
         }
-        .sn-close:hover {
-            background: rgba(239, 68, 68, 0.25);
-        }
-        .sn-sidebar-content {
-            padding: 15px;
-        }
-        .sn-menu-group {
-            margin-bottom: 18px;
-        }
-        .sn-menu-group:last-child {
-            margin-bottom: 0;
-        }
+        .sn-close:hover { background: rgba(239, 68, 68, 0.25); }
+        .sn-sidebar-content { padding: 15px; }
+        .sn-menu-group { margin-bottom: 18px; }
+        .sn-menu-group:last-child { margin-bottom: 0; }
         .sn-menu-group-title {
             color: #64748b;
             font-size: 11px;
@@ -282,47 +292,171 @@
             text-align: center;
             flex-shrink: 0;
         }
-        .sn-menu-label {
-            flex: 1;
-        }
+        .sn-menu-label { flex: 1; }
         .sn-menu-divider {
             height: 1px;
             background: rgba(212, 175, 55, 0.15);
             margin: 15px 0;
         }
-        .sn-logout {
-            color: #f87171 !important;
-        }
+        .sn-logout { color: #f87171 !important; }
         .sn-logout:hover {
             background: rgba(239, 68, 68, 0.1) !important;
             color: #ef4444 !important;
         }
+        
+        /* ===== Search Modal ===== */
+        .sn-search-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            z-index: 20000;
+            opacity: 0;
+            visibility: hidden;
+            transition: 0.3s;
+            padding: 20px;
+            overflow-y: auto;
+        }
+        .sn-search-overlay.show { opacity: 1; visibility: visible; }
+        .sn-search-box {
+            max-width: 700px;
+            margin: 60px auto;
+            background: #1a1a24;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+        }
+        .sn-search-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 18px 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        }
+        .sn-search-icon {
+            font-size: 22px;
+            color: #d4af37;
+        }
+        .sn-search-input {
+            flex: 1;
+            background: transparent;
+            border: none;
+            outline: none;
+            color: #f8fafc;
+            font-size: 16px;
+            font-family: 'Vazirmatn', Tahoma, sans-serif;
+            padding: 8px 0;
+        }
+        .sn-search-input::placeholder { color: #94a3b8; }
+        .sn-search-close {
+            background: rgba(239, 68, 68, 0.1);
+            color: #ef4444;
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            width: 34px; height: 34px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 16px;
+            font-family: inherit;
+            flex-shrink: 0;
+        }
+        .sn-search-results {
+            max-height: 60vh;
+            overflow-y: auto;
+            padding: 10px;
+        }
+        .sn-search-empty {
+            text-align: center;
+            padding: 40px 20px;
+            color: #94a3b8;
+            font-size: 14px;
+            font-family: 'Vazirmatn', Tahoma, sans-serif;
+        }
+        .sn-search-result {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 14px;
+            border-radius: 12px;
+            text-decoration: none;
+            color: #f8fafc;
+            transition: 0.2s;
+            font-family: 'Vazirmatn', Tahoma, sans-serif;
+        }
+        .sn-search-result:hover {
+            background: rgba(212, 175, 55, 0.1);
+        }
+        .sn-search-result-icon {
+            width: 42px; height: 42px;
+            border-radius: 10px;
+            background: rgba(212, 175, 55, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            flex-shrink: 0;
+        }
+        .sn-search-result-info { flex: 1; min-width: 0; }
+        .sn-search-result-title {
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 4px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        .sn-search-result-type {
+            font-size: 11px;
+            color: #94a3b8;
+        }
+        .sn-search-section {
+            padding: 8px 14px 4px;
+            font-size: 11px;
+            font-weight: 800;
+            color: #64748b;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* ===== Responsive ===== */
         @media (max-width: 700px) {
-            .sn-sidebar {
-                width: 290px;
-                right: -310px;
-            }
-            .sn-sidebar.show {
-                right: 0;
-            }
-            .sn-brand-text {
-                display: none;
-            }
-            .sn-dict-btn {
-                padding: 8px 10px;
-                font-size: 12px;
-            }
-            .sn-dict-btn .sn-dict-text {
-                display: none;
-            }
+            .sn-sidebar { width: 290px; right: -310px; }
+            .sn-sidebar.show { right: 0; }
+            .sn-brand-text { display: none; }
+            .sn-dict-btn { padding: 8px 10px; font-size: 12px; }
+            .sn-dict-btn .sn-dict-text { display: none; }
         }
         @media (max-width: 500px) {
             .sn-brand-logo { width: 34px; height: 34px; }
             .sn-hamburger { width: 38px; height: 38px; }
+            .sn-action-btn { width: 38px; height: 38px; font-size: 16px; }
             .sn-user-avatar { width: 38px; height: 38px; font-size: 13px; }
-            .sn-navbar-container { padding: 0 12px; gap: 8px; }
+            .sn-navbar-container { padding: 0 12px; gap: 6px; }
+            .sn-login-btn { padding: 8px 12px; font-size: 11px; }
+            .sn-search-box { margin: 20px auto; }
         }
     `;
+
+    // ===== Theme System =====
+    function initTheme() {
+        const savedTheme = localStorage.getItem('shamdun-theme') || 'dark';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+        updateThemeIcon(savedTheme);
+    }
+
+    function toggleTheme() {
+        const current = document.documentElement.getAttribute('data-theme') || 'dark';
+        const newTheme = current === 'dark' ? 'light' : 'dark';
+        document.documentElement.setAttribute('data-theme', newTheme);
+        localStorage.setItem('shamdun-theme', newTheme);
+        updateThemeIcon(newTheme);
+    }
+
+    function updateThemeIcon(theme) {
+        const icon = document.getElementById('snThemeIcon');
+        if (icon) icon.textContent = theme === 'dark' ? '🌙' : '☀️';
+    }
 
     // ===== ساخت Navbar =====
     function createNavbar() {
@@ -361,14 +495,21 @@
                         <span>🎓</span>
                         <span class="sn-dict-text">دانش‌نامه</span>
                     </a>
+                    <button class="sn-action-btn" id="snSearchBtn" aria-label="جستجو" title="جستجو">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+                            <circle cx="11" cy="11" r="7"></circle>
+                            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                        </svg>
+                    </button>
+                    <button class="sn-action-btn" id="snThemeBtn" aria-label="تغییر تم" title="تغییر تم">
+                        <span id="snThemeIcon">🌙</span>
+                    </button>
                     <div class="sn-user-area" id="snUserArea">
                         <a href="login.html" class="sn-login-btn">ورود</a>
                     </div>
                 </div>
             </nav>
-
             <div class="sn-overlay" id="snOverlay"></div>
-
             <aside class="sn-sidebar" id="snSidebar">
                 <div class="sn-sidebar-header">
                     <a href="index.html" class="sn-brand" style="justify-content:flex-start;">
@@ -377,12 +518,9 @@
                     </a>
                     <button class="sn-close" id="snClose">✕</button>
                 </div>
-
                 <div class="sn-sidebar-content">
                     ${groupsHTML}
-
                     <div class="sn-menu-divider"></div>
-
                     <div class="sn-menu-section">
                         <a href="dashboard.html" class="sn-menu-item">
                             <span class="sn-menu-icon">👤</span>
@@ -399,6 +537,23 @@
                     </div>
                 </div>
             </aside>
+            
+            <!-- Search Modal -->
+            <div class="sn-search-overlay" id="snSearchOverlay">
+                <div class="sn-search-box">
+                    <div class="sn-search-header">
+                        <span class="sn-search-icon">🔍</span>
+                        <input type="text" id="snSearchInput" class="sn-search-input" placeholder="جستجو در مقالات، دوره‌ها، دانش‌نامه...">
+                        <button class="sn-search-close" id="snSearchClose">✕</button>
+                    </div>
+                    <div class="sn-search-results" id="snSearchResults">
+                        <div class="sn-search-empty">
+                            <p>🔍 جستجو کن توی مقالات، دوره‌ها، دانش‌نامه</p>
+                            <p style="font-size:12px; margin-top:10px; opacity:0.7;">حداقل ۲ حرف بنویس</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
         `;
 
         document.body.insertAdjacentHTML('afterbegin', navbarHTML);
@@ -416,7 +571,6 @@
             overlay.classList.add('show');
             document.body.style.overflow = 'hidden';
         }
-
         function closeSidebar() {
             sidebar.classList.remove('show');
             overlay.classList.remove('show');
@@ -430,6 +584,135 @@
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape') closeSidebar();
         });
+    }
+
+    // ===== Search System =====
+    const SEARCH_DATA = {
+        articles: [
+            { title: 'کریپتوکارنسی در ۱۴۰۵', url: 'blog-post.html?slug=crypto-1405-professional-strategies', icon: '📝', type: 'مقاله' },
+            { title: 'الگوریتمی شدن بازار', url: 'blog-post.html?slug=algorithmic-markets-hidden-reality', icon: '📝', type: 'مقاله' },
+            { title: 'Dark Pools و OTC', url: 'blog-post.html?slug=dark-pools-otc-invisible-markets', icon: '📝', type: 'مقاله' },
+            { title: 'On-Chain Analytics', url: 'blog-post.html?slug=on-chain-analytics-blockchain-signals', icon: '📝', type: 'مقاله' },
+            { title: 'مشتقات و Funding Rate', url: 'blog-post.html?slug=derivatives-funding-rate-market-mechanics', icon: '📝', type: 'مقاله' },
+            { title: 'اقتصاد ایران ۱۴۰۵', url: 'blog-post.html?slug=iran-economy-1405-stagflation-recovery', icon: '📝', type: 'مقاله' },
+            { title: 'AI در معاملات', url: 'blog-post.html?slug=ai-trading-reality-vs-hype', icon: '📝', type: 'مقاله' }
+        ],
+        courses: [
+            { title: 'اقتصاد کلان و خرد', url: 'courses.html', icon: '📚', type: 'دوره' },
+            { title: 'آشنایی با بازارهای مالی', url: 'courses.html', icon: '📚', type: 'دوره' },
+            { title: 'مبانی تحلیل تکنیکال', url: 'courses.html', icon: '📚', type: 'دوره' },
+            { title: 'تحلیل بنیادی', url: 'courses.html', icon: '📚', type: 'دوره' },
+            { title: 'مدیریت ریسک', url: 'courses.html', icon: '📚', type: 'دوره' },
+            { title: 'روانشناسی بازار', url: 'courses.html', icon: '📚', type: 'دوره' }
+        ],
+        pages: [
+            { title: 'نمای بازار', url: 'home.html', icon: '📊', type: 'صفحه' },
+            { title: 'بورس ایران', url: 'bourse.html', icon: '📈', type: 'صفحه' },
+            { title: 'اخبار اقتصادی', url: 'news.html', icon: '📰', type: 'صفحه' },
+            { title: 'دانش‌نامه اقتصادی', url: 'dictionary.html', icon: '🎓', type: 'صفحه' },
+            { title: 'دستیار هوشمند', url: 'assistant.html', icon: '🤖', type: 'صفحه' },
+            { title: 'پرتفوی من', url: 'portfolio.html', icon: '💼', type: 'صفحه' },
+            { title: 'تست شخصیت مالی', url: 'personality-test.html', icon: '🧠', type: 'صفحه' }
+        ]
+    };
+
+    function setupSearch() {
+        const searchBtn = document.getElementById('snSearchBtn');
+        const searchOverlay = document.getElementById('snSearchOverlay');
+        const searchClose = document.getElementById('snSearchClose');
+        const searchInput = document.getElementById('snSearchInput');
+        const searchResults = document.getElementById('snSearchResults');
+
+        function openSearch() {
+            searchOverlay.classList.add('show');
+            document.body.style.overflow = 'hidden';
+            setTimeout(() => searchInput.focus(), 100);
+        }
+
+        function closeSearch() {
+            searchOverlay.classList.remove('show');
+            document.body.style.overflow = '';
+            searchInput.value = '';
+            searchResults.innerHTML = `
+                <div class="sn-search-empty">
+                    <p>🔍 جستجو کن توی مقالات، دوره‌ها، دانش‌نامه</p>
+                    <p style="font-size:12px; margin-top:10px; opacity:0.7;">حداقل ۲ حرف بنویس</p>
+                </div>
+            `;
+        }
+
+        function performSearch(query) {
+            if (!query || query.length < 2) {
+                searchResults.innerHTML = `
+                    <div class="sn-search-empty">
+                        <p>🔍 جستجو کن توی مقالات، دوره‌ها، دانش‌نامه</p>
+                        <p style="font-size:12px; margin-top:10px; opacity:0.7;">حداقل ۲ حرف بنویس</p>
+                    </div>
+                `;
+                return;
+            }
+
+            const q = query.toLowerCase();
+            const results = [];
+
+            // مقالات
+            SEARCH_DATA.articles.forEach(item => {
+                if (item.title.toLowerCase().includes(q)) {
+                    results.push(item);
+                }
+            });
+
+            // دوره‌ها
+            SEARCH_DATA.courses.forEach(item => {
+                if (item.title.toLowerCase().includes(q)) {
+                    results.push(item);
+                }
+            });
+
+            // صفحات
+            SEARCH_DATA.pages.forEach(item => {
+                if (item.title.toLowerCase().includes(q)) {
+                    results.push(item);
+                }
+            });
+
+            if (results.length === 0) {
+                searchResults.innerHTML = `
+                    <div class="sn-search-empty">
+                        <p>❌ نتیجه‌ای پیدا نشد برای: <strong>${query}</strong></p>
+                        <p style="font-size:12px; margin-top:10px; opacity:0.7;">یه کلمه دیگه امتحان کن</p>
+                    </div>
+                `;
+                return;
+            }
+
+            searchResults.innerHTML = results.map(r => `
+                <a href="${r.url}" class="sn-search-result">
+                    <div class="sn-search-result-icon">${r.icon}</div>
+                    <div class="sn-search-result-info">
+                        <div class="sn-search-result-title">${r.title}</div>
+                        <div class="sn-search-result-type">${r.type}</div>
+                    </div>
+                </a>
+            `).join('');
+        }
+
+        searchBtn.addEventListener('click', openSearch);
+        searchClose.addEventListener('click', closeSearch);
+        searchOverlay.addEventListener('click', (e) => {
+            if (e.target === searchOverlay) closeSearch();
+        });
+        searchInput.addEventListener('input', (e) => performSearch(e.target.value));
+        
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && searchOverlay.classList.contains('show')) closeSearch();
+        });
+    }
+
+    // ===== Theme Button =====
+    function setupTheme() {
+        const themeBtn = document.getElementById('snThemeBtn');
+        themeBtn.addEventListener('click', toggleTheme);
     }
 
     // ===== هایلایت صفحه فعلی =====
@@ -450,7 +733,6 @@
 
             const SUPABASE_URL = 'https://jcwwilatvstjrohvhtss.supabase.co';
             const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Impjd3dpbGF0dnN0anJvaHZodHNzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODk3MDY4NTYsImV4cCI6MjEwNTI4Mjg1Nn0.eUC89RJy6-60nNGrSeYeDADzLxz-kWTGy4DbNGVi6MM';
-
             const client = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
             client.auth.getSession().then(({ data }) => {
@@ -495,8 +777,11 @@
 
     // ===== راه‌اندازی =====
     function init() {
+        initTheme();
         createNavbar();
         setupSidebar();
+        setupSearch();
+        setupTheme();
         highlightCurrentPage();
         setTimeout(checkUser, 200);
     }
