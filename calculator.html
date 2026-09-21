@@ -23,6 +23,8 @@
             --red: #ef4444;
             --white: #f8fafc;
             --gray: #94a3b8;
+            --cyan: #22d3ee;
+            --cyan-dark: #0891b2;
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -44,18 +46,13 @@
             from { opacity: 0; transform: translateY(30px); }
             to { opacity: 1; transform: translateY(0); }
         }
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
+        @keyframes spin { to { transform: rotate(360deg); } }
         .main-container { max-width: 900px; margin: 0 auto; padding: 100px 20px 40px; }
         .page-header { text-align: center; margin-bottom: 30px; animation: fadeInUp 0.6s ease-out; }
         .page-header h1 {
-            font-size: 36px;
-            font-weight: 900;
-            margin-bottom: 10px;
+            font-size: 36px; font-weight: 900; margin-bottom: 10px;
             background: linear-gradient(135deg, var(--gold), var(--gold-light));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
             background-clip: text;
         }
         .page-header p { color: var(--gray); font-size: 14px; }
@@ -67,56 +64,36 @@
             padding: 12px;
         }
         .tabs-group-title {
-            color: var(--gray);
-            font-size: 11px;
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 10px;
-            padding-right: 8px;
-            display: flex;
-            align-items: center;
-            gap: 6px;
+            color: var(--gray); font-size: 11px; font-weight: 800;
+            text-transform: uppercase; letter-spacing: 1px;
+            margin-bottom: 10px; padding-right: 8px;
+            display: flex; align-items: center; gap: 6px;
         }
         .tabs-group-title::after {
-            content: '';
-            flex: 1;
-            height: 1px;
+            content: ''; flex: 1; height: 1px;
             background: rgba(212, 175, 55, 0.15);
         }
         .calc-tabs {
-            display: flex;
-            gap: 8px;
-            overflow-x: auto;
-            padding-bottom: 4px;
-            scrollbar-width: thin;
+            display: flex; gap: 8px; overflow-x: auto;
+            padding-bottom: 4px; scrollbar-width: thin;
         }
         .calc-tabs::-webkit-scrollbar { height: 4px; }
         .calc-tabs::-webkit-scrollbar-thumb {
-            background: rgba(212, 175, 55, 0.3);
-            border-radius: 10px;
+            background: rgba(212, 175, 55, 0.3); border-radius: 10px;
         }
         .calc-tab {
             padding: 10px 16px;
             background: rgba(10, 10, 15, 0.6);
             border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: 12px;
-            color: var(--gray);
-            font-size: 12.5px;
-            font-weight: 700;
-            font-family: inherit;
-            cursor: pointer;
-            transition: 0.3s;
-            white-space: nowrap;
-            display: flex;
-            align-items: center;
-            gap: 6px;
+            color: var(--gray); font-size: 12.5px; font-weight: 700;
+            font-family: inherit; cursor: pointer; transition: 0.3s;
+            white-space: nowrap; display: flex; align-items: center; gap: 6px;
         }
         .calc-tab:hover { color: var(--gold); border-color: rgba(212, 175, 55, 0.4); }
         .calc-tab.active {
             background: linear-gradient(135deg, var(--gold), var(--gold-dark));
-            color: var(--bg-primary);
-            border-color: var(--gold);
+            color: var(--bg-primary); border-color: var(--gold);
             box-shadow: 0 5px 20px rgba(212, 175, 55, 0.3);
         }
         .calc-section { display: none; }
@@ -124,12 +101,8 @@
         .edu-card {
             background: linear-gradient(135deg, rgba(59, 130, 246, 0.08), rgba(59, 130, 246, 0.02));
             border: 1px solid rgba(59, 130, 246, 0.2);
-            border-radius: 16px;
-            padding: 16px 18px;
-            margin-bottom: 20px;
-            display: flex;
-            gap: 12px;
-            align-items: flex-start;
+            border-radius: 16px; padding: 16px 18px; margin-bottom: 20px;
+            display: flex; gap: 12px; align-items: flex-start;
         }
         .edu-icon { font-size: 24px; flex-shrink: 0; line-height: 1; }
         .edu-content { flex: 1; }
@@ -140,43 +113,27 @@
         .calc-card {
             background: linear-gradient(135deg, var(--bg-card), var(--bg-secondary));
             border: 1px solid rgba(212, 175, 55, 0.15);
-            border-radius: 20px;
-            padding: 25px;
-            margin-bottom: 20px;
+            border-radius: 20px; padding: 25px; margin-bottom: 20px;
         }
         .calc-card h2 {
-            color: var(--gold);
-            font-size: 20px;
-            font-weight: 800;
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding-bottom: 15px;
-            border-bottom: 1px solid rgba(212, 175, 55, 0.15);
+            color: var(--gold); font-size: 20px; font-weight: 800;
+            margin-bottom: 20px; display: flex; align-items: center; gap: 10px;
+            padding-bottom: 15px; border-bottom: 1px solid rgba(212, 175, 55, 0.15);
         }
         .form-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; margin-bottom: 20px; }
         .form-group { display: flex; flex-direction: column; gap: 6px; }
         .form-group label {
-            color: var(--white);
-            font-size: 13px;
-            font-weight: 700;
-            display: flex;
-            align-items: center;
-            gap: 6px;
+            color: var(--white); font-size: 13px; font-weight: 700;
+            display: flex; align-items: center; gap: 6px;
         }
         .form-group label .help { font-size: 11px; color: var(--gray); font-weight: 400; }
         .form-input {
             padding: 12px 14px;
             background: rgba(10, 10, 15, 0.6);
             border: 2px solid rgba(255, 255, 255, 0.08);
-            border-radius: 10px;
-            color: var(--white);
-            font-family: inherit;
-            font-size: 14px;
-            outline: none;
-            transition: 0.3s;
-            direction: rtl;
+            border-radius: 10px; color: var(--white);
+            font-family: inherit; font-size: 14px; outline: none;
+            transition: 0.3s; direction: rtl;
             font-variant-numeric: tabular-nums;
         }
         .form-input:focus {
@@ -187,68 +144,45 @@
         .form-input::placeholder { color: rgba(148, 163, 184, 0.4); }
         select.form-input { cursor: pointer; }
         .calc-btn {
-            width: 100%;
-            padding: 14px;
+            width: 100%; padding: 14px;
             background: linear-gradient(135deg, var(--gold), var(--gold-dark));
-            color: var(--bg-primary);
-            border: none;
-            border-radius: 12px;
-            font-family: inherit;
-            font-size: 15px;
-            font-weight: 800;
-            cursor: pointer;
-            transition: 0.3s;
+            color: var(--bg-primary); border: none; border-radius: 12px;
+            font-family: inherit; font-size: 15px; font-weight: 800;
+            cursor: pointer; transition: 0.3s;
             box-shadow: 0 10px 30px rgba(212, 175, 55, 0.3);
         }
         .calc-btn:hover { transform: translateY(-2px); box-shadow: 0 15px 40px rgba(212, 175, 55, 0.5); }
         .calc-btn.secondary {
-            background: rgba(148, 163, 184, 0.1);
-            color: #cbd5e1;
+            background: rgba(148, 163, 184, 0.1); color: #cbd5e1;
             border: 1px solid rgba(148, 163, 184, 0.2);
-            box-shadow: none;
-            font-size: 13px;
-            padding: 10px;
-            margin-top: 10px;
+            box-shadow: none; font-size: 13px; padding: 10px; margin-top: 10px;
         }
         .calc-btn.secondary:hover {
             background: rgba(148, 163, 184, 0.2);
-            transform: none;
-            box-shadow: none;
+            transform: none; box-shadow: none;
         }
         .result-card {
             background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(16, 185, 129, 0.03));
             border: 1px solid rgba(16, 185, 129, 0.3);
-            border-radius: 20px;
-            padding: 25px;
-            margin-top: 20px;
-            display: none;
-            animation: fadeInUp 0.4s ease-out;
+            border-radius: 20px; padding: 25px; margin-top: 20px;
+            display: none; animation: fadeInUp 0.4s ease-out;
         }
         .result-card.show { display: block; }
         .result-card h3 {
-            color: var(--green);
-            font-size: 16px;
-            font-weight: 800;
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
+            color: var(--green); font-size: 16px; font-weight: 800;
+            margin-bottom: 15px; display: flex; align-items: center; gap: 8px;
         }
         .result-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
         .result-item {
-            background: rgba(10, 10, 15, 0.5);
-            padding: 15px;
-            border-radius: 12px;
-            border-right: 3px solid var(--green);
+            background: rgba(10, 10, 15, 0.5); padding: 15px;
+            border-radius: 12px; border-right: 3px solid var(--green);
         }
         .result-item.gold { border-right-color: var(--gold); }
         .result-item.red { border-right-color: var(--red); }
         .result-item.blue { border-right-color: var(--blue); }
         .result-item .label { color: var(--gray); font-size: 11px; margin-bottom: 6px; }
         .result-item .value {
-            color: var(--white);
-            font-size: 18px;
-            font-weight: 900;
+            color: var(--white); font-size: 18px; font-weight: 900;
             font-variant-numeric: tabular-nums;
         }
         .result-item .value.gold { color: var(--gold); }
@@ -259,84 +193,51 @@
             grid-column: 1 / -1;
             background: linear-gradient(135deg, rgba(212, 175, 55, 0.15), rgba(212, 175, 55, 0.05));
             border: 2px solid rgba(212, 175, 55, 0.4);
-            border-radius: 15px;
-            padding: 20px;
-            text-align: center;
-            margin-bottom: 15px;
+            border-radius: 15px; padding: 20px;
+            text-align: center; margin-bottom: 15px;
         }
         .result-highlight .label { color: var(--gold); font-size: 13px; margin-bottom: 8px; font-weight: 700; }
         .result-highlight .value {
-            color: var(--white);
-            font-size: 28px;
-            font-weight: 900;
+            color: var(--white); font-size: 28px; font-weight: 900;
             font-variant-numeric: tabular-nums;
         }
         .result-highlight .sub { color: var(--gray); font-size: 12px; margin-top: 6px; }
         .info-note {
             background: rgba(59, 130, 246, 0.1);
             border: 1px solid rgba(59, 130, 246, 0.3);
-            border-radius: 12px;
-            padding: 12px 15px;
-            margin-top: 15px;
-            color: #93c5fd;
-            font-size: 12px;
-            line-height: 1.7;
-            display: flex;
-            align-items: flex-start;
-            gap: 8px;
+            border-radius: 12px; padding: 12px 15px; margin-top: 15px;
+            color: #93c5fd; font-size: 12px; line-height: 1.7;
+            display: flex; align-items: flex-start; gap: 8px;
         }
         .info-note::before { content: '💡'; font-size: 16px; flex-shrink: 0; }
         .vs-badge {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            background: var(--gold);
-            color: var(--bg-primary);
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            font-weight: 900;
-            font-size: 14px;
-            margin: 0 auto;
+            display: inline-flex; align-items: center; justify-content: center;
+            background: var(--gold); color: var(--bg-primary);
+            width: 50px; height: 50px; border-radius: 50%;
+            font-weight: 900; font-size: 14px; margin: 0 auto;
         }
         .comparison-container {
-            display: grid;
-            grid-template-columns: 1fr auto 1fr;
-            gap: 12px;
-            align-items: center;
-            margin-bottom: 20px;
+            display: grid; grid-template-columns: 1fr auto 1fr;
+            gap: 12px; align-items: center; margin-bottom: 20px;
         }
         .comparison-side {
-            background: rgba(10, 10, 15, 0.5);
-            padding: 15px;
-            border-radius: 12px;
-            text-align: center;
+            background: rgba(10, 10, 15, 0.5); padding: 15px;
+            border-radius: 12px; text-align: center;
         }
         .comparison-side h4 { color: var(--gold); font-size: 14px; margin-bottom: 10px; }
         .footer {
-            text-align: center;
-            padding: 30px 20px;
-            color: var(--gray);
-            font-size: 12px;
-            border-top: 1px solid rgba(212, 175, 55, 0.1);
+            text-align: center; padding: 30px 20px; color: var(--gray);
+            font-size: 12px; border-top: 1px solid rgba(212, 175, 55, 0.1);
             margin-top: 40px;
         }
 
         /* ===== AI Analysis Card ===== */
         .ai-btn {
             background: linear-gradient(135deg, #8b5cf6, #7c3aed);
-            color: #fff;
-            padding: 10px 18px;
-            border-radius: 10px;
-            border: none;
-            font-family: inherit;
-            font-size: 13px;
-            font-weight: 800;
-            cursor: pointer;
-            transition: 0.3s;
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
+            color: #fff; padding: 10px 18px; border-radius: 10px;
+            border: none; font-family: inherit; font-size: 13px;
+            font-weight: 800; cursor: pointer; transition: 0.3s;
+            display: inline-flex; align-items: center; gap: 6px;
         }
         .ai-btn:hover:not(:disabled) {
             transform: translateY(-2px);
@@ -346,42 +247,26 @@
         .ai-card {
             background: linear-gradient(135deg, rgba(139, 92, 246, 0.08), rgba(139, 92, 246, 0.02));
             border: 1px solid rgba(139, 92, 246, 0.3);
-            border-radius: 20px;
-            padding: 25px;
-            margin-top: 20px;
-            display: none;
-            animation: fadeInUp 0.4s ease-out;
+            border-radius: 20px; padding: 25px; margin-top: 20px;
+            display: none; animation: fadeInUp 0.4s ease-out;
         }
         .ai-card.show { display: block; }
         .ai-card-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 18px;
-            padding-bottom: 15px;
+            display: flex; justify-content: space-between; align-items: center;
+            margin-bottom: 18px; padding-bottom: 15px;
             border-bottom: 1px solid rgba(139, 92, 246, 0.2);
-            flex-wrap: wrap;
-            gap: 10px;
+            flex-wrap: wrap; gap: 10px;
         }
         .ai-card-title {
-            color: #a78bfa;
-            font-size: 16px;
-            font-weight: 800;
-            display: flex;
-            align-items: center;
-            gap: 8px;
+            color: #a78bfa; font-size: 16px; font-weight: 800;
+            display: flex; align-items: center; gap: 8px;
         }
         .ai-output {
             background: rgba(10, 10, 15, 0.6);
             border: 1px solid rgba(139, 92, 246, 0.2);
-            border-radius: 12px;
-            padding: 20px;
-            min-height: 100px;
-            max-height: 600px;
-            overflow-y: auto;
-            color: #cbd5e1;
-            font-size: 13.5px;
-            line-height: 1.9;
+            border-radius: 12px; padding: 20px; min-height: 100px;
+            max-height: 600px; overflow-y: auto;
+            color: #cbd5e1; font-size: 13.5px; line-height: 1.9;
         }
         .ai-output h1 { color: #a78bfa; font-size: 18px; margin: 12px 0 8px; padding-bottom: 6px; border-bottom: 1px solid rgba(139, 92, 246, 0.2); }
         .ai-output h2 { color: #c4b5fd; font-size: 15px; margin: 12px 0 6px; }
@@ -392,220 +277,212 @@
         .ai-output strong { color: #ddd6fe; font-weight: 800; }
         .ai-output em { color: var(--gold); font-style: italic; }
         .ai-output code {
-            background: rgba(139, 92, 246, 0.15);
-            color: #c4b5fd;
-            padding: 2px 6px;
-            border-radius: 4px;
-            font-family: 'Courier New', monospace;
-            font-size: 12.5px;
-            direction: ltr;
-            display: inline-block;
+            background: rgba(139, 92, 246, 0.15); color: #c4b5fd;
+            padding: 2px 6px; border-radius: 4px;
+            font-family: 'Courier New', monospace; font-size: 12.5px;
+            direction: ltr; display: inline-block;
         }
         .ai-output pre {
-            background: rgba(0, 0, 0, 0.5);
-            padding: 12px;
-            border-radius: 8px;
-            overflow-x: auto;
-            margin: 10px 0;
-            direction: ltr;
-            text-align: left;
+            background: rgba(0, 0, 0, 0.5); padding: 12px;
+            border-radius: 8px; overflow-x: auto; margin: 10px 0;
+            direction: ltr; text-align: left;
         }
         .ai-output blockquote {
-            border-right: 3px solid #8b5cf6;
-            padding: 10px 15px;
-            margin: 10px 0;
-            background: rgba(139, 92, 246, 0.05);
-            border-radius: 6px;
-            color: #c4b5fd;
+            border-right: 3px solid #8b5cf6; padding: 10px 15px;
+            margin: 10px 0; background: rgba(139, 92, 246, 0.05);
+            border-radius: 6px; color: #c4b5fd;
         }
         .ai-loading {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 12px;
-            padding: 30px 20px;
-            color: #a78bfa;
+            display: flex; flex-direction: column; align-items: center;
+            gap: 12px; padding: 30px 20px; color: #a78bfa;
         }
         .ai-loading .spinner {
-            width: 36px;
-            height: 36px;
+            width: 36px; height: 36px;
             border: 3px solid rgba(139, 92, 246, 0.2);
-            border-top-color: #8b5cf6;
-            border-radius: 50%;
+            border-top-color: #8b5cf6; border-radius: 50%;
             animation: spin 1s linear infinite;
         }
         .ai-action-btn {
-            background: rgba(139, 92, 246, 0.1);
-            color: #a78bfa;
+            background: rgba(139, 92, 246, 0.1); color: #a78bfa;
             border: 1px solid rgba(139, 92, 246, 0.3);
-            padding: 8px 14px;
-            border-radius: 10px;
-            font-family: inherit;
-            font-size: 12.5px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: 0.3s;
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
+            padding: 8px 14px; border-radius: 10px;
+            font-family: inherit; font-size: 12.5px; font-weight: 700;
+            cursor: pointer; transition: 0.3s;
+            display: inline-flex; align-items: center; gap: 6px;
         }
         .ai-action-btn:hover {
             background: rgba(139, 92, 246, 0.2);
-            border-color: #8b5cf6;
-            color: #c4b5fd;
+            border-color: #8b5cf6; color: #c4b5fd;
         }
 
-        /* ===== Inflation History Styles ===== */
-        .inflation-year-row {
+        /* ===== Market Comparison Card ===== */
+        .market-btn {
+            background: linear-gradient(135deg, #06b6d4, #0891b2);
+            color: #fff; padding: 10px 18px; border-radius: 10px;
+            border: none; font-family: inherit; font-size: 13px;
+            font-weight: 800; cursor: pointer; transition: 0.3s;
+            display: inline-flex; align-items: center; gap: 6px;
+        }
+        .market-btn:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(6, 182, 212, 0.4);
+        }
+        .market-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+        .market-card {
+            background: linear-gradient(135deg, rgba(6, 182, 212, 0.08), rgba(6, 182, 212, 0.02));
+            border: 1px solid rgba(6, 182, 212, 0.3);
+            border-radius: 20px; padding: 25px; margin-top: 20px;
+            display: none; animation: fadeInUp 0.4s ease-out;
+        }
+        .market-card.show { display: block; }
+        .market-card-header {
+            display: flex; justify-content: space-between; align-items: center;
+            margin-bottom: 18px; padding-bottom: 15px;
+            border-bottom: 1px solid rgba(6, 182, 212, 0.2);
+            flex-wrap: wrap; gap: 10px;
+        }
+        .market-card-title {
+            color: var(--cyan); font-size: 16px; font-weight: 800;
+            display: flex; align-items: center; gap: 8px;
+        }
+        .market-prices {
             display: grid;
-            grid-template-columns: 100px 1fr;
-            gap: 12px;
-            align-items: center;
-            padding: 12px 0;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 10px; margin-bottom: 20px;
+        }
+        .market-price-item {
+            background: rgba(10, 10, 15, 0.5);
+            border: 1px solid rgba(6, 182, 212, 0.15);
+            border-radius: 12px; padding: 12px; text-align: center;
+        }
+        .market-price-item .icon { font-size: 20px; margin-bottom: 4px; }
+        .market-price-item .name { color: var(--gray); font-size: 11px; margin-bottom: 4px; }
+        .market-price-item .price {
+            color: #67e8f9; font-size: 13.5px; font-weight: 900;
+            font-variant-numeric: tabular-nums;
+        }
+        .market-compare-table {
+            background: rgba(10, 10, 15, 0.5);
+            border-radius: 12px; overflow: hidden;
+        }
+        .market-row {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr 1.2fr;
+            padding: 12px 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            align-items: center; font-size: 13px;
+        }
+        .market-row:last-child { border-bottom: none; }
+        .market-row.header {
+            background: rgba(6, 182, 212, 0.1);
+            color: var(--cyan); font-weight: 800; font-size: 12px;
+        }
+        .market-row .asset { color: var(--white); display: flex; align-items: center; gap: 8px; }
+        .market-row .user-rate { color: var(--gold); font-weight: 800; }
+        .market-row .bench { font-weight: 800; }
+        .market-row .diff-pos { color: var(--green); }
+        .market-row .diff-neg { color: var(--red); }
+        .market-verdict {
+            margin-top: 15px; padding: 15px;
+            border-radius: 12px; font-size: 13px; line-height: 1.8;
+        }
+        .market-verdict.good {
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            color: #86efac;
+        }
+        .market-verdict.bad {
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            color: #fca5a5;
+        }
+        .market-verdict.neutral {
+            background: rgba(212, 175, 55, 0.1);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            color: #fde68a;
+        }
+
+        /* ===== Inflation History ===== */
+        .inflation-year-row {
+            display: grid; grid-template-columns: 100px 1fr;
+            gap: 12px; align-items: center; padding: 12px 0;
             border-bottom: 1px dashed rgba(255, 255, 255, 0.05);
         }
         .inflation-year-row:last-child { border-bottom: none; }
         .inflation-year-row .year {
-            color: var(--gold);
-            font-size: 15px;
-            font-weight: 800;
-            text-align: center;
-            background: rgba(212, 175, 55, 0.1);
-            padding: 8px;
-            border-radius: 10px;
+            color: var(--gold); font-size: 15px; font-weight: 800;
+            text-align: center; background: rgba(212, 175, 55, 0.1);
+            padding: 8px; border-radius: 10px;
             border: 1px solid rgba(212, 175, 55, 0.2);
         }
-        .inflation-year-row .input-wrapper {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
+        .inflation-year-row .input-wrapper { display: flex; align-items: center; gap: 8px; }
         .inflation-year-row input { flex: 1; }
-        .inflation-year-row .suffix {
-            color: var(--gray);
-            font-size: 14px;
-            font-weight: 700;
-        }
+        .inflation-year-row .suffix { color: var(--gray); font-size: 14px; font-weight: 700; }
         .inflation-list-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 12px 15px;
-            background: rgba(10, 10, 15, 0.5);
-            border-radius: 12px;
-            border-right: 3px solid var(--gold);
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 12px 15px; background: rgba(10, 10, 15, 0.5);
+            border-radius: 12px; border-right: 3px solid var(--gold);
             margin-bottom: 8px;
         }
-        .inflation-list-item .info {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            flex-wrap: wrap;
-        }
+        .inflation-list-item .info { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
         .inflation-list-item .year-badge {
-            background: rgba(212, 175, 55, 0.15);
-            color: var(--gold);
-            padding: 4px 12px;
-            border-radius: 10px;
-            font-size: 13px;
-            font-weight: 800;
+            background: rgba(212, 175, 55, 0.15); color: var(--gold);
+            padding: 4px 12px; border-radius: 10px;
+            font-size: 13px; font-weight: 800;
         }
-        .inflation-list-item .rate {
-            color: var(--white);
-            font-size: 15px;
-            font-weight: 800;
-        }
-        .inflation-list-item .type {
-            color: var(--gray);
-            font-size: 11px;
-        }
-        .inflation-list-item .actions {
-            display: flex;
-            gap: 6px;
-        }
+        .inflation-list-item .rate { color: var(--white); font-size: 15px; font-weight: 800; }
+        .inflation-list-item .type { color: var(--gray); font-size: 11px; }
+        .inflation-list-item .actions { display: flex; gap: 6px; }
         .inflation-list-item .icon-btn-small {
-            width: 32px;
-            height: 32px;
-            border-radius: 8px;
+            width: 32px; height: 32px; border-radius: 8px;
             border: 1px solid rgba(255, 255, 255, 0.1);
-            background: rgba(10, 10, 15, 0.5);
-            color: var(--gray);
-            cursor: pointer;
-            font-size: 14px;
-            transition: 0.3s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            background: rgba(10, 10, 15, 0.5); color: var(--gray);
+            cursor: pointer; font-size: 14px; transition: 0.3s;
+            display: flex; align-items: center; justify-content: center;
         }
         .inflation-list-item .icon-btn-small:hover {
-            border-color: var(--gold);
-            color: var(--gold);
+            border-color: var(--gold); color: var(--gold);
             background: rgba(212, 175, 55, 0.1);
         }
         .inflation-list-item .icon-btn-small.danger:hover {
-            border-color: var(--red);
-            color: var(--red);
+            border-color: var(--red); color: var(--red);
             background: rgba(239, 68, 68, 0.1);
         }
         .inflation-summary {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 12px;
-            margin-bottom: 20px;
+            display: grid; grid-template-columns: repeat(3, 1fr);
+            gap: 12px; margin-bottom: 20px;
         }
         .inflation-summary-card {
-            background: rgba(10, 10, 15, 0.5);
-            padding: 15px;
-            border-radius: 12px;
-            text-align: center;
+            background: rgba(10, 10, 15, 0.5); padding: 15px;
+            border-radius: 12px; text-align: center;
             border: 1px solid rgba(212, 175, 55, 0.15);
         }
-        .inflation-summary-card .label {
-            color: var(--gray);
-            font-size: 11px;
-            margin-bottom: 6px;
-        }
+        .inflation-summary-card .label { color: var(--gray); font-size: 11px; margin-bottom: 6px; }
         .inflation-summary-card .value {
-            color: var(--gold);
-            font-size: 20px;
-            font-weight: 900;
+            color: var(--gold); font-size: 20px; font-weight: 900;
             font-variant-numeric: tabular-nums;
         }
         .inflation-summary-card .value.green { color: var(--green); }
         .inflation-summary-card .value.red { color: var(--red); }
         .inflation-empty {
-            text-align: center;
-            padding: 30px 20px;
-            color: var(--gray);
-            font-size: 13px;
+            text-align: center; padding: 30px 20px;
+            color: var(--gray); font-size: 13px;
         }
-        .inflation-empty .icon {
-            font-size: 40px;
-            margin-bottom: 10px;
-            opacity: 0.5;
-        }
+        .inflation-empty .icon { font-size: 40px; margin-bottom: 10px; opacity: 0.5; }
         .chart-wrapper-mini {
-            background: rgba(10, 10, 15, 0.5);
-            border-radius: 12px;
-            padding: 15px;
-            margin-top: 15px;
-            height: 280px;
+            background: rgba(10, 10, 15, 0.5); border-radius: 12px;
+            padding: 15px; margin-top: 15px; height: 280px;
             position: relative;
         }
         .type-selector {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
-            margin-bottom: 20px;
+            display: grid; grid-template-columns: repeat(3, 1fr);
+            gap: 10px; margin-bottom: 20px;
         }
         .type-card {
             background: rgba(10, 10, 15, 0.5);
             border: 2px solid rgba(255, 255, 255, 0.08);
-            border-radius: 12px;
-            padding: 15px 10px;
-            cursor: pointer;
-            transition: 0.3s;
-            text-align: center;
+            border-radius: 12px; padding: 15px 10px;
+            cursor: pointer; transition: 0.3s; text-align: center;
         }
         .type-card:hover { border-color: rgba(212, 175, 55, 0.4); }
         .type-card.active {
@@ -614,16 +491,10 @@
         }
         .type-card .icon { font-size: 24px; margin-bottom: 8px; }
         .type-card .title {
-            color: var(--white);
-            font-size: 12.5px;
-            font-weight: 800;
+            color: var(--white); font-size: 12.5px; font-weight: 800;
             margin-bottom: 4px;
         }
-        .type-card .desc {
-            color: var(--gray);
-            font-size: 10.5px;
-            line-height: 1.5;
-        }
+        .type-card .desc { color: var(--gray); font-size: 10.5px; line-height: 1.5; }
 
         @media (max-width: 600px) {
             .main-container { padding: 90px 15px 30px; }
@@ -635,9 +506,12 @@
             .comparison-container { grid-template-columns: 1fr; }
             .edu-card { padding: 14px; }
             .ai-card { padding: 18px; }
+            .market-card { padding: 18px; }
             .inflation-year-row { grid-template-columns: 80px 1fr; }
             .inflation-summary { grid-template-columns: 1fr; }
             .type-selector { grid-template-columns: 1fr; }
+            .market-prices { grid-template-columns: repeat(2, 1fr); }
+            .market-row { grid-template-columns: 1.2fr 1fr 1.2fr; font-size: 11.5px; padding: 10px; }
         }
     </style>
 </head>
@@ -735,7 +609,16 @@
             </div>
         </div>
 
-        <button class="ai-btn" id="ai-btn-dca" onclick="analyzeWithAI('dca')" style="width:100%; margin-top:15px; justify-content:center; padding:14px;">🤖 تحلیل با AI</button>
+        <button class="market-btn" id="market-btn-dca" onclick="compareWithMarket('dca')" style="width:100%; margin-top:15px; justify-content:center; padding:14px;">📊 مقایسه با بازار واقعی</button>
+        <button class="ai-btn" id="ai-btn-dca" onclick="analyzeWithAI('dca')" style="width:100%; margin-top:10px; justify-content:center; padding:14px;">🤖 تحلیل با AI</button>
+
+        <div class="market-card" id="market-card-dca">
+            <div class="market-card-header">
+                <div class="market-card-title">📊 مقایسه با بازار واقعی</div>
+                <button class="ai-action-btn" onclick="refreshMarketData('dca')">🔄 آپدیت</button>
+            </div>
+            <div id="market-output-dca"></div>
+        </div>
 
         <div class="ai-card" id="ai-card-dca">
             <div class="ai-card-header">
@@ -815,7 +698,16 @@
             </div>
         </div>
 
-        <button class="ai-btn" id="ai-btn-compound" onclick="analyzeWithAI('compound')" style="width:100%; margin-top:15px; justify-content:center; padding:14px;">🤖 تحلیل با AI</button>
+        <button class="market-btn" id="market-btn-compound" onclick="compareWithMarket('compound')" style="width:100%; margin-top:15px; justify-content:center; padding:14px;">📊 مقایسه با بازار واقعی</button>
+        <button class="ai-btn" id="ai-btn-compound" onclick="analyzeWithAI('compound')" style="width:100%; margin-top:10px; justify-content:center; padding:14px;">🤖 تحلیل با AI</button>
+
+        <div class="market-card" id="market-card-compound">
+            <div class="market-card-header">
+                <div class="market-card-title">📊 مقایسه با بازار واقعی</div>
+                <button class="ai-action-btn" onclick="refreshMarketData('compound')">🔄 آپدیت</button>
+            </div>
+            <div id="market-output-compound"></div>
+        </div>
 
         <div class="ai-card" id="ai-card-compound">
             <div class="ai-card-header">
@@ -1406,7 +1298,7 @@
     © ۱۴۰۵ آکادمی شمعدون | تمامی حقوق محفوظ است
 </footer>
 
-<script src="navbar.js"></script>   
+<script src="navbar.js"></script>    
 <script>
     // ==========================================
     // ابزارها
@@ -1508,6 +1400,7 @@
         document.getElementById('dca-avg').textContent = formatBigNum(avgMonthly) + ' تومان';
         document.getElementById('result-dca').classList.add('show');
         resetAICard('dca');
+        resetMarketCard('dca');
     }
 
     // ==========================================
@@ -1538,6 +1431,7 @@
         document.getElementById('cmp-daily').textContent = formatBigNum(dailyProfit) + ' تومان';
         document.getElementById('result-compound').classList.add('show');
         resetAICard('compound');
+        resetMarketCard('compound');
     }
 
     // ==========================================
@@ -2003,10 +1897,7 @@
                 },
                 scales: {
                     x: {
-                        ticks: {
-                            color: '#94a3b8',
-                            font: { family: 'Vazirmatn', size: 11 }
-                        },
+                        ticks: { color: '#94a3b8', font: { family: 'Vazirmatn', size: 11 } },
                         grid: { color: 'rgba(255, 255, 255, 0.05)' }
                     },
                     y: {
@@ -2065,7 +1956,7 @@
         }
 
         document.getElementById('result-real-value').classList.add('show');
-    }    
+    } 
         // ==========================================
         // 🤖 موتور AI
         // ==========================================
@@ -2467,6 +2358,255 @@ ${d.assets.map(a => `  • ${a.label}: ${toFa(a.percent)}٪ (${formatNum(d.total
             } catch (e) {
                 alert('کپی نشد. دستی انتخاب کن.');
             }
+        }
+
+        // ==========================================
+        // 📊 موتور مقایسه با بازار واقعی (BrsApi)
+        // ==========================================
+        const BRS_API_BASE = 'https://api.brsapi.ir/Market/GetCurrencyGoldPrice.php';
+        const BRS_API_KEY_FALLBACK = ''; // از app_settings خونده می‌شه
+        const MARKET_CACHE_KEY = 'shamdun_market_data';
+        const MARKET_CACHE_TTL = 6 * 60 * 60 * 1000; // ۶ ساعت
+
+        const marketState = {
+            dca: { data: null },
+            compound: { data: null }
+        };
+
+        async function getBrsApiKey() {
+            try {
+                if (window.supabase && window.SUPABASE_URL) {
+                    const { data } = await window.supabase
+                        .from('app_settings')
+                        .select('value')
+                        .eq('key', 'BRS_API_KEY')
+                        .single();
+                    if (data && data.value) return data.value;
+                }
+            } catch (e) {
+                console.warn('BRS_API_KEY خوانده نشد:', e);
+            }
+            return BRS_API_KEY_FALLBACK;
+        }
+
+        async function fetchMarketData() {
+            // چک کن کش معتبر هست
+            try {
+                const cached = JSON.parse(localStorage.getItem(MARKET_CACHE_KEY) || 'null');
+                if (cached && (Date.now() - cached.timestamp < MARKET_CACHE_TTL)) {
+                    return cached.data;
+                }
+            } catch (e) {}
+
+            const apiKey = await getBrsApiKey();
+            if (!apiKey) {
+                throw new Error('کلید BrsApi در تنظیمات پیدا نشد. لطفاً از پنل ادمین اضافه کنید.');
+            }
+
+            const url = `${BRS_API_BASE}?key=${apiKey}`;
+            const response = await fetch(url);
+            if (!response.ok) {
+                throw new Error(`خطای BrsApi (${response.status})`);
+            }
+
+            const result = await response.json();
+            if (!Array.isArray(result) || result.length === 0) {
+                throw new Error('داده‌ای از BrsApi دریافت نشد');
+            }
+
+            // پیدا کردن قیمت‌های موردنیاز
+            const findPrice = (symbol) => {
+                const item = result.find(i => i.symbol === symbol || i.latin_symbol === symbol);
+                return item ? parseFloat(item.price) : null;
+            };
+
+            const data = {
+                gold18: findPrice('IR_GOLD_18K') || findPrice('gold_18k') || null,
+                gold24: findPrice('IR_GOLD_24K') || findPrice('gold_24k') || null,
+                coin: findPrice('IR_COIN_EMAMI') || findPrice('coin_emami') || null,
+                dollar: findPrice('USD') || findPrice('usd') || null,
+                euro: findPrice('EUR') || findPrice('eur') || null,
+                index: findPrice('Tsetmc/Index.php') || null,
+                bitcoin: findPrice('BTC') || findPrice('btc') || null,
+                raw: result,
+                timestamp: Date.now()
+            };
+
+            try {
+                localStorage.setItem(MARKET_CACHE_KEY, JSON.stringify({
+                    data: data,
+                    timestamp: Date.now()
+                }));
+            } catch (e) {}
+
+            return data;
+        }
+
+        function resetMarketCard(type) {
+            const card = document.getElementById('market-card-' + type);
+            const output = document.getElementById('market-output-' + type);
+            const btn = document.getElementById('market-btn-' + type);
+            if (card) card.classList.remove('show');
+            if (output) output.innerHTML = '';
+            if (btn) btn.disabled = false;
+            if (marketState[type]) marketState[type].data = null;
+        }
+
+        async function refreshMarketData(type) {
+            localStorage.removeItem(MARKET_CACHE_KEY);
+            const btn = document.getElementById('market-btn-' + type);
+            const card = document.getElementById('market-card-' + type);
+            if (card) card.classList.remove('show');
+            if (btn) btn.disabled = false;
+            await compareWithMarket(type);
+        }
+
+        async function compareWithMarket(type) {
+            const btn = document.getElementById('market-btn-' + type);
+            const card = document.getElementById('market-card-' + type);
+            const output = document.getElementById('market-output-' + type);
+
+            if (!btn || !card || !output) return;
+
+            // گرفتن نرخ بازدهی کاربر
+            let userAnnualRate = 0;
+            let userYears = 0;
+
+            if (type === 'dca') {
+                const months = parseInt(document.getElementById('dca-months').value) || 0;
+                userAnnualRate = parseFloat(document.getElementById('dca-rate').value) || 0;
+                userYears = months / 12;
+            } else if (type === 'compound') {
+                userAnnualRate = parseFloat(document.getElementById('cmp-rate').value) || 0;
+                userYears = parseFloat(document.getElementById('cmp-years').value) || 0;
+            }
+
+            if (userAnnualRate <= 0 || userYears <= 0) {
+                alert('ابتدا محاسبه را انجام بده');
+                return;
+            }
+
+            card.classList.add('show');
+            btn.disabled = true;
+            btn.textContent = '⏳ در حال دریافت...';
+            output.innerHTML = `<div class="ai-loading"><div class="spinner"></div><div>📊 در حال دریافت قیمت‌های بازار...</div></div>`;
+            card.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+            try {
+                const data = await fetchMarketData();
+                marketState[type].data = data;
+                renderMarketComparison(type, data, userAnnualRate, userYears);
+            } catch (err) {
+                console.error('Market error:', err);
+                output.innerHTML = `
+                    <div style="color:var(--red); padding:15px; text-align:center;">
+                        <div style="font-size:24px; margin-bottom:8px;">⚠️</div>
+                        <div style="font-weight:800; margin-bottom:6px;">خطا در دریافت داده بازار</div>
+                        <div style="font-size:12px; color:var(--gray);">${err.message}</div>
+                        <div style="font-size:11.5px; color:var(--gray); margin-top:10px;">
+                            مطمئن شو کلید BrsApi توی پنل ادمین ذخیره شده.<br>
+                            اگه بازم خطا داد، دکمه 🔄 آپدیت رو بزن.
+                        </div>
+                    </div>
+                `;
+            } finally {
+                btn.disabled = false;
+                btn.textContent = '📊 مقایسه با بازار واقعی';
+            }
+        }
+
+        function renderMarketComparison(type, data, userRate, years) {
+            const output = document.getElementById('market-output-' + type);
+
+            // نرخ‌های مرجع (تقریبی - بر اساس میانگین بازار ایران)
+            // می‌تونن بعداً از تورم کاربر هم استفاده کنن
+            const benchmarks = [
+                { icon: '📊', name: 'شاخص کل بورس', rate: 25, color: 'gold' },
+                { icon: '🥇', name: 'طلا (۱۸ عیار)', rate: 35, color: 'gold' },
+                { icon: '🪙', name: 'سکه امامی', rate: 30, color: 'gold' },
+                { icon: '💵', name: 'دلار', rate: 28, color: 'blue' },
+                { icon: '💶', name: 'یورو', rate: 26, color: 'blue' },
+                { icon: '₿', name: 'بیت‌کوین', rate: 45, color: 'gold' },
+                { icon: '📉', name: 'تورم ایران', rate: 40, color: 'red' }
+            ];
+
+            // ساخت کارت قیمت‌ها
+            let pricesHtml = '<div class="market-prices">';
+            if (data.gold18) pricesHtml += `<div class="market-price-item"><div class="icon">🥇</div><div class="name">طلا ۱۸ عیار</div><div class="price">${formatNum(data.gold18)} تومان</div></div>`;
+            if (data.coin) pricesHtml += `<div class="market-price-item"><div class="icon">🪙</div><div class="name">سکه امامی</div><div class="price">${formatNum(data.coin)} تومان</div></div>`;
+            if (data.dollar) pricesHtml += `<div class="market-price-item"><div class="icon">💵</div><div class="name">دلار</div><div class="price">${formatNum(data.dollar)} تومان</div></div>`;
+            if (data.euro) pricesHtml += `<div class="market-price-item"><div class="icon">💶</div><div class="name">یورو</div><div class="price">${formatNum(data.euro)} تومان</div></div>`;
+            if (data.index) pricesHtml += `<div class="market-price-item"><div class="icon">📊</div><div class="name">شاخص کل</div><div class="price">${formatNum(data.index)}</div></div>`;
+            if (data.bitcoin) pricesHtml += `<div class="market-price-item"><div class="icon">₿</div><div class="name">بیت‌کوین</div><div class="price">${formatNum(data.bitcoin)} دلار</div></div>`;
+            pricesHtml += '</div>';
+
+            // ساخت جدول مقایسه
+            let rowsHtml = `
+                <div class="market-row header">
+                    <div>دارایی</div>
+                    <div>بازدهی شما</div>
+                    <div>بازدهی بازار</div>
+                </div>
+            `;
+
+            let userWin = 0;
+            let userLose = 0;
+
+            benchmarks.forEach(b => {
+                const diff = userRate - b.rate;
+                const diffClass = diff >= 0 ? 'diff-pos' : 'diff-neg';
+                const diffSign = diff >= 0 ? '+' : '';
+                if (diff >= 0) userWin++; else userLose++;
+
+                rowsHtml += `
+                    <div class="market-row">
+                        <div class="asset">${b.icon} ${b.name}</div>
+                        <div class="user-rate">${toFa(userRate.toFixed(1))}٪</div>
+                        <div class="bench ${diffClass}">${toFa(b.rate)}٪ (${diffSign}${toFa(diff.toFixed(1))}٪)</div>
+                    </div>
+                `;
+            });
+
+            // نتیجه‌گیری
+            const inflationBench = benchmarks.find(b => b.name === 'تورم ایران');
+            const isAboveInflation = userRate > inflationBench.rate;
+            const avgBench = benchmarks.reduce((sum, b) => sum + b.rate, 0) / benchmarks.length;
+            const isAboveAvg = userRate > avgBench;
+
+            let verdictClass = 'neutral';
+            let verdictText = '';
+
+            if (isAboveInflation && isAboveAvg) {
+                verdictClass = 'good';
+                verdictText = `<strong>✅ عالی!</strong> نرخ بازدهی شما (${toFa(userRate.toFixed(1))}٪) از تورم ایران (${toFa(inflationBench.rate)}٪) و میانگین بازار (${toFa(avgBench.toFixed(1))}٪) بالاتره. اگه این نرخ رو واقعاً به دست بیاری، ارزش واقعی سرمایه‌ات حفظ می‌شه.`;
+            } else if (!isAboveInflation && isAboveAvg) {
+                verdictClass = 'neutral';
+                verdictText = `<strong>⚖️ متعادل.</strong> نرخ شما از میانگین بازار بهتره ولی از تورم ایران (${toFa(inflationBench.rate)}٪) کمتره. یعنی ارزش واقعی سرمایه‌ات حفظ نمی‌شه. سعی کن بازدهی رو به بالای ${toFa(inflationBench.rate)}٪ برسونی.`;
+            } else if (isAboveInflation && !isAboveAvg) {
+                verdictClass = 'neutral';
+                verdictText = `<strong>⚖️ نیمه‌مطلوب.</strong> نرخ شما از تورم بالاتره ولی از میانگین بازار کمتره. برای بهترین نتیجه، سبدت رو متنوع کن.`;
+            } else {
+                verdictClass = 'bad';
+                verdictText = `<strong>⚠️ هشدار!</strong> نرخ بازدهی شما (${toFa(userRate.toFixed(1))}٪) از تورم ایران (${toFa(inflationBench.rate)}٪) کمتره. این یعنی سرمایه‌ات داره ارزش واقعی از دست می‌ده.`;
+            }
+
+            const yearsText = toFa(years.toFixed(1));
+
+            output.innerHTML = `
+                ${pricesHtml}
+                <div style="color:var(--gray); font-size:11.5px; margin-bottom:10px; text-align:center;">
+                    📅 نرخ‌های مرجع بر اساس میانگین ۵ سال اخیر بازار ایران | بازدهی شما در ${yearsText} سال
+                </div>
+                <div class="market-compare-table">
+                    ${rowsHtml}
+                </div>
+                <div class="market-verdict ${verdictClass}">
+                    ${verdictText}
+                </div>
+                <div style="margin-top:12px; font-size:10.5px; color:var(--gray); text-align:center;">
+                    ⚠️ نرخ‌های مرجع تقریبی هستن. برای تحلیل دقیق، از داده‌های رسمی استفاده کن.
+                </div>
+            `;
         }
 
         // ==========================================
