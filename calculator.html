@@ -24,7 +24,6 @@
             --white: #f8fafc;
             --gray: #94a3b8;
             --cyan: #22d3ee;
-            --cyan-dark: #0891b2;
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -60,8 +59,7 @@
         .tabs-group {
             background: rgba(20, 20, 28, 0.5);
             border: 1px solid rgba(212, 175, 55, 0.1);
-            border-radius: 16px;
-            padding: 12px;
+            border-radius: 16px; padding: 12px;
         }
         .tabs-group-title {
             color: var(--gray); font-size: 11px; font-weight: 800;
@@ -230,8 +228,7 @@
             font-size: 12px; border-top: 1px solid rgba(212, 175, 55, 0.1);
             margin-top: 40px;
         }
-
-        /* ===== AI Analysis Card ===== */
+        /* AI Card */
         .ai-btn {
             background: linear-gradient(135deg, #8b5cf6, #7c3aed);
             color: #fff; padding: 10px 18px; border-radius: 10px;
@@ -314,8 +311,7 @@
             background: rgba(139, 92, 246, 0.2);
             border-color: #8b5cf6; color: #c4b5fd;
         }
-
-        /* ===== Market Comparison Card ===== */
+        /* Market Card */
         .market-btn {
             background: linear-gradient(135deg, #06b6d4, #0891b2);
             color: #fff; padding: 10px 18px; border-radius: 10px;
@@ -401,8 +397,7 @@
             border: 1px solid rgba(212, 175, 55, 0.3);
             color: #fde68a;
         }
-
-        /* ===== Inflation History ===== */
+        /* Inflation History */
         .inflation-year-row {
             display: grid; grid-template-columns: 100px 1fr;
             gap: 12px; align-items: center; padding: 12px 0;
@@ -495,7 +490,6 @@
             margin-bottom: 4px;
         }
         .type-card .desc { color: var(--gray); font-size: 10.5px; line-height: 1.5; }
-
         @media (max-width: 600px) {
             .main-container { padding: 90px 15px 30px; }
             .page-header h1 { font-size: 26px; }
@@ -1298,7 +1292,8 @@
     © ۱۴۰۵ آکادمی شمعدون | تمامی حقوق محفوظ است
 </footer>
 
-<script src="navbar.js"></script>    
+<script src="supabase-config.js"></script>
+<script src="navbar.js"></script> 
 <script>
     // ==========================================
     // ابزارها
@@ -1337,15 +1332,43 @@
         return cleaned ? parseInt(cleaned, 10) : 0;
     }
 
-    document.querySelectorAll('input[inputmode="numeric"]').forEach(input => {
-        input.addEventListener('input', function() {
-            const value = this.value.replace(/\D/g, '');
-            if (value) {
-                this.value = parseInt(value).toLocaleString('en-US');
-            } else {
-                this.value = '';
+    // ==========================================
+    // فرمت خودکار فیلدهای عددی (اصلاح‌شده)
+    // ==========================================
+    function formatNumberInput(input) {
+        if (!input) return;
+        const cursorPos = input.selectionStart || 0;
+        const oldValue = input.value;
+        const raw = oldValue.replace(/\D/g, '');
+        if (raw) {
+            const formatted = parseInt(raw, 10).toLocaleString('en-US');
+            if (formatted !== oldValue) {
+                input.value = formatted;
+                const diff = formatted.length - oldValue.length;
+                const newPos = Math.max(0, cursorPos + diff);
+                try { input.setSelectionRange(newPos, newPos); } catch(e) {}
             }
+        } else {
+            input.value = '';
+        }
+    }
+
+    // اعمال به همه فیلدها بعد از لود
+    function applyNumberFormatting() {
+        document.querySelectorAll('input[inputmode="numeric"]').forEach(input => {
+            input.removeEventListener('input', handleNumericInput);
+            input.addEventListener('input', handleNumericInput);
+            if (input.value) formatNumberInput(input);
         });
+    }
+
+    function handleNumericInput(e) {
+        formatNumberInput(e.target);
+    }
+
+    // اعمال اولیه
+    document.addEventListener('DOMContentLoaded', () => {
+        setTimeout(applyNumberFormatting, 200);
     });
 
     // ==========================================
@@ -1703,7 +1726,7 @@
     }
 
     // ==========================================
-    // ۵.۵. تاریخچه تورم
+    // تاریخچه تورم
     // ==========================================
     let inflationType = 'point';
     let inflationHistory = [];
@@ -1956,8 +1979,8 @@
         }
 
         document.getElementById('result-real-value').classList.add('show');
-    } 
-        // ==========================================
+    }    
+            // ==========================================
         // 🤖 موتور AI
         // ==========================================
         const HARDCODED_AVALAI_KEY = 'aa-B6ef1JQ4HnDNBMRw4598qRGOKr7z3TttiznZubQXfD2A1iMf';
@@ -1977,16 +2000,16 @@
 
         async function getAvalaiKey() {
             try {
-                if (window.supabase && window.SUPABASE_URL) {
-                    const { data } = await window.supabase
+                if (typeof db !== 'undefined') {
+                    const { data, error } = await db
                         .from('app_settings')
                         .select('value')
                         .eq('key', 'AVALAI_API_KEY')
                         .single();
-                    if (data && data.value) return data.value;
+                    if (!error && data && data.value) return data.value;
                 }
             } catch (e) {
-                console.warn('app_settings خوانده نشد:', e);
+                console.warn('AVALAI_API_KEY از Supabase خوانده نشد:', e);
             }
             return HARDCODED_AVALAI_KEY;
         }
@@ -2363,8 +2386,7 @@ ${d.assets.map(a => `  • ${a.label}: ${toFa(a.percent)}٪ (${formatNum(d.total
         // ==========================================
         // 📊 موتور مقایسه با بازار واقعی (BrsApi)
         // ==========================================
-        const BRS_API_BASE = 'https://api.brsapi.ir/Market/GetCurrencyGoldPrice.php';
-        const BRS_API_KEY_FALLBACK = ''; // از app_settings خونده می‌شه
+        const BRS_API_BASE_GOLD = 'https://Api.BrsApi.ir/Market/Gold_Currency.php';
         const MARKET_CACHE_KEY = 'shamdun_market_data';
         const MARKET_CACHE_TTL = 6 * 60 * 60 * 1000; // ۶ ساعت
 
@@ -2374,23 +2396,44 @@ ${d.assets.map(a => `  • ${a.label}: ${toFa(a.percent)}٪ (${formatNum(d.total
         };
 
         async function getBrsApiKey() {
+            // ۱. sessionStorage
+            const cached = sessionStorage.getItem('api_BRS_API_KEY');
+            if (cached) return cached;
+
+            // ۲. Supabase
             try {
-                if (window.supabase && window.SUPABASE_URL) {
-                    const { data } = await window.supabase
+                if (typeof db !== 'undefined') {
+                    const { data, error } = await db
                         .from('app_settings')
                         .select('value')
                         .eq('key', 'BRS_API_KEY')
                         .single();
-                    if (data && data.value) return data.value;
+                    if (!error && data && data.value) {
+                        sessionStorage.setItem('api_BRS_API_KEY', data.value);
+                        return data.value;
+                    }
                 }
             } catch (e) {
-                console.warn('BRS_API_KEY خوانده نشد:', e);
+                console.warn('BRS_API_KEY از Supabase خوانده نشد:', e);
             }
-            return BRS_API_KEY_FALLBACK;
+            throw new Error('کلید BrsApi در تنظیمات پیدا نشد. لطفاً از پنل ادمین اضافه کنید.');
+        }
+
+        async function fetchBrsApiWithKey(baseUrl) {
+            const key = await getBrsApiKey();
+            const sep = baseUrl.includes('?') ? '&' : '?';
+            const url = `${baseUrl}${sep}key=${key}`;
+            const res = await fetch(url);
+            if (!res.ok) throw new Error(`HTTP ${res.status}`);
+            const text = await res.text();
+            if (text.trim().startsWith('<!DOCTYPE') || text.trim().startsWith('<html')) {
+                throw new Error('پاسخ نامعتبر از BrsApi');
+            }
+            return JSON.parse(text);
         }
 
         async function fetchMarketData() {
-            // چک کن کش معتبر هست
+            // چک کش
             try {
                 const cached = JSON.parse(localStorage.getItem(MARKET_CACHE_KEY) || 'null');
                 if (cached && (Date.now() - cached.timestamp < MARKET_CACHE_TTL)) {
@@ -2398,39 +2441,34 @@ ${d.assets.map(a => `  • ${a.label}: ${toFa(a.percent)}٪ (${formatNum(d.total
                 }
             } catch (e) {}
 
-            const apiKey = await getBrsApiKey();
-            if (!apiKey) {
-                throw new Error('کلید BrsApi در تنظیمات پیدا نشد. لطفاً از پنل ادمین اضافه کنید.');
-            }
-
-            const url = `${BRS_API_BASE}?key=${apiKey}`;
-            const response = await fetch(url);
-            if (!response.ok) {
-                throw new Error(`خطای BrsApi (${response.status})`);
-            }
-
-            const result = await response.json();
-            if (!Array.isArray(result) || result.length === 0) {
-                throw new Error('داده‌ای از BrsApi دریافت نشد');
-            }
-
-            // پیدا کردن قیمت‌های موردنیاز
-            const findPrice = (symbol) => {
-                const item = result.find(i => i.symbol === symbol || i.latin_symbol === symbol);
-                return item ? parseFloat(item.price) : null;
-            };
-
             const data = {
-                gold18: findPrice('IR_GOLD_18K') || findPrice('gold_18k') || null,
-                gold24: findPrice('IR_GOLD_24K') || findPrice('gold_24k') || null,
-                coin: findPrice('IR_COIN_EMAMI') || findPrice('coin_emami') || null,
-                dollar: findPrice('USD') || findPrice('usd') || null,
-                euro: findPrice('EUR') || findPrice('eur') || null,
-                index: findPrice('Tsetmc/Index.php') || null,
-                bitcoin: findPrice('BTC') || findPrice('btc') || null,
-                raw: result,
+                gold18: null,
+                gold24: null,
+                coin: null,
+                dollar: null,
+                euro: null,
+                index: null,
+                bitcoin: null,
                 timestamp: Date.now()
             };
+
+            const goldData = await fetchBrsApiWithKey(BRS_API_BASE_GOLD);
+
+            if (goldData.gold && Array.isArray(goldData.gold)) {
+                const g18 = goldData.gold.find(i => i.symbol === 'IR_GOLD_18K');
+                const g24 = goldData.gold.find(i => i.symbol === 'IR_GOLD_24K');
+                const ce = goldData.gold.find(i => i.symbol === 'IR_COIN_EMAMI');
+                if (g18) data.gold18 = parseFloat(g18.price);
+                if (g24) data.gold24 = parseFloat(g24.price);
+                if (ce) data.coin = parseFloat(ce.price);
+            }
+
+            if (goldData.currency && Array.isArray(goldData.currency)) {
+                const usd = goldData.currency.find(i => i.symbol === 'USD');
+                const eur = goldData.currency.find(i => i.symbol === 'EUR');
+                if (usd) data.dollar = parseFloat(usd.price);
+                if (eur) data.euro = parseFloat(eur.price);
+            }
 
             try {
                 localStorage.setItem(MARKET_CACHE_KEY, JSON.stringify({
@@ -2454,10 +2492,8 @@ ${d.assets.map(a => `  • ${a.label}: ${toFa(a.percent)}٪ (${formatNum(d.total
 
         async function refreshMarketData(type) {
             localStorage.removeItem(MARKET_CACHE_KEY);
-            const btn = document.getElementById('market-btn-' + type);
             const card = document.getElementById('market-card-' + type);
             if (card) card.classList.remove('show');
-            if (btn) btn.disabled = false;
             await compareWithMarket(type);
         }
 
@@ -2468,7 +2504,6 @@ ${d.assets.map(a => `  • ${a.label}: ${toFa(a.percent)}٪ (${formatNum(d.total
 
             if (!btn || !card || !output) return;
 
-            // گرفتن نرخ بازدهی کاربر
             let userAnnualRate = 0;
             let userYears = 0;
 
@@ -2504,8 +2539,7 @@ ${d.assets.map(a => `  • ${a.label}: ${toFa(a.percent)}٪ (${formatNum(d.total
                         <div style="font-weight:800; margin-bottom:6px;">خطا در دریافت داده بازار</div>
                         <div style="font-size:12px; color:var(--gray);">${err.message}</div>
                         <div style="font-size:11.5px; color:var(--gray); margin-top:10px;">
-                            مطمئن شو کلید BrsApi توی پنل ادمین ذخیره شده.<br>
-                            اگه بازم خطا داد، دکمه 🔄 آپدیت رو بزن.
+                            مطمئن شو کلید BrsApi توی پنل ادمین ذخیره شده.
                         </div>
                     </div>
                 `;
@@ -2518,29 +2552,24 @@ ${d.assets.map(a => `  • ${a.label}: ${toFa(a.percent)}٪ (${formatNum(d.total
         function renderMarketComparison(type, data, userRate, years) {
             const output = document.getElementById('market-output-' + type);
 
-            // نرخ‌های مرجع (تقریبی - بر اساس میانگین بازار ایران)
-            // می‌تونن بعداً از تورم کاربر هم استفاده کنن
             const benchmarks = [
-                { icon: '📊', name: 'شاخص کل بورس', rate: 25, color: 'gold' },
-                { icon: '🥇', name: 'طلا (۱۸ عیار)', rate: 35, color: 'gold' },
-                { icon: '🪙', name: 'سکه امامی', rate: 30, color: 'gold' },
-                { icon: '💵', name: 'دلار', rate: 28, color: 'blue' },
-                { icon: '💶', name: 'یورو', rate: 26, color: 'blue' },
-                { icon: '₿', name: 'بیت‌کوین', rate: 45, color: 'gold' },
-                { icon: '📉', name: 'تورم ایران', rate: 40, color: 'red' }
+                { icon: '📊', name: 'شاخص کل بورس', rate: 25 },
+                { icon: '🥇', name: 'طلا (۱۸ عیار)', rate: 35 },
+                { icon: '🪙', name: 'سکه امامی', rate: 30 },
+                { icon: '💵', name: 'دلار', rate: 28 },
+                { icon: '💶', name: 'یورو', rate: 26 },
+                { icon: '₿', name: 'بیت‌کوین', rate: 45 },
+                { icon: '📉', name: 'تورم ایران', rate: 40 }
             ];
 
-            // ساخت کارت قیمت‌ها
             let pricesHtml = '<div class="market-prices">';
             if (data.gold18) pricesHtml += `<div class="market-price-item"><div class="icon">🥇</div><div class="name">طلا ۱۸ عیار</div><div class="price">${formatNum(data.gold18)} تومان</div></div>`;
             if (data.coin) pricesHtml += `<div class="market-price-item"><div class="icon">🪙</div><div class="name">سکه امامی</div><div class="price">${formatNum(data.coin)} تومان</div></div>`;
             if (data.dollar) pricesHtml += `<div class="market-price-item"><div class="icon">💵</div><div class="name">دلار</div><div class="price">${formatNum(data.dollar)} تومان</div></div>`;
             if (data.euro) pricesHtml += `<div class="market-price-item"><div class="icon">💶</div><div class="name">یورو</div><div class="price">${formatNum(data.euro)} تومان</div></div>`;
-            if (data.index) pricesHtml += `<div class="market-price-item"><div class="icon">📊</div><div class="name">شاخص کل</div><div class="price">${formatNum(data.index)}</div></div>`;
-            if (data.bitcoin) pricesHtml += `<div class="market-price-item"><div class="icon">₿</div><div class="name">بیت‌کوین</div><div class="price">${formatNum(data.bitcoin)} دلار</div></div>`;
+            if (data.gold24) pricesHtml += `<div class="market-price-item"><div class="icon">🥇</div><div class="name">طلا ۲۴ عیار</div><div class="price">${formatNum(data.gold24)} تومان</div></div>`;
             pricesHtml += '</div>';
 
-            // ساخت جدول مقایسه
             let rowsHtml = `
                 <div class="market-row header">
                     <div>دارایی</div>
@@ -2549,14 +2578,10 @@ ${d.assets.map(a => `  • ${a.label}: ${toFa(a.percent)}٪ (${formatNum(d.total
                 </div>
             `;
 
-            let userWin = 0;
-            let userLose = 0;
-
             benchmarks.forEach(b => {
                 const diff = userRate - b.rate;
                 const diffClass = diff >= 0 ? 'diff-pos' : 'diff-neg';
                 const diffSign = diff >= 0 ? '+' : '';
-                if (diff >= 0) userWin++; else userLose++;
 
                 rowsHtml += `
                     <div class="market-row">
@@ -2567,7 +2592,6 @@ ${d.assets.map(a => `  • ${a.label}: ${toFa(a.percent)}٪ (${formatNum(d.total
                 `;
             });
 
-            // نتیجه‌گیری
             const inflationBench = benchmarks.find(b => b.name === 'تورم ایران');
             const isAboveInflation = userRate > inflationBench.rate;
             const avgBench = benchmarks.reduce((sum, b) => sum + b.rate, 0) / benchmarks.length;
@@ -2581,7 +2605,7 @@ ${d.assets.map(a => `  • ${a.label}: ${toFa(a.percent)}٪ (${formatNum(d.total
                 verdictText = `<strong>✅ عالی!</strong> نرخ بازدهی شما (${toFa(userRate.toFixed(1))}٪) از تورم ایران (${toFa(inflationBench.rate)}٪) و میانگین بازار (${toFa(avgBench.toFixed(1))}٪) بالاتره. اگه این نرخ رو واقعاً به دست بیاری، ارزش واقعی سرمایه‌ات حفظ می‌شه.`;
             } else if (!isAboveInflation && isAboveAvg) {
                 verdictClass = 'neutral';
-                verdictText = `<strong>⚖️ متعادل.</strong> نرخ شما از میانگین بازار بهتره ولی از تورم ایران (${toFa(inflationBench.rate)}٪) کمتره. یعنی ارزش واقعی سرمایه‌ات حفظ نمی‌شه. سعی کن بازدهی رو به بالای ${toFa(inflationBench.rate)}٪ برسونی.`;
+                verdictText = `<strong>⚖️ متعادل.</strong> نرخ شما از میانگین بازار بهتره ولی از تورم ایران (${toFa(inflationBench.rate)}٪) کمتره. یعنی ارزش واقعی سرمایه‌ات حفظ نمی‌شه.`;
             } else if (isAboveInflation && !isAboveAvg) {
                 verdictClass = 'neutral';
                 verdictText = `<strong>⚖️ نیمه‌مطلوب.</strong> نرخ شما از تورم بالاتره ولی از میانگین بازار کمتره. برای بهترین نتیجه، سبدت رو متنوع کن.`;
@@ -2617,4 +2641,4 @@ ${d.assets.map(a => `  • ${a.label}: ${toFa(a.percent)}٪ (${formatNum(d.total
         });
     </script>
 </body>
-</html>    
+</html>
