@@ -1283,7 +1283,16 @@
         const persianDigits = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
         return String(str).replace(/\d/g, d => persianDigits[d]);
     }
-     
+    // ===== تبدیل اعداد فارسی/عربی به انگلیسی =====
+    function toEnDigits(str) {
+        if (str === null || str === undefined) return '';
+        let s = String(str);
+        const persianDigits = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
+        const arabicDigits = ['٠', '١', '٢', '٣', '٤', '٥', '٦', '٧', '٨', '٩'];
+        persianDigits.forEach((d, i) => { s = s.split(d).join(String(i)); });
+        arabicDigits.forEach((d, i) => { s = s.split(d).join(String(i)); });
+        return s;
+    } 
     function toFa(num) {
         if (num === null || num === undefined || isNaN(num)) return '--';
         const persianDigits = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
