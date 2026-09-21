@@ -1002,16 +1002,19 @@
                 try {
                     const r = await fetch(`https://Api.BrsApi.ir/Tsetmc/Index.php?key=${LIVE_MARKET_KEYS[0]}&type=1`);
                     const d = await r.json();
-                    if (Array.isArray(d) && d.length > 0) {
-                        const idx = d.find(i => i.l18 === 'شاخص كل' || i.l30?.includes('کل')) || d[0];
-                        if (idx) marketData.push({
-                            name: 'شاخص بورس', icon: '📈',
-                            price: idx.lastValue || idx.value || idx.pc || 0,
-                            change: idx.changePercent || idx.pcp || 0
-                        });
+                    if (d && typeof d === 'object' && !Array.isArray(d)) {
+                        const price = d.index || d.lastValue || d.value || 0;
+                        const change = d.index_change_percent || d.changePercent || 
+                                       (d.index_change && d.index ? (d.index_change / d.index) * 100 : 0);
+                        if (price > 0) {
+                            marketData.push({
+                                name: 'شاخص بورس', icon: '📈',
+                                price: price,
+                                change: change || 0
+                            });
+                        }
                     }
                 } catch (e) { console.warn('Index error:', e); }
-
                 if (marketData.length === 0) {
                     track.innerHTML = `<div class="live-market-item"><span class="icon">⏳</span><span class="name">در حال دریافت...</span></div>`;
                     return;
