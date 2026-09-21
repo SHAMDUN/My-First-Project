@@ -2,7 +2,7 @@
 // Service Worker - آکادمی شمعدون
 // ==========================================
 
-const CACHE_NAME = 'shamdun-v16'; // ← این عدد رو بعد از هر آپدیت عوض کن
+const CACHE_NAME = 'shamdun-v18'; // ← این عدد رو بعد از هر آپدیت عوض کن
 
 const urlsToCache = [
     '/My-First-Project/',
