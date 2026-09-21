@@ -427,30 +427,9 @@
     // ==========================================
     // ترجمه با MyMemory (رایگان، بدون تحریم)
     // ==========================================
+    // ترجمه موقتاً غیرفعال — بعداً با Edge Function درست می‌کنیم
     async function translateToPersian(text) {
-        if (!text || text.length < 3) return text;
-        if (/[\u0600-\u06FF]/.test(text)) return text;
-
-        const cacheKey = 'trans_' + btoa(unescape(encodeURIComponent(text.substring(0, 80))));
-        const cached = sessionStorage.getItem(cacheKey);
-        if (cached) return cached;
-
-        try {
-            const textToTranslate = text.substring(0, 500);
-            const url = `https://api.mymemory.translated.net/get?q=${encodeURIComponent(textToTranslate)}&langpair=en|fa`;
-            const res = await fetch(url);
-            const data = await res.json();
-
-            if (data.responseData && data.responseData.translatedText) {
-                const translated = data.responseData.translatedText;
-                sessionStorage.setItem(cacheKey, translated);
-                return translated;
-            }
-            return text;
-        } catch (e) {
-            console.error('Translate error:', e);
-            return text;
-        }
+        return text;
     }
 
     // ==========================================
