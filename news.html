@@ -427,9 +427,31 @@
     // ==========================================
     // ترجمه با MyMemory (رایگان، بدون تحریم)
     // ==========================================
-    // ترجمه موقتاً غیرفعال — بعداً با Edge Function درست می‌کنیم
+    // ==========================================
+    // ترجمه از طریق Edge Function
+    // ==========================================
     async function translateToPersian(text) {
-        return text;
+        if (!text || text.length < 3) return text;
+        if (/[\u0600-\u06FF]/.test(text)) return text;
+
+        const cacheKey = 'trans_' + btoa(unescape(encodeURIComponent(text.substring(0, 80))));
+        const cached = sessionStorage.getItem(cacheKey);
+        if (cached) return cached;
+
+        try {
+            const url = `https://jcwwilatvstjrohvhtss.supabase.co/functions/v1/translate-news?text=${encodeURIComponent(text.substring(0, 500))}&to=fa`;
+            const res = await fetch(url);
+            const data = await res.json();
+
+            if (data.success && data.translated) {
+                sessionStorage.setItem(cacheKey, data.translated);
+                return data.translated;
+            }
+            return text;
+        } catch (e) {
+            console.error('Translate error:', e);
+            return text;
+        }
     }
 
     // ==========================================
