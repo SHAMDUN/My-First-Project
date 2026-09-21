@@ -131,7 +131,8 @@
             border: 2px solid rgba(255, 255, 255, 0.08);
             border-radius: 10px; color: var(--white);
             font-family: inherit; font-size: 14px; outline: none;
-            transition: 0.3s; direction: rtl;
+            transition: 0.3s; direction: ltr;
+            text-align: right;
             font-variant-numeric: tabular-nums;
         }
         .form-input:focus {
@@ -140,7 +141,7 @@
             box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.1);
         }
         .form-input::placeholder { color: rgba(148, 163, 184, 0.4); }
-        select.form-input { cursor: pointer; }
+        select.form-input { cursor: pointer; direction: rtl; text-align: right; }
         .calc-btn {
             width: 100%; padding: 14px;
             background: linear-gradient(135deg, var(--gold), var(--gold-dark));
@@ -154,10 +155,6 @@
             background: rgba(148, 163, 184, 0.1); color: #cbd5e1;
             border: 1px solid rgba(148, 163, 184, 0.2);
             box-shadow: none; font-size: 13px; padding: 10px; margin-top: 10px;
-        }
-        .calc-btn.secondary:hover {
-            background: rgba(148, 163, 184, 0.2);
-            transform: none; box-shadow: none;
         }
         .result-card {
             background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(16, 185, 129, 0.03));
@@ -228,7 +225,6 @@
             font-size: 12px; border-top: 1px solid rgba(212, 175, 55, 0.1);
             margin-top: 40px;
         }
-        /* AI Card */
         .ai-btn {
             background: linear-gradient(135deg, #8b5cf6, #7c3aed);
             color: #fff; padding: 10px 18px; border-radius: 10px;
@@ -279,16 +275,6 @@
             font-family: 'Courier New', monospace; font-size: 12.5px;
             direction: ltr; display: inline-block;
         }
-        .ai-output pre {
-            background: rgba(0, 0, 0, 0.5); padding: 12px;
-            border-radius: 8px; overflow-x: auto; margin: 10px 0;
-            direction: ltr; text-align: left;
-        }
-        .ai-output blockquote {
-            border-right: 3px solid #8b5cf6; padding: 10px 15px;
-            margin: 10px 0; background: rgba(139, 92, 246, 0.05);
-            border-radius: 6px; color: #c4b5fd;
-        }
         .ai-loading {
             display: flex; flex-direction: column; align-items: center;
             gap: 12px; padding: 30px 20px; color: #a78bfa;
@@ -311,7 +297,6 @@
             background: rgba(139, 92, 246, 0.2);
             border-color: #8b5cf6; color: #c4b5fd;
         }
-        /* Market Card */
         .market-btn {
             background: linear-gradient(135deg, #06b6d4, #0891b2);
             color: #fff; padding: 10px 18px; border-radius: 10px;
@@ -397,7 +382,6 @@
             border: 1px solid rgba(212, 175, 55, 0.3);
             color: #fde68a;
         }
-        /* Inflation History */
         .inflation-year-row {
             display: grid; grid-template-columns: 100px 1fr;
             gap: 12px; align-items: center; padding: 12px 0;
@@ -434,10 +418,6 @@
             background: rgba(10, 10, 15, 0.5); color: var(--gray);
             cursor: pointer; font-size: 14px; transition: 0.3s;
             display: flex; align-items: center; justify-content: center;
-        }
-        .inflation-list-item .icon-btn-small:hover {
-            border-color: var(--gold); color: var(--gold);
-            background: rgba(212, 175, 55, 0.1);
         }
         .inflation-list-item .icon-btn-small.danger:hover {
             border-color: var(--red); color: var(--red);
@@ -479,7 +459,6 @@
             border-radius: 12px; padding: 15px 10px;
             cursor: pointer; transition: 0.3s; text-align: center;
         }
-        .type-card:hover { border-color: rgba(212, 175, 55, 0.4); }
         .type-card.active {
             background: linear-gradient(135deg, rgba(212, 175, 55, 0.15), rgba(212, 175, 55, 0.05));
             border-color: var(--gold);
@@ -558,19 +537,19 @@
             <div class="form-grid">
                 <div class="form-group">
                     <label>💵 سرمایه‌گذاری ماهانه <span class="help">(تومان)</span></label>
-                    <input type="text" id="dca-monthly" class="form-input" placeholder="۵,۰۰۰,۰۰۰" inputmode="numeric">
+                    <input type="text" id="dca-monthly" class="form-input" placeholder="5000000" inputmode="numeric">
                 </div>
                 <div class="form-group">
                     <label>⏳ مدت زمان <span class="help">(ماه)</span></label>
-                    <input type="number" id="dca-months" class="form-input" placeholder="۱۲" min="1" max="600">
+                    <input type="number" id="dca-months" class="form-input" placeholder="12" min="1" max="600">
                 </div>
                 <div class="form-group">
                     <label>📈 بازدهی سالانه <span class="help">(٪)</span></label>
-                    <input type="number" id="dca-rate" class="form-input" placeholder="۳۰" step="0.1">
+                    <input type="number" id="dca-rate" class="form-input" placeholder="30" step="0.1">
                 </div>
                 <div class="form-group">
                     <label>💹 موجودی فعلی <span class="help">(اختیاری)</span></label>
-                    <input type="text" id="dca-initial" class="form-input" placeholder="۰" inputmode="numeric">
+                    <input type="text" id="dca-initial" class="form-input" placeholder="0" inputmode="numeric">
                 </div>
             </div>
             <button class="calc-btn" onclick="calcDCA()">🚀 محاسبه کن</button>
@@ -641,15 +620,15 @@
             <div class="form-grid">
                 <div class="form-group">
                     <label>💰 مبلغ اصل <span class="help">(تومان)</span></label>
-                    <input type="text" id="cmp-principal" class="form-input" placeholder="۱۰۰,۰۰۰,۰۰۰" inputmode="numeric">
+                    <input type="text" id="cmp-principal" class="form-input" placeholder="100000000" inputmode="numeric">
                 </div>
                 <div class="form-group">
                     <label>📈 نرخ سود سالانه <span class="help">(٪)</span></label>
-                    <input type="number" id="cmp-rate" class="form-input" placeholder="۲۰" step="0.1">
+                    <input type="number" id="cmp-rate" class="form-input" placeholder="20" step="0.1">
                 </div>
                 <div class="form-group">
                     <label>⏳ مدت زمان <span class="help">(سال)</span></label>
-                    <input type="number" id="cmp-years" class="form-input" placeholder="۵" min="0.1" max="100" step="0.1">
+                    <input type="number" id="cmp-years" class="form-input" placeholder="5" min="0.1" max="100" step="0.1">
                 </div>
                 <div class="form-group">
                     <label>🔄 تعداد محاسبه سود در سال</label>
@@ -730,19 +709,19 @@
             <div class="form-grid">
                 <div class="form-group">
                     <label>🎯 هدف نهایی <span class="help">(تومان)</span></label>
-                    <input type="text" id="goal-target" class="form-input" placeholder="۱,۰۰۰,۰۰۰,۰۰۰" inputmode="numeric">
+                    <input type="text" id="goal-target" class="form-input" placeholder="1000000000" inputmode="numeric">
                 </div>
                 <div class="form-group">
                     <label>⏳ مدت زمان <span class="help">(سال)</span></label>
-                    <input type="number" id="goal-years" class="form-input" placeholder="۳" min="0.5" max="50" step="0.5">
+                    <input type="number" id="goal-years" class="form-input" placeholder="3" min="0.5" max="50" step="0.5">
                 </div>
                 <div class="form-group">
                     <label>📈 بازدهی سالانه <span class="help">(٪)</span></label>
-                    <input type="number" id="goal-rate" class="form-input" placeholder="۳۰" step="0.1">
+                    <input type="number" id="goal-rate" class="form-input" placeholder="30" step="0.1">
                 </div>
                 <div class="form-group">
                     <label>💹 موجودی فعلی <span class="help">(اختیاری)</span></label>
-                    <input type="text" id="goal-initial" class="form-input" placeholder="۰" inputmode="numeric">
+                    <input type="text" id="goal-initial" class="form-input" placeholder="0" inputmode="numeric">
                 </div>
             </div>
             <button class="calc-btn" onclick="calcGoal()">🎯 محاسبه پس‌انداز لازم</button>
@@ -807,11 +786,11 @@
                     <h4>🅰️ گزینه اول</h4>
                     <div class="form-group" style="margin-bottom:10px;">
                         <label>مبلغ <span class="help">(تومان)</span></label>
-                        <input type="text" id="cmp-a-amount" class="form-input" placeholder="۱۰۰,۰۰۰,۰۰۰" inputmode="numeric">
+                        <input type="text" id="cmp-a-amount" class="form-input" placeholder="100000000" inputmode="numeric">
                     </div>
                     <div class="form-group">
                         <label>بازدهی سالانه <span class="help">(٪)</span></label>
-                        <input type="number" id="cmp-a-rate" class="form-input" placeholder="۳۰" step="0.1">
+                        <input type="number" id="cmp-a-rate" class="form-input" placeholder="30" step="0.1">
                     </div>
                 </div>
                 <div class="vs-badge">VS</div>
@@ -819,17 +798,17 @@
                     <h4>🅱️ گزینه دوم</h4>
                     <div class="form-group" style="margin-bottom:10px;">
                         <label>مبلغ <span class="help">(تومان)</span></label>
-                        <input type="text" id="cmp-b-amount" class="form-input" placeholder="۱۰۰,۰۰۰,۰۰۰" inputmode="numeric">
+                        <input type="text" id="cmp-b-amount" class="form-input" placeholder="100000000" inputmode="numeric">
                     </div>
                     <div class="form-group">
                         <label>بازدهی سالانه <span class="help">(٪)</span></label>
-                        <input type="number" id="cmp-b-rate" class="form-input" placeholder="۲۵" step="0.1">
+                        <input type="number" id="cmp-b-rate" class="form-input" placeholder="25" step="0.1">
                     </div>
                 </div>
             </div>
             <div class="form-group" style="margin-bottom:20px;">
                 <label>⏳ مدت زمان <span class="help">(سال)</span></label>
-                <input type="number" id="cmp-years2" class="form-input" placeholder="۵" min="0.1" max="50" step="0.5">
+                <input type="number" id="cmp-years2" class="form-input" placeholder="5" min="0.1" max="50" step="0.5">
             </div>
             <button class="calc-btn" onclick="calcCompare()">⚖️ مقایسه کن</button>
         </div>
@@ -882,15 +861,15 @@
             <div class="form-grid">
                 <div class="form-group">
                     <label>💰 مبلغ فعلی <span class="help">(تومان)</span></label>
-                    <input type="text" id="inf-amount" class="form-input" placeholder="۱۰۰,۰۰۰,۰۰۰" inputmode="numeric">
+                    <input type="text" id="inf-amount" class="form-input" placeholder="100000000" inputmode="numeric">
                 </div>
                 <div class="form-group">
                     <label>📈 نرخ تورم سالانه <span class="help">(٪)</span></label>
-                    <input type="number" id="inf-rate" class="form-input" placeholder="۴۰" step="0.1">
+                    <input type="number" id="inf-rate" class="form-input" placeholder="40" step="0.1">
                 </div>
                 <div class="form-group">
                     <label>⏳ مدت زمان <span class="help">(سال)</span></label>
-                    <input type="number" id="inf-years" class="form-input" placeholder="۳" min="0.1" max="50" step="0.5">
+                    <input type="number" id="inf-years" class="form-input" placeholder="3" min="0.1" max="50" step="0.5">
                 </div>
             </div>
             <button class="calc-btn" onclick="calcInflation()">📉 محاسبه کن</button>
@@ -958,11 +937,11 @@
             <div class="form-grid" style="margin-bottom:15px;">
                 <div class="form-group">
                     <label>📅 از سال <span class="help">(شمسی)</span></label>
-                    <input type="number" id="inf-from-year" class="form-input" placeholder="۱۴۰۲" min="۱۳۰۰" max="۱۵۰۰">
+                    <input type="number" id="inf-from-year" class="form-input" placeholder="1402" min="1300" max="1500">
                 </div>
                 <div class="form-group">
                     <label>📅 تا سال <span class="help">(شمسی)</span></label>
-                    <input type="number" id="inf-to-year" class="form-input" placeholder="۱۴۰۵" min="۱۳۰۰" max="۱۵۰۰">
+                    <input type="number" id="inf-to-year" class="form-input" placeholder="1405" min="1300" max="1500">
                 </div>
             </div>
 
@@ -1042,11 +1021,11 @@
             <div class="form-grid">
                 <div class="form-group">
                     <label>💵 مبلغ خرید اولیه <span class="help">(تومان)</span></label>
-                    <input type="text" id="real-buy-amount" class="form-input" placeholder="۱۰۰,۰۰۰,۰۰۰" inputmode="numeric">
+                    <input type="text" id="real-buy-amount" class="form-input" placeholder="100000000" inputmode="numeric">
                 </div>
                 <div class="form-group">
                     <label>💰 ارزش فعلی <span class="help">(تومان)</span></label>
-                    <input type="text" id="real-current-value" class="form-input" placeholder="۲۵۰,۰۰۰,۰۰۰" inputmode="numeric">
+                    <input type="text" id="real-current-value" class="form-input" placeholder="250000000" inputmode="numeric">
                 </div>
             </div>
             <button class="calc-btn" onclick="calcRealValue()">🎯 محاسبه ارزش واقعی</button>
@@ -1097,19 +1076,19 @@
             <div class="form-grid">
                 <div class="form-group">
                     <label>💵 قیمت خرید <span class="help">(تومان)</span></label>
-                    <input type="text" id="be-buy-price" class="form-input" placeholder="۱,۰۰۰,۰۰۰" inputmode="numeric">
+                    <input type="text" id="be-buy-price" class="form-input" placeholder="1000000" inputmode="numeric">
                 </div>
                 <div class="form-group">
                     <label>📊 تعداد سهام</label>
-                    <input type="number" id="be-quantity" class="form-input" placeholder="۱۰۰" min="1">
+                    <input type="number" id="be-quantity" class="form-input" placeholder="100" min="1">
                 </div>
                 <div class="form-group">
                     <label>💼 کارمزد خرید <span class="help">(٪)</span></label>
-                    <input type="number" id="be-buy-fee" class="form-input" placeholder="۰.۴۵" step="0.01" value="0.45">
+                    <input type="number" id="be-buy-fee" class="form-input" placeholder="0.45" step="0.01" value="0.45">
                 </div>
                 <div class="form-group">
                     <label>💼 کارمزد فروش <span class="help">(٪)</span></label>
-                    <input type="number" id="be-sell-fee" class="form-input" placeholder="۰.۸۸" step="0.01" value="0.88">
+                    <input type="number" id="be-sell-fee" class="form-input" placeholder="0.88" step="0.01" value="0.88">
                 </div>
             </div>
             <button class="calc-btn" onclick="calcBreakeven()">⚖️ محاسبه نقطه سربه‌سر</button>
@@ -1172,7 +1151,7 @@
             <div class="form-grid">
                 <div class="form-group">
                     <label>💵 کل سرمایه <span class="help">(تومان)</span></label>
-                    <input type="text" id="risk-total" class="form-input" placeholder="۱۰۰,۰۰۰,۰۰۰" inputmode="numeric">
+                    <input type="text" id="risk-total" class="form-input" placeholder="100000000" inputmode="numeric">
                 </div>
                 <div class="form-group">
                     <label>🎯 پروفایل ریسک</label>
@@ -1222,23 +1201,23 @@
             <div class="form-grid">
                 <div class="form-group">
                     <label>💵 کل سرمایه <span class="help">(تومان)</span></label>
-                    <input type="text" id="pos-total" class="form-input" placeholder="۱۰۰,۰۰۰,۰۰۰" inputmode="numeric">
+                    <input type="text" id="pos-total" class="form-input" placeholder="100000000" inputmode="numeric">
                 </div>
                 <div class="form-group">
                     <label>📉 درصد ریسک هر معامله <span class="help">(٪)</span></label>
-                    <input type="number" id="pos-risk-percent" class="form-input" placeholder="۲" step="0.1" value="2">
+                    <input type="number" id="pos-risk-percent" class="form-input" placeholder="2" step="0.1" value="2">
                 </div>
                 <div class="form-group">
                     <label>💵 قیمت ورود</label>
-                    <input type="text" id="pos-entry" class="form-input" placeholder="۱,۰۰۰,۰۰۰" inputmode="numeric">
+                    <input type="text" id="pos-entry" class="form-input" placeholder="1000000" inputmode="numeric">
                 </div>
                 <div class="form-group">
                     <label>🛑 حد ضرر</label>
-                    <input type="text" id="pos-stop" class="form-input" placeholder="۹۵۰,۰۰۰" inputmode="numeric">
+                    <input type="text" id="pos-stop" class="form-input" placeholder="950000" inputmode="numeric">
                 </div>
                 <div class="form-group">
                     <label>🎯 حد سود (هدف)</label>
-                    <input type="text" id="pos-target" class="form-input" placeholder="۱,۲۰۰,۰۰۰" inputmode="numeric">
+                    <input type="text" id="pos-target" class="form-input" placeholder="1200000" inputmode="numeric">
                 </div>
             </div>
             <button class="calc-btn" onclick="calcPosition()">🎯 محاسبه</button>
@@ -1293,8 +1272,8 @@
 </footer>
 
 <script src="supabase-config.js"></script>
-<script src="navbar.js"></script> 
-<script>
+<script src="navbar.js"></script>    
+ <script>
     // ==========================================
     // ابزارها
     // ==========================================
@@ -1320,56 +1299,62 @@
     }
 
     function formatNum(num) {
-        if (num === null || num === undefined || isNaN(num)) return '--';
+        if (num === null || num === undefined) return '--';
         const n = Math.round(Number(num));
-        if (!isFinite(n)) return '--';
-        return toFa(n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','));
+        if (!isFinite(n) || isNaN(n)) return '--';
+        const str = n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+        return toFa(str);
     }
 
+    // ✅ parseNum قوی - پشتیبانی از اعداد فارسی، عربی و انگلیسی
     function parseNum(str) {
-        if (!str) return 0;
-        const cleaned = String(str).replace(/[^\d]/g, '');
+        if (str === null || str === undefined || str === '') return 0;
+        let s = String(str);
+        // تبدیل اعداد فارسی به انگلیسی
+        const persianDigits = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
+        const arabicDigits = ['٠', '١', '٢', '٣', '٤', '٥', '٦', '٧', '٨', '٩'];
+        persianDigits.forEach((d, i) => { s = s.split(d).join(i); });
+        arabicDigits.forEach((d, i) => { s = s.split(d).join(i); });
+        // حذف هر چیزی غیر از رقم
+        const cleaned = s.replace(/[^\d]/g, '');
         return cleaned ? parseInt(cleaned, 10) : 0;
     }
 
-    // ==========================================
-    // فرمت خودکار فیلدهای عددی (اصلاح‌شده)
-    // ==========================================
-    function formatNumberInput(input) {
-        if (!input) return;
-        const cursorPos = input.selectionStart || 0;
-        const oldValue = input.value;
-        const raw = oldValue.replace(/\D/g, '');
+    // ✅ تشخیص خودکار فیلد عددی + فرمت
+    function handleNumericInput(e) {
+        const input = e.target;
+        if (!input || !input.matches || !input.matches('input[inputmode="numeric"]')) return;
+        
+        // تبدیل اعداد فارسی به انگلیسی در ورودی
+        const persianDigits = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
+        const arabicDigits = ['٠', '١', '٢', '٣', '٤', '٥', '٦', '٧', '٨', '٩'];
+        let val = input.value;
+        persianDigits.forEach((d, i) => { val = val.split(d).join(i); });
+        arabicDigits.forEach((d, i) => { val = val.split(d).join(i); });
+        
+        // فقط اعداد
+        const raw = val.replace(/[^\d]/g, '');
         if (raw) {
-            const formatted = parseInt(raw, 10).toLocaleString('en-US');
-            if (formatted !== oldValue) {
-                input.value = formatted;
-                const diff = formatted.length - oldValue.length;
-                const newPos = Math.max(0, cursorPos + diff);
-                try { input.setSelectionRange(newPos, newPos); } catch(e) {}
-            }
+            input.value = parseInt(raw, 10).toLocaleString('en-US');
         } else {
             input.value = '';
         }
     }
 
-    // اعمال به همه فیلدها بعد از لود
+    // اعمال به همه فیلدهای عددی
     function applyNumberFormatting() {
         document.querySelectorAll('input[inputmode="numeric"]').forEach(input => {
             input.removeEventListener('input', handleNumericInput);
             input.addEventListener('input', handleNumericInput);
-            if (input.value) formatNumberInput(input);
+            if (input.value && /[۰-۹٠-٩]/.test(input.value)) {
+                const raw = input.value
+                    .replace(/[۰-۹]/g, d => '۰۱۲۳۴۵۶۷۸۹'.indexOf(d))
+                    .replace(/[٠-٩]/g, d => '٠١٢٣٤٥٦٧٨٩'.indexOf(d))
+                    .replace(/[^\d]/g, '');
+                if (raw) input.value = parseInt(raw, 10).toLocaleString('en-US');
+            }
         });
     }
-
-    function handleNumericInput(e) {
-        formatNumberInput(e.target);
-    }
-
-    // اعمال اولیه
-    document.addEventListener('DOMContentLoaded', () => {
-        setTimeout(applyNumberFormatting, 200);
-    });
 
     // ==========================================
     // تب‌ها
@@ -1759,7 +1744,7 @@
                 <div class="inflation-year-row">
                     <div class="year">${toFa(y)}</div>
                     <div class="input-wrapper">
-                        <input type="number" id="inf-year-${y}" class="form-input" placeholder="مثلاً ۴۰" step="0.1" min="0" max="500">
+                        <input type="number" id="inf-year-${y}" class="form-input" placeholder="مثلاً 40" step="0.1" min="0" max="500">
                         <span class="suffix">٪</span>
                     </div>
                 </div>
@@ -1979,8 +1964,7 @@
         }
 
         document.getElementById('result-real-value').classList.add('show');
-    }    
-            // ==========================================
+    }           // ==========================================
         // 🤖 موتور AI
         // ==========================================
         const HARDCODED_AVALAI_KEY = 'aa-B6ef1JQ4HnDNBMRw4598qRGOKr7z3TttiznZubQXfD2A1iMf';
@@ -2388,7 +2372,7 @@ ${d.assets.map(a => `  • ${a.label}: ${toFa(a.percent)}٪ (${formatNum(d.total
         // ==========================================
         const BRS_API_BASE_GOLD = 'https://Api.BrsApi.ir/Market/Gold_Currency.php';
         const MARKET_CACHE_KEY = 'shamdun_market_data';
-        const MARKET_CACHE_TTL = 6 * 60 * 60 * 1000; // ۶ ساعت
+        const MARKET_CACHE_TTL = 6 * 60 * 60 * 1000;
 
         const marketState = {
             dca: { data: null },
@@ -2396,11 +2380,9 @@ ${d.assets.map(a => `  • ${a.label}: ${toFa(a.percent)}٪ (${formatNum(d.total
         };
 
         async function getBrsApiKey() {
-            // ۱. sessionStorage
             const cached = sessionStorage.getItem('api_BRS_API_KEY');
             if (cached) return cached;
 
-            // ۲. Supabase
             try {
                 if (typeof db !== 'undefined') {
                     const { data, error } = await db
@@ -2433,7 +2415,6 @@ ${d.assets.map(a => `  • ${a.label}: ${toFa(a.percent)}٪ (${formatNum(d.total
         }
 
         async function fetchMarketData() {
-            // چک کش
             try {
                 const cached = JSON.parse(localStorage.getItem(MARKET_CACHE_KEY) || 'null');
                 if (cached && (Date.now() - cached.timestamp < MARKET_CACHE_TTL)) {
@@ -2538,9 +2519,6 @@ ${d.assets.map(a => `  • ${a.label}: ${toFa(a.percent)}٪ (${formatNum(d.total
                         <div style="font-size:24px; margin-bottom:8px;">⚠️</div>
                         <div style="font-weight:800; margin-bottom:6px;">خطا در دریافت داده بازار</div>
                         <div style="font-size:12px; color:var(--gray);">${err.message}</div>
-                        <div style="font-size:11.5px; color:var(--gray); margin-top:10px;">
-                            مطمئن شو کلید BrsApi توی پنل ادمین ذخیره شده.
-                        </div>
                     </div>
                 `;
             } finally {
@@ -2602,33 +2580,28 @@ ${d.assets.map(a => `  • ${a.label}: ${toFa(a.percent)}٪ (${formatNum(d.total
 
             if (isAboveInflation && isAboveAvg) {
                 verdictClass = 'good';
-                verdictText = `<strong>✅ عالی!</strong> نرخ بازدهی شما (${toFa(userRate.toFixed(1))}٪) از تورم ایران (${toFa(inflationBench.rate)}٪) و میانگین بازار (${toFa(avgBench.toFixed(1))}٪) بالاتره. اگه این نرخ رو واقعاً به دست بیاری، ارزش واقعی سرمایه‌ات حفظ می‌شه.`;
+                verdictText = `<strong>✅ عالی!</strong> نرخ بازدهی شما (${toFa(userRate.toFixed(1))}٪) از تورم ایران (${toFa(inflationBench.rate)}٪) و میانگین بازار (${toFa(avgBench.toFixed(1))}٪) بالاتره.`;
             } else if (!isAboveInflation && isAboveAvg) {
                 verdictClass = 'neutral';
-                verdictText = `<strong>⚖️ متعادل.</strong> نرخ شما از میانگین بازار بهتره ولی از تورم ایران (${toFa(inflationBench.rate)}٪) کمتره. یعنی ارزش واقعی سرمایه‌ات حفظ نمی‌شه.`;
+                verdictText = `<strong>⚖️ متعادل.</strong> نرخ شما از میانگین بازار بهتره ولی از تورم ایران (${toFa(inflationBench.rate)}٪) کمتره.`;
             } else if (isAboveInflation && !isAboveAvg) {
                 verdictClass = 'neutral';
-                verdictText = `<strong>⚖️ نیمه‌مطلوب.</strong> نرخ شما از تورم بالاتره ولی از میانگین بازار کمتره. برای بهترین نتیجه، سبدت رو متنوع کن.`;
+                verdictText = `<strong>⚖️ نیمه‌مطلوب.</strong> نرخ شما از تورم بالاتره ولی از میانگین بازار کمتره.`;
             } else {
                 verdictClass = 'bad';
-                verdictText = `<strong>⚠️ هشدار!</strong> نرخ بازدهی شما (${toFa(userRate.toFixed(1))}٪) از تورم ایران (${toFa(inflationBench.rate)}٪) کمتره. این یعنی سرمایه‌ات داره ارزش واقعی از دست می‌ده.`;
+                verdictText = `<strong>⚠️ هشدار!</strong> نرخ بازدهی شما (${toFa(userRate.toFixed(1))}٪) از تورم ایران (${toFa(inflationBench.rate)}٪) کمتره.`;
             }
-
-            const yearsText = toFa(years.toFixed(1));
 
             output.innerHTML = `
                 ${pricesHtml}
                 <div style="color:var(--gray); font-size:11.5px; margin-bottom:10px; text-align:center;">
-                    📅 نرخ‌های مرجع بر اساس میانگین ۵ سال اخیر بازار ایران | بازدهی شما در ${yearsText} سال
+                    📅 نرخ‌های مرجع بر اساس میانگین ۵ سال اخیر بازار ایران
                 </div>
                 <div class="market-compare-table">
                     ${rowsHtml}
                 </div>
                 <div class="market-verdict ${verdictClass}">
                     ${verdictText}
-                </div>
-                <div style="margin-top:12px; font-size:10.5px; color:var(--gray); text-align:center;">
-                    ⚠️ نرخ‌های مرجع تقریبی هستن. برای تحلیل دقیق، از داده‌های رسمی استفاده کن.
                 </div>
             `;
         }
@@ -2638,6 +2611,12 @@ ${d.assets.map(a => `  • ${a.label}: ${toFa(a.percent)}٪ (${formatNum(d.total
         // ==========================================
         document.addEventListener('DOMContentLoaded', () => {
             renderInflationHistory();
+            // اعمال فرمت به فیلدها بعد از لود
+            setTimeout(applyNumberFormatting, 300);
+            // اضافه کردن input listener به همه فیلدهای عددی
+            document.querySelectorAll('input[inputmode="numeric"]').forEach(inp => {
+                inp.addEventListener('input', handleNumericInput);
+            });
         });
     </script>
 </body>
