@@ -151,8 +151,20 @@
             overflow: hidden;
             border: 1px solid rgba(212, 175, 55, 0.15);
         }
-        .data-table th { background: rgba(212, 175, 55, 0.1); color: var(--gold); padding: 14px; text-align: right; font-size: 13px; font-weight: 800; }
-        .data-table td { padding: 14px; border-top: 1px solid rgba(255, 255, 255, 0.05); color: #cbd5e1; font-size: 13px; }
+        .data-table th {
+            background: rgba(212, 175, 55, 0.1);
+            color: var(--gold);
+            padding: 14px;
+            text-align: right;
+            font-size: 13px;
+            font-weight: 800;
+        }
+        .data-table td {
+            padding: 14px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            color: #cbd5e1;
+            font-size: 13px;
+        }
         .data-table tr:hover td { background: rgba(212, 175, 55, 0.03); }
         .btn {
             padding: 10px 18px;
@@ -167,13 +179,28 @@
             align-items: center;
             gap: 6px;
         }
-        .btn-primary { background: linear-gradient(135deg, var(--gold), var(--gold-dark)); color: var(--bg-primary); }
+        .btn-primary {
+            background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+            color: var(--bg-primary);
+        }
         .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(212, 175, 55, 0.4); }
-        .btn-danger { background: rgba(239, 68, 68, 0.15); color: var(--red); border: 1px solid rgba(239, 68, 68, 0.3); }
+        .btn-danger {
+            background: rgba(239, 68, 68, 0.15);
+            color: var(--red);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+        }
         .btn-danger:hover { background: rgba(239, 68, 68, 0.25); }
-        .btn-success { background: rgba(16, 185, 129, 0.15); color: var(--green); border: 1px solid rgba(16, 185, 129, 0.3); }
+        .btn-success {
+            background: rgba(16, 185, 129, 0.15);
+            color: var(--green);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+        }
         .btn-success:hover { background: rgba(16, 185, 129, 0.25); }
-        .btn-secondary { background: rgba(148, 163, 184, 0.1); color: #cbd5e1; border: 1px solid rgba(148, 163, 184, 0.2); }
+        .btn-secondary {
+            background: rgba(148, 163, 184, 0.1);
+            color: #cbd5e1;
+            border: 1px solid rgba(148, 163, 184, 0.2);
+        }
         .btn-secondary:hover { background: rgba(148, 163, 184, 0.2); }
         .btn-small { padding: 6px 12px; font-size: 12px; }
         .form-box {
@@ -242,7 +269,13 @@
             border-bottom: 1px solid rgba(212, 175, 55, 0.15);
         }
         .modal-actions { display: flex; gap: 10px; margin-top: 20px; justify-content: flex-end; flex-wrap: wrap; }
-        .login-screen { display: flex; align-items: center; justify-content: center; min-height: 100vh; padding: 20px; }
+        .login-screen {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
         .login-card {
             background: linear-gradient(135deg, var(--bg-card), var(--bg-secondary));
             border: 2px solid rgba(212, 175, 55, 0.4);
@@ -421,7 +454,13 @@
             color: var(--gold);
             margin: 2px;
         }
-        .status-badge { display: inline-block; padding: 4px 10px; border-radius: 8px; font-size: 11px; font-weight: 800; }
+        .status-badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 8px;
+            font-size: 11px;
+            font-weight: 800;
+        }
         .status-published { background: rgba(16, 185, 129, 0.15); color: var(--green); }
         .status-draft { background: rgba(148, 163, 184, 0.15); color: var(--gray); }
         .type-badge { display: inline-block; padding: 4px 10px; border-radius: 8px; font-size: 11px; font-weight: 800; }
@@ -444,7 +483,11 @@
             transition: 0.3s;
         }
         .filter-tab:hover { color: var(--gold); border-color: rgba(212, 175, 55, 0.4); }
-        .filter-tab.active { background: linear-gradient(135deg, var(--gold), var(--gold-dark)); color: var(--bg-primary); border-color: var(--gold); }
+        .filter-tab.active {
+            background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+            color: var(--bg-primary);
+            border-color: var(--gold);
+        }
         .message-card {
             background: linear-gradient(135deg, var(--bg-card), var(--bg-secondary));
             border: 1px solid rgba(212, 175, 55, 0.15);
@@ -509,6 +552,90 @@
             white-space: pre-wrap;
             margin-bottom: 15px;
         }
+        /* ===== Testimonial Admin Cards ===== */
+        .testimonial-admin-card {
+            background: linear-gradient(135deg, var(--bg-card), var(--bg-secondary));
+            border: 1px solid rgba(212, 175, 55, 0.15);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 15px;
+            transition: 0.3s;
+            border-right: 4px solid rgba(148, 163, 184, 0.3);
+        }
+        .testimonial-admin-card:hover {
+            border-color: rgba(212, 175, 55, 0.4);
+            transform: translateX(-3px);
+        }
+        .testimonial-admin-card.pending {
+            border-right-color: #f59e0b;
+            background: linear-gradient(135deg, rgba(245, 158, 11, 0.05), var(--bg-secondary));
+        }
+        .testimonial-admin-card.approved {
+            border-right-color: var(--green);
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.03), var(--bg-secondary));
+        }
+        .testimonial-admin-card.rejected {
+            border-right-color: var(--red);
+            background: linear-gradient(135deg, rgba(239, 68, 68, 0.03), var(--bg-secondary));
+            opacity: 0.7;
+        }
+        .tac-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .tac-stars { color: var(--gold); font-size: 16px; letter-spacing: 2px; }
+        .tac-status {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 10px;
+            font-size: 11px;
+            font-weight: 800;
+        }
+        .tac-status.pending { background: rgba(245, 158, 11, 0.15); color: #f59e0b; }
+        .tac-status.approved { background: rgba(16, 185, 129, 0.15); color: var(--green); }
+        .tac-status.rejected { background: rgba(239, 68, 68, 0.15); color: var(--red); }
+        .tac-text {
+            color: #cbd5e1;
+            font-size: 14px;
+            line-height: 1.9;
+            margin-bottom: 15px;
+            padding: 12px 15px;
+            background: rgba(10, 10, 15, 0.4);
+            border-radius: 10px;
+            border-right: 3px solid var(--gold);
+        }
+        .tac-author {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+        }
+        .tac-avatar {
+            width: 40px; height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--bg-primary);
+            font-weight: 900;
+            font-size: 15px;
+            flex-shrink: 0;
+        }
+        .tac-info .name { color: var(--white); font-size: 14px; font-weight: 800; }
+        .tac-info .meta { color: var(--gray); font-size: 11px; margin-top: 2px; }
+        .tac-actions {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            padding-top: 12px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
         @media (max-width: 900px) {
             .blog-editor { grid-template-columns: 1fr; }
             .analysis-type-grid { grid-template-columns: 1fr; }
@@ -562,6 +689,7 @@
         <button class="tab-btn" onclick="switchTab('ai-assistant', this)">🤖 دستیار AI</button>
         <button class="tab-btn" onclick="switchTab('messages', this)">📬 صندوق پیام <span class="tab-badge" id="messagesBadge">0</span></button>
         <button class="tab-btn" onclick="switchTab('comments', this)">💬 نظرات</button>
+        <button class="tab-btn" onclick="switchTab('testimonials', this)">⭐ نظرات کاربران <span class="tab-badge" id="testimonialsBadge">0</span></button>
         <button class="tab-btn" onclick="switchTab('courses', this)">📚 دوره‌ها</button>
         <button class="tab-btn" onclick="switchTab('lessons', this)">📖 دروس</button>
         <button class="tab-btn" onclick="switchTab('users', this)">👥 کاربران</button>
@@ -751,6 +879,49 @@
             </div>
         </div>
 
+        <!-- ===== تب نظرات کاربران (Testimonials) ===== -->
+        <div id="tab-testimonials" class="tab-content">
+            <div class="tab-actions">
+                <h2>⭐ نظرات کاربران (Testimonials)</h2>
+                <span style="color:var(--gray); font-size:12px;">مدیریت نظرات ثبت‌شده توسط کاربران</span>
+            </div>
+
+            <div class="stats-grid" style="margin-bottom:20px;">
+                <div class="stat-card">
+                    <div class="icon">📊</div>
+                    <div class="value" id="tstatTotal">-</div>
+                    <div class="label">کل نظرات</div>
+                </div>
+                <div class="stat-card">
+                    <div class="icon">⏳</div>
+                    <div class="value" id="tstatPending">-</div>
+                    <div class="label">در انتظار تأیید</div>
+                </div>
+                <div class="stat-card">
+                    <div class="icon">✅</div>
+                    <div class="value" id="tstatApproved">-</div>
+                    <div class="label">تأییدشده</div>
+                </div>
+                <div class="stat-card">
+                    <div class="icon">⭐</div>
+                    <div class="value" id="tstatAvg">-</div>
+                    <div class="label">میانگین امتیاز</div>
+                </div>
+            </div>
+
+            <div class="filter-tabs">
+                <button class="filter-tab active" onclick="filterTestimonials('all', this)">📚 همه</button>
+                <button class="filter-tab" onclick="filterTestimonials('pending', this)">⏳ در انتظار</button>
+                <button class="filter-tab" onclick="filterTestimonials('approved', this)">✅ تأییدشده</button>
+                <button class="filter-tab" onclick="filterTestimonials('rejected', this)">❌ ردشده</button>
+            </div>
+
+            <div id="testimonialsList" class="loading">
+                <div class="spinner"></div>
+                در حال بارگذاری...
+            </div>
+        </div>
+
         <!-- ===== تب دوره‌ها ===== -->
         <div id="tab-courses" class="tab-content">
             <div class="tab-actions">
@@ -785,7 +956,7 @@
             </div>
         </div>
 
-        <!-- ===== تب تنظیمات (NEW) ===== -->
+        <!-- ===== تب تنظیمات ===== -->
         <div id="tab-settings" class="tab-content">
             <div class="tab-actions">
                 <h2>⚙️ تنظیمات سایت</h2>
@@ -816,8 +987,7 @@
         </div>
 
     </div>
-</div>
-
+</div>   
 <!-- ===== Modal: Course ===== -->
 <div id="courseModal" class="modal-overlay">
     <div class="modal">
@@ -1094,99 +1264,296 @@
 </div>
 
 <!-- ===== Toast ===== -->
-<div id="toast" class="toast"></div> 
+<div id="toast" class="toast"></div>   
     <script src="supabase-config.js"></script>
     <script>
-    // ==========================================
-    // تنظیمات - مدیریت کلیدهای API
-    // ==========================================
-    async function loadSettings() {
-        const status = document.getElementById('settingsStatus');
-        status.innerHTML = '⏳ در حال بارگذاری...';
-        status.style.color = 'var(--gray)';
+        // ==========================================
+        // تنظیمات - مدیریت کلیدهای API
+        // ==========================================
+        async function loadSettings() {
+            const status = document.getElementById('settingsStatus');
+            status.innerHTML = '⏳ در حال بارگذاری...';
+            status.style.color = 'var(--gray)';
 
-        try {
-            const { data, error } = await db
-                .from('app_settings')
-                .select('key, value')
-                .in('key', ['BRS_API_KEY']);
+            try {
+                const { data, error } = await db
+                    .from('app_settings')
+                    .select('key, value')
+                    .in('key', ['BRS_API_KEY']);
 
-            if (error) throw error;
+                if (error) throw error;
 
-            const map = {};
-            (data || []).forEach(item => { map[item.key] = item.value; });
+                const map = {};
+                (data || []).forEach(item => { map[item.key] = item.value; });
 
-            document.getElementById('setting_brs_api_key').value = map['BRS_API_KEY'] || '';
+                document.getElementById('setting_brs_api_key').value = map['BRS_API_KEY'] || '';
 
-            status.innerHTML = '✅ تنظیمات بارگذاری شد';
-            status.style.color = 'var(--green)';
-            setTimeout(() => { status.innerHTML = ''; }, 2000);
-        } catch (e) {
-            status.innerHTML = '❌ خطا: ' + e.message;
-            status.style.color = 'var(--red)';
-        }
-    }
-
-    async function saveSettings() {
-        const status = document.getElementById('settingsStatus');
-        const brsKey = document.getElementById('setting_brs_api_key').value.trim();
-
-        if (!brsKey) {
-            status.innerHTML = '❌ کلید BrsApi رو وارد کن';
-            status.style.color = 'var(--red)';
-            return;
+                status.innerHTML = '✅ تنظیمات بارگذاری شد';
+                status.style.color = 'var(--green)';
+                setTimeout(() => { status.innerHTML = ''; }, 2000);
+            } catch (e) {
+                status.innerHTML = '❌ خطا: ' + e.message;
+                status.style.color = 'var(--red)';
+            }
         }
 
-        status.innerHTML = '⏳ در حال ذخیره...';
-        status.style.color = 'var(--gray)';
+        async function saveSettings() {
+            const status = document.getElementById('settingsStatus');
+            const brsKey = document.getElementById('setting_brs_api_key').value.trim();
 
-        try {
-            const { data: existing } = await db
-                .from('app_settings')
-                .select('id')
-                .eq('key', 'BRS_API_KEY')
-                .maybeSingle();
-
-            let error;
-            if (existing) {
-                ({ error } = await db
-                    .from('app_settings')
-                    .update({ value: brsKey, updated_at: new Date().toISOString() })
-                    .eq('key', 'BRS_API_KEY'));
-            } else {
-                ({ error } = await db
-                    .from('app_settings')
-                    .insert({ key: 'BRS_API_KEY', value: brsKey, description: 'کلید API سایت BrsApi.ir' }));
+            if (!brsKey) {
+                status.innerHTML = '❌ کلید BrsApi رو وارد کن';
+                status.style.color = 'var(--red)';
+                return;
             }
 
-            if (error) throw error;
+            status.innerHTML = '⏳ در حال ذخیره...';
+            status.style.color = 'var(--gray)';
 
-            // پاک کردن کش sessionStorage
-            sessionStorage.removeItem('api_BRS_API_KEY');
+            try {
+                const { data: existing } = await db
+                    .from('app_settings')
+                    .select('id')
+                    .eq('key', 'BRS_API_KEY')
+                    .maybeSingle();
 
-            status.innerHTML = '✅ تنظیمات ذخیره شد. از این به بعد صفحه بورس از این کلید استفاده می‌کند.';
-            status.style.color = 'var(--green)';
-            setTimeout(() => { status.innerHTML = ''; }, 4000);
-        } catch (e) {
-            status.innerHTML = '❌ خطا: ' + e.message;
-            status.style.color = 'var(--red)';
-        }
-    }
-
-    // بارگذاری خودکار تنظیمات وقتی تب باز می‌شود
-    // صبر می‌کنیم تا admin.js لود بشه و switchTab رو override نمی‌کنیم
-    // به جاش از MutationObserver استفاده می‌کنیم
-    document.addEventListener('DOMContentLoaded', () => {
-        const settingsTab = document.getElementById('tab-settings');
-        if (settingsTab) {
-            const observer = new MutationObserver(() => {
-                if (settingsTab.classList.contains('active')) {
-                    loadSettings();
+                let error;
+                if (existing) {
+                    ({ error } = await db
+                        .from('app_settings')
+                        .update({ value: brsKey, updated_at: new Date().toISOString() })
+                        .eq('key', 'BRS_API_KEY'));
+                } else {
+                    ({ error } = await db
+                        .from('app_settings')
+                        .insert({ key: 'BRS_API_KEY', value: brsKey, description: 'کلید API سایت BrsApi.ir' }));
                 }
-            });
-            observer.observe(settingsTab, { attributes: true, attributeFilter: ['class'] });
+
+                if (error) throw error;
+
+                sessionStorage.removeItem('api_BRS_API_KEY');
+
+                status.innerHTML = '✅ تنظیمات ذخیره شد. از این به بعد صفحه بورس از این کلید استفاده می‌کند.';
+                status.style.color = 'var(--green)';
+                setTimeout(() => { status.innerHTML = ''; }, 4000);
+            } catch (e) {
+                status.innerHTML = '❌ خطا: ' + e.message;
+                status.style.color = 'var(--red)';
+            }
         }
-    });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const settingsTab = document.getElementById('tab-settings');
+            if (settingsTab) {
+                const observer = new MutationObserver(() => {
+                    if (settingsTab.classList.contains('active')) {
+                        loadSettings();
+                    }
+                });
+                observer.observe(settingsTab, { attributes: true, attributeFilter: ['class'] });
+            }
+        });
+
+        // ==========================================
+        // Testimonials Admin System
+        // ==========================================
+        let allTestimonials = [];
+        let currentTestimonialFilter = 'all';
+
+        function escapeHtml(text) {
+            if (!text) return '';
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        function toFa(num) {
+            if (num === null || num === undefined) return '۰';
+            const persianDigits = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
+            return String(num).replace(/\d/g, d => persianDigits[d]);
+        }
+
+        function formatDate(dateStr) {
+            if (!dateStr) return '';
+            try {
+                const d = new Date(dateStr);
+                const now = new Date();
+                const diff = Math.floor((now - d) / 1000 / 60);
+                if (diff < 60) return 'همین الان';
+                if (diff < 1440) return toFa(Math.floor(diff / 60)) + ' ساعت پیش';
+                if (diff < 10080) return toFa(Math.floor(diff / 1440)) + ' روز پیش';
+                return new Intl.DateTimeFormat('fa-IR', { year: 'numeric', month: 'short', day: 'numeric' }).format(d);
+            } catch (e) {
+                return '';
+            }
+        }
+
+        function showToast(msg, type = 'success') {
+            const toast = document.getElementById('toast');
+            toast.textContent = msg;
+            toast.className = 'toast show ' + type;
+            setTimeout(() => toast.classList.remove('show'), 3000);
+        }
+
+        async function loadTestimonials() {
+            const list = document.getElementById('testimonialsList');
+            if (!list) return;
+
+            list.innerHTML = '<div class="loading"><div class="spinner"></div>در حال بارگذاری...</div>';
+
+            try {
+                const { data, error } = await db
+                    .from('testimonials')
+                    .select('*')
+                    .order('created_at', { ascending: false });
+
+                if (error) throw error;
+
+                allTestimonials = data || [];
+
+                // آمار
+                const total = allTestimonials.length;
+                const pending = allTestimonials.filter(t => t.status === 'pending').length;
+                const approved = allTestimonials.filter(t => t.status === 'approved').length;
+                const avg = total > 0
+                    ? allTestimonials.reduce((sum, t) => sum + (t.rating || 0), 0) / total
+                    : 0;
+
+                document.getElementById('tstatTotal').textContent = toFa(total);
+                document.getElementById('tstatPending').textContent = toFa(pending);
+                document.getElementById('tstatApproved').textContent = toFa(approved);
+                document.getElementById('tstatAvg').textContent = toFa(avg.toFixed(1));
+
+                // بج تب
+                const badge = document.getElementById('testimonialsBadge');
+                if (pending > 0) {
+                    badge.textContent = toFa(pending);
+                    badge.classList.add('show');
+                } else {
+                    badge.classList.remove('show');
+                }
+
+                renderTestimonialsList();
+            } catch (e) {
+                console.error('Load testimonials error:', e);
+                list.innerHTML = '<div class="loading">❌ خطا در بارگذاری نظرات</div>';
+            }
+        }
+
+        function filterTestimonials(filter, btn) {
+            document.querySelectorAll('#tab-testimonials .filter-tab').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            currentTestimonialFilter = filter;
+            renderTestimonialsList();
+        }
+
+        function renderTestimonialsList() {
+            const list = document.getElementById('testimonialsList');
+            if (!list) return;
+
+            let filtered = allTestimonials;
+            if (currentTestimonialFilter !== 'all') {
+                filtered = allTestimonials.filter(t => t.status === currentTestimonialFilter);
+            }
+
+            if (filtered.length === 0) {
+                list.innerHTML = '<div class="loading">📭 نظری در این دسته یافت نشد</div>';
+                return;
+            }
+
+            list.innerHTML = filtered.map(t => {
+                const statusLabels = { pending: '⏳ در انتظار', approved: '✅ تأییدشده', rejected: '❌ ردشده' };
+                const statusLabel = statusLabels[t.status] || t.status;
+                const stars = '★'.repeat(t.rating || 0) + '☆'.repeat(5 - (t.rating || 0));
+                const initial = (t.name || '?').charAt(0).toUpperCase();
+                const location = t.city ? `📍 ${escapeHtml(t.city)}` : '';
+
+                return `
+                    <div class="testimonial-admin-card ${t.status}">
+                        <div class="tac-header">
+                            <div class="tac-stars">${stars}</div>
+                            <span class="tac-status ${t.status}">${statusLabel}</span>
+                        </div>
+                        <div class="tac-text">«${escapeHtml(t.text)}»</div>
+                        <div class="tac-author">
+                            <div class="tac-avatar">${initial}</div>
+                            <div class="tac-info">
+                                <div class="name">${escapeHtml(t.name)}</div>
+                                <div class="meta">${location} ${formatDate(t.created_at)}</div>
+                            </div>
+                        </div>
+                        <div class="tac-actions">
+                            ${t.status !== 'approved' ? `<button class="btn btn-success btn-small" onclick="approveTestimonial('${t.id}')">✅ تأیید</button>` : ''}
+                            ${t.status !== 'rejected' ? `<button class="btn btn-secondary btn-small" onclick="rejectTestimonial('${t.id}')">❌ رد</button>` : ''}
+                            <button class="btn btn-danger btn-small" onclick="deleteTestimonial('${t.id}')">🗑️ حذف</button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        async function approveTestimonial(id) {
+            try {
+                const { error } = await db
+                    .from('testimonials')
+                    .update({ status: 'approved', approved_at: new Date().toISOString() })
+                    .eq('id', id);
+
+                if (error) throw error;
+
+                showToast('✅ نظر تأیید شد');
+                await loadTestimonials();
+            } catch (e) {
+                showToast('❌ خطا: ' + e.message, 'error');
+            }
+        }
+
+        async function rejectTestimonial(id) {
+            try {
+                const { error } = await db
+                    .from('testimonials')
+                    .update({ status: 'rejected' })
+                    .eq('id', id);
+
+                if (error) throw error;
+
+                showToast('❌ نظر رد شد');
+                await loadTestimonials();
+            } catch (e) {
+                showToast('❌ خطا: ' + e.message, 'error');
+            }
+        }
+
+        async function deleteTestimonial(id) {
+            if (!confirm('مطمئنی می‌خوای این نظر رو حذف کنی؟')) return;
+
+            try {
+                const { error } = await db
+                    .from('testimonials')
+                    .delete()
+                    .eq('id', id);
+
+                if (error) throw error;
+
+                showToast('🗑️ نظر حذف شد');
+                await loadTestimonials();
+            } catch (e) {
+                showToast('❌ خطا: ' + e.message, 'error');
+            }
+        }
+
+        // بارگذاری نظرات وقتی تب باز می‌شود
+        document.addEventListener('DOMContentLoaded', () => {
+            const testimonialsTab = document.getElementById('tab-testimonials');
+            if (testimonialsTab) {
+                const observer = new MutationObserver(() => {
+                    if (testimonialsTab.classList.contains('active')) {
+                        loadTestimonials();
+                    }
+                });
+                observer.observe(testimonialsTab, { attributes: true, attributeFilter: ['class'] });
+            }
+        });
     </script>
     <script src="admin.js"></script>
 </body>
