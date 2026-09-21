@@ -323,6 +323,26 @@
         }
 
         /* ===== AI Analysis Card ===== */
+        .ai-btn {
+            background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+            color: #fff;
+            padding: 10px 18px;
+            border-radius: 10px;
+            border: none;
+            font-family: inherit;
+            font-size: 13px;
+            font-weight: 800;
+            cursor: pointer;
+            transition: 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .ai-btn:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(139, 92, 246, 0.4);
+        }
+        .ai-btn:disabled { opacity: 0.5; cursor: not-allowed; }
         .ai-card {
             background: linear-gradient(135deg, rgba(139, 92, 246, 0.08), rgba(139, 92, 246, 0.02));
             border: 1px solid rgba(139, 92, 246, 0.3);
@@ -351,26 +371,6 @@
             align-items: center;
             gap: 8px;
         }
-        .ai-btn {
-            background: linear-gradient(135deg, #8b5cf6, #7c3aed);
-            color: #fff;
-            padding: 10px 18px;
-            border-radius: 10px;
-            border: none;
-            font-family: inherit;
-            font-size: 13px;
-            font-weight: 800;
-            cursor: pointer;
-            transition: 0.3s;
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-        }
-        .ai-btn:hover:not(:disabled) {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(139, 92, 246, 0.4);
-        }
-        .ai-btn:disabled { opacity: 0.5; cursor: not-allowed; }
         .ai-output {
             background: rgba(10, 10, 15, 0.6);
             border: 1px solid rgba(139, 92, 246, 0.2);
@@ -434,12 +434,6 @@
             border-radius: 50%;
             animation: spin 1s linear infinite;
         }
-        .ai-actions {
-            display: flex;
-            gap: 8px;
-            margin-top: 15px;
-            flex-wrap: wrap;
-        }
         .ai-action-btn {
             background: rgba(139, 92, 246, 0.1);
             color: #a78bfa;
@@ -461,6 +455,176 @@
             color: #c4b5fd;
         }
 
+        /* ===== Inflation History Styles ===== */
+        .inflation-year-row {
+            display: grid;
+            grid-template-columns: 100px 1fr;
+            gap: 12px;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px dashed rgba(255, 255, 255, 0.05);
+        }
+        .inflation-year-row:last-child { border-bottom: none; }
+        .inflation-year-row .year {
+            color: var(--gold);
+            font-size: 15px;
+            font-weight: 800;
+            text-align: center;
+            background: rgba(212, 175, 55, 0.1);
+            padding: 8px;
+            border-radius: 10px;
+            border: 1px solid rgba(212, 175, 55, 0.2);
+        }
+        .inflation-year-row .input-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .inflation-year-row input { flex: 1; }
+        .inflation-year-row .suffix {
+            color: var(--gray);
+            font-size: 14px;
+            font-weight: 700;
+        }
+        .inflation-list-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 15px;
+            background: rgba(10, 10, 15, 0.5);
+            border-radius: 12px;
+            border-right: 3px solid var(--gold);
+            margin-bottom: 8px;
+        }
+        .inflation-list-item .info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        .inflation-list-item .year-badge {
+            background: rgba(212, 175, 55, 0.15);
+            color: var(--gold);
+            padding: 4px 12px;
+            border-radius: 10px;
+            font-size: 13px;
+            font-weight: 800;
+        }
+        .inflation-list-item .rate {
+            color: var(--white);
+            font-size: 15px;
+            font-weight: 800;
+        }
+        .inflation-list-item .type {
+            color: var(--gray);
+            font-size: 11px;
+        }
+        .inflation-list-item .actions {
+            display: flex;
+            gap: 6px;
+        }
+        .inflation-list-item .icon-btn-small {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(10, 10, 15, 0.5);
+            color: var(--gray);
+            cursor: pointer;
+            font-size: 14px;
+            transition: 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .inflation-list-item .icon-btn-small:hover {
+            border-color: var(--gold);
+            color: var(--gold);
+            background: rgba(212, 175, 55, 0.1);
+        }
+        .inflation-list-item .icon-btn-small.danger:hover {
+            border-color: var(--red);
+            color: var(--red);
+            background: rgba(239, 68, 68, 0.1);
+        }
+        .inflation-summary {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+        .inflation-summary-card {
+            background: rgba(10, 10, 15, 0.5);
+            padding: 15px;
+            border-radius: 12px;
+            text-align: center;
+            border: 1px solid rgba(212, 175, 55, 0.15);
+        }
+        .inflation-summary-card .label {
+            color: var(--gray);
+            font-size: 11px;
+            margin-bottom: 6px;
+        }
+        .inflation-summary-card .value {
+            color: var(--gold);
+            font-size: 20px;
+            font-weight: 900;
+            font-variant-numeric: tabular-nums;
+        }
+        .inflation-summary-card .value.green { color: var(--green); }
+        .inflation-summary-card .value.red { color: var(--red); }
+        .inflation-empty {
+            text-align: center;
+            padding: 30px 20px;
+            color: var(--gray);
+            font-size: 13px;
+        }
+        .inflation-empty .icon {
+            font-size: 40px;
+            margin-bottom: 10px;
+            opacity: 0.5;
+        }
+        .chart-wrapper-mini {
+            background: rgba(10, 10, 15, 0.5);
+            border-radius: 12px;
+            padding: 15px;
+            margin-top: 15px;
+            height: 280px;
+            position: relative;
+        }
+        .type-selector {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .type-card {
+            background: rgba(10, 10, 15, 0.5);
+            border: 2px solid rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            padding: 15px 10px;
+            cursor: pointer;
+            transition: 0.3s;
+            text-align: center;
+        }
+        .type-card:hover { border-color: rgba(212, 175, 55, 0.4); }
+        .type-card.active {
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.15), rgba(212, 175, 55, 0.05));
+            border-color: var(--gold);
+        }
+        .type-card .icon { font-size: 24px; margin-bottom: 8px; }
+        .type-card .title {
+            color: var(--white);
+            font-size: 12.5px;
+            font-weight: 800;
+            margin-bottom: 4px;
+        }
+        .type-card .desc {
+            color: var(--gray);
+            font-size: 10.5px;
+            line-height: 1.5;
+        }
+
         @media (max-width: 600px) {
             .main-container { padding: 90px 15px 30px; }
             .page-header h1 { font-size: 26px; }
@@ -471,6 +635,9 @@
             .comparison-container { grid-template-columns: 1fr; }
             .edu-card { padding: 14px; }
             .ai-card { padding: 18px; }
+            .inflation-year-row { grid-template-columns: 80px 1fr; }
+            .inflation-summary { grid-template-columns: 1fr; }
+            .type-selector { grid-template-columns: 1fr; }
         }
     </style>
 </head>
@@ -503,7 +670,7 @@
         </div>
     </div>
 
-    <!-- ============ تب ۱: DCA ============ -->
+    <!-- تب ۱: DCA -->
     <div class="calc-section active" id="section-dca">
         <div class="edu-card">
             <div class="edu-icon">📖</div>
@@ -513,7 +680,7 @@
                     اگه هر ماه یه مبلغ ثابت سرمایه‌گذاری کنی (مثلاً ۵ میلیون)، با سود مرکب چقدر می‌شه؟ این روش «DCA» یا سرمایه‌گذاری دوره‌ای نام داره.
                 </div>
                 <div class="edu-usage">
-                    <strong>💡 کاربرد:</strong> برنامه‌ریزی پس‌انداز ماهانه، دیدن قدرت سود مرکب در بلندمدت، مقایسه بازدهی با نرخ‌های مختلف
+                    <strong>💡 کاربرد:</strong> برنامه‌ریزی پس‌انداز ماهانه، دیدن قدرت سود مرکب در بلندمدت
                 </div>
             </div>
         </div>
@@ -568,9 +735,7 @@
             </div>
         </div>
 
-        <button class="ai-btn" id="ai-btn-dca" onclick="analyzeWithAI('dca')" style="width:100%; margin-top:15px; justify-content:center; padding:14px;">
-            🤖 تحلیل با AI
-        </button>
+        <button class="ai-btn" id="ai-btn-dca" onclick="analyzeWithAI('dca')" style="width:100%; margin-top:15px; justify-content:center; padding:14px;">🤖 تحلیل با AI</button>
 
         <div class="ai-card" id="ai-card-dca">
             <div class="ai-card-header">
@@ -578,26 +743,19 @@
                 <button class="ai-action-btn" onclick="copyAIAnalysis('dca')">📋 کپی</button>
             </div>
             <div class="ai-output" id="ai-output-dca">
-                <div class="ai-loading">
-                    <div class="spinner"></div>
-                    <div>در حال تحلیل...</div>
-                </div>
+                <div class="ai-loading"><div class="spinner"></div><div>در حال تحلیل...</div></div>
             </div>
         </div>
     </div>
 
-    <!-- ============ تب ۲: سود مرکب ============ -->
+    <!-- تب ۲: سود مرکب -->
     <div class="calc-section" id="section-compound">
         <div class="edu-card">
             <div class="edu-icon">📖</div>
             <div class="edu-content">
                 <div class="edu-title">این ابزار چیکار می‌کنه؟</div>
-                <div class="edu-text">
-                    اگه یه مبلغ رو با نرخ سود مشخص سرمایه‌گذاری کنی، با سود مرکب (سودی که خودش هم سود می‌سازه) چقدر می‌شه؟
-                </div>
-                <div class="edu-usage">
-                    <strong>💡 کاربرد:</strong> محاسبه سود سپرده بانکی، پیش‌بینی بازدهی بلندمدت، مقایسه نرخ‌های مختلف
-                </div>
+                <div class="edu-text">اگه یه مبلغ رو با نرخ سود مشخص سرمایه‌گذاری کنی، با سود مرکب چقدر می‌شه؟</div>
+                <div class="edu-usage"><strong>💡 کاربرد:</strong> محاسبه سود سپرده بانکی، پیش‌بینی بازدهی بلندمدت</div>
             </div>
         </div>
 
@@ -657,9 +815,7 @@
             </div>
         </div>
 
-        <button class="ai-btn" id="ai-btn-compound" onclick="analyzeWithAI('compound')" style="width:100%; margin-top:15px; justify-content:center; padding:14px;">
-            🤖 تحلیل با AI
-        </button>
+        <button class="ai-btn" id="ai-btn-compound" onclick="analyzeWithAI('compound')" style="width:100%; margin-top:15px; justify-content:center; padding:14px;">🤖 تحلیل با AI</button>
 
         <div class="ai-card" id="ai-card-compound">
             <div class="ai-card-header">
@@ -667,26 +823,19 @@
                 <button class="ai-action-btn" onclick="copyAIAnalysis('compound')">📋 کپی</button>
             </div>
             <div class="ai-output" id="ai-output-compound">
-                <div class="ai-loading">
-                    <div class="spinner"></div>
-                    <div>در حال تحلیل...</div>
-                </div>
+                <div class="ai-loading"><div class="spinner"></div><div>در حال تحلیل...</div></div>
             </div>
         </div>
     </div>
 
-    <!-- ============ تب ۳: هدف مالی ============ -->
+    <!-- تب ۳: هدف مالی -->
     <div class="calc-section" id="section-goal">
         <div class="edu-card">
             <div class="edu-icon">📖</div>
             <div class="edu-content">
                 <div class="edu-title">این ابزار چیکار می‌کنه؟</div>
-                <div class="edu-text">
-                    می‌خوای ۳ سال دیگه ۱ میلیارد تومان داشته باشی؟ این ابزار می‌گه ماهی چقدر باید پس‌انداز کنی تا به هدفت برسی.
-                </div>
-                <div class="edu-usage">
-                    <strong>💡 کاربرد:</strong> برنامه‌ریزی مالی هدف‌محور، پس‌انداز برای خرید خانه/ماشین، ساخت سرمایه بلندمدت
-                </div>
+                <div class="edu-text">می‌خوای ۳ سال دیگه ۱ میلیارد تومان داشته باشی؟ این ابزار می‌گه ماهی چقدر باید پس‌انداز کنی.</div>
+                <div class="edu-usage"><strong>💡 کاربرد:</strong> برنامه‌ریزی مالی هدف‌محور، پس‌انداز برای خرید خانه/ماشین</div>
             </div>
         </div>
 
@@ -738,14 +887,10 @@
                     <div class="value blue" id="goal-profit-percent">--</div>
                 </div>
             </div>
-            <div class="info-note">
-                هرچی زودتر شروع کنی، بهره مرکب بیشتر کار می‌کنه و پس‌انداز ماهانه‌ت کمتر میشه.
-            </div>
+            <div class="info-note">هرچی زودتر شروع کنی، بهره مرکب بیشتر کار می‌کنه.</div>
         </div>
 
-        <button class="ai-btn" id="ai-btn-goal" onclick="analyzeWithAI('goal')" style="width:100%; margin-top:15px; justify-content:center; padding:14px;">
-            🤖 تحلیل با AI
-        </button>
+        <button class="ai-btn" id="ai-btn-goal" onclick="analyzeWithAI('goal')" style="width:100%; margin-top:15px; justify-content:center; padding:14px;">🤖 تحلیل با AI</button>
 
         <div class="ai-card" id="ai-card-goal">
             <div class="ai-card-header">
@@ -753,26 +898,19 @@
                 <button class="ai-action-btn" onclick="copyAIAnalysis('goal')">📋 کپی</button>
             </div>
             <div class="ai-output" id="ai-output-goal">
-                <div class="ai-loading">
-                    <div class="spinner"></div>
-                    <div>در حال تحلیل...</div>
-                </div>
+                <div class="ai-loading"><div class="spinner"></div><div>در حال تحلیل...</div></div>
             </div>
         </div>
     </div>
 
-    <!-- ============ تب ۴: مقایسه ============ -->
+    <!-- تب ۴: مقایسه -->
     <div class="calc-section" id="section-compare">
         <div class="edu-card">
             <div class="edu-icon">📖</div>
             <div class="edu-content">
                 <div class="edu-title">این ابزار چیکار می‌کنه؟</div>
-                <div class="edu-text">
-                    دو گزینه سرمایه‌گذاری مختلف رو کنار هم بذار و ببین کدوم بهتره. مثلاً «بورس با ۳۰٪ بازدهی» vs «طلا با ۲۵٪ بازدهی» توی ۵ سال.
-                </div>
-                <div class="edu-usage">
-                    <strong>💡 کاربرد:</strong> تصمیم‌گیری بین دو بازار، مقایسه بازدهی با نرخ‌های مختلف، انتخاب بهترین گزینه
-                </div>
+                <div class="edu-text">دو گزینه سرمایه‌گذاری مختلف رو کنار هم بذار و ببین کدوم بهتره.</div>
+                <div class="edu-usage"><strong>💡 کاربرد:</strong> تصمیم‌گیری بین دو بازار، مقایسه بازدهی</div>
             </div>
         </div>
 
@@ -829,9 +967,7 @@
             </div>
         </div>
 
-        <button class="ai-btn" id="ai-btn-compare" onclick="analyzeWithAI('compare')" style="width:100%; margin-top:15px; justify-content:center; padding:14px;">
-            🤖 تحلیل با AI
-        </button>
+        <button class="ai-btn" id="ai-btn-compare" onclick="analyzeWithAI('compare')" style="width:100%; margin-top:15px; justify-content:center; padding:14px;">🤖 تحلیل با AI</button>
 
         <div class="ai-card" id="ai-card-compare">
             <div class="ai-card-header">
@@ -839,26 +975,19 @@
                 <button class="ai-action-btn" onclick="copyAIAnalysis('compare')">📋 کپی</button>
             </div>
             <div class="ai-output" id="ai-output-compare">
-                <div class="ai-loading">
-                    <div class="spinner"></div>
-                    <div>در حال تحلیل...</div>
-                </div>
+                <div class="ai-loading"><div class="spinner"></div><div>در حال تحلیل...</div></div>
             </div>
         </div>
     </div>
 
-    <!-- ============ تب ۵: تورم ============ -->
+    <!-- تب ۵: تورم -->
     <div class="calc-section" id="section-inflation">
         <div class="edu-card">
             <div class="edu-icon">📖</div>
             <div class="edu-content">
                 <div class="edu-title">این ابزار چیکار می‌کنه؟</div>
-                <div class="edu-text">
-                    اگه تورم ۴۰٪ باشه، ۱۰۰ میلیون تومان امروز، ۱ سال دیگه چقدر ارزش داره؟ این ابزار قدرت خرید پولت رو در طول زمان محاسبه می‌کنه.
-                </div>
-                <div class="edu-usage">
-                    <strong>💡 کاربرد:</strong> فهم تأثیر تورم روی پس‌انداز، مقایسه بازدهی با تورم، تصمیم‌گیری برای سرمایه‌گذاری
-                </div>
+                <div class="edu-text">اگه تورم ۴۰٪ باشه، ۱۰۰ میلیون تومان امروز، ۱ سال دیگه چقدر ارزش داره؟</div>
+                <div class="edu-usage"><strong>💡 کاربرد:</strong> فهم تأثیر تورم روی پس‌انداز، مقایسه بازدهی با تورم</div>
             </div>
         </div>
 
@@ -906,14 +1035,10 @@
                     <div class="value blue" id="inf-return-needed">--</div>
                 </div>
             </div>
-            <div class="info-note">
-                این محاسبه فرض می‌کنه تورم ثابته. در واقعیت تورم نوسان داره ولی محاسبه تقریبی کمک‌کننده‌ست.
-            </div>
+            <div class="info-note">این محاسبه فرض می‌کنه تورم ثابته.</div>
         </div>
 
-        <button class="ai-btn" id="ai-btn-inflation" onclick="analyzeWithAI('inflation')" style="width:100%; margin-top:15px; justify-content:center; padding:14px;">
-            🤖 تحلیل با AI
-        </button>
+        <button class="ai-btn" id="ai-btn-inflation" onclick="analyzeWithAI('inflation')" style="width:100%; margin-top:15px; justify-content:center; padding:14px;">🤖 تحلیل با AI</button>
 
         <div class="ai-card" id="ai-card-inflation">
             <div class="ai-card-header">
@@ -921,25 +1046,22 @@
                 <button class="ai-action-btn" onclick="copyAIAnalysis('inflation')">📋 کپی</button>
             </div>
             <div class="ai-output" id="ai-output-inflation">
-                <div class="ai-loading">
-                    <div class="spinner"></div>
-                    <div>در حال تحلیل...</div>
-                </div>
+                <div class="ai-loading"><div class="spinner"></div><div>در حال تحلیل...</div></div>
             </div>
         </div>
     </div>
 
-    <!-- ============ تب ۵.۵: تاریخچه تورم ============ -->
+    <!-- تب ۵.۵: تاریخچه تورم -->
     <div class="calc-section" id="section-inflation-history">
         <div class="edu-card">
             <div class="edu-icon">📖</div>
             <div class="edu-content">
                 <div class="edu-title">تورم تجمعی چیه و چرا مهمه؟</div>
                 <div class="edu-text">
-                    تورم هر سال متفاوته. مثلاً ۱۴۰۲: ۴۵٪، ۱۴۰۳: ۳۵٪، ۱۴۰۴: ۴۰٪. اگه بخوای بفهمی <strong>طلا که ۳ سال پیش خریدی</strong> چقدر ارزش واقعی داره، باید تورم <strong>هر سال</strong> رو جدا حساب کنی، بعد ضرب کنی.
+                    تورم هر سال متفاوته. اگه بخوای بفهمی <strong>طلا که ۳ سال پیش خریدی</strong> چقدر ارزش واقعی داره، باید تورم <strong>هر سال</strong> رو جدا حساب کنی، بعد ضرب کنی.
                 </div>
                 <div class="edu-usage">
-                    <strong>💡 کاربرد:</strong> محاسبه تورم تجمعی، مقایسه سرمایه‌گذاری بلندمدت با تورم واقعی، فهمیدن ارزش واقعی دارایی‌ها
+                    <strong>💡 کاربرد:</strong> محاسبه تورم تجمعی، مقایسه سرمایه‌گذاری بلندمدت با تورم واقعی
                 </div>
             </div>
         </div>
@@ -1029,7 +1151,7 @@
         <div class="calc-card">
             <h2>🎯 محاسبه‌گر ارزش واقعی</h2>
             <p style="color:var(--gray); font-size:12.5px; margin-bottom:15px; line-height:1.8;">
-                یه دارایی خریدی و می‌خوای بدونی الان <strong>ارزش واقعیش</strong> (تعدیل‌شده با تورم) چقدره؟
+                یه دارایی خریدی و می‌خوای بدونی الان <strong>ارزش واقعیش</strong> چقدره؟
             </p>
             <div class="form-grid">
                 <div class="form-group">
@@ -1073,18 +1195,14 @@
         </div>
     </div>
 
-    <!-- ============ تب ۶: سربه‌سر ============ -->
+    <!-- تب ۶: سربه‌سر -->
     <div class="calc-section" id="section-breakeven">
         <div class="edu-card">
             <div class="edu-icon">📖</div>
             <div class="edu-content">
                 <div class="edu-title">این ابزار چیکار می‌کنه؟</div>
-                <div class="edu-text">
-                    وقتی سهم می‌خری، کارگزاری کارمزد می‌گیره. این ابزار می‌گه سهم باید چند درصد رشد کنه تا تو به سربه‌سر برسی و از اون به بعد سود کنی.
-                </div>
-                <div class="edu-usage">
-                    <strong>💡 کاربرد:</strong> فهم هزینه‌های واقعی معامله، محاسبه دقیق سود، مقایسه کارگزاری‌های مختلف
-                </div>
+                <div class="edu-text">وقتی سهم می‌خری، کارگزاری کارمزد می‌گیره. این ابزار می‌گه سهم باید چند درصد رشد کنه تا به سربه‌سر برسی.</div>
+                <div class="edu-usage"><strong>💡 کاربرد:</strong> فهم هزینه‌های واقعی معامله، محاسبه دقیق سود</div>
             </div>
         </div>
 
@@ -1136,14 +1254,10 @@
                     <div class="value red" id="be-total-fee">--</div>
                 </div>
             </div>
-            <div class="info-note">
-                هر معامله سود در بورس ایران معمولاً حدود ۱.۳٪ کارمزد داره (خرید + فروش). برای سود کردن باید حداقل این مقدار رو پوشش بدی.
-            </div>
+            <div class="info-note">هر معامله سود در بورس ایران معمولاً حدود ۱.۳٪ کارمزد داره.</div>
         </div>
 
-        <button class="ai-btn" id="ai-btn-breakeven" onclick="analyzeWithAI('breakeven')" style="width:100%; margin-top:15px; justify-content:center; padding:14px;">
-            🤖 تحلیل با AI
-        </button>
+        <button class="ai-btn" id="ai-btn-breakeven" onclick="analyzeWithAI('breakeven')" style="width:100%; margin-top:15px; justify-content:center; padding:14px;">🤖 تحلیل با AI</button>
 
         <div class="ai-card" id="ai-card-breakeven">
             <div class="ai-card-header">
@@ -1151,26 +1265,19 @@
                 <button class="ai-action-btn" onclick="copyAIAnalysis('breakeven')">📋 کپی</button>
             </div>
             <div class="ai-output" id="ai-output-breakeven">
-                <div class="ai-loading">
-                    <div class="spinner"></div>
-                    <div>در حال تحلیل...</div>
-                </div>
+                <div class="ai-loading"><div class="spinner"></div><div>در حال تحلیل...</div></div>
             </div>
         </div>
     </div>
 
-    <!-- ============ تب ۷: ریسک ============ -->
+    <!-- تب ۷: ریسک -->
     <div class="calc-section" id="section-risk">
         <div class="edu-card">
             <div class="edu-icon">📖</div>
             <div class="edu-content">
                 <div class="edu-title">این ابزار چیکار می‌کنه؟</div>
-                <div class="edu-text">
-                    سرمایه‌ات رو چطور بین دارایی‌های مختلف (طلا، سهام، ارز، کریپتو) پخش کنی تا ریسک متعادل باشه و به بهترین بازدهی برسی؟
-                </div>
-                <div class="edu-usage">
-                    <strong>💡 کاربرد:</strong> تنوع‌بخشی به سبد سرمایه‌گذاری، کاهش ریسک، انتخاب تخصیص متناسب با شخصیت مالی
-                </div>
+                <div class="edu-text">سرمایه‌ات رو چطور بین دارایی‌های مختلف پخش کنی تا ریسک متعادل باشه؟</div>
+                <div class="edu-usage"><strong>💡 کاربرد:</strong> تنوع‌بخشی به سبد، کاهش ریسک</div>
             </div>
         </div>
 
@@ -1197,14 +1304,10 @@
         <div class="result-card" id="result-risk">
             <h3>✅ سبد پیشنهادی</h3>
             <div id="risk-portfolio" style="display: flex; flex-direction: column; gap: 12px;"></div>
-            <div class="info-note" id="risk-note">
-                این تخصیص بر اساس استانداردهای بین‌المللی و متناسب با بازار ایران پیشنهاد شده.
-            </div>
+            <div class="info-note" id="risk-note">این تخصیص بر اساس استانداردهای بین‌المللی پیشنهاد شده.</div>
         </div>
 
-        <button class="ai-btn" id="ai-btn-risk" onclick="analyzeWithAI('risk')" style="width:100%; margin-top:15px; justify-content:center; padding:14px;">
-            🤖 تحلیل با AI
-        </button>
+        <button class="ai-btn" id="ai-btn-risk" onclick="analyzeWithAI('risk')" style="width:100%; margin-top:15px; justify-content:center; padding:14px;">🤖 تحلیل با AI</button>
 
         <div class="ai-card" id="ai-card-risk">
             <div class="ai-card-header">
@@ -1212,26 +1315,19 @@
                 <button class="ai-action-btn" onclick="copyAIAnalysis('risk')">📋 کپی</button>
             </div>
             <div class="ai-output" id="ai-output-risk">
-                <div class="ai-loading">
-                    <div class="spinner"></div>
-                    <div>در حال تحلیل...</div>
-                </div>
+                <div class="ai-loading"><div class="spinner"></div><div>در حال تحلیل...</div></div>
             </div>
         </div>
     </div>
 
-    <!-- ============ تب ۸: پوزیشن ============ -->
+    <!-- تب ۸: پوزیشن -->
     <div class="calc-section" id="section-position">
         <div class="edu-card">
             <div class="edu-icon">📖</div>
             <div class="edu-content">
                 <div class="edu-title">این ابزار چیکار می‌کنه؟</div>
-                <div class="edu-text">
-                    چقدر سرمایه‌گذاری کنی که اگه حد ضرر خورد، ضررت قابل مدیریت باشه؟ این ابزار حجم پوزیشن بهینه و نسبت ریسک به ریوارد رو محاسبه می‌کنه.
-                </div>
-                <div class="edu-usage">
-                    <strong>💡 کاربرد:</strong> مدیریت ریسک هر معامله، جلوگیری از ضررهای بزرگ، محاسبه نسبت سود به ضرر (R/R)
-                </div>
+                <div class="edu-text">چقدر سرمایه‌گذاری کنی که اگه حد ضرر خورد، ضررت قابل مدیریت باشه؟</div>
+                <div class="edu-usage"><strong>💡 کاربرد:</strong> مدیریت ریسک هر معامله، محاسبه R/R</div>
             </div>
         </div>
 
@@ -1292,9 +1388,7 @@
             </div>
         </div>
 
-        <button class="ai-btn" id="ai-btn-position" onclick="analyzeWithAI('position')" style="width:100%; margin-top:15px; justify-content:center; padding:14px;">
-            🤖 تحلیل با AI
-        </button>
+        <button class="ai-btn" id="ai-btn-position" onclick="analyzeWithAI('position')" style="width:100%; margin-top:15px; justify-content:center; padding:14px;">🤖 تحلیل با AI</button>
 
         <div class="ai-card" id="ai-card-position">
             <div class="ai-card-header">
@@ -1302,10 +1396,7 @@
                 <button class="ai-action-btn" onclick="copyAIAnalysis('position')">📋 کپی</button>
             </div>
             <div class="ai-output" id="ai-output-position">
-                <div class="ai-loading">
-                    <div class="spinner"></div>
-                    <div>در حال تحلیل...</div>
-                </div>
+                <div class="ai-loading"><div class="spinner"></div><div>در حال تحلیل...</div></div>
             </div>
         </div>
     </div>
@@ -1315,7 +1406,7 @@
     © ۱۴۰۵ آکادمی شمعدون | تمامی حقوق محفوظ است
 </footer>
 
-<script src="navbar.js"></script>
+<script src="navbar.js"></script>   
 <script>
     // ==========================================
     // ابزارها
@@ -1374,7 +1465,6 @@
         document.querySelectorAll('.calc-section').forEach(s => s.classList.remove('active'));
         const target = document.getElementById('section-' + tabId);
         if (target) target.classList.add('active');
-
         if (tabId === 'inflation-history') {
             renderInflationHistory();
         }
@@ -1417,8 +1507,6 @@
         document.getElementById('dca-ratio').textContent = toFa(ratio.toFixed(2)) + ' برابر';
         document.getElementById('dca-avg').textContent = formatBigNum(avgMonthly) + ' تومان';
         document.getElementById('result-dca').classList.add('show');
-
-        // ریست کارت AI
         resetAICard('dca');
     }
 
@@ -1449,7 +1537,6 @@
         document.getElementById('cmp-total-return').textContent = toFa(totalReturn.toFixed(2)) + '٪';
         document.getElementById('cmp-daily').textContent = formatBigNum(dailyProfit) + ' تومان';
         document.getElementById('result-compound').classList.add('show');
-
         resetAICard('compound');
     }
 
@@ -1491,7 +1578,6 @@
         document.getElementById('goal-months').textContent = toFa(Math.round(months)) + ' ماه';
         document.getElementById('goal-profit-percent').textContent = toFa(profitPercent.toFixed(1)) + '٪';
         document.getElementById('result-goal').classList.add('show');
-
         resetAICard('goal');
     }
 
@@ -1533,7 +1619,6 @@
 
         winnerEl.style.display = 'block';
         document.getElementById('result-compare').classList.add('show');
-
         resetAICard('compare');
     }
 
@@ -1562,7 +1647,6 @@
         document.getElementById('inf-per-million').textContent = formatNum(perMillion) + ' تومان';
         document.getElementById('inf-return-needed').textContent = toFa(rate.toFixed(1)) + '٪';
         document.getElementById('result-inflation').classList.add('show');
-
         resetAICard('inflation');
     }
 
@@ -1595,7 +1679,6 @@
         document.getElementById('be-sell-fee-amount').textContent = formatBigNum(sellFeeAmount) + ' تومان';
         document.getElementById('be-total-fee').textContent = formatBigNum(totalFee) + ' تومان';
         document.getElementById('result-breakeven').classList.add('show');
-
         resetAICard('breakeven');
     }
 
@@ -1679,7 +1762,6 @@
             <strong>پروفایل: ${profile.name}</strong> — این تخصیص بر اساس استانداردهای بین‌المللی و متناسب با بازار ایران پیشنهاد شده.
         `;
         document.getElementById('result-risk').classList.add('show');
-
         resetAICard('risk');
     }
 
@@ -1723,268 +1805,267 @@
         document.getElementById('pos-rr').textContent = rr > 0 ? '۱ : ' + toFa(rr.toFixed(2)) : '--';
         document.getElementById('pos-stop-distance').textContent = toFa(stopPercent.toFixed(2)) + '٪';
         document.getElementById('result-position').classList.add('show');
-
         resetAICard('position');
-    }  
-         // ==========================================
-        // ۵.۵. تاریخچه تورم
-        // ==========================================
-        let inflationType = 'point';
-        let inflationHistory = [];
-        let inflationChart = null;
+    }
 
-        function selectInflationType(type, card) {
-            inflationType = type;
-            document.querySelectorAll('#infTypeSelector .type-card').forEach(c => c.classList.remove('active'));
-            card.classList.add('active');
+    // ==========================================
+    // ۵.۵. تاریخچه تورم
+    // ==========================================
+    let inflationType = 'point';
+    let inflationHistory = [];
+    let inflationChart = null;
+
+    function selectInflationType(type, card) {
+        inflationType = type;
+        document.querySelectorAll('#infTypeSelector .type-card').forEach(c => c.classList.remove('active'));
+        card.classList.add('active');
+    }
+
+    function generateYearInputs() {
+        const fromYear = parseInt(document.getElementById('inf-from-year').value);
+        const toYear = parseInt(document.getElementById('inf-to-year').value);
+        const container = document.getElementById('inflationYearsContainer');
+
+        if (!fromYear || !toYear || fromYear > toYear) {
+            alert('لطفاً سال شروع و پایان رو درست وارد کن');
+            return;
         }
 
-        function generateYearInputs() {
-            const fromYear = parseInt(document.getElementById('inf-from-year').value);
-            const toYear = parseInt(document.getElementById('inf-to-year').value);
-            const container = document.getElementById('inflationYearsContainer');
+        if (toYear - fromYear > 30) {
+            alert('حداکثر ۳۰ سال مجاز است');
+            return;
+        }
 
-            if (!fromYear || !toYear || fromYear > toYear) {
-                alert('لطفاً سال شروع و پایان رو درست وارد کن');
-                return;
-            }
-
-            if (toYear - fromYear > 30) {
-                alert('حداکثر ۳۰ سال مجاز است');
-                return;
-            }
-
-            let html = '';
-            for (let y = fromYear; y <= toYear; y++) {
-                html += `
-                    <div class="inflation-year-row">
-                        <div class="year">${toFa(y)}</div>
-                        <div class="input-wrapper">
-                            <input type="number" id="inf-year-${y}" class="form-input" placeholder="مثلاً ۴۰" step="0.1" min="0" max="500">
-                            <span class="suffix">٪</span>
-                        </div>
+        let html = '';
+        for (let y = fromYear; y <= toYear; y++) {
+            html += `
+                <div class="inflation-year-row">
+                    <div class="year">${toFa(y)}</div>
+                    <div class="input-wrapper">
+                        <input type="number" id="inf-year-${y}" class="form-input" placeholder="مثلاً ۴۰" step="0.1" min="0" max="500">
+                        <span class="suffix">٪</span>
                     </div>
-                `;
-            }
-            container.innerHTML = html;
+                </div>
+            `;
+        }
+        container.innerHTML = html;
+    }
+
+    function saveInflationHistory() {
+        const fromYear = parseInt(document.getElementById('inf-from-year').value);
+        const toYear = parseInt(document.getElementById('inf-to-year').value);
+
+        if (!fromYear || !toYear) {
+            alert('ابتدا فیلدهای سال رو بساز');
+            return;
         }
 
-        function saveInflationHistory() {
-            const fromYear = parseInt(document.getElementById('inf-from-year').value);
-            const toYear = parseInt(document.getElementById('inf-to-year').value);
-
-            if (!fromYear || !toYear) {
-                alert('ابتدا فیلدهای سال رو بساز');
-                return;
+        const history = [];
+        for (let y = fromYear; y <= toYear; y++) {
+            const input = document.getElementById('inf-year-' + y);
+            if (!input) continue;
+            const rate = parseFloat(input.value);
+            if (!isNaN(rate) && rate > 0) {
+                history.push({ year: y, rate: rate, type: inflationType });
             }
-
-            const history = [];
-            for (let y = fromYear; y <= toYear; y++) {
-                const input = document.getElementById('inf-year-' + y);
-                if (!input) continue;
-                const rate = parseFloat(input.value);
-                if (!isNaN(rate) && rate > 0) {
-                    history.push({ year: y, rate: rate, type: inflationType });
-                }
-            }
-
-            if (history.length === 0) {
-                alert('حداقل یه نرخ تورم وارد کن');
-                return;
-            }
-
-            localStorage.setItem('shamdun_inflation_history', JSON.stringify(history));
-            inflationHistory = history;
-            renderInflationHistory();
         }
 
-        function renderInflationHistory() {
-            const saved = localStorage.getItem('shamdun_inflation_history');
-            if (saved) {
-                try {
-                    inflationHistory = JSON.parse(saved);
-                } catch (e) {
-                    inflationHistory = [];
-                }
-            } else {
+        if (history.length === 0) {
+            alert('حداقل یه نرخ تورم وارد کن');
+            return;
+        }
+
+        localStorage.setItem('shamdun_inflation_history', JSON.stringify(history));
+        inflationHistory = history;
+        renderInflationHistory();
+    }
+
+    function renderInflationHistory() {
+        const saved = localStorage.getItem('shamdun_inflation_history');
+        if (saved) {
+            try {
+                inflationHistory = JSON.parse(saved);
+            } catch (e) {
                 inflationHistory = [];
             }
+        } else {
+            inflationHistory = [];
+        }
 
-            const summaryCard = document.getElementById('inflationSummaryCard');
-            const listCard = document.getElementById('inflationListCard');
-            const listEl = document.getElementById('inflationList');
+        const summaryCard = document.getElementById('inflationSummaryCard');
+        const listCard = document.getElementById('inflationListCard');
+        const listEl = document.getElementById('inflationList');
 
-            if (!inflationHistory || inflationHistory.length === 0) {
-                summaryCard.style.display = 'none';
-                listCard.style.display = 'none';
-                return;
-            }
+        if (!inflationHistory || inflationHistory.length === 0) {
+            summaryCard.style.display = 'none';
+            listCard.style.display = 'none';
+            return;
+        }
 
-            summaryCard.style.display = 'block';
-            listCard.style.display = 'block';
+        summaryCard.style.display = 'block';
+        listCard.style.display = 'block';
 
-            let multiplier = 1;
-            let sumRates = 0;
-            inflationHistory.forEach(item => {
-                multiplier *= (1 + item.rate / 100);
-                sumRates += item.rate;
-            });
+        let multiplier = 1;
+        let sumRates = 0;
+        inflationHistory.forEach(item => {
+            multiplier *= (1 + item.rate / 100);
+            sumRates += item.rate;
+        });
 
-            const totalPercent = (multiplier - 1) * 100;
-            const avgRate = sumRates / inflationHistory.length;
+        const totalPercent = (multiplier - 1) * 100;
+        const avgRate = sumRates / inflationHistory.length;
 
-            document.getElementById('infTotalMultiplier').textContent = toFa(multiplier.toFixed(2)) + ' برابر';
-            document.getElementById('infTotalPercent').textContent = toFa(totalPercent.toFixed(1)) + '٪';
-            document.getElementById('infAverageRate').textContent = toFa(avgRate.toFixed(1)) + '٪';
+        document.getElementById('infTotalMultiplier').textContent = toFa(multiplier.toFixed(2)) + ' برابر';
+        document.getElementById('infTotalPercent').textContent = toFa(totalPercent.toFixed(1)) + '٪';
+        document.getElementById('infAverageRate').textContent = toFa(avgRate.toFixed(1)) + '٪';
 
-            const sortedHistory = [...inflationHistory].sort((a, b) => b.year - a.year);
-            listEl.innerHTML = sortedHistory.map(item => {
-                const typeLabel = item.type === 'point' ? '🎯 نقطه‌به‌نقطه' : item.type === 'annual' ? '📅 سالانه' : '📆 ماهانه';
-                return `
-                    <div class="inflation-list-item">
-                        <div class="info">
-                            <div class="year-badge">${toFa(item.year)}</div>
-                            <div class="rate">${toFa(item.rate)}٪</div>
-                            <div class="type">${typeLabel}</div>
-                        </div>
-                        <div class="actions">
-                            <button class="icon-btn-small danger" onclick="deleteInflationYear(${item.year})" title="حذف">🗑️</button>
-                        </div>
+        const sortedHistory = [...inflationHistory].sort((a, b) => b.year - a.year);
+        listEl.innerHTML = sortedHistory.map(item => {
+            const typeLabel = item.type === 'point' ? '🎯 نقطه‌به‌نقطه' : item.type === 'annual' ? '📅 سالانه' : '📆 ماهانه';
+            return `
+                <div class="inflation-list-item">
+                    <div class="info">
+                        <div class="year-badge">${toFa(item.year)}</div>
+                        <div class="rate">${toFa(item.rate)}٪</div>
+                        <div class="type">${typeLabel}</div>
                     </div>
-                `;
-            }).join('');
+                    <div class="actions">
+                        <button class="icon-btn-small danger" onclick="deleteInflationYear(${item.year})" title="حذف">🗑️</button>
+                    </div>
+                </div>
+            `;
+        }).join('');
 
-            renderInflationChart();
-        }
+        renderInflationChart();
+    }
 
-        function deleteInflationYear(year) {
-            if (!confirm(`نرخ تورم سال ${toFa(year)} حذف بشه؟`)) return;
-            inflationHistory = inflationHistory.filter(item => item.year !== year);
-            localStorage.setItem('shamdun_inflation_history', JSON.stringify(inflationHistory));
-            renderInflationHistory();
-        }
+    function deleteInflationYear(year) {
+        if (!confirm(`نرخ تورم سال ${toFa(year)} حذف بشه؟`)) return;
+        inflationHistory = inflationHistory.filter(item => item.year !== year);
+        localStorage.setItem('shamdun_inflation_history', JSON.stringify(inflationHistory));
+        renderInflationHistory();
+    }
 
-        function renderInflationChart() {
-            const ctx = document.getElementById('inflationChart');
-            if (!ctx) return;
-            if (inflationChart) inflationChart.destroy();
+    function renderInflationChart() {
+        const ctx = document.getElementById('inflationChart');
+        if (!ctx) return;
+        if (inflationChart) inflationChart.destroy();
 
-            const sorted = [...inflationHistory].sort((a, b) => a.year - b.year);
-            const labels = sorted.map(item => toFa(item.year));
-            const data = sorted.map(item => item.rate);
+        const sorted = [...inflationHistory].sort((a, b) => a.year - b.year);
+        const labels = sorted.map(item => toFa(item.year));
+        const data = sorted.map(item => item.rate);
 
-            inflationChart = new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: labels,
-                    datasets: [{
-                        label: 'نرخ تورم (٪)',
-                        data: data,
-                        borderColor: '#d4af37',
-                        backgroundColor: 'rgba(212, 175, 55, 0.15)',
-                        borderWidth: 3,
-                        tension: 0.3,
-                        fill: true,
-                        pointBackgroundColor: '#d4af37',
-                        pointBorderColor: '#0a0a0f',
-                        pointBorderWidth: 2,
-                        pointRadius: 6,
-                        pointHoverRadius: 8
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: {
-                            labels: {
-                                color: '#cbd5e1',
-                                font: { family: 'Vazirmatn', size: 12 },
-                                usePointStyle: true
-                            }
-                        },
-                        tooltip: {
-                            backgroundColor: '#1a1a24',
-                            titleColor: '#d4af37',
-                            bodyColor: '#f8fafc',
-                            borderColor: '#d4af37',
-                            borderWidth: 1,
-                            padding: 12,
-                            titleFont: { family: 'Vazirmatn', size: 13, weight: 'bold' },
-                            bodyFont: { family: 'Vazirmatn', size: 12 },
-                            callbacks: {
-                                label: function(context) {
-                                    return ` تورم: ${toFa(context.parsed.y)}٪`;
-                                }
-                            }
+        inflationChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'نرخ تورم (٪)',
+                    data: data,
+                    borderColor: '#d4af37',
+                    backgroundColor: 'rgba(212, 175, 55, 0.15)',
+                    borderWidth: 3,
+                    tension: 0.3,
+                    fill: true,
+                    pointBackgroundColor: '#d4af37',
+                    pointBorderColor: '#0a0a0f',
+                    pointBorderWidth: 2,
+                    pointRadius: 6,
+                    pointHoverRadius: 8
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        labels: {
+                            color: '#cbd5e1',
+                            font: { family: 'Vazirmatn', size: 12 },
+                            usePointStyle: true
                         }
                     },
-                    scales: {
-                        x: {
-                            ticks: {
-                                color: '#94a3b8',
-                                font: { family: 'Vazirmatn', size: 11 }
-                            },
-                            grid: { color: 'rgba(255, 255, 255, 0.05)' }
-                        },
-                        y: {
-                            ticks: {
-                                color: '#94a3b8',
-                                font: { family: 'Vazirmatn', size: 11 },
-                                callback: v => toFa(v) + '٪'
-                            },
-                            grid: { color: 'rgba(255, 255, 255, 0.05)' }
+                    tooltip: {
+                        backgroundColor: '#1a1a24',
+                        titleColor: '#d4af37',
+                        bodyColor: '#f8fafc',
+                        borderColor: '#d4af37',
+                        borderWidth: 1,
+                        padding: 12,
+                        titleFont: { family: 'Vazirmatn', size: 13, weight: 'bold' },
+                        bodyFont: { family: 'Vazirmatn', size: 12 },
+                        callbacks: {
+                            label: function(context) {
+                                return ` تورم: ${toFa(context.parsed.y)}٪`;
+                            }
                         }
                     }
+                },
+                scales: {
+                    x: {
+                        ticks: {
+                            color: '#94a3b8',
+                            font: { family: 'Vazirmatn', size: 11 }
+                        },
+                        grid: { color: 'rgba(255, 255, 255, 0.05)' }
+                    },
+                    y: {
+                        ticks: {
+                            color: '#94a3b8',
+                            font: { family: 'Vazirmatn', size: 11 },
+                            callback: v => toFa(v) + '٪'
+                        },
+                        grid: { color: 'rgba(255, 255, 255, 0.05)' }
+                    }
                 }
-            });
+            }
+        });
+    }
+
+    function calcRealValue() {
+        const buyAmount = parseNum(document.getElementById('real-buy-amount').value);
+        const currentValue = parseNum(document.getElementById('real-current-value').value);
+
+        if (buyAmount <= 0 || currentValue <= 0) {
+            alert('لطفاً مبلغ خرید و ارزش فعلی رو وارد کن');
+            return;
         }
 
-        function calcRealValue() {
-            const buyAmount = parseNum(document.getElementById('real-buy-amount').value);
-            const currentValue = parseNum(document.getElementById('real-current-value').value);
-
-            if (buyAmount <= 0 || currentValue <= 0) {
-                alert('لطفاً مبلغ خرید و ارزش فعلی رو وارد کن');
-                return;
-            }
-
-            if (inflationHistory.length === 0) {
-                alert('ابتدا تاریخچه تورم رو ذخیره کن');
-                return;
-            }
-
-            let multiplier = 1;
-            inflationHistory.forEach(item => {
-                multiplier *= (1 + item.rate / 100);
-            });
-
-            const nominalProfit = currentValue - buyAmount;
-            const nominalReturn = (currentValue / buyAmount - 1) * 100;
-
-            const realValue = currentValue / multiplier;
-            const realReturn = (realValue / buyAmount - 1) * 100;
-            const inflationCumulative = (multiplier - 1) * 100;
-
-            document.getElementById('real-nominal-profit').textContent = formatBigNum(nominalProfit) + ' تومان';
-            document.getElementById('real-nominal-return').textContent = (nominalReturn >= 0 ? '+' : '') + toFa(nominalReturn.toFixed(1)) + '٪';
-            document.getElementById('real-inflation-cumulative').textContent = toFa(inflationCumulative.toFixed(1)) + '٪';
-            document.getElementById('real-real-return').textContent = (realReturn >= 0 ? '+' : '') + toFa(realReturn.toFixed(1)) + '٪';
-            document.getElementById('real-real-value').textContent = formatNum(realValue) + ' تومان';
-            document.getElementById('real-real-value-sub').textContent = `ارزش تعدیل‌شده با تورم ${toFa(multiplier.toFixed(2))} برابری`;
-
-            const verdictEl = document.getElementById('real-verdict');
-            if (realReturn > 0) {
-                verdictEl.innerHTML = `<strong style="color:var(--green);">✅ عالی!</strong> سرمایه‌گذاری شما از تورم جلو زده. ارزش واقعی ${toFa(realReturn.toFixed(1))}٪ رشد کرده.`;
-            } else if (realReturn > -5) {
-                verdictEl.innerHTML = `<strong style="color:var(--gold);">⚖️ تقریباً برابر با تورم.</strong> سرمایه‌گذاری شما فقط تورم رو پوشش داده.`;
-            } else {
-                verdictEl.innerHTML = `<strong style="color:var(--red);">⚠️ هشدار!</strong> ارزش واقعی سرمایه‌گذاری شما ${toFa(Math.abs(realReturn).toFixed(1))}٪ کاهش پیدا کرده. از تورم عقب موندی!`;
-            }
-
-            document.getElementById('result-real-value').classList.add('show');
+        if (inflationHistory.length === 0) {
+            alert('ابتدا تاریخچه تورم رو ذخیره کن');
+            return;
         }
 
+        let multiplier = 1;
+        inflationHistory.forEach(item => {
+            multiplier *= (1 + item.rate / 100);
+        });
+
+        const nominalProfit = currentValue - buyAmount;
+        const nominalReturn = (currentValue / buyAmount - 1) * 100;
+
+        const realValue = currentValue / multiplier;
+        const realReturn = (realValue / buyAmount - 1) * 100;
+        const inflationCumulative = (multiplier - 1) * 100;
+
+        document.getElementById('real-nominal-profit').textContent = formatBigNum(nominalProfit) + ' تومان';
+        document.getElementById('real-nominal-return').textContent = (nominalReturn >= 0 ? '+' : '') + toFa(nominalReturn.toFixed(1)) + '٪';
+        document.getElementById('real-inflation-cumulative').textContent = toFa(inflationCumulative.toFixed(1)) + '٪';
+        document.getElementById('real-real-return').textContent = (realReturn >= 0 ? '+' : '') + toFa(realReturn.toFixed(1)) + '٪';
+        document.getElementById('real-real-value').textContent = formatNum(realValue) + ' تومان';
+        document.getElementById('real-real-value-sub').textContent = `ارزش تعدیل‌شده با تورم ${toFa(multiplier.toFixed(2))} برابری`;
+
+        const verdictEl = document.getElementById('real-verdict');
+        if (realReturn > 0) {
+            verdictEl.innerHTML = `<strong style="color:var(--green);">✅ عالی!</strong> سرمایه‌گذاری شما از تورم جلو زده. ارزش واقعی ${toFa(realReturn.toFixed(1))}٪ رشد کرده.`;
+        } else if (realReturn > -5) {
+            verdictEl.innerHTML = `<strong style="color:var(--gold);">⚖️ تقریباً برابر با تورم.</strong> سرمایه‌گذاری شما فقط تورم رو پوشش داده.`;
+        } else {
+            verdictEl.innerHTML = `<strong style="color:var(--red);">⚠️ هشدار!</strong> ارزش واقعی سرمایه‌گذاری شما ${toFa(Math.abs(realReturn).toFixed(1))}٪ کاهش پیدا کرده. از تورم عقب موندی!`;
+        }
+
+        document.getElementById('result-real-value').classList.add('show');
+    }    
         // ==========================================
         // 🤖 موتور AI
         // ==========================================
@@ -2396,4 +2477,4 @@ ${d.assets.map(a => `  • ${a.label}: ${toFa(a.percent)}٪ (${formatNum(d.total
         });
     </script>
 </body>
-</html>   
+</html>    
