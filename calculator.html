@@ -1277,6 +1277,13 @@
     // ==========================================
     // ابزارها
     // ==========================================
+    // ===== تبدیل اعداد انگلیسی به فارسی (برای نمایش) =====
+    function toFaDigits(str) {
+        if (str === null || str === undefined) return '';
+        const persianDigits = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
+        return String(str).replace(/\d/g, d => persianDigits[d]);
+    }
+     
     function toFa(num) {
         if (num === null || num === undefined || isNaN(num)) return '--';
         const persianDigits = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
@@ -1324,18 +1331,12 @@
     function handleNumericInput(e) {
         const input = e.target;
         if (!input || !input.matches || !input.matches('input[inputmode="numeric"]')) return;
-        
-        // تبدیل اعداد فارسی به انگلیسی در ورودی
-        const persianDigits = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
-        const arabicDigits = ['٠', '١', '٢', '٣', '٤', '٥', '٦', '٧', '٨', '٩'];
-        let val = input.value;
-        persianDigits.forEach((d, i) => { val = val.split(d).join(i); });
-        arabicDigits.forEach((d, i) => { val = val.split(d).join(i); });
-        
-        // فقط اعداد
-        const raw = val.replace(/[^\d]/g, '');
+    
+        const raw = toEnDigits(input.value).replace(/[^\d]/g, '');
         if (raw) {
-            input.value = parseInt(raw, 10).toLocaleString('en-US');
+            // فرمت با comma + تبدیل به فارسی برای نمایش
+            const withComma = parseInt(raw, 10).toLocaleString('en-US');
+            input.value = toFaDigits(withComma);
         } else {
             input.value = '';
         }
@@ -1346,12 +1347,12 @@
         document.querySelectorAll('input[inputmode="numeric"]').forEach(input => {
             input.removeEventListener('input', handleNumericInput);
             input.addEventListener('input', handleNumericInput);
-            if (input.value && /[۰-۹٠-٩]/.test(input.value)) {
-                const raw = input.value
-                    .replace(/[۰-۹]/g, d => '۰۱۲۳۴۵۶۷۸۹'.indexOf(d))
-                    .replace(/[٠-٩]/g, d => '٠١٢٣٤٥٦٧٨٩'.indexOf(d))
-                    .replace(/[^\d]/g, '');
-                if (raw) input.value = parseInt(raw, 10).toLocaleString('en-US');
+            if (input.value) {
+                const raw = toEnDigits(input.value).replace(/[^\d]/g, '');
+                if (raw) {
+                    const withComma = parseInt(raw, 10).toLocaleString('en-US');
+                    input.value = toFaDigits(withComma);
+                }
             }
         });
     }
