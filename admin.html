@@ -28,7 +28,7 @@
         body {
             font-family: 'Vazirmatn', Tahoma, sans-serif;
             background-color: var(--bg-primary);
-            background-image: 
+            background-image:
                 radial-gradient(circle at 0% 0%, rgba(212, 175, 55, 0.08) 0%, transparent 40%),
                 radial-gradient(circle at 100% 100%, rgba(59, 130, 246, 0.06) 0%, transparent 40%);
             background-size: 100% 100%, 100% 100%;
@@ -37,8 +37,6 @@
             min-height: 100vh;
             direction: rtl;
         }
-
-        /* ===== Header ===== */
         .admin-header {
             background: rgba(20, 20, 28, 0.95);
             backdrop-filter: blur(20px);
@@ -54,13 +52,7 @@
             gap: 10px;
         }
         .admin-header h1 { color: var(--gold); font-size: 20px; font-weight: 800; }
-        .admin-user {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-size: 13px;
-            color: var(--gray);
-        }
+        .admin-user { display: flex; align-items: center; gap: 10px; font-size: 13px; color: var(--gray); }
         .logout-btn {
             background: rgba(239, 68, 68, 0.1);
             color: var(--red);
@@ -74,8 +66,6 @@
             transition: 0.3s;
         }
         .logout-btn:hover { background: rgba(239, 68, 68, 0.25); }
-
-        /* ===== Tabs ===== */
         .tabs {
             display: flex;
             gap: 5px;
@@ -106,7 +96,6 @@
             border-bottom-color: var(--gold);
             background: rgba(212, 175, 55, 0.05);
         }
-        /* ===== NEW: Badge ===== */
         .tab-badge {
             display: none;
             background: var(--red);
@@ -118,8 +107,6 @@
             margin-right: 5px;
         }
         .tab-badge.show { display: inline-block; }
-
-        /* ===== Container ===== */
         .container { max-width: 1300px; margin: 0 auto; padding: 20px; }
         .tab-content { display: none; animation: fadeIn 0.3s ease; }
         .tab-content.active { display: block; }
@@ -127,8 +114,6 @@
             from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
         }
-
-        /* ===== Stats ===== */
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
@@ -151,8 +136,6 @@
         .stat-card .icon { font-size: 30px; margin-bottom: 10px; }
         .stat-card .value { color: var(--gold); font-size: 26px; font-weight: 900; margin-bottom: 5px; }
         .stat-card .label { color: var(--gray); font-size: 13px; }
-
-        /* ===== Chart ===== */
         .chart-box {
             background: linear-gradient(135deg, var(--bg-card), var(--bg-secondary));
             border-radius: 15px;
@@ -161,8 +144,6 @@
             margin-bottom: 20px;
         }
         .chart-box h3 { color: var(--white); margin-bottom: 15px; font-size: 16px; }
-
-        /* ===== Data Table ===== */
         .data-table {
             width: 100%;
             background: linear-gradient(135deg, var(--bg-card), var(--bg-secondary));
@@ -170,23 +151,9 @@
             overflow: hidden;
             border: 1px solid rgba(212, 175, 55, 0.15);
         }
-        .data-table th {
-            background: rgba(212, 175, 55, 0.1);
-            color: var(--gold);
-            padding: 14px;
-            text-align: right;
-            font-size: 13px;
-            font-weight: 800;
-        }
-        .data-table td {
-            padding: 14px;
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
-            color: #cbd5e1;
-            font-size: 13px;
-        }
+        .data-table th { background: rgba(212, 175, 55, 0.1); color: var(--gold); padding: 14px; text-align: right; font-size: 13px; font-weight: 800; }
+        .data-table td { padding: 14px; border-top: 1px solid rgba(255, 255, 255, 0.05); color: #cbd5e1; font-size: 13px; }
         .data-table tr:hover td { background: rgba(212, 175, 55, 0.03); }
-
-        /* ===== Buttons ===== */
         .btn {
             padding: 10px 18px;
             border-radius: 10px;
@@ -200,35 +167,15 @@
             align-items: center;
             gap: 6px;
         }
-        .btn-primary {
-            background: linear-gradient(135deg, var(--gold), var(--gold-dark));
-            color: var(--bg-primary);
-        }
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(212, 175, 55, 0.4);
-        }
-        .btn-danger {
-            background: rgba(239, 68, 68, 0.15);
-            color: var(--red);
-            border: 1px solid rgba(239, 68, 68, 0.3);
-        }
+        .btn-primary { background: linear-gradient(135deg, var(--gold), var(--gold-dark)); color: var(--bg-primary); }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(212, 175, 55, 0.4); }
+        .btn-danger { background: rgba(239, 68, 68, 0.15); color: var(--red); border: 1px solid rgba(239, 68, 68, 0.3); }
         .btn-danger:hover { background: rgba(239, 68, 68, 0.25); }
-        .btn-success {
-            background: rgba(16, 185, 129, 0.15);
-            color: var(--green);
-            border: 1px solid rgba(16, 185, 129, 0.3);
-        }
+        .btn-success { background: rgba(16, 185, 129, 0.15); color: var(--green); border: 1px solid rgba(16, 185, 129, 0.3); }
         .btn-success:hover { background: rgba(16, 185, 129, 0.25); }
-        .btn-secondary {
-            background: rgba(148, 163, 184, 0.1);
-            color: #cbd5e1;
-            border: 1px solid rgba(148, 163, 184, 0.2);
-        }
+        .btn-secondary { background: rgba(148, 163, 184, 0.1); color: #cbd5e1; border: 1px solid rgba(148, 163, 184, 0.2); }
         .btn-secondary:hover { background: rgba(148, 163, 184, 0.2); }
         .btn-small { padding: 6px 12px; font-size: 12px; }
-
-        /* ===== Forms ===== */
         .form-box {
             background: linear-gradient(135deg, var(--bg-card), var(--bg-secondary));
             border-radius: 15px;
@@ -245,9 +192,7 @@
             margin-bottom: 6px;
             font-weight: 700;
         }
-        .form-group input,
-        .form-group textarea,
-        .form-group select {
+        .form-group input, .form-group textarea, .form-group select {
             width: 100%;
             padding: 10px 14px;
             background: rgba(10, 10, 15, 0.8);
@@ -258,17 +203,13 @@
             font-size: 13px;
             transition: 0.3s;
         }
-        .form-group input:focus,
-        .form-group textarea:focus,
-        .form-group select:focus {
+        .form-group input:focus, .form-group textarea:focus, .form-group select:focus {
             outline: none;
             border-color: var(--gold);
             box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.1);
         }
         .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
         .form-row-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
-
-        /* ===== Modal ===== */
         .modal-overlay {
             display: none;
             position: fixed;
@@ -300,22 +241,8 @@
             padding-bottom: 12px;
             border-bottom: 1px solid rgba(212, 175, 55, 0.15);
         }
-        .modal-actions {
-            display: flex;
-            gap: 10px;
-            margin-top: 20px;
-            justify-content: flex-end;
-            flex-wrap: wrap;
-        }
-
-        /* ===== Login ===== */
-        .login-screen {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-            padding: 20px;
-        }
+        .modal-actions { display: flex; gap: 10px; margin-top: 20px; justify-content: flex-end; flex-wrap: wrap; }
+        .login-screen { display: flex; align-items: center; justify-content: center; min-height: 100vh; padding: 20px; }
         .login-card {
             background: linear-gradient(135deg, var(--bg-card), var(--bg-secondary));
             border: 2px solid rgba(212, 175, 55, 0.4);
@@ -325,20 +252,8 @@
             width: 100%;
             box-shadow: 0 20px 60px rgba(212, 175, 55, 0.3);
         }
-        .login-card h1 {
-            color: var(--gold);
-            text-align: center;
-            margin-bottom: 25px;
-            font-size: 22px;
-            font-weight: 900;
-        }
-
-        /* ===== Blog Editor ===== */
-        .blog-editor {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-        }
+        .login-card h1 { color: var(--gold); text-align: center; margin-bottom: 25px; font-size: 22px; font-weight: 900; }
+        .blog-editor { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
         .blog-editor textarea {
             min-height: 400px;
             font-family: 'Courier New', monospace;
@@ -359,45 +274,17 @@
             font-size: 13.5px;
             line-height: 1.9;
         }
-        .blog-preview h1 {
-            color: var(--gold);
-            font-size: 22px;
-            margin: 15px 0 10px;
-            border-bottom: 2px solid rgba(212, 175, 55, 0.3);
-            padding-bottom: 8px;
-        }
+        .blog-preview h1 { color: var(--gold); font-size: 22px; margin: 15px 0 10px; border-bottom: 2px solid rgba(212, 175, 55, 0.3); padding-bottom: 8px; }
         .blog-preview h2 { color: var(--gold-light); font-size: 18px; margin: 15px 0 8px; }
         .blog-preview h3 { color: #cbd5e1; font-size: 15px; margin: 12px 0 6px; }
         .blog-preview p { margin-bottom: 10px; }
         .blog-preview ul, .blog-preview ol { margin: 10px 20px 10px 0; padding-right: 15px; }
         .blog-preview li { margin-bottom: 4px; }
-        .blog-preview code {
-            background: rgba(212, 175, 55, 0.1);
-            padding: 2px 6px;
-            border-radius: 4px;
-            color: var(--gold-light);
-            font-family: 'Courier New', monospace;
-        }
-        .blog-preview pre {
-            background: rgba(0, 0, 0, 0.5);
-            padding: 12px;
-            border-radius: 8px;
-            overflow-x: auto;
-            margin: 10px 0;
-            direction: ltr;
-            text-align: left;
-        }
-        .blog-preview blockquote {
-            border-right: 3px solid var(--gold);
-            padding-right: 12px;
-            margin: 10px 0;
-            color: var(--gold-light);
-            font-style: italic;
-        }
+        .blog-preview code { background: rgba(212, 175, 55, 0.1); padding: 2px 6px; border-radius: 4px; color: var(--gold-light); font-family: 'Courier New', monospace; }
+        .blog-preview pre { background: rgba(0, 0, 0, 0.5); padding: 12px; border-radius: 8px; overflow-x: auto; margin: 10px 0; direction: ltr; text-align: left; }
+        .blog-preview blockquote { border-right: 3px solid var(--gold); padding-right: 12px; margin: 10px 0; color: var(--gold-light); font-style: italic; }
         .blog-preview strong { color: var(--white); }
         .blog-preview a { color: var(--blue); text-decoration: underline; }
-
-        /* ===== AI Assistant ===== */
         .ai-section {
             background: linear-gradient(135deg, rgba(59, 130, 246, 0.08), rgba(59, 130, 246, 0.02));
             border: 1px solid rgba(59, 130, 246, 0.25);
@@ -450,27 +337,9 @@
         .ai-output ul, .ai-output ol { margin: 8px 20px 8px 0; padding-right: 15px; }
         .ai-output li { margin-bottom: 4px; }
         .ai-output strong { color: var(--gold-light); }
-        .ai-output code {
-            background: rgba(212, 175, 55, 0.1);
-            padding: 2px 6px;
-            border-radius: 4px;
-            color: var(--gold-light);
-        }
-        .ai-output pre {
-            background: rgba(0, 0, 0, 0.4);
-            padding: 12px;
-            border-radius: 8px;
-            overflow-x: auto;
-            margin: 10px 0;
-            direction: ltr;
-            text-align: left;
-        }
-        .ai-actions {
-            display: flex;
-            gap: 10px;
-            margin-top: 15px;
-            flex-wrap: wrap;
-        }
+        .ai-output code { background: rgba(212, 175, 55, 0.1); padding: 2px 6px; border-radius: 4px; color: var(--gold-light); }
+        .ai-output pre { background: rgba(0, 0, 0, 0.4); padding: 12px; border-radius: 8px; overflow-x: auto; margin: 10px 0; direction: ltr; text-align: left; }
+        .ai-actions { display: flex; gap: 10px; margin-top: 15px; flex-wrap: wrap; }
         .ai-model-selector {
             display: flex;
             align-items: center;
@@ -481,12 +350,7 @@
             border-radius: 12px;
             margin-bottom: 15px;
         }
-        .ai-model-selector label {
-            color: var(--gray);
-            font-size: 13px;
-            font-weight: 700;
-            white-space: nowrap;
-        }
+        .ai-model-selector label { color: var(--gray); font-size: 13px; font-weight: 700; white-space: nowrap; }
         .ai-model-selector select {
             flex: 1;
             padding: 8px 12px;
@@ -498,14 +362,7 @@
             font-size: 12.5px;
             cursor: pointer;
         }
-
-        /* ===== Analysis Type Selector ===== */
-        .analysis-type-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 12px;
-            margin-bottom: 15px;
-        }
+        .analysis-type-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-bottom: 15px; }
         .analysis-type-card {
             background: rgba(10, 10, 15, 0.5);
             border: 2px solid rgba(255, 255, 255, 0.08);
@@ -515,10 +372,7 @@
             transition: 0.3s;
             text-align: center;
         }
-        .analysis-type-card:hover {
-            border-color: rgba(212, 175, 55, 0.4);
-            transform: translateY(-2px);
-        }
+        .analysis-type-card:hover { border-color: rgba(212, 175, 55, 0.4); transform: translateY(-2px); }
         .analysis-type-card.active {
             background: linear-gradient(135deg, rgba(212, 175, 55, 0.15), rgba(212, 175, 55, 0.05));
             border-color: var(--gold);
@@ -526,11 +380,10 @@
         .analysis-type-card .icon { font-size: 28px; margin-bottom: 8px; }
         .analysis-type-card .title { color: var(--white); font-size: 13px; font-weight: 800; margin-bottom: 4px; }
         .analysis-type-card .desc { color: var(--gray); font-size: 11px; }
-
-        /* ===== Loading / Toast ===== */
         .loading { text-align: center; padding: 40px; color: var(--gray); }
         .spinner {
-            width: 40px; height: 40px;
+            width: 40px;
+            height: 40px;
             border: 4px solid rgba(212, 175, 55, 0.2);
             border-top-color: var(--gold);
             border-radius: 50%;
@@ -558,8 +411,6 @@
         .toast.show { transform: translateX(-50%) translateY(0); }
         .toast.success { border-right-color: var(--green); }
         .toast.error { border-right-color: var(--red); }
-
-        /* ===== Tags / Badges ===== */
         .tag {
             display: inline-block;
             padding: 3px 10px;
@@ -570,51 +421,16 @@
             color: var(--gold);
             margin: 2px;
         }
-        .status-badge {
-            display: inline-block;
-            padding: 4px 10px;
-            border-radius: 8px;
-            font-size: 11px;
-            font-weight: 800;
-        }
+        .status-badge { display: inline-block; padding: 4px 10px; border-radius: 8px; font-size: 11px; font-weight: 800; }
         .status-published { background: rgba(16, 185, 129, 0.15); color: var(--green); }
         .status-draft { background: rgba(148, 163, 184, 0.15); color: var(--gray); }
-        .type-badge {
-            display: inline-block;
-            padding: 4px 10px;
-            border-radius: 8px;
-            font-size: 11px;
-            font-weight: 800;
-        }
+        .type-badge { display: inline-block; padding: 4px 10px; border-radius: 8px; font-size: 11px; font-weight: 800; }
         .type-badge.daily { background: rgba(245, 158, 11, 0.15); color: #f59e0b; }
         .type-badge.weekly { background: rgba(59, 130, 246, 0.15); color: #60a5fa; }
-        .featured-badge {
-            background: rgba(212, 175, 55, 0.2);
-            color: var(--gold);
-            padding: 3px 8px;
-            border-radius: 6px;
-            font-size: 10px;
-            font-weight: 800;
-        }
-
-        /* ===== Tab Actions Bar ===== */
-        .tab-actions {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
+        .featured-badge { background: rgba(212, 175, 55, 0.2); color: var(--gold); padding: 3px 8px; border-radius: 6px; font-size: 10px; font-weight: 800; }
+        .tab-actions { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; flex-wrap: wrap; gap: 10px; }
         .tab-actions h2 { color: var(--gold); font-size: 18px; }
-
-        /* ===== Filter Tabs ===== */
-        .filter-tabs {
-            display: flex;
-            gap: 8px;
-            margin-bottom: 15px;
-            flex-wrap: wrap;
-        }
+        .filter-tabs { display: flex; gap: 8px; margin-bottom: 15px; flex-wrap: wrap; }
         .filter-tab {
             padding: 8px 16px;
             background: rgba(10, 10, 15, 0.5);
@@ -628,13 +444,7 @@
             transition: 0.3s;
         }
         .filter-tab:hover { color: var(--gold); border-color: rgba(212, 175, 55, 0.4); }
-        .filter-tab.active {
-            background: linear-gradient(135deg, var(--gold), var(--gold-dark));
-            color: var(--bg-primary);
-            border-color: var(--gold);
-        }
-
-        /* ===== NEW: Message Card ===== */
+        .filter-tab.active { background: linear-gradient(135deg, var(--gold), var(--gold-dark)); color: var(--bg-primary); border-color: var(--gold); }
         .message-card {
             background: linear-gradient(135deg, var(--bg-card), var(--bg-secondary));
             border: 1px solid rgba(212, 175, 55, 0.15);
@@ -654,40 +464,11 @@
             border-right-color: var(--gold);
             background: linear-gradient(135deg, rgba(212, 175, 55, 0.05), var(--bg-secondary));
         }
-        .message-card-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 10px;
-            flex-wrap: wrap;
-            gap: 8px;
-        }
-        .message-card-name {
-            color: var(--white);
-            font-size: 14px;
-            font-weight: 800;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        .message-card-name .new-badge {
-            background: var(--red);
-            color: #fff;
-            font-size: 9px;
-            padding: 2px 7px;
-            border-radius: 8px;
-            font-weight: 800;
-        }
-        .message-card-date {
-            color: var(--gray);
-            font-size: 11px;
-        }
-        .message-card-subject {
-            color: var(--gold-light);
-            font-size: 13px;
-            font-weight: 700;
-            margin-bottom: 8px;
-        }
+        .message-card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; flex-wrap: wrap; gap: 8px; }
+        .message-card-name { color: var(--white); font-size: 14px; font-weight: 800; display: flex; align-items: center; gap: 8px; }
+        .message-card-name .new-badge { background: var(--red); color: #fff; font-size: 9px; padding: 2px 7px; border-radius: 8px; font-weight: 800; }
+        .message-card-date { color: var(--gray); font-size: 11px; }
+        .message-card-subject { color: var(--gold-light); font-size: 13px; font-weight: 700; margin-bottom: 8px; }
         .message-card-text {
             color: #cbd5e1;
             font-size: 13px;
@@ -698,14 +479,7 @@
             -webkit-line-clamp: 2;
             -webkit-box-orient: vertical;
         }
-        .message-card-footer {
-            margin-top: 12px;
-            display: flex;
-            gap: 8px;
-            flex-wrap: wrap;
-        }
-
-        /* ===== Message Detail ===== */
+        .message-card-footer { margin-top: 12px; display: flex; gap: 8px; flex-wrap: wrap; }
         .message-detail-box {
             background: rgba(10, 10, 15, 0.5);
             border-radius: 12px;
@@ -721,20 +495,9 @@
             font-size: 13.5px;
         }
         .message-detail-row:last-child { border-bottom: none; }
-        .message-detail-row .label {
-            color: var(--gray);
-            font-weight: 700;
-            min-width: 90px;
-        }
-        .message-detail-row .value {
-            color: var(--white);
-            word-break: break-word;
-            flex: 1;
-        }
-        .message-detail-row .value a {
-            color: var(--gold);
-            text-decoration: none;
-        }
+        .message-detail-row .label { color: var(--gray); font-weight: 700; min-width: 90px; }
+        .message-detail-row .value { color: var(--white); word-break: break-word; flex: 1; }
+        .message-detail-row .value a { color: var(--gold); text-decoration: none; }
         .message-detail-row .value a:hover { text-decoration: underline; }
         .message-body {
             background: rgba(10, 10, 15, 0.6);
@@ -746,8 +509,6 @@
             white-space: pre-wrap;
             margin-bottom: 15px;
         }
-
-        /* ===== Responsive ===== */
         @media (max-width: 900px) {
             .blog-editor { grid-template-columns: 1fr; }
             .analysis-type-grid { grid-template-columns: 1fr; }
@@ -765,556 +526,668 @@
     </style>
 </head>
 <body>
-
-    <!-- ===== Login Screen ===== -->
-    <div id="loginScreen" class="login-screen">
-        <div class="login-card">
-            <h1>🔐 ورود ادمین</h1>
-            <div class="form-group">
-                <label>ایمیل</label>
-                <input type="email" id="adminEmail" placeholder="admin@example.com">
-            </div>
-            <div class="form-group">
-                <label>رمز عبور</label>
-                <input type="password" id="adminPassword" placeholder="••••••••">
-            </div>
-            <button class="btn btn-primary" style="width:100%; justify-content:center; margin-top:10px;" onclick="loginAdmin()">
-                ورود
-            </button>
-            <p id="loginError" style="color:#ef4444; text-align:center; margin-top:15px; font-size:13px;"></p>
+<!-- ===== Login Screen ===== -->
+<div id="loginScreen" class="login-screen">
+    <div class="login-card">
+        <h1>🔐 ورود ادمین</h1>
+        <div class="form-group">
+            <label>ایمیل</label>
+            <input type="email" id="adminEmail" placeholder="admin@example.com">
         </div>
+        <div class="form-group">
+            <label>رمز عبور</label>
+            <input type="password" id="adminPassword" placeholder="••••••••">
+        </div>
+        <button class="btn btn-primary" style="width:100%; justify-content:center; margin-top:10px;" onclick="loginAdmin()">
+            ورود
+        </button>
+        <p id="loginError" style="color:#ef4444; text-align:center; margin-top:15px; font-size:13px;"></p>
+    </div>
+</div>
+
+<!-- ===== Admin Panel ===== -->
+<div id="adminPanel" style="display:none;">
+    <header class="admin-header">
+        <h1>🎯 پنل ادمین شمعدون</h1>
+        <div class="admin-user">
+            <span id="adminEmailShow"></span>
+            <button class="logout-btn" onclick="logoutAdmin()">🚪 خروج</button>
+        </div>
+    </header>
+
+    <div class="tabs">
+        <button class="tab-btn active" onclick="switchTab('dashboard', this)">📊 داشبورد</button>
+        <button class="tab-btn" onclick="switchTab('blog', this)">📝 مقالات</button>
+        <button class="tab-btn" onclick="switchTab('analysis', this)">📊 تحلیل‌ها</button>
+        <button class="tab-btn" onclick="switchTab('ai-assistant', this)">🤖 دستیار AI</button>
+        <button class="tab-btn" onclick="switchTab('messages', this)">📬 صندوق پیام <span class="tab-badge" id="messagesBadge">0</span></button>
+        <button class="tab-btn" onclick="switchTab('comments', this)">💬 نظرات</button>
+        <button class="tab-btn" onclick="switchTab('courses', this)">📚 دوره‌ها</button>
+        <button class="tab-btn" onclick="switchTab('lessons', this)">📖 دروس</button>
+        <button class="tab-btn" onclick="switchTab('users', this)">👥 کاربران</button>
+        <button class="tab-btn" onclick="switchTab('settings', this)">⚙️ تنظیمات</button>
     </div>
 
-    <!-- ===== Admin Panel ===== -->
-    <div id="adminPanel" style="display:none;">
-        <header class="admin-header">
-            <h1>🎯 پنل ادمین شمعدون</h1>
-            <div class="admin-user">
-                <span id="adminEmailShow"></span>
-                <button class="logout-btn" onclick="logoutAdmin()">🚪 خروج</button>
-            </div>
-        </header>
+    <div class="container">
 
-        <div class="tabs">
-            <button class="tab-btn active" onclick="switchTab('dashboard', this)">📊 داشبورد</button>
-            <button class="tab-btn" onclick="switchTab('blog', this)">📝 مقالات</button>
-            <button class="tab-btn" onclick="switchTab('analysis', this)">📊 تحلیل‌ها</button>
-            <button class="tab-btn" onclick="switchTab('ai-assistant', this)">🤖 دستیار AI</button>
-            <button class="tab-btn" onclick="switchTab('messages', this)">📬 صندوق پیام <span class="tab-badge" id="messagesBadge">0</span></button>
-            <button class="tab-btn" onclick="switchTab('comments', this)">💬 نظرات</button>
-            <button class="tab-btn" onclick="switchTab('courses', this)">📚 دوره‌ها</button>
-            <button class="tab-btn" onclick="switchTab('lessons', this)">📖 دروس</button>
-            <button class="tab-btn" onclick="switchTab('users', this)">👥 کاربران</button>
+        <!-- ===== تب داشبورد ===== -->
+        <div id="tab-dashboard" class="tab-content active">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="icon">👥</div>
+                    <div class="value" id="statUsers">-</div>
+                    <div class="label">کاربران</div>
+                </div>
+                <div class="stat-card">
+                    <div class="icon">📚</div>
+                    <div class="value" id="statCourses">-</div>
+                    <div class="label">دوره‌ها</div>
+                </div>
+                <div class="stat-card">
+                    <div class="icon">📖</div>
+                    <div class="value" id="statLessons">-</div>
+                    <div class="label">دروس</div>
+                </div>
+                <div class="stat-card">
+                    <div class="icon">📝</div>
+                    <div class="value" id="statPosts">-</div>
+                    <div class="label">مقالات</div>
+                </div>
+                <div class="stat-card">
+                    <div class="icon">📊</div>
+                    <div class="value" id="statAnalyses">-</div>
+                    <div class="label">تحلیل‌ها</div>
+                </div>
+                <div class="stat-card">
+                    <div class="icon">📬</div>
+                    <div class="value" id="statMessages">-</div>
+                    <div class="label">پیام‌ها</div>
+                </div>
+                <div class="stat-card">
+                    <div class="icon">⭐</div>
+                    <div class="value" id="statScores">-</div>
+                    <div class="label">امتیازات</div>
+                </div>
+                <div class="stat-card">
+                    <div class="icon">💬</div>
+                    <div class="value" id="statComments">-</div>
+                    <div class="label">نظرات</div>
+                </div>
+            </div>
+            <div class="chart-box">
+                <h3>📈 امتیازات ۷ روز گذشته</h3>
+                <canvas id="scoresChart" height="100"></canvas>
+            </div>
         </div>
 
-        <div class="container">
+        <!-- ===== تب مقالات ===== -->
+        <div id="tab-blog" class="tab-content">
+            <div class="tab-actions">
+                <h2>📝 مدیریت مقالات</h2>
+                <button class="btn btn-primary" onclick="openBlogModal()">➕ مقاله جدید</button>
+            </div>
+            <div id="blogList" class="loading">
+                <div class="spinner"></div>
+                در حال بارگذاری...
+            </div>
+        </div>
 
-            <!-- ===== تب داشبورد ===== -->
-            <div id="tab-dashboard" class="tab-content active">
-                <div class="stats-grid">
-                    <div class="stat-card">
-                        <div class="icon">👥</div>
-                        <div class="value" id="statUsers">-</div>
-                        <div class="label">کاربران</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="icon">📚</div>
-                        <div class="value" id="statCourses">-</div>
-                        <div class="label">دوره‌ها</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="icon">📖</div>
-                        <div class="value" id="statLessons">-</div>
-                        <div class="label">دروس</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="icon">📝</div>
-                        <div class="value" id="statPosts">-</div>
-                        <div class="label">مقالات</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="icon">📊</div>
-                        <div class="value" id="statAnalyses">-</div>
-                        <div class="label">تحلیل‌ها</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="icon">📬</div>
-                        <div class="value" id="statMessages">-</div>
-                        <div class="label">پیام‌ها</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="icon">⭐</div>
-                        <div class="value" id="statScores">-</div>
-                        <div class="label">امتیازات</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="icon">💬</div>
-                        <div class="value" id="statComments">-</div>
-                        <div class="label">نظرات</div>
-                    </div>
-                </div>
+        <!-- ===== تب تحلیل‌ها ===== -->
+        <div id="tab-analysis" class="tab-content">
+            <div class="tab-actions">
+                <h2>📊 مدیریت تحلیل‌ها</h2>
+                <button class="btn btn-primary" onclick="openAnalysisModal()">➕ تحلیل جدید</button>
+            </div>
+            <div class="filter-tabs">
+                <button class="filter-tab active" onclick="filterAnalyses('all', this)">📚 همه</button>
+                <button class="filter-tab" onclick="filterAnalyses('daily', this)">🔥 روزانه</button>
+                <button class="filter-tab" onclick="filterAnalyses('weekly', this)">📈 هفتگی</button>
+            </div>
+            <div id="analysisList" class="loading">
+                <div class="spinner"></div>
+                در حال بارگذاری...
+            </div>
+        </div>
 
-                <div class="chart-box">
-                    <h3>📈 امتیازات ۷ روز گذشته</h3>
-                    <canvas id="scoresChart" height="100"></canvas>
+        <!-- ===== تب دستیار AI ===== -->
+        <div id="tab-ai-assistant" class="tab-content">
+            <div class="tab-actions">
+                <h2>🤖 دستیار AI ادمین</h2>
+                <span style="color:var(--gray); font-size:12px;">تولید تحلیل خودکار با هوش مصنوعی</span>
+            </div>
+
+            <div class="ai-section">
+                <h3>📋 نوع تحلیل</h3>
+                <div class="analysis-type-grid">
+                    <div class="analysis-type-card active" data-type="daily-gold" onclick="selectAnalysisType('daily-gold', this)">
+                        <div class="icon">🥇</div>
+                        <div class="title">تحلیل روزانه طلا و نقره</div>
+                        <div class="desc">بازار داخلی + انس</div>
+                    </div>
+                    <div class="analysis-type-card" data-type="daily-global" onclick="selectAnalysisType('daily-global', this)">
+                        <div class="icon">🌍</div>
+                        <div class="title">تحلیل انس و کریپتو</div>
+                        <div class="desc">بازارهای جهانی</div>
+                    </div>
+                    <div class="analysis-type-card" data-type="weekly-iran" onclick="selectAnalysisType('weekly-iran', this)">
+                        <div class="icon">📈</div>
+                        <div class="title">تحلیل هفتگی اقتصاد ایران</div>
+                        <div class="desc">تورم، نقدینگی، نرخ بهره</div>
+                    </div>
+                    <div class="analysis-type-card" data-type="weekly-usa" onclick="selectAnalysisType('weekly-usa', this)">
+                        <div class="icon">🇺🇸</div>
+                        <div class="title">تحلیل هفتگی اقتصاد آمریکا</div>
+                        <div class="desc">Fed، CPI، NFP</div>
+                    </div>
                 </div>
             </div>
 
-            <!-- ===== تب مقالات ===== -->
-            <div id="tab-blog" class="tab-content">
-                <div class="tab-actions">
-                    <h2>📝 مدیریت مقالات</h2>
-                    <button class="btn btn-primary" onclick="openBlogModal()">➕ مقاله جدید</button>
-                </div>
-                <div id="blogList" class="loading">
-                    <div class="spinner"></div>
-                    در حال بارگذاری...
-                </div>
+            <div class="ai-model-selector">
+                <label>🧠 مدل:</label>
+                <select id="aiModelSelect">
+                    <option value="gpt-5.6-luna">🧠 GPT-5.6 Luna (رایگان)</option>
+                    <option value="gpt-5.4-nano">⚡ GPT-5.4 Nano (رایگان)</option>
+                    <option value="gpt-5.4">💼 GPT-5.4 (دقیق)</option>
+                    <option value="gpt-5.6-terra">🎯 GPT-5.6 Terra (متعادل)</option>
+                    <option value="gemini-3.7-flash">🚀 Gemini 3.7 Flash (سریع)</option>
+                </select>
             </div>
 
-            <!-- ===== تب تحلیل‌ها ===== -->
-            <div id="tab-analysis" class="tab-content">
-                <div class="tab-actions">
-                    <h2>📊 مدیریت تحلیل‌ها</h2>
-                    <button class="btn btn-primary" onclick="openAnalysisModal()">➕ تحلیل جدید</button>
+            <div class="ai-section">
+                <h3>📌 داده‌های ورودی (خودکار)</h3>
+                <div class="ai-data-box" id="aiDataBox">
+                    ⏳ در حال لود داده‌ها...
                 </div>
-
-                <div class="filter-tabs">
-                    <button class="filter-tab active" onclick="filterAnalyses('all', this)">📚 همه</button>
-                    <button class="filter-tab" onclick="filterAnalyses('daily', this)">🔥 روزانه</button>
-                    <button class="filter-tab" onclick="filterAnalyses('weekly', this)">📈 هفتگی</button>
-                </div>
-
-                <div id="analysisList" class="loading">
-                    <div class="spinner"></div>
-                    در حال بارگذاری...
-                </div>
+                <button class="btn btn-secondary" onclick="reloadAIData()">
+                    🔄 بروزرسانی داده‌ها
+                </button>
             </div>
 
-            <!-- ===== تب دستیار AI ===== -->
-            <div id="tab-ai-assistant" class="tab-content">
-                <div class="tab-actions">
-                    <h2>🤖 دستیار AI ادمین</h2>
-                    <span style="color:var(--gray); font-size:12px;">تولید تحلیل خودکار با هوش مصنوعی</span>
-                </div>
+            <button class="btn btn-primary" style="width:100%; justify-content:center; padding:15px; font-size:15px;" onclick="generateAIAnalysis()" id="generateBtn">
+                🚀 تولید تحلیل با AI
+            </button>
 
-                <div class="ai-section">
-                    <h3>📋 نوع تحلیل</h3>
-                    <div class="analysis-type-grid">
-                        <div class="analysis-type-card active" data-type="daily-gold" onclick="selectAnalysisType('daily-gold', this)">
-                            <div class="icon">🥇</div>
-                            <div class="title">تحلیل روزانه طلا و نقره</div>
-                            <div class="desc">بازار داخلی + انس</div>
-                        </div>
-                        <div class="analysis-type-card" data-type="daily-global" onclick="selectAnalysisType('daily-global', this)">
-                            <div class="icon">🌍</div>
-                            <div class="title">تحلیل انس و کریپتو</div>
-                            <div class="desc">بازارهای جهانی</div>
-                        </div>
-                        <div class="analysis-type-card" data-type="weekly-iran" onclick="selectAnalysisType('weekly-iran', this)">
-                            <div class="icon">📈</div>
-                            <div class="title">تحلیل هفتگی اقتصاد ایران</div>
-                            <div class="desc">تورم، نقدینگی، نرخ بهره</div>
-                        </div>
-                        <div class="analysis-type-card" data-type="weekly-usa" onclick="selectAnalysisType('weekly-usa', this)">
-                            <div class="icon">🇺🇸</div>
-                            <div class="title">تحلیل هفتگی اقتصاد آمریکا</div>
-                            <div class="desc">Fed، CPI، NFP</div>
-                        </div>
-                    </div>
+            <div class="ai-section" style="margin-top:20px;">
+                <h3>📄 خروجی AI</h3>
+                <div class="ai-output" id="aiOutput">
+                    <p style="color:var(--gray); text-align:center; padding:40px 0;">
+                        👆 بعد از انتخاب نوع و دکمه تولید، خروجی AI اینجا نمایش داده می‌شود
+                    </p>
                 </div>
-
-                <div class="ai-model-selector">
-                    <label>🧠 مدل:</label>
-                    <select id="aiModelSelect">
-                        <option value="gpt-5.6-luna">🧠 GPT-5.6 Luna (رایگان)</option>
-                        <option value="gpt-5.4-nano">⚡ GPT-5.4 Nano (رایگان)</option>
-                        <option value="gpt-5.4">💼 GPT-5.4 (دقیق)</option>
-                        <option value="gpt-5.6-terra">🎯 GPT-5.6 Terra (متعادل)</option>
-                        <option value="gemini-3.7-flash">🚀 Gemini 3.7 Flash (سریع)</option>
-                    </select>
-                </div>
-
-                <div class="ai-section">
-                    <h3>📌 داده‌های ورودی (خودکار)</h3>
-                    <div class="ai-data-box" id="aiDataBox">
-                        ⏳ در حال لود داده‌ها...
-                    </div>
-                    <button class="btn btn-secondary" onclick="reloadAIData()">
-                        🔄 بروزرسانی داده‌ها
+                <div class="ai-actions" id="aiActions" style="display:none;">
+                    <button class="btn btn-secondary" onclick="copyAIOutput()">
+                        📋 کپی کل متن
+                    </button>
+                    <button class="btn btn-success" onclick="sendToAnalysisForm()">
+                        📝 ارسال به فرم تحلیل
                     </button>
                 </div>
-
-                <button class="btn btn-primary" style="width:100%; justify-content:center; padding:15px; font-size:15px;" onclick="generateAIAnalysis()" id="generateBtn">
-                    🚀 تولید تحلیل با AI
-                </button>
-
-                <div class="ai-section" style="margin-top:20px;">
-                    <h3>📄 خروجی AI</h3>
-                    <div class="ai-output" id="aiOutput">
-                        <p style="color:var(--gray); text-align:center; padding:40px 0;">
-                            👆 بعد از انتخاب نوع و دکمه تولید، خروجی AI اینجا نمایش داده می‌شود
-                        </p>
-                    </div>
-                    <div class="ai-actions" id="aiActions" style="display:none;">
-                        <button class="btn btn-secondary" onclick="copyAIOutput()">
-                            📋 کپی کل متن
-                        </button>
-                        <button class="btn btn-success" onclick="sendToAnalysisForm()">
-                            📝 ارسال به فرم تحلیل
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- ===== تب صندوق پیام (NEW) ===== -->
-            <div id="tab-messages" class="tab-content">
-                <div class="tab-actions">
-                    <h2>📬 صندوق پیام</h2>
-                    <span style="color:var(--gray); font-size:12px;">پیام‌های دریافتی از فرم تماس با ما</span>
-                </div>
-
-                <div class="filter-tabs">
-                    <button class="filter-tab active" onclick="filterMessages('all', this)">📚 همه</button>
-                    <button class="filter-tab" onclick="filterMessages('new', this)">🆕 جدید</button>
-                    <button class="filter-tab" onclick="filterMessages('read', this)">👁️ خوانده‌شده</button>
-                </div>
-
-                <div id="messagesList" class="loading">
-                    <div class="spinner"></div>
-                    در حال بارگذاری...
-                </div>
-            </div>
-
-            <!-- ===== تب نظرات ===== -->
-            <div id="tab-comments" class="tab-content">
-                <h2 style="margin-bottom:15px; color:var(--gold);">💬 نظرات کاربران</h2>
-                <div id="commentsList" class="loading">
-                    <div class="spinner"></div>
-                    در حال بارگذاری...
-                </div>
-            </div>
-
-            <!-- ===== تب دوره‌ها ===== -->
-            <div id="tab-courses" class="tab-content">
-                <div class="tab-actions">
-                    <h2>📚 مدیریت دوره‌ها</h2>
-                    <button class="btn btn-primary" onclick="openCourseModal()">➕ دوره جدید</button>
-                </div>
-                <div id="coursesList" class="loading">
-                    <div class="spinner"></div>
-                    در حال بارگذاری...
-                </div>
-            </div>
-
-            <!-- ===== تب دروس ===== -->
-            <div id="tab-lessons" class="tab-content">
-                <div class="tab-actions">
-                    <h2>📖 مدیریت دروس</h2>
-                    <button class="btn btn-primary" onclick="openLessonModal()">➕ درس جدید</button>
-                </div>
-                <div id="lessonsList" class="loading">
-                    <div class="spinner"></div>
-                    در حال بارگذاری...
-                </div>
-            </div>
-
-            <!-- ===== تب کاربران ===== -->
-            <div id="tab-users" class="tab-content">
-                <h2 style="margin-bottom:15px; color:var(--gold);">👥 کاربران</h2>
-                <input type="text" id="userSearch" placeholder="🔍 جستجوی کاربر..."
-                    style="width:100%; padding:12px; background:rgba(10,10,15,0.8); border:1px solid rgba(255,255,255,0.1); border-radius:10px; color:var(--white); font-family:inherit; margin-bottom:15px;"
-                    oninput="filterUsers()">
-                <div id="usersList" class="loading">
-                    <div class="spinner"></div>
-                    در حال بارگذاری...
-                </div>
-            </div>
-
-        </div>
-    </div>
-
-    <!-- ===== Modal: Course ===== -->
-    <div id="courseModal" class="modal-overlay">
-        <div class="modal">
-            <h2 id="courseModalTitle">➕ دوره جدید</h2>
-            <input type="hidden" id="courseId">
-            <div class="form-group">
-                <label>عنوان دوره *</label>
-                <input type="text" id="courseTitle">
-            </div>
-            <div class="form-group">
-                <label>توضیحات</label>
-                <textarea id="courseDesc" rows="3"></textarea>
-            </div>
-            <div class="form-row">
-                <div class="form-group">
-                    <label>آیکون (ایموجی)</label>
-                    <input type="text" id="courseIcon" placeholder="📚">
-                </div>
-                <div class="form-group">
-                    <label>سطح</label>
-                    <select id="courseLevel">
-                        <option value="مبتدی">مبتدی</option>
-                        <option value="متوسط">متوسط</option>
-                        <option value="پیشرفته">پیشرفته</option>
-                    </select>
-                </div>
-            </div>
-            <div class="modal-actions">
-                <button class="btn btn-secondary" onclick="closeModal('courseModal')">لغو</button>
-                <button class="btn btn-primary" onclick="saveCourse()">💾 ذخیره</button>
             </div>
         </div>
-    </div>
 
-    <!-- ===== Modal: Lesson ===== -->
-    <div id="lessonModal" class="modal-overlay">
-        <div class="modal">
-            <h2 id="lessonModalTitle">➕ درس جدید</h2>
-            <input type="hidden" id="lessonId">
-            <div class="form-group">
-                <label>دوره مربوطه *</label>
-                <select id="lessonCourse"></select>
+        <!-- ===== تب صندوق پیام ===== -->
+        <div id="tab-messages" class="tab-content">
+            <div class="tab-actions">
+                <h2>📬 صندوق پیام</h2>
+                <span style="color:var(--gray); font-size:12px;">پیام‌های دریافتی از فرم تماس با ما</span>
             </div>
-            <div class="form-group">
-                <label>عنوان درس *</label>
-                <input type="text" id="lessonTitle">
+            <div class="filter-tabs">
+                <button class="filter-tab active" onclick="filterMessages('all', this)">📚 همه</button>
+                <button class="filter-tab" onclick="filterMessages('new', this)">🆕 جدید</button>
+                <button class="filter-tab" onclick="filterMessages('read', this)">👁️ خوانده‌شده</button>
             </div>
-            <div class="form-group">
-                <label>محتوا (HTML قابل قبول)</label>
-                <textarea id="lessonContent" rows="5"></textarea>
-            </div>
-            <div class="form-row">
-                <div class="form-group">
-                    <label>🎥 لینک ویدیو (اختیاری)</label>
-                    <input type="text" id="lessonVideo" placeholder="https://...">
-                </div>
-                <div class="form-group">
-                    <label>ترتیب</label>
-                    <input type="number" id="lessonOrder" value="1">
-                </div>
-            </div>
-            <div class="form-group">
-                <label>🖼️ لینک تصویر (اختیاری)</label>
-                <input type="text" id="lessonImage" placeholder="files/image.jpg یا https://...">
-            </div>
-            <div class="form-group">
-                <label>📄 لینک PDF (اختیاری)</label>
-                <input type="text" id="lessonPdf" placeholder="files/lesson.pdf یا https://...">
-            </div>
-            <div class="form-row">
-                <div class="form-group">
-                    <label>📝 لینک Word (اختیاری)</label>
-                    <input type="text" id="lessonWord" placeholder="files/lesson.docx">
-                </div>
-                <div class="form-group">
-                    <label>📊 لینک PowerPoint (اختیاری)</label>
-                    <input type="text" id="lessonPowerpoint" placeholder="files/lesson.pptx">
-                </div>
-            </div>
-            <div class="form-group">
-                <label>📚 لینک جزوه (اختیاری)</label>
-                <input type="text" id="lessonNotes" placeholder="files/notes.pdf">
-            </div>
-            <div class="modal-actions">
-                <button class="btn btn-secondary" onclick="closeModal('lessonModal')">لغو</button>
-                <button class="btn btn-primary" onclick="saveLesson()">💾 ذخیره</button>
+            <div id="messagesList" class="loading">
+                <div class="spinner"></div>
+                در حال بارگذاری...
             </div>
         </div>
-    </div>
 
-    <!-- ===== Modal: Blog Post ===== -->
-    <div id="blogModal" class="modal-overlay">
-        <div class="modal large">
-            <h2 id="blogModalTitle">➕ مقاله جدید</h2>
-            <input type="hidden" id="blogId">
-
-            <div class="form-row">
-                <div class="form-group">
-                    <label>عنوان مقاله *</label>
-                    <input type="text" id="blogTitle" placeholder="مثال: پرایس اکشن چیست؟" oninput="autoSlug()">
-                </div>
-                <div class="form-group">
-                    <label>Slug (آدرس یکتا) *</label>
-                    <input type="text" id="blogSlug" placeholder="what-is-price-action" style="direction:ltr; text-align:left;">
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label>خلاصه مقاله * <span style="color:var(--gray); font-weight:400;">(برای کارت مقاله)</span></label>
-                <textarea id="blogExcerpt" rows="2" placeholder="در این مقاله یاد می‌گیری..."></textarea>
-            </div>
-
-            <div class="form-row">
-                <div class="form-group">
-                    <label>دسته‌بندی *</label>
-                    <select id="blogCategory">
-                        <option value="آموزش">📚 آموزش</option>
-                        <option value="تحلیل تکنیکال">📈 تحلیل تکنیکال</option>
-                        <option value="تحلیل بنیادی">🔬 تحلیل بنیادی</option>
-                        <option value="روانشناسی">🧠 روانشناسی بازار</option>
-                        <option value="ابزارها">🛠️ معرفی ابزارها</option>
-                        <option value="اخبار">📰 اخبار</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label>زمان مطالعه (دقیقه)</label>
-                    <input type="number" id="blogReadTime" value="5" min="1" max="120">
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label>برچسب‌ها <span style="color:var(--gray); font-weight:400;">(با کاما جدا کن)</span></label>
-                <input type="text" id="blogTags" placeholder="پرایس اکشن, تحلیل تکنیکال, مبتدی">
-            </div>
-
-            <div class="form-group">
-                <label>🖼️ لینک تصویر شاخص (اختیاری)</label>
-                <input type="text" id="blogCoverImage" placeholder="files/cover.jpg یا https://..." style="direction:ltr; text-align:left;">
-            </div>
-
-            <div class="form-group" style="display:flex; align-items:center; gap:10px; padding:12px; background:rgba(10,10,15,0.6); border-radius:10px;">
-                <input type="checkbox" id="blogFeatured" style="width:18px; height:18px; accent-color:var(--gold); cursor:pointer;">
-                <label for="blogFeatured" style="margin:0; cursor:pointer;">⭐ این مقاله ویژه باشد (در بالای صفحه نمایش داده شود)</label>
-            </div>
-
-            <div class="form-group">
-                <label>📝 متن مقاله (Markdown) *</label>
-                <div class="blog-editor">
-                    <textarea id="blogContent" placeholder="# عنوان&#10;&#10;متن مقاله..." oninput="updatePreview()"></textarea>
-                    <div class="blog-preview" id="blogPreview">
-                        <p style="color:var(--gray); text-align:center; padding-top:150px;">
-                            👁️ پیش‌نمایش اینجا نمایش داده می‌شود
-                        </p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="modal-actions">
-                <button class="btn btn-secondary" onclick="closeModal('blogModal')">لغو</button>
-                <button class="btn btn-success" onclick="saveBlogPost('draft')">💾 ذخیره پیش‌نویس</button>
-                <button class="btn btn-primary" onclick="saveBlogPost('published')">🚀 انتشار</button>
+        <!-- ===== تب نظرات ===== -->
+        <div id="tab-comments" class="tab-content">
+            <h2 style="margin-bottom:15px; color:var(--gold);">💬 نظرات کاربران</h2>
+            <div id="commentsList" class="loading">
+                <div class="spinner"></div>
+                در حال بارگذاری...
             </div>
         </div>
-    </div>
 
-    <!-- ===== Modal: Analysis ===== -->
-    <div id="analysisModal" class="modal-overlay">
-        <div class="modal large">
-            <h2 id="analysisModalTitle">➕ تحلیل جدید</h2>
-            <input type="hidden" id="analysisId">
-
-            <div class="form-row-3">
-                <div class="form-group">
-                    <label>نوع تحلیل *</label>
-                    <select id="analysisType">
-                        <option value="daily">🔥 تحلیل روزانه</option>
-                        <option value="weekly">📈 تحلیل هفتگی</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label>تاریخ *</label>
-                    <input type="date" id="analysisDate">
-                </div>
-                <div class="form-group">
-                    <label>ساعت</label>
-                    <input type="time" id="analysisTime">
-                </div>
+        <!-- ===== تب دوره‌ها ===== -->
+        <div id="tab-courses" class="tab-content">
+            <div class="tab-actions">
+                <h2>📚 مدیریت دوره‌ها</h2>
+                <button class="btn btn-primary" onclick="openCourseModal()">➕ دوره جدید</button>
             </div>
-
-            <div class="form-group">
-                <label>مدت اعتبار *</label>
-                <input type="text" id="analysisValidity" placeholder="مثال: تا پایان امروز / تا شنبه بعد">
-            </div>
-
-            <div class="form-row">
-                <div class="form-group">
-                    <label>عنوان تحلیل *</label>
-                    <input type="text" id="analysisTitle" placeholder="مثال: تحلیل بازار طلا و دلار" oninput="autoAnalysisSlug()">
-                </div>
-                <div class="form-group">
-                    <label>Slug (آدرس یکتا) *</label>
-                    <input type="text" id="analysisSlug" placeholder="gold-analysis-2026-06-29" style="direction:ltr; text-align:left;">
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label>خلاصه تحلیل * <span style="color:var(--gray); font-weight:400;">(برای کارت)</span></label>
-                <textarea id="analysisExcerpt" rows="2" placeholder="خلاصه کوتاه تحلیل..."></textarea>
-            </div>
-
-            <div class="form-row">
-                <div class="form-group">
-                    <label>🎯 سیگنال</label>
-                    <select id="analysisSignal">
-                        <option value="">— بدون سیگنال —</option>
-                        <option value="up">🟢 صعودی</option>
-                        <option value="down">🔴 نزولی</option>
-                        <option value="neutral">⚪ خنثی</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label>🖼️ لینک تصویر</label>
-                    <input type="text" id="analysisCoverImage" placeholder="files/analysis.jpg" style="direction:ltr; text-align:left;">
-                </div>
-            </div>
-
-            <div class="form-row">
-                <div class="form-group">
-                    <label>📏 حمایت (اختیاری)</label>
-                    <input type="text" id="analysisSupport" placeholder="مثال: 24000000" inputmode="numeric">
-                </div>
-                <div class="form-group">
-                    <label>📏 مقاومت (اختیاری)</label>
-                    <input type="text" id="analysisResistance" placeholder="مثال: 25000000" inputmode="numeric">
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label>🏷️ برچسب‌ها <span style="color:var(--gray); font-weight:400;">(با کاما جدا کن)</span></label>
-                <input type="text" id="analysisTags" placeholder="طلا, دلار, بورس">
-            </div>
-
-            <div class="form-group">
-                <label>📝 متن تحلیل (Markdown) *</label>
-                <div class="blog-editor">
-                    <textarea id="analysisContent" placeholder="# تحلیل..." oninput="updateAnalysisPreview()"></textarea>
-                    <div class="blog-preview" id="analysisPreview">
-                        <p style="color:var(--gray); text-align:center; padding-top:150px;">
-                            👁️ پیش‌نمایش اینجا نمایش داده می‌شود
-                        </p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="modal-actions">
-                <button class="btn btn-secondary" onclick="closeModal('analysisModal')">لغو</button>
-                <button class="btn btn-success" onclick="saveAnalysis('draft')">💾 ذخیره پیش‌نویس</button>
-                <button class="btn btn-primary" onclick="saveAnalysis('published')">🚀 انتشار</button>
+            <div id="coursesList" class="loading">
+                <div class="spinner"></div>
+                در حال بارگذاری...
             </div>
         </div>
-    </div>
 
-    <!-- ===== NEW Modal: View Message ===== -->
-    <div id="messageModal" class="modal-overlay">
-        <div class="modal">
-            <h2 id="messageModalTitle">📬 مشاهده پیام</h2>
-            <input type="hidden" id="viewMessageId">
-
-            <div id="messageDetailContent"></div>
-
-            <div class="modal-actions">
-                <button class="btn btn-secondary" onclick="closeModal('messageModal')">بستن</button>
-                <button class="btn btn-danger" onclick="deleteCurrentMessage()">🗑️ حذف پیام</button>
+        <!-- ===== تب دروس ===== -->
+        <div id="tab-lessons" class="tab-content">
+            <div class="tab-actions">
+                <h2>📖 مدیریت دروس</h2>
+                <button class="btn btn-primary" onclick="openLessonModal()">➕ درس جدید</button>
+            </div>
+            <div id="lessonsList" class="loading">
+                <div class="spinner"></div>
+                در حال بارگذاری...
             </div>
         </div>
+
+        <!-- ===== تب کاربران ===== -->
+        <div id="tab-users" class="tab-content">
+            <h2 style="margin-bottom:15px; color:var(--gold);">👥 کاربران</h2>
+            <input type="text" id="userSearch" placeholder="🔍 جستجوی کاربر..." style="width:100%; padding:12px; background:rgba(10,10,15,0.8); border:1px solid rgba(255,255,255,0.1); border-radius:10px; color:var(--white); font-family:inherit; margin-bottom:15px;" oninput="filterUsers()">
+            <div id="usersList" class="loading">
+                <div class="spinner"></div>
+                در حال بارگذاری...
+            </div>
+        </div>
+
+        <!-- ===== تب تنظیمات (NEW) ===== -->
+        <div id="tab-settings" class="tab-content">
+            <div class="tab-actions">
+                <h2>⚙️ تنظیمات سایت</h2>
+                <span style="color:var(--gray); font-size:12px;">مدیریت کلیدهای API</span>
+            </div>
+
+            <div class="form-box">
+                <h3>🔑 کلیدهای API</h3>
+                <p style="color:var(--gray); font-size:12px; margin-bottom:15px;">
+                    کلیدهای API سایت رو از اینجا مدیریت کن. تغییرات فوری اعمال می‌شه.
+                </p>
+
+                <div class="form-group">
+                    <label>🔑 BrsApi Key (بورس و ارز و طلا)</label>
+                    <input type="text" id="setting_brs_api_key" placeholder="کلید API سایت BrsApi.ir" style="direction:ltr; text-align:left; font-family:monospace;">
+                    <small style="color:var(--gray); font-size:11px; display:block; margin-top:5px;">
+                        از <a href="https://brsapi.ir" target="_blank" style="color:var(--gold);">brsapi.ir</a> می‌تونی کلید رایگان بگیری
+                    </small>
+                </div>
+
+                <div class="modal-actions" style="justify-content:flex-start; margin-top:20px;">
+                    <button class="btn btn-primary" onclick="saveSettings()">💾 ذخیره تنظیمات</button>
+                    <button class="btn btn-secondary" onclick="loadSettings()">🔄 بازخوانی</button>
+                </div>
+
+                <div id="settingsStatus" style="margin-top:15px; font-size:12.5px;"></div>
+            </div>
+        </div>
+
     </div>
+</div>
 
-    <!-- ===== Toast ===== -->
-    <div id="toast" class="toast"></div>
+<!-- ===== Modal: Course ===== -->
+<div id="courseModal" class="modal-overlay">
+    <div class="modal">
+        <h2 id="courseModalTitle">➕ دوره جدید</h2>
+        <input type="hidden" id="courseId">
+        <div class="form-group">
+            <label>عنوان دوره *</label>
+            <input type="text" id="courseTitle">
+        </div>
+        <div class="form-group">
+            <label>توضیحات</label>
+            <textarea id="courseDesc" rows="3"></textarea>
+        </div>
+        <div class="form-row">
+            <div class="form-group">
+                <label>آیکون (ایموجی)</label>
+                <input type="text" id="courseIcon" placeholder="📚">
+            </div>
+            <div class="form-group">
+                <label>سطح</label>
+                <select id="courseLevel">
+                    <option value="مبتدی">مبتدی</option>
+                    <option value="متوسط">متوسط</option>
+                    <option value="پیشرفته">پیشرفته</option>
+                </select>
+            </div>
+        </div>
+        <div class="modal-actions">
+            <button class="btn btn-secondary" onclick="closeModal('courseModal')">لغو</button>
+            <button class="btn btn-primary" onclick="saveCourse()">💾 ذخیره</button>
+        </div>
+    </div>
+</div>
 
+<!-- ===== Modal: Lesson ===== -->
+<div id="lessonModal" class="modal-overlay">
+    <div class="modal">
+        <h2 id="lessonModalTitle">➕ درس جدید</h2>
+        <input type="hidden" id="lessonId">
+        <div class="form-group">
+            <label>دوره مربوطه *</label>
+            <select id="lessonCourse"></select>
+        </div>
+        <div class="form-group">
+            <label>عنوان درس *</label>
+            <input type="text" id="lessonTitle">
+        </div>
+        <div class="form-group">
+            <label>محتوا (HTML قابل قبول)</label>
+            <textarea id="lessonContent" rows="5"></textarea>
+        </div>
+        <div class="form-row">
+            <div class="form-group">
+                <label>🎥 لینک ویدیو (اختیاری)</label>
+                <input type="text" id="lessonVideo" placeholder="https://...">
+            </div>
+            <div class="form-group">
+                <label>ترتیب</label>
+                <input type="number" id="lessonOrder" value="1">
+            </div>
+        </div>
+        <div class="form-group">
+            <label>🖼️ لینک تصویر (اختیاری)</label>
+            <input type="text" id="lessonImage" placeholder="files/image.jpg یا https://...">
+        </div>
+        <div class="form-group">
+            <label>📄 لینک PDF (اختیاری)</label>
+            <input type="text" id="lessonPdf" placeholder="files/lesson.pdf یا https://...">
+        </div>
+        <div class="form-row">
+            <div class="form-group">
+                <label>📝 لینک Word (اختیاری)</label>
+                <input type="text" id="lessonWord" placeholder="files/lesson.docx">
+            </div>
+            <div class="form-group">
+                <label>📊 لینک PowerPoint (اختیاری)</label>
+                <input type="text" id="lessonPowerpoint" placeholder="files/lesson.pptx">
+            </div>
+        </div>
+        <div class="form-group">
+            <label>📚 لینک جزوه (اختیاری)</label>
+            <input type="text" id="lessonNotes" placeholder="files/notes.pdf">
+        </div>
+        <div class="modal-actions">
+            <button class="btn btn-secondary" onclick="closeModal('lessonModal')">لغو</button>
+            <button class="btn btn-primary" onclick="saveLesson()">💾 ذخیره</button>
+        </div>
+    </div>
+</div>
+
+<!-- ===== Modal: Blog Post ===== -->
+<div id="blogModal" class="modal-overlay">
+    <div class="modal large">
+        <h2 id="blogModalTitle">➕ مقاله جدید</h2>
+        <input type="hidden" id="blogId">
+
+        <div class="form-row">
+            <div class="form-group">
+                <label>عنوان مقاله *</label>
+                <input type="text" id="blogTitle" placeholder="مثال: پرایس اکشن چیست؟" oninput="autoSlug()">
+            </div>
+            <div class="form-group">
+                <label>Slug (آدرس یکتا) *</label>
+                <input type="text" id="blogSlug" placeholder="what-is-price-action" style="direction:ltr; text-align:left;">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>خلاصه مقاله * <span style="color:var(--gray); font-weight:400;">(برای کارت مقاله)</span></label>
+            <textarea id="blogExcerpt" rows="2" placeholder="در این مقاله یاد می‌گیری..."></textarea>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group">
+                <label>دسته‌بندی *</label>
+                <select id="blogCategory">
+                    <option value="آموزش">📚 آموزش</option>
+                    <option value="تحلیل تکنیکال">📈 تحلیل تکنیکال</option>
+                    <option value="تحلیل بنیادی">🔬 تحلیل بنیادی</option>
+                    <option value="روانشناسی">🧠 روانشناسی بازار</option>
+                    <option value="ابزارها">🛠️ معرفی ابزارها</option>
+                    <option value="اخبار">📰 اخبار</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>زمان مطالعه (دقیقه)</label>
+                <input type="number" id="blogReadTime" value="5" min="1" max="120">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>برچسب‌ها <span style="color:var(--gray); font-weight:400;">(با کاما جدا کن)</span></label>
+            <input type="text" id="blogTags" placeholder="پرایس اکشن, تحلیل تکنیکال, مبتدی">
+        </div>
+
+        <div class="form-group">
+            <label>🖼️ لینک تصویر شاخص (اختیاری)</label>
+            <input type="text" id="blogCoverImage" placeholder="files/cover.jpg یا https://..." style="direction:ltr; text-align:left;">
+        </div>
+
+        <div class="form-group" style="display:flex; align-items:center; gap:10px; padding:12px; background:rgba(10,10,15,0.6); border-radius:10px;">
+            <input type="checkbox" id="blogFeatured" style="width:18px; height:18px; accent-color:var(--gold); cursor:pointer;">
+            <label for="blogFeatured" style="margin:0; cursor:pointer;">⭐ این مقاله ویژه باشد (در بالای صفحه نمایش داده شود)</label>
+        </div>
+
+        <div class="form-group">
+            <label>📝 متن مقاله (Markdown) *</label>
+            <div class="blog-editor">
+                <textarea id="blogContent" placeholder="# عنوان&#10;&#10;متن مقاله..." oninput="updatePreview()"></textarea>
+                <div class="blog-preview" id="blogPreview">
+                    <p style="color:var(--gray); text-align:center; padding-top:150px;">
+                        👁️ پیش‌نمایش اینجا نمایش داده می‌شود
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal-actions">
+            <button class="btn btn-secondary" onclick="closeModal('blogModal')">لغو</button>
+            <button class="btn btn-success" onclick="saveBlogPost('draft')">💾 ذخیره پیش‌نویس</button>
+            <button class="btn btn-primary" onclick="saveBlogPost('published')">🚀 انتشار</button>
+        </div>
+    </div>
+</div>
+
+<!-- ===== Modal: Analysis ===== -->
+<div id="analysisModal" class="modal-overlay">
+    <div class="modal large">
+        <h2 id="analysisModalTitle">➕ تحلیل جدید</h2>
+        <input type="hidden" id="analysisId">
+
+        <div class="form-row-3">
+            <div class="form-group">
+                <label>نوع تحلیل *</label>
+                <select id="analysisType">
+                    <option value="daily">🔥 تحلیل روزانه</option>
+                    <option value="weekly">📈 تحلیل هفتگی</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>تاریخ *</label>
+                <input type="date" id="analysisDate">
+            </div>
+            <div class="form-group">
+                <label>ساعت</label>
+                <input type="time" id="analysisTime">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>مدت اعتبار *</label>
+            <input type="text" id="analysisValidity" placeholder="مثال: تا پایان امروز / تا شنبه بعد">
+        </div>
+
+        <div class="form-row">
+            <div class="form-group">
+                <label>عنوان تحلیل *</label>
+                <input type="text" id="analysisTitle" placeholder="مثال: تحلیل بازار طلا و دلار" oninput="autoAnalysisSlug()">
+            </div>
+            <div class="form-group">
+                <label>Slug (آدرس یکتا) *</label>
+                <input type="text" id="analysisSlug" placeholder="gold-analysis-2026-06-29" style="direction:ltr; text-align:left;">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>خلاصه تحلیل * <span style="color:var(--gray); font-weight:400;">(برای کارت)</span></label>
+            <textarea id="analysisExcerpt" rows="2" placeholder="خلاصه کوتاه تحلیل..."></textarea>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group">
+                <label>🎯 سیگنال</label>
+                <select id="analysisSignal">
+                    <option value="">— بدون سیگنال —</option>
+                    <option value="up">🟢 صعودی</option>
+                    <option value="down">🔴 نزولی</option>
+                    <option value="neutral">⚪ خنثی</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>🖼️ لینک تصویر</label>
+                <input type="text" id="analysisCoverImage" placeholder="files/analysis.jpg" style="direction:ltr; text-align:left;">
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group">
+                <label>📏 حمایت (اختیاری)</label>
+                <input type="text" id="analysisSupport" placeholder="مثال: 24000000" inputmode="numeric">
+            </div>
+            <div class="form-group">
+                <label>📏 مقاومت (اختیاری)</label>
+                <input type="text" id="analysisResistance" placeholder="مثال: 25000000" inputmode="numeric">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>🏷️ برچسب‌ها <span style="color:var(--gray); font-weight:400;">(با کاما جدا کن)</span></label>
+            <input type="text" id="analysisTags" placeholder="طلا, دلار, بورس">
+        </div>
+
+        <div class="form-group">
+            <label>📝 متن تحلیل (Markdown) *</label>
+            <div class="blog-editor">
+                <textarea id="analysisContent" placeholder="# تحلیل..." oninput="updateAnalysisPreview()"></textarea>
+                <div class="blog-preview" id="analysisPreview">
+                    <p style="color:var(--gray); text-align:center; padding-top:150px;">
+                        👁️ پیش‌نمایش اینجا نمایش داده می‌شود
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal-actions">
+            <button class="btn btn-secondary" onclick="closeModal('analysisModal')">لغو</button>
+            <button class="btn btn-success" onclick="saveAnalysis('draft')">💾 ذخیره پیش‌نویس</button>
+            <button class="btn btn-primary" onclick="saveAnalysis('published')">🚀 انتشار</button>
+        </div>
+    </div>
+</div>
+
+<!-- ===== Modal: View Message ===== -->
+<div id="messageModal" class="modal-overlay">
+    <div class="modal">
+        <h2 id="messageModalTitle">📬 مشاهده پیام</h2>
+        <input type="hidden" id="viewMessageId">
+        <div id="messageDetailContent"></div>
+        <div class="modal-actions">
+            <button class="btn btn-secondary" onclick="closeModal('messageModal')">بستن</button>
+            <button class="btn btn-danger" onclick="deleteCurrentMessage()">🗑️ حذف پیام</button>
+        </div>
+    </div>
+</div>
+
+<!-- ===== Toast ===== -->
+<div id="toast" class="toast"></div> 
     <script src="supabase-config.js"></script>
+    <script>
+    // ==========================================
+    // تنظیمات - مدیریت کلیدهای API
+    // ==========================================
+    async function loadSettings() {
+        const status = document.getElementById('settingsStatus');
+        status.innerHTML = '⏳ در حال بارگذاری...';
+        status.style.color = 'var(--gray)';
+
+        try {
+            const { data, error } = await db
+                .from('app_settings')
+                .select('key, value')
+                .in('key', ['BRS_API_KEY']);
+
+            if (error) throw error;
+
+            const map = {};
+            (data || []).forEach(item => { map[item.key] = item.value; });
+
+            document.getElementById('setting_brs_api_key').value = map['BRS_API_KEY'] || '';
+
+            status.innerHTML = '✅ تنظیمات بارگذاری شد';
+            status.style.color = 'var(--green)';
+            setTimeout(() => { status.innerHTML = ''; }, 2000);
+        } catch (e) {
+            status.innerHTML = '❌ خطا: ' + e.message;
+            status.style.color = 'var(--red)';
+        }
+    }
+
+    async function saveSettings() {
+        const status = document.getElementById('settingsStatus');
+        const brsKey = document.getElementById('setting_brs_api_key').value.trim();
+
+        if (!brsKey) {
+            status.innerHTML = '❌ کلید BrsApi رو وارد کن';
+            status.style.color = 'var(--red)';
+            return;
+        }
+
+        status.innerHTML = '⏳ در حال ذخیره...';
+        status.style.color = 'var(--gray)';
+
+        try {
+            const { data: existing } = await db
+                .from('app_settings')
+                .select('id')
+                .eq('key', 'BRS_API_KEY')
+                .maybeSingle();
+
+            let error;
+            if (existing) {
+                ({ error } = await db
+                    .from('app_settings')
+                    .update({ value: brsKey, updated_at: new Date().toISOString() })
+                    .eq('key', 'BRS_API_KEY'));
+            } else {
+                ({ error } = await db
+                    .from('app_settings')
+                    .insert({ key: 'BRS_API_KEY', value: brsKey, description: 'کلید API سایت BrsApi.ir' }));
+            }
+
+            if (error) throw error;
+
+            // پاک کردن کش sessionStorage
+            sessionStorage.removeItem('api_BRS_API_KEY');
+
+            status.innerHTML = '✅ تنظیمات ذخیره شد. از این به بعد صفحه بورس از این کلید استفاده می‌کند.';
+            status.style.color = 'var(--green)';
+            setTimeout(() => { status.innerHTML = ''; }, 4000);
+        } catch (e) {
+            status.innerHTML = '❌ خطا: ' + e.message;
+            status.style.color = 'var(--red)';
+        }
+    }
+
+    // بارگذاری خودکار تنظیمات وقتی تب باز می‌شود
+    // صبر می‌کنیم تا admin.js لود بشه و switchTab رو override نمی‌کنیم
+    // به جاش از MutationObserver استفاده می‌کنیم
+    document.addEventListener('DOMContentLoaded', () => {
+        const settingsTab = document.getElementById('tab-settings');
+        if (settingsTab) {
+            const observer = new MutationObserver(() => {
+                if (settingsTab.classList.contains('active')) {
+                    loadSettings();
+                }
+            });
+            observer.observe(settingsTab, { attributes: true, attributeFilter: ['class'] });
+        }
+    });
+    </script>
     <script src="admin.js"></script>
 </body>
-</html>
+</html>    
