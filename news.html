@@ -22,7 +22,7 @@
         body {
             font-family: 'Vazirmatn', Tahoma, sans-serif;
             background-color: var(--bg-primary);
-            background-image: 
+            background-image:
                 radial-gradient(circle at 0% 0%, rgba(212, 175, 55, 0.08) 0%, transparent 40%),
                 radial-gradient(circle at 100% 100%, rgba(59, 130, 246, 0.06) 0%, transparent 40%),
                 linear-gradient(rgba(255, 255, 255, 0.015) 1px, transparent 1px),
@@ -39,7 +39,6 @@
             to { opacity: 1; transform: translateY(0); }
         }
         @keyframes spin { to { transform: rotate(360deg); } }
-
         .sn-navbar {
             position: fixed; top: 0; left: 0; right: 0;
             background: rgba(10, 10, 15, 0.92);
@@ -55,46 +54,25 @@
             width: 42px; height: 42px; border-radius: 12px;
             background: rgba(212, 175, 55, 0.08);
             border: 1px solid rgba(212, 175, 55, 0.25);
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-            gap: 4px; cursor: pointer; padding: 0; flex-shrink: 0;
+            display: flex; flex-direction: column; align-items: center;
+            justify-content: center; gap: 4px; cursor: pointer; padding: 0; flex-shrink: 0;
         }
         .sn-hamburger:hover { background: rgba(212, 175, 55, 0.2); }
         .sn-hamburger span { display: block; width: 18px; height: 2px; background: var(--gold); border-radius: 2px; }
-        .sn-brand {
-            display: flex; align-items: center; gap: 10px;
-            text-decoration: none; justify-content: center;
-        }
-        .sn-brand-logo {
-            width: 38px; height: 38px; border-radius: 50%;
-            border: 2px solid var(--gold); object-fit: cover;
-        }
+        .sn-brand { display: flex; align-items: center; gap: 10px; text-decoration: none; justify-content: center; }
+        .sn-brand-logo { width: 38px; height: 38px; border-radius: 50%; border: 2px solid var(--gold); object-fit: cover; }
         .sn-brand-text { color: var(--gold); font-size: 17px; font-weight: 800; }
-        
-        /* دکمه دانش‌نامه */
         .dict-btn {
             display: flex; align-items: center; gap: 6px;
             padding: 8px 14px;
             background: linear-gradient(135deg, rgba(212, 175, 55, 0.15), rgba(212, 175, 55, 0.05));
             border: 1px solid rgba(212, 175, 55, 0.35);
-            border-radius: 12px;
-            color: var(--gold);
-            font-size: 13px; font-weight: 700;
-            text-decoration: none;
-            font-family: inherit;
-            white-space: nowrap;
-            transition: 0.3s;
-            flex-shrink: 0;
+            border-radius: 12px; color: var(--gold);
+            font-size: 13px; font-weight: 700; text-decoration: none;
+            font-family: inherit; white-space: nowrap; transition: 0.3s; flex-shrink: 0;
         }
-        .dict-btn:hover {
-            background: linear-gradient(135deg, var(--gold), var(--gold-dark));
-            color: var(--bg-primary);
-            box-shadow: 0 5px 20px rgba(212, 175, 55, 0.3);
-        }
-
-        .sn-user-area {
-            display: flex; align-items: center; gap: 10px;
-            min-width: 42px; justify-content: flex-end; flex-shrink: 0;
-        }
+        .dict-btn:hover { background: linear-gradient(135deg, var(--gold), var(--gold-dark)); color: var(--bg-primary); box-shadow: 0 5px 20px rgba(212, 175, 55, 0.3); }
+        .sn-user-area { display: flex; align-items: center; gap: 10px; min-width: 42px; justify-content: flex-end; flex-shrink: 0; }
         .sn-user-avatar {
             width: 42px; height: 42px; border-radius: 50%;
             background: linear-gradient(135deg, var(--gold), var(--gold-dark));
@@ -132,9 +110,8 @@
         .sn-menu-section { display: flex; flex-direction: column; gap: 4px; }
         .sn-menu-item {
             display: flex; align-items: center; gap: 12px;
-            padding: 12px 14px; border-radius: 12px;
-            text-decoration: none; color: #cbd5e1;
-            font-size: 14px; font-weight: 600;
+            padding: 12px 14px; border-radius: 12px; text-decoration: none;
+            color: #cbd5e1; font-size: 14px; font-weight: 600;
             transition: 0.25s; border: 1px solid transparent;
         }
         .sn-menu-item:hover {
@@ -149,7 +126,6 @@
         .sn-menu-label { flex: 1; }
         .sn-menu-divider { height: 1px; background: rgba(212, 175, 55, 0.15); margin: 15px 0; }
         .sn-logout { color: #f87171 !important; }
-
         .main-container { max-width: 1200px; margin: 0 auto; padding: 100px 20px 40px; }
         .page-header { text-align: center; margin-bottom: 30px; animation: fadeInUp 0.6s ease-out; }
         .page-header h1 {
@@ -159,13 +135,13 @@
             background-clip: text;
         }
         .page-header p { color: var(--gray); font-size: 14px; }
-
         .news-tabs {
             display: flex; gap: 8px; margin-bottom: 25px;
             overflow-x: auto; padding-bottom: 8px; scrollbar-width: thin;
         }
         .news-tab {
-            padding: 12px 20px; background: rgba(20, 20, 28, 0.6);
+            padding: 12px 20px;
+            background: rgba(20, 20, 28, 0.6);
             border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: 12px; color: var(--gray);
             font-size: 13px; font-weight: 700; font-family: inherit;
@@ -177,10 +153,8 @@
             color: var(--bg-primary); border-color: var(--gold);
             box-shadow: 0 5px 20px rgba(212, 175, 55, 0.3);
         }
-
         .news-section { display: none; }
         .news-section.active { display: block; animation: fadeInUp 0.4s ease-out; }
-
         .news-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
@@ -189,12 +163,13 @@
         .news-card {
             background: linear-gradient(135deg, var(--bg-card), var(--bg-secondary));
             border: 1px solid rgba(212, 175, 55, 0.15);
-            border-radius: 18px; overflow: hidden; transition: 0.3s;
-            text-decoration: none; color: inherit;
-            display: flex; flex-direction: column;
+            border-radius: 18px; overflow: hidden;
+            transition: 0.3s; text-decoration: none;
+            color: inherit; display: flex; flex-direction: column;
         }
         .news-card:hover {
-            transform: translateY(-5px); border-color: rgba(212, 175, 55, 0.4);
+            transform: translateY(-5px);
+            border-color: rgba(212, 175, 55, 0.4);
             box-shadow: 0 15px 40px rgba(212, 175, 55, 0.15);
         }
         .news-image {
@@ -207,21 +182,17 @@
         .news-content { padding: 18px; flex: 1; display: flex; flex-direction: column; }
         .news-meta {
             display: flex; align-items: center; gap: 10px;
-            margin-bottom: 10px; font-size: 11px; color: var(--gray);
-            flex-wrap: wrap;
+            margin-bottom: 10px; font-size: 11px; color: var(--gray); flex-wrap: wrap;
         }
         .news-meta .source {
             padding: 3px 10px; border-radius: 10px; font-weight: 700;
             background: rgba(212, 175, 55, 0.15); color: var(--gold);
         }
         .news-meta .date { display: flex; align-items: center; gap: 4px; }
-        .news-title {
-            color: var(--white); font-size: 15px; font-weight: 800;
-            line-height: 1.6; margin-bottom: 10px;
-        }
+        .news-title { color: var(--white); font-size: 15px; font-weight: 800; line-height: 1.6; margin-bottom: 10px; }
         .news-desc {
-            color: var(--gray); font-size: 13px; line-height: 1.7; flex: 1;
-            display: -webkit-box; -webkit-line-clamp: 3;
+            color: var(--gray); font-size: 13px; line-height: 1.7;
+            flex: 1; display: -webkit-box; -webkit-line-clamp: 3;
             -webkit-box-orient: vertical; overflow: hidden;
         }
         .news-footer {
@@ -232,22 +203,17 @@
         }
         .news-category { color: var(--gold); font-weight: 700; }
         .news-read-more { color: var(--gold); font-weight: 700; }
-        .loading {
-            text-align: center; padding: 60px 20px;
-            color: var(--gray); grid-column: 1 / -1;
-        }
+        .loading { text-align: center; padding: 60px 20px; color: var(--gray); grid-column: 1 / -1; }
         .spinner {
             width: 40px; height: 40px;
             border: 4px solid rgba(212, 175, 55, 0.2);
-            border-top-color: var(--gold); border-radius: 50%;
-            animation: spin 1s linear infinite; margin: 0 auto 15px;
+            border-top-color: var(--gold);
+            border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto 15px;
         }
         .footer {
-            text-align: center; padding: 30px 20px;
-            color: var(--gray); font-size: 12px;
-            border-top: 1px solid rgba(212, 175, 55, 0.1); margin-top: 40px;
+            text-align: center; padding: 30px 20px; color: var(--gray);
+            font-size: 12px; border-top: 1px solid rgba(212, 175, 55, 0.1); margin-top: 40px;
         }
-
         @media (max-width: 700px) {
             .main-container { padding: 90px 15px 30px; }
             .page-header h1 { font-size: 26px; }
@@ -281,9 +247,7 @@
             <div class="sn-user-area" id="snUserArea"></div>
         </div>
     </nav>
-
     <div class="sn-overlay" id="snOverlay"></div>
-
     <aside class="sn-sidebar" id="snSidebar">
         <div class="sn-sidebar-header">
             <a href="index.html" class="sn-brand" style="justify-content:flex-start;">
@@ -311,13 +275,11 @@
             </div>
         </div>
     </aside>
-
     <div class="main-container">
         <div class="page-header">
             <h1>📰 اخبار اقتصادی</h1>
-            <p>اخبار زنده از ۱۶ منبع معتبر داخلی و بین‌المللی</p>
+            <p>اخبار زنده از منابع معتبر داخلی و بین‌المللی</p>
         </div>
-
         <div class="news-tabs">
             <button class="news-tab active" onclick="switchTab('all', this)">📰 همه</button>
             <button class="news-tab" onclick="switchTab('currency', this)">💵 ارز و طلا</button>
@@ -326,7 +288,6 @@
             <button class="news-tab" onclick="switchTab('economy', this)">🏦 اقتصاد کلان</button>
             <button class="news-tab" onclick="switchTab('global', this)">🌍 جهانی و فارکس</button>
         </div>
-
         <div class="news-section active" id="section-all">
             <div class="news-grid" id="newsGrid-all">
                 <div class="loading"><div class="spinner"></div>⏳ در حال دریافت اخبار...</div>
@@ -348,167 +309,195 @@
             <div class="news-grid" id="newsGrid-global"><div class="loading"><div class="spinner"></div>⏳</div></div>
         </div>
     </div>
-
     <footer class="footer">
         © ۱۴۰۵ آکادمی شمعدون | تمامی حقوق محفوظ است
     </footer>
-
     <script>
-        const ADMIN_EMAIL = 'beat.market.office@gmail.com';
-        const SUPABASE_URL = 'https://jcwwilatvstjrohvhtss.supabase.co';
-        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Impjd3dpbGF0dnN0anJvaHZodHNzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODk3MDY4NTYsImV4cCI6MjEwNTI4Mjg1Nn0.eUC89RJy6-60nNGrSeYeDADzLxz-kWTGy4DbNGVi6MM';
-        const EDGE_URL = 'https://jcwwilatvstjrohvhtss.supabase.co/functions/v1/bright-api';
+    const ADMIN_EMAIL = 'beat.market.office@gmail.com';
+    const SUPABASE_URL = 'https://jcwwilatvstjrohvhtss.supabase.co';
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Impjd3dpbGF0dnN0anJvaHZodHNzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODk3MDY4NTYsImV4cCI6MjEwNTI4Mjg1Nn0.eUC89RJy6-60nNGrSeYeDADzLxz-kWTGy4DbNGVi6MM';
+    const EDGE_URL = 'https://jcwwilatvstjrohvhtss.supabase.co/functions/v1/bright-api';
 
-        // ==========================================
-        // ۱۶ منبع فعال
-        // ==========================================
-        const SOURCES = [
-            { key: 'eghtesadonline', name: 'اقتصاد آنلاین', icon: '💼', rss: 'https://www.eghtesadonline.com/rss' },
-            { key: 'donya',         name: 'دنیای اقتصاد', icon: '🌍', rss: 'https://donya-e-eqtesad.com/rss' },
-            { key: 'shana',         name: 'شانا',         icon: '🛢️', rss: 'https://www.shana.ir/rss' },
-            { key: 'sedayebourse',  name: 'صدای بورس',    icon: '📢', rss: 'https://sedayebourse.ir/rss' },
-            { key: 'sedayebourse_crypto', name: 'صدای بورس کریپتو', icon: '🪙', rss: 'https://www.sedayebourse.ir/rss/tp/9059' },
-            { key: 'irasin',        name: 'ایراسین',       icon: '🏗️', rss: 'https://www.irasin.ir/rss/tp/23' },
-            { key: 'isna_eco',      name: 'ایسنا اقتصادی', icon: '📰', rss: 'https://www.isna.ir/rss/tp/34' },
-            { key: 'ibna',          name: 'ایبنا',         icon: '🏦', rss: 'https://www.ibna.ir/rss' },
-            { key: 'shada',         name: 'شادا',          icon: '🏛️', rss: 'http://shada.ir/rss/tp/14' },
-            { key: 'mehr_eco',      name: 'مهر اقتصاد',   icon: '🗞️', rss: 'https://www.mehrnews.com/rss/tp/25' },
-            { key: 'tejarat',       name: 'تجارت‌نیوز',   icon: '💹', rss: 'https://tejaratnews.com/rss' },
-            { key: 'khabaronline',  name: 'خبرآنلاین',    icon: '📰', rss: 'https://www.khabaronline.ir/rss/tp/51' },
-            { key: 'ilna',          name: 'ایلنا',         icon: '📋', rss: 'https://www.ilna.ir/rss' },
-            { key: 'forexlive',     name: 'ForexLive',     icon: '💱', rss: 'https://www.forexlive.com/feed/news' },
-            { key: 'coindesk',      name: 'CoinDesk',      icon: '🪙', rss: 'https://www.coindesk.com/arc/outboundfeeds/rss/?outputType=xml' },
-            { key: 'federalreserve',name: 'فدرال رزرو',   icon: '🇺🇸', rss: 'https://www.federalreserve.gov/feeds/press_all.xml' }
-        ];
+    // ==========================================
+    // منابع خبری تخصصی
+    // ==========================================
+    const SOURCES = [
+        // ===== فارسی - تخصصی =====
+        { key: 'sedayebourse', name: 'صدای بورس', icon: '📢', rss: 'https://www.sedayebourse.ir/rss/tp/9042', lang: 'fa' },
+        { key: 'sedayebourse_crypto', name: 'صدای بورس کریپتو', icon: '🪙', rss: 'https://www.sedayebourse.ir/rss/tp/9059', lang: 'fa' },
+        { key: 'shada_eco', name: 'شادا اقتصادی', icon: '🏛️', rss: 'http://shada.ir/rss/tp/14', lang: 'fa' },
+        { key: 'shada_bourse', name: 'شادا بورس', icon: '📈', rss: 'http://shada.ir/rss/tp/144', lang: 'fa' },
+        { key: 'irasin_eco', name: 'ایراسین اقتصاد', icon: '💼', rss: 'https://www.irasin.ir/rss/tp/23', lang: 'fa' },
+        { key: 'irasin_markets', name: 'ایراسین بازارها', icon: '📊', rss: 'https://www.irasin.ir/rss/tp/80', lang: 'fa' },
+        { key: 'shana_oil', name: 'شانا نفت', icon: '🛢️', rss: 'https://www.shana.ir/rss/tp/14', lang: 'fa' },
+        { key: 'shana_petro', name: 'شانا پتروشیمی', icon: '⚗️', rss: 'https://www.shana.ir/rss/tp/4', lang: 'fa' },
+        { key: 'ibena', name: 'ایبنا', icon: '🏦', rss: 'https://www.ibena.ir/rss', lang: 'fa' },
+        { key: 'cbi_news', name: 'بانک مرکزی', icon: '🇮🇷', rss: 'http://www.cbi.ir/rss', lang: 'fa' },
+        { key: 'tejarat', name: 'تجارت‌نیوز', icon: '💹', rss: 'https://tejaratnews.com/rss', lang: 'fa' },
 
-        let allArticles = [];
+        // ===== خارجی (ترجمه می‌شن) =====
+        { key: 'forexlive', name: 'ForexLive', icon: '💱', rss: 'https://www.forexlive.com/feed/news', lang: 'en' },
+        { key: 'coindesk', name: 'CoinDesk', icon: '🪙', rss: 'https://www.coindesk.com/arc/outboundfeeds/rss/?outputType=xml', lang: 'en' },
+        { key: 'federalreserve', name: 'فدرال رزرو', icon: '🇺🇸', rss: 'https://www.federalreserve.gov/feeds/press_all.xml', lang: 'en' }
+    ];
 
-        // ===== Navbar =====
-        function setupNavbar() {
-            const hamburger = document.getElementById('snHamburger');
-            const sidebar = document.getElementById('snSidebar');
-            const overlay = document.getElementById('snOverlay');
-            const closeBtn = document.getElementById('snClose');
-            hamburger.addEventListener('click', () => { sidebar.classList.add('show'); overlay.classList.add('show'); });
-            closeBtn.addEventListener('click', () => { sidebar.classList.remove('show'); overlay.classList.remove('show'); });
-            overlay.addEventListener('click', () => { sidebar.classList.remove('show'); overlay.classList.remove('show'); });
-            document.addEventListener('keydown', (e) => {
-                if (e.key === 'Escape') { sidebar.classList.remove('show'); overlay.classList.remove('show'); }
-            });
-        }
+    let allArticles = [];
 
-        async function checkUser() {
-            try {
-                const client = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-                const { data } = await client.auth.getSession();
-                const userArea = document.getElementById('snUserArea');
-                userArea.innerHTML = '';
-                if (data?.session?.user) {
-                    const user = data.session.user;
-                    const fullName = user.user_metadata?.full_name || user.email || 'کاربر';
-                    const firstLetter = fullName.charAt(0).toUpperCase();
-                    userArea.innerHTML = `<a href="dashboard.html" class="sn-user-avatar" title="${escapeHtml(fullName)}">${firstLetter}</a>`;
-                    if (user.email === ADMIN_EMAIL) {
-                        const adminLink = document.getElementById('snAdminLink');
-                        if (adminLink) adminLink.style.display = 'flex';
-                    }
-                    const logoutBtn = document.getElementById('snLogoutBtn');
-                    if (logoutBtn) {
-                        logoutBtn.style.display = 'flex';
-                        logoutBtn.addEventListener('click', async (e) => {
-                            e.preventDefault();
-                            if (confirm('می‌خوای خارج بشی؟')) {
-                                await client.auth.signOut();
-                                window.location.href = 'login.html';
-                            }
-                        });
-                    }
+    // ===== Navbar =====
+    function setupNavbar() {
+        const hamburger = document.getElementById('snHamburger');
+        const sidebar = document.getElementById('snSidebar');
+        const overlay = document.getElementById('snOverlay');
+        const closeBtn = document.getElementById('snClose');
+
+        hamburger.addEventListener('click', () => {
+            sidebar.classList.add('show');
+            overlay.classList.add('show');
+        });
+        closeBtn.addEventListener('click', () => {
+            sidebar.classList.remove('show');
+            overlay.classList.remove('show');
+        });
+        overlay.addEventListener('click', () => {
+            sidebar.classList.remove('show');
+            overlay.classList.remove('show');
+        });
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                sidebar.classList.remove('show');
+                overlay.classList.remove('show');
+            }
+        });
+    }
+
+    async function checkUser() {
+        try {
+            const client = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+            const { data } = await client.auth.getSession();
+            const userArea = document.getElementById('snUserArea');
+            userArea.innerHTML = '';
+
+            if (data?.session?.user) {
+                const user = data.session.user;
+                const fullName = user.user_metadata?.full_name || user.email || 'کاربر';
+                const firstLetter = fullName.charAt(0).toUpperCase();
+                userArea.innerHTML = `<a href="dashboard.html" class="sn-user-avatar" title="${escapeHtml(fullName)}">${firstLetter}</a>`;
+
+                if (user.email === ADMIN_EMAIL) {
+                    const adminLink = document.getElementById('snAdminLink');
+                    if (adminLink) adminLink.style.display = 'flex';
                 }
-            } catch (e) { console.log('Navbar error:', e); }
-        }
 
-        function escapeHtml(text) {
-            if (!text) return '';
-            const div = document.createElement('div');
-            div.textContent = text;
-            return div.innerHTML;
-        }
-
-        function formatDate(dateStr) {
-            try {
-                const d = new Date(dateStr);
-                if (isNaN(d.getTime())) return '';
-                const now = new Date();
-                const diff = Math.floor((now - d) / 1000 / 60);
-                if (diff < 1) return 'همین الان';
-                if (diff < 60) return `${diff} دقیقه پیش`;
-                if (diff < 1440) return `${Math.floor(diff / 60)} ساعت پیش`;
-                if (diff < 10080) return `${Math.floor(diff / 1440)} روز پیش`;
-                return new Intl.DateTimeFormat('fa-IR', { year: 'numeric', month: 'short', day: 'numeric' }).format(d);
-            } catch (e) { return ''; }
-        }
-
-        // ==========================================
-        // فیلتر سختگیرانه — اخبار غیراقتصادی حذف میشن
-        // ==========================================
-        const EXCLUDE_KEYWORDS = /ورزش|فوتبال|والیبال|بسکتبال|المپیک|بازیگر|سینما|فیلم|سریال|موسیقی|کنسرت|هنرمند|سلبریتی|حوادث|قتل|سرقت(?!رمزارز)|دزدی(?!رمزارز)|تصادف|آتش‌سوزی(?!پالایشگاه)|زلزله|سیل|جنگ|حمله|ترور|موشک|پهپاد|نظامی|ارتش|سپاه|وزیر|نماینده|مجلس|انتخابات|رئیس‌جمهور|سیاست|سیاسی|دیپلماسی|توافق هسته‌ای|برجام|تحریم(?!پولی|بانکی|اقتصادی)|سلامت|کرونا|بیماری|درمان|آموزش|مدرسه|دانشگاه|کنکور|هوا|آلودگی/;
-
-        // کلمات کلیدی که نشون میده خبر اقتصادیه
-        const ECON_KEYWORDS = /اقتصاد|بورس|سهام|شاخص|دلار|یورو|طلا|سکه|نقره|مس|فلز|ارز|نرخ|تورم|نقدینگی|بانک|بهره|بودجه|مالیات|صادرات|واردات|تولید|ناخالص|اشتغال|بیکاری|رکود|رشد|سیاست پولی|سیاست مالی|کسری|یارانه|تسهیلات|سود بانکی|gdp|نفت|پتروشیمی|گاز|اوپک|opec|فدرال|fed|فارکس|forex|کریپتو|crypto|بیت‌کوین|اتریوم|رمزارز|بلاکچین|ارز دیجیتال|سرمایه‌گذاری|معاملات|بازار|تجارت|شرکت|صندوق|اوراق|فرابورس|نماد|eps|p\/e|حق تقدم|valas|derivative|بازار سرمایه|سود|زیان|قیمت|ارزش|درآمد|هزینه|تسهیلات|وام|اعتبار|سپرده|پول|ریال|درهم|دینار|پوند|فرانک|بورس کالا|کالا|انرژی|برق|بنزین|گازوئیل|دیزل|زغال|سنگ آهن|فولاد|آلومینیوم|روی|سرب|قلع|نیکل/;
-
-        function categorizeNews(title, description, sourceKey) {
-            const text = (title + ' ' + description).toLowerCase();
-
-            // اول: بررسی حذف — اگه کلمه غیراقتصادی داشت و کلمه اقتصادی نداشت، حذف
-            const hasExclude = EXCLUDE_KEYWORDS.test(text);
-            const hasEcon = ECON_KEYWORDS.test(text);
-
-            // اگه کلمه غیراقتصادی داره و کلمه اقتصادی نداره → حذف
-            if (hasExclude && !hasEcon) return null;
-
-            // اگه هیچ کلمه اقتصادی نداره → حذف
-            if (!hasEcon) return null;
-
-            // ===== کریپتو (اولویت بالا) =====
-            if (text.match(/بیت\s?کوین|اتریوم|ارز\s?دیجیتال|رمزارز|بلاکچین|کریپتو|سولانا|ریپل|دوج\s?کوین|استیبل\s?کوین|تتر|ماینر|استخراج\s?رمزارز|کیف\s?پول\s?دیجیتال|نهنگ|whale|bitcoin|ethereum|crypto|blockchain|defi|nft|binance|coinbase|usdt|btc|eth/)) {
-                return 'crypto';
+                const logoutBtn = document.getElementById('snLogoutBtn');
+                if (logoutBtn) {
+                    logoutBtn.style.display = 'flex';
+                    logoutBtn.addEventListener('click', async (e) => {
+                        e.preventDefault();
+                        if (confirm('می‌خوای خارج بشی؟')) {
+                            await client.auth.signOut();
+                            window.location.href = 'login.html';
+                        }
+                    });
+                }
             }
+        } catch (e) { console.log('Navbar error:', e); }
+    }
 
-            // ===== ارز و طلا و فلزات =====
-            if (text.match(/قیمت\s?دلار|نرخ\s?دلار|قیمت\s?یورو|قیمت\s?طلا|قیمت\s?سکه|قیمت\s?نقره|قیمت\s?مس|بازار\s?ارز|بازار\s?طلا|صرافی|انس\s?طلا|انس\s?نقره|حباب\s?طلا|نرخ\s?ارز|دلار\s?آزاد|طلا\s?۱۸|سکه\s?امامی|سکه\s?بهار|نرخ\s?تتر|فلزات\s?اساسی|مس\s?داخلی|روی|آلومینیوم|فارکس|forex|xauusd|usd|eur|gbp|jpy|درهم|دینار|پوند|فرانک|سنگ\s?آهن|فولاد|آهن|میلگرد|شمش/)) {
-                return 'currency';
+    function escapeHtml(text) {
+        if (!text) return '';
+        const div = document.createElement('div');
+        div.textContent = text;
+        return div.innerHTML;
+    }
+
+    function formatDate(dateStr) {
+        try {
+            const d = new Date(dateStr);
+            if (isNaN(d.getTime())) return '';
+            const now = new Date();
+            const diff = Math.floor((now - d) / 1000 / 60);
+            if (diff < 1) return 'همین الان';
+            if (diff < 60) return `${diff} دقیقه پیش`;
+            if (diff < 1440) return `${Math.floor(diff / 60)} ساعت پیش`;
+            if (diff < 10080) return `${Math.floor(diff / 1440)} روز پیش`;
+            return new Intl.DateTimeFormat('fa-IR', { year: 'numeric', month: 'short', day: 'numeric' }).format(d);
+        } catch (e) { return ''; }
+    }
+
+    // ==========================================
+    // ترجمه با MyMemory (رایگان، بدون تحریم)
+    // ==========================================
+    async function translateToPersian(text) {
+        if (!text || text.length < 3) return text;
+        if (/[\u0600-\u06FF]/.test(text)) return text;
+
+        const cacheKey = 'trans_' + btoa(unescape(encodeURIComponent(text.substring(0, 80))));
+        const cached = sessionStorage.getItem(cacheKey);
+        if (cached) return cached;
+
+        try {
+            const textToTranslate = text.substring(0, 500);
+            const url = `https://api.mymemory.translated.net/get?q=${encodeURIComponent(textToTranslate)}&langpair=en|fa`;
+            const res = await fetch(url);
+            const data = await res.json();
+
+            if (data.responseData && data.responseData.translatedText) {
+                const translated = data.responseData.translatedText;
+                sessionStorage.setItem(cacheKey, translated);
+                return translated;
             }
-
-            // ===== بورس =====
-            if (text.match(/بورس|سهام|شاخص\s?کل|فرابورس|تالار\s?شیشه|حق\s?تقدم|معاملات\s?سهام|بازار\s?سرمایه|سود\s?سهام|eps|p\/e|نماد\s?بورس|شاخص\s?بورس|ارزش\s?معاملات|tedpix|بورس\s?تهران|نماد|صندوق|اوراق|سهامدار/)) {
-                return 'bourse';
-            }
-
-            // ===== اقتصاد کلان =====
-            if (text.match(/اقتصاد\s?کلان|اقتصاد\s?خرد|تورم|نقدینگی|بانک\s?مرکزی|نرخ\s?بهره|بودجه|مالیات|صادرات|واردات|تولید\s?ناخالص|اشتغال|بیکاری|رکود|رشد\s?اقتصادی|سیاست\s?پولی|سیاست\s?مالی|کسری\s?بودجه|یارانه|تسهیلات\s?بانکی|سود\s?بانکی|gdp|اقتصاد\s?ایران|وزیر\s?اقتصاد|نفت|پتروشیمی|گاز|اوپک|opec|بنزین|گازوئیل|سوخت|انرژی|برق|صنعت/)) {
-                return 'economy';
-            }
-
-            // ===== جهانی / فارکس =====
-            if (sourceKey === 'forexlive' || sourceKey === 'federalreserve') return 'global';
-            if (text.match(/فدرال\s?رزرو|فدرال|fed|bank\s?of|ترامپ|پاول|بازار\s?جهانی|اقتصاد\s?جهان|wall\s?street|داو\s?جونز|نزدک|s&p|بازارهای\s?جهانی/)) return 'global';
-
-            // اگه هیچ‌کدوم → پیش‌فرض اقتصاد
-            return 'economy';
+            return text;
+        } catch (e) {
+            console.error('Translate error:', e);
+            return text;
         }
+    }
 
-        function getCategoryLabel(cat) {
-            const labels = {
-                'crypto': '🪙 کریپتو',
-                'currency': '💵 ارز و فلزات',
-                'bourse': '📈 بورس',
-                'economy': '🏦 اقتصاد',
-                'global': '🌍 جهانی'
-            };
-            return labels[cat] || '📰 خبر';
-        }
+    // ==========================================
+    // فیلتر سختگیرانه اقتصادی
+    // ==========================================
 
-        // ==========================================
+    // کلمات ممنوع — اگه توی تیتر بود، ۱۰۰٪ حذف
+    const STRICT_EXCLUDE = /^(ورزشی|ورزش|فوتبال|والیبال|بسکتبال|کشتی|المپیک|قهرمانی|لیگ|باشگاه|تیم|مربی|بازیکن|گلزنی|پرسپولیس|استقلال|رئال|بارسلونا|سینما|فیلم|سریال|بازیگر|کارگردان|هنرمند|سلبریتی|موسیقی|کنسرت|آهنگ|آلبوم|حوادث|قتل|سرقت|دزدی|تصادف|آتش‌سوزی|زلزله|سیل|جنگ|حمله|ترور|موشک|پهپاد|نظامی|ارتش|سپاه|بازداشت|دادگاه|زندان|سیاسی|نماینده|مجلس|انتخابات|وزیر\s?خارجه|رئیس\s?جمهور|دیپلماسی|برجام|توافق\s?هسته‌ای|سلامت|کرونا|بیماری|درمان|دارو|بیمارستان|آموزش|مدرسه|دانشگاه|کنکور|دانش‌آموز|آلودگی|هوا|محیط\s?زیست|طبیعت|حیوانات|کودک|زنان|خانواده|طلاق|ازدواج|مهاجرت|پناهنده|گردشگری|توریست|سفر)/;
+
+    // کلمات کلیدی اقتصادی
+    const ECON_KEYWORDS = /اقتصاد|اقتصادی|بورس|سهام|شاخص|دلار|یورو|پوند|طلا|سکه|نقره|مس|فلز|ارز|نرخ|قیمت|تورم|نقدینگی|بانک|بهره|بودجه|مالیات|صادرات|واردات|تولید|ناخالص|اشتغال|بیکاری|رکود|رشد|کسری|یارانه|تسهیلات|وام|اعتبار|سپرده|ریال|درهم|دینار|فرانک|سرمایه|سرمایه‌گذاری|معاملات|بازار|تجارت|شرکت|صندوق|اوراق|فرابورس|نماد|حق\s?تقدم|گواهی|نفت|پتروشیمی|گاز|اوپک|انرژی|برق|بنزین|گازوئیل|دیزل|زغال|سنگ\s?آهن|فولاد|آلومینیوم|روی|سرب|قلع|نیکل|صنعت|معدن|کشاورزی|مسکن|املاک|اجاره|رهن|gdp|opec|cpi|ppi|fomc|fed|ecb|bitcoin|ethereum|crypto|blockchain|defi|nft|forex|commodity|stock|market|oil|gold/i;
+
+    const CRYPTO_KEYWORDS = /بیت\s?کوین|اتریوم|ارز\s?دیجیتال|رمزارز|بلاکچین|کریپتو|سولانا|ریپل|دوج\s?کوین|استیبل\s?کوین|تتر|ماینر|استخراج|کیف\s?پول\s?دیجیتال|نهنگ|whale|bitcoin|ethereum|crypto|blockchain|defi|nft|binance|coinbase|usdt|btc|eth|sol|bnb|xrp/;
+
+    const CURRENCY_KEYWORDS = /قیمت\s?دلار|نرخ\s?دلار|قیمت\s?یورو|قیمت\s?طلا|قیمت\s?سکه|قیمت\s?نقره|قیمت\s?مس|بازار\s?ارز|بازار\s?طلا|صرافی|انس\s?طلا|انس\s?نقره|حباب\s?طلا|نرخ\s?ارز|دلار\s?آزاد|طلا\s?۱۸|سکه\s?امامی|سکه\s?بهار|نرخ\s?تتر|فلزات\s?اساسی|فارکس|forex|xauusd|usd|eur|gbp|jpy|درهم|دینار|پوند|فرانک|سنگ\s?آهن|میلگرد|شمش|نقره|پلاتین|پالادیوم/;
+
+    const BOURSE_KEYWORDS = /بورس|سهام|شاخص\s?کل|فرابورس|تالار\s?شیشه|حق\s?تقدم|معاملات\s?سهام|بازار\s?سرمایه|سود\s?سهام|eps|p\/e|نماد\s?بورس|شاخص\s?بورس|ارزش\s?معاملات|tedpix|بورس\s?تهران|سهامدار|صندوق|اوراق|نماد|کدال/;
+
+    function categorizeNews(title, description, sourceKey) {
+        const fullText = (title + ' ' + description).trim();
+        const lowerText = fullText.toLowerCase();
+
+        if (!title || title.length < 15) return null;
+        if (STRICT_EXCLUDE.test(title.trim())) return null;
+        if (STRICT_EXCLUDE.test(title) && !ECON_KEYWORDS.test(title)) return null;
+        if (!ECON_KEYWORDS.test(fullText)) return null;
+
+        if (CRYPTO_KEYWORDS.test(fullText)) return 'crypto';
+        if (CURRENCY_KEYWORDS.test(fullText)) return 'currency';
+        if (BOURSE_KEYWORDS.test(fullText)) return 'bourse';
+        if (sourceKey === 'forexlive' || sourceKey === 'federalreserve') return 'global';
+        if (lowerText.match(/فدرال\s?رزرو|فدرال|fed|bank\s?of|ترامپ|پاول|بازار\s?جهانی|wall\s?street|داو\s?جونز|نزدک|s&p/)) return 'global';
+
+        return 'economy';
+    }
+
+    function getCategoryLabel(cat) {
+        const labels = {
+            'crypto': '🪙 کریپتو',
+            'currency': '💵 ارز و فلزات',
+            'bourse': '📈 بورس',
+            'economy': '🏦 اقتصاد',
+            'global': '🌍 جهانی'
+        };
+        return labels[cat] || '📰 خبر';
+    }
+            // ==========================================
         // Parse RSS
         // ==========================================
         function parseRSS(xmlText, source) {
@@ -525,7 +514,6 @@
                     const link = item.querySelector('link')?.textContent || '';
                     const description = item.querySelector('description')?.textContent || '';
                     const pubDate = item.querySelector('pubDate')?.textContent || '';
-
                     const enclosure = item.querySelector('enclosure');
                     const mediaContent = item.getElementsByTagName('media:content')[0];
                     const mediaThumb = item.getElementsByTagName('media:thumbnail')[0];
@@ -533,7 +521,6 @@
 
                     if (title && link) {
                         const cat = categorizeNews(title, description, source.key);
-                        // فقط اگه economic بود
                         if (cat !== null) {
                             news.push({
                                 title: title.trim(),
@@ -544,14 +531,17 @@
                                 cat: cat,
                                 sourceKey: source.key,
                                 sourceName: source.name,
-                                sourceIcon: source.icon
+                                sourceIcon: source.icon,
+                                lang: source.lang
                             });
                         }
                     }
                 });
-
                 return news;
-            } catch (e) { console.error('Parse error:', e); return []; }
+            } catch (e) {
+                console.error('Parse error:', e);
+                return [];
+            }
         }
 
         // ==========================================
@@ -563,8 +553,25 @@
                 const res = await fetch(proxyUrl);
                 const data = await res.json();
                 if (!data.success || !data.data) return [];
-                const news = parseRSS(data.data, source);
-                console.log(`✅ ${source.name}: ${news.length} خبر اقتصادی`);
+
+                let news = parseRSS(data.data, source);
+
+                // اگه منبع انگلیسیه، ترجمه کن
+                if (source.lang === 'en' && news.length > 0) {
+                    news = await Promise.all(news.slice(0, 10).map(async (item) => {
+                        const [titleFa, descFa] = await Promise.all([
+                            translateToPersian(item.title),
+                            translateToPersian(item.description.substring(0, 300))
+                        ]);
+                        return {
+                            ...item,
+                            title: titleFa || item.title,
+                            description: descFa || item.description
+                        };
+                    }));
+                }
+
+                console.log(`✅ ${source.name}: ${news.length} خبر`);
                 return news;
             } catch (e) {
                 console.warn(`❌ ${source.name}: ${e.message}`);
@@ -582,7 +589,7 @@
             const results = await Promise.all(SOURCES.map(s => loadFromSource(s)));
             allArticles = results.flat();
 
-            // حذف تکراری‌ها (بر اساس عنوان)
+            // حذف تکراری‌ها
             const seen = new Set();
             allArticles = allArticles.filter(a => {
                 const key = a.title.substring(0, 50);
@@ -591,19 +598,19 @@
                 return true;
             });
 
-            // مرتب‌سازی بر اساس تاریخ
+            // مرتب‌سازی
             allArticles.sort((a, b) => {
                 const da = new Date(a.pubDate).getTime() || 0;
                 const db = new Date(b.pubDate).getTime() || 0;
                 return db - da;
             });
 
-            console.log(`📊 مجموع: ${allArticles.length} خبر اقتصادی`);
+            console.log(`📊 مجموع: ${allArticles.length} خبر`);
 
             if (allArticles.length === 0) {
                 grids.forEach(g => {
                     const el = document.getElementById('newsGrid-' + g);
-                    if (el) el.innerHTML = '<div class="loading">📭 خبر اقتصادی یافت نشد</div>';
+                    if (el) el.innerHTML = '<div class="loading">📭 خبری یافت نشد</div>';
                 });
                 return;
             }
@@ -619,13 +626,17 @@
         function renderNews(sectionId, list) {
             const grid = document.getElementById('newsGrid-' + sectionId);
             if (!grid) return;
+
             if (list.length === 0) {
                 grid.innerHTML = '<div class="loading">📭 خبری در این دسته یافت نشد</div>';
                 return;
             }
+
             grid.innerHTML = list.map((n, idx) => `
                 <a href="${escapeHtml(n.link)}" target="_blank" rel="noopener" class="news-card" style="animation: fadeInUp 0.4s ease-out ${Math.min(idx * 0.03, 1)}s backwards;">
-                    ${n.image ? `<div class="news-image"><img src="${escapeHtml(n.image)}" alt="" onerror="this.parentElement.innerHTML='${n.sourceIcon}'"></div>` : `<div class="news-image">${n.sourceIcon}</div>`}
+                    ${n.image
+                        ? `<div class="news-image"><img src="${escapeHtml(n.image)}" alt="" onerror="this.parentElement.innerHTML='${n.sourceIcon}'"></div>`
+                        : `<div class="news-image">${n.sourceIcon}</div>`}
                     <div class="news-content">
                         <div class="news-meta">
                             <span class="source">${n.sourceIcon} ${escapeHtml(n.sourceName)}</span>
@@ -658,4 +669,4 @@
         });
     </script>
 </body>
-</html>
+</html>    
