@@ -1293,12 +1293,12 @@
         arabicDigits.forEach((d, i) => { s = s.split(d).join(String(i)); });
         return s;
     } 
+    
     function toFa(num) {
-        if (num === null || num === undefined || isNaN(num)) return '--';
+        if (num === null || num === undefined) return '--';
         const persianDigits = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
         return String(num).replace(/\d/g, d => persianDigits[d]);
     }
-
     function formatBigNum(num) {
         if (num === null || num === undefined || isNaN(num)) return '--';
         const n = Number(num);
