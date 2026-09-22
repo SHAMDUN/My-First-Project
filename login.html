@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="fa" dir="rtl">
+<html lang="fa" dir="rtl" data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -20,12 +20,28 @@
             --white: #f8fafc;
             --gray: #94a3b8;
         }
+
+        /* ===== تم روز ===== */
+        [data-theme="light"] {
+            --bg-primary: #f8fafc;
+            --bg-secondary: #eef2f7;
+            --bg-card: #ffffff;
+            --gold: #b8860b;
+            --gold-light: #d4af37;
+            --gold-dark: #8b6508;
+            --blue: #2563eb;
+            --green: #059669;
+            --red: #dc2626;
+            --white: #0f172a;
+            --gray: #64748b;
+        }
+
         * { margin: 0; padding: 0; box-sizing: border-box; }
         html { scroll-behavior: smooth; }
         body {
             font-family: 'Vazirmatn', Tahoma, sans-serif;
             background-color: var(--bg-primary);
-            background-image: 
+            background-image:
                 radial-gradient(circle at 0% 0%, rgba(212, 175, 55, 0.08) 0%, transparent 40%),
                 radial-gradient(circle at 100% 100%, rgba(59, 130, 246, 0.06) 0%, transparent 40%),
                 linear-gradient(rgba(255, 255, 255, 0.015) 1px, transparent 1px),
@@ -37,7 +53,17 @@
             display: flex;
             flex-direction: column;
             overflow-x: hidden;
+            transition: background-color 0.3s, color 0.3s;
         }
+
+        [data-theme="light"] body {
+            background-image:
+                radial-gradient(circle at 0% 0%, rgba(184, 134, 11, 0.06) 0%, transparent 40%),
+                radial-gradient(circle at 100% 100%, rgba(37, 99, 235, 0.05) 0%, transparent 40%),
+                linear-gradient(rgba(0, 0, 0, 0.025) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 0, 0, 0.025) 1px, transparent 1px);
+        }
+
         @keyframes fadeInUp {
             from { opacity: 0; transform: translateY(30px); }
             to { opacity: 1; transform: translateY(0); }
@@ -490,6 +516,96 @@
             background: rgba(10, 10, 15, 0.5);
         }
 
+        /* ===================================================== */
+        /* 🌙 تم روشن - !important برای غلبه بر رنگ‌های hardcode */
+        /* ===================================================== */
+        [data-theme="light"] body {
+            background-color: #f8fafc !important;
+            color: #0f172a !important;
+        }
+        [data-theme="light"] .navbar {
+            background: rgba(248, 250, 252, 0.9) !important;
+            border-bottom-color: rgba(184, 134, 11, 0.2) !important;
+        }
+        [data-theme="light"] .nav-back {
+            color: #475569 !important;
+            border-color: rgba(184, 134, 11, 0.3) !important;
+        }
+        [data-theme="light"] .nav-back:hover {
+            color: #b8860b !important;
+            background: rgba(184, 134, 11, 0.1) !important;
+        }
+        [data-theme="light"] .nav-dict {
+            color: #b8860b !important;
+            background: linear-gradient(135deg, rgba(184, 134, 11, 0.15), rgba(184, 134, 11, 0.05)) !important;
+        }
+        [data-theme="light"] .nav-dict:hover {
+            color: #ffffff !important;
+        }
+        [data-theme="light"] .branding-title {
+            color: #0f172a !important;
+        }
+        [data-theme="light"] .branding-title .gold {
+            background: linear-gradient(135deg, #b8860b, #8b6508) !important;
+            -webkit-background-clip: text !important;
+            -webkit-text-fill-color: transparent !important;
+            background-clip: text !important;
+        }
+        [data-theme="light"] .branding-desc {
+            color: #475569 !important;
+        }
+        [data-theme="light"] .branding-features li {
+            color: #0f172a !important;
+        }
+        [data-theme="light"] .branding-stats {
+            background: rgba(255, 255, 255, 0.7) !important;
+        }
+        [data-theme="light"] .login-card {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.98), rgba(248, 250, 252, 0.98)) !important;
+            box-shadow: 0 25px 70px rgba(0, 0, 0, 0.1) !important;
+        }
+        [data-theme="light"] .form-tabs {
+            background: rgba(241, 245, 249, 0.8) !important;
+        }
+        [data-theme="light"] .tab {
+            color: #64748b !important;
+        }
+        [data-theme="light"] .tab.active {
+            color: #ffffff !important;
+        }
+        [data-theme="light"] .form-label {
+            color: #0f172a !important;
+        }
+        [data-theme="light"] .form-input {
+            background: #ffffff !important;
+            color: #0f172a !important;
+            border-color: rgba(0, 0, 0, 0.1) !important;
+        }
+        [data-theme="light"] .form-input:focus {
+            background: #ffffff !important;
+            border-color: #b8860b !important;
+        }
+        [data-theme="light"] .form-input::placeholder {
+            color: rgba(100, 116, 139, 0.5) !important;
+        }
+        [data-theme="light"] .toggle-password {
+            color: #64748b !important;
+        }
+        [data-theme="light"] .checkbox-wrapper {
+            background: rgba(241, 245, 249, 0.7) !important;
+            border-color: rgba(0, 0, 0, 0.08) !important;
+        }
+        [data-theme="light"] .checkbox-wrapper label {
+            color: #475569 !important;
+        }
+        [data-theme="light"] .forgot-link {
+            color: #64748b !important;
+        }
+        [data-theme="light"] .footer {
+            color: #64748b !important;
+            background: rgba(248, 250, 252, 0.5) !important;
+        }
+
         @media (max-width: 900px) {
             .main-container {
                 grid-template-columns: 1fr;
@@ -544,6 +660,9 @@
                     <span>⬅</span>
                     <span>بازگشت</span>
                 </a>
+                <button class="nav-back" id="snThemeBtn" aria-label="تغییر تم" title="تغییر تم" style="cursor:pointer;font-family:inherit;">
+                    <span id="snThemeIcon">🌙</span>
+                </button>
             </div>
         </div>
     </nav>
@@ -849,6 +968,37 @@
                 window.location.href = 'dashboard.html';
             }
         }
+
+        // ==========================================
+        // 🌙 تم شب/روز
+        // ==========================================
+        function applyTheme() {
+            const saved = localStorage.getItem('shamdun-theme') || 'dark';
+            document.documentElement.setAttribute('data-theme', saved);
+            const icon = document.getElementById('snThemeIcon');
+            if (icon) icon.textContent = saved === 'dark' ? '🌙' : '☀️';
+        }
+
+        function initThemeButton() {
+            const themeBtn = document.getElementById('snThemeBtn');
+            if (!themeBtn || themeBtn.hasAttribute('data-bound')) return;
+            themeBtn.setAttribute('data-bound', 'true');
+
+            themeBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                const current = document.documentElement.getAttribute('data-theme') || 'dark';
+                const newTheme = current === 'dark' ? 'light' : 'dark';
+                document.documentElement.setAttribute('data-theme', newTheme);
+                localStorage.setItem('shamdun-theme', newTheme);
+                const icon = document.getElementById('snThemeIcon');
+                if (icon) icon.textContent = newTheme === 'dark' ? '🌙' : '☀️';
+            });
+        }
+
+        applyTheme();
+        setTimeout(initThemeButton, 100);
+        setTimeout(initThemeButton, 500);
 
         document.addEventListener('DOMContentLoaded', () => {
             checkSession();
