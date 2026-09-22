@@ -1,11 +1,11 @@
 // ==========================================
 // Navbar مشترک - آکادمی شمعدون
-// نسخه نهایی - با Theme Toggle و Search
+// نسخه نهایی حرفه‌ای - با Theme Toggle و Search
 // ==========================================
 (function() {
     'use strict';
 
-    // ===== آیتم‌های منو (گروه‌بندی شده) =====
+    // ===== آیتم‌های منو =====
     const NAV_GROUPS = [
         {
             title: 'بازار و تحلیل',
@@ -45,70 +45,19 @@
 
     // ===== CSS =====
     const css = `
+        /* ===== Navbar Base (Dark Default) ===== */
         .sn-navbar {
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
-            background: var(--navbar-bg, rgba(10, 10, 15, 0.92));
+            background: rgba(10, 10, 15, 0.92);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
             border-bottom: 1px solid rgba(212, 175, 55, 0.15);
             z-index: 9998;
             padding: 12px 0;
-            transition: background 0.3s;
-        }
-            [data-theme="light"] .sn-navbar {
-            background: rgba(248, 250, 252, 0.95);
-            border-bottom-color: rgba(184, 134, 11, 0.2);
-        }
-        [data-theme="light"] .sn-action-btn,
-        [data-theme="light"] .sn-hamburger {
-            background: rgba(184, 134, 11, 0.1);
-            border-color: rgba(184, 134, 11, 0.3);
-        }
-        [data-theme="light"] .sn-brand-text,
-        [data-theme="light"] .sn-action-btn {
-            color: #b8860b;
-        }
-        [data-theme="light"] .sn-action-btn svg {
-            stroke: #b8860b;
-        }
-        [data-theme="light"] .sn-hamburger span {
-            background: #b8860b;
-        }
-        [data-theme="light"] .sn-dict-btn {
-            color: #b8860b;
-            border-color: rgba(184, 134, 11, 0.4);
-        }
-        [data-theme="light"] .sn-login-btn {
-            color: #b8860b;
-            border-color: rgba(184, 134, 11, 0.4);
-        }
-        [data-theme="light"] .sn-sidebar {
-            background: linear-gradient(180deg, #f1f5f9, #f8fafc);
-        }
-        [data-theme="light"] .sn-sidebar-header {
-            background: #f1f5f9;
-        }
-        [data-theme="light"] .sn-menu-item {
-            color: #334155;
-        }
-        [data-theme="light"] .sn-menu-item:hover {
-            background: rgba(184, 134, 11, 0.1);
-            color: #b8860b;
-        }
-        [data-theme="light"] .sn-search-box {
-            background: #ffffff;
-        }
-        [data-theme="light"] .sn-search-input {
-            color: #0f172a;
-        }
-        [data-theme="light"] .sn-search-result {
-            color: #0f172a;
-        }
-        [data-theme="light"] .sn-menu-group-title {
-            color: #64748b;
+            transition: background 0.3s, border-color 0.3s;
         }
         .sn-navbar-container {
             max-width: 1200px;
@@ -119,6 +68,97 @@
             align-items: center;
             gap: 10px;
         }
+
+        /* ===== Light Theme Overrides ===== */
+        [data-theme="light"] .sn-navbar {
+            background: rgba(248, 250, 252, 0.95) !important;
+            border-bottom-color: rgba(184, 134, 11, 0.2) !important;
+        }
+        [data-theme="light"] .sn-navbar-container {
+            color: #0f172a;
+        }
+        [data-theme="light"] .sn-brand-text {
+            color: #b8860b !important;
+        }
+        [data-theme="light"] .sn-hamburger {
+            background: rgba(184, 134, 11, 0.1) !important;
+            border-color: rgba(184, 134, 11, 0.3) !important;
+        }
+        [data-theme="light"] .sn-hamburger span {
+            background: #b8860b !important;
+        }
+        [data-theme="light"] .sn-dict-btn {
+            color: #b8860b !important;
+            background: linear-gradient(135deg, rgba(184, 134, 11, 0.15), rgba(184, 134, 11, 0.05)) !important;
+            border-color: rgba(184, 134, 11, 0.4) !important;
+        }
+        [data-theme="light"] .sn-action-btn {
+            color: #b8860b !important;
+            background: rgba(184, 134, 11, 0.1) !important;
+            border-color: rgba(184, 134, 11, 0.3) !important;
+        }
+        [data-theme="light"] .sn-action-btn svg {
+            stroke: #b8860b !important;
+        }
+        [data-theme="light"] .sn-login-btn {
+            color: #b8860b !important;
+            border-color: rgba(184, 134, 11, 0.4) !important;
+            background: rgba(184, 134, 11, 0.1) !important;
+        }
+        [data-theme="light"] .sn-user-avatar {
+            background: linear-gradient(135deg, #d4af37, #a8862a) !important;
+            color: #fff !important;
+        }
+
+        /* Sidebar Light */
+        [data-theme="light"] .sn-sidebar {
+            background: linear-gradient(180deg, #f1f5f9, #f8fafc) !important;
+            border-left-color: rgba(184, 134, 11, 0.3) !important;
+        }
+        [data-theme="light"] .sn-sidebar-header {
+            background: #f1f5f9 !important;
+            border-bottom-color: rgba(184, 134, 11, 0.2) !important;
+        }
+        [data-theme="light"] .sn-menu-group-title {
+            color: #64748b !important;
+        }
+        [data-theme="light"] .sn-menu-item {
+            color: #334155 !important;
+        }
+        [data-theme="light"] .sn-menu-item:hover {
+            background: rgba(184, 134, 11, 0.1) !important;
+            color: #b8860b !important;
+        }
+        [data-theme="light"] .sn-menu-item.active {
+            background: rgba(184, 134, 11, 0.15) !important;
+            color: #b8860b !important;
+        }
+        [data-theme="light"] .sn-menu-divider {
+            background: rgba(184, 134, 11, 0.2) !important;
+        }
+
+        /* Search Light */
+        [data-theme="light"] .sn-search-box {
+            background: #ffffff !important;
+            border-color: rgba(184, 134, 11, 0.3) !important;
+        }
+        [data-theme="light"] .sn-search-header {
+            border-bottom-color: rgba(0, 0, 0, 0.06) !important;
+        }
+        [data-theme="light"] .sn-search-input {
+            color: #0f172a !important;
+        }
+        [data-theme="light"] .sn-search-input::placeholder {
+            color: #94a3b8 !important;
+        }
+        [data-theme="light"] .sn-search-result {
+            color: #0f172a !important;
+        }
+        [data-theme="light"] .sn-search-empty {
+            color: #64748b !important;
+        }
+
+        /* ===== Base styles ===== */
         .sn-hamburger {
             width: 42px;
             height: 42px;
@@ -274,7 +314,7 @@
             background: linear-gradient(180deg, #14141c, #0a0a0f);
             border-left: 1px solid rgba(212, 175, 55, 0.2);
             z-index: 10000;
-            transition: right 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: right 0.35s cubic-bezier(0.4, 0, 0.2, 1), background 0.3s;
             overflow-y: auto;
             box-shadow: -10px 0 40px rgba(0, 0, 0, 0.5);
         }
@@ -291,6 +331,7 @@
             top: 0;
             background: #14141c;
             z-index: 2;
+            transition: background 0.3s;
         }
         .sn-close {
             background: rgba(239, 68, 68, 0.1);
@@ -408,6 +449,7 @@
             border-radius: 20px;
             overflow: hidden;
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            transition: background 0.3s;
         }
         .sn-search-header {
             display: flex;
@@ -498,79 +540,39 @@
             font-size: 11px;
             color: #94a3b8;
         }
-        .sn-search-section {
-            padding: 8px 14px 4px;
-            font-size: 11px;
-            font-weight: 800;
-            color: #64748b;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
         @media (max-width: 700px) {
-            .sn-sidebar {
-                width: 290px;
-                right: -310px;
-            }
-            .sn-sidebar.show {
-                right: 0;
-            }
-            .sn-brand-text {
-                display: none;
-            }
-            .sn-dict-btn {
-                padding: 8px 10px;
-                font-size: 12px;
-            }
-            .sn-dict-btn .sn-dict-text {
-                display: none;
-            }
+            .sn-sidebar { width: 290px; right: -310px; }
+            .sn-sidebar.show { right: 0; }
+            .sn-brand-text { display: none; }
+            .sn-dict-btn { padding: 8px 10px; font-size: 12px; }
+            .sn-dict-btn .sn-dict-text { display: none; }
         }
         @media (max-width: 500px) {
-            .sn-brand-logo {
-                width: 34px;
-                height: 34px;
-            }
-            .sn-hamburger {
-                width: 38px;
-                height: 38px;
-            }
-            .sn-action-btn {
-                width: 38px;
-                height: 38px;
-                font-size: 16px;
-            }
-            .sn-user-avatar {
-                width: 38px;
-                height: 38px;
-                font-size: 13px;
-            }
-            .sn-navbar-container {
-                padding: 0 12px;
-                gap: 6px;
-            }
-            .sn-login-btn {
-                padding: 8px 12px;
-                font-size: 11px;
-            }
-            .sn-search-box {
-                margin: 20px auto;
-            }
+            .sn-brand-logo { width: 34px; height: 34px; }
+            .sn-hamburger { width: 38px; height: 38px; }
+            .sn-action-btn { width: 38px; height: 38px; font-size: 16px; }
+            .sn-user-avatar { width: 38px; height: 38px; font-size: 13px; }
+            .sn-navbar-container { padding: 0 12px; gap: 6px; }
+            .sn-login-btn { padding: 8px 12px; font-size: 11px; }
+            .sn-search-box { margin: 20px auto; }
         }
     `;
 
     // ===== Theme System =====
-    function initTheme() {
-        const savedTheme = localStorage.getItem('shamdun-theme') || 'dark';
-        document.documentElement.setAttribute('data-theme', savedTheme);
-        updateThemeIcon(savedTheme);
+    function getStoredTheme() {
+        return localStorage.getItem('shamdun-theme') || 'dark';
+    }
+
+    function applyTheme(theme) {
+        document.documentElement.setAttribute('data-theme', theme);
+        localStorage.setItem('shamdun-theme', theme);
+        updateThemeIcon(theme);
     }
 
     function toggleTheme() {
         const current = document.documentElement.getAttribute('data-theme') || 'dark';
         const newTheme = current === 'dark' ? 'light' : 'dark';
-        document.documentElement.setAttribute('data-theme', newTheme);
-        localStorage.setItem('shamdun-theme', newTheme);
-        updateThemeIcon(newTheme);
+        applyTheme(newTheme);
     }
 
     function updateThemeIcon(theme) {
@@ -580,11 +582,14 @@
 
     // ===== ساخت Navbar =====
     function createNavbar() {
+        // ✅ قبل از ساخت navbar، تم رو اعمال کن
+        const savedTheme = getStoredTheme();
+        document.documentElement.setAttribute('data-theme', savedTheme);
+
         const styleEl = document.createElement('style');
         styleEl.textContent = css;
         document.head.appendChild(styleEl);
 
-        // گروه‌ها
         const groupsHTML = NAV_GROUPS.map(group => `
             <div class="sn-menu-group">
                 <div class="sn-menu-group-title">${group.title}</div>
@@ -622,7 +627,7 @@
                         </svg>
                     </button>
                     <button class="sn-action-btn" id="snThemeBtn" aria-label="تغییر تم" title="تغییر تم">
-                        <span id="snThemeIcon">🌙</span>
+                        <span id="snThemeIcon">${savedTheme === 'dark' ? '🌙' : '☀️'}</span>
                     </button>
                     <div class="sn-user-area" id="snUserArea">
                         <a href="login.html" class="sn-login-btn">ورود</a>
@@ -657,7 +662,6 @@
                     </div>
                 </div>
             </aside>
-            <!-- Search Modal -->
             <div class="sn-search-overlay" id="snSearchOverlay">
                 <div class="sn-search-box">
                     <div class="sn-search-header">
@@ -677,7 +681,7 @@
         document.body.insertAdjacentHTML('afterbegin', navbarHTML);
     }
 
-    // ===== باز/بسته کردن Sidebar =====
+    // ===== Sidebar =====
     function setupSidebar() {
         const hamburger = document.getElementById('snHamburger');
         const sidebar = document.getElementById('snSidebar');
@@ -703,7 +707,7 @@
         });
     }
 
-    // ===== Search System =====
+    // ===== Search =====
     const SEARCH_DATA = {
         articles: [
             { title: 'کریپتوکارنسی در ۱۴۰۵', url: 'blog-post.html?slug=crypto-1405-professional-strategies', icon: '📝', type: 'مقاله' },
@@ -811,27 +815,19 @@
         });
     }
 
-    // ===== Theme Button =====
+    // ===== Theme Button (بعد از ساخت navbar) =====
     function setupTheme() {
         const themeBtn = document.getElementById('snThemeBtn');
         if (!themeBtn) return;
-        
-        // ✅ Clone برای حذف listenerهای قبلی
+
+        // ✅ cloneNode برای حذف listenerهای قبلی
         const newBtn = themeBtn.cloneNode(true);
         themeBtn.parentNode.replaceChild(newBtn, themeBtn);
-        
+
         newBtn.addEventListener('click', function(e) {
             e.preventDefault();
             e.stopPropagation();
-            
-            const current = document.documentElement.getAttribute('data-theme') || 'dark';
-            const newTheme = current === 'dark' ? 'light' : 'dark';
-            
-            document.documentElement.setAttribute('data-theme', newTheme);
-            localStorage.setItem('shamdun-theme', newTheme);
-            
-            const icon = document.getElementById('snThemeIcon');
-            if (icon) icon.textContent = newTheme === 'dark' ? '🌙' : '☀️';
+            toggleTheme();
         });
     }
 
@@ -897,23 +893,29 @@
 
     // ===== راه‌اندازی =====
     function init() {
-        initTheme();
+        // ✅ ۱. اول تم رو اعمال کن
+        const savedTheme = getStoredTheme();
+        document.documentElement.setAttribute('data-theme', savedTheme);
+
+        // ✅ ۲. navbar رو بساز
         createNavbar();
+
+        // ✅ ۳. بقیه setup ها
         setupSidebar();
         setupSearch();
         highlightCurrentPage();
+
+        // ✅ ۴. دکمه تم (بلافاصله چون navbar ساخته شده)
+        setupTheme();
+
+        // ✅ ۵. آیکون رو هم چک کن
+        updateThemeIcon(savedTheme);
+
+        // ✅ ۶. کاربر
         setTimeout(checkUser, 200);
-        
-        // ✅ دکمه تم بعد از ساخته شدن navbar (با تأخیر بیشتر)
-        setTimeout(() => {
-            setupTheme();
-            // ✅ آیکون رو هم آپدیت کن
-            const saved = localStorage.getItem('shamdun-theme') || 'dark';
-            const icon = document.getElementById('snThemeIcon');
-            if (icon) icon.textContent = saved === 'dark' ? '🌙' : '☀️';
-        }, 300);
     }
 
+    // اجرا
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', init);
     } else {
