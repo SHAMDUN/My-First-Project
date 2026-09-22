@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="fa" dir="rtl">
+<html lang="fa" dir="rtl" data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -17,6 +17,16 @@
             --gold-dark: #a8862a;
             --white: #f8fafc;
             --gray: #94a3b8;
+        }
+            [data-theme="light"] {
+            --bg-primary: #f8fafc;
+            --bg-secondary: #eef2f7;
+            --bg-card: #ffffff;
+            --gold: #b8860b;
+            --gold-light: #d4af37;
+            --gold-dark: #8b6508;
+            --white: #0f172a;
+            --gray: #64748b;
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -244,7 +254,10 @@
                 <span>🎓</span>
                 <span>دانش‌نامه اقتصادی</span>
             </a>
-            <div class="sn-user-area" id="snUserArea"></div>
+            <button class="sn-action-btn" id="snThemeBtn" aria-label="تغییر تم" style="width:42px;height:42px;border-radius:12px;background:rgba(212,175,55,0.08);border:1px solid rgba(212,175,55,0.25);color:var(--gold);font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;">
+    <span id="snThemeIcon">🌙</span>
+</button>
+<div class="sn-user-area" id="snUserArea"></div>
         </div>
     </nav>
     <div class="sn-overlay" id="snOverlay"></div>
@@ -668,6 +681,47 @@
             await loadAllNews();
             setInterval(loadAllNews, 600000);
         });
+   // ==========================================
+        // 🌙 تم شب/روز
+        // ==========================================
+        function applyTheme() {
+            const saved = localStorage.getItem('shamdun-theme') || 'dark';
+            document.documentElement.setAttribute('data-theme', saved);
+            const icon = document.getElementById('snThemeIcon');
+            if (icon) icon.textContent = saved === 'dark' ? '🌙' : '☀️';
+        }
+
+        function initThemeButton() {
+            const btn = document.getElementById('snThemeBtn');
+            if (!btn) return false;
+            
+            const newBtn = btn.cloneNode(true);
+            btn.parentNode.replaceChild(newBtn, btn);
+            
+            newBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                
+                const current = document.documentElement.getAttribute('data-theme') || 'dark';
+                const newTheme = current === 'dark' ? 'light' : 'dark';
+                
+                document.documentElement.setAttribute('data-theme', newTheme);
+                localStorage.setItem('shamdun-theme', newTheme);
+                
+                const icon = document.getElementById('snThemeIcon');
+                if (icon) icon.textContent = newTheme === 'dark' ? '🌙' : '☀️';
+            });
+            
+            return true;
+        }
+
+        // اجرا بعد از لود کامل
+        setTimeout(applyTheme, 100);
+        setTimeout(() => {
+            if (!initThemeButton()) {
+                setTimeout(initThemeButton, 500);
+            }
+        }, 200);
     </script>
 </body>
-</html>    
+</html>
