@@ -3554,6 +3554,9 @@ ${d.assets.map(a => `  • ${a.label}: ${toFa(a.percent)}٪ (${formatNum(d.total
     }
 
     async function downloadPDF(type) {
+            alert('مرحله ۱: report ساخته شد');
+            alert('مرحله ۲: ' + JSON.stringify(report).slice(0, 100));
+            alert('مرحله ۳: ' + report.rows.length + ' ردیف');
         const btn = document.getElementById('pdf-btn-' + type);
         if (!btn) return;
 
@@ -3583,8 +3586,9 @@ ${d.assets.map(a => `  • ${a.label}: ${toFa(a.percent)}٪ (${formatNum(d.total
                     `;
                 }
             });
-
+            alert('مرحله ۴: قبل از پیست HTML');
             container.innerHTML = `
+                alert('مرحله ۵: HTML پیست شد، طول: ' + container.innerHTML.length);
                 <div style="background:linear-gradient(135deg,#d4af37,#a8862a); color:white; padding:20px; border-radius:16px; margin-bottom:20px; display:flex; align-items:center; gap:16px;">
                     <img src="${LOGO_URL}" alt="لوگو" crossorigin="anonymous" style="width:70px; height:70px; border-radius:50%; border:3px solid white; background:white; object-fit:contain;">
                     <div style="flex:1;">
@@ -3611,7 +3615,7 @@ ${d.assets.map(a => `  • ${a.label}: ${toFa(a.percent)}٪ (${formatNum(d.total
 
             // ✅ ظرف رو آشکار کن
             container.classList.add('capturing');
-
+            alert('مرحله ۶: capturing اضافه شد');
             // ✅ صبر کن تا لوگو لود بشه
             await new Promise(resolve => setTimeout(resolve, 500));
 
@@ -3641,6 +3645,7 @@ ${d.assets.map(a => `  • ${a.label}: ${toFa(a.percent)}٪ (${formatNum(d.total
 
         } catch (err) {
             console.error('PDF error:', err);
+            alert('خطا: ' + err.message);
             container.classList.remove('capturing');
             container.innerHTML = '';
             alert('خطا در ساخت PDF: ' + err.message);
