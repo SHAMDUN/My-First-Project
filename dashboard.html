@@ -1,11 +1,16 @@
 <!DOCTYPE html>
-<html lang="fa" dir="rtl">
+<html lang="fa" dir="rtl" data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>پنل کاربری | آکادمی شمعدون</title>
+    <title>نمای بازار | آکادمی شمعدون</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css">
+    <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#d4af37">
+    <link rel="apple-touch-icon" href="icon-192.png">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="شمعدون">
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <style>
         :root {
@@ -20,12 +25,35 @@
             --red: #ef4444;
             --white: #f8fafc;
             --gray: #94a3b8;
+            --border-subtle: rgba(255, 255, 255, 0.06);
+            --border-gold: rgba(212, 175, 55, 0.3);
+            --navbar-bg: rgba(10, 10, 15, 0.92);
         }
+
+        /* ===== تم روز ===== */
+        [data-theme="light"] {
+            --bg-primary: #f8fafc;
+            --bg-secondary: #eef2f7;
+            --bg-card: #ffffff;
+            --gold: #b8860b;
+            --gold-light: #d4af37;
+            --gold-dark: #8b6508;
+            --blue: #2563eb;
+            --green: #059669;
+            --red: #dc2626;
+            --white: #0f172a;
+            --gray: #64748b;
+            --border-subtle: rgba(0, 0, 0, 0.06);
+            --border-gold: rgba(184, 134, 11, 0.3);
+            --navbar-bg: rgba(248, 250, 252, 0.92);
+        }
+
         * { margin: 0; padding: 0; box-sizing: border-box; }
+
         body {
             font-family: 'Vazirmatn', Tahoma, sans-serif;
             background-color: var(--bg-primary);
-            background-image: 
+            background-image:
                 radial-gradient(circle at 0% 0%, rgba(212, 175, 55, 0.08) 0%, transparent 40%),
                 radial-gradient(circle at 100% 100%, rgba(59, 130, 246, 0.06) 0%, transparent 40%),
                 linear-gradient(rgba(255, 255, 255, 0.015) 1px, transparent 1px),
@@ -36,1012 +64,1581 @@
             min-height: 100vh;
             direction: rtl;
             overflow-x: hidden;
+            transition: background-color 0.3s, color 0.3s;
         }
+
+        [data-theme="light"] body {
+            background-image:
+                radial-gradient(circle at 0% 0%, rgba(184, 134, 11, 0.06) 0%, transparent 40%),
+                radial-gradient(circle at 100% 100%, rgba(37, 99, 235, 0.05) 0%, transparent 40%),
+                linear-gradient(rgba(0, 0, 0, 0.025) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 0, 0, 0.025) 1px, transparent 1px);
+        }
+
         @keyframes fadeInUp {
             from { opacity: 0; transform: translateY(30px); }
             to { opacity: 1; transform: translateY(0); }
         }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.3); }
+        }
+        @keyframes scrollTicker {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-33.33%); }
+        }
 
-        .main-container { max-width: 1200px; margin: 0 auto; padding: 100px 20px 40px; }
+        /* Ticker Bar */
+        .ticker-bar {
+            position: fixed;
+            top: 66px; left: 0; right: 0;
+            background: linear-gradient(90deg, rgba(20, 20, 28, 0.98), rgba(26, 26, 36, 0.98));
+            backdrop-filter: blur(10px);
+            color: var(--white);
+            padding: 8px 0;
+            overflow: hidden;
+            z-index: 9997;
+            border-bottom: 1px solid var(--border-gold);
+            transition: background 0.3s;
+        }
 
-        /* ============= Welcome Hero ============= */
-        .welcome-hero {
-            background: linear-gradient(135deg, rgba(212, 175, 55, 0.1), rgba(59, 130, 246, 0.05));
-            border: 1px solid rgba(212, 175, 55, 0.2);
-            border-radius: 20px;
-            padding: 25px 30px;
-            margin-bottom: 24px;
+        [data-theme="light"] .ticker-bar {
+            background: linear-gradient(90deg, rgba(248, 250, 252, 0.98), rgba(255, 255, 255, 0.98));
+        }
+
+        .ticker-content {
             display: flex;
-            justify-content: space-between;
+            gap: 40px;
+            animation: scrollTicker 60s linear infinite;
+            white-space: nowrap;
+            padding-left: 100%;
+        }
+        .ticker-item {
+            display: inline-flex;
             align-items: center;
-            flex-wrap: wrap;
-            gap: 15px;
+            gap: 8px;
+            font-size: 13px;
+            font-weight: 600;
+        }
+        .ticker-item .value {
+            color: var(--gold);
+        }
+        .ticker-item .change.up { color: var(--green); font-size: 11px; }
+        .ticker-item .change.down { color: var(--red); font-size: 11px; }
+
+        /* Main Container */
+        .main-container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 130px 20px 40px;
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 20px;
             animation: fadeInUp 0.6s ease-out;
         }
-        .welcome-text h1 {
-            color: var(--white);
-            font-size: 24px;
+        .page-header h1 {
+            font-size: 32px;
             font-weight: 900;
-            margin-bottom: 6px;
-        }
-        .welcome-text h1 .gold {
+            margin-bottom: 10px;
             background: linear-gradient(135deg, var(--gold), var(--gold-light));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
-        .welcome-text p { color: var(--gray); font-size: 13px; }
-        .welcome-streak {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            background: rgba(20, 20, 28, 0.8);
-            border: 1px solid rgba(239, 68, 68, 0.3);
-            border-radius: 15px;
-            padding: 12px 20px;
-        }
-        .streak-icon { font-size: 28px; }
-        .streak-info { text-align: right; }
-        .streak-value {
-            color: var(--gold);
-            font-size: 22px;
-            font-weight: 900;
-            line-height: 1;
-        }
-        .streak-label { color: var(--gray); font-size: 11px; margin-top: 3px; }
+        .page-header p { color: var(--gray); font-size: 14px; }
 
-        /* ============= Continue Card ============= */
-        .continue-card {
-            background: linear-gradient(135deg, var(--bg-card), var(--bg-secondary));
-            border: 1px solid rgba(59, 130, 246, 0.3);
-            border-radius: 20px;
-            padding: 25px;
-            margin-bottom: 24px;
-            box-shadow: 0 10px 40px rgba(59, 130, 246, 0.15);
-            animation: fadeInUp 0.6s ease-out 0.1s backwards;
-        }
-        .continue-header {
+        /* Quick Access */
+        .quick-access {
             display: flex;
-            align-items: center;
             gap: 10px;
-            margin-bottom: 18px;
+            margin-bottom: 20px;
+            animation: fadeInUp 0.6s ease-out 0.05s backwards;
+            flex-wrap: wrap;
         }
-        .continue-icon {
-            width: 42px; height: 42px;
-            border-radius: 12px;
-            background: linear-gradient(135deg, var(--blue), #2563eb);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 20px;
-        }
-        .continue-title { color: var(--white); font-size: 16px; font-weight: 800; }
-        .continue-subtitle { color: var(--gray); font-size: 11px; margin-top: 2px; }
-        .continue-body {
-            background: rgba(10, 10, 15, 0.5);
-            border-radius: 15px;
-            padding: 18px;
-            margin-bottom: 16px;
-        }
-        .continue-course-info {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            margin-bottom: 15px;
-        }
-        .continue-course-icon { font-size: 38px; }
-        .continue-course-details { flex: 1; }
-        .continue-course-name {
-            color: var(--white);
-            font-size: 16px;
-            font-weight: 800;
-            margin-bottom: 4px;
-        }
-        .continue-lesson-name { color: var(--gray); font-size: 12px; }
-        .continue-progress-bar {
-            width: 100%;
-            height: 8px;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 10px;
-            overflow: hidden;
-            margin-bottom: 8px;
-        }
-        .continue-progress-fill {
-            height: 100%;
-            background: linear-gradient(90deg, var(--blue), var(--gold));
-            border-radius: 10px;
-            transition: width 0.5s;
-        }
-        .continue-progress-info {
-            display: flex;
-            justify-content: space-between;
-            color: var(--gray);
-            font-size: 11px;
-        }
-        .continue-btn {
-            width: 100%;
-            padding: 15px;
-            border-radius: 12px;
-            background: linear-gradient(135deg, var(--blue), #2563eb);
-            color: #fff;
-            font-size: 15px;
-            font-weight: 800;
-            cursor: pointer;
-            font-family: inherit;
+        .quick-btn {
+            flex: 1;
+            min-width: 140px;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 8px;
+            padding: 12px 16px;
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.1), rgba(212, 175, 55, 0.03));
+            border: 1px solid var(--border-gold);
+            border-radius: 12px;
+            color: var(--gold);
+            font-size: 13px;
+            font-weight: 700;
             text-decoration: none;
-            border: none;
             transition: 0.3s;
+            font-family: inherit;
         }
-        .continue-btn:hover {
+        .quick-btn:hover {
+            background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+            color: var(--bg-primary);
             transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(59, 130, 246, 0.5);
+            box-shadow: 0 8px 25px rgba(212, 175, 55, 0.3);
+        }
+        .quick-btn .icon { font-size: 16px; }
+
+        /* Manager Card */
+        .manager-card {
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.08), rgba(59, 130, 246, 0.04));
+            border: 1px solid var(--border-gold);
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 20px;
+            display: flex;
+            gap: 18px;
+            align-items: center;
+            animation: fadeInUp 0.6s ease-out 0.1s backwards;
         }
 
-        /* ============= Stats Grid ============= */
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 15px;
-            margin-bottom: 24px;
+        [data-theme="light"] .manager-card {
+            background: linear-gradient(135deg, rgba(184, 134, 11, 0.06), rgba(37, 99, 235, 0.03));
+        }
+
+        .manager-avatar {
+            width: 75px; height: 75px;
+            border-radius: 50%;
+            border: 3px solid var(--gold);
+            object-fit: cover;
+            flex-shrink: 0;
+            box-shadow: 0 0 25px rgba(212, 175, 55, 0.3);
+            background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+        }
+        .manager-info { flex: 1; }
+        .manager-name {
+            color: var(--gold);
+            font-size: 16px;
+            font-weight: 800;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .manager-text {
+            color: var(--gray);
+            font-size: 13px;
+            line-height: 1.8;
+        }
+
+        /* Market Tabs */
+        .market-tabs {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 20px;
+            overflow-x: auto;
+            padding-bottom: 8px;
+            scrollbar-width: thin;
             animation: fadeInUp 0.6s ease-out 0.15s backwards;
         }
-        .stat-card {
+        .market-tabs::-webkit-scrollbar { height: 4px; }
+        .market-tabs::-webkit-scrollbar-thumb {
+            background: rgba(212, 175, 55, 0.3);
+            border-radius: 10px;
+        }
+        .market-tab {
+            padding: 10px 18px;
+            background: rgba(20, 20, 28, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            color: var(--gray);
+            font-size: 13px;
+            font-weight: 700;
+            font-family: inherit;
+            cursor: pointer;
+            transition: 0.3s;
+            white-space: nowrap;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        [data-theme="light"] .market-tab {
+            background: rgba(255, 255, 255, 0.6);
+            border-color: rgba(0, 0, 0, 0.08);
+        }
+
+        .market-tab:hover {
+            color: var(--gold);
+            border-color: rgba(212, 175, 55, 0.4);
+        }
+        .market-tab.active {
+            background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+            color: #fff;
+            border-color: var(--gold);
+            box-shadow: 0 5px 20px rgba(212, 175, 55, 0.3);
+        }
+
+        /* Price Sections */
+        .price-section { display: none; }
+        .price-section.active {
+            display: block;
+            animation: fadeInUp 0.4s ease-out;
+        }
+        .price-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+
+        .price-card {
             background: linear-gradient(135deg, var(--bg-card), var(--bg-secondary));
-            border: 1px solid rgba(212, 175, 55, 0.15);
-            border-radius: 18px;
-            padding: 20px;
-            text-align: center;
+            padding: 15px;
+            border-radius: 15px;
+            border-right: 4px solid var(--gold);
+            text-align: right;
             transition: 0.3s;
         }
-        .stat-card:hover {
-            transform: translateY(-5px);
-            border-color: rgba(212, 175, 55, 0.4);
-            box-shadow: 0 15px 40px rgba(212, 175, 55, 0.15);
-        }
-        .stat-icon { font-size: 32px; margin-bottom: 10px; }
-        .stat-value {
-            color: var(--gold);
-            font-size: 28px;
-            font-weight: 900;
-            margin-bottom: 5px;
-        }
-        .stat-label { color: var(--gray); font-size: 12px; }
 
-        /* ============= Section ============= */
-        .section {
+        [data-theme="light"] .price-card {
+            background: linear-gradient(135deg, #ffffff, #eef2f7);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
+        }
+
+        .price-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.15);
+        }
+
+        .price-card .label {
+            font-size: 11.5px;
+            color: var(--gray);
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .price-card .value {
+            font-size: 15px;
+            font-weight: 800;
+            color: var(--white);
+            font-variant-numeric: tabular-nums;
+        }
+        .price-card .change {
+            font-size: 11px;
+            margin-top: 6px;
+            font-weight: 700;
+        }
+        .price-card .change.up { color: var(--green); }
+        .price-card .change.down { color: var(--red); }
+        .price-card .bubble-inline {
+            font-size: 10.5px;
+            margin-top: 5px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .price-card .bubble-inline.up { color: var(--green); }
+        .price-card .bubble-inline.down { color: var(--red); }
+        .price-card .bubble-inline.neutral { color: var(--gray); }
+        .price-card .intrinsic-badge {
+            display: inline-block;
+            background: rgba(59, 130, 246, 0.15);
+            color: #60a5fa;
+            font-size: 9px;
+            padding: 2px 8px;
+            border-radius: 6px;
+            margin-top: 6px;
+            border: 1px solid rgba(59, 130, 246, 0.3);
+        }
+
+        /* Card colors */
+        .price-card.gold { border-right-color: #D4AF37; }
+        .price-card.gold24 { border-right-color: #FFD700; }
+        .price-card.melted { border-right-color: #B8860B; }
+        .price-card.coin { border-right-color: #FFA500; }
+        .price-card.ounce { border-right-color: #FFD700; }
+        .price-card.silver { border-right-color: #A8A8A8; }
+        .price-card.platinum { border-right-color: #E5E4E2; }
+        .price-card.palladium { border-right-color: #CED0DD; }
+        .price-card.copper { border-right-color: #B87333; }
+        .price-card.aluminum { border-right-color: #A8A9AD; }
+        .price-card.zinc { border-right-color: #8B8680; }
+        .price-card.lead { border-right-color: #6E6E6E; }
+        .price-card.nickel { border-right-color: #A9A9A9; }
+        .price-card.oil { border-right-color: #2F4F4F; }
+        .price-card.gas { border-right-color: #4682B4; }
+        .price-card.usd { border-right-color: #10b981; }
+        .price-card.eur { border-right-color: #3b82f6; }
+        .price-card.gbp { border-right-color: #8b5cf6; }
+        .price-card.crypto { border-right-color: #f7931a; }
+
+        /* Bubble Section */
+        .bubble-section {
             background: linear-gradient(135deg, var(--bg-card), var(--bg-secondary));
-            border: 1px solid rgba(212, 175, 55, 0.1);
+            border: 1px solid var(--border-subtle);
             border-radius: 20px;
             padding: 25px;
             margin-bottom: 24px;
             animation: fadeInUp 0.6s ease-out 0.2s backwards;
         }
-        .section-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-            padding-bottom: 15px;
-            border-bottom: 1px solid rgba(212, 175, 55, 0.15);
+
+        [data-theme="light"] .bubble-section {
+            background: linear-gradient(135deg, #ffffff, #eef2f7);
+            border-color: rgba(184, 134, 11, 0.15);
         }
+
         .section-title {
-            color: var(--white);
-            font-size: 16px;
-            font-weight: 800;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        .section-link {
-            color: var(--gold);
-            text-decoration: none;
-            font-size: 12px;
-            font-weight: 600;
-        }
-        .section-link:hover { text-decoration: underline; }
-
-        /* ============= Course Item ============= */
-        .course-item {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            padding: 15px;
-            background: rgba(10, 10, 15, 0.5);
-            border-radius: 15px;
-            margin-bottom: 12px;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            transition: 0.3s;
-        }
-        .course-item:last-child { margin-bottom: 0; }
-        .course-item:hover {
-            background: rgba(10, 10, 15, 0.8);
-            border-color: rgba(212, 175, 55, 0.3);
-            transform: translateX(-5px);
-        }
-        .course-item-icon {
-            width: 50px; height: 50px;
-            border-radius: 12px;
-            background: rgba(212, 175, 55, 0.15);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 24px;
-            flex-shrink: 0;
-        }
-        .course-item-info { flex: 1; }
-        .course-item-title {
-            color: var(--white);
-            font-size: 14px;
-            font-weight: 700;
-            margin-bottom: 8px;
-        }
-        .course-item-progress {
-            width: 100%;
-            height: 6px;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 10px;
-            overflow: hidden;
-        }
-        .course-item-progress-fill {
-            height: 100%;
-            background: linear-gradient(90deg, var(--gold), var(--gold-dark));
-            border-radius: 10px;
-        }
-        .course-item-percent {
-            color: var(--gold);
-            font-size: 14px;
-            font-weight: 800;
-            min-width: 50px;
-            text-align: left;
-        }
-        .course-item-percent.done { color: var(--green); }
-        .empty-state {
-            text-align: center;
-            padding: 30px 20px;
-            color: var(--gray);
-            font-size: 13px;
-        }
-        .empty-state a {
-            color: var(--gold);
-            text-decoration: none;
-            font-weight: 700;
-        }
-
-        /* ============= AI Suggestion ============= */
-        .ai-suggestion {
-            background: linear-gradient(135deg, rgba(212, 175, 55, 0.08), rgba(59, 130, 246, 0.05));
-            border: 1px solid rgba(212, 175, 55, 0.25);
-            border-radius: 18px;
-            padding: 20px;
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            margin-bottom: 24px;
-            animation: fadeInUp 0.6s ease-out 0.25s backwards;
-        }
-        .ai-suggestion-icon { font-size: 38px; flex-shrink: 0; }
-        .ai-suggestion-content { flex: 1; }
-        .ai-suggestion-title {
-            color: var(--gold);
-            font-size: 14px;
-            font-weight: 800;
-            margin-bottom: 6px;
-        }
-        .ai-suggestion-text {
-            color: var(--white);
-            font-size: 13px;
-            margin-bottom: 12px;
-            line-height: 1.7;
-        }
-        .ai-suggestion-btn {
-            display: inline-block;
-            background: linear-gradient(135deg, var(--gold), var(--gold-dark));
-            color: var(--bg-primary);
-            padding: 10px 20px;
-            border-radius: 10px;
-            text-decoration: none;
-            font-size: 12px;
-            font-weight: 800;
-            transition: 0.3s;
-        }
-        .ai-suggestion-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(212, 175, 55, 0.4);
-        }
-
-        /* ============= Achievements ============= */
-        .achievements-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 12px;
-        }
-        .achievement {
-            background: rgba(10, 10, 15, 0.5);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            border-radius: 12px;
-            padding: 15px 10px;
-            text-align: center;
-            transition: 0.3s;
-        }
-        .achievement.unlocked {
-            border-color: rgba(212, 175, 55, 0.4);
-            background: rgba(212, 175, 55, 0.05);
-        }
-        .achievement.locked { opacity: 0.4; }
-        .achievement-icon { font-size: 28px; margin-bottom: 8px; }
-        .achievement-title {
-            color: var(--white);
-            font-size: 11px;
-            font-weight: 700;
-            line-height: 1.4;
-        }
-
-        /* ============= Quick Links ============= */
-        .quick-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 10px;
-        }
-        .quick-link {
-            background: rgba(10, 10, 15, 0.5);
-            padding: 15px;
-            border-radius: 12px;
-            text-decoration: none;
-            color: var(--white);
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            transition: 0.3s;
-        }
-        .quick-link:hover {
-            background: rgba(10, 10, 15, 0.8);
-            border-color: rgba(212, 175, 55, 0.3);
-            transform: translateY(-3px);
-        }
-        .quick-link-icon { font-size: 22px; }
-        .quick-link-title { font-size: 13px; font-weight: 700; }
-
-        /* ============= Profile ============= */
-        .profile-card {
-            background: linear-gradient(135deg, var(--bg-card), var(--bg-secondary));
-            border: 1px solid rgba(212, 175, 55, 0.15);
-            border-radius: 20px;
-            padding: 25px;
-            margin-bottom: 24px;
-            animation: fadeInUp 0.6s ease-out 0.3s backwards;
-        }
-        .profile-header {
-            display: flex;
-            align-items: center;
-            gap: 18px;
-            margin-bottom: 20px;
-            padding-bottom: 20px;
-            border-bottom: 1px solid rgba(212, 175, 55, 0.15);
-        }
-        .profile-avatar {
-            width: 80px; height: 80px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, var(--gold), var(--gold-dark));
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 30px;
-            font-weight: 900;
-            color: var(--bg-primary);
-            border: 3px solid var(--gold);
-            box-shadow: 0 0 30px rgba(212, 175, 55, 0.4);
-            flex-shrink: 0;
-        }
-        .profile-info { flex: 1; min-width: 0; }
-        .profile-name {
             color: var(--white);
             font-size: 18px;
             font-weight: 800;
-            margin-bottom: 5px;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid var(--border-gold);
             display: flex;
             align-items: center;
             gap: 8px;
-            flex-wrap: wrap;
         }
-        .profile-email {
-            color: var(--gray);
-            font-size: 12px;
-            margin-bottom: 8px;
-            word-break: break-all;
+
+        .bubble-card {
+            background: rgba(10, 10, 15, 0.5);
+            padding: 18px;
+            border-radius: 15px;
+            border-right: 4px solid var(--gold);
+            text-align: right;
         }
-        .profile-badges { display: flex; gap: 6px; flex-wrap: wrap; }
-        .badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 4px;
-            background: rgba(212, 175, 55, 0.15);
+
+        [data-theme="light"] .bubble-card {
+            background: rgba(248, 250, 252, 0.8);
+        }
+
+        .bubble-card .title {
+            font-size: 14px;
             color: var(--gold);
-            font-size: 10px;
-            padding: 4px 10px;
-            border-radius: 12px;
-            border: 1px solid rgba(212, 175, 55, 0.3);
-            font-weight: 700;
-        }
-        .badge.admin {
-            background: rgba(220, 38, 38, 0.15);
-            color: #fca5a5;
-            border-color: rgba(220, 38, 38, 0.4);
-        }
-        .profile-actions { display: flex; gap: 10px; flex-wrap: wrap; }
-        .profile-btn {
-            flex: 1;
-            min-width: 130px;
-            padding: 12px 18px;
-            border-radius: 10px;
-            background: rgba(10, 10, 15, 0.6);
-            color: var(--white);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            font-family: inherit;
-            font-size: 13px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: 0.3s;
+            font-weight: 800;
+            margin-bottom: 12px;
             display: flex;
             align-items: center;
-            justify-content: center;
             gap: 6px;
-            text-decoration: none;
         }
-        .profile-btn:hover {
-            background: rgba(10, 10, 15, 0.9);
-            border-color: rgba(212, 175, 55, 0.4);
-            color: var(--gold);
-        }
-        .profile-btn.danger {
-            color: var(--red);
-            border-color: rgba(239, 68, 68, 0.3);
-        }
-        .profile-btn.danger:hover {
-            background: rgba(239, 68, 68, 0.1);
-            border-color: var(--red);
-            color: #fca5a5;
-        }
-
-        /* ============= Modal ============= */
-        .modal-overlay {
-            display: none;
-            position: fixed;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(0, 0, 0, 0.8);
-            backdrop-filter: blur(5px);
-            z-index: 9999;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-        }
-        .modal-overlay.show { display: flex; }
-        .modal {
-            background: var(--bg-card);
-            border: 1px solid rgba(212, 175, 55, 0.3);
-            padding: 25px;
-            border-radius: 20px;
-            max-width: 400px;
-            width: 100%;
-        }
-        .modal h3 {
-            color: var(--white);
-            font-size: 17px;
-            margin-bottom: 18px;
-            text-align: center;
-        }
-        .modal-input {
-            width: 100%;
-            padding: 13px 16px;
-            border-radius: 12px;
-            border: 2px solid rgba(255, 255, 255, 0.1);
-            background: rgba(10, 10, 15, 0.6);
-            color: var(--white);
-            font-size: 14px;
-            outline: none;
-            margin-bottom: 12px;
-            font-family: inherit;
-            transition: 0.3s;
-        }
-        .modal-input:focus {
-            border-color: var(--gold);
-            box-shadow: 0 0 0 4px rgba(212, 175, 55, 0.1);
-        }
-        .modal-buttons { display: flex; gap: 10px; margin-top: 18px; }
-        .modal-btn {
-            flex: 1;
-            padding: 12px;
-            border-radius: 10px;
-            border: none;
-            font-family: inherit;
+        .bubble-card .row {
+            display: flex;
+            justify-content: space-between;
+            padding: 6px 0;
             font-size: 13px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: 0.3s;
+            border-bottom: 1px dashed var(--border-subtle);
         }
-        .modal-btn.primary {
-            background: linear-gradient(135deg, var(--gold), var(--gold-dark));
-            color: var(--bg-primary);
-        }
-        .modal-btn.primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(212, 175, 55, 0.4);
-        }
-        .modal-btn.secondary {
-            background: rgba(10, 10, 15, 0.6);
-            color: var(--white);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-        .modal-btn.secondary:hover { background: rgba(10, 10, 15, 0.9); }
-        .message {
-            padding: 10px 14px;
-            border-radius: 10px;
-            margin-bottom: 12px;
-            font-size: 12px;
-            text-align: center;
-            display: none;
-        }
-        .message.success {
-            background: rgba(16, 185, 129, 0.15);
-            color: var(--green);
-            border: 1px solid rgba(16, 185, 129, 0.4);
-            display: block;
-        }
-        .message.error {
-            background: rgba(239, 68, 68, 0.15);
-            color: var(--red);
-            border: 1px solid rgba(239, 68, 68, 0.4);
-            display: block;
-        }
-        .loading {
-            text-align: center;
-            padding: 100px 20px;
-            color: var(--gray);
+        .bubble-card .row:last-child { border-bottom: none; }
+        .bubble-card .row .label { color: var(--gray); }
+        .bubble-card .row .value { font-weight: 700; color: var(--white); }
+        .bubble-value {
             font-size: 16px;
-        }
-        .footer {
+            font-weight: 800;
             text-align: center;
-            padding: 25px 20px;
-            color: var(--gray);
-            font-size: 12px;
-            border-top: 1px solid rgba(212, 175, 55, 0.1);
+            margin-top: 15px;
+            padding: 12px;
+            border-radius: 12px;
+            background: rgba(10, 10, 15, 0.6);
         }
-
-        /* ============= ریسپانسیو ============= */
-        @media (max-width: 900px) {
-            .stats-grid { gap: 10px; }
-            .stat-card { padding: 15px 10px; }
-            .stat-value { font-size: 22px; }
-            .achievements-grid { grid-template-columns: repeat(2, 1fr); }
-        }
-        @media (max-width: 600px) {
-            .main-container { padding: 90px 15px 30px; }
-            .welcome-hero { flex-direction: column; align-items: flex-start; padding: 20px; }
-            .welcome-text h1 { font-size: 20px; }
-            .stats-grid { grid-template-columns: 1fr; }
-            .quick-grid { grid-template-columns: 1fr; }
-            .profile-actions { flex-direction: column; }
-            .profile-header { flex-direction: column; text-align: center; }
-            .profile-name { justify-content: center; }
-        }
+        .bubble-positive { color: var(--green); }
+        .bubble-negative { color: var(--red); }
+        .bubble-neutral { color: var(--gray); }
     </style>
 </head>
 <body>
+<!-- Ticker Bar -->
+<div class="ticker-bar">
+    <div class="ticker-content" id="tickerContent">
+        <span class="ticker-item">⏳ در حال دریافت قیمت‌ها...</span>
+    </div>
+</div>
 
-    <!-- Main Content -->
-    <div class="main-container" id="content">
-        <div class="loading">⏳ در حال بارگذاری...</div>
+<!-- Main Container -->
+<div class="main-container">
+    <div class="page-header">
+        <h1>📊 نمای بازار</h1>
+        <p>قیمت‌های لحظه‌ای طلا، ارز، فلزات و انرژی</p>
     </div>
 
-    <!-- مودال ویرایش نام -->
-    <div class="modal-overlay" id="editNameModal">
-        <div class="modal">
-            <h3>✏️ ویرایش نام</h3>
-            <div class="message" id="editNameMsg"></div>
-            <input type="text" id="editNameInput" class="modal-input" placeholder="نام جدید">
-            <div class="modal-buttons">
-                <button class="modal-btn primary" onclick="saveName()">💾 ذخیره</button>
-                <button class="modal-btn secondary" onclick="closeModal('editNameModal')">لغو</button>
+    <div class="quick-access">
+        <a href="courses.html" class="quick-btn">
+            <span class="icon">📚</span>
+            دوره‌های آموزشی
+        </a>
+        <a href="personality-test.html" class="quick-btn">
+            <span class="icon">🧠</span>
+            تست شخصیت مالی
+        </a>
+        <a href="news.html" class="quick-btn">
+            <span class="icon">📰</span>
+            اخبار اقتصادی
+        </a>
+        <a href="dictionary.html" class="quick-btn">
+            <span class="icon">🎓</span>
+            دانش‌نامه
+        </a>
+    </div>
+
+    <div class="manager-card">
+        <img src="me.png" alt="مدیر آکادمی" class="manager-avatar" onerror="this.style.display='none'">
+        <div class="manager-info">
+            <div class="manager-name">👋 سلام! من مهدی‌ام، سازنده‌ی شمعدون</div>
+            <div class="manager-text">
+                این صفحه رو ساختم تا هر معامله‌گر ایرانی، بدون هزینه و بدون واسطه، به قیمت‌های لحظه‌ای و تحلیل‌های واقعی بازار دسترسی داشته باشه. اینجا با هم یاد می‌گیریم، تحلیل می‌کنیم و رشد می‌کنیم.
             </div>
         </div>
     </div>
 
-    <!-- مودال تغییر رمز -->
-    <div class="modal-overlay" id="changePassModal">
-        <div class="modal">
-            <h3>🔒 تغییر رمز عبور</h3>
-            <div class="message" id="changePassMsg"></div>
-            <input type="password" id="newPassword" class="modal-input" placeholder="رمز جدید (حداقل ۶ کاراکتر)">
-            <input type="password" id="confirmPassword" class="modal-input" placeholder="تکرار رمز جدید">
-            <div class="modal-buttons">
-                <button class="modal-btn primary" onclick="savePassword()">💾 ذخیره</button>
-                <button class="modal-btn secondary" onclick="closeModal('changePassModal')">لغو</button>
+    <div class="market-tabs">
+        <button class="market-tab active" onclick="switchMarket('gold', this)">🥇 طلا و سکه</button>
+        <button class="market-tab" onclick="switchMarket('currency', this)">💵 ارزها</button>
+        <button class="market-tab" onclick="switchMarket('precious', this)">🏅 فلزات گرانبها</button>
+        <button class="market-tab" onclick="switchMarket('base', this)">🟤 فلزات پایه</button>
+        <button class="market-tab" onclick="switchMarket('energy', this)">⚡ انرژی</button>
+        <button class="market-tab" onclick="switchMarket('crypto', this)">₿ ارز دیجیتال</button>
+    </div>
+
+    <!-- Gold Section -->
+    <div class="price-section active" id="section-gold">
+        <div class="price-grid">
+            <div class="price-card gold">
+                <div class="label">🥇 طلا ۱۸ عیار (گرم)</div>
+                <div class="value" id="gold18-price">--</div>
+                <div class="change" id="gold18-change">--</div>
+                <div class="bubble-inline" id="gold18-bubble"></div>
+            </div>
+            <div class="price-card gold24">
+                <div class="label">🥇 طلا ۲۴ عیار (گرم)</div>
+                <div class="value" id="gold24-price">--</div>
+                <div class="change" id="gold24-change">--</div>
+            </div>
+            <div class="price-card melted">
+                <div class="label">🟡 طلای آب‌شده (مثقال)</div>
+                <div class="value" id="melted-price">--</div>
+                <div class="change" id="melted-change">--</div>
+            </div>
+            <div class="price-card coin">
+                <div class="label">🪙 سکه امامی</div>
+                <div class="value" id="coin-emami-price">--</div>
+                <div class="change" id="coin-emami-change">--</div>
+                <div class="bubble-inline" id="coin-emami-bubble"></div>
+            </div>
+            <div class="price-card coin">
+                <div class="label">🏅 سکه بهار آزادی</div>
+                <div class="value" id="coin-bahar-price">--</div>
+                <div class="change" id="coin-bahar-change">--</div>
+                <div class="bubble-inline" id="coin-bahar-bubble"></div>
+            </div>
+            <div class="price-card coin">
+                <div class="label">🥈 نیم سکه</div>
+                <div class="value" id="coin-half-price">--</div>
+                <div class="change" id="coin-half-change">--</div>
+                <div class="bubble-inline" id="coin-half-bubble"></div>
+            </div>
+            <div class="price-card coin">
+                <div class="label">🥉 ربع سکه</div>
+                <div class="value" id="coin-quarter-price">--</div>
+                <div class="change" id="coin-quarter-change">--</div>
+                <div class="bubble-inline" id="coin-quarter-bubble"></div>
+            </div>
+            <div class="price-card coin">
+                <div class="label">⭕ سکه گرمی</div>
+                <div class="value" id="coin-1g-price">--</div>
+                <div class="change" id="coin-1g-change">--</div>
+                <div class="bubble-inline" id="coin-1g-bubble"></div>
             </div>
         </div>
     </div>
 
-    <footer class="footer">
-        © ۱۴۰۵ آکادمی شمعدون | تمامی حقوق محفوظ است
-    </footer>
+    <!-- Currency Section -->
+    <div class="price-section" id="section-currency">
+        <div class="price-grid">
+            <div class="price-card usd">
+                <div class="label">💵 دلار آمریکا</div>
+                <div class="value" id="usd-price">--</div>
+                <div class="change" id="usd-change">--</div>
+            </div>
+            <div class="price-card usd">
+                <div class="label">💚 دلار تتر</div>
+                <div class="value" id="usdt-price">--</div>
+                <div class="change" id="usdt-change">--</div>
+            </div>
+            <div class="price-card eur">
+                <div class="label">💶 یورو</div>
+                <div class="value" id="eur-price">--</div>
+                <div class="change" id="eur-change">--</div>
+            </div>
+            <div class="price-card gbp">
+                <div class="label">💷 پوند انگلیس</div>
+                <div class="value" id="gbp-price">--</div>
+                <div class="change" id="gbp-change">--</div>
+            </div>
+            <div class="price-card usd">
+                <div class="label">🇦🇪 درهم امارات</div>
+                <div class="value" id="aed-price">--</div>
+                <div class="change" id="aed-change">--</div>
+            </div>
+            <div class="price-card usd">
+                <div class="label">🇹🇷 لیر ترکیه</div>
+                <div class="value" id="try-price">--</div>
+                <div class="change" id="try-change">--</div>
+            </div>
+            <div class="price-card usd">
+                <div class="label">🇨🇳 یوان چین</div>
+                <div class="value" id="cny-price">--</div>
+                <div class="change" id="cny-change">--</div>
+            </div>
+            <div class="price-card usd">
+                <div class="label">🇨🇦 دلار کانادا</div>
+                <div class="value" id="cad-price">--</div>
+                <div class="change" id="cad-change">--</div>
+            </div>
+            <div class="price-card usd">
+                <div class="label">🇨🇭 فرانک سوئیس</div>
+                <div class="value" id="chf-price">--</div>
+                <div class="change" id="chf-change">--</div>
+            </div>
+            <div class="price-card usd">
+                <div class="label">🇯🇵 ین ژاپن (۱۰۰)</div>
+                <div class="value" id="jpy-price">--</div>
+                <div class="change" id="jpy-change">--</div>
+            </div>
+            <div class="price-card usd">
+                <div class="label">🇸🇦 ریال عربستان</div>
+                <div class="value" id="sar-price">--</div>
+                <div class="change" id="sar-change">--</div>
+            </div>
+            <div class="price-card usd">
+                <div class="label">🇶🇦 ریال قطر</div>
+                <div class="value" id="qar-price">--</div>
+                <div class="change" id="qar-change">--</div>
+            </div>
+        </div>
+    </div>
 
-    <script src="navbar.js"></script>
-    <script src="supabase-config.js"></script>
+    <!-- Precious Metals Section -->
+    <div class="price-section" id="section-precious">
+        <div class="price-grid">
+            <div class="price-card ounce">
+                <div class="label">🏅 انس طلا</div>
+                <div class="value" id="ounce-gold-price">--</div>
+                <div class="change" id="ounce-gold-change">--</div>
+            </div>
+            <div class="price-card silver">
+                <div class="label">🥈 انس نقره</div>
+                <div class="value" id="ounce-silver-price">--</div>
+                <div class="change" id="ounce-silver-change">--</div>
+            </div>
+            <div class="price-card platinum">
+                <div class="label">🔶 انس پلاتین</div>
+                <div class="value" id="ounce-platinum-price">--</div>
+                <div class="change" id="ounce-platinum-change">--</div>
+            </div>
+            <div class="price-card palladium">
+                <div class="label">💎 انس پالادیوم</div>
+                <div class="value" id="ounce-palladium-price">--</div>
+                <div class="change" id="ounce-palladium-change">--</div>
+            </div>
+            <div class="price-card platinum">
+                <div class="label">🔶 پلاتین (گرم)</div>
+                <div class="value" id="platinum-gram-price">--</div>
+                <div class="intrinsic-badge">قیمت ذاتی</div>
+            </div>
+            <div class="price-card palladium">
+                <div class="label">💎 پالادیوم (گرم)</div>
+                <div class="value" id="palladium-gram-price">--</div>
+                <div class="intrinsic-badge">قیمت ذاتی</div>
+            </div>
+        </div>
+    </div>
 
-    <script>
-        const staticCourses = {
-            1: { title: 'اقتصاد کلان و خرد', icon: '📊', lessons: 8 },
-            2: { title: 'آشنایی با بازارهای مالی', icon: '💹', lessons: 10 },
-            3: { title: 'مبانی تحلیل تکنیکال', icon: '📈', lessons: 12 },
-            4: { title: 'مدیریت ریسک مقدماتی', icon: '🛡️', lessons: 8 },
-            5: { title: 'آشنایی با ارز دیجیتال', icon: '₿', lessons: 10 }
+    <!-- Base Metals Section -->
+    <div class="price-section" id="section-base">
+        <div class="price-grid">
+            <div class="price-card copper">
+                <div class="label">🟤 مس (تن)</div>
+                <div class="value" id="copper-price">--</div>
+                <div class="change" id="copper-change">--</div>
+            </div>
+            <div class="price-card aluminum">
+                <div class="label">⚪ آلومینیوم (تن)</div>
+                <div class="value" id="aluminum-price">--</div>
+                <div class="change" id="aluminum-change">--</div>
+            </div>
+            <div class="price-card zinc">
+                <div class="label">🔘 روی (تن)</div>
+                <div class="value" id="zinc-price">--</div>
+                <div class="change" id="zinc-change">--</div>
+            </div>
+            <div class="price-card lead">
+                <div class="label">⚫ سرب (تن)</div>
+                <div class="value" id="lead-price">--</div>
+                <div class="change" id="lead-change">--</div>
+            </div>
+            <div class="price-card nickel">
+                <div class="label">🔩 نیکل (تن)</div>
+                <div class="value" id="nickel-price">--</div>
+                <div class="change" id="nickel-change">--</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Energy Section -->
+    <div class="price-section" id="section-energy">
+        <div class="price-grid">
+            <div class="price-card oil">
+                <div class="label">🛢️ نفت برنت</div>
+                <div class="value" id="brent-price">--</div>
+                <div class="change" id="brent-change">--</div>
+            </div>
+            <div class="price-card oil">
+                <div class="label">🛢️ نفت WTI</div>
+                <div class="value" id="wti-price">--</div>
+                <div class="change" id="wti-change">--</div>
+            </div>
+            <div class="price-card gas">
+                <div class="label">⚡ گاز طبیعی</div>
+                <div class="value" id="gas-price">--</div>
+                <div class="change" id="gas-change">--</div>
+            </div>
+            <div class="price-card gas">
+                <div class="label">⛽ بنزین</div>
+                <div class="value" id="rbob-price">--</div>
+                <div class="change" id="rbob-change">--</div>
+            </div>
+            <div class="price-card gas">
+                <div class="label">🛢️ گازوییل</div>
+                <div class="value" id="gasoil-price">--</div>
+                <div class="change" id="gasoil-change">--</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Crypto Section -->
+    <div class="price-section" id="section-crypto">
+        <div class="price-grid">
+            <div class="price-card crypto">
+                <div class="label">₿ بیت‌کوین</div>
+                <div class="value" id="btc-price">--</div>
+                <div class="change" id="btc-change">--</div>
+            </div>
+            <div class="price-card crypto">
+                <div class="label">⟠ اتریوم</div>
+                <div class="value" id="eth-price">--</div>
+                <div class="change" id="eth-change">--</div>
+            </div>
+            <div class="price-card crypto">
+                <div class="label">◎ سولانا</div>
+                <div class="value" id="sol-price">--</div>
+                <div class="change" id="sol-change">--</div>
+            </div>
+            <div class="price-card crypto">
+                <div class="label">🔷 ریپل</div>
+                <div class="value" id="xrp-price">--</div>
+                <div class="change" id="xrp-change">--</div>
+            </div>
+            <div class="price-card crypto">
+                <div class="label">🐕 دوج‌کوین</div>
+                <div class="value" id="doge-price">--</div>
+                <div class="change" id="doge-change">--</div>
+            </div>
+            <div class="price-card crypto">
+                <div class="label">🟣 کاردانو</div>
+                <div class="value" id="ada-price">--</div>
+                <div class="change" id="ada-change">--</div>
+            </div>
+            <div class="price-card crypto">
+                <div class="label">🔶 BNB</div>
+                <div class="value" id="bnb-price">--</div>
+                <div class="change" id="bnb-change">--</div>
+            </div>
+            <div class="price-card crypto">
+                <div class="label">🟢 ترون</div>
+                <div class="value" id="trx-price">--</div>
+                <div class="change" id="trx-change">--</div>
+            </div>
+            <div class="price-card crypto">
+                <div class="label">🔺 آوالانچ</div>
+                <div class="value" id="avax-price">--</div>
+                <div class="change" id="avax-change">--</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Silver Bubble Section -->
+    <div class="bubble-section">
+        <div class="section-title">💎 قیمت نقره ۹۹۹</div>
+        <div class="bubble-card">
+            <div class="title">🥈 نقره ۹۹۹ (گرم)</div>
+            <div class="row"><span class="label">انس نقره:</span><span class="value" id="bubble-silver-ounce">--</span></div>
+            <div class="row"><span class="label">دلار:</span><span class="value" id="bubble-silver-usd">--</span></div>
+            <div class="row"><span class="label">ارزش ذاتی:</span><span class="value" id="bubble-silver-calc">--</span></div>
+            <div class="bubble-value bubble-neutral" id="bubble-silver-result">
+                ⓘ قیمت ذاتی، بدون احتساب حباب
+            </div>
+        </div>
+    </div>
+
+    <!-- Chart Section -->
+    <div class="chart-section" id="chartSection">
+        <div class="chart-header">
+            <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
+                <h2>📈 چارت زنده بازار</h2>
+                <button class="fullscreen-btn" onclick="toggleFullscreen()" id="fullscreenBtn">⛶ تمام‌صفحه</button>
+            </div>
+            <div class="chart-tabs">
+                <button class="chart-tab active" onclick="switchChart('BINANCE:BTCUSDT', this)">₿ بیت‌کوین</button>
+                <button class="chart-tab" onclick="switchChart('BINANCE:ETHUSDT', this)">⟠ اتریوم</button>
+                <button class="chart-tab" onclick="switchChart('BINANCE:SOLUSDT', this)">◎ سولانا</button>
+                <button class="chart-tab" onclick="switchChart('BINANCE:XRPUSDT', this)">🔷 ریپل</button>
+                <button class="chart-tab" onclick="switchChart('BINANCE:DOGEUSDT', this)">🐕 دوج</button>
+                <button class="chart-tab" onclick="switchChart('BINANCE:ADAUSDT', this)">🟣 کاردانو</button>
+                <button class="chart-tab" onclick="switchChart('BINANCE:BNBUSDT', this)">🔶 BNB</button>
+                <button class="chart-tab" onclick="switchChart('BINANCE:TRXUSDT', this)">🟢 ترون</button>
+                <button class="chart-tab" onclick="switchChart('BINANCE:AVAXUSDT', this)">🔺 آوالانچ</button>
+                <button class="chart-tab" onclick="switchChart('TVC:GOLD', this)">🏅 انس طلا</button>
+                <button class="chart-tab" onclick="switchChart('TVC:SILVER', this)">🥈 انس نقره</button>
+                <button class="chart-tab" onclick="switchChart('TVC:PLATINUM', this)">🔶 پلاتین</button>
+                <button class="chart-tab" onclick="switchChart('TVC:PALLADIUM', this)">💎 پالادیوم</button>
+                <button class="chart-tab" onclick="switchChart('TVC:UKOIL', this)">🛢️ نفت برنت</button>
+                <button class="chart-tab" onclick="switchChart('TVC:USOIL', this)">🛢️ WTI</button>
+                <button class="chart-tab" onclick="switchChart('COMEX:HG1!', this)">🟤 مس</button>
+                <button class="chart-tab" onclick="switchChart('NYMEX:NG1!', this)">⚡ گاز</button>
+            </div>
+        </div>
+        <div id="tvchart"></div>
+    </div>
+
+    <!-- CTA Section -->
+    <div class="cta-section">
+        <h2>🎓 از تحلیل تا معامله حرفه‌ای</h2>
+        <p>دوره‌های آموزشی آکادمی شمعدون، مسیر حرفه‌ای شدن رو از صفر تا صد برات هموار می‌کنه.</p>
+        <a href="courses.html" class="cta-btn">مشاهده دوره‌ها ←</a>
+    </div>
+</div>
+
+<!-- Footer -->
+<footer class="footer">
+    <div class="footer-social">
+        <a href="https://instagram.com/shamdun.trade" target="_blank" rel="noopener" title="اینستاگرام">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <defs>
+                    <radialGradient id="ig-footer" cx="30%" cy="107%" r="150%">
+                        <stop offset="0%" stop-color="#fdf497"/>
+                        <stop offset="5%" stop-color="#fdf497"/>
+                        <stop offset="45%" stop-color="#fd5949"/>
+                        <stop offset="60%" stop-color="#d6249f"/>
+                        <stop offset="90%" stop-color="#285AEB"/>
+                    </radialGradient>
+                </defs>
+                <rect x="2" y="2" width="20" height="20" rx="5" fill="url(#ig-footer)"/>
+                <circle cx="12" cy="12" r="4" stroke="#fff" stroke-width="2" fill="none"/>
+                <circle cx="17.5" cy="6.5" r="1.3" fill="#fff"/>
+            </svg>
+        </a>
+        <a href="https://t.me/nabzebazar_shamdun" target="_blank" rel="noopener" title="تلگرام">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+                <path d="M21.5 4L2.5 11.5L7.5 13.5L9.5 20L13 15L18.5 19L21.5 4Z" stroke="#d4af37" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/>
+                <path d="M7.5 13.5L18.5 6" stroke="#d4af37" stroke-width="1.8" stroke-linecap="round"/>
+            </svg>
+        </a>
+    </div>
+    © ۱۴۰۵ آکادمی شمعدون | تمامی حقوق محفوظ است
+</footer>
+<style>
+    /* Chart Section */
+    .chart-section {
+        background: linear-gradient(135deg, var(--bg-card), var(--bg-secondary));
+        border: 1px solid var(--border-subtle);
+        border-radius: 20px;
+        padding: 20px;
+        margin-bottom: 24px;
+        animation: fadeInUp 0.6s ease-out 0.3s backwards;
+    }
+
+    [data-theme="light"] .chart-section {
+        background: linear-gradient(135deg, #ffffff, #eef2f7);
+        border-color: rgba(184, 134, 11, 0.15);
+    }
+
+    .chart-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 15px;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+    .chart-header h2 {
+        color: var(--white);
+        font-size: 17px;
+        font-weight: 800;
+    }
+    .chart-tabs {
+        display: flex;
+        gap: 5px;
+        flex-wrap: wrap;
+        align-items: center;
+        max-height: 120px;
+        overflow-y: auto;
+    }
+    .chart-tab {
+        background: rgba(10, 10, 15, 0.6);
+        color: var(--gray);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        padding: 7px 12px;
+        border-radius: 8px;
+        font-size: 11px;
+        font-weight: 700;
+        cursor: pointer;
+        font-family: inherit;
+        transition: 0.3s;
+    }
+
+    [data-theme="light"] .chart-tab {
+        background: rgba(255, 255, 255, 0.8);
+        border-color: rgba(0, 0, 0, 0.08);
+    }
+
+    .chart-tab:hover {
+        color: var(--gold);
+        border-color: rgba(212, 175, 55, 0.4);
+    }
+    .chart-tab.active {
+        background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+        color: #fff;
+        border-color: var(--gold);
+    }
+    .fullscreen-btn {
+        background: rgba(10, 10, 15, 0.6);
+        color: var(--gold);
+        border: 1px solid var(--gold);
+        padding: 8px 14px;
+        border-radius: 8px;
+        font-size: 12px;
+        font-weight: 700;
+        cursor: pointer;
+        font-family: inherit;
+        transition: 0.3s;
+    }
+    [data-theme="light"] .fullscreen-btn {
+        background: #ffffff;
+        color: var(--gold-dark);
+        border-color: var(--gold-dark);
+    }
+    .fullscreen-btn:hover {
+        background: var(--gold);
+        color: #fff;
+    }
+    [data-theme="light"] .fullscreen-btn:hover {
+        background: var(--gold);
+        color: #ffffff;
+    }
+    #tvchart {
+        width: 100%;
+        height: 550px;
+        border-radius: 12px;
+        overflow: hidden;
+    }
+    .chart-fullscreen {
+        position: fixed !important;
+        top: 0 !important; left: 0 !important;
+        right: 0 !important; bottom: 0 !important;
+        width: 100vw !important; height: 100vh !important;
+        z-index: 999999 !important;
+        background: var(--bg-primary) !important;
+        padding: 10px !important;
+        margin: 0 !important;
+        border-radius: 0 !important;
+        display: flex !important;
+        flex-direction: column !important;
+        overflow: hidden !important;
+    }
+    .chart-fullscreen .chart-header {
+        flex-shrink: 0 !important;
+        margin-bottom: 8px !important;
+    }
+    .chart-fullscreen .chart-header h2 {
+        display: none !important;
+    }
+    .chart-fullscreen .chart-tabs {
+        max-height: 60px !important;
+        overflow-y: auto !important;
+    }
+    .chart-fullscreen #tvchart {
+        flex: 1 !important;
+        height: auto !important;
+        min-height: 0 !important;
+        width: 100% !important;
+    }
+
+    /* CTA Section */
+    .cta-section {
+        background: linear-gradient(135deg, rgba(212, 175, 55, 0.1), rgba(59, 130, 246, 0.05));
+        border: 1px solid var(--border-gold);
+        border-radius: 20px;
+        padding: 30px;
+        text-align: center;
+        margin-bottom: 24px;
+    }
+
+    [data-theme="light"] .cta-section {
+        background: linear-gradient(135deg, rgba(184, 134, 11, 0.08), rgba(37, 99, 235, 0.04));
+    }
+
+    .cta-section h2 {
+        color: var(--white);
+        font-size: 22px;
+        font-weight: 900;
+        margin-bottom: 12px;
+    }
+    .cta-section p {
+        color: var(--gray);
+        font-size: 14px;
+        margin-bottom: 20px;
+        line-height: 1.8;
+    }
+    .cta-btn {
+        display: inline-block;
+        background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+        color: #fff;
+        padding: 14px 32px;
+        border-radius: 12px;
+        text-decoration: none;
+        font-size: 14px;
+        font-weight: 800;
+        transition: 0.3s;
+        box-shadow: 0 10px 30px rgba(212, 175, 55, 0.3);
+    }
+    .cta-btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 15px 40px rgba(212, 175, 55, 0.5);
+    }
+
+    /* Footer */
+    .footer {
+        text-align: center;
+        padding: 30px 20px;
+        color: var(--gray);
+        font-size: 12px;
+        border-top: 1px solid var(--border-subtle);
+    }
+    .footer-social {
+        display: flex;
+        justify-content: center;
+        gap: 12px;
+        margin-bottom: 15px;
+    }
+    .footer-social a {
+        width: 44px; height: 44px;
+        border-radius: 12px;
+        background: rgba(212, 175, 55, 0.08);
+        border: 1px solid var(--border-gold);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: 0.3s;
+    }
+    .footer-social a:hover {
+        background: rgba(212, 175, 55, 0.2);
+        transform: translateY(-3px);
+        box-shadow: 0 8px 25px rgba(212, 175, 55, 0.3);
+    }
+
+    /* ===================================================== */
+    /* 🌙 تم روشن - !important برای غلبه بر رنگ‌های hardcode */
+    /* ===================================================== */
+    [data-theme="light"] body {
+        background-color: #f8fafc !important;
+        color: #0f172a !important;
+    }
+    [data-theme="light"] .ticker-bar {
+        background: linear-gradient(90deg, rgba(248, 250, 252, 0.98), rgba(255, 255, 255, 0.98)) !important;
+        color: #0f172a !important;
+    }
+    [data-theme="light"] .ticker-item {
+        color: #334155 !important;
+    }
+    [data-theme="light"] .ticker-item .value {
+        color: #b8860b !important;
+    }
+    [data-theme="light"] .market-tab {
+        background: rgba(255, 255, 255, 0.8) !important;
+        color: #475569 !important;
+        border-color: rgba(0, 0, 0, 0.1) !important;
+    }
+    [data-theme="light"] .market-tab:hover {
+        color: #b8860b !important;
+        border-color: rgba(184, 134, 11, 0.5) !important;
+    }
+    [data-theme="light"] .market-tab.active {
+        background: linear-gradient(135deg, #d4af37, #a8862a) !important;
+        color: #ffffff !important;
+        border-color: #b8860b !important;
+    }
+    [data-theme="light"] .price-card {
+        background: linear-gradient(135deg, #ffffff, #eef2f7) !important;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05) !important;
+    }
+    [data-theme="light"] .price-card .value {
+        color: #0f172a !important;
+    }
+    [data-theme="light"] .price-card .label {
+        color: #64748b !important;
+    }
+    [data-theme="light"] .bubble-section {
+        background: linear-gradient(135deg, #ffffff, #eef2f7) !important;
+        border-color: rgba(184, 134, 11, 0.15) !important;
+    }
+    [data-theme="light"] .bubble-card {
+        background: rgba(248, 250, 252, 0.9) !important;
+    }
+    [data-theme="light"] .bubble-card .row .value {
+        color: #0f172a !important;
+    }
+    [data-theme="light"] .bubble-value {
+        background: rgba(241, 245, 249, 0.8) !important;
+        color: #334155 !important;
+    }
+    [data-theme="light"] .section-title {
+        color: #0f172a !important;
+    }
+    [data-theme="light"] .manager-card {
+        background: linear-gradient(135deg, rgba(184, 134, 11, 0.08), rgba(37, 99, 235, 0.04)) !important;
+    }
+    [data-theme="light"] .manager-text {
+        color: #475569 !important;
+    }
+    [data-theme="light"] .quick-btn {
+        background: linear-gradient(135deg, rgba(184, 134, 11, 0.1), rgba(184, 134, 11, 0.03)) !important;
+        color: #8b6508 !important;
+    }
+    [data-theme="light"] .quick-btn:hover {
+        background: linear-gradient(135deg, #d4af37, #8b6508) !important;
+        color: #ffffff !important;
+    }
+    [data-theme="light"] .chart-section {
+        background: linear-gradient(135deg, #ffffff, #eef2f7) !important;
+        border-color: rgba(184, 134, 11, 0.15) !important;
+    }
+    [data-theme="light"] .chart-header h2 {
+        color: #0f172a !important;
+    }
+    [data-theme="light"] .chart-tab {
+        background: rgba(255, 255, 255, 0.9) !important;
+        color: #475569 !important;
+        border-color: rgba(0, 0, 0, 0.1) !important;
+    }
+    [data-theme="light"] .chart-tab:hover {
+        color: #b8860b !important;
+        border-color: rgba(184, 134, 11, 0.5) !important;
+    }
+    [data-theme="light"] .chart-tab.active {
+        background: linear-gradient(135deg, #d4af37, #a8862a) !important;
+        color: #ffffff !important;
+    }
+    [data-theme="light"] .cta-section {
+        background: linear-gradient(135deg, rgba(184, 134, 11, 0.08), rgba(37, 99, 235, 0.04)) !important;
+    }
+    [data-theme="light"] .cta-section h2 {
+        color: #0f172a !important;
+    }
+    [data-theme="light"] .cta-section p {
+        color: #475569 !important;
+    }
+    [data-theme="light"] .footer {
+        color: #475569 !important;
+    }
+    [data-theme="light"] .footer-social a {
+        background: rgba(184, 134, 11, 0.1) !important;
+    }
+    [data-theme="light"] .page-header p {
+        color: #475569 !important;
+    }
+    [data-theme="light"] .bubble-card .title {
+        color: #8b6508 !important;
+    }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+        .price-grid { grid-template-columns: repeat(2, 1fr); }
+        .manager-card { flex-direction: column; text-align: center; }
+    }
+    @media (max-width: 600px) {
+        .main-container { padding: 130px 15px 30px; }
+        .page-header h1 { font-size: 26px; }
+        .price-grid { grid-template-columns: 1fr; }
+        #tvchart { height: 400px; }
+        .chart-tab { font-size: 10px; padding: 5px 8px; }
+        .market-tab { font-size: 11px; padding: 8px 12px; }
+        .quick-btn { font-size: 12px; padding: 10px 12px; }
+    }
+</style>
+
+<script src="navbar.js" defer></script>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        setTimeout(() => {
+            const themeBtn = document.getElementById('snThemeBtn');
+            if (themeBtn && !themeBtn.hasAttribute('data-bound')) {
+                themeBtn.setAttribute('data-bound', 'true');
+                themeBtn.addEventListener('click', () => {
+                    const current = document.documentElement.getAttribute('data-theme') || 'dark';
+                    const newTheme = current === 'dark' ? 'light' : 'dark';
+                    document.documentElement.setAttribute('data-theme', newTheme);
+                    localStorage.setItem('shamdun-theme', newTheme);
+                    const icon = document.getElementById('snThemeIcon');
+                    if (icon) icon.textContent = newTheme === 'dark' ? '🌙' : '☀️';
+                });
+            }
+        }, 1000);
+    });
+</script>
+
+<script src="https://s3.tradingview.com/tv.js"></script>
+<script>
+    // ==========================================
+    // API Keys با Key Rotation
+    // ==========================================
+    const BRS_API_KEYS = [
+        'B4xp2gWXASUmB3n6WPHtJxhjyJkgcBJz',
+        'BvUj3cMKWNBK87KW9xhNccCThmfVbd8u'
+    ];
+    let currentKeyIndex = 0;
+
+    async function fetchWithRotation(baseUrl) {
+        const maxAttempts = BRS_API_KEYS.length;
+        for (let attempt = 0; attempt < maxAttempts; attempt++) {
+            const key = BRS_API_KEYS[currentKeyIndex];
+            const url = `${baseUrl}?key=${key}`;
+            try {
+                const res = await fetch(url);
+                if (!res.ok) {
+                    console.warn(`⚠️ کلید ${currentKeyIndex + 1} کد ${res.status}`);
+                    currentKeyIndex = (currentKeyIndex + 1) % BRS_API_KEYS.length;
+                    continue;
+                }
+                const text = await res.text();
+                if (text.trim().startsWith('<!DOCTYPE') || text.trim().startsWith('<html')) {
+                    console.warn(`⚠️ کلید ${currentKeyIndex + 1} HTML داد`);
+                    currentKeyIndex = (currentKeyIndex + 1) % BRS_API_KEYS.length;
+                    continue;
+                }
+                const data = JSON.parse(text);
+                console.log(`✅ کلید ${currentKeyIndex + 1} کار کرد`);
+                return data;
+            } catch (e) {
+                console.warn(`⚠️ خطا با کلید ${currentKeyIndex + 1}:`, e.message);
+                currentKeyIndex = (currentKeyIndex + 1) % BRS_API_KEYS.length;
+            }
+        }
+        throw new Error('❌ همه کلیدها fail');
+    }
+
+    const OUNCE_TO_GRAM = 31.1035;
+
+    function toPersianNumber(num) {
+        if (num === null || num === undefined || isNaN(num)) return '--';
+        const persianDigits = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
+        return num.toString().replace(/\d/g, d => persianDigits[d]);
+    }
+
+    function formatNumber(num, decimals = 0) {
+        if (num === null || num === undefined || isNaN(num)) return '--';
+        try {
+            const n = Number(num);
+            if (isNaN(n)) return '--';
+            let str;
+            if (decimals > 0) {
+                str = n.toFixed(decimals);
+            } else {
+                str = Math.round(n).toString();
+            }
+            const parts = str.split('.');
+            parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+            str = parts.join('.');
+            const persianDigits = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
+            return str.replace(/\d/g, d => persianDigits[d]);
+        } catch (e) {
+            return '--';
+        }
+    }
+
+    function setChange(elId, changePercent) {
+        const el = document.getElementById(elId);
+        if (!el) return;
+        if (changePercent === null || changePercent === undefined || isNaN(changePercent)) {
+            el.textContent = '';
+            el.className = 'change';
+            return;
+        }
+        const sign = changePercent >= 0 ? '+' : '';
+        el.textContent = sign + toPersianNumber(Number(changePercent).toFixed(2)) + '٪';
+        el.className = 'change ' + (changePercent >= 0 ? 'up' : 'down');
+    }
+
+    function setPrice(elId, value, unit = '', decimals = 0) {
+        const el = document.getElementById(elId);
+        if (!el) return;
+        if (value === null || value === undefined || isNaN(value)) {
+            el.textContent = '--';
+            return;
+        }
+        el.textContent = formatNumber(value, decimals) + (unit ? ' ' + unit : '');
+        el.dataset.raw = Number(value);
+    }
+
+    function switchMarket(marketId, btn) {
+        document.querySelectorAll('.market-tab').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        document.querySelectorAll('.price-section').forEach(s => s.classList.remove('active'));
+        const section = document.getElementById('section-' + marketId);
+        if (section) section.classList.add('active');
+    }
+
+    let tvWidget = null;
+    let currentChartSymbol = 'BINANCE:BTCUSDT';
+    let currentChartTheme = document.documentElement.getAttribute('data-theme') || 'dark';
+
+    function initChart(symbol) {
+        currentChartSymbol = symbol;
+        const container = document.getElementById('tvchart');
+        if (!container) return;
+        container.innerHTML = '';
+
+        const theme = document.documentElement.getAttribute('data-theme') || 'dark';
+        currentChartTheme = theme;
+
+        tvWidget = new TradingView.widget({
+            "container_id": "tvchart",
+            "autosize": true,
+            "symbol": symbol,
+            "interval": "60",
+            "timezone": "Asia/Tehran",
+            "theme": theme === 'light' ? 'light' : 'dark',
+            "style": "1",
+            "locale": "fa_IR",
+            "toolbar_bg": theme === 'light' ? '#ffffff' : '#1e293b',
+            "enable_publishing": false,
+            "hide_side_toolbar": false,
+            "allow_symbol_change": true,
+            "details": true,
+            "withdateranges": true,
+            "studies": ["RSI@tv-basicstudies"]
+        });
+    }
+
+    function switchChart(symbol, btn) {
+        document.querySelectorAll('.chart-tab').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        initChart(symbol);
+    }
+
+    function toggleFullscreen() {
+        const chartSection = document.getElementById('chartSection');
+        const btn = document.getElementById('fullscreenBtn');
+        if (chartSection.classList.contains('chart-fullscreen')) {
+            chartSection.classList.remove('chart-fullscreen');
+            btn.innerHTML = '⛶ تمام‌صفحه';
+            document.body.style.overflow = '';
+            setTimeout(() => initChart(currentChartSymbol), 100);
+        } else {
+            chartSection.classList.add('chart-fullscreen');
+            btn.innerHTML = '✕ خروج';
+            document.body.style.overflow = 'hidden';
+            setTimeout(() => initChart(currentChartSymbol), 100);
+        }
+    }
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+            const chartSection = document.getElementById('chartSection');
+            if (chartSection.classList.contains('chart-fullscreen')) {
+                toggleFullscreen();
+            }
+        }
+    });
+
+    const themeObserver = new MutationObserver((mutations) => {
+        mutations.forEach((mutation) => {
+            if (mutation.attributeName === 'data-theme') {
+                const newTheme = document.documentElement.getAttribute('data-theme');
+                if (newTheme !== currentChartTheme) {
+                    setTimeout(() => initChart(currentChartSymbol), 200);
+                }
+            }
+        });
+    });
+    themeObserver.observe(document.documentElement, { attributes: true });
+
+    let globalOunceGold = 0;
+    let globalOunceSilver = 0;
+    let globalUSD = 0;
+    let globalGold18Market = 0;
+
+    const COIN_WEIGHTS = {
+        'coin-emami': 8.133,
+        'coin-bahar': 8.133,
+        'coin-half': 4.0665,
+        'coin-quarter': 2.03325,
+        'coin-1g': 1.0
+    };
+
+    async function fetchBrsApi() {
+        try {
+            const data = await fetchWithRotation('https://Api.BrsApi.ir/Market/Gold_Currency.php');
+            if (data.gold && Array.isArray(data.gold)) {
+                const items = {
+                    IR_GOLD_18K: { price: 'gold18-price', change: 'gold18-change' },
+                    IR_GOLD_24K: { price: 'gold24-price', change: 'gold24-change' },
+                    IR_GOLD_MELTED: { price: 'melted-price', change: 'melted-change' },
+                    IR_COIN_EMAMI: { price: 'coin-emami-price', change: 'coin-emami-change' },
+                    IR_COIN_BAHAR: { price: 'coin-bahar-price', change: 'coin-bahar-change' },
+                    IR_COIN_HALF: { price: 'coin-half-price', change: 'coin-half-change' },
+                    IR_COIN_QUARTER: { price: 'coin-quarter-price', change: 'coin-quarter-change' },
+                    IR_COIN_1G: { price: 'coin-1g-price', change: 'coin-1g-change' },
+                };
+                data.gold.forEach(item => {
+                    if (items[item.symbol]) {
+                        setPrice(items[item.symbol].price, item.price, 'تومان');
+                        setChange(items[item.symbol].change, item.change_percent);
+                        if (item.symbol === 'IR_GOLD_18K') globalGold18Market = parseFloat(item.price);
+                    }
+                });
+            }
+            if (data.currency && Array.isArray(data.currency)) {
+                const currencyMap = {
+                    USDT_IRT: { price: 'usdt-price', change: 'usdt-change' },
+                    USD: { price: 'usd-price', change: 'usd-change' },
+                    EUR: { price: 'eur-price', change: 'eur-change' },
+                    GBP: { price: 'gbp-price', change: 'gbp-change' },
+                    AED: { price: 'aed-price', change: 'aed-change' },
+                    TRY: { price: 'try-price', change: 'try-change' },
+                    CNY: { price: 'cny-price', change: 'cny-change' },
+                    CAD: { price: 'cad-price', change: 'cad-change' },
+                    CHF: { price: 'chf-price', change: 'chf-change' },
+                    JPY: { price: 'jpy-price', change: 'jpy-change' },
+                    SAR: { price: 'sar-price', change: 'sar-change' },
+                    QAR: { price: 'qar-price', change: 'qar-change' },
+                };
+                data.currency.forEach(item => {
+                    if (currencyMap[item.symbol]) {
+                        setPrice(currencyMap[item.symbol].price, item.price, 'تومان');
+                        setChange(currencyMap[item.symbol].change, item.change_percent);
+                        if (item.symbol === 'USD') globalUSD = parseFloat(item.price);
+                    }
+                });
+            }
+        } catch (e) {
+            console.error('❌ Gold_Currency error:', e.message);
+        }
+
+        try {
+            const data = await fetchWithRotation('https://Api.BrsApi.ir/Market/Commodity.php');
+            if (data.metal_precious && Array.isArray(data.metal_precious)) {
+                const preciousMap = {
+                    XAUUSD: { price: 'ounce-gold-price', change: 'ounce-gold-change' },
+                    XAGUSD: { price: 'ounce-silver-price', change: 'ounce-silver-change' },
+                    XPTUSD: { price: 'ounce-platinum-price', change: 'ounce-platinum-change' },
+                    XPDUSD: { price: 'ounce-palladium-price', change: 'ounce-palladium-change' },
+                };
+                data.metal_precious.forEach(item => {
+                    if (preciousMap[item.symbol]) {
+                        setPrice(preciousMap[item.symbol].price, item.price, 'دلار', 2);
+                        setChange(preciousMap[item.symbol].change, item.change_percent);
+                        if (item.symbol === 'XAUUSD') globalOunceGold = parseFloat(item.price);
+                        if (item.symbol === 'XAGUSD') globalOunceSilver = parseFloat(item.price);
+                    }
+                });
+            }
+            if (data.metal_base && Array.isArray(data.metal_base)) {
+                const baseMap = {
+                    Cu: { price: 'copper-price', change: 'copper-change' },
+                    Al: { price: 'aluminum-price', change: 'aluminum-change' },
+                    Zn: { price: 'zinc-price', change: 'zinc-change' },
+                    Pb: { price: 'lead-price', change: 'lead-change' },
+                    Ni: { price: 'nickel-price', change: 'nickel-change' },
+                };
+                data.metal_base.forEach(item => {
+                    if (baseMap[item.symbol]) {
+                        setPrice(baseMap[item.symbol].price, item.price, 'دلار', 0);
+                        setChange(baseMap[item.symbol].change, item.change_percent);
+                    }
+                });
+            }
+            if (data.energy && Array.isArray(data.energy)) {
+                const energyMap = {
+                    BRENT: { price: 'brent-price', change: 'brent-change' },
+                    WTI: { price: 'wti-price', change: 'wti-change' },
+                    GAS: { price: 'gas-price', change: 'gas-change' },
+                    RBOB: { price: 'rbob-price', change: 'rbob-change' },
+                    GASOIL: { price: 'gasoil-price', change: 'gasoil-change' },
+                };
+                data.energy.forEach(item => {
+                    if (energyMap[item.symbol]) {
+                        setPrice(energyMap[item.symbol].price, item.price, 'دلار', 2);
+                        setChange(energyMap[item.symbol].change, item.change_percent);
+                    }
+                });
+            }
+        } catch (e) {
+            console.error('❌ Commodity error:', e.message);
+        }
+
+        if (globalOunceSilver > 0 && globalUSD > 0) {
+            const silver999Gram = (globalOunceSilver * globalUSD * 0.999) / OUNCE_TO_GRAM;
+            setPrice('silver999-price', Math.round(silver999Gram), 'تومان');
+
+            const platinumEl = document.getElementById('ounce-platinum-price');
+            const palladiumEl = document.getElementById('ounce-palladium-price');
+            const platinumPrice = platinumEl ? parseFloat(platinumEl.dataset.raw || 0) : 0;
+            const palladiumPrice = palladiumEl ? parseFloat(palladiumEl.dataset.raw || 0) : 0;
+
+            if (platinumPrice > 0) {
+                const platGram = (platinumPrice * globalUSD) / OUNCE_TO_GRAM;
+                setPrice('platinum-gram-price', Math.round(platGram), 'تومان');
+            }
+            if (palladiumPrice > 0) {
+                const pallGram = (palladiumPrice * globalUSD) / OUNCE_TO_GRAM;
+                setPrice('palladium-gram-price', Math.round(pallGram), 'تومان');
+            }
+        }
+
+        calculateBubbles();
+    }
+
+    async function fetchCrypto() {
+        try {
+            const res = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum,solana,ripple,dogecoin,cardano,binancecoin,tron,avalanche-2&vs_currencies=usd&include_24hr_change=true');
+            const data = await res.json();
+            const cryptoMap = {
+                bitcoin: { price: 'btc-price', change: 'btc-change' },
+                ethereum: { price: 'eth-price', change: 'eth-change' },
+                solana: { price: 'sol-price', change: 'sol-change' },
+                ripple: { price: 'xrp-price', change: 'xrp-change' },
+                dogecoin: { price: 'doge-price', change: 'doge-change' },
+                cardano: { price: 'ada-price', change: 'ada-change' },
+                binancecoin: { price: 'bnb-price', change: 'bnb-change' },
+                tron: { price: 'trx-price', change: 'trx-change' },
+                'avalanche-2': { price: 'avax-price', change: 'avax-change' },
+            };
+            Object.keys(cryptoMap).forEach(key => {
+                if (data[key]) {
+                    setPrice(cryptoMap[key].price, data[key].usd, 'دلار', 2);
+                    setChange(cryptoMap[key].change, data[key].usd_24h_change);
+                }
+            });
+        } catch (e) {
+            console.error('❌ Crypto error:', e.message);
+        }
+    }
+
+    function calculateBubbles() {
+        if (globalOunceGold <= 0 || globalUSD <= 0) return;
+
+        const gold18Calc = (globalOunceGold * globalUSD * 0.75) / OUNCE_TO_GRAM;
+        if (globalGold18Market > 0) {
+            const bubble = ((globalGold18Market - gold18Calc) / gold18Calc) * 100;
+            const bubbleEl = document.getElementById('gold18-bubble');
+            if (bubbleEl) {
+                bubbleEl.textContent = '💎 حباب: ' + (bubble >= 0 ? '+' : '') + toPersianNumber(bubble.toFixed(2)) + '٪';
+                bubbleEl.className = 'bubble-inline ' + (bubble > 0.5 ? 'up' : bubble < -0.5 ? 'down' : 'neutral');
+            }
+        }
+
+        const coinsMap = {
+            'coin-emami': { price: 'coin-emami-price', bubble: 'coin-emami-bubble' },
+            'coin-bahar': { price: 'coin-bahar-price', bubble: 'coin-bahar-bubble' },
+            'coin-half': { price: 'coin-half-price', bubble: 'coin-half-bubble' },
+            'coin-quarter': { price: 'coin-quarter-price', bubble: 'coin-quarter-bubble' },
+            'coin-1g': { price: 'coin-1g-price', bubble: 'coin-1g-bubble' }
         };
 
-        let currentUser = null;
+        Object.keys(coinsMap).forEach(key => {
+            const weight = COIN_WEIGHTS[key];
+            const marketEl = document.getElementById(coinsMap[key].price);
+            const bubbleEl = document.getElementById(coinsMap[key].bubble);
+            if (!marketEl || !bubbleEl) return;
 
-        // ==========================================
-        // Load Profile
-        // ==========================================
-        async function loadProfile() {
-            try {
-                const { data: { session } } = await db.auth.getSession();
+            const marketPrice = parseFloat(marketEl.dataset.raw || 0);
+            if (marketPrice <= 0) return;
 
-                if (!session) {
-                    window.location.href = 'login.html';
-                    return;
-                }
-
-                currentUser = session.user;
-
-                const fullName = currentUser.user_metadata?.full_name || 'کاربر عزیز';
-                const email = currentUser.email;
-                const firstLetter = fullName.charAt(0).toUpperCase();
-                const joinDate = new Date(currentUser.created_at).toLocaleDateString('fa-IR', {
-                    year: 'numeric', month: 'long', day: 'numeric'
-                });
-
-                const isAdmin = (email === ADMIN_EMAIL);
-                const completedCourses = currentUser.user_metadata?.completed_courses || [];
-                const inProgressCourses = currentUser.user_metadata?.in_progress_courses || [];
-                const completedLessons = currentUser.user_metadata?.completed_lessons || {};
-                const personalityResult = currentUser.user_metadata?.personality_result;
-                const totalCourses = completedCourses.length + inProgressCourses.length;
-
-                // ===== Continue Learning =====
-                let continueHTML = '';
-                if (inProgressCourses.length > 0) {
-                    const firstId = inProgressCourses[0];
-                    const info = staticCourses[firstId];
-                    if (info) {
-                        const completedCount = (completedLessons[firstId] || []).length;
-                        const percent = Math.round((completedCount / info.lessons) * 100);
-                        const nextLesson = completedCount + 1;
-                        continueHTML = `
-                            <div class="continue-card">
-                                <div class="continue-header">
-                                    <div class="continue-icon">🎯</div>
-                                    <div>
-                                        <div class="continue-title">ادامه یادگیری</div>
-                                        <div class="continue-subtitle">از جایی که رها کردی</div>
-                                    </div>
-                                </div>
-                                <div class="continue-body">
-                                    <div class="continue-course-info">
-                                        <div class="continue-course-icon">${info.icon}</div>
-                                        <div class="continue-course-details">
-                                            <div class="continue-course-name">${info.title}</div>
-                                            <div class="continue-lesson-name">درس ${toPersianNum(nextLesson)} از ${toPersianNum(info.lessons)}</div>
-                                        </div>
-                                    </div>
-                                    <div class="continue-progress-bar">
-                                        <div class="continue-progress-fill" style="width: ${percent}%"></div>
-                                    </div>
-                                    <div class="continue-progress-info">
-                                        <span>${toPersianNum(completedCount)} از ${toPersianNum(info.lessons)} درس</span>
-                                        <span>${toPersianNum(percent)}٪</span>
-                                    </div>
-                                </div>
-                                <a href="lesson.html?course=${firstId}&lesson=${nextLesson}" class="continue-btn">ادامه بده ←</a>
-                            </div>
-                        `;
-                    }
-                }
-
-                // ===== My Courses =====
-                let myCoursesHTML = '';
-                if (totalCourses === 0) {
-                    myCoursesHTML = `
-                        <div class="empty-state">
-                            📚 هنوز در هیچ دوره‌ای ثبت‌نام نکردی.<br><br>
-                            <a href="courses.html">مشاهده دوره‌های رایگان →</a>
-                        </div>
-                    `;
-                } else {
-                    completedCourses.forEach(courseId => {
-                        const info = staticCourses[courseId];
-                        if (info) {
-                            myCoursesHTML += `
-                                <div class="course-item">
-                                    <div class="course-item-icon">${info.icon}</div>
-                                    <div class="course-item-info">
-                                        <div class="course-item-title">${info.title}</div>
-                                        <div class="course-item-progress">
-                                            <div class="course-item-progress-fill" style="width: 100%"></div>
-                                        </div>
-                                    </div>
-                                    <div class="course-item-percent done">✅</div>
-                                </div>
-                            `;
-                        }
-                    });
-
-                    inProgressCourses.forEach(courseId => {
-                        const info = staticCourses[courseId];
-                        if (info) {
-                            const completedCount = (completedLessons[courseId] || []).length;
-                            const percent = Math.round((completedCount / info.lessons) * 100);
-                            myCoursesHTML += `
-                                <div class="course-item">
-                                    <div class="course-item-icon">${info.icon}</div>
-                                    <div class="course-item-info">
-                                        <div class="course-item-title">${info.title}</div>
-                                        <div class="course-item-progress">
-                                            <div class="course-item-progress-fill" style="width: ${percent}%"></div>
-                                        </div>
-                                    </div>
-                                    <div class="course-item-percent">${toPersianNum(percent)}٪</div>
-                                </div>
-                            `;
-                        }
-                    });
-                }
-
-                // ===== Achievements =====
-                const achievements = [
-                    { icon: '🥇', title: 'کاربر طلایی', unlocked: completedCourses.length >= 3 },
-                    { icon: '🎓', title: 'دانشجوی فعال', unlocked: totalCourses >= 2 },
-                    { icon: '🎯', title: 'تست شخصیت', unlocked: !!personalityResult },
-                    { icon: '🔥', title: 'شروع قدرتمند', unlocked: totalCourses >= 1 },
-                    { icon: '⭐', title: 'عضو وفادار', unlocked: true },
-                    { icon: '🏆', title: 'حرفه‌ای', unlocked: completedCourses.length >= 5 }
-                ];
-                const achievementsHTML = achievements.map(a => `
-                    <div class="achievement ${a.unlocked ? 'unlocked' : 'locked'}">
-                        <div class="achievement-icon">${a.icon}</div>
-                        <div class="achievement-title">${a.title}</div>
-                    </div>
-                `).join('');
-
-                // ===== Suggestion =====
-                let suggestionHTML = '';
-                if (totalCourses === 0) {
-                    suggestionHTML = `
-                        <div class="ai-suggestion">
-                            <div class="ai-suggestion-icon">👋</div>
-                            <div class="ai-suggestion-content">
-                                <div class="ai-suggestion-title">خوش آمدی!</div>
-                                <div class="ai-suggestion-text">برای شروع، دوره «اقتصاد کلان» رو پیشنهاد می‌کنیم — کاملاً رایگان.</div>
-                                <a href="courses.html" class="ai-suggestion-btn">شروع کن ←</a>
-                            </div>
-                        </div>
-                    `;
-                }
-
-                // ===== Render =====
-                document.getElementById('content').innerHTML = `
-                    <div class="welcome-hero">
-                        <div class="welcome-text">
-                            <h1>سلام <span class="gold">${escapeHtml(fullName)}</span> 👋</h1>
-                            <p>خوش برگشتی! امروز چه خبر؟</p>
-                        </div>
-                        <div class="welcome-streak">
-                            <div class="streak-icon">🔥</div>
-                            <div class="streak-info">
-                                <div class="streak-value">${toPersianNum(totalCourses)}</div>
-                                <div class="streak-label">دوره فعال</div>
-                            </div>
-                        </div>
-                    </div>
-
-                    ${continueHTML}
-
-                    <div class="stats-grid">
-                        <div class="stat-card">
-                            <div class="stat-icon">📚</div>
-                            <div class="stat-value">${toPersianNum(totalCourses)}</div>
-                            <div class="stat-label">دوره ثبت‌نام شده</div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-icon">✅</div>
-                            <div class="stat-value">${toPersianNum(completedCourses.length)}</div>
-                            <div class="stat-label">دوره تکمیل شده</div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-icon">🎯</div>
-                            <div class="stat-value">${personalityResult ? '✓' : '--'}</div>
-                            <div class="stat-label">تست شخصیت</div>
-                        </div>
-                    </div>
-
-                    <div class="section">
-                        <div class="section-header">
-                            <div class="section-title">📚 دوره‌های من</div>
-                            <a href="courses.html" class="section-link">مشاهده همه ←</a>
-                        </div>
-                        ${myCoursesHTML}
-                    </div>
-
-                    ${suggestionHTML}
-
-                    <div class="section">
-                        <div class="section-header">
-                            <div class="section-title">🏆 دستاوردها</div>
-                        </div>
-                        <div class="achievements-grid">${achievementsHTML}</div>
-                    </div>
-
-                    <div class="section">
-                        <div class="section-header">
-                            <div class="section-title">⚡ دسترسی سریع</div>
-                        </div>
-                        <div class="quick-grid">
-                            <a href="home.html" class="quick-link">
-                                <div class="quick-link-icon">📊</div>
-                                <div class="quick-link-title">نمای بازار</div>
-                            </a>
-                            <a href="assistant.html" class="quick-link">
-                                <div class="quick-link-icon">🤖</div>
-                                <div class="quick-link-title">دستیار هوشمند</div>
-                            </a>
-                            <a href="bourse.html" class="quick-link">
-                                <div class="quick-link-icon">🏢</div>
-                                <div class="quick-link-title">بورس ایران</div>
-                            </a>
-                            <a href="personality-test.html" class="quick-link">
-                                <div class="quick-link-icon">🧠</div>
-                                <div class="quick-link-title">آزمون خودشناسی</div>
-                            </a>
-                        </div>
-                    </div>
-
-                    <div class="profile-card">
-                        <div class="profile-header">
-                            <div class="profile-avatar">${firstLetter}</div>
-                            <div class="profile-info">
-                                <div class="profile-name">
-                                    ${escapeHtml(fullName)}
-                                    ${isAdmin ? '<span class="badge admin">👑 ادمین</span>' : ''}
-                                </div>
-                                <div class="profile-email">${escapeHtml(email)}</div>
-                                <div class="profile-badges">
-                                    <span class="badge">✨ عضو از ${joinDate}</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="profile-actions">
-                            <button class="profile-btn" onclick="openEditName()">✏️ ویرایش نام</button>
-                            <button class="profile-btn" onclick="openChangePass()">🔒 تغییر رمز</button>
-                            ${isAdmin ? '<a href="admin.html" class="profile-btn" style="background: rgba(220,38,38,0.15); color:#fca5a5; border-color: rgba(220,38,38,0.4);">🎯 پنل ادمین</a>' : ''}
-                            <button class="profile-btn danger" onclick="handleLogout()">🚪 خروج</button>
-                        </div>
-                    </div>
-                `;
-
-            } catch (err) {
-                console.log('Error:', err);
-                document.getElementById('content').innerHTML = `
-                    <div class="loading">❌ خطا در بارگذاری. لطفاً دوباره تلاش کن.</div>
-                `;
-            }
-        }
-
-        // ==========================================
-        // Modal Functions
-        // ==========================================
-        function openEditName() {
-            const currentName = currentUser.user_metadata?.full_name || '';
-            document.getElementById('editNameInput').value = currentName;
-            document.getElementById('editNameMsg').className = 'message';
-            document.getElementById('editNameModal').classList.add('show');
-        }
-
-        async function saveName() {
-            const newName = document.getElementById('editNameInput').value.trim();
-            const msg = document.getElementById('editNameMsg');
-
-            if (!newName) {
-                msg.textContent = '❌ لطفاً نام را وارد کن';
-                msg.className = 'message error';
-                return;
-            }
-
-            const { error } = await db.auth.updateUser({ data: { full_name: newName } });
-
-            if (error) {
-                msg.textContent = '❌ ' + error.message;
-                msg.className = 'message error';
-            } else {
-                msg.textContent = '✅ نام تغییر کرد';
-                msg.className = 'message success';
-                setTimeout(() => {
-                    closeModal('editNameModal');
-                    loadProfile();
-                }, 1500);
-            }
-        }
-
-        function openChangePass() {
-            document.getElementById('newPassword').value = '';
-            document.getElementById('confirmPassword').value = '';
-            document.getElementById('changePassMsg').className = 'message';
-            document.getElementById('changePassModal').classList.add('show');
-        }
-
-        async function savePassword() {
-            const newPass = document.getElementById('newPassword').value;
-            const confirmPass = document.getElementById('confirmPassword').value;
-            const msg = document.getElementById('changePassMsg');
-
-            if (newPass.length < 6) {
-                msg.textContent = '❌ رمز باید حداقل ۶ کاراکتر باشه';
-                msg.className = 'message error';
-                return;
-            }
-
-            if (newPass !== confirmPass) {
-                msg.textContent = '❌ رمزها یکسان نیستن';
-                msg.className = 'message error';
-                return;
-            }
-
-            const { error } = await db.auth.updateUser({ password: newPass });
-
-            if (error) {
-                msg.textContent = '❌ ' + error.message;
-                msg.className = 'message error';
-            } else {
-                msg.textContent = '✅ رمز تغییر کرد';
-                msg.className = 'message success';
-                setTimeout(() => closeModal('changePassModal'), 1500);
-            }
-        }
-
-        function closeModal(id) {
-            document.getElementById(id).classList.remove('show');
-        }
-
-        async function handleLogout() {
-            if (confirm('مطمئنی می‌خوای خارج بشی؟')) {
-                await db.auth.signOut();
-                window.location.href = 'login.html';
-            }
-        }
-
-        // ==========================================
-        // ابزارها
-        // ==========================================
-        function escapeHtml(text) {
-            if (!text) return '';
-            const div = document.createElement('div');
-            div.textContent = text;
-            return div.innerHTML;
-        }
-
-        function toPersianNum(num) {
-            if (num === 0 || num === null || num === undefined) return '۰';
-            const persianDigits = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
-            return String(num).replace(/\d/g, d => persianDigits[d]);
-        }
-
-        // ==========================================
-        // راه‌اندازی
-        // ==========================================
-        document.addEventListener('DOMContentLoaded', () => {
-            loadProfile();
+            const intrinsic = (globalOunceGold * globalUSD * 0.9 * weight) / OUNCE_TO_GRAM;
+            const bubble = ((marketPrice - intrinsic) / intrinsic) * 100;
+            bubbleEl.textContent = '💎 حباب: ' + (bubble >= 0 ? '+' : '') + toPersianNumber(bubble.toFixed(2)) + '٪';
+            bubbleEl.className = 'bubble-inline ' + (bubble > 0.5 ? 'up' : bubble < -0.5 ? 'down' : 'neutral');
         });
-    </script>
+
+        if (globalOunceSilver > 0) {
+            const silver999Calc = (globalOunceSilver * globalUSD * 0.999) / OUNCE_TO_GRAM;
+            setPrice('bubble-silver-ounce', globalOunceSilver, 'دلار', 2);
+            setPrice('bubble-silver-usd', globalUSD, 'تومان');
+            setPrice('bubble-silver-calc', Math.round(silver999Calc), 'تومان');
+        }
+    }
+
+    async function updateTicker() {
+        let tickerHTML = '';
+
+        const gold18El = document.getElementById('gold18-price');
+        const gold18Chg = document.getElementById('gold18-change');
+        if (gold18El && gold18El.textContent !== '--') {
+            tickerHTML += `<span class="ticker-item">🥇 طلا ۱۸: <span class="value">${gold18El.textContent}</span> ${gold18Chg?.textContent || ''}</span>`;
+        }
+
+        const usdEl = document.getElementById('usd-price');
+        const usdChg = document.getElementById('usd-change');
+        if (usdEl && usdEl.textContent !== '--') {
+            tickerHTML += `<span class="ticker-item">💵 دلار: <span class="value">${usdEl.textContent}</span> ${usdChg?.textContent || ''}</span>`;
+        }
+
+        const ounceEl = document.getElementById('ounce-gold-price');
+        if (ounceEl && ounceEl.textContent !== '--') {
+            tickerHTML += `<span class="ticker-item">🏅 انس طلا: <span class="value">${ounceEl.textContent}</span></span>`;
+        }
+
+        const silverEl = document.getElementById('ounce-silver-price');
+        if (silverEl && silverEl.textContent !== '--') {
+            tickerHTML += `<span class="ticker-item">🥈 انس نقره: <span class="value">${silverEl.textContent}</span></span>`;
+        }
+
+        const btcEl = document.getElementById('btc-price');
+        const btcChg = document.getElementById('btc-change');
+        if (btcEl && btcEl.textContent !== '--') {
+            tickerHTML += `<span class="ticker-item">₿ بیت‌کوین: <span class="value">${btcEl.textContent}</span> ${btcChg?.textContent || ''}</span>`;
+        }
+
+        const ethEl = document.getElementById('eth-price');
+        const ethChg = document.getElementById('eth-change');
+        if (ethEl && ethEl.textContent !== '--') {
+            tickerHTML += `<span class="ticker-item">⟠ اتریوم: <span class="value">${ethEl.textContent}</span> ${ethChg?.textContent || ''}</span>`;
+        }
+
+        const platEl = document.getElementById('ounce-platinum-price');
+        if (platEl && platEl.textContent !== '--') {
+            tickerHTML += `<span class="ticker-item">🔶 پلاتین: <span class="value">${platEl.textContent}</span></span>`;
+        }
+
+        const brentEl = document.getElementById('brent-price');
+        if (brentEl && brentEl.textContent !== '--') {
+            tickerHTML += `<span class="ticker-item">🛢️ برنت: <span class="value">${brentEl.textContent}</span></span>`;
+        }
+
+        if (!tickerHTML) {
+            tickerHTML = '<span class="ticker-item">⏳ در حال دریافت قیمت‌ها...</span>';
+        }
+
+        const el = document.getElementById('tickerContent');
+        if (el) el.innerHTML = tickerHTML + tickerHTML + tickerHTML;
+    }
+
+    document.addEventListener('DOMContentLoaded', async () => {
+        initChart('BINANCE:BTCUSDT');
+        await fetchBrsApi();
+        await fetchCrypto();
+        updateTicker();
+        setInterval(async () => {
+            await fetchBrsApi();
+            await fetchCrypto();
+            updateTicker();
+        }, 60000);
+    });
+</script>
 </body>
 </html>
