@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="fa" dir="rtl">
+<html lang="fa" dir="rtl" data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -24,6 +24,24 @@
             --white: #f8fafc;
             --gray: #94a3b8;
             --cyan: #22d3ee;
+            --navbar-bg: rgba(10, 10, 15, 0.92);
+            --border-subtle: rgba(255, 255, 255, 0.06);
+        }
+        [data-theme="light"] {
+            --bg-primary: #f8fafc;
+            --bg-secondary: #eef2f7;
+            --bg-card: #ffffff;
+            --gold: #b8860b;
+            --gold-light: #d4af37;
+            --gold-dark: #8b6508;
+            --blue: #2563eb;
+            --green: #059669;
+            --red: #dc2626;
+            --white: #0f172a;
+            --gray: #64748b;
+            --cyan: #0891b2;
+            --navbar-bg: rgba(248, 250, 252, 0.92);
+            --border-subtle: rgba(0, 0, 0, 0.06);
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -40,6 +58,14 @@
             min-height: 100vh;
             direction: rtl;
             overflow-x: hidden;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        [data-theme="light"] body {
+            background-image:
+                radial-gradient(circle at 0% 0%, rgba(184, 134, 11, 0.06) 0%, transparent 40%),
+                radial-gradient(circle at 100% 100%, rgba(37, 99, 235, 0.05) 0%, transparent 40%),
+                linear-gradient(rgba(0, 0, 0, 0.025) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 0, 0, 0.025) 1px, transparent 1px);
         }
         @keyframes fadeInUp {
             from { opacity: 0; transform: translateY(30px); }
@@ -60,6 +86,9 @@
             background: rgba(20, 20, 28, 0.5);
             border: 1px solid rgba(212, 175, 55, 0.1);
             border-radius: 16px; padding: 12px;
+        }
+        [data-theme="light"] .tabs-group {
+            background: rgba(255, 255, 255, 0.6);
         }
         .tabs-group-title {
             color: var(--gray); font-size: 11px; font-weight: 800;
@@ -88,10 +117,13 @@
             font-family: inherit; cursor: pointer; transition: 0.3s;
             white-space: nowrap; display: flex; align-items: center; gap: 6px;
         }
+        [data-theme="light"] .calc-tab {
+            background: rgba(255, 255, 255, 0.6);
+        }
         .calc-tab:hover { color: var(--gold); border-color: rgba(212, 175, 55, 0.4); }
         .calc-tab.active {
             background: linear-gradient(135deg, var(--gold), var(--gold-dark));
-            color: var(--bg-primary); border-color: var(--gold);
+            color: #fff; border-color: var(--gold);
             box-shadow: 0 5px 20px rgba(212, 175, 55, 0.3);
         }
         .calc-section { display: none; }
@@ -105,7 +137,9 @@
         .edu-icon { font-size: 24px; flex-shrink: 0; line-height: 1; }
         .edu-content { flex: 1; }
         .edu-title { color: #60a5fa; font-size: 13px; font-weight: 800; margin-bottom: 8px; }
+        [data-theme="light"] .edu-title { color: #2563eb; }
         .edu-text { color: #cbd5e1; font-size: 12.5px; line-height: 1.8; margin-bottom: 8px; }
+        [data-theme="light"] .edu-text { color: #475569; }
         .edu-usage { color: var(--gray); font-size: 11.5px; line-height: 1.7; }
         .edu-usage strong { color: var(--gold); }
         .calc-card {
@@ -135,9 +169,12 @@
             text-align: right;
             font-variant-numeric: tabular-nums;
         }
+        [data-theme="light"] .form-input {
+            background: #ffffff;
+            border-color: rgba(0, 0, 0, 0.1);
+        }
         .form-input:focus {
             border-color: var(--gold);
-            background: rgba(10, 10, 15, 0.9);
             box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.1);
         }
         .form-input::placeholder { color: rgba(148, 163, 184, 0.4); }
@@ -145,7 +182,7 @@
         .calc-btn {
             width: 100%; padding: 14px;
             background: linear-gradient(135deg, var(--gold), var(--gold-dark));
-            color: var(--bg-primary); border: none; border-radius: 12px;
+            color: #fff; border: none; border-radius: 12px;
             font-family: inherit; font-size: 15px; font-weight: 800;
             cursor: pointer; transition: 0.3s;
             box-shadow: 0 10px 30px rgba(212, 175, 55, 0.3);
@@ -155,6 +192,9 @@
             background: rgba(148, 163, 184, 0.1); color: #cbd5e1;
             border: 1px solid rgba(148, 163, 184, 0.2);
             box-shadow: none; font-size: 13px; padding: 10px; margin-top: 10px;
+        }
+        [data-theme="light"] .calc-btn.secondary {
+            color: #475569;
         }
         .result-card {
             background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(16, 185, 129, 0.03));
@@ -172,6 +212,7 @@
             background: rgba(10, 10, 15, 0.5); padding: 15px;
             border-radius: 12px; border-right: 3px solid var(--green);
         }
+        [data-theme="light"] .result-item { background: rgba(248, 250, 252, 0.8); }
         .result-item.gold { border-right-color: var(--gold); }
         .result-item.red { border-right-color: var(--red); }
         .result-item.blue { border-right-color: var(--blue); }
@@ -204,10 +245,11 @@
             color: #93c5fd; font-size: 12px; line-height: 1.7;
             display: flex; align-items: flex-start; gap: 8px;
         }
+        [data-theme="light"] .info-note { color: #1e40af; }
         .info-note::before { content: '💡'; font-size: 16px; flex-shrink: 0; }
         .vs-badge {
             display: inline-flex; align-items: center; justify-content: center;
-            background: var(--gold); color: var(--bg-primary);
+            background: var(--gold); color: #fff;
             width: 50px; height: 50px; border-radius: 50%;
             font-weight: 900; font-size: 14px; margin: 0 auto;
         }
@@ -219,6 +261,7 @@
             background: rgba(10, 10, 15, 0.5); padding: 15px;
             border-radius: 12px; text-align: center;
         }
+        [data-theme="light"] .comparison-side { background: rgba(248, 250, 252, 0.8); }
         .comparison-side h4 { color: var(--gold); font-size: 14px; margin-bottom: 10px; }
         .footer {
             text-align: center; padding: 30px 20px; color: var(--gray);
@@ -254,6 +297,7 @@
             color: #a78bfa; font-size: 16px; font-weight: 800;
             display: flex; align-items: center; gap: 8px;
         }
+        [data-theme="light"] .ai-card-title { color: #7c3aed; }
         .ai-output {
             background: rgba(10, 10, 15, 0.6);
             border: 1px solid rgba(139, 92, 246, 0.2);
@@ -261,20 +305,19 @@
             max-height: 600px; overflow-y: auto;
             color: #cbd5e1; font-size: 13.5px; line-height: 1.9;
         }
+        [data-theme="light"] .ai-output { background: #ffffff; color: #334155; }
         .ai-output h1 { color: #a78bfa; font-size: 18px; margin: 12px 0 8px; padding-bottom: 6px; border-bottom: 1px solid rgba(139, 92, 246, 0.2); }
         .ai-output h2 { color: #c4b5fd; font-size: 15px; margin: 12px 0 6px; }
         .ai-output h3 { color: #ddd6fe; font-size: 13.5px; margin: 10px 0 5px; }
+        [data-theme="light"] .ai-output h1,
+        [data-theme="light"] .ai-output h2,
+        [data-theme="light"] .ai-output h3 { color: #6d28d9; }
         .ai-output p { margin-bottom: 8px; }
         .ai-output ul, .ai-output ol { margin: 8px 20px 8px 0; padding-right: 15px; }
         .ai-output li { margin-bottom: 4px; }
         .ai-output strong { color: #ddd6fe; font-weight: 800; }
+        [data-theme="light"] .ai-output strong { color: #6d28d9; }
         .ai-output em { color: var(--gold); font-style: italic; }
-        .ai-output code {
-            background: rgba(139, 92, 246, 0.15); color: #c4b5fd;
-            padding: 2px 6px; border-radius: 4px;
-            font-family: 'Courier New', monospace; font-size: 12.5px;
-            direction: ltr; display: inline-block;
-        }
         .ai-loading {
             display: flex; flex-direction: column; align-items: center;
             gap: 12px; padding: 30px 20px; color: #a78bfa;
@@ -297,6 +340,7 @@
             background: rgba(139, 92, 246, 0.2);
             border-color: #8b5cf6; color: #c4b5fd;
         }
+        [data-theme="light"] .ai-action-btn { color: #7c3aed; }
         .market-btn {
             background: linear-gradient(135deg, #06b6d4, #0891b2);
             color: #fff; padding: 10px 18px; border-radius: 10px;
@@ -336,16 +380,18 @@
             border: 1px solid rgba(6, 182, 212, 0.15);
             border-radius: 12px; padding: 12px; text-align: center;
         }
+        [data-theme="light"] .market-price-item { background: #ffffff; }
         .market-price-item .icon { font-size: 20px; margin-bottom: 4px; }
         .market-price-item .name { color: var(--gray); font-size: 11px; margin-bottom: 4px; }
         .market-price-item .price {
-            color: #67e8f9; font-size: 13.5px; font-weight: 900;
+            color: var(--cyan); font-size: 13.5px; font-weight: 900;
             font-variant-numeric: tabular-nums;
         }
         .market-compare-table {
             background: rgba(10, 10, 15, 0.5);
             border-radius: 12px; overflow: hidden;
         }
+        [data-theme="light"] .market-compare-table { background: #f8fafc; }
         .market-row {
             display: grid;
             grid-template-columns: 1.5fr 1fr 1.2fr;
@@ -353,6 +399,7 @@
             border-bottom: 1px solid rgba(255, 255, 255, 0.05);
             align-items: center; font-size: 13px;
         }
+        [data-theme="light"] .market-row { border-bottom-color: rgba(0, 0, 0, 0.05); }
         .market-row:last-child { border-bottom: none; }
         .market-row.header {
             background: rgba(6, 182, 212, 0.1);
@@ -372,227 +419,150 @@
             border: 1px solid rgba(16, 185, 129, 0.3);
             color: #86efac;
         }
+        [data-theme="light"] .market-verdict.good { color: #065f46; }
         .market-verdict.bad {
             background: rgba(239, 68, 68, 0.1);
             border: 1px solid rgba(239, 68, 68, 0.3);
             color: #fca5a5;
         }
+        [data-theme="light"] .market-verdict.bad { color: #991b1b; }
         .market-verdict.neutral {
             background: rgba(212, 175, 55, 0.1);
             border: 1px solid rgba(212, 175, 55, 0.3);
             color: #fde68a;
         }
+        [data-theme="light"] .market-verdict.neutral { color: #92400e; }
+
         /* ===== Saved Calculations ===== */
         .save-btn {
             background: linear-gradient(135deg, #10b981, #059669);
-            color: #fff;
-            padding: 10px 18px;
-            border-radius: 10px;
-            border: none;
-            font-family: inherit;
-            font-size: 13px;
-            font-weight: 800;
-            cursor: pointer;
-            transition: 0.3s;
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
+            color: #fff; padding: 10px 18px; border-radius: 10px;
+            border: none; font-family: inherit; font-size: 13px;
+            font-weight: 800; cursor: pointer; transition: 0.3s;
+            display: inline-flex; align-items: center; gap: 6px;
         }
         .save-btn:hover:not(:disabled) {
             transform: translateY(-2px);
             box-shadow: 0 10px 25px rgba(16, 185, 129, 0.4);
         }
         .save-btn:disabled { opacity: 0.5; cursor: not-allowed; }
-
-        .saved-list {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
+        .saved-list { display: flex; flex-direction: column; gap: 12px; }
         .saved-item {
             background: linear-gradient(135deg, rgba(16, 185, 129, 0.08), rgba(16, 185, 129, 0.02));
             border: 1px solid rgba(16, 185, 129, 0.25);
-            border-radius: 15px;
-            padding: 15px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 12px;
-            flex-wrap: wrap;
+            border-radius: 15px; padding: 15px;
+            display: flex; justify-content: space-between;
+            align-items: center; gap: 12px; flex-wrap: wrap;
             transition: 0.3s;
         }
         .saved-item:hover {
             border-color: rgba(16, 185, 129, 0.5);
             transform: translateY(-2px);
         }
-        .saved-item .info {
-            flex: 1;
-            min-width: 200px;
-        }
+        .saved-item .info { flex: 1; min-width: 200px; }
         .saved-item .title {
-            color: var(--white);
-            font-size: 15px;
-            font-weight: 800;
-            margin-bottom: 6px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
+            color: var(--white); font-size: 15px; font-weight: 800;
+            margin-bottom: 6px; display: flex; align-items: center; gap: 8px;
+            flex-wrap: wrap;
         }
         .saved-item .summary {
-            color: var(--gold);
-            font-size: 13px;
-            font-weight: 700;
+            color: var(--gold); font-size: 13px; font-weight: 700;
             margin-bottom: 6px;
         }
         .saved-item .meta {
-            color: var(--gray);
-            font-size: 11px;
-            display: flex;
-            gap: 12px;
-            flex-wrap: wrap;
-       }
-       .saved-item .actions {
-            display: flex;
-            gap: 6px;
-       }
-       .saved-item .icon-btn {
-            width: 38px;
-            height: 38px;
-            border-radius: 10px;
+            color: var(--gray); font-size: 11px;
+            display: flex; gap: 12px; flex-wrap: wrap;
+        }
+        .saved-item .actions { display: flex; gap: 6px; }
+        .saved-item .icon-btn {
+            width: 38px; height: 38px; border-radius: 10px;
             border: 1px solid rgba(255, 255, 255, 0.1);
-            background: rgba(10, 10, 15, 0.5);
-            color: var(--gray);
-            cursor: pointer;
-            font-size: 16px;
-            transition: 0.3s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            background: rgba(10, 10, 15, 0.5); color: var(--gray);
+            cursor: pointer; font-size: 16px; transition: 0.3s;
+            display: flex; align-items: center; justify-content: center;
             font-family: inherit;
         }
+        [data-theme="light"] .saved-item .icon-btn { background: #f8fafc; }
         .saved-item .icon-btn:hover {
-            border-color: var(--gold);
-            color: var(--gold);
+            border-color: var(--gold); color: var(--gold);
             background: rgba(212, 175, 55, 0.1);
         }
         .saved-item .icon-btn.danger:hover {
-            border-color: var(--red);
-            color: var(--red);
+            border-color: var(--red); color: var(--red);
             background: rgba(239, 68, 68, 0.1);
         }
         .saved-empty {
-            text-align: center;
-            padding: 40px 20px;
-            color: var(--gray);
-            font-size: 13px;
+            text-align: center; padding: 40px 20px;
+            color: var(--gray); font-size: 13px;
         }
-        .saved-empty .icon {
-            font-size: 50px;
-            margin-bottom: 12px;
-            opacity: 0.5;
-        }
+        .saved-empty .icon { font-size: 50px; margin-bottom: 12px; opacity: 0.5; }
         .saved-loading {
-            text-align: center;
-            padding: 30px 20px;
-            color: #a78bfa;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 12px;
+            text-align: center; padding: 30px 20px; color: #a78bfa;
+            display: flex; flex-direction: column; align-items: center; gap: 12px;
         }
         .saved-loading .spinner {
-            width: 36px;
-            height: 36px;
+            width: 36px; height: 36px;
             border: 3px solid rgba(16, 185, 129, 0.2);
-            border-top-color: #10b981;
-            border-radius: 50%;
-           animation: spin 1s linear infinite;
+            border-top-color: #10b981; border-radius: 50%;
+            animation: spin 1s linear infinite;
         }
         .saved-badge {
-            display: inline-block;
-            padding: 3px 10px;
-            border-radius: 8px;
-            font-size: 10.5px;
-            font-weight: 800;
-            background: rgba(212, 175, 55, 0.15);
-            color: var(--gold);
+            display: inline-block; padding: 3px 10px; border-radius: 8px;
+            font-size: 10.5px; font-weight: 800;
+            background: rgba(212, 175, 55, 0.15); color: var(--gold);
             border: 1px solid rgba(212, 175, 55, 0.3);
         }
         /* ===== Modal ===== */
         .modal-overlay {
-            position: fixed;
-            inset: 0;
+            position: fixed; inset: 0;
             background: rgba(0, 0, 0, 0.85);
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
-            z-index: 99999;
-            display: none;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-            overflow-y: auto;
+            z-index: 99999; display: none;
+            align-items: center; justify-content: center;
+            padding: 20px; overflow-y: auto;
         }
         .modal-overlay.show { display: flex; }
         .modal-box {
             background: var(--bg-card);
             border: 1px solid rgba(212, 175, 55, 0.3);
-            border-radius: 20px;
-            padding: 25px;
-            max-width: 600px;
-            width: 100%;
-            max-height: 90vh;
-           overflow-y: auto;
+            border-radius: 20px; padding: 25px;
+            max-width: 600px; width: 100%;
+            max-height: 90vh; overflow-y: auto;
         }
         .modal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-            padding-bottom: 15px;
+            display: flex; justify-content: space-between; align-items: center;
+            margin-bottom: 20px; padding-bottom: 15px;
             border-bottom: 1px solid rgba(212, 175, 55, 0.2);
-            flex-wrap: wrap;
-            gap: 10px;
+            flex-wrap: wrap; gap: 10px;
         }
-        .modal-title {
-            color: var(--gold);
-            font-size: 18px;
-            font-weight: 800;
-        }
+        .modal-title { color: var(--gold); font-size: 18px; font-weight: 800; }
         .modal-close {
-            background: rgba(239, 68, 68, 0.1);
-            color: var(--red);
+            background: rgba(239, 68, 68, 0.1); color: var(--red);
             border: 1px solid rgba(239, 68, 68, 0.3);
-            width: 38px;
-            height: 38px;
-            border-radius: 10px;
-            cursor: pointer;
-            font-size: 18px;
-            font-family: inherit;
+            width: 38px; height: 38px; border-radius: 10px;
+            cursor: pointer; font-size: 18px; font-family: inherit;
         }
-        .modal-close:hover {
-            background: rgba(239, 68, 68, 0.25);
-        }
-        .modal-body {
-            color: #cbd5e1;
-            font-size: 13.5px;
-            line-height: 1.9;
-        }
+        .modal-close:hover { background: rgba(239, 68, 68, 0.25); }
+        .modal-body { color: #cbd5e1; font-size: 13.5px; line-height: 1.9; }
+        [data-theme="light"] .modal-body { color: #334155; }
         .modal-row {
-            display: flex;
-            justify-content: space-between;
-            padding: 10px 12px;
-            background: rgba(10, 10, 15, 0.5);
-            border-radius: 10px;
-            margin-bottom: 8px;
+            display: flex; justify-content: space-between;
+            padding: 10px 12px; background: rgba(10, 10, 15, 0.5);
+            border-radius: 10px; margin-bottom: 8px;
             border-right: 3px solid var(--gold);
         }
+        [data-theme="light"] .modal-row { background: #f8fafc; }
         .modal-row .k { color: var(--gray); font-size: 12px; }
         .modal-row .v { color: var(--white); font-weight: 800; font-size: 13.5px; }
-       .inflation-year-row {
-           display: grid; grid-template-columns: 100px 1fr;
-           gap: 12px; align-items: center; padding: 12px 0;
-           border-bottom: 1px dashed rgba(255, 255, 255, 0.05);
+
+        /* ===== Inflation History ===== */
+        .inflation-year-row {
+            display: grid; grid-template-columns: 100px 1fr;
+            gap: 12px; align-items: center; padding: 12px 0;
+            border-bottom: 1px dashed rgba(255, 255, 255, 0.05);
         }
+        [data-theme="light"] .inflation-year-row { border-bottom-color: rgba(0, 0, 0, 0.05); }
         .inflation-year-row:last-child { border-bottom: none; }
         .inflation-year-row .year {
             color: var(--gold); font-size: 15px; font-weight: 800;
@@ -609,6 +579,7 @@
             border-radius: 12px; border-right: 3px solid var(--gold);
             margin-bottom: 8px;
         }
+        [data-theme="light"] .inflation-list-item { background: #f8fafc; }
         .inflation-list-item .info { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
         .inflation-list-item .year-badge {
             background: rgba(212, 175, 55, 0.15); color: var(--gold);
@@ -625,6 +596,7 @@
             cursor: pointer; font-size: 14px; transition: 0.3s;
             display: flex; align-items: center; justify-content: center;
         }
+        [data-theme="light"] .inflation-list-item .icon-btn-small { background: #f8fafc; }
         .inflation-list-item .icon-btn-small.danger:hover {
             border-color: var(--red); color: var(--red);
             background: rgba(239, 68, 68, 0.1);
@@ -638,6 +610,7 @@
             border-radius: 12px; text-align: center;
             border: 1px solid rgba(212, 175, 55, 0.15);
         }
+        [data-theme="light"] .inflation-summary-card { background: #f8fafc; }
         .inflation-summary-card .label { color: var(--gray); font-size: 11px; margin-bottom: 6px; }
         .inflation-summary-card .value {
             color: var(--gold); font-size: 20px; font-weight: 900;
@@ -655,6 +628,7 @@
             padding: 15px; margin-top: 15px; height: 280px;
             position: relative;
         }
+        [data-theme="light"] .chart-wrapper-mini { background: #f8fafc; }
         .type-selector {
             display: grid; grid-template-columns: repeat(3, 1fr);
             gap: 10px; margin-bottom: 20px;
@@ -665,6 +639,8 @@
             border-radius: 12px; padding: 15px 10px;
             cursor: pointer; transition: 0.3s; text-align: center;
         }
+        [data-theme="light"] .type-card { background: #f8fafc; }
+        .type-card:hover { border-color: rgba(212, 175, 55, 0.4); }
         .type-card.active {
             background: linear-gradient(135deg, rgba(212, 175, 55, 0.15), rgba(212, 175, 55, 0.05));
             border-color: var(--gold);
@@ -675,6 +651,7 @@
             margin-bottom: 4px;
         }
         .type-card .desc { color: var(--gray); font-size: 10.5px; line-height: 1.5; }
+
         @media (max-width: 600px) {
             .main-container { padding: 90px 15px 30px; }
             .page-header h1 { font-size: 26px; }
@@ -695,7 +672,7 @@
     </style>
 </head>
 <body>
-<div class="main-container">
+    <div class="main-container">
     <div class="page-header">
         <h1>🧮 ماشین‌حساب مالی</h1>
         <p>ابزار حرفه‌ای تحلیل سرمایه‌گذاری و مدیریت ریسک</p>
@@ -719,6 +696,12 @@
                 <button class="calc-tab" onclick="switchTab('breakeven', this)">⚖️ سربه‌سر</button>
                 <button class="calc-tab" onclick="switchTab('risk', this)">🎲 ریسک</button>
                 <button class="calc-tab" onclick="switchTab('position', this)">🎯 پوزیشن</button>
+            </div>
+        </div>
+        <div class="tabs-group">
+            <div class="tabs-group-title">🔧 ابزارهای من</div>
+            <div class="calc-tabs">
+                <button class="calc-tab" onclick="switchTab('saved', this)">💾 محاسبات من</button>
             </div>
         </div>
     </div>
@@ -790,6 +773,7 @@
 
         <button class="market-btn" id="market-btn-dca" onclick="compareWithMarket('dca')" style="width:100%; margin-top:15px; justify-content:center; padding:14px;">📊 مقایسه با بازار واقعی</button>
         <button class="ai-btn" id="ai-btn-dca" onclick="analyzeWithAI('dca')" style="width:100%; margin-top:10px; justify-content:center; padding:14px;">🤖 تحلیل با AI</button>
+        <button class="save-btn" id="save-btn-dca" onclick="saveCalculation('dca')" style="width:100%; margin-top:10px; justify-content:center; padding:14px;">💾 ذخیره این محاسبه</button>
 
         <div class="market-card" id="market-card-dca">
             <div class="market-card-header">
@@ -879,6 +863,7 @@
 
         <button class="market-btn" id="market-btn-compound" onclick="compareWithMarket('compound')" style="width:100%; margin-top:15px; justify-content:center; padding:14px;">📊 مقایسه با بازار واقعی</button>
         <button class="ai-btn" id="ai-btn-compound" onclick="analyzeWithAI('compound')" style="width:100%; margin-top:10px; justify-content:center; padding:14px;">🤖 تحلیل با AI</button>
+        <button class="save-btn" id="save-btn-compound" onclick="saveCalculation('compound')" style="width:100%; margin-top:10px; justify-content:center; padding:14px;">💾 ذخیره این محاسبه</button>
 
         <div class="market-card" id="market-card-compound">
             <div class="market-card-header">
@@ -962,6 +947,7 @@
         </div>
 
         <button class="ai-btn" id="ai-btn-goal" onclick="analyzeWithAI('goal')" style="width:100%; margin-top:15px; justify-content:center; padding:14px;">🤖 تحلیل با AI</button>
+        <button class="save-btn" id="save-btn-goal" onclick="saveCalculation('goal')" style="width:100%; margin-top:10px; justify-content:center; padding:14px;">💾 ذخیره این محاسبه</button>
 
         <div class="ai-card" id="ai-card-goal">
             <div class="ai-card-header">
@@ -1039,6 +1025,7 @@
         </div>
 
         <button class="ai-btn" id="ai-btn-compare" onclick="analyzeWithAI('compare')" style="width:100%; margin-top:15px; justify-content:center; padding:14px;">🤖 تحلیل با AI</button>
+        <button class="save-btn" id="save-btn-compare" onclick="saveCalculation('compare')" style="width:100%; margin-top:10px; justify-content:center; padding:14px;">💾 ذخیره این محاسبه</button>
 
         <div class="ai-card" id="ai-card-compare">
             <div class="ai-card-header">
@@ -1110,6 +1097,7 @@
         </div>
 
         <button class="ai-btn" id="ai-btn-inflation" onclick="analyzeWithAI('inflation')" style="width:100%; margin-top:15px; justify-content:center; padding:14px;">🤖 تحلیل با AI</button>
+        <button class="save-btn" id="save-btn-inflation" onclick="saveCalculation('inflation')" style="width:100%; margin-top:10px; justify-content:center; padding:14px;">💾 ذخیره این محاسبه</button>
 
         <div class="ai-card" id="ai-card-inflation">
             <div class="ai-card-header">
@@ -1329,6 +1317,7 @@
         </div>
 
         <button class="ai-btn" id="ai-btn-breakeven" onclick="analyzeWithAI('breakeven')" style="width:100%; margin-top:15px; justify-content:center; padding:14px;">🤖 تحلیل با AI</button>
+        <button class="save-btn" id="save-btn-breakeven" onclick="saveCalculation('breakeven')" style="width:100%; margin-top:10px; justify-content:center; padding:14px;">💾 ذخیره این محاسبه</button>
 
         <div class="ai-card" id="ai-card-breakeven">
             <div class="ai-card-header">
@@ -1379,6 +1368,7 @@
         </div>
 
         <button class="ai-btn" id="ai-btn-risk" onclick="analyzeWithAI('risk')" style="width:100%; margin-top:15px; justify-content:center; padding:14px;">🤖 تحلیل با AI</button>
+        <button class="save-btn" id="save-btn-risk" onclick="saveCalculation('risk')" style="width:100%; margin-top:10px; justify-content:center; padding:14px;">💾 ذخیره این محاسبه</button>
 
         <div class="ai-card" id="ai-card-risk">
             <div class="ai-card-header">
@@ -1460,6 +1450,7 @@
         </div>
 
         <button class="ai-btn" id="ai-btn-position" onclick="analyzeWithAI('position')" style="width:100%; margin-top:15px; justify-content:center; padding:14px;">🤖 تحلیل با AI</button>
+        <button class="save-btn" id="save-btn-position" onclick="saveCalculation('position')" style="width:100%; margin-top:10px; justify-content:center; padding:14px;">💾 ذخیره این محاسبه</button>
 
         <div class="ai-card" id="ai-card-position">
             <div class="ai-card-header">
@@ -1471,25 +1462,64 @@
             </div>
         </div>
     </div>
+
+    <!-- ============ تب ۹: محاسبات من ============ -->
+    <div class="calc-section" id="section-saved">
+        <div class="edu-card">
+            <div class="edu-icon">💾</div>
+            <div class="edu-content">
+                <div class="edu-title">محاسبات ذخیره‌شده شما</div>
+                <div class="edu-text">
+                    اینجا همه محاسباتی که ذخیره کردی رو می‌بینی. می‌تونی بعداً برگردی، ببینی یا حذف کنی.
+                </div>
+                <div class="edu-usage">
+                    <strong>💡 کاربرد:</strong> پیگیری محاسبات، مقایسه برنامه‌های مختلف، ذخیره سناریوها
+                </div>
+            </div>
+        </div>
+
+        <div class="calc-card">
+            <h2>💾 محاسبات من</h2>
+            <div id="savedContainer">
+                <div class="saved-loading">
+                    <div class="spinner"></div>
+                    <div>⏳ در حال بارگذاری...</div>
+                </div>
+            </div>
+            <button class="calc-btn secondary" onclick="loadSavedCalculations()" style="margin-top:15px;">🔄 بروزرسانی</button>
+        </div>
+    </div>
 </div>
 
 <footer class="footer">
     © ۱۴۰۵ آکادمی شمعدون | تمامی حقوق محفوظ است
 </footer>
 
+<!-- Modal مشاهده محاسبه -->
+<div class="modal-overlay" id="savedModal">
+    <div class="modal-box">
+        <div class="modal-header">
+            <div class="modal-title" id="modalTitle">مشاهده محاسبه</div>
+            <button class="modal-close" onclick="closeSavedModal()">✕</button>
+        </div>
+        <div class="modal-body" id="modalBody">
+            ...
+        </div>
+    </div>
+</div>
+
 <script src="supabase-config.js"></script>
-<script src="navbar.js"></script>    
- <script>
+<script src="navbar.js"></script>
+<script>
     // ==========================================
     // ابزارها
     // ==========================================
-    // ===== تبدیل اعداد انگلیسی به فارسی (برای نمایش) =====
     function toFaDigits(str) {
         if (str === null || str === undefined) return '';
         const persianDigits = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
         return String(str).replace(/\d/g, d => persianDigits[d]);
     }
-    // ===== تبدیل اعداد فارسی/عربی به انگلیسی =====
+
     function toEnDigits(str) {
         if (str === null || str === undefined) return '';
         let s = String(str);
@@ -1498,13 +1528,14 @@
         persianDigits.forEach((d, i) => { s = s.split(d).join(String(i)); });
         arabicDigits.forEach((d, i) => { s = s.split(d).join(String(i)); });
         return s;
-    } 
-    
+    }
+
     function toFa(num) {
         if (num === null || num === undefined) return '--';
         const persianDigits = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
         return String(num).replace(/\d/g, d => persianDigits[d]);
     }
+
     function formatBigNum(num) {
         if (num === null || num === undefined || isNaN(num)) return '--';
         const n = Number(num);
@@ -1528,28 +1559,18 @@
         return toFa(str);
     }
 
-    // ✅ parseNum قوی - پشتیبانی از اعداد فارسی، عربی و انگلیسی
     function parseNum(str) {
         if (str === null || str === undefined || str === '') return 0;
-        let s = String(str);
-        // تبدیل اعداد فارسی به انگلیسی
-        const persianDigits = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
-        const arabicDigits = ['٠', '١', '٢', '٣', '٤', '٥', '٦', '٧', '٨', '٩'];
-        persianDigits.forEach((d, i) => { s = s.split(d).join(i); });
-        arabicDigits.forEach((d, i) => { s = s.split(d).join(i); });
-        // حذف هر چیزی غیر از رقم
-        const cleaned = s.replace(/[^\d]/g, '');
+        const en = toEnDigits(str);
+        const cleaned = en.replace(/[^\d]/g, '');
         return cleaned ? parseInt(cleaned, 10) : 0;
     }
 
-    // ✅ تشخیص خودکار فیلد عددی + فرمت
     function handleNumericInput(e) {
         const input = e.target;
         if (!input || !input.matches || !input.matches('input[inputmode="numeric"]')) return;
-    
         const raw = toEnDigits(input.value).replace(/[^\d]/g, '');
         if (raw) {
-            // فرمت با comma + تبدیل به فارسی برای نمایش
             const withComma = parseInt(raw, 10).toLocaleString('en-US');
             input.value = toFaDigits(withComma);
         } else {
@@ -1557,7 +1578,6 @@
         }
     }
 
-    // اعمال به همه فیلدهای عددی
     function applyNumberFormatting() {
         document.querySelectorAll('input[inputmode="numeric"]').forEach(input => {
             input.removeEventListener('input', handleNumericInput);
@@ -1583,6 +1603,9 @@
         if (target) target.classList.add('active');
         if (tabId === 'inflation-history') {
             renderInflationHistory();
+        }
+        if (tabId === 'saved') {
+            loadSavedCalculations();
         }
     }
 
@@ -2015,8 +2038,8 @@
         const listEl = document.getElementById('inflationList');
 
         if (!inflationHistory || inflationHistory.length === 0) {
-            summaryCard.style.display = 'none';
-            listCard.style.display = 'none';
+            if (summaryCard) summaryCard.style.display = 'none';
+            if (listCard) listCard.style.display = 'none';
             return;
         }
 
@@ -2072,6 +2095,7 @@
         const sorted = [...inflationHistory].sort((a, b) => a.year - b.year);
         const labels = sorted.map(item => toFa(item.year));
         const data = sorted.map(item => item.rate);
+        const isLight = document.documentElement.getAttribute('data-theme') === 'light';
 
         inflationChart = new Chart(ctx, {
             type: 'line',
@@ -2086,7 +2110,7 @@
                     tension: 0.3,
                     fill: true,
                     pointBackgroundColor: '#d4af37',
-                    pointBorderColor: '#0a0a0f',
+                    pointBorderColor: isLight ? '#ffffff' : '#0a0a0f',
                     pointBorderWidth: 2,
                     pointRadius: 6,
                     pointHoverRadius: 8
@@ -2098,15 +2122,15 @@
                 plugins: {
                     legend: {
                         labels: {
-                            color: '#cbd5e1',
+                            color: isLight ? '#0f172a' : '#cbd5e1',
                             font: { family: 'Vazirmatn', size: 12 },
                             usePointStyle: true
                         }
                     },
                     tooltip: {
-                        backgroundColor: '#1a1a24',
+                        backgroundColor: isLight ? '#ffffff' : '#1a1a24',
                         titleColor: '#d4af37',
-                        bodyColor: '#f8fafc',
+                        bodyColor: isLight ? '#0f172a' : '#f8fafc',
                         borderColor: '#d4af37',
                         borderWidth: 1,
                         padding: 12,
@@ -2121,16 +2145,16 @@
                 },
                 scales: {
                     x: {
-                        ticks: { color: '#94a3b8', font: { family: 'Vazirmatn', size: 11 } },
-                        grid: { color: 'rgba(255, 255, 255, 0.05)' }
+                        ticks: { color: isLight ? '#64748b' : '#94a3b8', font: { family: 'Vazirmatn', size: 11 } },
+                        grid: { color: isLight ? 'rgba(0, 0, 0, 0.05)' : 'rgba(255, 255, 255, 0.05)' }
                     },
                     y: {
                         ticks: {
-                            color: '#94a3b8',
+                            color: isLight ? '#64748b' : '#94a3b8',
                             font: { family: 'Vazirmatn', size: 11 },
                             callback: v => toFa(v) + '٪'
                         },
-                        grid: { color: 'rgba(255, 255, 255, 0.05)' }
+                        grid: { color: isLight ? 'rgba(0, 0, 0, 0.05)' : 'rgba(255, 255, 255, 0.05)' }
                     }
                 }
             }
@@ -2180,42 +2204,43 @@
         }
 
         document.getElementById('result-real-value').classList.add('show');
-    }           // ==========================================
-        // 🤖 موتور AI
+    }
         // ==========================================
-        const HARDCODED_AVALAI_KEY = 'aa-B6ef1JQ4HnDNBMRw4598qRGOKr7z3TttiznZubQXfD2A1iMf';
-        const AVALAI_ENDPOINT = 'https://api.avalai.ir/v1/chat/completions';
-        const AI_MODEL = 'gpt-4o-mini';
+    // 🤖 موتور AI
+    // ==========================================
+    const HARDCODED_AVALAI_KEY = 'aa-B6ef1JQ4HnDNBMRw4598qRGOKr7z3TttiznZubQXfD2A1iMf';
+    const AVALAI_ENDPOINT = 'https://api.avalai.ir/v1/chat/completions';
+    const AI_MODEL = 'gpt-4o-mini';
 
-        const aiState = {
-            dca: { data: null, text: '' },
-            compound: { data: null, text: '' },
-            goal: { data: null, text: '' },
-            compare: { data: null, text: '' },
-            inflation: { data: null, text: '' },
-            breakeven: { data: null, text: '' },
-            risk: { data: null, text: '' },
-            position: { data: null, text: '' }
-        };
+    const aiState = {
+        dca: { data: null, text: '' },
+        compound: { data: null, text: '' },
+        goal: { data: null, text: '' },
+        compare: { data: null, text: '' },
+        inflation: { data: null, text: '' },
+        breakeven: { data: null, text: '' },
+        risk: { data: null, text: '' },
+        position: { data: null, text: '' }
+    };
 
-        async function getAvalaiKey() {
-            try {
-                if (typeof db !== 'undefined') {
-                    const { data, error } = await db
-                        .from('app_settings')
-                        .select('value')
-                        .eq('key', 'AVALAI_API_KEY')
-                        .single();
-                    if (!error && data && data.value) return data.value;
-                }
-            } catch (e) {
-                console.warn('AVALAI_API_KEY از Supabase خوانده نشد:', e);
+    async function getAvalaiKey() {
+        try {
+            if (typeof db !== 'undefined') {
+                const { data, error } = await db
+                    .from('app_settings')
+                    .select('value')
+                    .eq('key', 'AVALAI_API_KEY')
+                    .single();
+                if (!error && data && data.value) return data.value;
             }
-            return HARDCODED_AVALAI_KEY;
+        } catch (e) {
+            console.warn('AVALAI_API_KEY از Supabase خوانده نشد:', e);
         }
+        return HARDCODED_AVALAI_KEY;
+    }
 
-        const AI_PROMPTS = {
-            dca: (d) => `شما یک مشاور مالی حرفه‌ای و دلسوز ایرانی هستید. کاربر این محاسبه DCA را انجام داده:
+    const AI_PROMPTS = {
+        dca: (d) => `شما یک مشاور مالی حرفه‌ای و دلسوز ایرانی هستید. کاربر این محاسبه DCA را انجام داده:
 
 📊 اطلاعات محاسبه:
 - سرمایه‌گذاری ماهانه: ${formatNum(d.monthly)} تومان
@@ -2237,7 +2262,7 @@
 لحن: صمیمی، صادقانه، آموزشی. از ایموجی استفاده کن. حداکثر ۴۰۰ کلمه.
 ⚠️ مهم: تحلیل صرفاً آموزشی است و توصیه سرمایه‌گذاری نیست.`,
 
-            compound: (d) => `شما یک مشاور مالی حرفه‌ای ایرانی هستید. کاربر این محاسبه سود مرکب را انجام داده:
+        compound: (d) => `شما یک مشاور مالی حرفه‌ای ایرانی هستید. کاربر این محاسبه سود مرکب را انجام داده:
 
 📊 اطلاعات:
 - اصل سرمایه: ${formatNum(d.principal)} تومان
@@ -2258,7 +2283,7 @@
 لحن صمیمی، ایموجی، حداکثر ۴۰۰ کلمه.
 ⚠️ تحلیل آموزشی، نه توصیه سرمایه‌گذاری.`,
 
-            goal: (d) => `مشاور مالی ایرانی. کاربر هدف مالی گذاشته:
+        goal: (d) => `مشاور مالی ایرانی. کاربر هدف مالی گذاشته:
 
 📊 اطلاعات:
 - هدف: ${formatNum(d.target)} تومان
@@ -2279,7 +2304,7 @@
 صمیمی، ایموجی، حداکثر ۴۰۰ کلمه.
 ⚠️ آموزشی، نه توصیه.`,
 
-            compare: (d) => `مشاور مالی ایرانی. کاربر دو گزینه را مقایسه کرده:
+        compare: (d) => `مشاور مالی ایرانی. کاربر دو گزینه را مقایسه کرده:
 
 🅰️ گزینه اول:
 - مبلغ: ${formatNum(d.aAmount)} تومان
@@ -2303,7 +2328,7 @@
 صمیمی، ایموجی، حداکثر ۴۰۰ کلمه.
 ⚠️ آموزشی.`,
 
-            inflation: (d) => `مشاور مالی ایرانی. کاربر تورم را محاسبه کرده:
+        inflation: (d) => `مشاور مالی ایرانی. کاربر تورم را محاسبه کرده:
 
 📊 اطلاعات:
 - مبلغ: ${formatNum(d.amount)} تومان
@@ -2322,7 +2347,7 @@
 صمیمی، ایموجی، حداکثر ۴۰۰ کلمه.
 ⚠️ آموزشی.`,
 
-            breakeven: (d) => `مشاور مالی ایرانی. کاربر نقطه سربه‌سر را محاسبه کرده:
+        breakeven: (d) => `مشاور مالی ایرانی. کاربر نقطه سربه‌سر را محاسبه کرده:
 
 📊 اطلاعات:
 - قیمت خرید: ${formatNum(d.buyPrice)} تومان
@@ -2343,7 +2368,7 @@
 صمیمی، ایموجی، حداکثر ۳۵۰ کلمه.
 ⚠️ آموزشی.`,
 
-            risk: (d) => `مشاور مالی ایرانی. کاربر تحلیل ریسک انجام داده:
+        risk: (d) => `مشاور مالی ایرانی. کاربر تحلیل ریسک انجام داده:
 
 📊 اطلاعات:
 - کل سرمایه: ${formatNum(d.total)} تومان
@@ -2361,7 +2386,7 @@ ${d.assets.map(a => `  • ${a.label}: ${toFa(a.percent)}٪ (${formatNum(d.total
 صمیمی، ایموجی، حداکثر ۴۰۰ کلمه.
 ⚠️ آموزشی.`,
 
-            position: (d) => `مشاور مالی ایرانی. کاربر پوزیشن‌سایزینگ انجام داده:
+        position: (d) => `مشاور مالی ایرانی. کاربر پوزیشن‌سایزینگ انجام داده:
 
 📊 اطلاعات:
 - کل سرمایه: ${formatNum(d.total)} تومان
@@ -2384,456 +2409,799 @@ ${d.assets.map(a => `  • ${a.label}: ${toFa(a.percent)}٪ (${formatNum(d.total
 
 صمیمی، ایموجی، حداکثر ۳۵۰ کلمه.
 ⚠️ آموزشی.`
-        };
+    };
 
-        function collectAIData(type) {
-            try {
-                if (type === 'dca') {
-                    const monthly = parseNum(document.getElementById('dca-monthly').value);
-                    const months = parseInt(document.getElementById('dca-months').value) || 0;
-                    const annualRate = parseFloat(document.getElementById('dca-rate').value) || 0;
-                    const initial = parseNum(document.getElementById('dca-initial').value);
-                    const monthlyRate = annualRate / 100 / 12;
-                    let final;
-                    if (monthlyRate === 0) final = monthly * months + initial;
-                    else {
-                        const f = Math.pow(1 + monthlyRate, months);
-                        final = monthly * ((f - 1) / monthlyRate) + initial * f;
-                    }
-                    const totalPrincipal = monthly * months + initial;
-                    return { monthly, months, annualRate, initial, final, totalPrincipal, totalProfit: final - totalPrincipal, ratio: final / totalPrincipal };
-                }
-                if (type === 'compound') {
-                    const principal = parseNum(document.getElementById('cmp-principal').value);
-                    const annualRate = parseFloat(document.getElementById('cmp-rate').value) || 0;
-                    const years = parseFloat(document.getElementById('cmp-years').value) || 0;
-                    const n = parseInt(document.getElementById('cmp-compound').value) || 1;
-                    const final = principal * Math.pow(1 + annualRate / 100 / n, n * years);
-                    return { principal, annualRate, years, n, final, totalProfit: final - principal, totalReturn: (final / principal - 1) * 100 };
-                }
-                if (type === 'goal') {
-                    const target = parseNum(document.getElementById('goal-target').value);
-                    const years = parseFloat(document.getElementById('goal-years').value) || 0;
-                    const annualRate = parseFloat(document.getElementById('goal-rate').value) || 0;
-                    const initial = parseNum(document.getElementById('goal-initial').value);
-                    const months = years * 12;
-                    const mr = annualRate / 100 / 12;
-                    let monthlySaving;
-                    if (mr === 0) monthlySaving = (target - initial) / months;
-                    else {
-                        const f = Math.pow(1 + mr, months);
-                        monthlySaving = ((target - initial * f) * mr) / (f - 1);
-                    }
-                    const totalPrincipal = monthlySaving * months + initial;
-                    return { target, years, annualRate, initial, monthlySaving, totalPrincipal, totalProfit: target - totalPrincipal };
-                }
-                if (type === 'compare') {
-                    const aAmount = parseNum(document.getElementById('cmp-a-amount').value);
-                    const aRate = parseFloat(document.getElementById('cmp-a-rate').value) || 0;
-                    const bAmount = parseNum(document.getElementById('cmp-b-amount').value);
-                    const bRate = parseFloat(document.getElementById('cmp-b-rate').value) || 0;
-                    const years = parseFloat(document.getElementById('cmp-years2').value) || 0;
-                    return { aAmount, aRate, bAmount, bRate, years, aFinal: aAmount * Math.pow(1 + aRate / 100, years), bFinal: bAmount * Math.pow(1 + bRate / 100, years) };
-                }
-                if (type === 'inflation') {
-                    const amount = parseNum(document.getElementById('inf-amount').value);
-                    const rate = parseFloat(document.getElementById('inf-rate').value) || 0;
-                    const years = parseFloat(document.getElementById('inf-years').value) || 0;
-                    const futurePower = amount / Math.pow(1 + rate / 100, years);
-                    return { amount, rate, years, futurePower, loss: amount - futurePower };
-                }
-                if (type === 'breakeven') {
-                    const buyPrice = parseNum(document.getElementById('be-buy-price').value);
-                    const quantity = parseInt(document.getElementById('be-quantity').value) || 0;
-                    const buyFee = parseFloat(document.getElementById('be-buy-fee').value) || 0;
-                    const sellFee = parseFloat(document.getElementById('be-sell-fee').value) || 0;
-                    const totalBuy = buyPrice * quantity;
-                    const buyFeeAmount = totalBuy * (buyFee / 100);
-                    const breakevenPrice = (totalBuy + buyFeeAmount) / (quantity * (1 - sellFee / 100));
-                    return { buyPrice, quantity, buyFee, sellFee, breakevenPrice, breakevenPercent: ((breakevenPrice - buyPrice) / buyPrice) * 100, totalFee: buyFeeAmount + breakevenPrice * quantity * (sellFee / 100) };
-                }
-                if (type === 'risk') {
-                    const total = parseNum(document.getElementById('risk-total').value);
-                    const profileKey = document.getElementById('risk-profile').value;
-                    const profile = portfolios[profileKey];
-                    return { total, profileName: profile.name, assets: profile.assets };
-                }
-                if (type === 'position') {
-                    const total = parseNum(document.getElementById('pos-total').value);
-                    const riskPercent = parseFloat(document.getElementById('pos-risk-percent').value) || 0;
-                    const entry = parseNum(document.getElementById('pos-entry').value);
-                    const stop = parseNum(document.getElementById('pos-stop').value);
-                    const target = parseNum(document.getElementById('pos-target').value);
-                    const maxLoss = total * (riskPercent / 100);
-                    const stopDist = Math.abs(entry - stop);
-                    const positionSize = maxLoss / stopDist;
-                    const maxProfit = target > 0 ? positionSize * Math.abs(target - entry) : 0;
-                    return { total, riskPercent, entry, stop, target, positionSize, positionAmount: positionSize * entry, maxLoss, maxProfit, rr: maxLoss > 0 ? maxProfit / maxLoss : 0 };
-                }
-            } catch (e) {
-                console.error('collectAIData error:', e);
-            }
-            return null;
-        }
-
-        function resetAICard(type) {
-            const card = document.getElementById('ai-card-' + type);
-            const output = document.getElementById('ai-output-' + type);
-            const btn = document.getElementById('ai-btn-' + type);
-            if (card) card.classList.remove('show');
-            if (output) output.innerHTML = `<div class="ai-loading"><div class="spinner"></div><div>در حال تحلیل...</div></div>`;
-            if (btn) btn.disabled = false;
-            if (aiState[type]) { aiState[type].data = null; aiState[type].text = ''; }
-        }
-
-        async function analyzeWithAI(type) {
-            const btn = document.getElementById('ai-btn-' + type);
-            const card = document.getElementById('ai-card-' + type);
-            const output = document.getElementById('ai-output-' + type);
-
-            if (!btn || !card || !output) return;
-
-            const data = collectAIData(type);
-            if (!data) {
-                alert('ابتدا محاسبه را انجام بده');
-                return;
-            }
-
-            aiState[type].data = data;
-            card.classList.add('show');
-            btn.disabled = true;
-            btn.textContent = '⏳ در حال تحلیل...';
-            output.innerHTML = `<div class="ai-loading"><div class="spinner"></div><div>🤖 AI در حال بررسی محاسبه شماست...</div></div>`;
-            card.scrollIntoView({ behavior: 'smooth', block: 'start' });
-
-            try {
-                const apiKey = await getAvalaiKey();
-                const prompt = AI_PROMPTS[type](data);
-
-                const response = await fetch(AVALAI_ENDPOINT, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': 'Bearer ' + apiKey
-                    },
-                    body: JSON.stringify({
-                        model: AI_MODEL,
-                        messages: [
-                            { role: 'system', content: 'شما یک مشاور مالی حرفه‌ای ایرانی هستید که به زبان فارسی روان و صمیمی صحبت می‌کنید.' },
-                            { role: 'user', content: prompt }
-                        ],
-                        temperature: 0.7,
-                        max_tokens: 1500
-                    })
-                });
-
-                if (!response.ok) {
-                    const errText = await response.text();
-                    throw new Error(`خطای API (${response.status}): ${errText.slice(0, 200)}`);
-                }
-
-                const result = await response.json();
-                const text = result?.choices?.[0]?.message?.content || 'پاسخی دریافت نشد.';
-
-                aiState[type].text = text;
-
-                let html = text;
-                if (window.marked) {
-                    html = marked.parse(text);
-                }
-                if (window.DOMPurify) {
-                    html = DOMPurify.sanitize(html);
-                }
-                output.innerHTML = html;
-
-            } catch (err) {
-                console.error('AI error:', err);
-                output.innerHTML = `
-                    <div style="color:var(--red); padding:15px; text-align:center;">
-                        <div style="font-size:24px; margin-bottom:8px;">⚠️</div>
-                        <div style="font-weight:800; margin-bottom:6px;">خطا در تحلیل AI</div>
-                        <div style="font-size:12px; color:var(--gray);">${err.message}</div>
-                        <div style="font-size:11.5px; color:var(--gray); margin-top:10px;">ممکنه اینترنت یا API موقتاً مشکل داشته باشه. دوباره تلاش کن.</div>
-                    </div>
-                `;
-            } finally {
-                btn.disabled = false;
-                btn.textContent = '🤖 تحلیل با AI';
-            }
-        }
-
-        async function copyAIAnalysis(type) {
-            const state = aiState[type];
-            if (!state || !state.text) {
-                alert('ابتدا تحلیل با AI انجام بده');
-                return;
-            }
-            try {
-                await navigator.clipboard.writeText(state.text);
-                const btns = document.querySelectorAll(`#ai-card-${type} .ai-action-btn`);
-                btns.forEach(b => {
-                    if (b.textContent.includes('کپی')) {
-                        const original = b.innerHTML;
-                        b.innerHTML = '✅ کپی شد!';
-                        setTimeout(() => { b.innerHTML = original; }, 1500);
-                    }
-                });
-            } catch (e) {
-                alert('کپی نشد. دستی انتخاب کن.');
-            }
-        }
-
-        // ==========================================
-        // 📊 موتور مقایسه با بازار واقعی (BrsApi)
-        // ==========================================
-        const BRS_API_BASE_GOLD = 'https://Api.BrsApi.ir/Market/Gold_Currency.php';
-        const MARKET_CACHE_KEY = 'shamdun_market_data';
-        const MARKET_CACHE_TTL = 6 * 60 * 60 * 1000;
-
-        const marketState = {
-            dca: { data: null },
-            compound: { data: null }
-        };
-
-        async function getBrsApiKey() {
-            const cached = sessionStorage.getItem('api_BRS_API_KEY');
-            if (cached) return cached;
-
-            try {
-                if (typeof db !== 'undefined') {
-                    const { data, error } = await db
-                        .from('app_settings')
-                        .select('value')
-                        .eq('key', 'BRS_API_KEY')
-                        .single();
-                    if (!error && data && data.value) {
-                        sessionStorage.setItem('api_BRS_API_KEY', data.value);
-                        return data.value;
-                    }
-                }
-            } catch (e) {
-                console.warn('BRS_API_KEY از Supabase خوانده نشد:', e);
-            }
-            throw new Error('کلید BrsApi در تنظیمات پیدا نشد. لطفاً از پنل ادمین اضافه کنید.');
-        }
-
-        async function fetchBrsApiWithKey(baseUrl) {
-            const key = await getBrsApiKey();
-            const sep = baseUrl.includes('?') ? '&' : '?';
-            const url = `${baseUrl}${sep}key=${key}`;
-            const res = await fetch(url);
-            if (!res.ok) throw new Error(`HTTP ${res.status}`);
-            const text = await res.text();
-            if (text.trim().startsWith('<!DOCTYPE') || text.trim().startsWith('<html')) {
-                throw new Error('پاسخ نامعتبر از BrsApi');
-            }
-            return JSON.parse(text);
-        }
-
-        async function fetchMarketData() {
-            try {
-                const cached = JSON.parse(localStorage.getItem(MARKET_CACHE_KEY) || 'null');
-                if (cached && (Date.now() - cached.timestamp < MARKET_CACHE_TTL)) {
-                    return cached.data;
-                }
-            } catch (e) {}
-
-            const data = {
-                gold18: null,
-                gold24: null,
-                coin: null,
-                dollar: null,
-                euro: null,
-                index: null,
-                bitcoin: null,
-                timestamp: Date.now()
-            };
-
-            const goldData = await fetchBrsApiWithKey(BRS_API_BASE_GOLD);
-
-            if (goldData.gold && Array.isArray(goldData.gold)) {
-                const g18 = goldData.gold.find(i => i.symbol === 'IR_GOLD_18K');
-                const g24 = goldData.gold.find(i => i.symbol === 'IR_GOLD_24K');
-                const ce = goldData.gold.find(i => i.symbol === 'IR_COIN_EMAMI');
-                if (g18) data.gold18 = parseFloat(g18.price);
-                if (g24) data.gold24 = parseFloat(g24.price);
-                if (ce) data.coin = parseFloat(ce.price);
-            }
-
-            if (goldData.currency && Array.isArray(goldData.currency)) {
-                const usd = goldData.currency.find(i => i.symbol === 'USD');
-                const eur = goldData.currency.find(i => i.symbol === 'EUR');
-                if (usd) data.dollar = parseFloat(usd.price);
-                if (eur) data.euro = parseFloat(eur.price);
-            }
-
-            try {
-                localStorage.setItem(MARKET_CACHE_KEY, JSON.stringify({
-                    data: data,
-                    timestamp: Date.now()
-                }));
-            } catch (e) {}
-
-            return data;
-        }
-
-        function resetMarketCard(type) {
-            const card = document.getElementById('market-card-' + type);
-            const output = document.getElementById('market-output-' + type);
-            const btn = document.getElementById('market-btn-' + type);
-            if (card) card.classList.remove('show');
-            if (output) output.innerHTML = '';
-            if (btn) btn.disabled = false;
-            if (marketState[type]) marketState[type].data = null;
-        }
-
-        async function refreshMarketData(type) {
-            localStorage.removeItem(MARKET_CACHE_KEY);
-            const card = document.getElementById('market-card-' + type);
-            if (card) card.classList.remove('show');
-            await compareWithMarket(type);
-        }
-
-        async function compareWithMarket(type) {
-            const btn = document.getElementById('market-btn-' + type);
-            const card = document.getElementById('market-card-' + type);
-            const output = document.getElementById('market-output-' + type);
-
-            if (!btn || !card || !output) return;
-
-            let userAnnualRate = 0;
-            let userYears = 0;
-
+    function collectAIData(type) {
+        try {
             if (type === 'dca') {
+                const monthly = parseNum(document.getElementById('dca-monthly').value);
                 const months = parseInt(document.getElementById('dca-months').value) || 0;
-                userAnnualRate = parseFloat(document.getElementById('dca-rate').value) || 0;
-                userYears = months / 12;
-            } else if (type === 'compound') {
-                userAnnualRate = parseFloat(document.getElementById('cmp-rate').value) || 0;
-                userYears = parseFloat(document.getElementById('cmp-years').value) || 0;
+                const annualRate = parseFloat(document.getElementById('dca-rate').value) || 0;
+                const initial = parseNum(document.getElementById('dca-initial').value);
+                const monthlyRate = annualRate / 100 / 12;
+                let final;
+                if (monthlyRate === 0) final = monthly * months + initial;
+                else {
+                    const f = Math.pow(1 + monthlyRate, months);
+                    final = monthly * ((f - 1) / monthlyRate) + initial * f;
+                }
+                const totalPrincipal = monthly * months + initial;
+                return { monthly, months, annualRate, initial, final, totalPrincipal, totalProfit: final - totalPrincipal, ratio: final / totalPrincipal };
+            }
+            if (type === 'compound') {
+                const principal = parseNum(document.getElementById('cmp-principal').value);
+                const annualRate = parseFloat(document.getElementById('cmp-rate').value) || 0;
+                const years = parseFloat(document.getElementById('cmp-years').value) || 0;
+                const n = parseInt(document.getElementById('cmp-compound').value) || 1;
+                const final = principal * Math.pow(1 + annualRate / 100 / n, n * years);
+                return { principal, annualRate, years, n, final, totalProfit: final - principal, totalReturn: (final / principal - 1) * 100 };
+            }
+            if (type === 'goal') {
+                const target = parseNum(document.getElementById('goal-target').value);
+                const years = parseFloat(document.getElementById('goal-years').value) || 0;
+                const annualRate = parseFloat(document.getElementById('goal-rate').value) || 0;
+                const initial = parseNum(document.getElementById('goal-initial').value);
+                const months = years * 12;
+                const mr = annualRate / 100 / 12;
+                let monthlySaving;
+                if (mr === 0) monthlySaving = (target - initial) / months;
+                else {
+                    const f = Math.pow(1 + mr, months);
+                    monthlySaving = ((target - initial * f) * mr) / (f - 1);
+                }
+                const totalPrincipal = monthlySaving * months + initial;
+                return { target, years, annualRate, initial, monthlySaving, totalPrincipal, totalProfit: target - totalPrincipal };
+            }
+            if (type === 'compare') {
+                const aAmount = parseNum(document.getElementById('cmp-a-amount').value);
+                const aRate = parseFloat(document.getElementById('cmp-a-rate').value) || 0;
+                const bAmount = parseNum(document.getElementById('cmp-b-amount').value);
+                const bRate = parseFloat(document.getElementById('cmp-b-rate').value) || 0;
+                const years = parseFloat(document.getElementById('cmp-years2').value) || 0;
+                return { aAmount, aRate, bAmount, bRate, years, aFinal: aAmount * Math.pow(1 + aRate / 100, years), bFinal: bAmount * Math.pow(1 + bRate / 100, years) };
+            }
+            if (type === 'inflation') {
+                const amount = parseNum(document.getElementById('inf-amount').value);
+                const rate = parseFloat(document.getElementById('inf-rate').value) || 0;
+                const years = parseFloat(document.getElementById('inf-years').value) || 0;
+                const futurePower = amount / Math.pow(1 + rate / 100, years);
+                return { amount, rate, years, futurePower, loss: amount - futurePower };
+            }
+            if (type === 'breakeven') {
+                const buyPrice = parseNum(document.getElementById('be-buy-price').value);
+                const quantity = parseInt(document.getElementById('be-quantity').value) || 0;
+                const buyFee = parseFloat(document.getElementById('be-buy-fee').value) || 0;
+                const sellFee = parseFloat(document.getElementById('be-sell-fee').value) || 0;
+                const totalBuy = buyPrice * quantity;
+                const buyFeeAmount = totalBuy * (buyFee / 100);
+                const breakevenPrice = (totalBuy + buyFeeAmount) / (quantity * (1 - sellFee / 100));
+                return { buyPrice, quantity, buyFee, sellFee, breakevenPrice, breakevenPercent: ((breakevenPrice - buyPrice) / buyPrice) * 100, totalFee: buyFeeAmount + breakevenPrice * quantity * (sellFee / 100) };
+            }
+            if (type === 'risk') {
+                const total = parseNum(document.getElementById('risk-total').value);
+                const profileKey = document.getElementById('risk-profile').value;
+                const profile = portfolios[profileKey];
+                return { total, profileName: profile.name, assets: profile.assets };
+            }
+            if (type === 'position') {
+                const total = parseNum(document.getElementById('pos-total').value);
+                const riskPercent = parseFloat(document.getElementById('pos-risk-percent').value) || 0;
+                const entry = parseNum(document.getElementById('pos-entry').value);
+                const stop = parseNum(document.getElementById('pos-stop').value);
+                const target = parseNum(document.getElementById('pos-target').value);
+                const maxLoss = total * (riskPercent / 100);
+                const stopDist = Math.abs(entry - stop);
+                const positionSize = maxLoss / stopDist;
+                const maxProfit = target > 0 ? positionSize * Math.abs(target - entry) : 0;
+                return { total, riskPercent, entry, stop, target, positionSize, positionAmount: positionSize * entry, maxLoss, maxProfit, rr: maxLoss > 0 ? maxProfit / maxLoss : 0 };
+            }
+        } catch (e) {
+            console.error('collectAIData error:', e);
+        }
+        return null;
+    }
+
+    function resetAICard(type) {
+        const card = document.getElementById('ai-card-' + type);
+        const output = document.getElementById('ai-output-' + type);
+        const btn = document.getElementById('ai-btn-' + type);
+        if (card) card.classList.remove('show');
+        if (output) output.innerHTML = `<div class="ai-loading"><div class="spinner"></div><div>در حال تحلیل...</div></div>`;
+        if (btn) btn.disabled = false;
+        if (aiState[type]) { aiState[type].data = null; aiState[type].text = ''; }
+    }
+
+    async function analyzeWithAI(type) {
+        const btn = document.getElementById('ai-btn-' + type);
+        const card = document.getElementById('ai-card-' + type);
+        const output = document.getElementById('ai-output-' + type);
+
+        if (!btn || !card || !output) return;
+
+        const data = collectAIData(type);
+        if (!data) {
+            alert('ابتدا محاسبه را انجام بده');
+            return;
+        }
+
+        aiState[type].data = data;
+        card.classList.add('show');
+        btn.disabled = true;
+        btn.textContent = '⏳ در حال تحلیل...';
+        output.innerHTML = `<div class="ai-loading"><div class="spinner"></div><div>🤖 AI در حال بررسی محاسبه شماست...</div></div>`;
+        card.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+        try {
+            const apiKey = await getAvalaiKey();
+            const prompt = AI_PROMPTS[type](data);
+
+            const response = await fetch(AVALAI_ENDPOINT, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + apiKey
+                },
+                body: JSON.stringify({
+                    model: AI_MODEL,
+                    messages: [
+                        { role: 'system', content: 'شما یک مشاور مالی حرفه‌ای ایرانی هستید که به زبان فارسی روان و صمیمی صحبت می‌کنید.' },
+                        { role: 'user', content: prompt }
+                    ],
+                    temperature: 0.7,
+                    max_tokens: 1500
+                })
+            });
+
+            if (!response.ok) {
+                const errText = await response.text();
+                throw new Error(`خطای API (${response.status}): ${errText.slice(0, 200)}`);
             }
 
-            if (userAnnualRate <= 0 || userYears <= 0) {
-                alert('ابتدا محاسبه را انجام بده');
+            const result = await response.json();
+            const text = result?.choices?.[0]?.message?.content || 'پاسخی دریافت نشد.';
+
+            aiState[type].text = text;
+
+            let html = text;
+            if (window.marked) {
+                html = marked.parse(text);
+            }
+            if (window.DOMPurify) {
+                html = DOMPurify.sanitize(html);
+            }
+            output.innerHTML = html;
+
+        } catch (err) {
+            console.error('AI error:', err);
+            output.innerHTML = `
+                <div style="color:var(--red); padding:15px; text-align:center;">
+                    <div style="font-size:24px; margin-bottom:8px;">⚠️</div>
+                    <div style="font-weight:800; margin-bottom:6px;">خطا در تحلیل AI</div>
+                    <div style="font-size:12px; color:var(--gray);">${err.message}</div>
+                    <div style="font-size:11.5px; color:var(--gray); margin-top:10px;">ممکنه اینترنت یا API موقتاً مشکل داشته باشه. دوباره تلاش کن.</div>
+                </div>
+            `;
+        } finally {
+            btn.disabled = false;
+            btn.textContent = '🤖 تحلیل با AI';
+        }
+    }
+
+    async function copyAIAnalysis(type) {
+        const state = aiState[type];
+        if (!state || !state.text) {
+            alert('ابتدا تحلیل با AI انجام بده');
+            return;
+        }
+        try {
+            await navigator.clipboard.writeText(state.text);
+            const btns = document.querySelectorAll(`#ai-card-${type} .ai-action-btn`);
+            btns.forEach(b => {
+                if (b.textContent.includes('کپی')) {
+                    const original = b.innerHTML;
+                    b.innerHTML = '✅ کپی شد!';
+                    setTimeout(() => { b.innerHTML = original; }, 1500);
+                }
+            });
+        } catch (e) {
+            alert('کپی نشد. دستی انتخاب کن.');
+        }
+    }
+
+    // ==========================================
+    // 📊 موتور مقایسه با بازار واقعی (BrsApi)
+    // ==========================================
+    const BRS_API_BASE_GOLD = 'https://Api.BrsApi.ir/Market/Gold_Currency.php';
+    const MARKET_CACHE_KEY = 'shamdun_market_data';
+    const MARKET_CACHE_TTL = 6 * 60 * 60 * 1000;
+
+    const marketState = {
+        dca: { data: null },
+        compound: { data: null }
+    };
+
+    async function getBrsApiKey() {
+        const cached = sessionStorage.getItem('api_BRS_API_KEY');
+        if (cached) return cached;
+
+        try {
+            if (typeof db !== 'undefined') {
+                const { data, error } = await db
+                    .from('app_settings')
+                    .select('value')
+                    .eq('key', 'BRS_API_KEY')
+                    .single();
+                if (!error && data && data.value) {
+                    sessionStorage.setItem('api_BRS_API_KEY', data.value);
+                    return data.value;
+                }
+            }
+        } catch (e) {
+            console.warn('BRS_API_KEY از Supabase خوانده نشد:', e);
+        }
+        throw new Error('کلید BrsApi در تنظیمات پیدا نشد. لطفاً از پنل ادمین اضافه کنید.');
+    }
+
+    async function fetchBrsApiWithKey(baseUrl) {
+        const key = await getBrsApiKey();
+        const sep = baseUrl.includes('?') ? '&' : '?';
+        const url = `${baseUrl}${sep}key=${key}`;
+        const res = await fetch(url);
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const text = await res.text();
+        if (text.trim().startsWith('<!DOCTYPE') || text.trim().startsWith('<html')) {
+            throw new Error('پاسخ نامعتبر از BrsApi');
+        }
+        return JSON.parse(text);
+    }
+
+    async function fetchMarketData() {
+        try {
+            const cached = JSON.parse(localStorage.getItem(MARKET_CACHE_KEY) || 'null');
+            if (cached && (Date.now() - cached.timestamp < MARKET_CACHE_TTL)) {
+                return cached.data;
+            }
+        } catch (e) {}
+
+        const data = {
+            gold18: null,
+            gold24: null,
+            coin: null,
+            dollar: null,
+            euro: null,
+            timestamp: Date.now()
+        };
+
+        const goldData = await fetchBrsApiWithKey(BRS_API_BASE_GOLD);
+
+        if (goldData.gold && Array.isArray(goldData.gold)) {
+            const g18 = goldData.gold.find(i => i.symbol === 'IR_GOLD_18K');
+            const g24 = goldData.gold.find(i => i.symbol === 'IR_GOLD_24K');
+            const ce = goldData.gold.find(i => i.symbol === 'IR_COIN_EMAMI');
+            if (g18) data.gold18 = parseFloat(g18.price);
+            if (g24) data.gold24 = parseFloat(g24.price);
+            if (ce) data.coin = parseFloat(ce.price);
+        }
+
+        if (goldData.currency && Array.isArray(goldData.currency)) {
+            const usd = goldData.currency.find(i => i.symbol === 'USD');
+            const eur = goldData.currency.find(i => i.symbol === 'EUR');
+            if (usd) data.dollar = parseFloat(usd.price);
+            if (eur) data.euro = parseFloat(eur.price);
+        }
+
+        try {
+            localStorage.setItem(MARKET_CACHE_KEY, JSON.stringify({
+                data: data,
+                timestamp: Date.now()
+            }));
+        } catch (e) {}
+
+        return data;
+    }
+
+    function resetMarketCard(type) {
+        const card = document.getElementById('market-card-' + type);
+        const output = document.getElementById('market-output-' + type);
+        const btn = document.getElementById('market-btn-' + type);
+        if (card) card.classList.remove('show');
+        if (output) output.innerHTML = '';
+        if (btn) btn.disabled = false;
+        if (marketState[type]) marketState[type].data = null;
+    }
+
+    async function refreshMarketData(type) {
+        localStorage.removeItem(MARKET_CACHE_KEY);
+        const card = document.getElementById('market-card-' + type);
+        if (card) card.classList.remove('show');
+        await compareWithMarket(type);
+    }
+
+    async function compareWithMarket(type) {
+        const btn = document.getElementById('market-btn-' + type);
+        const card = document.getElementById('market-card-' + type);
+        const output = document.getElementById('market-output-' + type);
+
+        if (!btn || !card || !output) return;
+
+        let userAnnualRate = 0;
+        let userYears = 0;
+
+        if (type === 'dca') {
+            const months = parseInt(document.getElementById('dca-months').value) || 0;
+            userAnnualRate = parseFloat(document.getElementById('dca-rate').value) || 0;
+            userYears = months / 12;
+        } else if (type === 'compound') {
+            userAnnualRate = parseFloat(document.getElementById('cmp-rate').value) || 0;
+            userYears = parseFloat(document.getElementById('cmp-years').value) || 0;
+        }
+
+        if (userAnnualRate <= 0 || userYears <= 0) {
+            alert('ابتدا محاسبه را انجام بده');
+            return;
+        }
+
+        card.classList.add('show');
+        btn.disabled = true;
+        btn.textContent = '⏳ در حال دریافت...';
+        output.innerHTML = `<div class="ai-loading"><div class="spinner"></div><div>📊 در حال دریافت قیمت‌های بازار...</div></div>`;
+        card.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+        try {
+            const data = await fetchMarketData();
+            marketState[type].data = data;
+            renderMarketComparison(type, data, userAnnualRate, userYears);
+        } catch (err) {
+            console.error('Market error:', err);
+            output.innerHTML = `
+                <div style="color:var(--red); padding:15px; text-align:center;">
+                    <div style="font-size:24px; margin-bottom:8px;">⚠️</div>
+                    <div style="font-weight:800; margin-bottom:6px;">خطا در دریافت داده بازار</div>
+                    <div style="font-size:12px; color:var(--gray);">${err.message}</div>
+                </div>
+            `;
+        } finally {
+            btn.disabled = false;
+            btn.textContent = '📊 مقایسه با بازار واقعی';
+        }
+    }
+
+    function renderMarketComparison(type, data, userRate, years) {
+        const output = document.getElementById('market-output-' + type);
+
+        const benchmarks = [
+            { icon: '📊', name: 'شاخص کل بورس', rate: 25 },
+            { icon: '🥇', name: 'طلا (۱۸ عیار)', rate: 35 },
+            { icon: '🪙', name: 'سکه امامی', rate: 30 },
+            { icon: '💵', name: 'دلار', rate: 28 },
+            { icon: '💶', name: 'یورو', rate: 26 },
+            { icon: '₿', name: 'بیت‌کوین', rate: 45 },
+            { icon: '📉', name: 'تورم ایران', rate: 40 }
+        ];
+
+        let pricesHtml = '<div class="market-prices">';
+        if (data.gold18) pricesHtml += `<div class="market-price-item"><div class="icon">🥇</div><div class="name">طلا ۱۸ عیار</div><div class="price">${formatNum(data.gold18)} تومان</div></div>`;
+        if (data.coin) pricesHtml += `<div class="market-price-item"><div class="icon">🪙</div><div class="name">سکه امامی</div><div class="price">${formatNum(data.coin)} تومان</div></div>`;
+        if (data.dollar) pricesHtml += `<div class="market-price-item"><div class="icon">💵</div><div class="name">دلار</div><div class="price">${formatNum(data.dollar)} تومان</div></div>`;
+        if (data.euro) pricesHtml += `<div class="market-price-item"><div class="icon">💶</div><div class="name">یورو</div><div class="price">${formatNum(data.euro)} تومان</div></div>`;
+        if (data.gold24) pricesHtml += `<div class="market-price-item"><div class="icon">🥇</div><div class="name">طلا ۲۴ عیار</div><div class="price">${formatNum(data.gold24)} تومان</div></div>`;
+        pricesHtml += '</div>';
+
+        let rowsHtml = `
+            <div class="market-row header">
+                <div>دارایی</div>
+                <div>بازدهی شما</div>
+                <div>بازدهی بازار</div>
+            </div>
+        `;
+
+        benchmarks.forEach(b => {
+            const diff = userRate - b.rate;
+            const diffClass = diff >= 0 ? 'diff-pos' : 'diff-neg';
+            const diffSign = diff >= 0 ? '+' : '';
+
+            rowsHtml += `
+                <div class="market-row">
+                    <div class="asset">${b.icon} ${b.name}</div>
+                    <div class="user-rate">${toFa(userRate.toFixed(1))}٪</div>
+                    <div class="bench ${diffClass}">${toFa(b.rate)}٪ (${diffSign}${toFa(diff.toFixed(1))}٪)</div>
+                </div>
+            `;
+        });
+
+        const inflationBench = benchmarks.find(b => b.name === 'تورم ایران');
+        const isAboveInflation = userRate > inflationBench.rate;
+        const avgBench = benchmarks.reduce((sum, b) => sum + b.rate, 0) / benchmarks.length;
+        const isAboveAvg = userRate > avgBench;
+
+        let verdictClass = 'neutral';
+        let verdictText = '';
+
+        if (isAboveInflation && isAboveAvg) {
+            verdictClass = 'good';
+            verdictText = `<strong>✅ عالی!</strong> نرخ بازدهی شما (${toFa(userRate.toFixed(1))}٪) از تورم ایران (${toFa(inflationBench.rate)}٪) و میانگین بازار (${toFa(avgBench.toFixed(1))}٪) بالاتره.`;
+        } else if (!isAboveInflation && isAboveAvg) {
+            verdictClass = 'neutral';
+            verdictText = `<strong>⚖️ متعادل.</strong> نرخ شما از میانگین بازار بهتره ولی از تورم ایران (${toFa(inflationBench.rate)}٪) کمتره.`;
+        } else if (isAboveInflation && !isAboveAvg) {
+            verdictClass = 'neutral';
+            verdictText = `<strong>⚖️ نیمه‌مطلوب.</strong> نرخ شما از تورم بالاتره ولی از میانگین بازار کمتره.`;
+        } else {
+            verdictClass = 'bad';
+            verdictText = `<strong>⚠️ هشدار!</strong> نرخ بازدهی شما (${toFa(userRate.toFixed(1))}٪) از تورم ایران (${toFa(inflationBench.rate)}٪) کمتره.`;
+        }
+
+        output.innerHTML = `
+            ${pricesHtml}
+            <div style="color:var(--gray); font-size:11.5px; margin-bottom:10px; text-align:center;">
+                📅 نرخ‌های مرجع بر اساس میانگین ۵ سال اخیر بازار ایران
+            </div>
+            <div class="market-compare-table">
+                ${rowsHtml}
+            </div>
+            <div class="market-verdict ${verdictClass}">
+                ${verdictText}
+            </div>
+        `;
+    }
+
+    // ==========================================
+    // 💾 ذخیره محاسبات
+    // ==========================================
+    const CALC_TITLES = {
+        dca: '💰 DCA',
+        compound: '🏦 سود مرکب',
+        goal: '🎯 هدف مالی',
+        compare: '⚖️ مقایسه',
+        inflation: '📉 تورم',
+        breakeven: '⚖️ سربه‌سر',
+        risk: '🎲 ریسک',
+        position: '🎯 پوزیشن'
+    };
+
+    function getCalcInputs(type) {
+        const inputs = {};
+        if (type === 'dca') {
+            inputs.monthly = parseNum(document.getElementById('dca-monthly').value);
+            inputs.months = parseInt(document.getElementById('dca-months').value) || 0;
+            inputs.rate = parseFloat(document.getElementById('dca-rate').value) || 0;
+            inputs.initial = parseNum(document.getElementById('dca-initial').value);
+        } else if (type === 'compound') {
+            inputs.principal = parseNum(document.getElementById('cmp-principal').value);
+            inputs.rate = parseFloat(document.getElementById('cmp-rate').value) || 0;
+            inputs.years = parseFloat(document.getElementById('cmp-years').value) || 0;
+            inputs.compound = parseInt(document.getElementById('cmp-compound').value) || 1;
+        } else if (type === 'goal') {
+            inputs.target = parseNum(document.getElementById('goal-target').value);
+            inputs.years = parseFloat(document.getElementById('goal-years').value) || 0;
+            inputs.rate = parseFloat(document.getElementById('goal-rate').value) || 0;
+            inputs.initial = parseNum(document.getElementById('goal-initial').value);
+        } else if (type === 'compare') {
+            inputs.aAmount = parseNum(document.getElementById('cmp-a-amount').value);
+            inputs.aRate = parseFloat(document.getElementById('cmp-a-rate').value) || 0;
+            inputs.bAmount = parseNum(document.getElementById('cmp-b-amount').value);
+            inputs.bRate = parseFloat(document.getElementById('cmp-b-rate').value) || 0;
+            inputs.years = parseFloat(document.getElementById('cmp-years2').value) || 0;
+        } else if (type === 'inflation') {
+            inputs.amount = parseNum(document.getElementById('inf-amount').value);
+            inputs.rate = parseFloat(document.getElementById('inf-rate').value) || 0;
+            inputs.years = parseFloat(document.getElementById('inf-years').value) || 0;
+        } else if (type === 'breakeven') {
+            inputs.buyPrice = parseNum(document.getElementById('be-buy-price').value);
+            inputs.quantity = parseInt(document.getElementById('be-quantity').value) || 0;
+            inputs.buyFee = parseFloat(document.getElementById('be-buy-fee').value) || 0;
+            inputs.sellFee = parseFloat(document.getElementById('be-sell-fee').value) || 0;
+        } else if (type === 'risk') {
+            inputs.total = parseNum(document.getElementById('risk-total').value);
+            inputs.profile = document.getElementById('risk-profile').value;
+        } else if (type === 'position') {
+            inputs.total = parseNum(document.getElementById('pos-total').value);
+            inputs.riskPercent = parseFloat(document.getElementById('pos-risk-percent').value) || 0;
+            inputs.entry = parseNum(document.getElementById('pos-entry').value);
+            inputs.stop = parseNum(document.getElementById('pos-stop').value);
+            inputs.target = parseNum(document.getElementById('pos-target').value);
+        }
+        return inputs;
+    }
+
+    function getCalcSummary(type, inputs) {
+        if (type === 'dca') {
+            const monthlyRate = inputs.rate / 100 / 12;
+            let final;
+            if (monthlyRate === 0) final = inputs.monthly * inputs.months + inputs.initial;
+            else {
+                const f = Math.pow(1 + monthlyRate, inputs.months);
+                final = inputs.monthly * ((f - 1) / monthlyRate) + inputs.initial * f;
+            }
+            return `سرمایه نهایی: ${formatNum(final)} تومان`;
+        }
+        if (type === 'compound') {
+            const final = inputs.principal * Math.pow(1 + inputs.rate / 100 / inputs.compound, inputs.compound * inputs.years);
+            return `مبلغ نهایی: ${formatNum(final)} تومان`;
+        }
+        if (type === 'goal') {
+            const months = inputs.years * 12;
+            const mr = inputs.rate / 100 / 12;
+            let ms;
+            if (mr === 0) ms = (inputs.target - inputs.initial) / months;
+            else {
+                const f = Math.pow(1 + mr, months);
+                ms = ((inputs.target - inputs.initial * f) * mr) / (f - 1);
+            }
+            return `پس‌انداز ماهانه: ${formatNum(ms)} تومان`;
+        }
+        if (type === 'compare') {
+            const aFinal = inputs.aAmount * Math.pow(1 + inputs.aRate / 100, inputs.years);
+            const bFinal = inputs.bAmount * Math.pow(1 + inputs.bRate / 100, inputs.years);
+            return `گزینه ۱: ${formatBigNum(aFinal)} | گزینه ۲: ${formatBigNum(bFinal)}`;
+        }
+        if (type === 'inflation') {
+            const future = inputs.amount / Math.pow(1 + inputs.rate / 100, inputs.years);
+            return `قدرت خرید: ${formatNum(future)} تومان`;
+        }
+        if (type === 'breakeven') {
+            const totalBuy = inputs.buyPrice * inputs.quantity;
+            const buyFeeAmt = totalBuy * (inputs.buyFee / 100);
+            const bePrice = (totalBuy + buyFeeAmt) / (inputs.quantity * (1 - inputs.sellFee / 100));
+            return `قیمت سربه‌سر: ${formatNum(bePrice)} تومان`;
+        }
+        if (type === 'risk') {
+            const profileNames = { conservative: 'محافظه‌کار', balanced: 'متعادل', aggressive: 'جسور', professional: 'حرفه‌ای' };
+            return `سرمایه: ${formatBigNum(inputs.total)} | پروفایل: ${profileNames[inputs.profile]}`;
+        }
+        if (type === 'position') {
+            const maxLoss = inputs.total * (inputs.riskPercent / 100);
+            const stopDist = Math.abs(inputs.entry - inputs.stop);
+            const posSize = maxLoss / stopDist;
+            return `حجم پوزیشن: ${formatNum(posSize)} واحد`;
+        }
+        return '';
+    }
+
+    async function saveCalculation(type) {
+        const btn = document.getElementById('save-btn-' + type);
+        if (!btn) return;
+
+        if (typeof db === 'undefined') {
+            alert('سیستم ذخیره‌سازی در دسترس نیست');
+            return;
+        }
+
+        try {
+            const { data: sessionData } = await db.auth.getSession();
+            if (!sessionData || !sessionData.session) {
+                alert('برای ذخیره محاسبات باید وارد حساب کاربری بشی');
+                window.location.href = 'login.html';
                 return;
             }
 
-            card.classList.add('show');
+            const userId = sessionData.session.user.id;
+            const inputs = getCalcInputs(type);
+            const summary = getCalcSummary(type, inputs);
+
+            const title = CALC_TITLES[type] + ' — ' + new Date().toLocaleDateString('fa-IR');
+
             btn.disabled = true;
-            btn.textContent = '⏳ در حال دریافت...';
-            output.innerHTML = `<div class="ai-loading"><div class="spinner"></div><div>📊 در حال دریافت قیمت‌های بازار...</div></div>`;
-            card.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            btn.textContent = '⏳ در حال ذخیره...';
 
-            try {
-                const data = await fetchMarketData();
-                marketState[type].data = data;
-                renderMarketComparison(type, data, userAnnualRate, userYears);
-            } catch (err) {
-                console.error('Market error:', err);
-                output.innerHTML = `
-                    <div style="color:var(--red); padding:15px; text-align:center;">
-                        <div style="font-size:24px; margin-bottom:8px;">⚠️</div>
-                        <div style="font-weight:800; margin-bottom:6px;">خطا در دریافت داده بازار</div>
-                        <div style="font-size:12px; color:var(--gray);">${err.message}</div>
-                    </div>
-                `;
-            } finally {
+            const { error } = await db
+                .from('saved_calculations')
+                .insert({
+                    user_id: userId,
+                    calc_type: type,
+                    title: title,
+                    inputs: inputs,
+                    results: {},
+                    summary: summary
+                });
+
+            if (error) throw error;
+
+            btn.textContent = '✅ ذخیره شد!';
+            setTimeout(() => {
+                btn.textContent = '💾 ذخیره این محاسبه';
                 btn.disabled = false;
-                btn.textContent = '📊 مقایسه با بازار واقعی';
-            }
+            }, 2000);
+
+        } catch (err) {
+            console.error('Save error:', err);
+            alert('خطا در ذخیره: ' + err.message);
+            btn.disabled = false;
+            btn.textContent = '💾 ذخیره این محاسبه';
+        }
+    }
+
+    async function loadSavedCalculations() {
+        const container = document.getElementById('savedContainer');
+        if (!container) return;
+
+        container.innerHTML = `
+            <div class="saved-loading">
+                <div class="spinner"></div>
+                <div>⏳ در حال بارگذاری...</div>
+            </div>
+        `;
+
+        if (typeof db === 'undefined') {
+            container.innerHTML = `<div class="saved-empty"><div class="icon">⚠️</div>سیستم در دسترس نیست</div>`;
+            return;
         }
 
-        function renderMarketComparison(type, data, userRate, years) {
-            const output = document.getElementById('market-output-' + type);
-
-            const benchmarks = [
-                { icon: '📊', name: 'شاخص کل بورس', rate: 25 },
-                { icon: '🥇', name: 'طلا (۱۸ عیار)', rate: 35 },
-                { icon: '🪙', name: 'سکه امامی', rate: 30 },
-                { icon: '💵', name: 'دلار', rate: 28 },
-                { icon: '💶', name: 'یورو', rate: 26 },
-                { icon: '₿', name: 'بیت‌کوین', rate: 45 },
-                { icon: '📉', name: 'تورم ایران', rate: 40 }
-            ];
-
-            let pricesHtml = '<div class="market-prices">';
-            if (data.gold18) pricesHtml += `<div class="market-price-item"><div class="icon">🥇</div><div class="name">طلا ۱۸ عیار</div><div class="price">${formatNum(data.gold18)} تومان</div></div>`;
-            if (data.coin) pricesHtml += `<div class="market-price-item"><div class="icon">🪙</div><div class="name">سکه امامی</div><div class="price">${formatNum(data.coin)} تومان</div></div>`;
-            if (data.dollar) pricesHtml += `<div class="market-price-item"><div class="icon">💵</div><div class="name">دلار</div><div class="price">${formatNum(data.dollar)} تومان</div></div>`;
-            if (data.euro) pricesHtml += `<div class="market-price-item"><div class="icon">💶</div><div class="name">یورو</div><div class="price">${formatNum(data.euro)} تومان</div></div>`;
-            if (data.gold24) pricesHtml += `<div class="market-price-item"><div class="icon">🥇</div><div class="name">طلا ۲۴ عیار</div><div class="price">${formatNum(data.gold24)} تومان</div></div>`;
-            pricesHtml += '</div>';
-
-            let rowsHtml = `
-                <div class="market-row header">
-                    <div>دارایی</div>
-                    <div>بازدهی شما</div>
-                    <div>بازدهی بازار</div>
-                </div>
-            `;
-
-            benchmarks.forEach(b => {
-                const diff = userRate - b.rate;
-                const diffClass = diff >= 0 ? 'diff-pos' : 'diff-neg';
-                const diffSign = diff >= 0 ? '+' : '';
-
-                rowsHtml += `
-                    <div class="market-row">
-                        <div class="asset">${b.icon} ${b.name}</div>
-                        <div class="user-rate">${toFa(userRate.toFixed(1))}٪</div>
-                        <div class="bench ${diffClass}">${toFa(b.rate)}٪ (${diffSign}${toFa(diff.toFixed(1))}٪)</div>
+        try {
+            const { data: sessionData } = await db.auth.getSession();
+            if (!sessionData || !sessionData.session) {
+                container.innerHTML = `
+                    <div class="saved-empty">
+                        <div class="icon">🔒</div>
+                        <div style="margin-bottom:12px;">برای دیدن محاسبات، وارد حساب شو</div>
+                        <a href="login.html" style="display:inline-block; background:linear-gradient(135deg,#d4af37,#a8862a); color:#fff; padding:10px 20px; border-radius:10px; text-decoration:none; font-weight:800;">ورود</a>
                     </div>
                 `;
-            });
-
-            const inflationBench = benchmarks.find(b => b.name === 'تورم ایران');
-            const isAboveInflation = userRate > inflationBench.rate;
-            const avgBench = benchmarks.reduce((sum, b) => sum + b.rate, 0) / benchmarks.length;
-            const isAboveAvg = userRate > avgBench;
-
-            let verdictClass = 'neutral';
-            let verdictText = '';
-
-            if (isAboveInflation && isAboveAvg) {
-                verdictClass = 'good';
-                verdictText = `<strong>✅ عالی!</strong> نرخ بازدهی شما (${toFa(userRate.toFixed(1))}٪) از تورم ایران (${toFa(inflationBench.rate)}٪) و میانگین بازار (${toFa(avgBench.toFixed(1))}٪) بالاتره.`;
-            } else if (!isAboveInflation && isAboveAvg) {
-                verdictClass = 'neutral';
-                verdictText = `<strong>⚖️ متعادل.</strong> نرخ شما از میانگین بازار بهتره ولی از تورم ایران (${toFa(inflationBench.rate)}٪) کمتره.`;
-            } else if (isAboveInflation && !isAboveAvg) {
-                verdictClass = 'neutral';
-                verdictText = `<strong>⚖️ نیمه‌مطلوب.</strong> نرخ شما از تورم بالاتره ولی از میانگین بازار کمتره.`;
-            } else {
-                verdictClass = 'bad';
-                verdictText = `<strong>⚠️ هشدار!</strong> نرخ بازدهی شما (${toFa(userRate.toFixed(1))}٪) از تورم ایران (${toFa(inflationBench.rate)}٪) کمتره.`;
+                return;
             }
 
-            output.innerHTML = `
-                ${pricesHtml}
-                <div style="color:var(--gray); font-size:11.5px; margin-bottom:10px; text-align:center;">
-                    📅 نرخ‌های مرجع بر اساس میانگین ۵ سال اخیر بازار ایران
-                </div>
-                <div class="market-compare-table">
-                    ${rowsHtml}
-                </div>
-                <div class="market-verdict ${verdictClass}">
-                    ${verdictText}
+            const userId = sessionData.session.user.id;
+            const { data, error } = await db
+                .from('saved_calculations')
+                .select('*')
+                .eq('user_id', userId)
+                .order('created_at', { ascending: false });
+
+            if (error) throw error;
+
+            if (!data || data.length === 0) {
+                container.innerHTML = `
+                    <div class="saved-empty">
+                        <div class="icon">📭</div>
+                        <div>هنوز محاسبه‌ای ذخیره نکردی</div>
+                        <div style="font-size:11px; margin-top:8px; opacity:0.7;">یه محاسبه انجام بده، دکمه 💾 ذخیره رو بزن</div>
+                    </div>
+                `;
+                return;
+            }
+
+            renderSavedList(data);
+        } catch (err) {
+            console.error('Load error:', err);
+            container.innerHTML = `
+                <div class="saved-empty">
+                    <div class="icon">⚠️</div>
+                    <div>خطا: ${err.message}</div>
                 </div>
             `;
         }
+    }
 
-        // ==========================================
-        // Init
-        // ==========================================
-        document.addEventListener('DOMContentLoaded', () => {
-            renderInflationHistory();
-            // اعمال فرمت به فیلدها بعد از لود
-            setTimeout(applyNumberFormatting, 300);
-            // اضافه کردن input listener به همه فیلدهای عددی
-            document.querySelectorAll('input[inputmode="numeric"]').forEach(inp => {
-                inp.addEventListener('input', handleNumericInput);
-            });
+    function renderSavedList(items) {
+        const container = document.getElementById('savedContainer');
+        container.innerHTML = '<div class="saved-list">' + items.map((item, index) => {
+            const date = new Date(item.created_at).toLocaleDateString('fa-IR');
+            const time = new Date(item.created_at).toLocaleTimeString('fa-IR', { hour: '2-digit', minute: '2-digit' });
+            return `
+                <div class="saved-item">
+                    <div class="info">
+                        <div class="title">${item.title} <span class="saved-badge">${CALC_TITLES[item.calc_type] || item.calc_type}</span></div>
+                        <div class="summary">${item.summary || ''}</div>
+                        <div class="meta">
+                            <span>📅 ${date}</span>
+                            <span>🕐 ${time}</span>
+                        </div>
+                    </div>
+                    <div class="actions">
+                        <button class="icon-btn" onclick="viewSavedCalculationByIndex(${index})" title="مشاهده">👁️</button>
+                        <button class="icon-btn danger" onclick="deleteCalculation('${item.id}')" title="حذف">🗑️</button>
+                    </div>
+                </div>
+            `;
+        }).join('') + '</div>';
+
+        window._savedItemsCache = items;
+    }
+
+    function viewSavedCalculationByIndex(index) {
+        const items = window._savedItemsCache || [];
+        const item = items[index];
+        if (!item) return;
+        viewSavedCalculation(item);
+    }
+
+    function viewSavedCalculation(item) {
+        document.getElementById('modalTitle').textContent = item.title;
+        let bodyHtml = '';
+
+        bodyHtml += `<div class="modal-row"><span class="k">نوع</span><span class="v">${CALC_TITLES[item.calc_type] || item.calc_type}</span></div>`;
+
+        if (item.summary) {
+            bodyHtml += `<div class="modal-row"><span class="k">خلاصه</span><span class="v" style="color:var(--gold);">${item.summary}</span></div>`;
+        }
+
+        bodyHtml += `<div style="margin-top:15px; color:var(--gray); font-size:12px; margin-bottom:8px;">📋 ورودی‌ها:</div>`;
+
+        const labels = {
+            monthly: 'سرمایه‌گذاری ماهانه', months: 'مدت (ماه)', rate: 'بازدهی سالانه (٪)',
+            initial: 'موجودی فعلی', principal: 'مبلغ اصل', years: 'مدت (سال)',
+            compound: 'تعداد محاسبه سود', target: 'هدف نهایی',
+            aAmount: 'مبلغ گزینه ۱', aRate: 'بازدهی گزینه ۱',
+            bAmount: 'مبلغ گزینه ۲', bRate: 'بازدهی گزینه ۲',
+            amount: 'مبلغ', buyPrice: 'قیمت خرید', quantity: 'تعداد',
+            buyFee: 'کارمزد خرید (٪)', sellFee: 'کارمزد فروش (٪)',
+            total: 'سرمایه کل', profile: 'پروفایل',
+            riskPercent: 'ریسک (٪)', entry: 'قیمت ورود', stop: 'حد ضرر'
+        };
+
+        for (const key in item.inputs) {
+            const label = labels[key] || key;
+            let value = item.inputs[key];
+            if (typeof value === 'number' && (key.includes('mount') || key === 'total' || key === 'entry' || key === 'stop' || key === 'target' || key === 'buyPrice' || key === 'principal' || key === 'initial')) {
+                value = formatNum(value);
+            }
+            bodyHtml += `<div class="modal-row"><span class="k">${label}</span><span class="v">${value}</span></div>`;
+        }
+
+        document.getElementById('modalBody').innerHTML = bodyHtml;
+        document.getElementById('savedModal').classList.add('show');
+    }
+
+    function closeSavedModal() {
+        document.getElementById('savedModal').classList.remove('show');
+    }
+
+    async function deleteCalculation(id) {
+        if (!confirm('این محاسبه حذف بشه؟')) return;
+
+        try {
+            const { error } = await db
+                .from('saved_calculations')
+                .delete()
+                .eq('id', id);
+
+            if (error) throw error;
+            loadSavedCalculations();
+        } catch (err) {
+            alert('خطا در حذف: ' + err.message);
+        }
+    }
+
+    // ==========================================
+    // 🌙 تم شب/روز (رفع مشکل)
+    // ==========================================
+    function setupTheme() {
+        const themeBtn = document.getElementById('snThemeBtn');
+        if (!themeBtn) return;
+        // جلوگیری از bind دوباره
+        if (themeBtn.getAttribute('data-bound') === 'true') return;
+        themeBtn.setAttribute('data-bound', 'true');
+        themeBtn.addEventListener('click', () => {
+            const current = document.documentElement.getAttribute('data-theme') || 'dark';
+            const newTheme = current === 'dark' ? 'light' : 'dark';
+            document.documentElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('shamdun-theme', newTheme);
+            const icon = document.getElementById('snThemeIcon');
+            if (icon) icon.textContent = newTheme === 'dark' ? '🌙' : '☀️';
+            // رفرش نمودار با تم جدید
+            if (inflationHistory && inflationHistory.length > 0) {
+                setTimeout(renderInflationChart, 100);
+            }
         });
-    </script>
+    }
+
+    // ==========================================
+    // Init
+    // ==========================================
+    document.addEventListener('DOMContentLoaded', () => {
+        renderInflationHistory();
+        setTimeout(applyNumberFormatting, 300);
+        document.querySelectorAll('input[inputmode="numeric"]').forEach(inp => {
+            inp.addEventListener('input', handleNumericInput);
+        });
+        // راه‌اندازی تم بعد از ساخته شدن navbar
+        setTimeout(setupTheme, 500);
+    });
+
+    // اگه navbar دیرتر لود شد
+    window.addEventListener('load', () => {
+        setTimeout(setupTheme, 500);
+    });
+</script>
 </body>
 </html>
