@@ -58,6 +58,58 @@
             padding: 12px 0;
             transition: background 0.3s;
         }
+            [data-theme="light"] .sn-navbar {
+            background: rgba(248, 250, 252, 0.95);
+            border-bottom-color: rgba(184, 134, 11, 0.2);
+        }
+        [data-theme="light"] .sn-action-btn,
+        [data-theme="light"] .sn-hamburger {
+            background: rgba(184, 134, 11, 0.1);
+            border-color: rgba(184, 134, 11, 0.3);
+        }
+        [data-theme="light"] .sn-brand-text,
+        [data-theme="light"] .sn-action-btn {
+            color: #b8860b;
+        }
+        [data-theme="light"] .sn-action-btn svg {
+            stroke: #b8860b;
+        }
+        [data-theme="light"] .sn-hamburger span {
+            background: #b8860b;
+        }
+        [data-theme="light"] .sn-dict-btn {
+            color: #b8860b;
+            border-color: rgba(184, 134, 11, 0.4);
+        }
+        [data-theme="light"] .sn-login-btn {
+            color: #b8860b;
+            border-color: rgba(184, 134, 11, 0.4);
+        }
+        [data-theme="light"] .sn-sidebar {
+            background: linear-gradient(180deg, #f1f5f9, #f8fafc);
+        }
+        [data-theme="light"] .sn-sidebar-header {
+            background: #f1f5f9;
+        }
+        [data-theme="light"] .sn-menu-item {
+            color: #334155;
+        }
+        [data-theme="light"] .sn-menu-item:hover {
+            background: rgba(184, 134, 11, 0.1);
+            color: #b8860b;
+        }
+        [data-theme="light"] .sn-search-box {
+            background: #ffffff;
+        }
+        [data-theme="light"] .sn-search-input {
+            color: #0f172a;
+        }
+        [data-theme="light"] .sn-search-result {
+            color: #0f172a;
+        }
+        [data-theme="light"] .sn-menu-group-title {
+            color: #64748b;
+        }
         .sn-navbar-container {
             max-width: 1200px;
             margin: 0 auto;
@@ -852,8 +904,14 @@
         highlightCurrentPage();
         setTimeout(checkUser, 200);
         
-        // ✅ دکمه تم بعد از ساخته شدن navbar
-        setTimeout(setupTheme, 100);
+        // ✅ دکمه تم بعد از ساخته شدن navbar (با تأخیر بیشتر)
+        setTimeout(() => {
+            setupTheme();
+            // ✅ آیکون رو هم آپدیت کن
+            const saved = localStorage.getItem('shamdun-theme') || 'dark';
+            const icon = document.getElementById('snThemeIcon');
+            if (icon) icon.textContent = saved === 'dark' ? '🌙' : '☀️';
+        }, 300);
     }
 
     if (document.readyState === 'loading') {
