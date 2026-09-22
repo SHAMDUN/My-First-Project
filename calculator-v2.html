@@ -1,0 +1,925 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>همراه مالی هوشمند | آکادمی شمعدون</title>
+<meta name="description" content="همراه مالی هوشمند شمعدون — از عدد تا تصمیم، در ۳۰ ثانیه">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css">
+<meta name="theme-color" content="#d4af37">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+:root {
+  --bg-primary: #0a0a0f;
+  --bg-secondary: #14141c;
+  --bg-card: #1a1a24;
+  --gold: #d4af37;
+  --gold-light: #f4d47c;
+  --gold-dark: #a8862a;
+  --green: #10b981;
+  --red: #ef4444;
+  --blue: #3b82f6;
+  --purple: #8b5cf6;
+  --cyan: #22d3ee;
+  --white: #f8fafc;
+  --gray: #94a3b8;
+  --border-gold: rgba(212, 175, 55, 0.15);
+  --shadow-md: 0 5px 20px rgba(212, 175, 55, 0.15);
+  --shadow-lg: 0 15px 40px rgba(212, 175, 55, 0.2);
+  --shadow-gold: 0 10px 30px rgba(212, 175, 55, 0.3);
+}
+[data-theme="light"] {
+  --bg-primary: #f8fafc;
+  --bg-secondary: #eef2f7;
+  --bg-card: #ffffff;
+  --gold: #b8860b;
+  --gold-light: #d4af37;
+  --gold-dark: #8b6508;
+  --green: #059669;
+  --red: #dc2626;
+  --blue: #2563eb;
+  --purple: #7c3aed;
+  --cyan: #0891b2;
+  --white: #0f172a;
+  --gray: #64748b;
+  --border-gold: rgba(184, 134, 11, 0.2);
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: 'Vazirmatn', Tahoma, sans-serif;
+  background-color: var(--bg-primary);
+  background-image:
+    radial-gradient(circle at 0% 0%, rgba(212, 175, 55, 0.08) 0%, transparent 40%),
+    radial-gradient(circle at 100% 100%, rgba(59, 130, 246, 0.06) 0%, transparent 40%);
+  background-size: 100% 100%, 100% 100%;
+  background-attachment: fixed;
+  color: var(--white);
+  min-height: 100vh;
+  direction: rtl;
+  overflow-x: hidden;
+  transition: background-color 0.3s, color 0.3s;
+}
+[data-theme="light"] body {
+  background-image:
+    radial-gradient(circle at 0% 0%, rgba(184, 134, 11, 0.06) 0%, transparent 40%),
+    radial-gradient(circle at 100% 100%, rgba(37, 99, 235, 0.05) 0%, transparent 40%);
+}
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(1.2); }
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+.sn-navbar {
+  position: fixed; top: 0; left: 0; right: 0;
+  background: rgba(10, 10, 15, 0.92);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border-gold);
+  z-index: 9998; padding: 12px 0;
+}
+[data-theme="light"] .sn-navbar { background: rgba(248, 250, 252, 0.95); }
+.sn-navbar-container {
+  max-width: 1400px; margin: 0 auto; padding: 0 20px;
+  display: flex; justify-content: space-between; align-items: center; gap: 15px;
+}
+.sn-hamburger {
+  width: 42px; height: 42px; border-radius: 12px;
+  background: rgba(212, 175, 55, 0.08);
+  border: 1px solid rgba(212, 175, 55, 0.25);
+  display: flex; flex-direction: column; align-items: center;
+  justify-content: center; gap: 4px; cursor: pointer; padding: 0; flex-shrink: 0;
+}
+.sn-hamburger span { display: block; width: 18px; height: 2px; background: var(--gold); border-radius: 2px; }
+.sn-brand { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+.sn-brand-logo { width: 38px; height: 38px; border-radius: 50%; border: 2px solid var(--gold); object-fit: cover; background: linear-gradient(135deg, var(--gold), var(--gold-dark)); }
+.sn-brand-text { color: var(--gold); font-size: 17px; font-weight: 800; }
+.sn-theme-btn {
+  width: 42px; height: 42px; border-radius: 12px;
+  background: rgba(212, 175, 55, 0.08);
+  border: 1px solid rgba(212, 175, 55, 0.25);
+  color: var(--gold); font-size: 18px; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  font-family: inherit; flex-shrink: 0;
+}
+.sn-user-area { min-width: 42px; display: flex; justify-content: flex-end; }
+.sn-user-avatar {
+  width: 42px; height: 42px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+  display: flex; align-items: center; justify-content: center;
+  color: var(--bg-primary); font-weight: 900; font-size: 15px;
+  border: 2px solid var(--gold); text-decoration: none;
+}
+.main-container { max-width: 1200px; margin: 0 auto; padding: 100px 20px 40px; }
+
+/* Hero */
+.hero-section { text-align: center; margin-bottom: 35px; animation: fadeInUp 0.6s ease-out; }
+.hero-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: rgba(212, 175, 55, 0.1);
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  border-radius: 30px; padding: 8px 18px;
+  margin-bottom: 20px; color: var(--gold);
+  font-size: 12px; font-weight: 700;
+}
+.hero-badge .dot { width: 8px; height: 8px; background: var(--green); border-radius: 50%; animation: pulse 1.5s infinite; }
+.hero-section h1 { font-size: 42px; font-weight: 900; margin-bottom: 15px; line-height: 1.3; }
+.hero-section h1 .gold {
+  background: linear-gradient(135deg, var(--gold), var(--gold-light));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+.hero-section p { color: var(--gray); font-size: 16px; line-height: 1.9; max-width: 650px; margin: 0 auto; }
+
+/* Market Ticker */
+.market-ticker {
+  background: linear-gradient(135deg, rgba(212, 175, 55, 0.08), rgba(212, 175, 55, 0.02));
+  border: 1px solid rgba(212, 175, 55, 0.25);
+  border-radius: 18px; padding: 15px 20px; margin-bottom: 30px;
+  display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+  animation: fadeInUp 0.6s ease-out 0.1s backwards;
+}
+.market-ticker .label {
+  display: flex; align-items: center; gap: 8px;
+  color: var(--gold); font-size: 13px; font-weight: 800;
+  padding-left: 15px; border-left: 1px solid rgba(212, 175, 55, 0.2);
+}
+.market-ticker .label .live { width: 6px; height: 6px; background: var(--green); border-radius: 50%; animation: pulse 1.2s infinite; }
+.market-prices { display: flex; gap: 20px; flex-wrap: wrap; flex: 1; }
+.market-price-item { display: flex; align-items: center; gap: 6px; font-size: 13px; color: var(--gray); }
+.market-price-item .icon { font-size: 16px; }
+.market-price-item .name { font-weight: 600; }
+.market-price-item .price { color: var(--gold); font-weight: 900; font-variant-numeric: tabular-nums; }
+.market-price-item .change { font-size: 11px; font-weight: 700; }
+.market-price-item .change.up { color: var(--green); }
+.market-price-item .change.down { color: var(--red); }
+
+/* Score Card */
+.score-card {
+  background: linear-gradient(135deg, rgba(212, 175, 55, 0.12), rgba(212, 175, 55, 0.03));
+  border: 2px solid rgba(212, 175, 55, 0.3);
+  border-radius: 22px; padding: 25px; margin-bottom: 35px;
+  display: grid; grid-template-columns: auto 1fr auto;
+  gap: 25px; align-items: center;
+  animation: fadeInUp 0.6s ease-out 0.15s backwards;
+  position: relative; overflow: hidden;
+}
+.score-card::before {
+  content: ''; position: absolute; top: -50%; right: -10%;
+  width: 300px; height: 300px;
+  background: radial-gradient(circle, rgba(212, 175, 55, 0.15), transparent 70%);
+  filter: blur(50px); pointer-events: none;
+}
+.score-circle { width: 110px; height: 110px; position: relative; flex-shrink: 0; z-index: 2; }
+.score-circle svg { width: 100%; height: 100%; transform: rotate(-90deg); }
+.score-circle .bg-circle { fill: none; stroke: rgba(212, 175, 55, 0.1); stroke-width: 10; }
+.score-circle .progress-circle {
+  fill: none; stroke: url(#scoreGradient); stroke-width: 10;
+  stroke-linecap: round; stroke-dasharray: 283;
+  stroke-dashoffset: calc(283 - (283 * 78 / 100));
+  transition: stroke-dashoffset 1s ease;
+}
+.score-circle .score-value {
+  position: absolute; top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 28px; font-weight: 900; color: var(--gold);
+}
+.score-info { z-index: 2; }
+.score-info h3 { color: var(--white); font-size: 20px; font-weight: 900; margin-bottom: 8px; }
+.score-info h3 .gold { color: var(--gold); }
+.score-info p { color: var(--gray); font-size: 13.5px; line-height: 1.8; margin-bottom: 12px; }
+.score-badges { display: flex; gap: 8px; flex-wrap: wrap; }
+.score-badge {
+  background: rgba(16, 185, 129, 0.15); color: var(--green);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  padding: 4px 12px; border-radius: 12px; font-size: 11px; font-weight: 700;
+}
+.score-badge.warning { background: rgba(239, 68, 68, 0.15); color: var(--red); border-color: rgba(239, 68, 68, 0.3); }
+.score-badge.neutral { background: rgba(148, 163, 184, 0.15); color: var(--gray); border-color: rgba(148, 163, 184, 0.3); }
+.score-cta { z-index: 2; display: flex; flex-direction: column; gap: 8px; align-items: flex-end; }
+.score-cta button {
+  background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+  color: #ffffff; border: none; padding: 12px 22px;
+  border-radius: 12px; font-family: inherit; font-size: 13.5px;
+  font-weight: 800; cursor: pointer; transition: 0.3s;
+  white-space: nowrap; box-shadow: var(--shadow-gold);
+}
+.score-cta button:hover { transform: translateY(-2px); box-shadow: 0 15px 40px rgba(212, 175, 55, 0.5); }
+.score-cta .hint { color: var(--gray); font-size: 11px; }
+
+/* Section Title */
+.section-title {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 20px; animation: fadeInUp 0.6s ease-out 0.2s backwards;
+}
+.section-title h2 {
+  color: var(--white); font-size: 22px; font-weight: 900;
+  display: flex; align-items: center; gap: 10px;
+}
+.section-title h2 .badge {
+  background: rgba(212, 175, 55, 0.15); color: var(--gold);
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  padding: 3px 10px; border-radius: 10px;
+  font-size: 11px; font-weight: 800;
+}
+
+/* Tools Grid */
+.tools-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 16px; margin-bottom: 40px;
+}
+.tool-card {
+  background: linear-gradient(135deg, var(--bg-card), var(--bg-secondary));
+  border: 1px solid var(--border-gold);
+  border-radius: 20px; padding: 22px;
+  cursor: pointer; transition: all 0.35s ease;
+  position: relative; overflow: hidden;
+  animation: fadeInUp 0.5s ease-out backwards;
+}
+.tool-card::before {
+  content: ''; position: absolute; top: -50%; right: -30%;
+  width: 200px; height: 200px;
+  background: radial-gradient(circle, rgba(212, 175, 55, 0.12), transparent 70%);
+  filter: blur(40px); transition: 0.5s; pointer-events: none;
+}
+.tool-card:hover {
+  transform: translateY(-6px);
+  border-color: rgba(212, 175, 55, 0.5);
+  box-shadow: 0 20px 50px rgba(212, 175, 55, 0.18);
+}
+.tool-card .tool-icon {
+  width: 54px; height: 54px; border-radius: 15px;
+  background: linear-gradient(135deg, rgba(212, 175, 55, 0.18), rgba(212, 175, 55, 0.05));
+  border: 1px solid rgba(212, 175, 55, 0.25);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 26px; margin-bottom: 15px; position: relative; z-index: 2;
+}
+.tool-card h3 {
+  color: var(--white); font-size: 16px; font-weight: 900;
+  margin-bottom: 8px; position: relative; z-index: 2;
+  display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+}
+.tool-card h3 .trending {
+  background: rgba(239, 68, 68, 0.15); color: var(--red);
+  font-size: 9px; padding: 2px 8px; border-radius: 8px;
+  font-weight: 800; border: 1px solid rgba(239, 68, 68, 0.3);
+}
+.tool-card h3 .popular {
+  background: rgba(212, 175, 55, 0.15); color: var(--gold);
+  font-size: 9px; padding: 2px 8px; border-radius: 8px;
+  font-weight: 800; border: 1px solid rgba(212, 175, 55, 0.3);
+}
+.tool-card p {
+  color: var(--gray); font-size: 12.5px; line-height: 1.7;
+  margin-bottom: 15px; position: relative; z-index: 2; min-height: 42px;
+}
+.tool-card .tool-footer {
+  display: flex; align-items: center; justify-content: space-between;
+  position: relative; z-index: 2;
+  padding-top: 12px; border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+.tool-card .tool-stats { display: flex; align-items: center; gap: 5px; color: var(--gray); font-size: 11px; }
+.tool-card .tool-stats strong { color: var(--gold); font-weight: 800; }
+.tool-card .tool-arrow { color: var(--gold); font-size: 16px; transition: transform 0.3s; }
+.tool-card:hover .tool-arrow { transform: translateX(-4px); }
+
+/* Simulator */
+.simulator-section {
+  background: linear-gradient(135deg, rgba(139, 92, 246, 0.08), rgba(139, 92, 246, 0.02));
+  border: 2px solid rgba(139, 92, 246, 0.25);
+  border-radius: 22px; padding: 28px; margin-bottom: 40px;
+  animation: fadeInUp 0.6s ease-out 0.3s backwards;
+  position: relative; overflow: hidden;
+}
+.simulator-section::before {
+  content: ''; position: absolute; top: -50%; left: -20%;
+  width: 400px; height: 400px;
+  background: radial-gradient(circle, rgba(139, 92, 246, 0.15), transparent 70%);
+  filter: blur(60px); pointer-events: none;
+}
+.simulator-header {
+  display: flex; align-items: center; gap: 15px; margin-bottom: 22px;
+  position: relative; z-index: 2; flex-wrap: wrap;
+}
+.simulator-icon {
+  width: 54px; height: 54px; border-radius: 15px;
+  background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 26px; flex-shrink: 0;
+}
+.simulator-title h2 {
+  color: #a78bfa; font-size: 20px; font-weight: 900;
+  margin-bottom: 4px; display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+}
+.simulator-title p { color: var(--gray); font-size: 13px; line-height: 1.6; }
+.simulator-new-badge {
+  background: linear-gradient(135deg, #ef4444, #dc2626);
+  color: #ffffff; padding: 4px 12px; border-radius: 10px;
+  font-size: 10px; font-weight: 900; animation: pulse 2s infinite;
+}
+.simulator-inputs {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 14px; margin-bottom: 20px; position: relative; z-index: 2;
+}
+.sim-input-group { display: flex; flex-direction: column; gap: 6px; }
+.sim-input-group label {
+  color: var(--white); font-size: 12.5px; font-weight: 700;
+  display: flex; align-items: center; gap: 5px;
+}
+.sim-input-group input {
+  padding: 12px 14px;
+  background: rgba(10, 10, 15, 0.6);
+  border: 2px solid rgba(255, 255, 255, 0.08);
+  border-radius: 10px; color: var(--white);
+  font-family: inherit; font-size: 14px; outline: none;
+  transition: 0.3s; font-variant-numeric: tabular-nums;
+}
+[data-theme="light"] .sim-input-group input { background: #ffffff; border-color: rgba(0, 0, 0, 0.1); }
+.sim-input-group input:focus {
+  border-color: #8b5cf6;
+  box-shadow: 0 0 0 4px rgba(139, 92, 246, 0.15);
+}
+.simulator-btn {
+  width: 100%; padding: 15px;
+  background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+  color: #ffffff; border: none; border-radius: 12px;
+  font-family: inherit; font-size: 15px; font-weight: 800;
+  cursor: pointer; transition: 0.3s;
+  position: relative; z-index: 2;
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  box-shadow: 0 10px 30px rgba(139, 92, 246, 0.3);
+}
+.simulator-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 15px 40px rgba(139, 92, 246, 0.5);
+}
+.simulator-results {
+  margin-top: 22px; display: none; position: relative; z-index: 2;
+  animation: fadeInUp 0.5s ease-out;
+}
+.simulator-results.show { display: block; }
+.scenario-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 12px; margin-bottom: 20px;
+}
+.scenario-card {
+  background: rgba(10, 10, 15, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 15px; padding: 16px;
+  position: relative; transition: 0.3s;
+}
+[data-theme="light"] .scenario-card { background: #ffffff; }
+.scenario-card.winner {
+  border-color: rgba(16, 185, 129, 0.5);
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.12), rgba(16, 185, 129, 0.03));
+}
+.scenario-card.you {
+  border-color: rgba(212, 175, 55, 0.5);
+  background: linear-gradient(135deg, rgba(212, 175, 55, 0.12), rgba(212, 175, 55, 0.03));
+}
+.scenario-card .scenario-header {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 12px; flex-wrap: wrap; gap: 6px;
+}
+.scenario-card .scenario-name {
+  color: var(--white); font-size: 13px; font-weight: 800;
+  display: flex; align-items: center; gap: 6px;
+}
+.scenario-card .scenario-tag {
+  font-size: 9.5px; font-weight: 800;
+  padding: 2px 8px; border-radius: 8px;
+}
+.scenario-card .scenario-tag.best { background: rgba(16, 185, 129, 0.2); color: var(--green); }
+.scenario-card .scenario-tag.you { background: rgba(212, 175, 55, 0.2); color: var(--gold); }
+.scenario-card .scenario-value {
+  color: var(--white); font-size: 20px; font-weight: 900;
+  margin-bottom: 4px; font-variant-numeric: tabular-nums;
+}
+.scenario-card .scenario-return { font-size: 12px; font-weight: 700; margin-bottom: 10px; }
+.scenario-card .scenario-return.up { color: var(--green); }
+.scenario-card .scenario-return.down { color: var(--red); }
+.scenario-card .scenario-bar {
+  height: 5px; background: rgba(255, 255, 255, 0.08);
+  border-radius: 5px; overflow: hidden;
+}
+.scenario-card .scenario-bar-fill {
+  height: 100%; border-radius: 5px; transition: width 0.8s ease;
+}
+.scenario-summary {
+  background: rgba(139, 92, 246, 0.1);
+  border: 1px solid rgba(139, 92, 246, 0.3);
+  border-radius: 15px; padding: 16px 20px;
+  color: #c4b5fd; font-size: 13.5px; line-height: 1.9;
+}
+[data-theme="light"] .scenario-summary { color: #6d28d9; }
+.scenario-summary strong { color: #a78bfa; font-weight: 900; }
+
+/* Social Proof */
+.social-proof {
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  gap: 14px; margin-bottom: 40px;
+  animation: fadeInUp 0.6s ease-out 0.4s backwards;
+}
+.proof-item {
+  background: linear-gradient(135deg, var(--bg-card), var(--bg-secondary));
+  border: 1px solid var(--border-gold);
+  border-radius: 18px; padding: 20px 15px;
+  text-align: center; transition: 0.3s;
+}
+.proof-item:hover {
+  transform: translateY(-4px);
+  border-color: rgba(212, 175, 55, 0.4);
+}
+.proof-item .icon { font-size: 28px; margin-bottom: 10px; }
+.proof-item .value {
+  color: var(--gold); font-size: 24px; font-weight: 900;
+  margin-bottom: 5px; font-variant-numeric: tabular-nums;
+}
+.proof-item .label { color: var(--gray); font-size: 11.5px; }
+
+/* CTA */
+.cta-section {
+  background: linear-gradient(135deg, rgba(212, 175, 55, 0.15), rgba(59, 130, 246, 0.05));
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  border-radius: 22px; padding: 35px 30px;
+  text-align: center; margin-bottom: 30px;
+  animation: fadeInUp 0.6s ease-out 0.5s backwards;
+  position: relative; overflow: hidden;
+}
+.cta-section h2 {
+  color: var(--white); font-size: 24px; font-weight: 900;
+  margin-bottom: 12px;
+}
+.cta-section h2 .gold { color: var(--gold); }
+.cta-section p {
+  color: var(--gray); font-size: 14px; line-height: 1.8;
+  max-width: 550px; margin: 0 auto 22px;
+}
+.cta-btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 15px 32px;
+  background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+  color: #ffffff; text-decoration: none; border-radius: 14px;
+  font-size: 15px; font-weight: 900; transition: 0.3s;
+  box-shadow: 0 12px 35px rgba(212, 175, 55, 0.4);
+  border: none; cursor: pointer; font-family: inherit;
+}
+.cta-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 18px 45px rgba(212, 175, 55, 0.55);
+}
+.footer {
+  text-align: center; padding: 30px 20px;
+  color: var(--gray); font-size: 12px;
+  border-top: 1px solid var(--border-gold); margin-top: 30px;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .tools-grid { grid-template-columns: repeat(2, 1fr); }
+  .social-proof { grid-template-columns: repeat(2, 1fr); }
+  .score-card { grid-template-columns: auto 1fr; }
+  .score-cta { grid-column: 1 / -1; align-items: stretch; }
+  .score-cta button { width: 100%; }
+  .simulator-inputs { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 600px) {
+  .main-container { padding: 90px 15px 30px; }
+  .hero-section h1 { font-size: 26px; }
+  .hero-section p { font-size: 14px; }
+  .tools-grid { grid-template-columns: 1fr; }
+  .social-proof { grid-template-columns: 1fr 1fr; }
+  .score-card { grid-template-columns: 1fr; text-align: center; }
+  .score-circle { margin: 0 auto; }
+  .simulator-inputs { grid-template-columns: 1fr; }
+  .section-title h2 { font-size: 18px; }
+  .market-ticker { padding: 12px 15px; }
+  .market-ticker .label { padding-left: 10px; }
+}
+</style>
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="sn-navbar">
+  <div class="sn-navbar-container">
+    <button class="sn-hamburger" id="snHamburger" aria-label="منو">
+      <span></span><span></span><span></span>
+    </button>
+    <a href="index.html" class="sn-brand">
+      <img src="519.png" alt="شمعدون" class="sn-brand-logo" onerror="this.style.display='none'">
+      <span class="sn-brand-text">شمعدون</span>
+    </a>
+    <button class="sn-theme-btn" id="snThemeBtn" aria-label="تغییر تم">
+      <span id="snThemeIcon">🌙</span>
+    </button>
+    <div class="sn-user-area" id="snUserArea"></div>
+  </div>
+</nav>
+
+<!-- Main -->
+<div class="main-container">
+
+  <!-- Hero -->
+  <section class="hero-section">
+    <div class="hero-badge">
+      <span class="dot"></span>
+      <span>✨ نسخه جدید — همراه مالی هوشمند</span>
+    </div>
+    <h1>
+      همراه <span class="gold">مالی هوشمند</span> شما
+      <br>
+      از عدد تا تصمیم، در ۳۰ ثانیه
+    </h1>
+    <p>
+      ابزارهای مالی حرفه‌ای، تحلیل هوشمند با AI، و پیشنهاد شخصی‌سازی‌شده — همه در یک صفحه.
+      بدون نیاز به دانش تخصصی، بدون هزینه.
+    </p>
+  </section>
+
+  <!-- Market Ticker -->
+  <div class="market-ticker">
+    <div class="label">
+      <span class="live"></span>
+      <span>بازار زنده</span>
+    </div>
+    <div class="market-prices" id="marketPrices">
+      <div class="market-price-item">
+        <span class="icon">🥇</span>
+        <span class="name">طلا ۱۸:</span>
+        <span class="price">--</span>
+        <span class="change up">--</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Score Card -->
+  <section class="score-card">
+    <div class="score-circle">
+      <svg viewBox="0 0 100 100">
+        <defs>
+          <linearGradient id="scoreGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#d4af37"/>
+            <stop offset="100%" stop-color="#f4d47c"/>
+          </linearGradient>
+        </defs>
+        <circle class="bg-circle" cx="50" cy="50" r="45"/>
+        <circle class="progress-circle" cx="50" cy="50" r="45"/>
+      </svg>
+      <div class="score-value">۷۸</div>
+    </div>
+    <div class="score-info">
+      <h3>🏆 امتیاز مالی شما: <span class="gold">۷۸ از ۱۰۰</span></h3>
+      <p>
+        سبد شما متعادل و متنوعه، ولی برای بهتر شدن پوشش تورم، پیشنهادهای زیر رو ببین.
+      </p>
+      <div class="score-badges">
+        <span class="score-badge">✓ تنوع خوب</span>
+        <span class="score-badge warning">⚠️ پوشش تورم ضعیف</span>
+        <span class="score-badge neutral">ⓘ نظم DCA: متوسط</span>
+      </div>
+    </div>
+    <div class="score-cta">
+      <button onclick="alert('🔓 برای دیدن تحلیل کامل امتیاز، وارد حساب کاربری شو')">
+        🔓 دیدن تحلیل کامل
+      </button>
+      <span class="hint">۲۰ ثانیه طول می‌کشه</span>
+    </div>
+  </section>
+
+  <!-- Tools Grid -->
+  <div class="section-title">
+    <h2>
+      🧰 ابزارهای مالی
+      <span class="badge">۸ ابزار</span>
+    </h2>
+  </div>
+  <div class="tools-grid">
+    <div class="tool-card" onclick="alert('💰 ابزار DCA')" style="animation-delay: 0.05s;">
+      <div class="tool-icon">💰</div>
+      <h3>
+        سرمایه‌گذاری ماهانه
+        <span class="popular">🔥 محبوب</span>
+      </h3>
+      <p>هر ماه یه مبلغ ثابت سرمایه‌گذاری کن و قدرت سود مرکب رو ببین</p>
+      <div class="tool-footer">
+        <span class="tool-stats">👥 <strong>۱۲۴۸</strong> کاربر امروز</span>
+        <span class="tool-arrow">←</span>
+      </div>
+    </div>
+    <div class="tool-card" onclick="alert('🏦 سود مرکب')" style="animation-delay: 0.1s;">
+      <div class="tool-icon">🏦</div>
+      <h3>سود مرکب</h3>
+      <p>محاسبه دقیق سود سپرده بانکی و بازدهی سرمایه‌گذاری بلندمدت</p>
+      <div class="tool-footer">
+        <span class="tool-stats">👥 <strong>۸۹۴</strong> کاربر امروز</span>
+        <span class="tool-arrow">←</span>
+      </div>
+    </div>
+    <div class="tool-card" onclick="alert('🎯 هدف مالی')" style="animation-delay: 0.15s;">
+      <div class="tool-icon">🎯</div>
+      <h3>هدف مالی</h3>
+      <p>می‌خوای ۳ سال دیگه ۱ میلیارد داشته باشی؟ ماهی چقدر لازمه؟</p>
+      <div class="tool-footer">
+        <span class="tool-stats">👥 <strong>۶۲۳</strong> کاربر امروز</span>
+        <span class="tool-arrow">←</span>
+      </div>
+    </div>
+    <div class="tool-card" onclick="alert('📉 تورم')" style="animation-delay: 0.2s;">
+      <div class="tool-icon">📉</div>
+      <h3>
+        محاسبه تورم
+        <span class="popular">🔥 ترند</span>
+      </h3>
+      <p>۱۰۰ میلیون امروز، ۱ سال دیگه چقدر ارزش داره؟</p>
+      <div class="tool-footer">
+        <span class="tool-stats">👥 <strong>۱۵۶۷</strong> کاربر امروز</span>
+        <span class="tool-arrow">←</span>
+      </div>
+    </div>
+    <div class="tool-card" onclick="alert('📊 تاریخچه تورم')" style="animation-delay: 0.25s;">
+      <div class="tool-icon">📊</div>
+      <h3>تاریخچه تورم</h3>
+      <p>نرخ تورم هر سال رو ثبت کن و ارزش واقعی دارایی‌ت رو ببین</p>
+      <div class="tool-footer">
+        <span class="tool-stats">👥 <strong>۴۵۶</strong> کاربر امروز</span>
+        <span class="tool-arrow">←</span>
+      </div>
+    </div>
+    <div class="tool-card" onclick="alert('⚖️ مقایسه')" style="animation-delay: 0.3s;">
+      <div class="tool-icon">⚖️</div>
+      <h3>مقایسه گزینه‌ها</h3>
+      <p>دو تا سرمایه‌گذاری مختلف رو کنار هم بذار و ببین کدوم بهتره</p>
+      <div class="tool-footer">
+        <span class="tool-stats">👥 <strong>۳۴۲</strong> کاربر امروز</span>
+        <span class="tool-arrow">←</span>
+      </div>
+    </div>
+    <div class="tool-card" onclick="alert('🎲 ریسک')" style="animation-delay: 0.35s;">
+      <div class="tool-icon">🎲</div>
+      <h3>تحلیل ریسک</h3>
+      <p>سرمایه‌ات رو چطور بین دارایی‌ها پخش کنی؟</p>
+      <div class="tool-footer">
+        <span class="tool-stats">👥 <strong>۷۸۹</strong> کاربر امروز</span>
+        <span class="tool-arrow">←</span>
+      </div>
+    </div>
+    <div class="tool-card" onclick="alert('🎯 پوزیشن')" style="animation-delay: 0.4s;">
+      <div class="tool-icon">🎯</div>
+      <h3>مدیریت پوزیشن</h3>
+      <p>چقدر سرمایه‌گذاری کنی که اگه حد ضرر خورد، ضررت قابل مدیریت باشه؟</p>
+      <div class="tool-footer">
+        <span class="tool-stats">👥 <strong>۵۶۷</strong> کاربر امروز</span>
+        <span class="tool-arrow">←</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scenario Simulator -->
+  <section class="simulator-section">
+    <div class="simulator-header">
+      <div class="simulator-icon">🎮</div>
+      <div class="simulator-title">
+        <h2>
+          شبیه‌ساز سناریو
+          <span class="simulator-new-badge">جدید</span>
+        </h2>
+        <p>ببین اگه الان با پولت یه سناریو دیگه رو انتخاب کنی، ۵ سال دیگه چی می‌شه</p>
+      </div>
+    </div>
+    <div class="simulator-inputs">
+      <div class="sim-input-group">
+        <label>💰 سرمایه فعلی (تومان)</label>
+        <input type="text" id="sim-capital" value="۵۰۰,۰۰۰,۰۰۰" placeholder="۵۰۰,۰۰۰,۰۰۰">
+      </div>
+      <div class="sim-input-group">
+        <label>💵 سرمایه‌گذاری ماهانه (تومان)</label>
+        <input type="text" id="sim-monthly" value="۲۰,۰۰۰,۰۰۰" placeholder="۲۰,۰۰۰,۰۰۰">
+      </div>
+      <div class="sim-input-group">
+        <label>⏳ مدت زمان (سال)</label>
+        <input type="number" id="sim-years" value="5" min="1" max="30">
+      </div>
+    </div>
+    <button class="simulator-btn" onclick="runSimulation()">
+      🎯 شبیه‌سازی کن
+    </button>
+    <div class="simulator-results" id="simResults">
+      <div class="scenario-grid" id="scenarioGrid"></div>
+      <div class="scenario-summary" id="scenarioSummary"></div>
+    </div>
+  </section>
+
+  <!-- Social Proof -->
+  <section class="social-proof">
+    <div class="proof-item">
+      <div class="icon">👥</div>
+      <div class="value">۲,۴۷۸</div>
+      <div class="label">کاربر فعال امروز</div>
+    </div>
+    <div class="proof-item">
+      <div class="icon">📊</div>
+      <div class="value">۱۵,۴۲۳</div>
+      <div class="label">محاسبه انجام‌شده</div>
+    </div>
+    <div class="proof-item">
+      <div class="icon">⭐</div>
+      <div class="value">۴.۷</div>
+      <div class="label">میانگین رضایت</div>
+    </div>
+    <div class="proof-item">
+      <div class="icon">🎯</div>
+      <div class="value">۶۲</div>
+      <div class="label">میانگین امتیاز مالی</div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-section">
+    <h2>آماده‌ای <span class="gold">تصمیم‌های هوشمندانه‌تر</span> بگیری؟</h2>
+    <p>
+      عضو آکادمی شمعدون شو، امتیاز مالی خودت رو ببین و مسیر حرفه‌ای شدن رو شروع کن.
+    </p>
+    <button class="cta-btn" onclick="window.location.href='login.html'">
+      🚀 شروع رایگان
+    </button>
+  </section>
+
+</div>
+
+<footer class="footer">
+  © ۱۴۰۵ آکادمی شمعدون | تمامی حقوق محفوظ است
+</footer>
+
+<script>
+// ابزارها
+function toFa(num) {
+  if (num === null || num === undefined) return '۰';
+  const d = ['۰','۱','۲','۳','۴','۵','۶','۷','۸','۹'];
+  return String(num).replace(/\d/g, x => d[x]);
+}
+function toEnDigits(str) {
+  if (str === null || str === undefined) return '';
+  let s = String(str);
+  const d = ['۰','۱','۲','۳','۴','۵','۶','۷','۸','۹'];
+  d.forEach((p, i) => { s = s.split(p).join(String(i)); });
+  return s;
+}
+function parseNum(str) {
+  if (!str) return 0;
+  const en = toEnDigits(str).replace(/[^\d]/g, '');
+  return en ? parseInt(en, 10) : 0;
+}
+function formatBigNum(num) {
+  if (!num || isNaN(num)) return '۰';
+  const n = Number(num);
+  const abs = Math.abs(n);
+  let r;
+  if (abs >= 1e12) r = (n / 1e12).toFixed(2) + ' همت';
+  else if (abs >= 1e9) r = (n / 1e9).toFixed(2) + ' میلیارد';
+  else if (abs >= 1e6) r = (n / 1e6).toFixed(1) + ' میلیون';
+  else if (abs >= 1e3) r = (n / 1e3).toFixed(0) + ' هزار';
+  else r = Math.round(n).toString();
+  return toFa(r);
+}
+
+// تم شب/روز با پشتیبانی از تم پویا
+function getAutoTheme() {
+  const hour = new Date().getHours();
+  return (hour >= 6 && hour < 18) ? 'light' : 'dark';
+}
+function applyTheme() {
+  const saved = localStorage.getItem('shamdun-theme');
+  const auto = localStorage.getItem('shamdun-theme-auto');
+  let theme;
+  if (auto === 'true' || !saved) {
+    theme = getAutoTheme();
+  } else {
+    theme = saved;
+  }
+  document.documentElement.setAttribute('data-theme', theme);
+  const icon = document.getElementById('snThemeIcon');
+  if (icon) icon.textContent = theme === 'dark' ? '🌙' : '☀️';
+}
+function initThemeButton() {
+  const btn = document.getElementById('snThemeBtn');
+  if (!btn) return;
+  btn.addEventListener('click', (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    const cur = document.documentElement.getAttribute('data-theme') || 'dark';
+    const nw = cur === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', nw);
+    localStorage.setItem('shamdun-theme', nw);
+    localStorage.setItem('shamdun-theme-auto', 'false');
+    const icon = document.getElementById('snThemeIcon');
+    if (icon) icon.textContent = nw === 'dark' ? '🌙' : '☀️';
+  });
+}
+
+// شبیه‌ساز سناریو
+const SCENARIOS = [
+  { key: 'gold', name: '🥇 فقط طلا', rate: 35, color: '#D4AF37' },
+  { key: 'usd', name: '💵 فقط دلار', rate: 28, color: '#10b981' },
+  { key: 'bourse', name: '📊 فقط بورس', rate: 25, color: '#3b82f6' },
+  { key: 'btc', name: '₿ فقط بیت‌کوین', rate: 45, color: '#f7931a' },
+  { key: 'inflation', name: '📉 فقط تورم', rate: 40, color: '#ef4444' },
+  { key: 'you', name: '🎯 سبد فعلی شما', rate: 32, color: '#d4af37', isYou: true }
+];
+function runSimulation() {
+  const capital = parseNum(document.getElementById('sim-capital').value);
+  const monthly = parseNum(document.getElementById('sim-monthly').value);
+  const years = parseFloat(document.getElementById('sim-years').value) || 5;
+  if (capital <= 0 || years <= 0) { alert('لطفاً سرمایه و مدت زمان رو درست وارد کن'); return; }
+  const months = years * 12;
+  const results = SCENARIOS.map(sc => {
+    const mr = sc.rate / 100 / 12;
+    let final;
+    if (mr === 0) { final = capital + (monthly * months); }
+    else {
+      const f = Math.pow(1 + mr, months);
+      final = capital * f + monthly * ((f - 1) / mr);
+    }
+    const invested = capital + (monthly * months);
+    return { ...sc, finalValue: final, invested, returnPercent: (final / invested - 1) * 100 };
+  });
+  const winner = results.reduce((m, s) => s.finalValue > m.finalValue ? s : m, results[0]);
+  const maxV = winner.finalValue;
+  const user = results.find(r => r.isYou);
+
+  const grid = document.getElementById('scenarioGrid');
+  grid.innerHTML = results.map(sc => {
+    const bw = (sc.finalValue / maxV) * 100;
+    const isW = sc.key === winner.key;
+    const cls = ['scenario-card'];
+    if (isW) cls.push('winner');
+    if (sc.isYou) cls.push('you');
+    return `
+      <div class="${cls.join(' ')}">
+        <div class="scenario-header">
+          <span class="scenario-name">${sc.name}</span>
+          ${isW ? '<span class="scenario-tag best">🏆 بهترین</span>' : ''}
+          ${sc.isYou ? '<span class="scenario-tag you">شما</span>' : ''}
+        </div>
+        <div class="scenario-value">${formatBigNum(sc.finalValue)}</div>
+        <div class="scenario-return ${sc.returnPercent >= 0 ? 'up' : 'down'}">
+          ${sc.returnPercent >= 0 ? '+' : ''}${toFa(sc.returnPercent.toFixed(1))}٪
+        </div>
+        <div class="scenario-bar">
+          <div class="scenario-bar-fill" style="width: ${bw}%; background: linear-gradient(90deg, ${sc.color}, ${sc.color}88);"></div>
+        </div>
+      </div>
+    `;
+  }).join('');
+
+  const diff = user.finalValue - winner.finalValue;
+  const dp = (user.finalValue / winner.finalValue - 1) * 100;
+  let summary = '';
+  if (user.key === winner.key) {
+    summary = `🏆 <strong>عالی!</strong> سبد فعلی شما بهترین سناریو در این دوره است.`;
+  } else if (dp > -10) {
+    summary = `⚖️ <strong>سبد شما نزدیک به بهترین گزینه‌ست.</strong> اگه روی «${winner.name}» تمرکز کنی، در ${toFa(years)} سال <strong>${formatBigNum(Math.abs(diff))}</strong> تومان بیشتر می‌داشتی.`;
+  } else {
+    summary = `⚠️ <strong>سبد فعلی شما از بهترین گزینه عقب‌تره.</strong> اگه روی «${winner.name}» سرمایه‌گذاری می‌کردی، <strong>${formatBigNum(Math.abs(diff))}</strong> تومان بیشتر (${toFa(Math.abs(dp).toFixed(1))}٪) می‌داشتی.`;
+  }
+  document.getElementById('scenarioSummary').innerHTML = summary;
+  document.getElementById('simResults').classList.add('show');
+  document.getElementById('simResults').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+
+// قیمت‌های بازار (Mock)
+function mockMarketPrices() {
+  const p = { gold18: 2950000, ch: 1.2, usd: 62500, uc: -0.5, btc: 88200, bc: 2.3 };
+  const el = document.getElementById('marketPrices');
+  if (el) {
+    el.innerHTML = `
+      <div class="market-price-item">
+        <span class="icon">🥇</span><span class="name">طلا ۱۸:</span>
+        <span class="price">${toFa(p.gold18.toLocaleString())}</span>
+        <span class="change up">+${toFa(p.ch)}٪</span>
+      </div>
+      <div class="market-price-item">
+        <span class="icon">💵</span><span class="name">دلار:</span>
+        <span class="price">${toFa(p.usd.toLocaleString())}</span>
+        <span class="change down">${toFa(p.uc)}٪</span>
+      </div>
+      <div class="market-price-item">
+        <span class="icon">₿</span><span class="name">BTC:</span>
+        <span class="price">$${toFa(p.btc.toLocaleString())}</span>
+        <span class="change up">+${toFa(p.bc)}٪</span>
+      </div>
+    `;
+  }
+}
+
+// Init
+document.addEventListener('DOMContentLoaded', () => {
+  applyTheme();
+  initThemeButton();
+  mockMarketPrices();
+});
+</script>
+</body>
+</html>
