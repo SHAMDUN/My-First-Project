@@ -18,7 +18,9 @@
             --white: #f8fafc;
             --gray: #94a3b8;
         }
-            [data-theme="light"] {
+
+        /* ===== تم روز ===== */
+        [data-theme="light"] {
             --bg-primary: #f8fafc;
             --bg-secondary: #eef2f7;
             --bg-card: #ffffff;
@@ -28,40 +30,15 @@
             --white: #0f172a;
             --gray: #64748b;
         }
-        [data-theme="light"] .news-image {
-            background: linear-gradient(135deg, rgba(184, 134, 11, 0.15), rgba(248, 250, 252, 0.9));
+
+        [data-theme="light"] body {
+            background-image:
+                radial-gradient(circle at 0% 0%, rgba(184, 134, 11, 0.06) 0%, transparent 40%),
+                radial-gradient(circle at 100% 100%, rgba(37, 99, 235, 0.05) 0%, transparent 40%),
+                linear-gradient(rgba(0, 0, 0, 0.025) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 0, 0, 0.025) 1px, transparent 1px);
         }
-        [data-theme="light"] .news-footer {
-            border-top-color: rgba(0, 0, 0, 0.06);
-        }
-        [data-theme="light"] .news-tab {
-            background: rgba(248, 250, 252, 0.8);
-            border-color: rgba(0, 0, 0, 0.08);
-        }
-        [data-theme="light"] .news-card {
-            border-color: rgba(184, 134, 11, 0.2);
-        }
-        [data-theme="light"] .news-card:hover {
-            border-color: rgba(184, 134, 11, 0.5);
-            box-shadow: 0 15px 40px rgba(184, 134, 11, 0.1);
-        }
-        [data-theme="light"] .news-meta .source {
-            background: rgba(184, 134, 11, 0.15);
-            color: #b8860b;
-        }
-        [data-theme="light"] .sn-sidebar {
-            background: linear-gradient(180deg, #f1f5f9, #f8fafc);
-        }
-        [data-theme="light"] .sn-sidebar-header {
-            background: #f1f5f9;
-        }
-        [data-theme="light"] .sn-menu-item {
-            color: #334155;
-        }
-        [data-theme="light"] .sn-menu-item:hover {
-            background: rgba(184, 134, 11, 0.1);
-            color: #b8860b;
-        }
+
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: 'Vazirmatn', Tahoma, sans-serif;
@@ -77,6 +54,7 @@
             min-height: 100vh;
             direction: rtl;
             overflow-x: hidden;
+            transition: background-color 0.3s, color 0.3s;
         }
         @keyframes fadeInUp {
             from { opacity: 0; transform: translateY(30px); }
@@ -258,6 +236,112 @@
             text-align: center; padding: 30px 20px; color: var(--gray);
             font-size: 12px; border-top: 1px solid rgba(212, 175, 55, 0.1); margin-top: 40px;
         }
+
+        /* ===================================================== */
+        /* 🌙 تم روشن - !important برای غلبه بر رنگ‌های hardcode */
+        /* ===================================================== */
+        [data-theme="light"] body {
+            background-color: #f8fafc !important;
+            color: #0f172a !important;
+        }
+        [data-theme="light"] .sn-navbar {
+            background: rgba(248, 250, 252, 0.95) !important;
+            border-bottom-color: rgba(184, 134, 11, 0.2) !important;
+        }
+        [data-theme="light"] .sn-hamburger {
+            background: rgba(184, 134, 11, 0.08) !important;
+            border-color: rgba(184, 134, 11, 0.3) !important;
+        }
+        [data-theme="light"] .dict-btn {
+            background: linear-gradient(135deg, rgba(184, 134, 11, 0.15), rgba(184, 134, 11, 0.05)) !important;
+            color: #8b6508 !important;
+        }
+        [data-theme="light"] .dict-btn:hover {
+            color: #ffffff !important;
+        }
+        [data-theme="light"] .sn-sidebar {
+            background: linear-gradient(180deg, #f1f5f9, #f8fafc) !important;
+        }
+        [data-theme="light"] .sn-sidebar-header {
+            background: #f1f5f9 !important;
+            border-bottom-color: rgba(184, 134, 11, 0.2) !important;
+        }
+        [data-theme="light"] .sn-menu-item {
+            color: #334155 !important;
+        }
+        [data-theme="light"] .sn-menu-item:hover {
+            background: rgba(184, 134, 11, 0.1) !important;
+            color: #8b6508 !important;
+        }
+        [data-theme="light"] .sn-menu-item.active {
+            background: rgba(184, 134, 11, 0.15) !important;
+            color: #8b6508 !important;
+        }
+        [data-theme="light"] .sn-menu-divider {
+            background: rgba(184, 134, 11, 0.15) !important;
+        }
+        [data-theme="light"] .page-header h1 {
+            background: linear-gradient(135deg, #b8860b, #8b6508) !important;
+            -webkit-background-clip: text !important;
+            -webkit-text-fill-color: transparent !important;
+            background-clip: text !important;
+        }
+        [data-theme="light"] .page-header p {
+            color: #475569 !important;
+        }
+        [data-theme="light"] .news-tab {
+            background: rgba(255, 255, 255, 0.8) !important;
+            color: #475569 !important;
+            border-color: rgba(0, 0, 0, 0.1) !important;
+        }
+        [data-theme="light"] .news-tab:hover {
+            color: #b8860b !important;
+            border-color: rgba(184, 134, 11, 0.5) !important;
+        }
+        [data-theme="light"] .news-tab.active {
+            background: linear-gradient(135deg, #d4af37, #a8862a) !important;
+            color: #ffffff !important;
+            border-color: #b8860b !important;
+        }
+        [data-theme="light"] .news-card {
+            background: linear-gradient(135deg, #ffffff, #eef2f7) !important;
+            border-color: rgba(184, 134, 11, 0.2) !important;
+        }
+        [data-theme="light"] .news-card:hover {
+            border-color: rgba(184, 134, 11, 0.5) !important;
+            box-shadow: 0 15px 40px rgba(184, 134, 11, 0.1) !important;
+        }
+        /* 🔒 فقط اگه عکس نداره، پس‌زمینه روشن اعمال شه */
+        [data-theme="light"] .news-image:not(:has(img)) {
+            background: linear-gradient(135deg, rgba(184, 134, 11, 0.15), rgba(241, 245, 249, 0.9)) !important;
+        }
+        [data-theme="light"] .news-title {
+            color: #0f172a !important;
+        }
+        [data-theme="light"] .news-desc {
+            color: #475569 !important;
+        }
+        [data-theme="light"] .news-meta {
+            color: #64748b !important;
+        }
+        [data-theme="light"] .news-meta .source {
+            background: rgba(184, 134, 11, 0.15) !important;
+            color: #8b6508 !important;
+        }
+        [data-theme="light"] .news-footer {
+            border-top-color: rgba(0, 0, 0, 0.06) !important;
+        }
+        [data-theme="light"] .news-category,
+        [data-theme="light"] .news-read-more {
+            color: #8b6508 !important;
+        }
+        [data-theme="light"] .loading {
+            color: #64748b !important;
+        }
+        [data-theme="light"] .footer {
+            color: #64748b !important;
+        }
+
         @media (max-width: 700px) {
             .main-container { padding: 90px 15px 30px; }
             .page-header h1 { font-size: 26px; }
@@ -472,9 +556,6 @@
     }
 
     // ==========================================
-    // ترجمه با MyMemory (رایگان، بدون تحریم)
-    // ==========================================
-    // ==========================================
     // ترجمه از طریق Edge Function
     // ==========================================
     async function translateToPersian(text) {
@@ -505,10 +586,8 @@
     // فیلتر سختگیرانه اقتصادی
     // ==========================================
 
-    // کلمات ممنوع — اگه توی تیتر بود، ۱۰۰٪ حذف
     const STRICT_EXCLUDE = /^(ورزشی|ورزش|فوتبال|والیبال|بسکتبال|کشتی|المپیک|قهرمانی|لیگ|باشگاه|تیم|مربی|بازیکن|گلزنی|پرسپولیس|استقلال|رئال|بارسلونا|سینما|فیلم|سریال|بازیگر|کارگردان|هنرمند|سلبریتی|موسیقی|کنسرت|آهنگ|آلبوم|حوادث|قتل|سرقت|دزدی|تصادف|آتش‌سوزی|زلزله|سیل|جنگ|حمله|ترور|موشک|پهپاد|نظامی|ارتش|سپاه|بازداشت|دادگاه|زندان|سیاسی|نماینده|مجلس|انتخابات|وزیر\s?خارجه|رئیس\s?جمهور|دیپلماسی|برجام|توافق\s?هسته‌ای|سلامت|کرونا|بیماری|درمان|دارو|بیمارستان|آموزش|مدرسه|دانشگاه|کنکور|دانش‌آموز|آلودگی|هوا|محیط\s?زیست|طبیعت|حیوانات|کودک|زنان|خانواده|طلاق|ازدواج|مهاجرت|پناهنده|گردشگری|توریست|سفر)/;
 
-    // کلمات کلیدی اقتصادی
     const ECON_KEYWORDS = /اقتصاد|اقتصادی|بورس|سهام|شاخص|دلار|یورو|پوند|طلا|سکه|نقره|مس|فلز|ارز|نرخ|قیمت|تورم|نقدینگی|بانک|بهره|بودجه|مالیات|صادرات|واردات|تولید|ناخالص|اشتغال|بیکاری|رکود|رشد|کسری|یارانه|تسهیلات|وام|اعتبار|سپرده|ریال|درهم|دینار|فرانک|سرمایه|سرمایه‌گذاری|معاملات|بازار|تجارت|شرکت|صندوق|اوراق|فرابورس|نماد|حق\s?تقدم|گواهی|نفت|پتروشیمی|گاز|اوپک|انرژی|برق|بنزین|گازوئیل|دیزل|زغال|سنگ\s?آهن|فولاد|آلومینیوم|روی|سرب|قلع|نیکل|صنعت|معدن|کشاورزی|مسکن|املاک|اجاره|رهن|gdp|opec|cpi|ppi|fomc|fed|ecb|bitcoin|ethereum|crypto|blockchain|defi|nft|forex|commodity|stock|market|oil|gold/i;
 
     const CRYPTO_KEYWORDS = /بیت\s?کوین|اتریوم|ارز\s?دیجیتال|رمزارز|بلاکچین|کریپتو|سولانا|ریپل|دوج\s?کوین|استیبل\s?کوین|تتر|ماینر|استخراج|کیف\s?پول\s?دیجیتال|نهنگ|whale|bitcoin|ethereum|crypto|blockchain|defi|nft|binance|coinbase|usdt|btc|eth|sol|bnb|xrp/;
@@ -545,217 +624,210 @@
         };
         return labels[cat] || '📰 خبر';
     }
-            // ==========================================
-        // Parse RSS
-        // ==========================================
-        function parseRSS(xmlText, source) {
-            try {
-                const parser = new DOMParser();
-                const xml = parser.parseFromString(xmlText, 'text/xml');
-                if (xml.querySelector('parsererror')) return [];
 
-                const items = xml.querySelectorAll('item');
-                const news = [];
+    // ==========================================
+    // Parse RSS
+    // ==========================================
+    function parseRSS(xmlText, source) {
+        try {
+            const parser = new DOMParser();
+            const xml = parser.parseFromString(xmlText, 'text/xml');
+            if (xml.querySelector('parsererror')) return [];
 
-                items.forEach(item => {
-                    const title = item.querySelector('title')?.textContent || '';
-                    const link = item.querySelector('link')?.textContent || '';
-                    const description = item.querySelector('description')?.textContent || '';
-                    const pubDate = item.querySelector('pubDate')?.textContent || '';
-                    const enclosure = item.querySelector('enclosure');
-                    const mediaContent = item.getElementsByTagName('media:content')[0];
-                    const mediaThumb = item.getElementsByTagName('media:thumbnail')[0];
-                    const img = mediaContent?.getAttribute('url') || mediaThumb?.getAttribute('url') || enclosure?.getAttribute('url') || '';
+            const items = xml.querySelectorAll('item');
+            const news = [];
 
-                    if (title && link) {
-                        const cat = categorizeNews(title, description, source.key);
-                        if (cat !== null) {
-                            news.push({
-                                title: title.trim(),
-                                link: link.trim(),
-                                description: description.replace(/<[^>]*>/g, '').trim(),
-                                pubDate: pubDate.trim(),
-                                image: img,
-                                cat: cat,
-                                sourceKey: source.key,
-                                sourceName: source.name,
-                                sourceIcon: source.icon,
-                                lang: source.lang
-                            });
-                        }
+            items.forEach(item => {
+                const title = item.querySelector('title')?.textContent || '';
+                const link = item.querySelector('link')?.textContent || '';
+                const description = item.querySelector('description')?.textContent || '';
+                const pubDate = item.querySelector('pubDate')?.textContent || '';
+                const enclosure = item.querySelector('enclosure');
+                const mediaContent = item.getElementsByTagName('media:content')[0];
+                const mediaThumb = item.getElementsByTagName('media:thumbnail')[0];
+                const img = mediaContent?.getAttribute('url') || mediaThumb?.getAttribute('url') || enclosure?.getAttribute('url') || '';
+
+                if (title && link) {
+                    const cat = categorizeNews(title, description, source.key);
+                    if (cat !== null) {
+                        news.push({
+                            title: title.trim(),
+                            link: link.trim(),
+                            description: description.replace(/<[^>]*>/g, '').trim(),
+                            pubDate: pubDate.trim(),
+                            image: img,
+                            cat: cat,
+                            sourceKey: source.key,
+                            sourceName: source.name,
+                            sourceIcon: source.icon,
+                            lang: source.lang
+                        });
                     }
-                });
-                return news;
-            } catch (e) {
-                console.error('Parse error:', e);
-                return [];
-            }
-        }
-
-        // ==========================================
-        // Load
-        // ==========================================
-        async function loadFromSource(source) {
-            try {
-                const proxyUrl = `${EDGE_URL}?source=proxy&url=${encodeURIComponent(source.rss)}`;
-                const res = await fetch(proxyUrl);
-                const data = await res.json();
-                if (!data.success || !data.data) return [];
-
-                let news = parseRSS(data.data, source);
-
-                // اگه منبع انگلیسیه، ترجمه کن
-                if (source.lang === 'en' && news.length > 0) {
-                    news = await Promise.all(news.slice(0, 10).map(async (item) => {
-                        const [titleFa, descFa] = await Promise.all([
-                            translateToPersian(item.title),
-                            translateToPersian(item.description.substring(0, 300))
-                        ]);
-                        return {
-                            ...item,
-                            title: titleFa || item.title,
-                            description: descFa || item.description
-                        };
-                    }));
                 }
-
-                console.log(`✅ ${source.name}: ${news.length} خبر`);
-                return news;
-            } catch (e) {
-                console.warn(`❌ ${source.name}: ${e.message}`);
-                return [];
-            }
+            });
+            return news;
+        } catch (e) {
+            console.error('Parse error:', e);
+            return [];
         }
+    }
 
-        async function loadAllNews() {
-            const grids = ['all', 'currency', 'crypto', 'bourse', 'economy', 'global'];
+    // ==========================================
+    // Load
+    // ==========================================
+    async function loadFromSource(source) {
+        try {
+            const proxyUrl = `${EDGE_URL}?source=proxy&url=${encodeURIComponent(source.rss)}`;
+            const res = await fetch(proxyUrl);
+            const data = await res.json();
+            if (!data.success || !data.data) return [];
+
+            let news = parseRSS(data.data, source);
+
+            if (source.lang === 'en' && news.length > 0) {
+                news = await Promise.all(news.slice(0, 10).map(async (item) => {
+                    const [titleFa, descFa] = await Promise.all([
+                        translateToPersian(item.title),
+                        translateToPersian(item.description.substring(0, 300))
+                    ]);
+                    return {
+                        ...item,
+                        title: titleFa || item.title,
+                        description: descFa || item.description
+                    };
+                }));
+            }
+
+            console.log(`✅ ${source.name}: ${news.length} خبر`);
+            return news;
+        } catch (e) {
+            console.warn(`❌ ${source.name}: ${e.message}`);
+            return [];
+        }
+    }
+
+    async function loadAllNews() {
+        const grids = ['all', 'currency', 'crypto', 'bourse', 'economy', 'global'];
+        grids.forEach(g => {
+            const el = document.getElementById('newsGrid-' + g);
+            if (el) el.innerHTML = '<div class="loading"><div class="spinner"></div>⏳ در حال دریافت...</div>';
+        });
+
+        const results = await Promise.all(SOURCES.map(s => loadFromSource(s)));
+        allArticles = results.flat();
+
+        const seen = new Set();
+        allArticles = allArticles.filter(a => {
+            const key = a.title.substring(0, 50);
+            if (seen.has(key)) return false;
+            seen.add(key);
+            return true;
+        });
+
+        allArticles.sort((a, b) => {
+            const da = new Date(a.pubDate).getTime() || 0;
+            const db = new Date(b.pubDate).getTime() || 0;
+            return db - da;
+        });
+
+        console.log(`📊 مجموع: ${allArticles.length} خبر`);
+
+        if (allArticles.length === 0) {
             grids.forEach(g => {
                 const el = document.getElementById('newsGrid-' + g);
-                if (el) el.innerHTML = '<div class="loading"><div class="spinner"></div>⏳ در حال دریافت...</div>';
+                if (el) el.innerHTML = '<div class="loading">📭 خبری یافت نشد</div>';
             });
-
-            const results = await Promise.all(SOURCES.map(s => loadFromSource(s)));
-            allArticles = results.flat();
-
-            // حذف تکراری‌ها
-            const seen = new Set();
-            allArticles = allArticles.filter(a => {
-                const key = a.title.substring(0, 50);
-                if (seen.has(key)) return false;
-                seen.add(key);
-                return true;
-            });
-
-            // مرتب‌سازی
-            allArticles.sort((a, b) => {
-                const da = new Date(a.pubDate).getTime() || 0;
-                const db = new Date(b.pubDate).getTime() || 0;
-                return db - da;
-            });
-
-            console.log(`📊 مجموع: ${allArticles.length} خبر`);
-
-            if (allArticles.length === 0) {
-                grids.forEach(g => {
-                    const el = document.getElementById('newsGrid-' + g);
-                    if (el) el.innerHTML = '<div class="loading">📭 خبری یافت نشد</div>';
-                });
-                return;
-            }
-
-            renderNews('all', allArticles.slice(0, 80));
-            renderNews('currency', allArticles.filter(a => a.cat === 'currency').slice(0, 50));
-            renderNews('crypto', allArticles.filter(a => a.cat === 'crypto').slice(0, 50));
-            renderNews('bourse', allArticles.filter(a => a.cat === 'bourse').slice(0, 50));
-            renderNews('economy', allArticles.filter(a => a.cat === 'economy').slice(0, 50));
-            renderNews('global', allArticles.filter(a => a.cat === 'global').slice(0, 50));
+            return;
         }
 
-        function renderNews(sectionId, list) {
-            const grid = document.getElementById('newsGrid-' + sectionId);
-            if (!grid) return;
+        renderNews('all', allArticles.slice(0, 80));
+        renderNews('currency', allArticles.filter(a => a.cat === 'currency').slice(0, 50));
+        renderNews('crypto', allArticles.filter(a => a.cat === 'crypto').slice(0, 50));
+        renderNews('bourse', allArticles.filter(a => a.cat === 'bourse').slice(0, 50));
+        renderNews('economy', allArticles.filter(a => a.cat === 'economy').slice(0, 50));
+        renderNews('global', allArticles.filter(a => a.cat === 'global').slice(0, 50));
+    }
 
-            if (list.length === 0) {
-                grid.innerHTML = '<div class="loading">📭 خبری در این دسته یافت نشد</div>';
-                return;
-            }
+    function renderNews(sectionId, list) {
+        const grid = document.getElementById('newsGrid-' + sectionId);
+        if (!grid) return;
 
-            grid.innerHTML = list.map((n, idx) => `
-                <a href="${escapeHtml(n.link)}" target="_blank" rel="noopener" class="news-card" style="animation: fadeInUp 0.4s ease-out ${Math.min(idx * 0.03, 1)}s backwards;">
-                    ${n.image
-                        ? `<div class="news-image"><img src="${escapeHtml(n.image)}" alt="" onerror="this.parentElement.innerHTML='${n.sourceIcon}'"></div>`
-                        : `<div class="news-image">${n.sourceIcon}</div>`}
-                    <div class="news-content">
-                        <div class="news-meta">
-                            <span class="source">${n.sourceIcon} ${escapeHtml(n.sourceName)}</span>
-                            <span class="date">⏰ ${formatDate(n.pubDate)}</span>
-                        </div>
-                        <div class="news-title">${escapeHtml(n.title)}</div>
-                        <div class="news-desc">${escapeHtml(n.description.substring(0, 200))}</div>
-                        <div class="news-footer">
-                            <span class="news-category">${getCategoryLabel(n.cat)}</span>
-                            <span class="news-read-more">مشاهده ←</span>
-                        </div>
+        if (list.length === 0) {
+            grid.innerHTML = '<div class="loading">📭 خبری در این دسته یافت نشد</div>';
+            return;
+        }
+
+        grid.innerHTML = list.map((n, idx) => `
+            <a href="${escapeHtml(n.link)}" target="_blank" rel="noopener" class="news-card" style="animation: fadeInUp 0.4s ease-out ${Math.min(idx * 0.03, 1)}s backwards;">
+                ${n.image
+                    ? `<div class="news-image"><img src="${escapeHtml(n.image)}" alt="" onerror="this.parentElement.innerHTML='${n.sourceIcon}'"></div>`
+                    : `<div class="news-image">${n.sourceIcon}</div>`}
+                <div class="news-content">
+                    <div class="news-meta">
+                        <span class="source">${n.sourceIcon} ${escapeHtml(n.sourceName)}</span>
+                        <span class="date">⏰ ${formatDate(n.pubDate)}</span>
                     </div>
-                </a>
-            `).join('');
-        }
+                    <div class="news-title">${escapeHtml(n.title)}</div>
+                    <div class="news-desc">${escapeHtml(n.description.substring(0, 200))}</div>
+                    <div class="news-footer">
+                        <span class="news-category">${getCategoryLabel(n.cat)}</span>
+                        <span class="news-read-more">مشاهده ←</span>
+                    </div>
+                </div>
+            </a>
+        `).join('');
+    }
 
-        function switchTab(tabId, btn) {
-            document.querySelectorAll('.news-tab').forEach(t => t.classList.remove('active'));
-            btn.classList.add('active');
-            document.querySelectorAll('.news-section').forEach(s => s.classList.remove('active'));
-            const target = document.getElementById('section-' + tabId);
-            if (target) target.classList.add('active');
-        }
+    function switchTab(tabId, btn) {
+        document.querySelectorAll('.news-tab').forEach(t => t.classList.remove('active'));
+        btn.classList.add('active');
+        document.querySelectorAll('.news-section').forEach(s => s.classList.remove('active'));
+        const target = document.getElementById('section-' + tabId);
+        if (target) target.classList.add('active');
+    }
 
-        document.addEventListener('DOMContentLoaded', async () => {
-            setupNavbar();
-            checkUser();
-            await loadAllNews();
-            setInterval(loadAllNews, 600000);
-        });
-   // ==========================================
-        // 🌙 تم شب/روز
-        // ==========================================
-        function applyTheme() {
-            const saved = localStorage.getItem('shamdun-theme') || 'dark';
-            document.documentElement.setAttribute('data-theme', saved);
+    // ==========================================
+    // 🌙 تم شب/روز
+    // ==========================================
+    function applyTheme() {
+        const saved = localStorage.getItem('shamdun-theme') || 'dark';
+        document.documentElement.setAttribute('data-theme', saved);
+        const icon = document.getElementById('snThemeIcon');
+        if (icon) icon.textContent = saved === 'dark' ? '🌙' : '☀️';
+    }
+
+    function initThemeButton() {
+        const btn = document.getElementById('snThemeBtn');
+        if (!btn || btn.hasAttribute('data-bound')) return true;
+
+        btn.setAttribute('data-bound', 'true');
+        btn.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            const current = document.documentElement.getAttribute('data-theme') || 'dark';
+            const newTheme = current === 'dark' ? 'light' : 'dark';
+
+            document.documentElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('shamdun-theme', newTheme);
+
             const icon = document.getElementById('snThemeIcon');
-            if (icon) icon.textContent = saved === 'dark' ? '🌙' : '☀️';
-        }
+            if (icon) icon.textContent = newTheme === 'dark' ? '🌙' : '☀️';
+        });
+        return true;
+    }
 
-        function initThemeButton() {
-            const btn = document.getElementById('snThemeBtn');
-            if (!btn) return false;
-            
-            const newBtn = btn.cloneNode(true);
-            btn.parentNode.replaceChild(newBtn, btn);
-            
-            newBtn.addEventListener('click', function(e) {
-                e.preventDefault();
-                e.stopPropagation();
-                
-                const current = document.documentElement.getAttribute('data-theme') || 'dark';
-                const newTheme = current === 'dark' ? 'light' : 'dark';
-                
-                document.documentElement.setAttribute('data-theme', newTheme);
-                localStorage.setItem('shamdun-theme', newTheme);
-                
-                const icon = document.getElementById('snThemeIcon');
-                if (icon) icon.textContent = newTheme === 'dark' ? '🌙' : '☀️';
-            });
-            
-            return true;
-        }
+    applyTheme();
+    setTimeout(initThemeButton, 100);
+    setTimeout(initThemeButton, 500);
 
-        // اجرا بعد از لود کامل
-        setTimeout(applyTheme, 100);
-        setTimeout(() => {
-            if (!initThemeButton()) {
-                setTimeout(initThemeButton, 500);
-            }
-        }, 200);
+    document.addEventListener('DOMContentLoaded', async () => {
+        setupNavbar();
+        checkUser();
+        initThemeButton();
+        await loadAllNews();
+        setInterval(loadAllNews, 600000);
+    });
     </script>
 </body>
 </html>
