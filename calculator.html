@@ -646,9 +646,9 @@
         .type-card .desc { color: var(--gray); font-size: 10.5px; line-height: 1.5; }
 
         /* ===== Hidden Report Container ===== */
-        #pdfReportContainer {
-            position: fixed;
-            right: -10000px;
+         #pdfReportContainer {
+            position: absolute;
+            left: 0;
             top: 0;
             width: 800px;
             background: #ffffff;
@@ -656,6 +656,14 @@
             font-family: 'Vazirmatn', Tahoma, sans-serif;
             padding: 40px;
             direction: rtl;
+            z-index: 999999;
+            visibility: hidden;
+            pointer-events: none;
+        }
+        #pdfReportContainer.capturing {
+            visibility: visible !important;
+            opacity: 0.01;
+            pointer-events: none;
         }
 
         @media (max-width: 600px) {
@@ -3552,9 +3560,10 @@ ${d.assets.map(a => `  • ${a.label}: ${toFa(a.percent)}٪ (${formatNum(d.total
         btn.disabled = true;
         btn.textContent = '⏳ در حال ساخت...';
 
+        const container = document.getElementById('pdfReportContainer');
+
         try {
             const report = buildReportData(type);
-            const container = document.getElementById('pdfReportContainer');
 
             let rowsHtml = '';
             report.rows.forEach(row => {
@@ -3577,7 +3586,7 @@ ${d.assets.map(a => `  • ${a.label}: ${toFa(a.percent)}٪ (${formatNum(d.total
 
             container.innerHTML = `
                 <div style="background:linear-gradient(135deg,#d4af37,#a8862a); color:white; padding:20px; border-radius:16px; margin-bottom:20px; display:flex; align-items:center; gap:16px;">
-                    <img src="${LOGO_URL}" alt="لوگو" style="width:70px; height:70px; border-radius:50%; border:3px solid white; background:white; object-fit:contain;" onerror="this.style.display='none'">
+                    <img src="${LOGO_URL}" alt="لوگو" crossorigin="anonymous" style="width:70px; height:70px; border-radius:50%; border:3px solid white; background:white; object-fit:contain;">
                     <div style="flex:1;">
                         <div style="font-size:22px; font-weight:900; margin-bottom:4px;">🎯 آکادمی شمعدون</div>
                         <div style="font-size:13px; opacity:0.9;">گزارش ماشین‌حساب مالی</div>
@@ -3600,21 +3609,40 @@ ${d.assets.map(a => `  • ${a.label}: ${toFa(a.percent)}٪ (${formatNum(d.total
                 </div>
             `;
 
+            // ✅ ظرف رو آشکار کن
+            container.classList.add('capturing');
+
+            // ✅ صبر کن تا لوگو لود بشه
+            await new Promise(resolve => setTimeout(resolve, 500));
+
             const opt = {
                 margin: [10, 10, 10, 10],
                 filename: `shamdun-${type}-${Date.now()}.pdf`,
                 image: { type: 'jpeg', quality: 0.98 },
-                html2canvas: { scale: 2, useCORS: true, backgroundColor: '#ffffff' },
+                html2canvas: {
+                    scale: 2,
+                    useCORS: true,
+                    allowTaint: false,
+                    backgroundColor: '#ffffff',
+                    logging: false,
+                    windowWidth: 800
+                },
                 jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
             };
 
             await html2pdf().set(opt).from(container).save();
+
+            // ✅ مخفی کن
+            container.classList.remove('capturing');
+            container.innerHTML = '';
 
             btn.disabled = false;
             btn.textContent = '📄 گزارش PDF';
 
         } catch (err) {
             console.error('PDF error:', err);
+            container.classList.remove('capturing');
+            container.innerHTML = '';
             alert('خطا در ساخت PDF: ' + err.message);
             btn.disabled = false;
             btn.textContent = '📄 گزارش PDF';
