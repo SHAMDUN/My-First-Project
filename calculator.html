@@ -10,6 +10,9 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/dompurify@3.0.6/dist/purify.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/html2pdf.js@0.10.1/dist/html2pdf.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/exceljs@4.4.0/dist/exceljs.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/file-saver@2.0.5/dist/FileSaver.min.js"></script>
     <style>
         :root {
             --bg-primary: #0a0a0f;
@@ -87,9 +90,7 @@
             border: 1px solid rgba(212, 175, 55, 0.1);
             border-radius: 16px; padding: 12px;
         }
-        [data-theme="light"] .tabs-group {
-            background: rgba(255, 255, 255, 0.6);
-        }
+        [data-theme="light"] .tabs-group { background: rgba(255, 255, 255, 0.6); }
         .tabs-group-title {
             color: var(--gray); font-size: 11px; font-weight: 800;
             text-transform: uppercase; letter-spacing: 1px;
@@ -117,9 +118,7 @@
             font-family: inherit; cursor: pointer; transition: 0.3s;
             white-space: nowrap; display: flex; align-items: center; gap: 6px;
         }
-        [data-theme="light"] .calc-tab {
-            background: rgba(255, 255, 255, 0.6);
-        }
+        [data-theme="light"] .calc-tab { background: rgba(255, 255, 255, 0.6); }
         .calc-tab:hover { color: var(--gold); border-color: rgba(212, 175, 55, 0.4); }
         .calc-tab.active {
             background: linear-gradient(135deg, var(--gold), var(--gold-dark));
@@ -193,9 +192,7 @@
             border: 1px solid rgba(148, 163, 184, 0.2);
             box-shadow: none; font-size: 13px; padding: 10px; margin-top: 10px;
         }
-        [data-theme="light"] .calc-btn.secondary {
-            color: #475569;
-        }
+        [data-theme="light"] .calc-btn.secondary { color: #475569; }
         .result-card {
             background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(16, 185, 129, 0.03));
             border: 1px solid rgba(16, 185, 129, 0.3);
@@ -217,10 +214,7 @@
         .result-item.red { border-right-color: var(--red); }
         .result-item.blue { border-right-color: var(--blue); }
         .result-item .label { color: var(--gray); font-size: 11px; margin-bottom: 6px; }
-        .result-item .value {
-            color: var(--white); font-size: 18px; font-weight: 900;
-            font-variant-numeric: tabular-nums;
-        }
+        .result-item .value { color: var(--white); font-size: 18px; font-weight: 900; font-variant-numeric: tabular-nums; }
         .result-item .value.gold { color: var(--gold); }
         .result-item .value.green { color: var(--green); }
         .result-item .value.red { color: var(--red); }
@@ -233,10 +227,7 @@
             text-align: center; margin-bottom: 15px;
         }
         .result-highlight .label { color: var(--gold); font-size: 13px; margin-bottom: 8px; font-weight: 700; }
-        .result-highlight .value {
-            color: var(--white); font-size: 28px; font-weight: 900;
-            font-variant-numeric: tabular-nums;
-        }
+        .result-highlight .value { color: var(--white); font-size: 28px; font-weight: 900; font-variant-numeric: tabular-nums; }
         .result-highlight .sub { color: var(--gray); font-size: 12px; margin-top: 6px; }
         .info-note {
             background: rgba(59, 130, 246, 0.1);
@@ -275,10 +266,7 @@
             font-weight: 800; cursor: pointer; transition: 0.3s;
             display: inline-flex; align-items: center; gap: 6px;
         }
-        .ai-btn:hover:not(:disabled) {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(139, 92, 246, 0.4);
-        }
+        .ai-btn:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 10px 25px rgba(139, 92, 246, 0.4); }
         .ai-btn:disabled { opacity: 0.5; cursor: not-allowed; }
         .ai-card {
             background: linear-gradient(135deg, rgba(139, 92, 246, 0.08), rgba(139, 92, 246, 0.02));
@@ -293,10 +281,7 @@
             border-bottom: 1px solid rgba(139, 92, 246, 0.2);
             flex-wrap: wrap; gap: 10px;
         }
-        .ai-card-title {
-            color: #a78bfa; font-size: 16px; font-weight: 800;
-            display: flex; align-items: center; gap: 8px;
-        }
+        .ai-card-title { color: #a78bfa; font-size: 16px; font-weight: 800; display: flex; align-items: center; gap: 8px; }
         [data-theme="light"] .ai-card-title { color: #7c3aed; }
         .ai-output {
             background: rgba(10, 10, 15, 0.6);
@@ -318,10 +303,7 @@
         .ai-output strong { color: #ddd6fe; font-weight: 800; }
         [data-theme="light"] .ai-output strong { color: #6d28d9; }
         .ai-output em { color: var(--gold); font-style: italic; }
-        .ai-loading {
-            display: flex; flex-direction: column; align-items: center;
-            gap: 12px; padding: 30px 20px; color: #a78bfa;
-        }
+        .ai-loading { display: flex; flex-direction: column; align-items: center; gap: 12px; padding: 30px 20px; color: #a78bfa; }
         .ai-loading .spinner {
             width: 36px; height: 36px;
             border: 3px solid rgba(139, 92, 246, 0.2);
@@ -336,10 +318,7 @@
             cursor: pointer; transition: 0.3s;
             display: inline-flex; align-items: center; gap: 6px;
         }
-        .ai-action-btn:hover {
-            background: rgba(139, 92, 246, 0.2);
-            border-color: #8b5cf6; color: #c4b5fd;
-        }
+        .ai-action-btn:hover { background: rgba(139, 92, 246, 0.2); border-color: #8b5cf6; color: #c4b5fd; }
         [data-theme="light"] .ai-action-btn { color: #7c3aed; }
         .market-btn {
             background: linear-gradient(135deg, #06b6d4, #0891b2);
@@ -348,10 +327,7 @@
             font-weight: 800; cursor: pointer; transition: 0.3s;
             display: inline-flex; align-items: center; gap: 6px;
         }
-        .market-btn:hover:not(:disabled) {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(6, 182, 212, 0.4);
-        }
+        .market-btn:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 10px 25px rgba(6, 182, 212, 0.4); }
         .market-btn:disabled { opacity: 0.5; cursor: not-allowed; }
         .market-card {
             background: linear-gradient(135deg, rgba(6, 182, 212, 0.08), rgba(6, 182, 212, 0.02));
@@ -366,15 +342,8 @@
             border-bottom: 1px solid rgba(6, 182, 212, 0.2);
             flex-wrap: wrap; gap: 10px;
         }
-        .market-card-title {
-            color: var(--cyan); font-size: 16px; font-weight: 800;
-            display: flex; align-items: center; gap: 8px;
-        }
-        .market-prices {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-            gap: 10px; margin-bottom: 20px;
-        }
+        .market-card-title { color: var(--cyan); font-size: 16px; font-weight: 800; display: flex; align-items: center; gap: 8px; }
+        .market-prices { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px; margin-bottom: 20px; }
         .market-price-item {
             background: rgba(10, 10, 15, 0.5);
             border: 1px solid rgba(6, 182, 212, 0.15);
@@ -383,54 +352,29 @@
         [data-theme="light"] .market-price-item { background: #ffffff; }
         .market-price-item .icon { font-size: 20px; margin-bottom: 4px; }
         .market-price-item .name { color: var(--gray); font-size: 11px; margin-bottom: 4px; }
-        .market-price-item .price {
-            color: var(--cyan); font-size: 13.5px; font-weight: 900;
-            font-variant-numeric: tabular-nums;
-        }
-        .market-compare-table {
-            background: rgba(10, 10, 15, 0.5);
-            border-radius: 12px; overflow: hidden;
-        }
+        .market-price-item .price { color: var(--cyan); font-size: 13.5px; font-weight: 900; font-variant-numeric: tabular-nums; }
+        .market-compare-table { background: rgba(10, 10, 15, 0.5); border-radius: 12px; overflow: hidden; }
         [data-theme="light"] .market-compare-table { background: #f8fafc; }
         .market-row {
-            display: grid;
-            grid-template-columns: 1.5fr 1fr 1.2fr;
+            display: grid; grid-template-columns: 1.5fr 1fr 1.2fr;
             padding: 12px 15px;
             border-bottom: 1px solid rgba(255, 255, 255, 0.05);
             align-items: center; font-size: 13px;
         }
         [data-theme="light"] .market-row { border-bottom-color: rgba(0, 0, 0, 0.05); }
         .market-row:last-child { border-bottom: none; }
-        .market-row.header {
-            background: rgba(6, 182, 212, 0.1);
-            color: var(--cyan); font-weight: 800; font-size: 12px;
-        }
+        .market-row.header { background: rgba(6, 182, 212, 0.1); color: var(--cyan); font-weight: 800; font-size: 12px; }
         .market-row .asset { color: var(--white); display: flex; align-items: center; gap: 8px; }
         .market-row .user-rate { color: var(--gold); font-weight: 800; }
         .market-row .bench { font-weight: 800; }
         .market-row .diff-pos { color: var(--green); }
         .market-row .diff-neg { color: var(--red); }
-        .market-verdict {
-            margin-top: 15px; padding: 15px;
-            border-radius: 12px; font-size: 13px; line-height: 1.8;
-        }
-        .market-verdict.good {
-            background: rgba(16, 185, 129, 0.1);
-            border: 1px solid rgba(16, 185, 129, 0.3);
-            color: #86efac;
-        }
+        .market-verdict { margin-top: 15px; padding: 15px; border-radius: 12px; font-size: 13px; line-height: 1.8; }
+        .market-verdict.good { background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); color: #86efac; }
         [data-theme="light"] .market-verdict.good { color: #065f46; }
-        .market-verdict.bad {
-            background: rgba(239, 68, 68, 0.1);
-            border: 1px solid rgba(239, 68, 68, 0.3);
-            color: #fca5a5;
-        }
+        .market-verdict.bad { background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.3); color: #fca5a5; }
         [data-theme="light"] .market-verdict.bad { color: #991b1b; }
-        .market-verdict.neutral {
-            background: rgba(212, 175, 55, 0.1);
-            border: 1px solid rgba(212, 175, 55, 0.3);
-            color: #fde68a;
-        }
+        .market-verdict.neutral { background: rgba(212, 175, 55, 0.1); border: 1px solid rgba(212, 175, 55, 0.3); color: #fde68a; }
         [data-theme="light"] .market-verdict.neutral { color: #92400e; }
 
         /* ===== Saved Calculations ===== */
@@ -441,10 +385,7 @@
             font-weight: 800; cursor: pointer; transition: 0.3s;
             display: inline-flex; align-items: center; gap: 6px;
         }
-        .save-btn:hover:not(:disabled) {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(16, 185, 129, 0.4);
-        }
+        .save-btn:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 10px 25px rgba(16, 185, 129, 0.4); }
         .save-btn:disabled { opacity: 0.5; cursor: not-allowed; }
         .saved-list { display: flex; flex-direction: column; gap: 12px; }
         .saved-item {
@@ -455,24 +396,15 @@
             align-items: center; gap: 12px; flex-wrap: wrap;
             transition: 0.3s;
         }
-        .saved-item:hover {
-            border-color: rgba(16, 185, 129, 0.5);
-            transform: translateY(-2px);
-        }
+        .saved-item:hover { border-color: rgba(16, 185, 129, 0.5); transform: translateY(-2px); }
         .saved-item .info { flex: 1; min-width: 200px; }
         .saved-item .title {
             color: var(--white); font-size: 15px; font-weight: 800;
             margin-bottom: 6px; display: flex; align-items: center; gap: 8px;
             flex-wrap: wrap;
         }
-        .saved-item .summary {
-            color: var(--gold); font-size: 13px; font-weight: 700;
-            margin-bottom: 6px;
-        }
-        .saved-item .meta {
-            color: var(--gray); font-size: 11px;
-            display: flex; gap: 12px; flex-wrap: wrap;
-        }
+        .saved-item .summary { color: var(--gold); font-size: 13px; font-weight: 700; margin-bottom: 6px; }
+        .saved-item .meta { color: var(--gray); font-size: 11px; display: flex; gap: 12px; flex-wrap: wrap; }
         .saved-item .actions { display: flex; gap: 6px; }
         .saved-item .icon-btn {
             width: 38px; height: 38px; border-radius: 10px;
@@ -483,23 +415,11 @@
             font-family: inherit;
         }
         [data-theme="light"] .saved-item .icon-btn { background: #f8fafc; }
-        .saved-item .icon-btn:hover {
-            border-color: var(--gold); color: var(--gold);
-            background: rgba(212, 175, 55, 0.1);
-        }
-        .saved-item .icon-btn.danger:hover {
-            border-color: var(--red); color: var(--red);
-            background: rgba(239, 68, 68, 0.1);
-        }
-        .saved-empty {
-            text-align: center; padding: 40px 20px;
-            color: var(--gray); font-size: 13px;
-        }
+        .saved-item .icon-btn:hover { border-color: var(--gold); color: var(--gold); background: rgba(212, 175, 55, 0.1); }
+        .saved-item .icon-btn.danger:hover { border-color: var(--red); color: var(--red); background: rgba(239, 68, 68, 0.1); }
+        .saved-empty { text-align: center; padding: 40px 20px; color: var(--gray); font-size: 13px; }
         .saved-empty .icon { font-size: 50px; margin-bottom: 12px; opacity: 0.5; }
-        .saved-loading {
-            text-align: center; padding: 30px 20px; color: #a78bfa;
-            display: flex; flex-direction: column; align-items: center; gap: 12px;
-        }
+        .saved-loading { text-align: center; padding: 30px 20px; color: #a78bfa; display: flex; flex-direction: column; align-items: center; gap: 12px; }
         .saved-loading .spinner {
             width: 36px; height: 36px;
             border: 3px solid rgba(16, 185, 129, 0.2);
@@ -512,6 +432,94 @@
             background: rgba(212, 175, 55, 0.15); color: var(--gold);
             border: 1px solid rgba(212, 175, 55, 0.3);
         }
+
+        /* ===== Report Buttons (NEW) ===== */
+        .report-actions {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        .report-btn {
+            padding: 12px 14px;
+            border-radius: 10px;
+            border: none;
+            font-family: inherit;
+            font-size: 13px;
+            font-weight: 800;
+            cursor: pointer;
+            transition: 0.3s;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            color: #fff;
+        }
+        .report-btn.pdf {
+            background: linear-gradient(135deg, #ef4444, #b91c1c);
+        }
+        .report-btn.excel {
+            background: linear-gradient(135deg, #16a34a, #15803d);
+        }
+        .report-btn:hover:not(:disabled) {
+            transform: translateY(-2px);
+            filter: brightness(1.1);
+        }
+        .report-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* ===== Suggestion Card (NEW) ===== */
+        .suggestion-card {
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.08), rgba(212, 175, 55, 0.02));
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            border-radius: 16px;
+            padding: 18px;
+            margin-top: 15px;
+            display: none;
+            animation: fadeInUp 0.4s ease-out;
+        }
+        .suggestion-card.show { display: block; }
+        .suggestion-card-title {
+            color: var(--gold);
+            font-size: 14px;
+            font-weight: 800;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .suggestion-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .suggestion-item {
+            background: rgba(10, 10, 15, 0.5);
+            border: 1px solid rgba(212, 175, 55, 0.15);
+            border-radius: 10px;
+            padding: 10px 14px;
+            color: var(--white);
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-align: right;
+            font-family: inherit;
+            width: 100%;
+        }
+        [data-theme="light"] .suggestion-item { background: #f8fafc; color: #334155; }
+        .suggestion-item:hover {
+            border-color: var(--gold);
+            background: rgba(212, 175, 55, 0.1);
+            transform: translateX(-4px);
+        }
+        .suggestion-item .arrow { margin-right: auto; color: var(--gold); font-size: 14px; }
+
         /* ===== Modal ===== */
         .modal-overlay {
             position: fixed; inset: 0;
@@ -601,10 +609,7 @@
             border-color: var(--red); color: var(--red);
             background: rgba(239, 68, 68, 0.1);
         }
-        .inflation-summary {
-            display: grid; grid-template-columns: repeat(3, 1fr);
-            gap: 12px; margin-bottom: 20px;
-        }
+        .inflation-summary { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 20px; }
         .inflation-summary-card {
             background: rgba(10, 10, 15, 0.5); padding: 15px;
             border-radius: 12px; text-align: center;
@@ -612,16 +617,10 @@
         }
         [data-theme="light"] .inflation-summary-card { background: #f8fafc; }
         .inflation-summary-card .label { color: var(--gray); font-size: 11px; margin-bottom: 6px; }
-        .inflation-summary-card .value {
-            color: var(--gold); font-size: 20px; font-weight: 900;
-            font-variant-numeric: tabular-nums;
-        }
+        .inflation-summary-card .value { color: var(--gold); font-size: 20px; font-weight: 900; font-variant-numeric: tabular-nums; }
         .inflation-summary-card .value.green { color: var(--green); }
         .inflation-summary-card .value.red { color: var(--red); }
-        .inflation-empty {
-            text-align: center; padding: 30px 20px;
-            color: var(--gray); font-size: 13px;
-        }
+        .inflation-empty { text-align: center; padding: 30px 20px; color: var(--gray); font-size: 13px; }
         .inflation-empty .icon { font-size: 40px; margin-bottom: 10px; opacity: 0.5; }
         .chart-wrapper-mini {
             background: rgba(10, 10, 15, 0.5); border-radius: 12px;
@@ -629,10 +628,7 @@
             position: relative;
         }
         [data-theme="light"] .chart-wrapper-mini { background: #f8fafc; }
-        .type-selector {
-            display: grid; grid-template-columns: repeat(3, 1fr);
-            gap: 10px; margin-bottom: 20px;
-        }
+        .type-selector { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 20px; }
         .type-card {
             background: rgba(10, 10, 15, 0.5);
             border: 2px solid rgba(255, 255, 255, 0.08);
@@ -646,11 +642,21 @@
             border-color: var(--gold);
         }
         .type-card .icon { font-size: 24px; margin-bottom: 8px; }
-        .type-card .title {
-            color: var(--white); font-size: 12.5px; font-weight: 800;
-            margin-bottom: 4px;
-        }
+        .type-card .title { color: var(--white); font-size: 12.5px; font-weight: 800; margin-bottom: 4px; }
         .type-card .desc { color: var(--gray); font-size: 10.5px; line-height: 1.5; }
+
+        /* ===== Hidden Report Container ===== */
+        #pdfReportContainer {
+            position: fixed;
+            right: -10000px;
+            top: 0;
+            width: 800px;
+            background: #ffffff;
+            color: #1a1a24;
+            font-family: 'Vazirmatn', Tahoma, sans-serif;
+            padding: 40px;
+            direction: rtl;
+        }
 
         @media (max-width: 600px) {
             .main-container { padding: 90px 15px 30px; }
@@ -672,7 +678,7 @@
     </style>
 </head>
 <body>
- <div class="main-container">
+     <div class="main-container">
     <div class="page-header">
         <h1>🧮 ماشین‌حساب مالی</h1>
         <p>ابزار حرفه‌ای تحلیل سرمایه‌گذاری و مدیریت ریسک</p>
@@ -775,6 +781,13 @@
         <button class="ai-btn" id="ai-btn-dca" onclick="analyzeWithAI('dca')" style="width:100%; margin-top:10px; justify-content:center; padding:14px;">🤖 تحلیل با AI</button>
         <button class="save-btn" id="save-btn-dca" onclick="saveCalculation('dca')" style="width:100%; margin-top:10px; justify-content:center; padding:14px;">💾 ذخیره این محاسبه</button>
 
+        <div class="report-actions">
+            <button class="report-btn pdf" id="pdf-btn-dca" onclick="downloadPDF('dca')">📄 گزارش PDF</button>
+            <button class="report-btn excel" id="excel-btn-dca" onclick="downloadExcel('dca')">📊 گزارش Excel</button>
+        </div>
+
+        <div class="suggestion-card" id="suggestion-dca"></div>
+
         <div class="market-card" id="market-card-dca">
             <div class="market-card-header">
                 <div class="market-card-title">📊 مقایسه با بازار واقعی</div>
@@ -865,6 +878,13 @@
         <button class="ai-btn" id="ai-btn-compound" onclick="analyzeWithAI('compound')" style="width:100%; margin-top:10px; justify-content:center; padding:14px;">🤖 تحلیل با AI</button>
         <button class="save-btn" id="save-btn-compound" onclick="saveCalculation('compound')" style="width:100%; margin-top:10px; justify-content:center; padding:14px;">💾 ذخیره این محاسبه</button>
 
+        <div class="report-actions">
+            <button class="report-btn pdf" id="pdf-btn-compound" onclick="downloadPDF('compound')">📄 گزارش PDF</button>
+            <button class="report-btn excel" id="excel-btn-compound" onclick="downloadExcel('compound')">📊 گزارش Excel</button>
+        </div>
+
+        <div class="suggestion-card" id="suggestion-compound"></div>
+
         <div class="market-card" id="market-card-compound">
             <div class="market-card-header">
                 <div class="market-card-title">📊 مقایسه با بازار واقعی</div>
@@ -949,6 +969,13 @@
         <button class="ai-btn" id="ai-btn-goal" onclick="analyzeWithAI('goal')" style="width:100%; margin-top:15px; justify-content:center; padding:14px;">🤖 تحلیل با AI</button>
         <button class="save-btn" id="save-btn-goal" onclick="saveCalculation('goal')" style="width:100%; margin-top:10px; justify-content:center; padding:14px;">💾 ذخیره این محاسبه</button>
 
+        <div class="report-actions">
+            <button class="report-btn pdf" id="pdf-btn-goal" onclick="downloadPDF('goal')">📄 گزارش PDF</button>
+            <button class="report-btn excel" id="excel-btn-goal" onclick="downloadExcel('goal')">📊 گزارش Excel</button>
+        </div>
+
+        <div class="suggestion-card" id="suggestion-goal"></div>
+
         <div class="ai-card" id="ai-card-goal">
             <div class="ai-card-header">
                 <div class="ai-card-title">🤖 تحلیل هوشمند</div>
@@ -1027,6 +1054,13 @@
         <button class="ai-btn" id="ai-btn-compare" onclick="analyzeWithAI('compare')" style="width:100%; margin-top:15px; justify-content:center; padding:14px;">🤖 تحلیل با AI</button>
         <button class="save-btn" id="save-btn-compare" onclick="saveCalculation('compare')" style="width:100%; margin-top:10px; justify-content:center; padding:14px;">💾 ذخیره این محاسبه</button>
 
+        <div class="report-actions">
+            <button class="report-btn pdf" id="pdf-btn-compare" onclick="downloadPDF('compare')">📄 گزارش PDF</button>
+            <button class="report-btn excel" id="excel-btn-compare" onclick="downloadExcel('compare')">📊 گزارش Excel</button>
+        </div>
+
+        <div class="suggestion-card" id="suggestion-compare"></div>
+
         <div class="ai-card" id="ai-card-compare">
             <div class="ai-card-header">
                 <div class="ai-card-title">🤖 تحلیل هوشمند</div>
@@ -1098,6 +1132,13 @@
 
         <button class="ai-btn" id="ai-btn-inflation" onclick="analyzeWithAI('inflation')" style="width:100%; margin-top:15px; justify-content:center; padding:14px;">🤖 تحلیل با AI</button>
         <button class="save-btn" id="save-btn-inflation" onclick="saveCalculation('inflation')" style="width:100%; margin-top:10px; justify-content:center; padding:14px;">💾 ذخیره این محاسبه</button>
+
+        <div class="report-actions">
+            <button class="report-btn pdf" id="pdf-btn-inflation" onclick="downloadPDF('inflation')">📄 گزارش PDF</button>
+            <button class="report-btn excel" id="excel-btn-inflation" onclick="downloadExcel('inflation')">📊 گزارش Excel</button>
+        </div>
+
+        <div class="suggestion-card" id="suggestion-inflation"></div>
 
         <div class="ai-card" id="ai-card-inflation">
             <div class="ai-card-header">
@@ -1319,6 +1360,13 @@
         <button class="ai-btn" id="ai-btn-breakeven" onclick="analyzeWithAI('breakeven')" style="width:100%; margin-top:15px; justify-content:center; padding:14px;">🤖 تحلیل با AI</button>
         <button class="save-btn" id="save-btn-breakeven" onclick="saveCalculation('breakeven')" style="width:100%; margin-top:10px; justify-content:center; padding:14px;">💾 ذخیره این محاسبه</button>
 
+        <div class="report-actions">
+            <button class="report-btn pdf" id="pdf-btn-breakeven" onclick="downloadPDF('breakeven')">📄 گزارش PDF</button>
+            <button class="report-btn excel" id="excel-btn-breakeven" onclick="downloadExcel('breakeven')">📊 گزارش Excel</button>
+        </div>
+
+        <div class="suggestion-card" id="suggestion-breakeven"></div>
+
         <div class="ai-card" id="ai-card-breakeven">
             <div class="ai-card-header">
                 <div class="ai-card-title">🤖 تحلیل هوشمند</div>
@@ -1369,6 +1417,13 @@
 
         <button class="ai-btn" id="ai-btn-risk" onclick="analyzeWithAI('risk')" style="width:100%; margin-top:15px; justify-content:center; padding:14px;">🤖 تحلیل با AI</button>
         <button class="save-btn" id="save-btn-risk" onclick="saveCalculation('risk')" style="width:100%; margin-top:10px; justify-content:center; padding:14px;">💾 ذخیره این محاسبه</button>
+
+        <div class="report-actions">
+            <button class="report-btn pdf" id="pdf-btn-risk" onclick="downloadPDF('risk')">📄 گزارش PDF</button>
+            <button class="report-btn excel" id="excel-btn-risk" onclick="downloadExcel('risk')">📊 گزارش Excel</button>
+        </div>
+
+        <div class="suggestion-card" id="suggestion-risk"></div>
 
         <div class="ai-card" id="ai-card-risk">
             <div class="ai-card-header">
@@ -1452,6 +1507,13 @@
         <button class="ai-btn" id="ai-btn-position" onclick="analyzeWithAI('position')" style="width:100%; margin-top:15px; justify-content:center; padding:14px;">🤖 تحلیل با AI</button>
         <button class="save-btn" id="save-btn-position" onclick="saveCalculation('position')" style="width:100%; margin-top:10px; justify-content:center; padding:14px;">💾 ذخیره این محاسبه</button>
 
+        <div class="report-actions">
+            <button class="report-btn pdf" id="pdf-btn-position" onclick="downloadPDF('position')">📄 گزارش PDF</button>
+            <button class="report-btn excel" id="excel-btn-position" onclick="downloadExcel('position')">📊 گزارش Excel</button>
+        </div>
+
+        <div class="suggestion-card" id="suggestion-position"></div>
+
         <div class="ai-card" id="ai-card-position">
             <div class="ai-card-header">
                 <div class="ai-card-title">🤖 تحلیل هوشمند</div>
@@ -1508,9 +1570,12 @@
     </div>
 </div>
 
+<!-- Container مخفی برای PDF -->
+<div id="pdfReportContainer"></div>
+
 <script src="supabase-config.js"></script>
 <script src="navbar.js"></script>  
- <script>
+    <script>
     // ==========================================
     // ابزارها
     // ==========================================
@@ -1648,6 +1713,7 @@
         document.getElementById('result-dca').classList.add('show');
         resetAICard('dca');
         resetMarketCard('dca');
+        showSuggestions('dca');
     }
 
     // ==========================================
@@ -1679,6 +1745,7 @@
         document.getElementById('result-compound').classList.add('show');
         resetAICard('compound');
         resetMarketCard('compound');
+        showSuggestions('compound');
     }
 
     // ==========================================
@@ -1720,6 +1787,7 @@
         document.getElementById('goal-profit-percent').textContent = toFa(profitPercent.toFixed(1)) + '٪';
         document.getElementById('result-goal').classList.add('show');
         resetAICard('goal');
+        showSuggestions('goal');
     }
 
     // ==========================================
@@ -1761,6 +1829,7 @@
         winnerEl.style.display = 'block';
         document.getElementById('result-compare').classList.add('show');
         resetAICard('compare');
+        showSuggestions('compare');
     }
 
     // ==========================================
@@ -1789,6 +1858,7 @@
         document.getElementById('inf-return-needed').textContent = toFa(rate.toFixed(1)) + '٪';
         document.getElementById('result-inflation').classList.add('show');
         resetAICard('inflation');
+        showSuggestions('inflation');
     }
 
     // ==========================================
@@ -1821,6 +1891,7 @@
         document.getElementById('be-total-fee').textContent = formatBigNum(totalFee) + ' تومان';
         document.getElementById('result-breakeven').classList.add('show');
         resetAICard('breakeven');
+        showSuggestions('breakeven');
     }
 
     // ==========================================
@@ -1904,6 +1975,7 @@
         `;
         document.getElementById('result-risk').classList.add('show');
         resetAICard('risk');
+        showSuggestions('risk');
     }
 
     // ==========================================
@@ -1947,6 +2019,7 @@
         document.getElementById('pos-stop-distance').textContent = toFa(stopPercent.toFixed(2)) + '٪';
         document.getElementById('result-position').classList.add('show');
         resetAICard('position');
+        showSuggestions('position');
     }
 
     // ==========================================
@@ -2204,8 +2277,9 @@
         }
 
         document.getElementById('result-real-value').classList.add('show');
-    }   
-      // ==========================================
+    }
+
+    // ==========================================
     // 🤖 موتور AI
     // ==========================================
     const HARDCODED_AVALAI_KEY = 'aa-B6ef1JQ4HnDNBMRw4598qRGOKr7z3TttiznZubQXfD2A1iMf';
@@ -3161,9 +3235,798 @@ ${d.assets.map(a => `  • ${a.label}: ${toFa(a.percent)}٪ (${formatNum(d.total
             alert('خطا در حذف: ' + err.message);
         }
     }
+         // ==========================================
+    // 💡 پیشنهاد خودکار (NEW)
+    // ==========================================
+    const SUGGESTIONS = {
+        dca: [
+            { icon: '📊', text: 'نمودار رشد سرمایه رو ببین', tab: 'dca', action: 'scrollResult' },
+            { icon: '📉', text: 'بازدهی رو با تورم مقایسه کن', tab: 'inflation' },
+            { icon: '📊', text: 'با بازار واقعی مقایسه کن', action: 'market', tab: 'dca' },
+            { icon: '🎲', text: 'ریسک سبدت رو بسنج', tab: 'risk' }
+        ],
+        compound: [
+            { icon: '💰', text: 'DCA رو هم امتحان کن', tab: 'dca' },
+            { icon: '📉', text: 'تأثیر تورم روی سودت رو ببین', tab: 'inflation' },
+            { icon: '🎯', text: 'یه هدف مالی بذار', tab: 'goal' },
+            { icon: '📊', text: 'با بازار واقعی مقایسه کن', action: 'market', tab: 'compound' }
+        ],
+        goal: [
+            { icon: '💰', text: 'DCA برای پس‌انداز ماهانه', tab: 'dca' },
+            { icon: '📉', text: 'قدرت خرید هدفت رو بسنج', tab: 'inflation' },
+            { icon: '🎲', text: 'پروفایل ریسک مناسب رو انتخاب کن', tab: 'risk' },
+            { icon: '📊', text: 'تاریخچه تورم رو ثبت کن', tab: 'inflation-history' }
+        ],
+        compare: [
+            { icon: '💰', text: 'DCA برای هر گزینه', tab: 'dca' },
+            { icon: '📉', text: 'بازدهی رو با تورم تعدیل کن', tab: 'inflation' },
+            { icon: '🎲', text: 'ریسک هر گزینه رو بسنج', tab: 'risk' }
+        ],
+        inflation: [
+            { icon: '📊', text: 'تاریخچه تورم رو کامل کن', tab: 'inflation-history' },
+            { icon: '💰', text: 'DCA برای مقابله با تورم', tab: 'dca' },
+            { icon: '⚖️', text: 'ارزش واقعی دارایی‌ت رو بسنج', tab: 'inflation-history' }
+        ],
+        breakeven: [
+            { icon: '🎯', text: 'پوزیشن‌سایزینگ رو یاد بگیر', tab: 'position' },
+            { icon: '🎲', text: 'ریسک هر معامله رو بسنج', tab: 'risk' },
+            { icon: '💰', text: 'DCA برای سرمایه‌گذاری بلندمدت', tab: 'dca' }
+        ],
+        risk: [
+            { icon: '📊', text: 'برای هر دارایی DCA بگیر', tab: 'dca' },
+            { icon: '📉', text: 'بازدهی رو با تورم مقایسه کن', tab: 'inflation' },
+            { icon: '⚖️', text: 'با بازار واقعی مقایسه کن', tab: 'compare' }
+        ],
+        position: [
+            { icon: '⚖️', text: 'نقطه سربه‌سر کارمزد رو محاسبه کن', tab: 'breakeven' },
+            { icon: '🎲', text: 'پروفایل ریسک مناسب رو انتخاب کن', tab: 'risk' },
+            { icon: '💰', text: 'DCA برای معاملات بلندمدت', tab: 'dca' }
+        ]
+    };
+
+    function showSuggestions(type) {
+        const card = document.getElementById('suggestion-' + type);
+        if (!card) return;
+
+        const items = SUGGESTIONS[type] || [];
+        if (items.length === 0) {
+            card.classList.remove('show');
+            return;
+        }
+
+        let html = `
+            <div class="suggestion-card-title">
+                💡 پیشنهاد برای تو:
+            </div>
+            <div class="suggestion-list">
+        `;
+
+        items.forEach((item, index) => {
+            html += `
+                <button class="suggestion-item" onclick="handleSuggestion('${type}', ${index})">
+                    <span>${item.icon}</span>
+                    <span>${item.text}</span>
+                    <span class="arrow">←</span>
+                </button>
+            `;
+        });
+
+        html += `</div>`;
+        card.innerHTML = html;
+        card.classList.add('show');
+    }
+
+    function handleSuggestion(type, index) {
+        const items = SUGGESTIONS[type] || [];
+        const item = items[index];
+        if (!item) return;
+
+        // اگه action خاصی داره
+        if (item.action === 'market') {
+            compareWithMarket(item.tab);
+            return;
+        }
+        if (item.action === 'scrollResult') {
+            const result = document.getElementById('result-' + item.tab);
+            if (result) result.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            return;
+        }
+
+        // در غیر این صورت، تب رو عوض کن
+        if (item.tab) {
+            const tabs = document.querySelectorAll('.calc-tab');
+            let targetBtn = null;
+            tabs.forEach(btn => {
+                if (btn.getAttribute('onclick') && btn.getAttribute('onclick').includes(`'${item.tab}'`)) {
+                    targetBtn = btn;
+                }
+            });
+            if (targetBtn) {
+                switchTab(item.tab, targetBtn);
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        }
+    }
 
     // ==========================================
-    // 🌙 تم شب/روز - نسخه اصلاح‌شده
+    // 📄 گزارش PDF (NEW)
+    // ==========================================
+    const LOGO_URL = '519.png';
+
+    function buildReportData(type) {
+        const inputs = getCalcInputs(type);
+        const now = new Date();
+        const dateStr = now.toLocaleDateString('fa-IR');
+        const timeStr = now.toLocaleTimeString('fa-IR', { hour: '2-digit', minute: '2-digit' });
+
+        let rows = [];
+
+        if (type === 'dca') {
+            const monthly = inputs.monthly;
+            const months = inputs.months;
+            const rate = inputs.rate;
+            const initial = inputs.initial;
+            const monthlyRate = rate / 100 / 12;
+            let final, totalPrincipal;
+            if (monthlyRate === 0) {
+                final = monthly * months + initial;
+            } else {
+                const f = Math.pow(1 + monthlyRate, months);
+                final = monthly * ((f - 1) / monthlyRate) + initial * f;
+            }
+            totalPrincipal = monthly * months + initial;
+            const totalProfit = final - totalPrincipal;
+            const ratio = totalPrincipal > 0 ? (final / totalPrincipal) : 0;
+
+            rows = [
+                { k: '💵 سرمایه‌گذاری ماهانه', v: formatNum(monthly) + ' تومان' },
+                { k: '⏳ مدت زمان', v: toFa(months) + ' ماه' },
+                { k: '📈 بازدهی سالانه', v: toFa(rate) + '٪' },
+                { k: '💹 موجودی فعلی', v: formatNum(initial) + ' تومان' },
+                { k: '─', v: '' },
+                { k: '📊 اصل سرمایه کل', v: formatNum(totalPrincipal) + ' تومان' },
+                { k: '📈 سود کل', v: formatNum(totalProfit) + ' تومان', color: 'green' },
+                { k: '💎 سرمایه نهایی', v: formatNum(final) + ' تومان', color: 'gold', bold: true },
+                { k: '⚖️ نسبت رشد', v: toFa(ratio.toFixed(2)) + ' برابر' }
+            ];
+        } else if (type === 'compound') {
+            const principal = inputs.principal;
+            const rate = inputs.rate;
+            const years = inputs.years;
+            const n = inputs.compound;
+            const final = principal * Math.pow(1 + rate / 100 / n, n * years);
+            const totalProfit = final - principal;
+            const totalReturn = (final / principal - 1) * 100;
+
+            rows = [
+                { k: '💰 مبلغ اصل', v: formatNum(principal) + ' تومان' },
+                { k: '📈 نرخ سود سالانه', v: toFa(rate) + '٪' },
+                { k: '⏳ مدت زمان', v: toFa(years) + ' سال' },
+                { k: '🔄 تعداد محاسبه در سال', v: toFa(n) },
+                { k: '─', v: '' },
+                { k: '📈 سود کل', v: formatNum(totalProfit) + ' تومان', color: 'green' },
+                { k: '💎 مبلغ نهایی', v: formatNum(final) + ' تومان', color: 'gold', bold: true },
+                { k: '📊 بازدهی کل', v: toFa(totalReturn.toFixed(2)) + '٪' }
+            ];
+        } else if (type === 'goal') {
+            const target = inputs.target;
+            const years = inputs.years;
+            const rate = inputs.rate;
+            const initial = inputs.initial;
+            const months = years * 12;
+            const mr = rate / 100 / 12;
+            let ms;
+            if (mr === 0) ms = (target - initial) / months;
+            else {
+                const f = Math.pow(1 + mr, months);
+                ms = ((target - initial * f) * mr) / (f - 1);
+            }
+            const totalPrincipal = ms * months + initial;
+            const totalProfit = target - totalPrincipal;
+
+            rows = [
+                { k: '🎯 هدف نهایی', v: formatNum(target) + ' تومان' },
+                { k: '⏳ مدت زمان', v: toFa(years) + ' سال' },
+                { k: '📈 بازدهی سالانه', v: toFa(rate) + '٪' },
+                { k: '💹 موجودی فعلی', v: formatNum(initial) + ' تومان' },
+                { k: '─', v: '' },
+                { k: '💰 پس‌انداز ماهانه لازم', v: formatNum(ms) + ' تومان', color: 'gold', bold: true },
+                { k: '💎 کل اصل سرمایه‌گذاری', v: formatNum(totalPrincipal) + ' تومان' },
+                { k: '📈 سود مرکب', v: formatNum(totalProfit) + ' تومان', color: 'green' }
+            ];
+        } else if (type === 'compare') {
+            const aAmount = inputs.aAmount;
+            const aRate = inputs.aRate;
+            const bAmount = inputs.bAmount;
+            const bRate = inputs.bRate;
+            const years = inputs.years;
+            const aFinal = aAmount * Math.pow(1 + aRate / 100, years);
+            const bFinal = bAmount * Math.pow(1 + bRate / 100, years);
+
+            rows = [
+                { k: '🅰️ مبلغ گزینه اول', v: formatNum(aAmount) + ' تومان' },
+                { k: '🅰️ بازدهی گزینه اول', v: toFa(aRate) + '٪' },
+                { k: '🅱️ مبلغ گزینه دوم', v: formatNum(bAmount) + ' تومان' },
+                { k: '🅱️ بازدهی گزینه دوم', v: toFa(bRate) + '٪' },
+                { k: '⏳ مدت زمان', v: toFa(years) + ' سال' },
+                { k: '─', v: '' },
+                { k: '🅰️ نتیجه گزینه اول', v: formatNum(aFinal) + ' تومان', color: 'blue' },
+                { k: '🅱️ نتیجه گزینه دوم', v: formatNum(bFinal) + ' تومان', color: 'gold' },
+                { k: '🏆 برنده', v: aFinal > bFinal ? 'گزینه اول' : (bFinal > aFinal ? 'گزینه دوم' : 'مساوی'), color: 'green', bold: true }
+            ];
+        } else if (type === 'inflation') {
+            const amount = inputs.amount;
+            const rate = inputs.rate;
+            const years = inputs.years;
+            const futurePower = amount / Math.pow(1 + rate / 100, years);
+            const loss = amount - futurePower;
+            const needed = amount * Math.pow(1 + rate / 100, years);
+
+            rows = [
+                { k: '💰 مبلغ فعلی', v: formatNum(amount) + ' تومان' },
+                { k: '📈 نرخ تورم سالانه', v: toFa(rate) + '٪' },
+                { k: '⏳ مدت زمان', v: toFa(years) + ' سال' },
+                { k: '─', v: '' },
+                { k: '💸 قدرت خرید در پایان', v: formatNum(futurePower) + ' تومان', color: 'gold', bold: true },
+                { k: '📉 کاهش ارزش پول', v: formatNum(loss) + ' تومان', color: 'red' },
+                { k: '📈 مبلغ برای حفظ ارزش', v: formatNum(needed) + ' تومان', color: 'green' }
+            ];
+        } else if (type === 'breakeven') {
+            const buyPrice = inputs.buyPrice;
+            const quantity = inputs.quantity;
+            const buyFee = inputs.buyFee;
+            const sellFee = inputs.sellFee;
+            const totalBuy = buyPrice * quantity;
+            const buyFeeAmt = totalBuy * (buyFee / 100);
+            const bePrice = (totalBuy + buyFeeAmt) / (quantity * (1 - sellFee / 100));
+            const bePercent = ((bePrice - buyPrice) / buyPrice) * 100;
+
+            rows = [
+                { k: '💵 قیمت خرید', v: formatNum(buyPrice) + ' تومان' },
+                { k: '📊 تعداد', v: toFa(quantity) },
+                { k: '💼 کارمزد خرید', v: toFa(buyFee) + '٪' },
+                { k: '💼 کارمزد فروش', v: toFa(sellFee) + '٪' },
+                { k: '─', v: '' },
+                { k: '💰 کل هزینه خرید', v: formatNum(totalBuy) + ' تومان' },
+                { k: '🎯 قیمت سربه‌سر', v: formatNum(bePrice) + ' تومان', color: 'gold', bold: true },
+                { k: '📈 رشد لازم', v: toFa(bePercent.toFixed(2)) + '٪', color: 'red' }
+            ];
+        } else if (type === 'risk') {
+            const total = inputs.total;
+            const profileKey = inputs.profile;
+            const profile = portfolios[profileKey];
+            const profileNames = { conservative: 'محافظه‌کار', balanced: 'متعادل', aggressive: 'جسور', professional: 'حرفه‌ای' };
+
+            rows = [
+                { k: '💵 کل سرمایه', v: formatNum(total) + ' تومان' },
+                { k: '🎯 پروفایل', v: profileNames[profileKey], bold: true },
+                { k: '─', v: '' }
+            ];
+            profile.assets.forEach(asset => {
+                rows.push({
+                    k: asset.label,
+                    v: `${toFa(asset.percent)}٪ (${formatNum(total * asset.percent / 100)} تومان)`
+                });
+            });
+        } else if (type === 'position') {
+            const total = inputs.total;
+            const riskPercent = inputs.riskPercent;
+            const entry = inputs.entry;
+            const stop = inputs.stop;
+            const target = inputs.target;
+            const maxLoss = total * (riskPercent / 100);
+            const stopDist = Math.abs(entry - stop);
+            const posSize = maxLoss / stopDist;
+            const posAmount = posSize * entry;
+            const maxProfit = target > 0 ? posSize * Math.abs(target - entry) : 0;
+            const rr = maxLoss > 0 ? maxProfit / maxLoss : 0;
+
+            rows = [
+                { k: '💵 کل سرمایه', v: formatNum(total) + ' تومان' },
+                { k: '📉 ریسک هر معامله', v: toFa(riskPercent) + '٪' },
+                { k: '💵 قیمت ورود', v: formatNum(entry) + ' تومان' },
+                { k: '🛑 حد ضرر', v: formatNum(stop) + ' تومان' },
+                { k: '🎯 حد سود', v: formatNum(target) + ' تومان' },
+                { k: '─', v: '' },
+                { k: '📊 حجم پوزیشن', v: formatNum(posSize) + ' واحد', color: 'gold' },
+                { k: '💰 مبلغ سرمایه‌گذاری', v: formatNum(posAmount) + ' تومان' },
+                { k: '🔴 حداکثر ضرر', v: formatNum(maxLoss) + ' تومان', color: 'red' },
+                { k: '🟢 سود بالقوه', v: formatNum(maxProfit) + ' تومان', color: 'green' },
+                { k: '⚖️ نسبت R/R', v: '۱ : ' + toFa(rr.toFixed(2)), color: 'gold', bold: true }
+            ];
+        }
+
+        return {
+            type,
+            title: CALC_TITLES[type] || type,
+            dateStr,
+            timeStr,
+            rows
+        };
+    }
+
+    async function downloadPDF(type) {
+        const btn = document.getElementById('pdf-btn-' + type);
+        if (!btn) return;
+
+        btn.disabled = true;
+        btn.textContent = '⏳ در حال ساخت...';
+
+        try {
+            const report = buildReportData(type);
+            const container = document.getElementById('pdfReportContainer');
+
+            let rowsHtml = '';
+            report.rows.forEach(row => {
+                if (row.k === '─') {
+                    rowsHtml += `<div style="height:1px; background:#e5e7eb; margin:12px 0;"></div>`;
+                } else {
+                    const color = row.color === 'gold' ? '#b8860b' :
+                                  row.color === 'green' ? '#059669' :
+                                  row.color === 'red' ? '#dc2626' :
+                                  row.color === 'blue' ? '#2563eb' : '#1f2937';
+                    const bold = row.bold ? 'font-weight:900;' : 'font-weight:600;';
+                    rowsHtml += `
+                        <div style="display:flex; justify-content:space-between; padding:10px 14px; background:#f9fafb; border-radius:10px; margin-bottom:6px; border-right:3px solid #d4af37;">
+                            <span style="color:#6b7280; font-size:13px;">${row.k}</span>
+                            <span style="color:${color}; ${bold} font-size:14px;">${row.v}</span>
+                        </div>
+                    `;
+                }
+            });
+
+            container.innerHTML = `
+                <div style="background:linear-gradient(135deg,#d4af37,#a8862a); color:white; padding:20px; border-radius:16px; margin-bottom:20px; display:flex; align-items:center; gap:16px;">
+                    <img src="${LOGO_URL}" alt="لوگو" style="width:70px; height:70px; border-radius:50%; border:3px solid white; background:white; object-fit:contain;" onerror="this.style.display='none'">
+                    <div style="flex:1;">
+                        <div style="font-size:22px; font-weight:900; margin-bottom:4px;">🎯 آکادمی شمعدون</div>
+                        <div style="font-size:13px; opacity:0.9;">گزارش ماشین‌حساب مالی</div>
+                    </div>
+                </div>
+
+                <div style="background:#f9fafb; padding:16px; border-radius:12px; margin-bottom:20px; border-right:4px solid #d4af37;">
+                    <div style="font-size:16px; font-weight:800; color:#b8860b; margin-bottom:8px;">📊 ${report.title}</div>
+                    <div style="font-size:12px; color:#6b7280;">📅 تاریخ: ${report.dateStr} | 🕐 ساعت: ${report.timeStr}</div>
+                </div>
+
+                <div style="margin-bottom:20px;">
+                    <div style="font-size:14px; font-weight:800; color:#1f2937; margin-bottom:10px;">📋 اطلاعات و نتایج:</div>
+                    ${rowsHtml}
+                </div>
+
+                <div style="background:#fffbeb; border:1px solid #fcd34d; padding:12px; border-radius:10px; font-size:11px; color:#92400e; line-height:1.7; text-align:center;">
+                    ⚠️ این گزارش صرفاً آموزشی است و توصیه سرمایه‌گذاری نیست.<br>
+                    🌐 shamdun.github.io/My-First-Project
+                </div>
+            `;
+
+            const opt = {
+                margin: [10, 10, 10, 10],
+                filename: `shamdun-${type}-${Date.now()}.pdf`,
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: { scale: 2, useCORS: true, backgroundColor: '#ffffff' },
+                jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+            };
+
+            await html2pdf().set(opt).from(container).save();
+
+            btn.disabled = false;
+            btn.textContent = '📄 گزارش PDF';
+
+        } catch (err) {
+            console.error('PDF error:', err);
+            alert('خطا در ساخت PDF: ' + err.message);
+            btn.disabled = false;
+            btn.textContent = '📄 گزارش PDF';
+        }
+    }
+
+    // ==========================================
+    // 📊 گزارش Excel (NEW)
+    // ==========================================
+    async function downloadExcel(type) {
+        const btn = document.getElementById('excel-btn-' + type);
+        if (!btn) return;
+
+        btn.disabled = true;
+        btn.textContent = '⏳ در حال ساخت...';
+
+        try {
+            if (typeof ExcelJS === 'undefined') {
+                throw new Error('کتابخانه ExcelJS لود نشده');
+            }
+
+            const report = buildReportData(type);
+            const inputs = getCalcInputs(type);
+
+            const wb = new ExcelJS.Workbook();
+            wb.creator = 'آکادمی شمعدون';
+            wb.created = new Date();
+
+            // ✅ شیت ۱: خلاصه
+            const ws1 = wb.addWorksheet('خلاصه', {
+                views: [{ rightToLeft: true }]
+            });
+
+            ws1.columns = [
+                { width: 30 },
+                { width: 30 }
+            ];
+
+            // عنوان
+            ws1.mergeCells('A1:B1');
+            const titleCell = ws1.getCell('A1');
+            titleCell.value = '🎯 آکادمی شمعدون';
+            titleCell.font = { name: 'Tahoma', size: 18, bold: true, color: { argb: 'FFFFFFFF' } };
+            titleCell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FFD4AF37' } };
+            titleCell.alignment = { horizontal: 'center', vertical: 'middle' };
+            ws1.getRow(1).height = 40;
+
+            ws1.mergeCells('A2:B2');
+            const subtitleCell = ws1.getCell('A2');
+            subtitleCell.value = `📊 گزارش ${report.title}`;
+            subtitleCell.font = { name: 'Tahoma', size: 14, bold: true, color: { argb: 'FFB8860B' } };
+            subtitleCell.alignment = { horizontal: 'center', vertical: 'middle' };
+            ws1.getRow(2).height = 30;
+
+            ws1.mergeCells('A3:B3');
+            const dateCell = ws1.getCell('A3');
+            dateCell.value = `📅 ${report.dateStr} | 🕐 ${report.timeStr}`;
+            dateCell.font = { name: 'Tahoma', size: 11, color: { argb: 'FF6B7280' } };
+            dateCell.alignment = { horizontal: 'center' };
+            ws1.getRow(3).height = 25;
+
+            // ورودی‌ها و نتایج
+            let rowIdx = 5;
+            report.rows.forEach(row => {
+                if (row.k === '─') {
+                    rowIdx++;
+                    return;
+                }
+                const keyCell = ws1.getCell(`A${rowIdx}`);
+                const valCell = ws1.getCell(`B${rowIdx}`);
+
+                keyCell.value = row.k;
+                keyCell.font = { name: 'Tahoma', size: 12, color: { argb: 'FF6B7280' } };
+                keyCell.alignment = { horizontal: 'right', vertical: 'middle' };
+                keyCell.border = {
+                    right: { style: 'medium', color: { argb: 'FFD4AF37' } }
+                };
+                keyCell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FFF9FAFB' } };
+
+                valCell.value = row.v;
+                valCell.font = {
+                    name: 'Tahoma',
+                    size: 13,
+                    bold: row.bold || false,
+                    color: {
+                        argb: row.color === 'gold' ? 'FFB8860B' :
+                              row.color === 'green' ? 'FF059669' :
+                              row.color === 'red' ? 'FFDC2626' :
+                              row.color === 'blue' ? 'FF2563EB' : 'FF1F2937'
+                    }
+                };
+                valCell.alignment = { horizontal: 'right', vertical: 'middle' };
+                valCell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FFF9FAFB' } };
+
+                ws1.getRow(rowIdx).height = 25;
+                rowIdx++;
+            });
+
+            // پاورقی
+            rowIdx++;
+            ws1.mergeCells(`A${rowIdx}:B${rowIdx}`);
+            const footerCell = ws1.getCell(`A${rowIdx}`);
+            footerCell.value = '⚠️ این گزارش صرفاً آموزشی است. | 🌐 shamdun.github.io/My-First-Project';
+            footerCell.font = { name: 'Tahoma', size: 10, italic: true, color: { argb: 'FF92400E' } };
+            footerCell.alignment = { horizontal: 'center' };
+            footerCell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FFFFFBEB' } };
+            ws1.getRow(rowIdx).height = 30;
+
+            // ✅ شیت ۲: جدول رشد (برای DCA و سود مرکب)
+            if (type === 'dca' || type === 'compound') {
+                const ws2 = wb.addWorksheet('جدول رشد', {
+                    views: [{ rightToLeft: true }]
+                });
+
+                ws2.columns = [
+                    { header: 'دوره', width: 12 },
+                    { header: 'واریز', width: 20 },
+                    { header: 'سود', width: 20 },
+                    { header: 'مجموع', width: 22 }
+                ];
+
+                // هدر رنگی
+                ws2.getRow(1).eachCell(cell => {
+                    cell.font = { name: 'Tahoma', size: 12, bold: true, color: { argb: 'FFFFFFFF' } };
+                    cell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FFD4AF37' } };
+                    cell.alignment = { horizontal: 'center', vertical: 'middle' };
+                    cell.border = {
+                        top: { style: 'thin' }, bottom: { style: 'thin' },
+                        left: { style: 'thin' }, right: { style: 'thin' }
+                    };
+                });
+                ws2.getRow(1).height = 30;
+
+                let rowNum = 2;
+
+                if (type === 'dca') {
+                    const monthly = inputs.monthly;
+                    const months = inputs.months;
+                    const rate = inputs.rate;
+                    const initial = inputs.initial;
+                    const monthlyRate = rate / 100 / 12;
+
+                    let balance = initial;
+                    const step = months > 60 ? Math.ceil(months / 60) : 1;
+
+                    for (let m = 1; m <= months; m++) {
+                        balance = balance * (1 + monthlyRate) + monthly;
+
+                        if (m % step === 0 || m === months) {
+                            const principalSoFar = monthly * m + initial;
+                            const profitSoFar = balance - principalSoFar;
+
+                            const row = ws2.addRow([
+                                `ماه ${toFa(m)}`,
+                                formatNum(principalSoFar),
+                                formatNum(profitSoFar),
+                                formatNum(balance)
+                            ]);
+
+                            row.eachCell((cell, colNum) => {
+                                cell.font = {
+                                    name: 'Tahoma', size: 11,
+                                    color: { argb: colNum === 4 ? 'FFB8860B' : (colNum === 3 ? 'FF059669' : 'FF1F2937') },
+                                    bold: colNum === 4
+                                };
+                                cell.alignment = { horizontal: 'right' };
+                                cell.fill = {
+                                    type: 'pattern', pattern: 'solid',
+                                    fgColor: { argb: m === months ? 'FFFFFBEB' : 'FFFFFFFF' }
+                                };
+                                cell.border = {
+                                    top: { style: 'thin', color: { argb: 'FFE5E7EB' } },
+                                    bottom: { style: 'thin', color: { argb: 'FFE5E7EB' } },
+                                    left: { style: 'thin', color: { argb: 'FFE5E7EB' } },
+                                    right: { style: 'thin', color: { argb: 'FFE5E7EB' } }
+                                };
+                            });
+                            rowNum++;
+                        }
+                    }
+                } else if (type === 'compound') {
+                    const principal = inputs.principal;
+                    const rate = inputs.rate;
+                    const years = inputs.years;
+                    const n = inputs.compound;
+
+                    const totalYears = Math.ceil(years);
+                    const step = totalYears > 30 ? Math.ceil(totalYears / 30) : 1;
+
+                    for (let y = 1; y <= totalYears; y++) {
+                        const final = principal * Math.pow(1 + rate / 100 / n, n * y);
+                        const profit = final - principal;
+
+                        if (y % step === 0 || y === totalYears) {
+                            const row = ws2.addRow([
+                                `سال ${toFa(y)}`,
+                                formatNum(principal),
+                                formatNum(profit),
+                                formatNum(final)
+                            ]);
+                            row.eachCell((cell, colNum) => {
+                                cell.font = {
+                                    name: 'Tahoma', size: 11,
+                                    color: { argb: colNum === 4 ? 'FFB8860B' : (colNum === 3 ? 'FF059669' : 'FF1F2937') },
+                                    bold: colNum === 4
+                                };
+                                cell.alignment = { horizontal: 'right' };
+                                cell.border = {
+                                    top: { style: 'thin', color: { argb: 'FFE5E7EB' } },
+                                    bottom: { style: 'thin', color: { argb: 'FFE5E7EB' } },
+                                    left: { style: 'thin', color: { argb: 'FFE5E7EB' } },
+                                    right: { style: 'thin', color: { argb: 'FFE5E7EB' } }
+                                };
+                            });
+                            rowNum++;
+                        }
+                    }
+                }
+            }
+
+            // ✅ شیت ۳: نمودارها
+            if (type === 'dca' || type === 'compound') {
+                const ws3 = wb.addWorksheet('نمودار', {
+                    views: [{ rightToLeft: true }]
+                });
+
+                ws3.columns = [
+                    { width: 20 },
+                    { width: 20 },
+                    { width: 20 }
+                ];
+
+                ws3.mergeCells('A1:C1');
+                const chartTitle = ws3.getCell('A1');
+                chartTitle.value = '📈 نمودار رشد سرمایه';
+                chartTitle.font = { name: 'Tahoma', size: 16, bold: true, color: { argb: 'FFB8860B' } };
+                chartTitle.alignment = { horizontal: 'center' };
+                ws3.getRow(1).height = 35;
+
+                // محاسبه داده‌های نمودار
+                let chartLabels = [];
+                let chartPrincipal = [];
+                let chartTotal = [];
+
+                if (type === 'dca') {
+                    const monthly = inputs.monthly;
+                    const months = inputs.months;
+                    const rate = inputs.rate;
+                    const initial = inputs.initial;
+                    const monthlyRate = rate / 100 / 12;
+
+                    let balance = initial;
+                    const step = months > 24 ? Math.ceil(months / 24) : 1;
+
+                    for (let m = 1; m <= months; m++) {
+                        balance = balance * (1 + monthlyRate) + monthly;
+                        if (m % step === 0 || m === months) {
+                            chartLabels.push(`ماه ${m}`);
+                            chartPrincipal.push(monthly * m + initial);
+                            chartTotal.push(balance);
+                        }
+                    }
+                } else {
+                    const principal = inputs.principal;
+                    const rate = inputs.rate;
+                    const years = inputs.years;
+                    const n = inputs.compound;
+                    const totalYears = Math.ceil(years);
+                    const step = totalYears > 20 ? Math.ceil(totalYears / 20) : 1;
+
+                    for (let y = 1; y <= totalYears; y++) {
+                        if (y % step === 0 || y === totalYears) {
+                            chartLabels.push(`سال ${y}`);
+                            chartPrincipal.push(principal);
+                            chartTotal.push(principal * Math.pow(1 + rate / 100 / n, n * y));
+                        }
+                    }
+                }
+
+                // جدول داده‌ها برای نمودار
+                ws3.getCell('A3').value = 'دوره';
+                ws3.getCell('B3').value = 'اصل';
+                ws3.getCell('C3').value = 'کل';
+
+                ['A3', 'B3', 'C3'].forEach(ref => {
+                    const cell = ws3.getCell(ref);
+                    cell.font = { name: 'Tahoma', size: 12, bold: true, color: { argb: 'FFFFFFFF' } };
+                    cell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FFD4AF37' } };
+                    cell.alignment = { horizontal: 'center' };
+                });
+
+                for (let i = 0; i < chartLabels.length; i++) {
+                    const r = 4 + i;
+                    ws3.getCell(`A${r}`).value = chartLabels[i];
+                    ws3.getCell(`B${r}`).value = formatNum(chartPrincipal[i]);
+                    ws3.getCell(`C${r}`).value = formatNum(chartTotal[i]);
+                    ['A', 'B', 'C'].forEach(col => {
+                        ws3.getCell(`${col}${r}`).font = { name: 'Tahoma', size: 10 };
+                        ws3.getCell(`${col}${r}`).alignment = { horizontal: 'right' };
+                    });
+                }
+
+                // نمودار خطی
+                const lastRow = 3 + chartLabels.length;
+                const chart = wb.addChart? null : null;
+
+                // چون ExcelJS از chart پشتیبانی محدودی داره، از Chart.js استفاده می‌کنیم
+                // و تصویر رو به Excel اضافه می‌کنیم
+                try {
+                    const canvas = document.createElement('canvas');
+                    canvas.width = 800;
+                    canvas.height = 400;
+                    canvas.style.position = 'fixed';
+                    canvas.style.right = '-10000px';
+                    document.body.appendChild(canvas);
+
+                    const ctx = canvas.getContext('2d');
+
+                    new Chart(ctx, {
+                        type: 'line',
+                        data: {
+                            labels: chartLabels,
+                            datasets: [
+                                {
+                                    label: 'اصل سرمایه',
+                                    data: chartPrincipal,
+                                    borderColor: '#3b82f6',
+                                    backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                                    borderWidth: 2,
+                                    fill: true,
+                                    tension: 0.3
+                                },
+                                {
+                                    label: 'کل سرمایه',
+                                    data: chartTotal,
+                                    borderColor: '#d4af37',
+                                    backgroundColor: 'rgba(212, 175, 55, 0.1)',
+                                    borderWidth: 3,
+                                    fill: true,
+                                    tension: 0.3
+                                }
+                            ]
+                        },
+                        options: {
+                            responsive: false,
+                            animation: false,
+                            plugins: {
+                                legend: {
+                                    labels: { font: { family: 'Tahoma', size: 14 } }
+                                },
+                                title: {
+                                    display: true,
+                                    text: 'نمودار رشد سرمایه',
+                                    font: { family: 'Tahoma', size: 18, weight: 'bold' }
+                                }
+                            },
+                            scales: {
+                                y: {
+                                    ticks: {
+                                        callback: v => {
+                                            if (v >= 1e9) return (v / 1e9).toFixed(1) + 'B';
+                                            if (v >= 1e6) return (v / 1e6).toFixed(1) + 'M';
+                                            if (v >= 1e3) return (v / 1e3).toFixed(0) + 'K';
+                                            return v;
+                                        },
+                                        font: { family: 'Tahoma' }
+                                    }
+                                }
+                            }
+                        }
+                    });
+
+                    // صبر کن تا نمودار رندر بشه
+                    await new Promise(resolve => setTimeout(resolve, 800));
+
+                    const imageData = canvas.toDataURL('image/png');
+                    const imageId = wb.addImage({
+                        base64: imageData,
+                        extension: 'png'
+                    });
+
+                    // تصویر رو به شیت نمودار اضافه کن
+                    ws3.addImage(imageId, {
+                        tl: { col: 0, row: lastRow + 2 },
+                        ext: { width: 700, height: 350 }
+                    });
+
+                    document.body.removeChild(canvas);
+                } catch (chartErr) {
+                    console.warn('Chart error:', chartErr);
+                    // اگه نمودار نشد، فقط داده‌ها نمایش داده می‌شه
+                }
+            }
+
+            // ✅ ذخیره فایل
+            const buffer = await wb.xlsx.writeBuffer();
+            const blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+            saveAs(blob, `shamdun-${type}-${Date.now()}.xlsx`);
+
+            btn.disabled = false;
+            btn.textContent = '📊 گزارش Excel';
+
+        } catch (err) {
+            console.error('Excel error:', err);
+            alert('خطا در ساخت Excel: ' + err.message);
+            btn.disabled = false;
+            btn.textContent = '📊 گزارش Excel';
+        }
+    }
+
+    // ==========================================
+    // 🌙 تم شب/روز
     // ==========================================
     function applyThemeFromStorage() {
         const saved = localStorage.getItem('shamdun-theme') || 'dark';
@@ -3175,31 +4038,34 @@ ${d.assets.map(a => `  • ${a.label}: ${toFa(a.percent)}٪ (${formatNum(d.total
     function initThemeButton() {
         const themeBtn = document.getElementById('snThemeBtn');
         if (!themeBtn) return false;
-    
+
         const newBtn = themeBtn.cloneNode(true);
         themeBtn.parentNode.replaceChild(newBtn, themeBtn);
-    
+
         newBtn.addEventListener('click', function(e) {
             e.preventDefault();
             e.stopPropagation();
-        
+
             const current = document.documentElement.getAttribute('data-theme') || 'dark';
             const newTheme = current === 'dark' ? 'light' : 'dark';
-        
+
             document.documentElement.setAttribute('data-theme', newTheme);
             localStorage.setItem('shamdun-theme', newTheme);
-        
+
             const icon = document.getElementById('snThemeIcon');
             if (icon) icon.textContent = newTheme === 'dark' ? '🌙' : '☀️';
-        
+
             if (typeof inflationHistory !== 'undefined' && inflationHistory && inflationHistory.length > 0) {
                 setTimeout(renderInflationChart, 100);
             }
         });
-    
-        return true;
-    }.   
 
+        return true;
+    }
+
+    // ==========================================
+    // Init
+    // ==========================================
     document.addEventListener('DOMContentLoaded', () => {
         renderInflationHistory();
         setTimeout(applyNumberFormatting, 300);
@@ -3214,23 +4080,6 @@ ${d.assets.map(a => `  • ${a.label}: ${toFa(a.percent)}٪ (${formatNum(d.total
             setTimeout(initThemeButton, 500);
             setTimeout(initThemeButton, 1000);
         }
-    });
-     // ==========================================
-    // Init
-    // ==========================================
-    document.addEventListener('DOMContentLoaded', () => {
-        renderInflationHistory();
-        setTimeout(applyNumberFormatting, 300);
-        document.querySelectorAll('input[inputmode="numeric"]').forEach(inp => {
-            inp.addEventListener('input', handleNumericInput);
-        });
-        // راه‌اندازی تم بعد از ساخته شدن navbar
-        setTimeout(setupTheme, 500);
-    });
-
-    // اگه navbar دیرتر لود شد
-    window.addEventListener('load', () => {
-        setTimeout(setupTheme, 500);
     });
 </script>
 </body>
