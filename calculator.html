@@ -13,6 +13,7 @@
     <script src="https://cdn.jsdelivr.net/npm/html2pdf.js@0.10.1/dist/html2pdf.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/exceljs@4.4.0/dist/exceljs.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/file-saver@2.0.5/dist/FileSaver.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
     <style>
@@ -3555,7 +3556,7 @@ ${d.assets.map(a => `  • ${a.label}: ${toFa(a.percent)}٪ (${formatNum(d.total
         };
     }
 
-    async function downloadPDF(type) {
+        async function downloadPDF(type) {
         const btn = document.getElementById('pdf-btn-' + type);
         if (!btn) return;
 
@@ -3565,119 +3566,147 @@ ${d.assets.map(a => `  • ${a.label}: ${toFa(a.percent)}٪ (${formatNum(d.total
         try {
             const report = buildReportData(type);
 
-            let rowsHtml = '';
-            report.rows.forEach(row => {
-                if (row.k === '─') {
-                    rowsHtml += `<div style="height:1px; background:#e5e7eb; margin:12px 0;"></div>`;
-                } else {
-                    const color = row.color === 'gold' ? '#b8860b' :
-                                  row.color === 'green' ? '#059669' :
-                                  row.color === 'red' ? '#dc2626' :
-                                  row.color === 'blue' ? '#2563eb' : '#1f2937';
-                    const bold = row.bold ? 'font-weight:900;' : 'font-weight:600;';
-                    rowsHtml += `
-                        <div style="display:flex; justify-content:space-between; padding:10px 14px; background:#f9fafb; border-radius:10px; margin-bottom:6px; border-right:3px solid #d4af37;">
-                            <span style="color:#6b7280; font-size:13px;">${row.k}</span>
-                            <span style="color:${color}; ${bold} font-size:14px;">${row.v}</span>
-                        </div>
-                    `;
-                }
-            });
-
-            const htmlContent = `
-                <div style="background:linear-gradient(135deg,#d4af37,#a8862a); color:white; padding:20px; border-radius:16px; margin-bottom:20px; text-align:center;">
-                    <div style="font-size:22px; font-weight:900; margin-bottom:4px;">🎯 آکادمی شمعدون</div>
-                    <div style="font-size:13px; opacity:0.9;">گزارش ماشین‌حساب مالی</div>
-                </div>
-
-                <div style="background:#f9fafb; padding:16px; border-radius:12px; margin-bottom:20px; border-right:4px solid #d4af37;">
-                    <div style="font-size:16px; font-weight:800; color:#b8860b; margin-bottom:8px;">📊 ${report.title}</div>
-                    <div style="font-size:12px; color:#6b7280;">📅 تاریخ: ${report.dateStr} | 🕐 ساعت: ${report.timeStr}</div>
-                </div>
-
-                <div style="margin-bottom:20px;">
-                    <div style="font-size:14px; font-weight:800; color:#1f2937; margin-bottom:10px;">📋 اطلاعات و نتایج:</div>
-                    ${rowsHtml}
-                </div>
-
-                <div style="background:#fffbeb; border:1px solid #fcd34d; padding:12px; border-radius:10px; font-size:11px; color:#92400e; line-height:1.7; text-align:center;">
-                    ⚠️ این گزارش صرفاً آموزشی است.<br>
-                    🌐 shamdun.github.io/My-First-Project
-                </div>
-            `;
-
-            // ✅ ظرف موقت که دقیقاً توی body هست و مخفی نیست
-            const tempContainer = document.createElement('div');
-            tempContainer.id = 'tempPdfContainer';
-            tempContainer.style.cssText = `
-                position: fixed;
-                left: 0;
-                top: 0;
-                width: 800px;
-                background: #ffffff;
-                color: #1a1a24;
-                font-family: 'Vazirmatn', Tahoma, sans-serif;
-                padding: 40px;
-                direction: rtl;
-                z-index: 999999;
-                box-sizing: border-box;
-            `;
-            tempContainer.innerHTML = htmlContent;
-
-            // ✅ موقتاً به body اضافه کن
-            document.body.appendChild(tempContainer);
-
-            // ✅ صبر کن
-            await new Promise(resolve => setTimeout(resolve, 300));
-
-            // ✅ دسترسی مستقیم به html2canvas و jsPDF
-            const canvas = await html2canvas(tempContainer, {
-                scale: 2,
-                useCORS: true,
-                backgroundColor: '#ffffff',
-                logging: false,
-                width: 800,
-                windowWidth: 800
-            });
-
-            const imgData = canvas.toDataURL('image/png');
+            // ✅ استفاده از jsPDF
             const { jsPDF } = window.jspdf;
+            if (!jsPDF) throw new Error('jsPDF لود نشده');
+
             const pdf = new jsPDF({
                 unit: 'mm',
                 format: 'a4',
                 orientation: 'portrait'
             });
 
-            const pdfWidth = pdf.internal.pageSize.getWidth();
-            const pdfHeight = pdf.internal.pageSize.getHeight();
-            const imgWidth = pdfWidth - 20;
-            const imgHeight = (canvas.height * imgWidth) / canvas.width;
+            const pageWidth = pdf.internal.pageSize.getWidth();
+            const pageHeight = pdf.internal.pageSize.getHeight();
+            const margin = 15;
+            const contentWidth = pageWidth - (margin * 2);
 
-            let heightLeft = imgHeight;
-            let position = 10;
+            let y = margin;
 
-            pdf.addImage(imgData, 'PNG', 10, position, imgWidth, imgHeight);
-            heightLeft -= (pdfHeight - 20);
-
-            while (heightLeft > 0) {
-                position = heightLeft - imgHeight + 10;
-                pdf.addPage();
-                pdf.addImage(imgData, 'PNG', 10, position, imgWidth, imgHeight);
-                heightLeft -= (pdfHeight - 20);
+            // ✅ سعی کن فونت فارسی رو لود کنی
+            let fontLoaded = false;
+            try {
+                const fontUrl = 'https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/fonts/webfonts/Vazirmatn-Regular.woff2';
+                const fontResponse = await fetch(fontUrl);
+                if (fontResponse.ok) {
+                    const fontBuffer = await fontResponse.arrayBuffer();
+                    const fontBase64 = btoa(String.fromCharCode(...new Uint8Array(fontBuffer)));
+                    pdf.addFileToVFS('Vazirmatn.ttf', fontBase64);
+                    pdf.addFont('Vazirmatn.ttf', 'Vazirmatn', 'normal');
+                    pdf.setFont('Vazirmatn');
+                    fontLoaded = true;
+                }
+            } catch (fontErr) {
+                console.warn('فونت لود نشد، از helvetica استفاده می‌شه:', fontErr);
             }
 
-            pdf.save(`shamdun-${type}-${Date.now()}.pdf`);
+            if (!fontLoaded) {
+                pdf.setFont('helvetica');
+            }
 
-            // ✅ حذف کن
-            document.body.removeChild(tempContainer);
+            // ✅ هدر
+            pdf.setFillColor(212, 175, 55);
+            pdf.rect(0, 0, pageWidth, 30, 'F');
+
+            pdf.setTextColor(255, 255, 255);
+            pdf.setFontSize(18);
+            pdf.text('Academy Shamdun', pageWidth / 2, 13, { align: 'center' });
+            pdf.setFontSize(11);
+            pdf.text('Financial Calculator Report', pageWidth / 2, 22, { align: 'center' });
+
+            y = 40;
+
+            // ✅ عنوان گزارش
+            pdf.setTextColor(184, 134, 11);
+            pdf.setFontSize(16);
+            pdf.text(report.title.replace(/[^\x00-\x7F]/g, ''), margin, y);
+            y += 8;
+
+            // ✅ تاریخ و ساعت
+            pdf.setTextColor(107, 114, 128);
+            pdf.setFontSize(10);
+            pdf.text(`Date: ${report.dateStr} | Time: ${report.timeStr}`, margin, y);
+            y += 12;
+
+            // ✅ خط جداکننده
+            pdf.setDrawColor(212, 175, 55);
+            pdf.setLineWidth(0.5);
+            pdf.line(margin, y, pageWidth - margin, y);
+            y += 8;
+
+            // ✅ ردیف‌ها
+            pdf.setFontSize(11);
+
+            for (const row of report.rows) {
+                if (row.k === '─') {
+                    pdf.setDrawColor(229, 231, 235);
+                    pdf.setLineWidth(0.3);
+                    pdf.line(margin, y, pageWidth - margin, y);
+                    y += 6;
+                    continue;
+                }
+
+                // چک کن به انتهای صفحه رسیده یا نه
+                if (y > pageHeight - 25) {
+                    pdf.addPage();
+                    y = margin + 10;
+                }
+
+                // کلید
+                pdf.setTextColor(107, 114, 128);
+                pdf.setFontSize(10);
+                const cleanKey = row.k.replace(/[^\x00-\x7F]/g, '').trim();
+                pdf.text(cleanKey || row.k.substring(0, 30), margin, y);
+
+                // مقدار
+                pdf.setTextColor(
+                    row.color === 'gold' ? 184 :
+                    row.color === 'green' ? 5 :
+                    row.color === 'red' ? 220 :
+                    row.color === 'blue' ? 37 : 31,
+                    row.color === 'gold' ? 134 :
+                    row.color === 'green' ? 150 :
+                    row.color === 'red' ? 38 :
+                    row.color === 'blue' ? 99 : 41,
+                    row.color === 'gold' ? 11 :
+                    row.color === 'green' ? 105 :
+                    row.color === 'red' ? 38 :
+                    row.color === 'blue' ? 235 : 55
+                );
+                pdf.setFontSize(11);
+                if (row.bold) pdf.setFont(undefined, 'bold');
+
+                const cleanValue = row.v;
+                pdf.text(cleanValue, pageWidth - margin, y, { align: 'right' });
+
+                if (row.bold) pdf.setFont(undefined, 'normal');
+
+                y += 9;
+            }
+
+            // ✅ پاورقی
+            y += 10;
+            if (y > pageHeight - 30) {
+                pdf.addPage();
+                y = margin + 10;
+            }
+
+            pdf.setFillColor(255, 251, 235);
+            pdf.rect(margin, y - 5, contentWidth, 20, 'F');
+
+            pdf.setTextColor(146, 64, 14);
+            pdf.setFontSize(9);
+            pdf.text('This report is for educational purposes only.', pageWidth / 2, y + 2, { align: 'center' });
+            pdf.text('shamdun.github.io/My-First-Project', pageWidth / 2, y + 8, { align: 'center' });
+
+            // ✅ ذخیره
+            pdf.save(`shamdun-${type}-${Date.now()}.pdf`);
 
             btn.disabled = false;
             btn.textContent = '📄 گزارش PDF';
 
         } catch (err) {
             console.error('PDF error:', err);
-            const tmp = document.getElementById('tempPdfContainer');
-            if (tmp) document.body.removeChild(tmp);
             alert('خطا در ساخت PDF: ' + err.message);
             btn.disabled = false;
             btn.textContent = '📄 گزارش PDF';
