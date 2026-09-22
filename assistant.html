@@ -21,7 +21,11 @@
             --red: #ef4444;
             --blue: #3b82f6;
         }
-                [data-theme="light"] {
+
+        /* ===================================================== */
+        /* 🌙 تم روشن - با !important برای غلبه بر رنگ‌های hardcode */
+        /* ===================================================== */
+        [data-theme="light"] {
             --bg-primary: #f8fafc;
             --bg-secondary: #eef2f7;
             --bg-card: #ffffff;
@@ -35,69 +39,115 @@
             --blue: #2563eb;
         }
         [data-theme="light"] body {
+            background-color: #f8fafc !important;
             background-image:
                 radial-gradient(circle at 0% 0%, rgba(184, 134, 11, 0.06) 0%, transparent 40%),
-                radial-gradient(circle at 100% 100%, rgba(37, 99, 235, 0.05) 0%, transparent 40%);
+                radial-gradient(circle at 100% 100%, rgba(37, 99, 235, 0.05) 0%, transparent 40%) !important;
+            color: #0f172a !important;
         }
-        [data-theme="light"] .chat-header,
-        [data-theme="light"] .dropdowns-section,
-        [data-theme="light"] .input-container,
-        [data-theme="light"] .selected-tags {
-            background: rgba(248, 250, 252, 0.98);
-            border-color: rgba(184, 134, 11, 0.2);
+
+        /* ===== هدر چت ===== */
+        [data-theme="light"] .chat-header {
+            background: rgba(248, 250, 252, 0.98) !important;
+            border-bottom-color: rgba(184, 134, 11, 0.2) !important;
         }
         [data-theme="light"] .chat-header-title h1 {
-            color: #0f172a;
+            color: #0f172a !important;
         }
-        [data-theme="light"] .model-selector,
-        [data-theme="light"] .market-status {
-            background: rgba(248, 250, 252, 0.8);
-            border-color: rgba(184, 134, 11, 0.2);
+        [data-theme="light"] .model-selector {
+            background: rgba(241, 245, 249, 0.9) !important;
+            border-color: rgba(184, 134, 11, 0.2) !important;
+        }
+        [data-theme="light"] .model-selector label {
+            color: #475569 !important;
         }
         [data-theme="light"] .model-selector select {
-            background: #ffffff;
-            color: #0f172a;
+            background: #ffffff !important;
+            color: #0f172a !important;
+            border-color: rgba(184, 134, 11, 0.3) !important;
         }
-        [data-theme="light"] .market-status .item {
-            color: #475569;
+        [data-theme="light"] .market-status {
+            background: rgba(241, 245, 249, 0.9) !important;
+            color: #475569 !important;
+            border-color: rgba(184, 134, 11, 0.15) !important;
         }
+        [data-theme="light"] .market-status .value {
+            color: #b8860b !important;
+        }
+
+        /* ===== پیام‌ها ===== */
         [data-theme="light"] .message-content {
-            background: #ffffff;
-            color: #1e293b;
-            border-color: rgba(184, 134, 11, 0.2);
+            background: #ffffff !important;
+            color: #1e293b !important;
+            border-color: rgba(184, 134, 11, 0.15) !important;
         }
         [data-theme="light"] .message.user .message-content {
-            background: rgba(37, 99, 235, 0.1);
-            border-color: rgba(37, 99, 235, 0.3);
+            background: rgba(37, 99, 235, 0.1) !important;
+            border-color: rgba(37, 99, 235, 0.3) !important;
+            color: #1e3a8a !important;
+        }
+
+        /* ===== منوهای آبشاری ===== */
+        [data-theme="light"] .dropdowns-section {
+            background: rgba(248, 250, 252, 0.98) !important;
+            border-top-color: rgba(184, 134, 11, 0.2) !important;
         }
         [data-theme="light"] .dropdown-btn {
-            background: #ffffff;
-            color: #0f172a;
-            border-color: rgba(184, 134, 11, 0.3);
+            background: #ffffff !important;
+            color: #0f172a !important;
+            border-color: rgba(184, 134, 11, 0.3) !important;
+        }
+        [data-theme="light"] .dropdown-btn .count {
+            background: #b8860b !important;
+            color: #ffffff !important;
         }
         [data-theme="light"] .dropdown-content {
-            background: #ffffff;
-            border-color: rgba(184, 134, 11, 0.3);
-            box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.1);
+            background: #ffffff !important;
+            border-color: rgba(184, 134, 11, 0.3) !important;
+            box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.1) !important;
         }
         [data-theme="light"] .dropdown-item {
-            color: #334155;
+            color: #334155 !important;
         }
         [data-theme="light"] .dropdown-item:hover {
-            background: rgba(184, 134, 11, 0.1);
+            background: rgba(184, 134, 11, 0.1) !important;
+            color: #8b6508 !important;
+        }
+        [data-theme="light"] .dropdown-item.selected {
+            background: rgba(184, 134, 11, 0.2) !important;
+            color: #8b6508 !important;
         }
         [data-theme="light"] .dropdown-item .check {
-            border-color: #94a3b8;
+            border-color: #94a3b8 !important;
         }
-        [data-theme="light"] .input-wrapper textarea {
-            background: #ffffff;
-            color: #0f172a;
-            border-color: rgba(184, 134, 11, 0.3);
+
+        /* ===== تگ‌های انتخاب‌شده ===== */
+        [data-theme="light"] .selected-tags {
+            background: rgba(248, 250, 252, 0.95) !important;
         }
         [data-theme="light"] .selected-tag {
-            background: rgba(184, 134, 11, 0.15);
-            color: #8b6508;
+            background: rgba(184, 134, 11, 0.15) !important;
+            color: #8b6508 !important;
+            border-color: rgba(184, 134, 11, 0.4) !important;
         }
+
+        /* ===== ورودی ===== */
+        [data-theme="light"] .input-container {
+            background: rgba(248, 250, 252, 0.98) !important;
+            border-top-color: rgba(184, 134, 11, 0.2) !important;
+        }
+        [data-theme="light"] .input-wrapper textarea {
+            background: #ffffff !important;
+            color: #0f172a !important;
+            border-color: rgba(184, 134, 11, 0.3) !important;
+        }
+        [data-theme="light"] .input-wrapper textarea::placeholder {
+            color: #94a3b8 !important;
+        }
+        [data-theme="light"] .send-btn {
+            color: #ffffff !important;
+        }
+
         * { margin: 0; padding: 0; box-sizing: border-box; }
         html, body {
             height: 100%;
@@ -1002,7 +1052,8 @@
 
         loadMarketData();
         setInterval(loadMarketData, 60000);
-                // ==========================================
+
+        // ==========================================
         // 🌙 تم شب/روز
         // ==========================================
         function applyTheme() {
