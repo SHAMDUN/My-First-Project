@@ -3163,29 +3163,59 @@ ${d.assets.map(a => `  • ${a.label}: ${toFa(a.percent)}٪ (${formatNum(d.total
     }
 
     // ==========================================
-    // 🌙 تم شب/روز (رفع مشکل)
+    // 🌙 تم شب/روز - نسخه اصلاح‌شده
     // ==========================================
-    function setupTheme() {
+    function applyThemeFromStorage() {
+        const saved = localStorage.getItem('shamdun-theme') || 'dark';
+        document.documentElement.setAttribute('data-theme', saved);
+        const icon = document.getElementById('snThemeIcon');
+        if (icon) icon.textContent = saved === 'dark' ? '🌙' : '☀️';
+    }
+
+    function initThemeButton() {
         const themeBtn = document.getElementById('snThemeBtn');
-        if (!themeBtn) return;
-        // جلوگیری از bind دوباره
-        if (themeBtn.getAttribute('data-bound') === 'true') return;
-        themeBtn.setAttribute('data-bound', 'true');
-        themeBtn.addEventListener('click', () => {
+        if (!themeBtn) return false;
+    
+        const newBtn = themeBtn.cloneNode(true);
+        themeBtn.parentNode.replaceChild(newBtn, themeBtn);
+    
+        newBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+        
             const current = document.documentElement.getAttribute('data-theme') || 'dark';
             const newTheme = current === 'dark' ? 'light' : 'dark';
+        
             document.documentElement.setAttribute('data-theme', newTheme);
             localStorage.setItem('shamdun-theme', newTheme);
+        
             const icon = document.getElementById('snThemeIcon');
             if (icon) icon.textContent = newTheme === 'dark' ? '🌙' : '☀️';
-            // رفرش نمودار با تم جدید
-            if (inflationHistory && inflationHistory.length > 0) {
+        
+            if (typeof inflationHistory !== 'undefined' && inflationHistory && inflationHistory.length > 0) {
                 setTimeout(renderInflationChart, 100);
             }
         });
-    }
+    
+        return true;
+    }.   
 
-    // ==========================================
+    document.addEventListener('DOMContentLoaded', () => {
+        renderInflationHistory();
+        setTimeout(applyNumberFormatting, 300);
+        document.querySelectorAll('input[inputmode="numeric"]').forEach(inp => {
+            inp.addEventListener('input', handleNumericInput);
+        });
+        setTimeout(applyThemeFromStorage, 200);
+    });
+
+    window.addEventListener('load', () => {
+        if (!initThemeButton()) {
+            setTimeout(initThemeButton, 500);
+            setTimeout(initThemeButton, 1000);
+        }
+    });
+     // ==========================================
     // Init
     // ==========================================
     document.addEventListener('DOMContentLoaded', () => {
