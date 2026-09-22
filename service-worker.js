@@ -1,854 +1,168 @@
-<!DOCTYPE html>
-<html lang="fa" dir="rtl" data-theme="dark">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>دانش‌نامه اقتصادی | آکادمی شمعدون</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css">
-    <meta name="theme-color" content="#d4af37">
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <style>
-        :root {
-            --bg-primary: #0a0a0f;
-            --bg-secondary: #14141c;
-            --bg-card: #1a1a24;
-            --gold: #d4af37;
-            --gold-light: #f4d47c;
-            --gold-dark: #a8862a;
-            --white: #f8fafc;
-            --gray: #94a3b8;
-        }
+// ==========================================
+// Service Worker - آکادمی شمعدون
+// نسخه‌بندی خودکار + پاک کردن کش قدیمی
+// ==========================================
 
-        /* ===== تم روز ===== */
-        [data-theme="light"] {
-            --bg-primary: #f8fafc;
-            --bg-secondary: #eef2f7;
-            --bg-card: #ffffff;
-            --gold: #b8860b;
-            --gold-light: #d4af37;
-            --gold-dark: #8b6508;
-            --white: #0f172a;
-            --gray: #64748b;
-        }
+// نسخه خودکار: هر بار که فایل تغییر کنه، نسخه جدید میاد
+const VERSION = 'v2.0.0';
+const CACHE_NAME = `shamdun-${VERSION}`;
 
-        [data-theme="light"] body {
-            background-image:
-                radial-gradient(circle at 0% 0%, rgba(184, 134, 11, 0.06) 0%, transparent 40%),
-                radial-gradient(circle at 100% 100%, rgba(37, 99, 235, 0.05) 0%, transparent 40%),
-                linear-gradient(rgba(0, 0, 0, 0.025) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(0, 0, 0, 0.025) 1px, transparent 1px);
-        }
+const urlsToCache = [
+    // صفحات اصلی
+    '/My-First-Project/',
+    '/My-First-Project/index.html',
+    '/My-First-Project/login.html',
+    '/My-First-Project/dashboard.html',
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            font-family: 'Vazirmatn', Tahoma, sans-serif;
-            background-color: var(--bg-primary);
-            background-image:
-                radial-gradient(circle at 0% 0%, rgba(212, 175, 55, 0.08) 0%, transparent 40%),
-                radial-gradient(circle at 100% 100%, rgba(59, 130, 246, 0.06) 0%, transparent 40%),
-                linear-gradient(rgba(255, 255, 255, 0.015) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
-            background-size: 100% 100%, 100% 100%, 60px 60px, 60px 60px;
-            background-attachment: fixed;
-            color: var(--white);
-            min-height: 100vh;
-            direction: rtl;
-            overflow-x: hidden;
-            transition: background-color 0.3s, color 0.3s;
-        }
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        @keyframes spin { to { transform: rotate(360deg); } }
+    // صفحات بازار
+    '/My-First-Project/home.html',
+    '/My-First-Project/bourse.html',
+    '/My-First-Project/news.html',
+    '/My-First-Project/dictionary.html',
 
-        .sn-navbar {
-            position: fixed; top: 0; left: 0; right: 0;
-            background: rgba(10, 10, 15, 0.92);
-            backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(212, 175, 55, 0.15);
-            z-index: 9998; padding: 12px 0;
-        }
-        .sn-navbar-container {
-            max-width: 1400px; margin: 0 auto; padding: 0 20px;
-            display: flex; justify-content: space-between; align-items: center; gap: 15px;
-        }
-        .sn-hamburger {
-            width: 42px; height: 42px; border-radius: 12px;
-            background: rgba(212, 175, 55, 0.08);
-            border: 1px solid rgba(212, 175, 55, 0.25);
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-            gap: 4px; cursor: pointer; padding: 0; flex-shrink: 0;
-        }
-        .sn-hamburger:hover { background: rgba(212, 175, 55, 0.2); }
-        .sn-hamburger span { display: block; width: 18px; height: 2px; background: var(--gold); border-radius: 2px; }
-        .sn-brand {
-            display: flex; align-items: center; gap: 10px;
-            text-decoration: none; justify-content: center;
-        }
-        .sn-brand-logo {
-            width: 38px; height: 38px; border-radius: 50%;
-            border: 2px solid var(--gold); object-fit: cover;
-        }
-        .sn-brand-text { color: var(--gold); font-size: 17px; font-weight: 800; }
-        
-        .dict-btn {
-            display: flex; align-items: center; gap: 6px;
-            padding: 8px 14px;
-            background: linear-gradient(135deg, var(--gold), var(--gold-dark));
-            border: 1px solid var(--gold);
-            border-radius: 12px;
-            color: var(--bg-primary);
-            font-size: 13px; font-weight: 700;
-            text-decoration: none;
-            font-family: inherit;
-            white-space: nowrap;
-            flex-shrink: 0;
-            box-shadow: 0 5px 20px rgba(212, 175, 55, 0.3);
-        }
-        .sn-user-area {
-            display: flex; align-items: center; gap: 10px;
-            min-width: 42px; justify-content: flex-end; flex-shrink: 0;
-        }
-        .sn-user-avatar {
-            width: 42px; height: 42px; border-radius: 50%;
-            background: linear-gradient(135deg, var(--gold), var(--gold-dark));
-            display: flex; align-items: center; justify-content: center;
-            color: var(--bg-primary); font-weight: 900; font-size: 15px;
-            border: 2px solid var(--gold); text-decoration: none;
-        }
-        .sn-overlay {
-            position: fixed; top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(0, 0, 0, 0.7); backdrop-filter: blur(5px);
-            z-index: 9999; opacity: 0; visibility: hidden; transition: 0.3s;
-        }
-        .sn-overlay.show { opacity: 1; visibility: visible; }
-        .sn-sidebar {
-            position: fixed; top: 0; right: -320px; width: 300px; height: 100vh;
-            background: linear-gradient(180deg, #14141c, #0a0a0f);
-            border-left: 1px solid rgba(212, 175, 55, 0.2);
-            z-index: 10000; transition: right 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-            overflow-y: auto; box-shadow: -10px 0 40px rgba(0, 0, 0, 0.5);
-        }
-        .sn-sidebar.show { right: 0; }
-        .sn-sidebar-header {
-            display: flex; justify-content: space-between; align-items: center;
-            padding: 20px; border-bottom: 1px solid rgba(212, 175, 55, 0.15);
-            position: sticky; top: 0; background: #14141c; z-index: 2;
-        }
-        .sn-sidebar-header .sn-brand { justify-content: flex-start; }
-        .sn-close {
-            background: rgba(239, 68, 68, 0.1); color: #ef4444;
-            border: 1px solid rgba(239, 68, 68, 0.3);
-            width: 34px; height: 34px; border-radius: 10px;
-            cursor: pointer; font-size: 16px; font-family: inherit;
-        }
-        .sn-sidebar-content { padding: 15px; }
-        .sn-menu-section { display: flex; flex-direction: column; gap: 4px; }
-        .sn-menu-item {
-            display: flex; align-items: center; gap: 12px;
-            padding: 12px 14px; border-radius: 12px;
-            text-decoration: none; color: #cbd5e1;
-            font-size: 14px; font-weight: 600;
-            transition: 0.25s; border: 1px solid transparent;
-        }
-        .sn-menu-item:hover {
-            background: rgba(212, 175, 55, 0.08); color: var(--gold);
-            border-color: rgba(212, 175, 55, 0.2); transform: translateX(-4px);
-        }
-        .sn-menu-item.active {
-            background: rgba(212, 175, 55, 0.15); color: var(--gold);
-            border-color: rgba(212, 175, 55, 0.4);
-        }
-        .sn-menu-icon { font-size: 20px; width: 26px; text-align: center; }
-        .sn-menu-label { flex: 1; }
-        .sn-menu-divider { height: 1px; background: rgba(212, 175, 55, 0.15); margin: 15px 0; }
-        .sn-logout { color: #f87171 !important; }
+    // صفحات دوره‌ها
+    '/My-First-Project/courses.html',
+    '/My-First-Project/course-detail.html',
+    '/My-First-Project/lesson.html',
 
-        /* Page header */
-        .main-container { max-width: 1200px; margin: 0 auto; padding: 100px 20px 40px; }
-        .page-header {
-            text-align: center; margin-bottom: 35px;
-            animation: fadeInUp 0.6s ease-out;
-        }
-        .page-header h1 {
-            font-size: 40px; font-weight: 900; margin-bottom: 12px;
-            background: linear-gradient(135deg, var(--gold), var(--gold-light));
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-        .page-header p { color: var(--gray); font-size: 15px; line-height: 1.8; }
+    // صفحات وبلاگ
+    '/My-First-Project/blog.html',
+    '/My-First-Project/blog-post.html',
 
-        /* Search box */
-        .search-box {
-            max-width: 600px; margin: 0 auto 25px;
-            position: relative;
-        }
-        .search-box input {
-            width: 100%;
-            padding: 16px 50px 16px 20px;
-            background: rgba(20, 20, 28, 0.8);
-            border: 2px solid rgba(212, 175, 55, 0.25);
-            border-radius: 16px;
-            color: var(--white);
-            font-size: 15px;
-            font-family: inherit;
-            transition: 0.3s;
-            direction: rtl;
-        }
-        .search-box input:focus {
-            outline: none;
-            border-color: var(--gold);
-            box-shadow: 0 0 30px rgba(212, 175, 55, 0.2);
-            background: rgba(20, 20, 28, 1);
-        }
-        .search-box input::placeholder { color: #64748b; }
-        .search-icon {
-            position: absolute;
-            right: 18px;
-            top: 50%;
-            transform: translateY(-50%);
-            font-size: 20px;
-            pointer-events: none;
-        }
+    // صفحات دیگه
+    '/My-First-Project/about.html',
+    '/My-First-Project/contact.html',
+    '/My-First-Project/faq.html',
+    '/My-First-Project/portfolio.html',
+    '/My-First-Project/personality-test.html',
+    '/My-First-Project/assistant.html',
+    '/My-First-Project/calculator.html',
 
-        /* Stats */
-        .stats {
-            display: flex; justify-content: center; gap: 15px;
-            flex-wrap: wrap; margin-bottom: 25px;
-            animation: fadeInUp 0.6s ease-out 0.1s backwards;
-        }
-        .stat-box {
-            padding: 10px 20px;
-            background: rgba(20, 20, 28, 0.6);
-            border: 1px solid rgba(212, 175, 55, 0.2);
-            border-radius: 12px;
-            font-size: 13px;
-            color: var(--gray);
-        }
-        .stat-box strong { color: var(--gold); font-size: 16px; }
+    // فایل‌های سیستمی
+    '/My-First-Project/manifest.json',
+    '/My-First-Project/supabase-config.js',
+    '/My-First-Project/navbar.js',
+    '/My-First-Project/jalali-datepicker.js',
+    '/My-First-Project/jalali-datepicker.css',
 
-        /* Categories */
-        .dict-categories {
-            display: flex; gap: 8px; margin-bottom: 25px;
-            overflow-x: auto; padding-bottom: 10px;
-            scrollbar-width: thin;
-            animation: fadeInUp 0.6s ease-out 0.15s backwards;
-        }
-        .dict-cat-btn {
-            padding: 11px 18px;
-            background: rgba(20, 20, 28, 0.6);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 12px;
-            color: var(--gray);
-            font-size: 13px; font-weight: 700;
-            font-family: inherit;
-            cursor: pointer;
-            transition: 0.3s;
-            white-space: nowrap;
-            display: flex; align-items: center; gap: 6px;
-        }
-        .dict-cat-btn:hover {
-            color: var(--gold);
-            border-color: rgba(212, 175, 55, 0.4);
-        }
-        .dict-cat-btn.active {
-            background: linear-gradient(135deg, var(--gold), var(--gold-dark));
-            color: var(--bg-primary);
-            border-color: var(--gold);
-            box-shadow: 0 5px 20px rgba(212, 175, 55, 0.3);
-        }
-        .dict-cat-btn .count {
-            background: rgba(0,0,0,0.2);
-            padding: 2px 8px;
-            border-radius: 8px;
-            font-size: 11px;
-        }
-        .dict-cat-btn.active .count {
-            background: rgba(0,0,0,0.25);
-        }
+    // آیکون‌ها و تصاویر
+    '/My-First-Project/519.png',
+    '/My-First-Project/icon-192.png',
+    '/My-First-Project/icon-512.png'
+];
 
-        /* Grid */
-        .dict-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-            gap: 15px;
-        }
-        .dict-card {
-            background: linear-gradient(135deg, var(--bg-card), var(--bg-secondary));
-            border: 1px solid rgba(212, 175, 55, 0.15);
-            border-right: 4px solid var(--gold);
-            border-radius: 15px;
-            padding: 20px;
-            transition: 0.3s;
-            animation: fadeInUp 0.4s ease-out backwards;
-        }
-        .dict-card:hover {
-            transform: translateY(-4px);
-            border-color: rgba(212, 175, 55, 0.4);
-            box-shadow: 0 15px 40px rgba(212, 175, 55, 0.15);
-        }
-        .dict-term {
-            color: var(--gold);
-            font-size: 16px; font-weight: 800;
-            margin-bottom: 10px;
-            display: flex; align-items: center; gap: 8px;
-        }
-        .dict-term .cat-icon { font-size: 20px; }
-        .dict-def {
-            color: #cbd5e1;
-            font-size: 13px;
-            line-height: 1.9;
-            margin-bottom: 10px;
-        }
-        .dict-example {
-            background: rgba(212, 175, 55, 0.08);
-            border-right: 3px solid var(--gold);
-            padding: 10px 12px;
-            border-radius: 8px;
-            font-size: 12px;
-            color: #fbbf24;
-            line-height: 1.7;
-            margin-top: 10px;
-        }
-        .dict-example::before {
-            content: '💡 مثال: ';
-            font-weight: 800;
-            color: var(--gold);
-        }
+// ==========================================
+// نصب: ذخیره فایل‌ها در کش
+// ==========================================
+self.addEventListener('install', (event) => {
+    self.skipWaiting(); // فعال‌سازی فوری SW جدید
+    event.waitUntil(
+        caches.open(CACHE_NAME).then((cache) => {
+            console.log('📦 Caching files for version:', VERSION);
+            // از addAll استفاده نکن چون اگه یه فایل ۴۰۴ بده، همه fail می‌شن
+            return Promise.allSettled(
+                urlsToCache.map(url =>
+                    cache.add(url).catch(err => {
+                        console.warn('⚠️ Failed to cache:', url, err.message);
+                    })
+                )
+            );
+        })
+    );
+});
 
-        .empty-state {
-            text-align: center;
-            padding: 60px 20px;
-            color: var(--gray);
-            grid-column: 1 / -1;
-        }
-        .empty-state .icon { font-size: 60px; margin-bottom: 15px; opacity: 0.5; }
+// ==========================================
+// فعال‌سازی: پاک کردن کش‌های قدیمی
+// ==========================================
+self.addEventListener('activate', (event) => {
+    event.waitUntil(
+        caches.keys().then((names) => {
+            return Promise.all(
+                names
+                    .filter(n => n !== CACHE_NAME)
+                    .map(n => {
+                        console.log('🗑️ Deleting old cache:', n);
+                        return caches.delete(n);
+                    })
+            );
+        }).then(() => self.clients.claim())
+    );
+});
 
-        .footer {
-            text-align: center; padding: 30px 20px;
-            color: var(--gray); font-size: 12px;
-            border-top: 1px solid rgba(212, 175, 55, 0.1); margin-top: 40px;
-        }
+// ==========================================
+// Fetch: استراتژی Network First برای HTML، Cache First برای بقیه
+// ==========================================
+self.addEventListener('fetch', (event) => {
+    const url = event.request.url;
 
-        /* ===================================================== */
-        /* 🌙 تم روشن - !important برای غلبه بر رنگ‌های hardcode */
-        /* ===================================================== */
-        [data-theme="light"] body {
-            background-color: #f8fafc !important;
-            color: #0f172a !important;
-        }
-        [data-theme="light"] .sn-navbar {
-            background: rgba(248, 250, 252, 0.95) !important;
-            border-bottom-color: rgba(184, 134, 11, 0.2) !important;
-        }
-        [data-theme="light"] .sn-hamburger {
-            background: rgba(184, 134, 11, 0.08) !important;
-            border-color: rgba(184, 134, 11, 0.3) !important;
-        }
-        [data-theme="light"] .dict-btn {
-            color: #ffffff !important;
-        }
-        [data-theme="light"] .sn-sidebar {
-            background: linear-gradient(180deg, #f1f5f9, #f8fafc) !important;
-        }
-        [data-theme="light"] .sn-sidebar-header {
-            background: #f1f5f9 !important;
-            border-bottom-color: rgba(184, 134, 11, 0.2) !important;
-        }
-        [data-theme="light"] .sn-menu-item {
-            color: #334155 !important;
-        }
-        [data-theme="light"] .sn-menu-item:hover {
-            background: rgba(184, 134, 11, 0.1) !important;
-            color: #8b6508 !important;
-        }
-        [data-theme="light"] .sn-menu-item.active {
-            background: rgba(184, 134, 11, 0.15) !important;
-            color: #8b6508 !important;
-        }
-        [data-theme="light"] .sn-menu-divider {
-            background: rgba(184, 134, 11, 0.15) !important;
-        }
-        [data-theme="light"] .page-header h1 {
-            background: linear-gradient(135deg, #b8860b, #8b6508) !important;
-            -webkit-background-clip: text !important;
-            -webkit-text-fill-color: transparent !important;
-            background-clip: text !important;
-        }
-        [data-theme="light"] .page-header p {
-            color: #475569 !important;
-        }
-        [data-theme="light"] .search-box input {
-            background: rgba(248, 250, 252, 0.9) !important;
-            color: #0f172a !important;
-        }
-        [data-theme="light"] .search-box input:focus {
-            background: #ffffff !important;
-        }
-        [data-theme="light"] .stat-box {
-            background: rgba(248, 250, 252, 0.8) !important;
-            color: #475569 !important;
-        }
-        [data-theme="light"] .dict-cat-btn {
-            background: rgba(248, 250, 252, 0.8) !important;
-            color: #475569 !important;
-            border-color: rgba(0, 0, 0, 0.08) !important;
-        }
-        [data-theme="light"] .dict-cat-btn:hover {
-            color: #b8860b !important;
-            border-color: rgba(184, 134, 11, 0.5) !important;
-        }
-        [data-theme="light"] .dict-cat-btn.active {
-            background: linear-gradient(135deg, #d4af37, #a8862a) !important;
-            color: #ffffff !important;
-            border-color: #b8860b !important;
-        }
-        [data-theme="light"] .dict-card {
-            background: linear-gradient(135deg, #ffffff, #eef2f7) !important;
-            border-color: rgba(184, 134, 11, 0.2) !important;
-        }
-        [data-theme="light"] .dict-card:hover {
-            border-color: rgba(184, 134, 11, 0.5) !important;
-            box-shadow: 0 15px 40px rgba(184, 134, 11, 0.1) !important;
-        }
-        [data-theme="light"] .dict-term {
-            color: #8b6508 !important;
-        }
-        [data-theme="light"] .dict-def {
-            color: #334155 !important;
-        }
-        [data-theme="light"] .dict-example {
-            background: rgba(184, 134, 11, 0.1) !important;
-            color: #92400e !important;
-        }
-        [data-theme="light"] .empty-state {
-            color: #64748b !important;
-        }
-        [data-theme="light"] .footer {
-            color: #64748b !important;
-        }
+    // درخواست‌های Supabase رو کش نکن
+    if (url.includes('supabase.co')) return;
 
-        @media (max-width: 700px) {
-            .main-container { padding: 90px 15px 30px; }
-            .page-header h1 { font-size: 28px; }
-            .page-header p { font-size: 13px; }
-            .dict-grid { grid-template-columns: 1fr; }
-            .sn-sidebar { width: 280px; right: -300px; }
-            .sn-brand-text { display: none; }
-            .dict-btn { padding: 8px 10px; font-size: 12px; }
-            .dict-btn span:last-child { display: none; }
-            .stats { gap: 8px; }
-            .stat-box { padding: 8px 14px; font-size: 12px; }
-        }
-    </style>
-</head>
-<body>
-    <nav class="sn-navbar">
-        <div class="sn-navbar-container">
-            <button class="sn-hamburger" id="snHamburger" aria-label="منو">
-                <span></span><span></span><span></span>
-            </button>
-            <a href="index.html" class="sn-brand">
-                <img src="519.png" alt="شمعدون" class="sn-brand-logo" onerror="this.style.display='none'">
-                <span class="sn-brand-text">شمعدون</span>
-            </a>
-            <a href="dictionary.html" class="dict-btn" title="دانش‌نامه اقتصادی">
-                <span>🎓</span>
-                <span>دانش‌نامه</span>
-            </a>
-            <button class="sn-theme-toggle" id="snThemeBtn" aria-label="تغییر تم" style="width:42px;height:42px;border-radius:12px;background:rgba(212,175,55,0.08);border:1px solid rgba(212,175,55,0.25);color:var(--gold);font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-                <span id="snThemeIcon">🌙</span>
-            </button>
-            <div class="sn-user-area" id="snUserArea"></div>
-        </div>
-    </nav>
+    // درخواست‌های API خارجی رو کش نکن
+    if (url.includes('api.coingecko.com') ||
+        url.includes('api.brsapi.ir') ||
+        url.includes('tsetmc.com') ||
+        url.includes('avalai.ir') ||
+        url.includes('tradingview.com')) {
+        return;
+    }
 
-    <div class="sn-overlay" id="snOverlay"></div>
+    // فقط GET رو کش کن
+    if (event.request.method !== 'GET') return;
 
-    <aside class="sn-sidebar" id="snSidebar">
-        <div class="sn-sidebar-header">
-            <a href="index.html" class="sn-brand" style="justify-content:flex-start;">
-                <img src="519.png" alt="شمعدون" class="sn-brand-logo" onerror="this.style.display='none'">
-                <span class="sn-brand-text">شمعدون</span>
-            </a>
-            <button class="sn-close" id="snClose">✕</button>
-        </div>
-        <div class="sn-sidebar-content">
-            <div class="sn-menu-section">
-                <a href="index.html" class="sn-menu-item"><span class="sn-menu-icon">🏠</span><span class="sn-menu-label">صفحه اصلی</span></a>
-                <a href="home.html" class="sn-menu-item"><span class="sn-menu-icon">📊</span><span class="sn-menu-label">نمای بازار</span></a>
-                <a href="bourse.html" class="sn-menu-item"><span class="sn-menu-icon">📈</span><span class="sn-menu-label">بورس ایران</span></a>
-                <a href="news.html" class="sn-menu-item"><span class="sn-menu-icon">📰</span><span class="sn-menu-label">اخبار اقتصادی</span></a>
-                <a href="dictionary.html" class="sn-menu-item active"><span class="sn-menu-icon">🎓</span><span class="sn-menu-label">دانش‌نامه اقتصادی</span></a>
-                <a href="courses.html" class="sn-menu-item"><span class="sn-menu-icon">📚</span><span class="sn-menu-label">دوره‌های آموزشی</span></a>
-                <a href="personality-test.html" class="sn-menu-item"><span class="sn-menu-icon">🧠</span><span class="sn-menu-label">آزمون خودشناسی مالی</span></a>
-                <a href="assistant.html" class="sn-menu-item"><span class="sn-menu-icon">🤖</span><span class="sn-menu-label">دستیار هوشمند</span></a>
-            </div>
-            <div class="sn-menu-divider"></div>
-            <div class="sn-menu-section">
-                <a href="dashboard.html" class="sn-menu-item"><span class="sn-menu-icon">👤</span><span class="sn-menu-label">پنل کاربری</span></a>
-                <a href="admin.html" class="sn-menu-item" id="snAdminLink" style="display:none; color:#fca5a5;"><span class="sn-menu-icon">🎯</span><span class="sn-menu-label">پنل ادمین</span></a>
-                <a href="#" class="sn-menu-item sn-logout" id="snLogoutBtn" style="display:none;"><span class="sn-menu-icon">🚪</span><span class="sn-menu-label">خروج</span></a>
-            </div>
-        </div>
-    </aside>
+    // ===== استراتژی =====
+    const isHTML = event.request.headers.get('accept')?.includes('text/html');
+    const isSameOrigin = url.startsWith(self.location.origin);
 
-    <div class="main-container">
-        <div class="page-header">
-            <h1>🎓 دانش‌نامه اقتصادی</h1>
-            <p>راهنمای جامع مفاهیم بازارهای مالی — اصطلاحات را جستجو یا دسته‌بندی کن</p>
-        </div>
-
-        <div class="search-box">
-            <input type="text" id="searchInput" placeholder="جستجو در اصطلاحات... (مثلاً: تورم، شاخص، نهنگ)" oninput="handleSearch()">
-            <span class="search-icon">🔍</span>
-        </div>
-
-        <div class="stats">
-            <div class="stat-box">📚 <strong id="totalCount">۰</strong> اصطلاح</div>
-            <div class="stat-box">📂 <strong id="catCount">۸</strong> دسته‌بندی</div>
-            <div class="stat-box">🔎 نتیجه: <strong id="resultCount">۰</strong></div>
-        </div>
-
-        <div class="dict-categories" id="categoriesBar"></div>
-
-        <div class="dict-grid" id="dictGrid"></div>
-    </div>
-
-    <footer class="footer">
-        © ۱۴۰۵ آکادمی شمعدون | تمامی حقوق محفوظ است
-    </footer>
-
-    <script>
-        const ADMIN_EMAIL = 'beat.market.office@gmail.com';
-        const SUPABASE_URL = 'https://jcwwilatvstjrohvhtss.supabase.co';
-        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Impjd3dpbGF0dnN0anJvaHZodHNzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODk3MDY4NTYsImV4cCI6MjEwNTI4Mjg1Nn0.eUC89RJy6-60nNGrSeYeDADzLxz-kWTGy4DbNGVi6MM';
-
-        // ==========================================
-        // دانش‌نامه — ۸ دسته، ~۱۰۰ اصطلاح
-        // ==========================================
-        const CATEGORIES = {
-            economy:   { name: 'اقتصاد کلان',        icon: '🏦' },
-            bourse:    { name: 'بورس ایران',         icon: '📈' },
-            currency:  { name: 'ارز و طلا',          icon: '💵' },
-            crypto:    { name: 'کریپتوکارنسی',       icon: '🪙' },
-            forex:     { name: 'فارکس و جهانی',      icon: '🌍' },
-            federal:   { name: 'فدرال رزرو',         icon: '🇺🇸' },
-            technical: { name: 'تحلیل تکنیکال',      icon: '📊' },
-            fundamental: { name: 'تحلیل بنیادی',    icon: '🔬' }
-        };
-
-        const DICTIONARY = {
-            economy: [
-                { term: 'تورم', def: 'افزایش مداوم و عمومی سطح قیمت‌ها در اقتصاد که باعث کاهش قدرت خرید پول می‌شود.', example: 'تورم ۴۰٪ یعنی قیمت‌ها نسبت به سال قبل ۴۰٪ بیشتر شده.' },
-                { term: 'نقدینگی', def: 'مجموع پول در گردش و سپرده‌های بانکی که در اختیار مردم و بنگاه‌های اقتصادی است.', example: 'رشد نقدینگی ۳۰٪ یعنی حجم پول در اقتصاد ۳۰٪ زیاد شده.' },
-                { term: 'نرخ بهره', def: 'درصدی که بانک مرکزی برای وام دادن به بانک‌ها تعیین می‌کند و بر تمام اقتصاد اثر می‌گذارد.', example: 'افزایش نرخ بهره باعث کاهش تورم ولی کندی رشد اقتصادی می‌شود.' },
-                { term: 'تولید ناخالص داخلی (GDP)', def: 'ارزش کل کالاها و خدمات تولیدشده در یک کشور در یک دوره زمانی مشخص.', example: 'GDP ایران حدود ۴۰۰ میلیارد دلار است.' },
-                { term: 'سیاست پولی', def: 'اقدامات بانک مرکزی برای کنترل نقدینگی و تورم از طریق نرخ بهره و ذخایر بانکی.', example: 'فروش اوراق مشارکت برای جمع کردن نقدینگی.' },
-                { term: 'سیاست مالی', def: 'تصمیمات دولت در مورد مالیات و هزینه‌های عمومی برای تأثیر بر اقتصاد.', example: 'کاهش مالیات برای تحریک تولید.' },
-                { term: 'کسری بودجه', def: 'وقتی هزینه‌های دولت از درآمدهایش بیشتر شود.', example: 'کسری بودجه معمولاً با استقراض یا چاپ پول جبران می‌شود.' },
-                { term: 'رکود تورمی', def: 'وضعیتی که هم تورم بالا و هم رکود اقتصادی همزمان وجود دارد. بدترین حالت اقتصادی.', example: 'در دهه ۷۰ آمریکا این اتفاق افتاد.' },
-                { term: 'نرخ بیکاری', def: 'درصد جمعیت فعال که دنبال کار می‌گردند ولی شغل ندارند.', example: 'بیکاری ۱۰٪ یعنی از هر ۱۰ نفر، ۱ نفر بیکاره.' },
-                { term: 'رشد اقتصادی', def: 'افزایش تولید ناخالص داخلی در یک دوره. معمولاً به صورت درصد سالانه بیان می‌شود.', example: 'رشد ۵٪ یعنی اقتصاد ۵٪ بزرگتر شده.' },
-                { term: 'اقتصاد خرد', def: 'شاخه‌ای از اقتصاد که به رفتار مصرف‌کنندگان و شرکت‌ها می‌پردازد.', example: 'قیمت‌گذاری یک کالا در بازار موضوع اقتصاد خرد است.' },
-                { term: 'اقتصاد کلان', def: 'شاخه‌ای که اقتصاد را در سطح ملی و کلی بررسی می‌کند.', example: 'تورم، بیکاری، GDP موضوعات اقتصاد کلان هستند.' },
-                { term: 'یارانه', def: 'کمک دولتی به بخشی از اقتصاد برای کاهش قیمت یا حمایت از تولید.', example: 'یارانه بنزین باعث ارزان بودن بنزین می‌شود.' },
-                { term: 'سوخت یارانه‌ای', def: 'سوختی که با قیمت کمتر از قیمت جهانی عرضه می‌شود.', example: 'بنزین در ایران یارانه‌ای است.' },
-                { term: 'نرخ ارز مرجع', def: 'نرخ رسمی که بانک مرکزی اعلام می‌کند و مبنای معاملات رسمی است.', example: 'نرخ مرجع معمولاً با نرخ آزاد تفاوت دارد.' }
-            ],
-            bourse: [
-                { term: 'شاخص کل (TEDPIX)', def: 'معیاری برای سنجش عملکرد کلی بازار بورس. افزایش آن یعنی رشد کلی قیمت سهام.', example: 'شاخص کل امروز ۱۵۷ هزار واحد اصلاح شد.' },
-                { term: 'نماد', def: 'هر شرکت در بورس با یک نام کوتاه مشخص می‌شود.', example: 'نماد «فولاد» یعنی شرکت فولاد مبارکه.' },
-                { term: 'حق تقدم', def: 'حقی که به سهامداران فعلی داده می‌شود تا سهام جدید را با تخفیف بخرند.', example: 'شرکت افزایش سرمایه می‌دهد و به سهامداران حق تقدم می‌دهد.' },
-                { term: 'فرابورس', def: 'بازار خارج از بورس که شرایط پذیرش ساده‌تری دارد.', example: 'شرکت‌های کوچک‌تر معمولاً در فرابورس پذیرش می‌شوند.' },
-                { term: 'P/E', def: 'نسبت قیمت سهام به سود هر سهم. نشان‌دهنده گران یا ارزان بودن سهم.', example: 'P/E = ۵ یعنی سهم ۵ برابر سود سالانه‌اش قیمت دارد.' },
-                { term: 'EPS', def: 'سود هر سهم — کل سود شرکت تقسیم بر تعداد سهام.', example: 'EPS = ۱۰۰۰ تومان یعنی هر سهم ۱۰۰۰ تومان سود داده.' },
-                { term: 'ارزش بازار', def: 'قیمت هر سهم ضرب در تعداد کل سهام شرکت.', example: 'شرکتی با ۱۰ میلیون سهم ۱۰۰۰ تومانی، ارزش بازار ۱۰ میلیارد تومان دارد.' },
-                { term: 'حجم مبنا', def: 'حداقل تعداد سهامی که باید در روز معامله شود تا قیمت تغییر کند.', example: 'حجم مبنا جلوگیری می‌کند از تغییر قیمت با معاملات کوچک.' },
-                { term: 'صف خرید', def: 'وقتی تقاضا برای یک سهم بیشتر از عرضه است و خریداران در صف می‌مانند.', example: 'صف خرید نشانه تقاضای بالا و رشد احتمالی است.' },
-                { term: 'صف فروش', def: 'وقتی عرضه یک سهم بیشتر از تقاضاست و فروشندگان در صف می‌مانند.', example: 'صف فروش نشانه فشار فروش و ریزش احتمالی است.' },
-                { term: 'بازار پایه', def: 'بازاری که در آن سهام شرکت‌های نوپا و کوچک معامله می‌شود.', example: 'ریسک بازار پایه بالاتر است.' },
-                { term: 'توقف نماد', def: 'وقتی معاملات یک سهم به دلایل خاص متوقف می‌شود.', example: 'توقف نماد معمولاً برای انتشار اطلاعیه مهم است.' },
-                { term: 'مجمع عمومی', def: 'جلسه‌ای که سهامداران برای تصمیم‌گیری‌های مهم شرکت برگزار می‌کنند.', example: 'در مجمع درباره تقسیم سود تصمیم‌گیری می‌شود.' },
-                { term: 'تقسیم سود (DPS)', def: 'سودی که شرکت بین سهامداران تقسیم می‌کند.', example: 'DPS = ۲۰۰ تومان یعنی هر سهم ۲۰۰ تومان سود نقدی می‌گیرد.' },
-                { term: 'افزایش سرمایه', def: 'شرکت با انتشار سهام جدید، سرمایه‌اش را زیاد می‌کند.', example: 'افزایش سرمایه از محل سود انباشته یا آورده نقدی.' }
-            ],
-            currency: [
-                { term: 'انس طلا (XAUUSD)', def: 'قیمت جهانی یک اونس طلا به دلار آمریکا. مبنای قیمت‌گذاری طلا در ایران.', example: 'انس طلا ۲۶۵۰ دلار یعنی قیمت جهانی هر اونس این مقدار است.' },
-                { term: 'انس نقره (XAGUSD)', def: 'قیمت جهانی یک اونس نقره به دلار. بر قیمت نقره داخلی اثر مستقیم دارد.', example: 'نقره معمولاً نوسان بیشتری از طلا دارد.' },
-                { term: 'مس (Copper)', def: 'فلز اساسی صنعتی که قیمت جهانی آن بر بازار داخلی ایران اثر می‌گذارد.', example: 'قیمت مس در بورس کالای لندن (LME) تعیین می‌شود.' },
-                { term: 'حباب طلا', def: 'تفاوت بین قیمت بازار طلا و ارزش ذاتی آن. حباب مثبت یعنی گران‌تر از ارزش واقعی.', example: 'حباب سکه ۲۰٪ یعنی سکه ۲۰٪ گران‌تر از ارزش طلای داخلشه.' },
-                { term: 'ارزش ذاتی', def: 'قیمتی که با محاسبه قیمت جهانی و نرخ ارز به دست می‌آید، بدون حباب.', example: 'ارزش ذاتی سکه = انس طلا × نرخ دلار × وزن سکه.' },
-                { term: 'دلار آزاد', def: 'نرخ دلار در بازار آزاد (غیررسمی).', example: 'دلار آزاد معمولاً بالاتر از دلار نیمایی است.' },
-                { term: 'دلار نیمایی', def: 'نرخ دلار در سامانه نیما که برای صادرکنندگان و واردکنندگان رسمی است.', example: 'دلار نیمایی مبنای تخصیص ارز رسمی است.' },
-                { term: 'تتر (USDT)', def: 'ارز دیجیتال باثبات که ارزشش همیشه نزدیک یک دلار آمریکاست.', example: 'تتر ابزار اصلی انتقال دلار در بازار کریپتو ایران است.' },
-                { term: 'سکه امامی', def: 'سکه طلای بهار آزادی طرح جدید که توسط بانک مرکزی ضرب می‌شود.', example: 'سکه امامی طرح جدید، سکه بهار طرح قدیم.' },
-                { term: 'گرم طلای ۱۸ عیار', def: 'واحد رایج معاملات طلا در ایران که ۷۵۰ از ۱۰۰۰ آن طلای خالص است.', example: 'طلای ۱۸ عیار خالص‌تر از ۱۴ عیار است.' },
-                { term: 'مثقال طلا', def: 'واحد سنتی وزن طلا معادل ۴.۶۰۸۳ گرم.', example: 'قیمت مثقال طلا در بازار سنتی ایران رایج است.' },
-                { term: 'فارکس (Forex)', def: 'بازار جهانی معاملات ارزها که بزرگترین بازار مالی جهان است.', example: 'حجم روزانه فارکس بیش از ۷ تریلیون دلار است.' },
-                { term: 'پیپ (Pip)', def: 'کوچک‌ترین واحد تغییر قیمت در فارکس.', example: 'اگر EUR/USD از ۱.۱۰۰۰ به ۱.۱۰۰۵ برود، ۵ پیپ حرکت کرده.' },
-                { term: 'اهرم (Leverage)', def: 'استفاده از سرمایه قرضی برای بزرگ‌تر کردن معاملات.', example: 'اهرم ۱:۱۰۰ یعنی با ۱۰۰ دلار می‌تونی ۱۰۰۰۰ دلار معامله کنی.' },
-                { term: 'اسپرد (Spread)', def: 'تفاوت بین قیمت خرید (Ask) و قیمت فروش (Bid) که کارمزد کارگزاری است.', example: 'اسپرد کم یعنی کارمزد پایین‌تر.' }
-            ],
-            crypto: [
-                { term: 'بیت‌کوین (BTC)', def: 'اولین و بزرگترین ارز دیجیتال جهان با عرضه محدود ۲۱ میلیون واحد.', example: 'بیت‌کوین در سال ۲۰۰۹ توسط ساتوشی ناکاموتو ساخته شد.' },
-                { term: 'اتریوم (ETH)', def: 'دومین ارز دیجیتال بزرگ که از قراردادهای هوشمند پشتیبانی می‌کند.', example: 'اکثر پروژه‌های DeFi و NFT روی اتریوم اجرا می‌شوند.' },
-                { term: 'سولانا (SOL)', def: 'بلاکچین سریع با کارمزد پایین که برای اپلیکیشن‌های DeFi استفاده می‌شود.', example: 'سولانا رقیب اصلی اتریوم در سرعت تراکنش است.' },
-                { term: 'استیبل‌کوین', def: 'ارز دیجیتالی که ارزشش به یک دارایی (مثل دلار) گره خورده.', example: 'USDT و USDC پرکاربردترین استیبل‌کوین‌ها هستند.' },
-                { term: 'کیف پول سرد', def: 'کیف پول آفلاین که امنیت بالاتری دارد ولی برای تراکنش روزانه مناسب نیست.', example: 'Ledger و Trezor نمونه‌های کیف پول سرد هستند.' },
-                { term: 'کیف پول گرم', def: 'کیف پول متصل به اینترنت که راحت ولی امنیت کمتری دارد.', example: 'MetaMask یک کیف پول گرم محبوب است.' },
-                { term: 'نهنگ (Whale)', def: 'کاربری که مقدار زیادی ارز دیجیتال دارد و تراکنش‌هایش روی قیمت اثر می‌گذارد.', example: 'انتقال ۱۰۰۰ بیت‌کوین توسط نهنگ‌ها می‌تواند بازار را تکان دهد.' },
-                { term: 'DeFi', def: 'امور مالی غیرمتمرکز — سرویس‌های مالی بدون واسطه که روی بلاکچین اجرا می‌شوند.', example: 'وام بدون بانک، مبادله بدون صرافی، نمونه‌های DeFi هستند.' },
-                { term: 'هش ریت (Hash Rate)', def: 'قدرت پردازشی شبکه برای استخراج ارز دیجیتال.', example: 'هش ریت بالاتر یعنی امنیت بیشتر شبکه.' },
-                { term: 'هالوینگ (Halving)', def: 'رویدادی که هر ۴ سال یکبار پاداش استخراج بیت‌کوین را نصف می‌کند.', example: 'آخرین هالوینگ بیت‌کوین در سال ۲۰۲۴ بود.' },
-                { term: 'Inflow/Outflow صرافی', def: 'ورود/خروج ارز دیجیتال به صرافی. inflow بالا = سیگنال فروش، outflow بالا = سیگنال انباشت.', example: 'خروج ۱۰ هزار بیت‌کوین از صرافی نشانه انباشت است.' },
-                { term: 'گس فی (Gas Fee)', def: 'کارمزد تراکنش در شبکه اتریوم و مشابه‌ها.', example: 'گس فی بالا یعنی شبکه شلوغ است.' },
-                { term: 'NFT', def: 'توکن غیرقابل تعویض که مالکیت یک دارایی دیجیتال منحصربه‌فرد را نشان می‌دهد.', example: 'NFT یک اثر هنری دیجیتال می‌تواند میلیون‌ها دلار بفروشد.' },
-                { term: 'ICO', def: 'عرضه اولیه سکه — روشی برای جمع‌آوری سرمایه از طریق فروش توکن جدید.', example: 'بسیاری از ICOها کلاهبرداری از آب درآمدند.' },
-                { term: 'اپن‌سورس (Open Source)', def: 'کدی که عمومی است و همه می‌توانند آن را ببینند و بررسی کنند.', example: 'بیت‌کوین اپن‌سورس است.' }
-            ],
-            forex: [
-                { term: 'فارکس (Forex)', def: 'بازار جهانی معاملات ارزها که بزرگترین بازار مالی جهان است.', example: 'فارکس ۲۴ ساعته باز است و ۵ روز هفته کار می‌کند.' },
-                { term: 'جفت ارز (Currency Pair)', def: 'دو ارز که در برابر هم معامله می‌شوند.', example: 'EUR/USD یعنی یورو در برابر دلار.' },
-                { term: 'جفت ارز اصلی (Major)', def: 'جفت‌های ارزی که دلار آمریکا در یک طرفشان است.', example: 'EUR/USD, GBP/USD, USD/JPY جفت‌های اصلی هستند.' },
-                { term: 'جفت ارز ضربدری (Cross)', def: 'جفت‌های ارزی که دلار در آن‌ها نیست.', example: 'EUR/GBP یک جفت ضربدری است.' },
-                { term: 'پیپ (Pip)', def: 'کوچک‌ترین واحد تغییر قیمت در فارکس.', example: 'حرکت از ۱.۱۰۰۰ به ۱.۱۰۰۵ = ۵ پیپ.' },
-                { term: 'اهرم (Leverage)', def: 'استفاده از سرمایه قرضی برای بزرگ‌تر کردن معاملات.', example: 'اهرم ۱:۱۰۰ یعنی با ۱۰۰ دلار، ۱۰۰۰۰ دلار معامله می‌کنی.' },
-                { term: 'مارجین (Margin)', def: 'سرمایه‌ای که برای باز کردن معامله اهرمی نیاز است.', example: 'مارجین ۱۰۰ دلار با اهرم ۱:۱۰۰ = پوزیشن ۱۰۰۰۰ دلاری.' },
-                { term: 'مارجین کال (Margin Call)', def: 'هشدار کارگزاری وقتی سرمایه از حداقل کمتر شود.', example: 'در مارجین کال باید پول اضافه کنی یا پوزیشن ببندی.' },
-                { term: 'استاپ لاس (Stop Loss)', def: 'سفارش خودکار برای بستن معامله با زیان محدود.', example: 'استاپ لاس ۲٪ یعنی حداکثر ۲٪ ضرر می‌کنی.' },
-                { term: 'تیک پرافیت (Take Profit)', def: 'سفارش خودکار برای بستن معامله با سود مشخص.', example: 'تیک پرافیت ۵٪ یعنی با ۵٪ سود، معامله بسته می‌شود.' },
-                { term: 'اسپرد (Spread)', def: 'تفاوت بین قیمت خرید و فروش که کارمزد کارگزاری است.', example: 'اسپرد کم = کارمزد پایین.' },
-                { term: 'سشن معاملاتی', def: 'بازه‌ای که یک بازار مالی در آن فعال است.', example: 'سشن توکیو، لندن، نیویورک.' }
-            ],
-            federal: [
-                { term: 'فدرال رزرو (Fed)', def: 'بانک مرکزی آمریکا که سیاست‌های پولی جهان را تحت تأثیر قرار می‌دهد.', example: 'تصمیمات فدرال رزرو روی دلار، طلا و کریپتو اثر مستقیم دارد.' },
-                { term: 'نرخ بهره فدرال', def: 'نرخ بهره کلیدی که فدرال رزرو تعیین می‌کند.', example: 'افزایش نرخ بهره = تقویت دلار، کاهش طلا و کریپتو.' },
-                { term: 'FOMC', def: 'کمیته بازار آزاد فدرال رزرو که درباره نرخ بهره تصمیم می‌گیرد.', example: 'جلسات FOMC هر ۶ هفته یکبار برگزار می‌شود.' },
-                { term: 'جرمی پاول (Jerome Powell)', def: 'رئیس فعلی فدرال رزرو آمریکا.', example: 'سخنرانی پاول می‌تواند بازارها را تکان دهد.' },
-                { term: 'تاپرینگ (Tapering)', def: 'کاهش تدریجی خرید اوراق قرضه توسط فدرال رزرو.', example: 'تاپرینگ نشانه شروع سیاست انقباضی است.' },
-                { term: 'تسهیل کمی (QE)', def: 'خرید اوراق قرضه توسط فدرال رزرو برای تزریق پول به اقتصاد.', example: 'QE باعث افزایش نقدینگی و تورم می‌شود.' },
-                { term: 'سیاست انقباضی', def: 'سیاستی که هدفش کاهش نقدینگی و کنترل تورم است.', example: 'افزایش نرخ بهره نمونه سیاست انقباضی است.' },
-                { term: 'سیاست انبساطی', def: 'سیاستی که هدفش تحریک رشد اقتصادی است.', example: 'کاهش نرخ بهره و QE نمونه سیاست انبساطی هستند.' },
-                { term: 'دات پلات (Dot Plot)', def: 'نموداری که پیش‌بینی اعضای فدرال رزرو از نرخ بهره آینده را نشان می‌دهد.', example: 'دات پلات به بازار می‌گوید فدرال رزرو چه برنامه‌ای دارد.' },
-                { term: 'بازار اوراق قرضه آمریکا', def: 'بزرگترین بازار اوراق قرضه جهان که بازدهی آن بر همه بازارها اثر می‌گذارد.', example: 'بازدهی اوراق ۱۰ ساله آمریکا مهم‌ترین شاخص جهانی است.' }
-            ],
-            technical: [
-                { term: 'پرایس اکشن', def: 'روش تحلیل بر اساس حرکات قیمت و الگوهای کندلی، بدون استفاده از اندیکاتور.', example: 'تحلیل پرایس اکشن روی خود قیمت تمرکز می‌کند نه اندیکاتور.' },
-                { term: 'حمایت', def: 'سطحی که قیمت به آن می‌رسد و احتمال برگشت به بالا وجود دارد.', example: 'قیمت دلار روی حمایت ۶۰ هزار تومانی برگشت.' },
-                { term: 'مقاومت', def: 'سطحی که قیمت به آن می‌رسد و احتمال برگشت به پایین وجود دارد.', example: 'طلا روی مقاومت ۲۷۰۰ دلاری گیر کرد.' },
-                { term: 'خط روند', def: 'خطی که کف‌ها یا سقف‌های قیمت را به هم وصل می‌کند.', example: 'شکست خط روند نزولی نشانه شروع روند صعودی است.' },
-                { term: 'کندل استیک', def: 'نمایش گرافیکی قیمت که شامل باز، بسته، بالا و پایین است.', example: 'کندل دوجی نشانه تردید بازار است.' },
-                { term: 'RSI', def: 'اندیکاتوری که قدرت خرید و فروش را بین ۰ تا ۱۰۰ نشان می‌دهد.', example: 'RSI بالای ۷۰ = اشباع خرید، زیر ۳۰ = اشباع فروش.' },
-                { term: 'MACD', def: 'اندیکاتوری برای تشخیص روند و نقاط ورود و خروج.', example: 'تقاطع خطوط MACD نشانه تغییر روند است.' },
-                { term: 'فیبوناچی', def: 'ابزاری برای پیدا کردن سطوح برگشت قیمت بر اساس نسبت‌های ریاضی.', example: 'سطوح فیبوناچی ۳۸.۲٪ و ۶۱.۸٪ مهم‌ترین سطوح هستند.' },
-                { term: 'میانگین متحرک (MA)', def: 'میانگین قیمت در یک بازه زمانی که روند را نرم می‌کند.', example: 'MA ۲۰۰ روزه روند بلندمدت را نشان می‌دهد.' },
-                { term: 'واگرایی', def: 'وقتی قیمت و اندیکاتور در جهت مخالف حرکت کنند.', example: 'واگرایی منفی RSI نشانه ضعف روند صعودی است.' },
-                { term: 'الگوی سر و شانه', def: 'الگوی برگشتی معروف که نشانه پایان روند صعودی است.', example: 'سر و شانه در سقف بازار شکل می‌گیرد.' },
-                { term: 'الگوی کف دوقلو', def: 'الگوی برگشتی که نشانه پایان روند نزولی است.', example: 'کف دوقلو در پایان روند نزولی شکل می‌گیرد.' }
-            ],
-            fundamental: [
-                { term: 'تحلیل بنیادی', def: 'روش تحلیل که با بررسی وضعیت مالی و اقتصادی یک دارایی، ارزش ذاتی آن را می‌سنجد.', example: 'تحلیل بنیادی سهام بر اساس صورت‌های مالی شرکت.' },
-                { term: 'صورت سود و زیان', def: 'گزارشی که درآمدها و هزینه‌های شرکت را در یک دوره نشان می‌دهد.', example: 'سود خالص شرکت از صورت سود و زیان مشخص می‌شود.' },
-                { term: 'ترازنامه', def: 'گزارشی که دارایی‌ها، بدهی‌ها و حقوق صاحبان سهام را نشان می‌دهد.', example: 'ترازنامه وضعیت مالی شرکت در یک لحظه خاص است.' },
-                { term: 'جریان نقدی', def: 'حرکت پول ورودی و خروجی از یک شرکت یا پروژه.', example: 'جریان نقدی مثبت نشانه سلامت مالی شرکت است.' },
-                { term: 'ROE', def: 'بازده حقوق صاحبان سهام — سود خالص تقسیم بر حقوق صاحبان سهام.', example: 'ROE بالا یعنی شرکت از سرمایه سهامداران خوب استفاده می‌کند.' },
-                { term: 'ROA', def: 'بازده دارایی‌ها — سود خالص تقسیم بر کل دارایی‌ها.', example: 'ROA نشان می‌دهد شرکت چقدر کارآمد دارایی‌ها را استفاده می‌کند.' },
-                { term: 'حاشیه سود', def: 'درصد سودی که از هر فروش باقی می‌ماند.', example: 'حاشیه سود ۲۰٪ یعنی از هر ۱۰۰ تومان فروش، ۲۰ تومان سود.' },
-                { term: 'ارزش ذاتی', def: 'ارزش واقعی یک دارایی بر اساس تحلیل بنیادی.', example: 'اگه قیمت بازار زیر ارزش ذاتی باشه، سهم ارزنده است.' },
-                { term: 'نسبت قیمت به فروش (P/S)', def: 'ارزش بازار تقسیم بر فروش سالانه شرکت.', example: 'P/S پایین‌تر = سهم ارزان‌تر.' },
-                { term: 'نسبت بدهی به دارایی', def: 'درصد بدهی شرکت نسبت به کل دارایی‌هایش.', example: 'نسبت بالای بدهی = ریسک بالاتر.' }
-            ]
-        };
-
-        let currentCategory = 'all';
-        let searchTerm = '';
-
-        // ===== Navbar =====
-        function setupNavbar() {
-            const hamburger = document.getElementById('snHamburger');
-            const sidebar = document.getElementById('snSidebar');
-            const overlay = document.getElementById('snOverlay');
-            const closeBtn = document.getElementById('snClose');
-            hamburger.addEventListener('click', () => { sidebar.classList.add('show'); overlay.classList.add('show'); });
-            closeBtn.addEventListener('click', () => { sidebar.classList.remove('show'); overlay.classList.remove('show'); });
-            overlay.addEventListener('click', () => { sidebar.classList.remove('show'); overlay.classList.remove('show'); });
-            document.addEventListener('keydown', (e) => {
-                if (e.key === 'Escape') { sidebar.classList.remove('show'); overlay.classList.remove('show'); }
-            });
-        }
-
-        async function checkUser() {
-            try {
-                const client = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-                const { data } = await client.auth.getSession();
-                const userArea = document.getElementById('snUserArea');
-                userArea.innerHTML = '';
-                if (data?.session?.user) {
-                    const user = data.session.user;
-                    const fullName = user.user_metadata?.full_name || user.email || 'کاربر';
-                    const firstLetter = fullName.charAt(0).toUpperCase();
-                    userArea.innerHTML = `<a href="dashboard.html" class="sn-user-avatar" title="${escapeHtml(fullName)}">${firstLetter}</a>`;
-                    if (user.email === ADMIN_EMAIL) {
-                        const adminLink = document.getElementById('snAdminLink');
-                        if (adminLink) adminLink.style.display = 'flex';
-                    }
-                    const logoutBtn = document.getElementById('snLogoutBtn');
-                    if (logoutBtn) {
-                        logoutBtn.style.display = 'flex';
-                        logoutBtn.addEventListener('click', async (e) => {
-                            e.preventDefault();
-                            if (confirm('می‌خوای خارج بشی؟')) {
-                                await client.auth.signOut();
-                                window.location.href = 'login.html';
-                            }
-                        });
-                    }
-                }
-            } catch (e) { console.log('Navbar error:', e); }
-        }
-
-        function escapeHtml(text) {
-            if (!text) return '';
-            const div = document.createElement('div');
-            div.textContent = text;
-            return div.innerHTML;
-        }
-
-        // ===== Render Categories =====
-        function renderCategories() {
-            const bar = document.getElementById('categoriesBar');
-            const total = Object.values(DICTIONARY).reduce((sum, arr) => sum + arr.length, 0);
-
-            let html = `<button class="dict-cat-btn ${currentCategory === 'all' ? 'active' : ''}" onclick="selectCategory('all', this)">
-                <span>🌐 همه</span>
-                <span class="count">${toFa(total)}</span>
-            </button>`;
-
-            Object.keys(CATEGORIES).forEach(key => {
-                const cat = CATEGORIES[key];
-                const count = DICTIONARY[key]?.length || 0;
-                html += `<button class="dict-cat-btn ${currentCategory === key ? 'active' : ''}" onclick="selectCategory('${key}', this)">
-                    <span>${cat.icon} ${cat.name}</span>
-                    <span class="count">${toFa(count)}</span>
-                </button>`;
-            });
-
-            bar.innerHTML = html;
-        }
-
-        function toFa(num) {
-            return num.toString().replace(/\d/g, d => '۰۱۲۳۴۵۶۷۸۹'[d]);
-        }
-
-        // ===== Render Dictionary =====
-        function renderDictionary() {
-            const grid = document.getElementById('dictGrid');
-            let items = [];
-
-            if (currentCategory === 'all') {
-                Object.keys(DICTIONARY).forEach(key => {
-                    DICTIONARY[key].forEach(item => {
-                        items.push({ ...item, catKey: key, catName: CATEGORIES[key].name, catIcon: CATEGORIES[key].icon });
+    if (isHTML && isSameOrigin) {
+        // HTML: Network First (همیشه نسخه تازه رو بگیر)
+        event.respondWith(
+            fetch(event.request)
+                .then((response) => {
+                    // نسخه جدید رو توی کش هم بروز کن
+                    const responseClone = response.clone();
+                    caches.open(CACHE_NAME).then((cache) => {
+                        cache.put(event.request, responseClone);
                     });
+                    return response;
+                })
+                .catch(() => {
+                    // اگه آفلاین بود، از کش بده
+                    return caches.match(event.request);
+                })
+        );
+    } else {
+        // بقیه فایل‌ها: Cache First
+        event.respondWith(
+            caches.match(event.request).then((cached) => {
+                if (cached) return cached;
+
+                return fetch(event.request).then((response) => {
+                    // فقط پاسخ‌های موفق رو کش کن
+                    if (!response || response.status !== 200) return response;
+
+                    const responseClone = response.clone();
+                    caches.open(CACHE_NAME).then((cache) => {
+                        cache.put(event.request, responseClone);
+                    });
+                    return response;
                 });
-            } else {
-                (DICTIONARY[currentCategory] || []).forEach(item => {
-                    items.push({ ...item, catKey: currentCategory, catName: CATEGORIES[currentCategory].name, catIcon: CATEGORIES[currentCategory].icon });
-                });
-            }
+            })
+        );
+    }
+});
 
-            if (searchTerm) {
-                const term = searchTerm.toLowerCase();
-                items = items.filter(it =>
-                    it.term.toLowerCase().includes(term) ||
-                    it.def.toLowerCase().includes(term)
-                );
-            }
+// ==========================================
+// پیام از سمت کلاینت (مثلاً برای پاک کردن کش)
+// ==========================================
+self.addEventListener('message', (event) => {
+    if (event.data && event.data.type === 'SKIP_WAITING') {
+        self.skipWaiting();
+    }
 
-            document.getElementById('resultCount').textContent = toFa(items.length);
-
-            if (items.length === 0) {
-                grid.innerHTML = `
-                    <div class="empty-state">
-                        <div class="icon">🔍</div>
-                        <p>هیچ اصطلاحی با «${escapeHtml(searchTerm)}» پیدا نشد</p>
-                        <p style="font-size:12px;margin-top:10px;color:#64748b;">جستجوی دیگری امتحان کن</p>
-                    </div>
-                `;
-                return;
-            }
-
-            grid.innerHTML = items.map((item, idx) => `
-                <div class="dict-card" style="animation-delay: ${Math.min(idx * 0.02, 0.5)}s">
-                    <div class="dict-term">
-                        <span class="cat-icon">${item.catIcon}</span>
-                        <span>${escapeHtml(item.term)}</span>
-                    </div>
-                    <div class="dict-def">${escapeHtml(item.def)}</div>
-                    ${item.example ? `<div class="dict-example">${escapeHtml(item.example)}</div>` : ''}
-                </div>
-            `).join('');
-        }
-
-        function selectCategory(cat, btn) {
-            currentCategory = cat;
-            document.querySelectorAll('.dict-cat-btn').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            renderDictionary();
-        }
-
-        function handleSearch() {
-            searchTerm = document.getElementById('searchInput').value.trim();
-            renderDictionary();
-        }
-
-        // ==========================================
-        // 🌙 تم شب/روز
-        // ==========================================
-        function applyTheme() {
-            const saved = localStorage.getItem('shamdun-theme') || 'dark';
-            document.documentElement.setAttribute('data-theme', saved);
-            const icon = document.getElementById('snThemeIcon');
-            if (icon) icon.textContent = saved === 'dark' ? '🌙' : '☀️';
-        }
-
-        function initThemeButton() {
-            const btn = document.getElementById('snThemeBtn');
-            if (!btn || btn.hasAttribute('data-bound')) return true;
-
-            btn.setAttribute('data-bound', 'true');
-            btn.addEventListener('click', function(e) {
-                e.preventDefault();
-                e.stopPropagation();
-                const current = document.documentElement.getAttribute('data-theme') || 'dark';
-                const newTheme = current === 'dark' ? 'light' : 'dark';
-                document.documentElement.setAttribute('data-theme', newTheme);
-                localStorage.setItem('shamdun-theme', newTheme);
-                const icon = document.getElementById('snThemeIcon');
-                if (icon) icon.textContent = newTheme === 'dark' ? '🌙' : '☀️';
-            });
-            return true;
-        }
-
-        applyTheme();
-        setTimeout(initThemeButton, 100);
-        setTimeout(initThemeButton, 500);
-
-        // ===== Init =====
-        document.addEventListener('DOMContentLoaded', () => {
-            setupNavbar();
-            checkUser();
-            initThemeButton();
-
-            const total = Object.values(DICTIONARY).reduce((sum, arr) => sum + arr.length, 0);
-            document.getElementById('totalCount').textContent = toFa(total);
-            document.getElementById('catCount').textContent = toFa(Object.keys(CATEGORIES).length);
-
-            renderCategories();
-            renderDictionary();
+    if (event.data && event.data.type === 'CLEAR_CACHE') {
+        caches.keys().then(names => {
+            names.forEach(name => caches.delete(name));
         });
-    </script>
-</body>
-</html>
+    }
+});
