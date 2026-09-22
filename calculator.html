@@ -13,6 +13,8 @@
     <script src="https://cdn.jsdelivr.net/npm/html2pdf.js@0.10.1/dist/html2pdf.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/exceljs@4.4.0/dist/exceljs.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/file-saver@2.0.5/dist/FileSaver.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
     <style>
         :root {
             --bg-primary: #0a0a0f;
@@ -3560,8 +3562,6 @@ ${d.assets.map(a => `  • ${a.label}: ${toFa(a.percent)}٪ (${formatNum(d.total
         btn.disabled = true;
         btn.textContent = '⏳ در حال ساخت...';
 
-        const container = document.getElementById('pdfReportContainer');
-
         try {
             const report = buildReportData(type);
 
@@ -3583,13 +3583,11 @@ ${d.assets.map(a => `  • ${a.label}: ${toFa(a.percent)}٪ (${formatNum(d.total
                     `;
                 }
             });
-            container.innerHTML = `
-                <div style="background:linear-gradient(135deg,#d4af37,#a8862a); color:white; padding:20px; border-radius:16px; margin-bottom:20px; display:flex; align-items:center; gap:16px;">
-                    <img src="${LOGO_URL}" alt="لوگو" crossorigin="anonymous" style="width:70px; height:70px; border-radius:50%; border:3px solid white; background:white; object-fit:contain;">
-                    <div style="flex:1;">
-                        <div style="font-size:22px; font-weight:900; margin-bottom:4px;">🎯 آکادمی شمعدون</div>
-                        <div style="font-size:13px; opacity:0.9;">گزارش ماشین‌حساب مالی</div>
-                    </div>
+
+            const htmlContent = `
+                <div style="background:linear-gradient(135deg,#d4af37,#a8862a); color:white; padding:20px; border-radius:16px; margin-bottom:20px; text-align:center;">
+                    <div style="font-size:22px; font-weight:900; margin-bottom:4px;">🎯 آکادمی شمعدون</div>
+                    <div style="font-size:13px; opacity:0.9;">گزارش ماشین‌حساب مالی</div>
                 </div>
 
                 <div style="background:#f9fafb; padding:16px; border-radius:12px; margin-bottom:20px; border-right:4px solid #d4af37;">
@@ -3603,50 +3601,88 @@ ${d.assets.map(a => `  • ${a.label}: ${toFa(a.percent)}٪ (${formatNum(d.total
                 </div>
 
                 <div style="background:#fffbeb; border:1px solid #fcd34d; padding:12px; border-radius:10px; font-size:11px; color:#92400e; line-height:1.7; text-align:center;">
-                    ⚠️ این گزارش صرفاً آموزشی است و توصیه سرمایه‌گذاری نیست.<br>
+                    ⚠️ این گزارش صرفاً آموزشی است.<br>
                     🌐 shamdun.github.io/My-First-Project
                 </div>
             `;
 
-            // ✅ ظرف رو آشکار کن
-            container.classList.add('capturing');
-            // ✅ صبر کن تا لوگو لود بشه
-            await new Promise(resolve => setTimeout(resolve, 500));
+            // ✅ ظرف موقت که دقیقاً توی body هست و مخفی نیست
+            const tempContainer = document.createElement('div');
+            tempContainer.id = 'tempPdfContainer';
+            tempContainer.style.cssText = `
+                position: fixed;
+                left: 0;
+                top: 0;
+                width: 800px;
+                background: #ffffff;
+                color: #1a1a24;
+                font-family: 'Vazirmatn', Tahoma, sans-serif;
+                padding: 40px;
+                direction: rtl;
+                z-index: 999999;
+                box-sizing: border-box;
+            `;
+            tempContainer.innerHTML = htmlContent;
 
-            const opt = {
-                margin: [10, 10, 10, 10],
-                filename: `shamdun-${type}-${Date.now()}.pdf`,
-                image: { type: 'jpeg', quality: 0.98 },
-                html2canvas: {
-                    scale: 2,
-                    useCORS: true,
-                    allowTaint: false,
-                    backgroundColor: '#ffffff',
-                    logging: false,
-                    windowWidth: 800
-                },
-                jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
-            };
+            // ✅ موقتاً به body اضافه کن
+            document.body.appendChild(tempContainer);
 
-            await html2pdf().set(opt).from(container).save();
+            // ✅ صبر کن
+            await new Promise(resolve => setTimeout(resolve, 300));
 
-            // ✅ مخفی کن
-            container.classList.remove('capturing');
-            container.innerHTML = '';
+            // ✅ دسترسی مستقیم به html2canvas و jsPDF
+            const canvas = await html2canvas(tempContainer, {
+                scale: 2,
+                useCORS: true,
+                backgroundColor: '#ffffff',
+                logging: false,
+                width: 800,
+                windowWidth: 800
+            });
+
+            const imgData = canvas.toDataURL('image/png');
+            const { jsPDF } = window.jspdf;
+            const pdf = new jsPDF({
+                unit: 'mm',
+                format: 'a4',
+                orientation: 'portrait'
+            });
+
+            const pdfWidth = pdf.internal.pageSize.getWidth();
+            const pdfHeight = pdf.internal.pageSize.getHeight();
+            const imgWidth = pdfWidth - 20;
+            const imgHeight = (canvas.height * imgWidth) / canvas.width;
+
+            let heightLeft = imgHeight;
+            let position = 10;
+
+            pdf.addImage(imgData, 'PNG', 10, position, imgWidth, imgHeight);
+            heightLeft -= (pdfHeight - 20);
+
+            while (heightLeft > 0) {
+                position = heightLeft - imgHeight + 10;
+                pdf.addPage();
+                pdf.addImage(imgData, 'PNG', 10, position, imgWidth, imgHeight);
+                heightLeft -= (pdfHeight - 20);
+            }
+
+            pdf.save(`shamdun-${type}-${Date.now()}.pdf`);
+
+            // ✅ حذف کن
+            document.body.removeChild(tempContainer);
 
             btn.disabled = false;
             btn.textContent = '📄 گزارش PDF';
 
         } catch (err) {
             console.error('PDF error:', err);
-            container.classList.remove('capturing');
-            container.innerHTML = '';
+            const tmp = document.getElementById('tempPdfContainer');
+            if (tmp) document.body.removeChild(tmp);
             alert('خطا در ساخت PDF: ' + err.message);
             btn.disabled = false;
             btn.textContent = '📄 گزارش PDF';
         }
     }
-
     // ==========================================
     // 📊 گزارش Excel (NEW)
     // ==========================================
