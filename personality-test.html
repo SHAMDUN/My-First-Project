@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="fa" dir="rtl">
+<html lang="fa" dir="rtl" data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -21,11 +21,27 @@
             --white: #f8fafc;
             --gray: #94a3b8;
         }
+
+        /* ===== تم روز ===== */
+        [data-theme="light"] {
+            --bg-primary: #f8fafc;
+            --bg-secondary: #eef2f7;
+            --bg-card: #ffffff;
+            --gold: #b8860b;
+            --gold-light: #d4af37;
+            --gold-dark: #8b6508;
+            --green: #059669;
+            --red: #dc2626;
+            --blue: #2563eb;
+            --white: #0f172a;
+            --gray: #64748b;
+        }
+
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: 'Vazirmatn', Tahoma, sans-serif;
             background-color: var(--bg-primary);
-            background-image: 
+            background-image:
                 radial-gradient(circle at 0% 0%, rgba(212, 175, 55, 0.08) 0%, transparent 40%),
                 radial-gradient(circle at 100% 100%, rgba(59, 130, 246, 0.06) 0%, transparent 40%),
                 linear-gradient(rgba(255, 255, 255, 0.015) 1px, transparent 1px),
@@ -36,7 +52,17 @@
             min-height: 100vh;
             direction: rtl;
             overflow-x: hidden;
+            transition: background-color 0.3s, color 0.3s;
         }
+
+        [data-theme="light"] body {
+            background-image:
+                radial-gradient(circle at 0% 0%, rgba(184, 134, 11, 0.06) 0%, transparent 40%),
+                radial-gradient(circle at 100% 100%, rgba(37, 99, 235, 0.05) 0%, transparent 40%),
+                linear-gradient(rgba(0, 0, 0, 0.025) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 0, 0, 0.025) 1px, transparent 1px);
+        }
+
         @keyframes fadeInUp {
             from { opacity: 0; transform: translateY(30px); }
             to { opacity: 1; transform: translateY(0); }
@@ -346,6 +372,97 @@
             font-size: 12px;
             border-top: 1px solid rgba(212, 175, 55, 0.1);
             margin-top: 40px;
+        }
+
+        /* ===================================================== */
+        /* 🌙 تم روشن - !important برای غلبه بر رنگ‌های hardcode */
+        /* ===================================================== */
+        [data-theme="light"] body {
+            background-color: #f8fafc !important;
+            color: #0f172a !important;
+        }
+        [data-theme="light"] .page-header h1 {
+            background: linear-gradient(135deg, #b8860b, #8b6508) !important;
+            -webkit-background-clip: text !important;
+            -webkit-text-fill-color: transparent !important;
+            background-clip: text !important;
+        }
+        [data-theme="light"] .page-header p {
+            color: #475569 !important;
+        }
+        [data-theme="light"] .card {
+            background: linear-gradient(135deg, #ffffff, #eef2f7) !important;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08) !important;
+        }
+        [data-theme="light"] .progress-bar {
+            background: rgba(0, 0, 0, 0.08) !important;
+        }
+        [data-theme="light"] .progress-info {
+            color: #64748b !important;
+        }
+        [data-theme="light"] .question-text {
+            color: #0f172a !important;
+        }
+        [data-theme="light"] .question-hint {
+            color: #64748b !important;
+        }
+        [data-theme="light"] .option {
+            background: rgba(241, 245, 249, 0.8) !important;
+            color: #334155 !important;
+        }
+        [data-theme="light"] .option:hover {
+            background: rgba(241, 245, 249, 1) !important;
+            border-color: rgba(184, 134, 11, 0.4) !important;
+        }
+        [data-theme="light"] .option.selected {
+            background: rgba(184, 134, 11, 0.15) !important;
+            border-color: #b8860b !important;
+            color: #0f172a !important;
+        }
+        [data-theme="light"] .option .checkbox {
+            border-color: #94a3b8 !important;
+        }
+        [data-theme="light"] .btn-secondary {
+            background: rgba(241, 245, 249, 0.9) !important;
+            color: #0f172a !important;
+            border-color: rgba(0, 0, 0, 0.1) !important;
+        }
+        [data-theme="light"] .btn-secondary:hover {
+            background: rgba(241, 245, 249, 1) !important;
+        }
+        [data-theme="light"] .result-title {
+            color: #b8860b !important;
+        }
+        [data-theme="light"] .result-subtitle {
+            color: #334155 !important;
+        }
+        [data-theme="light"] .result-description {
+            background: rgba(241, 245, 249, 0.8) !important;
+            color: #1e293b !important;
+        }
+        [data-theme="light"] .portfolio-section {
+            background: rgba(241, 245, 249, 0.8) !important;
+        }
+        [data-theme="light"] .portfolio-title {
+            color: #0f172a !important;
+        }
+        [data-theme="light"] .portfolio-item {
+            border-bottom-color: rgba(0, 0, 0, 0.08) !important;
+        }
+        [data-theme="light"] .portfolio-label {
+            color: #334155 !important;
+        }
+        [data-theme="light"] .portfolio-detail {
+            color: #64748b !important;
+        }
+        [data-theme="light"] .portfolio-bar {
+            background: rgba(0, 0, 0, 0.08) !important;
+        }
+        [data-theme="light"] .loading {
+            color: #64748b !important;
+        }
+        [data-theme="light"] .footer {
+            color: #64748b !important;
         }
 
         @media (max-width: 500px) {
@@ -924,6 +1041,55 @@
             const persianDigits = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
             return String(num).replace(/\d/g, d => persianDigits[d]);
         }
+
+        // ==========================================
+        // 🌙 تم شب/روز
+        // ==========================================
+        function applyTheme() {
+            const saved = localStorage.getItem('shamdun-theme') || 'dark';
+            document.documentElement.setAttribute('data-theme', saved);
+            const icon = document.getElementById('snThemeIcon');
+            if (icon) icon.textContent = saved === 'dark' ? '🌙' : '☀️';
+        }
+
+        function addThemeButtonToNavbar() {
+            const navbarContainer = document.querySelector('.sn-navbar-container');
+            if (!navbarContainer) {
+                setTimeout(addThemeButtonToNavbar, 200);
+                return;
+            }
+            if (document.getElementById('snThemeBtn')) return;
+
+            const themeBtn = document.createElement('button');
+            themeBtn.className = 'sn-action-btn';
+            themeBtn.id = 'snThemeBtn';
+            themeBtn.setAttribute('aria-label', 'تغییر تم');
+            themeBtn.setAttribute('title', 'تغییر تم');
+            themeBtn.style.cssText = 'width:42px;height:42px;border-radius:12px;background:rgba(212,175,55,0.08);border:1px solid rgba(212,175,55,0.25);color:var(--gold);font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-family:inherit;';
+            themeBtn.innerHTML = '<span id="snThemeIcon">🌙</span>';
+
+            const userArea = navbarContainer.querySelector('.sn-user-area');
+            if (userArea) {
+                navbarContainer.insertBefore(themeBtn, userArea);
+            } else {
+                navbarContainer.appendChild(themeBtn);
+            }
+
+            themeBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                const current = document.documentElement.getAttribute('data-theme') || 'dark';
+                const newTheme = current === 'dark' ? 'light' : 'dark';
+                document.documentElement.setAttribute('data-theme', newTheme);
+                localStorage.setItem('shamdun-theme', newTheme);
+                const icon = document.getElementById('snThemeIcon');
+                if (icon) icon.textContent = newTheme === 'dark' ? '🌙' : '☀️';
+            });
+        }
+
+        setTimeout(applyTheme, 100);
+        setTimeout(addThemeButtonToNavbar, 500);
+        setTimeout(addThemeButtonToNavbar, 1500);
 
         init();
     </script>
