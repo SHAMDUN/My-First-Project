@@ -47,7 +47,9 @@
     const css = `
         .sn-navbar {
             position: fixed;
-            top: 0; left: 0; right: 0;
+            top: 0;
+            left: 0;
+            right: 0;
             background: var(--navbar-bg, rgba(10, 10, 15, 0.92));
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
@@ -66,7 +68,8 @@
             gap: 10px;
         }
         .sn-hamburger {
-            width: 42px; height: 42px;
+            width: 42px;
+            height: 42px;
             border-radius: 12px;
             background: rgba(212, 175, 55, 0.08);
             border: 1px solid rgba(212, 175, 55, 0.25);
@@ -80,10 +83,13 @@
             flex-shrink: 0;
             transition: 0.25s;
         }
-        .sn-hamburger:hover { background: rgba(212, 175, 55, 0.2); }
+        .sn-hamburger:hover {
+            background: rgba(212, 175, 55, 0.2);
+        }
         .sn-hamburger span {
             display: block;
-            width: 18px; height: 2px;
+            width: 18px;
+            height: 2px;
             background: #d4af37;
             border-radius: 2px;
         }
@@ -95,7 +101,8 @@
             justify-content: center;
         }
         .sn-brand-logo {
-            width: 38px; height: 38px;
+            width: 38px;
+            height: 38px;
             border-radius: 50%;
             border: 2px solid #d4af37;
             object-fit: cover;
@@ -105,7 +112,6 @@
             font-size: 17px;
             font-weight: 800;
         }
-        /* دکمه دانش‌نامه */
         .sn-dict-btn {
             display: flex;
             align-items: center;
@@ -128,9 +134,9 @@
             color: #0a0a0f;
             box-shadow: 0 5px 20px rgba(212, 175, 55, 0.3);
         }
-        /* دکمه‌های اکشن (تم + جستجو) */
         .sn-action-btn {
-            width: 42px; height: 42px;
+            width: 42px;
+            height: 42px;
             border-radius: 12px;
             background: rgba(212, 175, 55, 0.08);
             border: 1px solid rgba(212, 175, 55, 0.25);
@@ -152,7 +158,6 @@
         .sn-action-btn svg {
             stroke: #d4af37;
         }
-        /* ناحیه کاربر */
         .sn-user-area {
             display: flex;
             align-items: center;
@@ -173,9 +178,12 @@
             transition: 0.25s;
             white-space: nowrap;
         }
-        .sn-login-btn:hover { background: rgba(212, 175, 55, 0.2); }
+        .sn-login-btn:hover {
+            background: rgba(212, 175, 55, 0.2);
+        }
         .sn-user-avatar {
-            width: 42px; height: 42px;
+            width: 42px;
+            height: 42px;
             border-radius: 50%;
             background: linear-gradient(135deg, #d4af37, #a8862a);
             display: flex;
@@ -187,10 +195,12 @@
             border: 2px solid #d4af37;
             text-decoration: none;
         }
-        /* Overlay */
         .sn-overlay {
             position: fixed;
-            top: 0; left: 0; right: 0; bottom: 0;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
             background: rgba(0, 0, 0, 0.7);
             backdrop-filter: blur(5px);
             -webkit-backdrop-filter: blur(5px);
@@ -199,11 +209,14 @@
             visibility: hidden;
             transition: 0.3s;
         }
-        .sn-overlay.show { opacity: 1; visibility: visible; }
-        /* Sidebar */
+        .sn-overlay.show {
+            opacity: 1;
+            visibility: visible;
+        }
         .sn-sidebar {
             position: fixed;
-            top: 0; right: -340px;
+            top: 0;
+            right: -340px;
             width: 320px;
             height: 100vh;
             background: linear-gradient(180deg, #14141c, #0a0a0f);
@@ -213,7 +226,9 @@
             overflow-y: auto;
             box-shadow: -10px 0 40px rgba(0, 0, 0, 0.5);
         }
-        .sn-sidebar.show { right: 0; }
+        .sn-sidebar.show {
+            right: 0;
+        }
         .sn-sidebar-header {
             display: flex;
             justify-content: space-between;
@@ -229,17 +244,26 @@
             background: rgba(239, 68, 68, 0.1);
             color: #ef4444;
             border: 1px solid rgba(239, 68, 68, 0.3);
-            width: 34px; height: 34px;
+            width: 34px;
+            height: 34px;
             border-radius: 10px;
             cursor: pointer;
             font-size: 16px;
             font-family: inherit;
             transition: 0.25s;
         }
-        .sn-close:hover { background: rgba(239, 68, 68, 0.25); }
-        .sn-sidebar-content { padding: 15px; }
-        .sn-menu-group { margin-bottom: 18px; }
-        .sn-menu-group:last-child { margin-bottom: 0; }
+        .sn-close:hover {
+            background: rgba(239, 68, 68, 0.25);
+        }
+        .sn-sidebar-content {
+            padding: 15px;
+        }
+        .sn-menu-group {
+            margin-bottom: 18px;
+        }
+        .sn-menu-group:last-child {
+            margin-bottom: 0;
+        }
         .sn-menu-group-title {
             color: #64748b;
             font-size: 11px;
@@ -292,19 +316,21 @@
             text-align: center;
             flex-shrink: 0;
         }
-        .sn-menu-label { flex: 1; }
+        .sn-menu-label {
+            flex: 1;
+        }
         .sn-menu-divider {
             height: 1px;
             background: rgba(212, 175, 55, 0.15);
             margin: 15px 0;
         }
-        .sn-logout { color: #f87171 !important; }
+        .sn-logout {
+            color: #f87171 !important;
+        }
         .sn-logout:hover {
             background: rgba(239, 68, 68, 0.1) !important;
             color: #ef4444 !important;
         }
-        
-        /* ===== Search Modal ===== */
         .sn-search-overlay {
             position: fixed;
             inset: 0;
@@ -318,7 +344,10 @@
             padding: 20px;
             overflow-y: auto;
         }
-        .sn-search-overlay.show { opacity: 1; visibility: visible; }
+        .sn-search-overlay.show {
+            opacity: 1;
+            visibility: visible;
+        }
         .sn-search-box {
             max-width: 700px;
             margin: 60px auto;
@@ -349,12 +378,15 @@
             font-family: 'Vazirmatn', Tahoma, sans-serif;
             padding: 8px 0;
         }
-        .sn-search-input::placeholder { color: #94a3b8; }
+        .sn-search-input::placeholder {
+            color: #94a3b8;
+        }
         .sn-search-close {
             background: rgba(239, 68, 68, 0.1);
             color: #ef4444;
             border: 1px solid rgba(239, 68, 68, 0.3);
-            width: 34px; height: 34px;
+            width: 34px;
+            height: 34px;
             border-radius: 10px;
             cursor: pointer;
             font-size: 16px;
@@ -388,7 +420,8 @@
             background: rgba(212, 175, 55, 0.1);
         }
         .sn-search-result-icon {
-            width: 42px; height: 42px;
+            width: 42px;
+            height: 42px;
             border-radius: 10px;
             background: rgba(212, 175, 55, 0.1);
             display: flex;
@@ -397,7 +430,10 @@
             font-size: 20px;
             flex-shrink: 0;
         }
-        .sn-search-result-info { flex: 1; min-width: 0; }
+        .sn-search-result-info {
+            flex: 1;
+            min-width: 0;
+        }
         .sn-search-result-title {
             font-size: 14px;
             font-weight: 700;
@@ -418,23 +454,55 @@
             text-transform: uppercase;
             letter-spacing: 1px;
         }
-
-        /* ===== Responsive ===== */
         @media (max-width: 700px) {
-            .sn-sidebar { width: 290px; right: -310px; }
-            .sn-sidebar.show { right: 0; }
-            .sn-brand-text { display: none; }
-            .sn-dict-btn { padding: 8px 10px; font-size: 12px; }
-            .sn-dict-btn .sn-dict-text { display: none; }
+            .sn-sidebar {
+                width: 290px;
+                right: -310px;
+            }
+            .sn-sidebar.show {
+                right: 0;
+            }
+            .sn-brand-text {
+                display: none;
+            }
+            .sn-dict-btn {
+                padding: 8px 10px;
+                font-size: 12px;
+            }
+            .sn-dict-btn .sn-dict-text {
+                display: none;
+            }
         }
         @media (max-width: 500px) {
-            .sn-brand-logo { width: 34px; height: 34px; }
-            .sn-hamburger { width: 38px; height: 38px; }
-            .sn-action-btn { width: 38px; height: 38px; font-size: 16px; }
-            .sn-user-avatar { width: 38px; height: 38px; font-size: 13px; }
-            .sn-navbar-container { padding: 0 12px; gap: 6px; }
-            .sn-login-btn { padding: 8px 12px; font-size: 11px; }
-            .sn-search-box { margin: 20px auto; }
+            .sn-brand-logo {
+                width: 34px;
+                height: 34px;
+            }
+            .sn-hamburger {
+                width: 38px;
+                height: 38px;
+            }
+            .sn-action-btn {
+                width: 38px;
+                height: 38px;
+                font-size: 16px;
+            }
+            .sn-user-avatar {
+                width: 38px;
+                height: 38px;
+                font-size: 13px;
+            }
+            .sn-navbar-container {
+                padding: 0 12px;
+                gap: 6px;
+            }
+            .sn-login-btn {
+                padding: 8px 12px;
+                font-size: 11px;
+            }
+            .sn-search-box {
+                margin: 20px auto;
+            }
         }
     `;
 
@@ -537,7 +605,6 @@
                     </div>
                 </div>
             </aside>
-            
             <!-- Search Modal -->
             <div class="sn-search-overlay" id="snSearchOverlay">
                 <div class="sn-search-box">
@@ -555,7 +622,6 @@
                 </div>
             </div>
         `;
-
         document.body.insertAdjacentHTML('afterbegin', navbarHTML);
     }
 
@@ -580,7 +646,6 @@
         hamburger.addEventListener('click', openSidebar);
         closeBtn.addEventListener('click', closeSidebar);
         overlay.addEventListener('click', closeSidebar);
-
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape') closeSidebar();
         });
@@ -628,7 +693,6 @@
             document.body.style.overflow = 'hidden';
             setTimeout(() => searchInput.focus(), 100);
         }
-
         function closeSearch() {
             searchOverlay.classList.remove('show');
             document.body.style.overflow = '';
@@ -651,29 +715,16 @@
                 `;
                 return;
             }
-
             const q = query.toLowerCase();
             const results = [];
-
-            // مقالات
             SEARCH_DATA.articles.forEach(item => {
-                if (item.title.toLowerCase().includes(q)) {
-                    results.push(item);
-                }
+                if (item.title.toLowerCase().includes(q)) results.push(item);
             });
-
-            // دوره‌ها
             SEARCH_DATA.courses.forEach(item => {
-                if (item.title.toLowerCase().includes(q)) {
-                    results.push(item);
-                }
+                if (item.title.toLowerCase().includes(q)) results.push(item);
             });
-
-            // صفحات
             SEARCH_DATA.pages.forEach(item => {
-                if (item.title.toLowerCase().includes(q)) {
-                    results.push(item);
-                }
+                if (item.title.toLowerCase().includes(q)) results.push(item);
             });
 
             if (results.length === 0) {
@@ -703,7 +754,6 @@
             if (e.target === searchOverlay) closeSearch();
         });
         searchInput.addEventListener('input', (e) => performSearch(e.target.value));
-        
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape' && searchOverlay.classList.contains('show')) closeSearch();
         });
@@ -712,7 +762,25 @@
     // ===== Theme Button =====
     function setupTheme() {
         const themeBtn = document.getElementById('snThemeBtn');
-        themeBtn.addEventListener('click', toggleTheme);
+        if (!themeBtn) return;
+        
+        // ✅ Clone برای حذف listenerهای قبلی
+        const newBtn = themeBtn.cloneNode(true);
+        themeBtn.parentNode.replaceChild(newBtn, themeBtn);
+        
+        newBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            
+            const current = document.documentElement.getAttribute('data-theme') || 'dark';
+            const newTheme = current === 'dark' ? 'light' : 'dark';
+            
+            document.documentElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('shamdun-theme', newTheme);
+            
+            const icon = document.getElementById('snThemeIcon');
+            if (icon) icon.textContent = newTheme === 'dark' ? '🌙' : '☀️';
+        });
     }
 
     // ===== هایلایت صفحه فعلی =====
@@ -781,9 +849,11 @@
         createNavbar();
         setupSidebar();
         setupSearch();
-        setupTheme();
         highlightCurrentPage();
         setTimeout(checkUser, 200);
+        
+        // ✅ دکمه تم بعد از ساخته شدن navbar
+        setTimeout(setupTheme, 100);
     }
 
     if (document.readyState === 'loading') {
@@ -791,4 +861,5 @@
     } else {
         init();
     }
+
 })();
