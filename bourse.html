@@ -22,6 +22,12 @@
             --red: #ef4444;
             --white: #f8fafc;
             --gray: #94a3b8;
+            /* ✅ جدید */
+            --card-bg: rgba(10, 10, 15, 0.5);
+            --input-bg: rgba(10, 10, 15, 0.6);
+            --table-header-bg: rgba(20, 20, 28, 0.98);
+            --border-subtle: rgba(255, 255, 255, 0.05);
+            --text-secondary: #cbd5e1;
         }
             [data-theme="light"] {
             --bg-primary: #f8fafc;
@@ -35,6 +41,12 @@
             --red: #dc2626;
             --white: #0f172a;
             --gray: #64748b;
+            /* ✅ جدید */
+            --card-bg: rgba(248, 250, 252, 0.8);
+            --input-bg: #ffffff;
+            --table-header-bg: rgba(248, 250, 252, 0.98);
+            --border-subtle: rgba(0, 0, 0, 0.06);
+            --text-secondary: #334155;
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -124,7 +136,7 @@
         .filter-group label { color: var(--gray); font-size: 11px; font-weight: 600; }
         .filter-input {
             padding: 10px 14px;
-            background: rgba(10, 10, 15, 0.6);
+            background: var(--input-bg);
             border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 10px;
             color: var(--white);
@@ -176,7 +188,7 @@
         .ranking-controls { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 15px; }
         .ranking-btn {
             padding: 8px 14px;
-            background: rgba(10, 10, 15, 0.6);
+            background: var(--input-bg);
             color: var(--gray);
             border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 8px;
@@ -204,7 +216,7 @@
         }
         .ranking-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; }
         .ranking-list {
-            background: rgba(10, 10, 15, 0.5);
+            background: var(--card-bg);
             border-radius: 12px;
             padding: 12px;
             max-height: 400px;
@@ -222,7 +234,7 @@
             justify-content: space-between;
             align-items: center;
             padding: 8px 10px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            border-bottom: 1px solid var(--border-subtle);
             font-size: 12px;
             cursor: pointer;
             transition: 0.2s;
@@ -241,8 +253,8 @@
         }
         .table-info {
             padding: 12px 20px;
-            background: rgba(10, 10, 15, 0.4);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            background: var(--card-bg);
+            border-bottom: 1px solid var(--border-subtle);
             color: var(--gray);
             font-size: 12px;
             display: flex;
@@ -256,7 +268,7 @@
         thead {
             position: sticky;
             top: 0;
-            background: rgba(20, 20, 28, 0.98);
+            background: var(--table-header-bg);
             backdrop-filter: blur(10px);
             z-index: 10;
         }
@@ -275,8 +287,8 @@
         th.sorted { color: var(--gold-light); }
         td {
             padding: 10px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-            color: #cbd5e1;
+            border-bottom: 1px solid var(--border-subtle);
+            color: var(--text-secondary);
             white-space: nowrap;
         }
         tr { transition: 0.2s; cursor: pointer; }
@@ -353,7 +365,7 @@
         }
         .modal-close:hover { background: rgba(239, 68, 68, 0.25); }
         .chart-container {
-            background: rgba(10, 10, 15, 0.5);
+            background: var(--card-bg);
             border-radius: 12px;
             padding: 12px;
             margin-bottom: 20px;
@@ -370,7 +382,7 @@
         .chart-header h3 { color: var(--gold); font-size: 15px; font-weight: 800; }
         .chart-actions { display: flex; gap: 5px; flex-wrap: wrap; }
         .chart-tab {
-            background: rgba(10, 10, 15, 0.6);
+            background: var(--input-bg);
             color: var(--gray);
             border: 1px solid rgba(255, 255, 255, 0.08);
             padding: 7px 12px;
@@ -388,7 +400,7 @@
             border-color: var(--gold);
         }
         .fullscreen-btn {
-            background: rgba(10, 10, 15, 0.6);
+            background: var(--input-bg);
             color: var(--gold);
             border: 1px solid var(--gold);
             padding: 7px 14px;
@@ -437,7 +449,7 @@
             gap: 10px;
         }
         .info-card {
-            background: rgba(10, 10, 15, 0.5);
+            background: var(--card-bg);
             padding: 12px;
             border-radius: 12px;
             border-right: 3px solid var(--gold);
@@ -452,7 +464,7 @@
         .info-card .value.up { color: var(--green); }
         .info-card .value.down { color: var(--red); }
         .orderbook-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
-        .orderbook { background: rgba(10, 10, 15, 0.5); border-radius: 12px; padding: 12px; }
+        .orderbook { background: var(--card-bg); border-radius: 12px; padding: 12px; }
         .orderbook h4 { font-size: 13px; font-weight: 800; margin-bottom: 10px; display: flex; align-items: center; gap: 6px; }
         .orderbook.buy h4 { color: var(--green); }
         .orderbook.sell h4 { color: var(--red); }
