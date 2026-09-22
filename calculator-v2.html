@@ -9,6 +9,7 @@
 <meta name="theme-color" content="#d4af37">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="supabase-config.js"></script>
 <style>
 :root {
   --bg-primary: #0a0a0f;
@@ -914,11 +915,77 @@ function mockMarketPrices() {
   }
 }
 
+// ==========================================
+// 🔌 اتصال به Supabase — کاربر فعلی
+// ==========================================
+let currentUser = null;
+
+async function checkUser() {
+  try {
+    const { data: { session } } = await db.auth.getSession();
+    const userArea = document.getElementById('snUserArea');
+    
+    if (session?.user) {
+      currentUser = session.user;
+      const fullName = session.user.user_metadata?.full_name || session.user.email || 'کاربر';
+      const firstLetter = fullName.charAt(0).toUpperCase();
+      const userName = fullName.split(' ')[0] || 'کاربر';
+      
+      userArea.innerHTML = `
+        <a href="dashboard.html" class="sn-user-avatar" title="${fullName}">
+          ${firstLetter}
+        </a>
+      `;
+      
+      // تغییر Hero بر اساس کاربر لاگین‌شده
+      const heroP = document.querySelector('.hero-section p');
+      if (heroP) {
+        heroP.innerHTML = `سلام <strong style="color: var(--gold);">${userName}</strong> 👋 خوش برگشتی!<br>امتیاز مالی و پیشنهادهای شخصی‌ت آماده‌ست.`;
+      }
+      
+      // دکمه CTA رو تغییر بده
+      const ctaBtn = document.querySelector('.cta-btn');
+      if (ctaBtn) {
+        ctaBtn.innerHTML = '📊 ورود به داشبورد';
+        ctaBtn.onclick = () => window.location.href = 'dashboard.html';
+      }
+      
+      // Score Card CTA رو تغییر بده
+      const scoreBtn = document.querySelector('.score-cta button');
+      if (scoreBtn) {
+        scoreBtn.innerHTML = '📊 تحلیل کامل امتیاز';
+        scoreBtn.onclick = () => window.location.href = 'dashboard.html';
+      }
+      
+      console.log('✅ کاربر لاگین‌شده:', fullName);
+      
+    } else {
+      // کاربر مهمان
+      userArea.innerHTML = `
+        <a href="login.html" class="sn-user-avatar" title="ورود / ثبت‌نام" style="font-size: 18px;">
+          👤
+        </a>
+      `;
+      
+      console.log('👤 کاربر مهمان');
+    }
+  } catch (e) {
+    console.error('User check error:', e);
+    const userArea = document.getElementById('snUserArea');
+    userArea.innerHTML = `
+      <a href="login.html" class="sn-user-avatar" title="ورود" style="font-size: 18px;">
+        👤
+      </a>
+    `;
+  }
+}
+
 // Init
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
   applyTheme();
   initThemeButton();
   mockMarketPrices();
+  await checkUser();
 });
 </script>
 </body>
