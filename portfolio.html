@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="fa" dir="rtl">
+<html lang="fa" dir="rtl" data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -28,6 +28,108 @@
             --cyan: #06b6d4;
             --white: #f8fafc;
             --gray: #94a3b8;
+        }
+                [data-theme="light"] {
+            --bg-primary: #f8fafc;
+            --bg-secondary: #eef2f7;
+            --bg-card: #ffffff;
+            --gold: #b8860b;
+            --gold-light: #d4af37;
+            --gold-dark: #8b6508;
+            --green: #059669;
+            --red: #dc2626;
+            --blue: #2563eb;
+            --purple: #7c3aed;
+            --orange: #ea580c;
+            --pink: #db2777;
+            --cyan: #0891b2;
+            --white: #0f172a;
+            --gray: #64748b;
+        }
+        [data-theme="light"] body {
+            background-image:
+                radial-gradient(circle at 0% 0%, rgba(184, 134, 11, 0.06) 0%, transparent 40%),
+                radial-gradient(circle at 100% 100%, rgba(37, 99, 235, 0.05) 0%, transparent 40%),
+                linear-gradient(rgba(0, 0, 0, 0.025) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 0, 0, 0.025) 1px, transparent 1px);
+        }
+        [data-theme="light"] .btn-secondary {
+            background: rgba(248, 250, 252, 0.8);
+            color: #334155;
+            border-color: rgba(0, 0, 0, 0.1);
+        }
+        [data-theme="light"] .quick-btn {
+            background: rgba(248, 250, 252, 0.8);
+            border-color: rgba(184, 134, 11, 0.2);
+        }
+        [data-theme="light"] .category-group {
+            background: rgba(248, 250, 252, 0.4);
+            border-color: rgba(184, 134, 11, 0.15);
+        }
+        [data-theme="light"] .asset-card {
+            border-top-color: rgba(0, 0, 0, 0.03);
+        }
+        [data-theme="light"] .asset-icon-wrapper {
+            background: rgba(184, 134, 11, 0.1);
+        }
+        [data-theme="light"] .info-item {
+            background: rgba(248, 250, 252, 0.7);
+        }
+        [data-theme="light"] .icon-btn {
+            background: rgba(248, 250, 252, 0.8);
+            border-color: rgba(0, 0, 0, 0.08);
+        }
+        [data-theme="light"] .compare-card {
+            background: rgba(248, 250, 252, 0.6);
+            border-color: rgba(0, 0, 0, 0.06);
+        }
+        [data-theme="light"] .asset-weight-bar .bar {
+            background: rgba(0, 0, 0, 0.06);
+        }
+        [data-theme="light"] .form-group input,
+        [data-theme="light"] .form-group select,
+        [data-theme="light"] .form-group textarea {
+            background: #ffffff;
+            border-color: rgba(0, 0, 0, 0.1);
+        }
+        [data-theme="light"] .stock-search-results {
+            background: #ffffff;
+            border-color: rgba(184, 134, 11, 0.3);
+        }
+        [data-theme="light"] .stock-result-item .stock-name {
+            color: #0f172a;
+        }
+        [data-theme="light"] .stock-selected-box {
+            background: rgba(184, 134, 11, 0.1);
+            border-color: rgba(184, 134, 11, 0.3);
+        }
+        [data-theme="light"] .stock-selected-box .name {
+            color: #0f172a;
+        }
+        [data-theme="light"] .toast {
+            background: #ffffff;
+            color: #0f172a;
+        }
+        [data-theme="light"] .modal {
+            background: #ffffff;
+            border-color: rgba(184, 134, 11, 0.3);
+        }
+        [data-theme="light"] .modal h2 {
+            color: #b8860b;
+            border-bottom-color: rgba(184, 134, 11, 0.2);
+        }
+        [data-theme="light"] .form-group label {
+            color: #334155;
+        }
+        [data-theme="light"] .ai-insight {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(59, 130, 246, 0.03));
+            border-color: rgba(37, 99, 235, 0.3);
+        }
+        [data-theme="light"] .ai-title {
+            color: #2563eb;
+        }
+        [data-theme="light"] .ai-text {
+            color: #334155;
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -1838,6 +1940,65 @@ ${portfolioText}
             currentUser = session.user;
             await render();
         });
+        // ==========================================
+        // 🌙 تم شب/روز
+        // ==========================================
+        function applyTheme() {
+            const saved = localStorage.getItem('shamdun-theme') || 'dark';
+            document.documentElement.setAttribute('data-theme', saved);
+            const icon = document.getElementById('snThemeIcon');
+            if (icon) icon.textContent = saved === 'dark' ? '🌙' : '☀️';
+        }
+
+        function addThemeButtonToNavbar() {
+            // صبر کن تا navbar.js لود بشه
+            const navbarContainer = document.querySelector('.sn-navbar-container');
+            if (!navbarContainer) {
+                // navbar.js هنوز لود نشده، دوباره تلاش کن
+                setTimeout(addThemeButtonToNavbar, 200);
+                return;
+            }
+            
+            // اگه دکمه تم قبلاً اضافه شده، کاری نکن
+            if (document.getElementById('snThemeBtn')) return;
+            
+            // ساخت دکمه تم
+            const themeBtn = document.createElement('button');
+            themeBtn.className = 'sn-action-btn';
+            themeBtn.id = 'snThemeBtn';
+            themeBtn.setAttribute('aria-label', 'تغییر تم');
+            themeBtn.setAttribute('title', 'تغییر تم');
+            themeBtn.style.cssText = 'width:42px;height:42px;border-radius:12px;background:rgba(212,175,55,0.08);border:1px solid rgba(212,175,55,0.25);color:var(--gold);font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-family:inherit;';
+            themeBtn.innerHTML = '<span id="snThemeIcon">🌙</span>';
+            
+            // اضافه کن قبل از userArea
+            const userArea = navbarContainer.querySelector('.sn-user-area');
+            if (userArea) {
+                navbarContainer.insertBefore(themeBtn, userArea);
+            } else {
+                navbarContainer.appendChild(themeBtn);
+            }
+            
+            // listener
+            themeBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                
+                const current = document.documentElement.getAttribute('data-theme') || 'dark';
+                const newTheme = current === 'dark' ? 'light' : 'dark';
+                
+                document.documentElement.setAttribute('data-theme', newTheme);
+                localStorage.setItem('shamdun-theme', newTheme);
+                
+                const icon = document.getElementById('snThemeIcon');
+                if (icon) icon.textContent = newTheme === 'dark' ? '🌙' : '☀️';
+            });
+        }
+
+        // اجرا
+        setTimeout(applyTheme, 100);
+        setTimeout(addThemeButtonToNavbar, 500);
+        setTimeout(addThemeButtonToNavbar, 1500);
     </script>
 </body>
 </html>
