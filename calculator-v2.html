@@ -827,7 +827,7 @@ body {
     </h2>
   </div>
   <div class="tools-grid">
-    <div class="tool-card" onclick="alert('💰 ابزار DCA')" style="animation-delay: 0.05s;">
+    <div class="tool-card" onclick="openTool('dca')" style="animation-delay: 0.05s;">
       <div class="tool-icon">💰</div>
       <h3>
         سرمایه‌گذاری ماهانه
@@ -839,7 +839,7 @@ body {
         <span class="tool-arrow">←</span>
       </div>
     </div>
-    <div class="tool-card" onclick="alert('🏦 سود مرکب')" style="animation-delay: 0.1s;">
+    <div class="tool-card" onclick="openTool('compound')" style="animation-delay: 0.1s;">
       <div class="tool-icon">🏦</div>
       <h3>سود مرکب</h3>
       <p>محاسبه دقیق سود سپرده بانکی و بازدهی سرمایه‌گذاری بلندمدت</p>
@@ -848,7 +848,7 @@ body {
         <span class="tool-arrow">←</span>
       </div>
     </div>
-    <div class="tool-card" onclick="alert('🎯 هدف مالی')" style="animation-delay: 0.15s;">
+    <div class="tool-card" onclick="openTool('goal')" style="animation-delay: 0.15s;">
       <div class="tool-icon">🎯</div>
       <h3>هدف مالی</h3>
       <p>می‌خوای ۳ سال دیگه ۱ میلیارد داشته باشی؟ ماهی چقدر لازمه؟</p>
@@ -857,7 +857,7 @@ body {
         <span class="tool-arrow">←</span>
       </div>
     </div>
-    <div class="tool-card" onclick="alert('📉 تورم')" style="animation-delay: 0.2s;">
+    <div class="tool-card" onclick="openTool('inflation')" style="animation-delay: 0.2s;">
       <div class="tool-icon">📉</div>
       <h3>
         محاسبه تورم
@@ -869,7 +869,7 @@ body {
         <span class="tool-arrow">←</span>
       </div>
     </div>
-    <div class="tool-card" onclick="alert('📊 تاریخچه تورم')" style="animation-delay: 0.25s;">
+    <div class="tool-card" onclick="openTool('inflation-history')" style="animation-delay: 0.25s;">
       <div class="tool-icon">📊</div>
       <h3>تاریخچه تورم</h3>
       <p>نرخ تورم هر سال رو ثبت کن و ارزش واقعی دارایی‌ت رو ببین</p>
@@ -878,7 +878,7 @@ body {
         <span class="tool-arrow">←</span>
       </div>
     </div>
-    <div class="tool-card" onclick="alert('⚖️ مقایسه')" style="animation-delay: 0.3s;">
+    <div class="tool-card" onclick="openTool('compare')" style="animation-delay: 0.3s;">
       <div class="tool-icon">⚖️</div>
       <h3>مقایسه گزینه‌ها</h3>
       <p>دو تا سرمایه‌گذاری مختلف رو کنار هم بذار و ببین کدوم بهتره</p>
@@ -887,7 +887,7 @@ body {
         <span class="tool-arrow">←</span>
       </div>
     </div>
-    <div class="tool-card" onclick="alert('🎲 ریسک')" style="animation-delay: 0.35s;">
+    <div class="tool-card" onclick="openTool('risk')" style="animation-delay: 0.35s;">
       <div class="tool-icon">🎲</div>
       <h3>تحلیل ریسک</h3>
       <p>سرمایه‌ات رو چطور بین دارایی‌ها پخش کنی؟</p>
@@ -896,7 +896,7 @@ body {
         <span class="tool-arrow">←</span>
       </div>
     </div>
-    <div class="tool-card" onclick="alert('🎯 پوزیشن')" style="animation-delay: 0.4s;">
+    <div class="tool-card" onclick="openTool('position')" style="animation-delay: 0.4s;">
       <div class="tool-icon">🎯</div>
       <h3>مدیریت پوزیشن</h3>
       <p>چقدر سرمایه‌گذاری کنی که اگه حد ضرر خورد، ضررت قابل مدیریت باشه؟</p>
@@ -977,6 +977,23 @@ body {
     </button>
   </section>
 
+</div>
+<!-- ========================================== -->
+<!-- 🎯 Modal ابزارها                            -->
+<!-- ========================================== -->
+<div class="tool-modal-overlay" id="toolModal">
+  <div class="tool-modal-box">
+    <div class="tool-modal-header">
+      <div class="tool-modal-title" id="toolModalTitle">
+        <span id="toolModalIcon">💰</span>
+        <span id="toolModalName">ابزار</span>
+      </div>
+      <button class="tool-modal-close" onclick="closeToolModal()" aria-label="بستن">✕</button>
+    </div>
+    <div class="tool-modal-body" id="toolModalBody">
+      <!-- محتوا اینجا رندر می‌شه -->
+    </div>
+  </div>
 </div>
 
 <footer class="footer">
@@ -1207,6 +1224,231 @@ async function checkUser() {
       </a>
     `;
   }
+}
+// ==========================================
+// 🎯 Modal ابزارها
+// ==========================================
+const TOOLS_CONFIG = {
+  dca: {
+    icon: '💰',
+    name: 'سرمایه‌گذاری ماهانه (DCA)',
+    render: renderDCATool
+  },
+  compound: {
+    icon: '🏦',
+    name: 'سود مرکب',
+    render: renderCompoundTool
+  },
+  goal: {
+    icon: '🎯',
+    name: 'هدف مالی',
+    render: renderGoalTool
+  },
+  inflation: {
+    icon: '📉',
+    name: 'محاسبه تورم',
+    render: renderInflationTool
+  },
+  'inflation-history': {
+    icon: '📊',
+    name: 'تاریخچه تورم',
+    render: renderInflationHistoryTool
+  },
+  compare: {
+    icon: '⚖️',
+    name: 'مقایسه گزینه‌ها',
+    render: renderCompareTool
+  },
+  risk: {
+    icon: '🎲',
+    name: 'تحلیل ریسک',
+    render: renderRiskTool
+  },
+  position: {
+    icon: '🎯',
+    name: 'مدیریت پوزیشن',
+    render: renderPositionTool
+  }
+};
+
+function openTool(toolKey) {
+  const config = TOOLS_CONFIG[toolKey];
+  if (!config) {
+    console.warn('ابزار ناشناخته:', toolKey);
+    return;
+  }
+  
+  // تنظیم عنوان
+  document.getElementById('toolModalIcon').textContent = config.icon;
+  document.getElementById('toolModalName').textContent = config.name;
+  
+  // رندر محتوا
+  const body = document.getElementById('toolModalBody');
+  body.innerHTML = config.render();
+  
+  // نمایش Modal
+  document.getElementById('toolModal').classList.add('show');
+  document.body.style.overflow = 'hidden';
+  
+  // فعال‌سازی فرمت اعداد
+  setTimeout(() => {
+    document.querySelectorAll('#toolModalBody input[inputmode="numeric"]').forEach(inp => {
+      inp.addEventListener('input', handleNumericInput);
+    });
+  }, 100);
+}
+
+function closeToolModal() {
+  document.getElementById('toolModal').classList.remove('show');
+  document.body.style.overflow = '';
+}
+
+// بستن با کلیک روی overlay
+document.addEventListener('click', (e) => {
+  if (e.target.id === 'toolModal') {
+    closeToolModal();
+  }
+});
+
+// بستن با Escape
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') {
+    closeToolModal();
+  }
+});
+
+// ==========================================
+// 💰 ابزار DCA
+// ==========================================
+function renderDCATool() {
+  return `
+    <div class="edu-card" style="background: linear-gradient(135deg, rgba(59, 130, 246, 0.08), rgba(59, 130, 246, 0.02)); border: 1px solid rgba(59, 130, 246, 0.25); border-radius: 16px; padding: 16px 18px; margin-bottom: 20px; display: flex; gap: 12px; align-items: flex-start;">
+      <div style="font-size: 24px; flex-shrink: 0;">📖</div>
+      <div style="flex: 1;">
+        <div style="color: #60a5fa; font-size: 13px; font-weight: 800; margin-bottom: 8px;">این ابزار چیکار می‌کنه؟</div>
+        <div style="color: #cbd5e1; font-size: 12.5px; line-height: 1.8;">اگه هر ماه یه مبلغ ثابت سرمایه‌گذاری کنی، با سود مرکب چقدر می‌شه؟</div>
+      </div>
+    </div>
+    
+    <div class="form-row-2">
+      <div class="form-group">
+        <label>💵 سرمایه‌گذاری ماهانه <span class="help">(تومان)</span></label>
+        <input type="text" id="dca-monthly" class="form-input" placeholder="5,000,000" inputmode="numeric">
+      </div>
+      <div class="form-group">
+        <label>⏳ مدت زمان <span class="help">(ماه)</span></label>
+        <input type="number" id="dca-months" class="form-input" placeholder="12" min="1" max="600" style="direction: rtl; text-align: right;">
+      </div>
+    </div>
+    
+    <div class="form-row-2">
+      <div class="form-group">
+        <label>📈 بازدهی سالانه <span class="help">(٪)</span></label>
+        <input type="number" id="dca-rate" class="form-input" placeholder="30" step="0.1" style="direction: rtl; text-align: right;">
+      </div>
+      <div class="form-group">
+        <label>💹 موجودی فعلی <span class="help">(اختیاری)</span></label>
+        <input type="text" id="dca-initial" class="form-input" placeholder="0" inputmode="numeric">
+      </div>
+    </div>
+    
+    <button class="calc-btn" onclick="calcDCA()">🚀 محاسبه کن</button>
+    
+    <div class="result-card" id="result-dca">
+      <h3>✅ نتیجه محاسبه</h3>
+      <div class="result-grid">
+        <div class="result-highlight">
+          <div class="label">💎 سرمایه نهایی شما</div>
+          <div class="value" id="dca-final">--</div>
+          <div class="sub" id="dca-profit-sub">--</div>
+        </div>
+        <div class="result-item">
+          <div class="label">📊 اصل سرمایه</div>
+          <div class="value" id="dca-principal">--</div>
+        </div>
+        <div class="result-item">
+          <div class="label">📈 سود کل</div>
+          <div class="value green" id="dca-profit">--</div>
+        </div>
+        <div class="result-item gold">
+          <div class="label">⚖️ نسبت رشد</div>
+          <div class="value gold" id="dca-ratio">--</div>
+        </div>
+        <div class="result-item blue">
+          <div class="label">📅 میانگین ماهانه</div>
+          <div class="value" id="dca-avg">--</div>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function calcDCA() {
+  const monthly = parseNum(document.getElementById('dca-monthly').value);
+  const months = parseInt(toEnDigits(document.getElementById('dca-months').value)) || 0;
+  const annualRate = parseFloat(toEnDigits(document.getElementById('dca-rate').value)) || 0;
+  const initial = parseNum(document.getElementById('dca-initial').value);
+  
+  if (monthly <= 0 || months <= 0) {
+    alert('لطفاً مبلغ ماهانه و مدت زمان رو وارد کن');
+    return;
+  }
+  
+  const monthlyRate = annualRate / 100 / 12;
+  let futureValue;
+  
+  if (monthlyRate === 0) {
+    futureValue = monthly * months + initial;
+  } else {
+    const factor = Math.pow(1 + monthlyRate, months);
+    futureValue = monthly * ((factor - 1) / monthlyRate) + initial * factor;
+  }
+  
+  const totalPrincipal = monthly * months + initial;
+  const totalProfit = futureValue - totalPrincipal;
+  const ratio = totalPrincipal > 0 ? (futureValue / totalPrincipal) : 0;
+  const avgMonthly = futureValue / months;
+  
+  document.getElementById('dca-final').textContent = formatBigNum(futureValue) + ' تومان';
+  document.getElementById('dca-profit-sub').textContent = totalProfit > 0
+    ? `سود: ${formatBigNum(totalProfit)} تومان در ${toFa(months)} ماه`
+    : '';
+  document.getElementById('dca-principal').textContent = formatBigNum(totalPrincipal);
+  document.getElementById('dca-profit').textContent = formatBigNum(totalProfit);
+  document.getElementById('dca-ratio').textContent = toFa(ratio.toFixed(2)) + ' برابر';
+  document.getElementById('dca-avg').textContent = formatBigNum(avgMonthly);
+  
+  document.getElementById('result-dca').classList.add('show');
+  
+  // اسکرول به نتیجه
+  setTimeout(() => {
+    document.getElementById('result-dca').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }, 100);
+}
+
+// ==========================================
+// 📌 Placeholder برای بقیه ابزارها
+// ==========================================
+function renderCompoundTool() {
+  return '<div style="text-align:center; padding:40px; color:var(--gray);">🏦 ابزار سود مرکب — به زودی</div>';
+}
+function renderGoalTool() {
+  return '<div style="text-align:center; padding:40px; color:var(--gray);">🎯 ابزار هدف مالی — به زودی</div>';
+}
+function renderInflationTool() {
+  return '<div style="text-align:center; padding:40px; color:var(--gray);">📉 ابزار تورم — به زودی</div>';
+}
+function renderInflationHistoryTool() {
+  return '<div style="text-align:center; padding:40px; color:var(--gray);">📊 تاریخچه تورم — به زودی</div>';
+}
+function renderCompareTool() {
+  return '<div style="text-align:center; padding:40px; color:var(--gray);">⚖️ مقایسه — به زودی</div>';
+}
+function renderRiskTool() {
+  return '<div style="text-align:center; padding:40px; color:var(--gray);">🎲 تحلیل ریسک — به زودی</div>';
+}
+function renderPositionTool() {
+  return '<div style="text-align:center; padding:40px; color:var(--gray);">🎯 مدیریت پوزیشن — به زودی</div>';
 }
 
 // Init
