@@ -29,7 +29,7 @@
         {
             title: 'ابزارهای مالی',
             items: [
-                { href: 'calculator.html', icon: '🧮', label: 'ماشین‌حساب مالی' },
+                { href: 'calculator-v2.html', icon: '🧮', label: 'همراه مالی هوشمند' },
                 { href: 'portfolio.html', icon: '💼', label: 'پرتفوی من' }
             ]
         },
