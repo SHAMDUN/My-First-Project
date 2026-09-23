@@ -1151,7 +1151,118 @@ function renderScoreDisplay(score, type, badges) {
     scoreBadges.innerHTML = '';
   }
 }
+// ==========================================
+// 📊 Market Ticker — قیمت‌های واقعی
+// ==========================================
+const BRS_API_KEYS = [
+    'B4xp2gWXASUmB3n6WPHtJxhjyJkgcBJz',
+    'BvUj3cMKWNBK87KW9xhNccCThmfVbd8u'
+];
+let brsKeyIndex = 0;
 
+async function fetchBrsApi(baseUrl) {
+    for (let i = 0; i < BRS_API_KEYS.length; i++) {
+        const key = BRS_API_KEYS[brsKeyIndex];
+        try {
+            const sep = baseUrl.includes('?') ? '&' : '?';
+            const res = await fetch(`${baseUrl}${sep}key=${key}`);
+            if (!res.ok) {
+                brsKeyIndex = (brsKeyIndex + 1) % BRS_API_KEYS.length;
+                continue;
+            }
+            const text = await res.text();
+            if (text.trim().startsWith('<')) {
+                brsKeyIndex = (brsKeyIndex + 1) % BRS_API_KEYS.length;
+                continue;
+            }
+            return JSON.parse(text);
+        } catch (e) {
+            brsKeyIndex = (brsKeyIndex + 1) % BRS_API_KEYS.length;
+        }
+    }
+    throw new Error('همه کلیدها fail');
+}
+
+async function loadRealMarketPrices() {
+    const el = document.getElementById('marketPrices');
+    if (!el) return;
+
+    try {
+        let gold18 = null, gold18Change = 0;
+        let usd = null, usdChange = 0;
+        let btc = null, btcChange = 0;
+
+        // ۱. طلا و دلار از BrsApi
+        try {
+            const data = await fetchBrsApi('https://Api.BrsApi.ir/Market/Gold_Currency.php');
+            if (data.gold && Array.isArray(data.gold)) {
+                const g = data.gold.find(i => i.symbol === 'IR_GOLD_18K');
+                if (g) { gold18 = parseFloat(g.price); gold18Change = parseFloat(g.change_percent) || 0; }
+            }
+            if (data.currency && Array.isArray(data.currency)) {
+                const u = data.currency.find(i => i.symbol === 'USD');
+                if (u) { usd = parseFloat(u.price); usdChange = parseFloat(u.change_percent) || 0; }
+            }
+        } catch (e) { console.warn('BrsApi error:', e); }
+
+        // ۲. کریپتو از CoinGecko
+        try {
+            const res = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd&include_24hr_change=true');
+            const data = await res.json();
+            if (data.bitcoin) {
+                btc = data.bitcoin.usd;
+                btcChange = data.bitcoin.usd_24h_change || 0;
+            }
+        } catch (e) { console.warn('CoinGecko error:', e); }
+
+        // ۳. رندر
+        const items = [];
+        
+        if (gold18) {
+            const up = gold18Change >= 0;
+            items.push(`
+                <div class="market-price-item">
+                    <span class="icon">🥇</span><span class="name">طلا ۱۸:</span>
+                    <span class="price">${formatNum(gold18)}</span>
+                    <span class="change ${up ? 'up' : 'down'}">${up ? '+' : ''}${toFa(gold18Change.toFixed(1))}٪</span>
+                </div>
+            `);
+        }
+        
+        if (usd) {
+            const up = usdChange >= 0;
+            items.push(`
+                <div class="market-price-item">
+                    <span class="icon">💵</span><span class="name">دلار:</span>
+                    <span class="price">${formatNum(usd)}</span>
+                    <span class="change ${up ? 'up' : 'down'}">${up ? '+' : ''}${toFa(usdChange.toFixed(1))}٪</span>
+                </div>
+            `);
+        }
+        
+        if (btc) {
+            const up = btcChange >= 0;
+            items.push(`
+                <div class="market-price-item">
+                    <span class="icon">₿</span><span class="name">BTC:</span>
+                    <span class="price">$${formatNum(btc)}</span>
+                    <span class="change ${up ? 'up' : 'down'}">${up ? '+' : ''}${toFa(btcChange.toFixed(1))}٪</span>
+                </div>
+            `);
+        }
+
+        if (items.length > 0) {
+            el.innerHTML = items.join('');
+        } else {
+            el.innerHTML = `<span class="market-price-item">⚠️ قیمت‌ها در دسترس نیست</span>`;
+        }
+
+    } catch (e) {
+        console.error('Market prices error:', e);
+        el.innerHTML = `<span class="market-price-item">⚠️ خطا در دریافت قیمت‌ها</span>`;
+    }
+}
+    
 // ==========================================
 // 📊 Market Ticker
 // ==========================================
@@ -2420,7 +2531,15 @@ async function analyzeWithAI(type) {
 document.addEventListener('DOMContentLoaded', async () => {
   applyTheme();
   initThemeButton();
-  mockMarketPrices();
+  document.addEventListener('DOMContentLoaded', async () => {
+  applyTheme();
+  initThemeButton();
+  loadRealMarketPrices();
+  await checkUser();
+  
+  // هر ۶۰ ثانیه آپدیت کن
+  setInterval(loadRealMarketPrices, 60000);
+});
   await checkUser();
 });
 </script>
