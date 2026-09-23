@@ -625,8 +625,61 @@ body {
   .market-ticker { padding: 12px 15px; }
   .market-ticker .label { padding-left: 10px; }
 }
+  /* ===== Mobile Menu ===== */
+.sn-menu-overlay {
+  position: fixed; inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+  z-index: 99998;
+  opacity: 0; visibility: hidden;
+  transition: 0.3s;
+}
+.sn-menu-overlay.show { opacity: 1; visibility: visible; }
+.sn-menu {
+  position: fixed;
+  top: 0; right: -320px;
+  width: 300px; max-width: 85vw;
+  height: 100vh;
+  background: var(--bg-card);
+  border-left: 1px solid var(--border-gold);
+  box-shadow: -10px 0 40px rgba(0, 0, 0, 0.5);
+  z-index: 99999;
+  transition: right 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+}
+.sn-menu.show { right: 0; }
+.sn-menu-header {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 20px;
+  border-bottom: 1px solid var(--border-gold);
+  background: linear-gradient(135deg, rgba(212, 175, 55, 0.1), transparent);
+}
+.sn-menu-title { color: var(--gold); font-size: 15px; font-weight: 900; }
+.sn-menu-close {
+  width: 36px; height: 36px; border-radius: 10px;
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  color: var(--red); font-size: 16px; cursor: pointer;
+  font-family: inherit; transition: 0.3s;
+}
+.sn-menu-close:hover { background: rgba(239, 68, 68, 0.25); }
+.sn-menu-links { padding: 10px; display: flex; flex-direction: column; gap: 4px; }
+.sn-menu-link {
+  padding: 14px 16px;
+  color: var(--white); text-decoration: none;
+  font-size: 14px; font-weight: 700;
+  border-radius: 12px;
+  transition: 0.2s;
+  display: flex; align-items: center; gap: 10px;
+}
+.sn-menu-link:hover {
+  background: rgba(212, 175, 55, 0.12);
+  color: var(--gold);
+  transform: translateX(-4px);
+}
 </style>
-<script src="navbar.js" defer></script>
 </head>
 <body>
 
@@ -855,7 +908,24 @@ body {
 </div>
 
 <div id="toast" class="toast"></div>
-
+<!-- 🍔 منوی موبایل -->
+<div class="sn-menu-overlay" id="snMenuOverlay"></div>
+<div class="sn-menu" id="snMenu">
+  <div class="sn-menu-header">
+    <span class="sn-menu-title">📋 منوی شمعدون</span>
+    <button class="sn-menu-close" id="snMenuClose">✕</button>
+  </div>
+  <div class="sn-menu-links">
+    <a href="index.html" class="sn-menu-link">🏠 خانه</a>
+    <a href="market.html" class="sn-menu-link">📊 نمای بازار</a>
+    <a href="calculator-v2.html" class="sn-menu-link">🧮 ماشین‌حساب مالی</a>
+    <a href="courses.html" class="sn-menu-link">📚 دوره‌های آموزشی</a>
+    <a href="news.html" class="sn-menu-link">📰 اخبار اقتصادی</a>
+    <a href="dictionary.html" class="sn-menu-link">🎓 دانش‌نامه</a>
+    <a href="personality-test.html" class="sn-menu-link">🧠 تست شخصیت مالی</a>
+    <a href="dashboard.html" class="sn-menu-link">📊 داشبورد من</a>
+  </div>
+</div>
 <footer class="footer">
   © ۱۴۰۵ آکادمی شمعدون | تمامی حقوق محفوظ است
 </footer>
@@ -949,7 +1019,28 @@ function initThemeButton() {
     if (icon) icon.textContent = nw === 'dark' ? '🌙' : '☀️';
   });
 }
-
+// ==========================================
+// 🍔 منوی موبایل
+// ==========================================
+function openSnMenu() {
+  document.getElementById('snMenu')?.classList.add('show');
+  document.getElementById('snMenuOverlay')?.classList.add('show');
+  document.body.style.overflow = 'hidden';
+}
+function closeSnMenu() {
+  document.getElementById('snMenu')?.classList.remove('show');
+  document.getElementById('snMenuOverlay')?.classList.remove('show');
+  document.body.style.overflow = '';
+}
+function initSnMenu() {
+  const btn = document.getElementById('snHamburger');
+  const closeBtn = document.getElementById('snMenuClose');
+  const overlay = document.getElementById('snMenuOverlay');
+  if (btn) btn.addEventListener('click', (e) => { e.preventDefault(); openSnMenu(); });
+  if (closeBtn) closeBtn.addEventListener('click', closeSnMenu);
+  if (overlay) overlay.addEventListener('click', closeSnMenu);
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeSnMenu(); });
+}
 // ==========================================
 // 🔌 اتصال به Supabase
 // ==========================================
@@ -2529,12 +2620,13 @@ async function analyzeWithAI(type) {
 // ==========================================
 // 🚀 Init
 // ==========================================
-document.addEventListener('DOMContentLoaded', async () => {
-  applyTheme();
-  initThemeButton();
-  loadRealMarketPrices();
-  await checkUser();
-  setInterval(loadRealMarketPrices, 60000);
+  document.addEventListener('DOMContentLoaded', async () => {
+    applyTheme();
+    initThemeButton();
+    initSnMenu();
+    loadRealMarketPrices();
+    await checkUser();
+    setInterval(loadRealMarketPrices, 60000);
 });
 </script>
 </body>
