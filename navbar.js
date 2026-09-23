@@ -732,6 +732,7 @@
             { title: 'اخبار اقتصادی', url: 'news.html', icon: '📰', type: 'صفحه' },
             { title: 'دانش‌نامه اقتصادی', url: 'dictionary.html', icon: '🎓', type: 'صفحه' },
             { title: 'دستیار هوشمند', url: 'assistant.html', icon: '🤖', type: 'صفحه' },
+            { title: 'همراه مالی هوشمند', url: 'calculator-v2.html', icon: '🧮', type: 'صفحه' },
             { title: 'پرتفوی من', url: 'portfolio.html', icon: '💼', type: 'صفحه' },
             { title: 'تست شخصیت مالی', url: 'personality-test.html', icon: '🧠', type: 'صفحه' }
         ]
