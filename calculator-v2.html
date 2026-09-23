@@ -9,6 +9,11 @@
 <meta name="theme-color" content="#d4af37">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/dompurify@3.0.6/dist/purify.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/exceljs@4.4.0/dist/exceljs.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/file-saver@2.0.5/dist/FileSaver.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
 <script src="supabase-config.js"></script>
 <style>
 :root {
@@ -26,8 +31,6 @@
   --white: #f8fafc;
   --gray: #94a3b8;
   --border-gold: rgba(212, 175, 55, 0.15);
-  --shadow-md: 0 5px 20px rgba(212, 175, 55, 0.15);
-  --shadow-lg: 0 15px 40px rgba(212, 175, 55, 0.2);
   --shadow-gold: 0 10px 30px rgba(212, 175, 55, 0.3);
 }
 [data-theme="light"] {
@@ -115,8 +118,6 @@ body {
   border: 2px solid var(--gold); text-decoration: none;
 }
 .main-container { max-width: 1200px; margin: 0 auto; padding: 100px 20px 40px; }
-
-/* Hero */
 .hero-section { text-align: center; margin-bottom: 35px; animation: fadeInUp 0.6s ease-out; }
 .hero-badge {
   display: inline-flex; align-items: center; gap: 8px;
@@ -133,8 +134,6 @@ body {
   -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
 }
 .hero-section p { color: var(--gray); font-size: 16px; line-height: 1.9; max-width: 650px; margin: 0 auto; }
-
-/* Market Ticker */
 .market-ticker {
   background: linear-gradient(135deg, rgba(212, 175, 55, 0.08), rgba(212, 175, 55, 0.02));
   border: 1px solid rgba(212, 175, 55, 0.25);
@@ -156,8 +155,6 @@ body {
 .market-price-item .change { font-size: 11px; font-weight: 700; }
 .market-price-item .change.up { color: var(--green); }
 .market-price-item .change.down { color: var(--red); }
-
-/* Score Card */
 .score-card {
   background: linear-gradient(135deg, rgba(212, 175, 55, 0.12), rgba(212, 175, 55, 0.03));
   border: 2px solid rgba(212, 175, 55, 0.3);
@@ -179,7 +176,7 @@ body {
 .score-circle .progress-circle {
   fill: none; stroke: url(#scoreGradient); stroke-width: 10;
   stroke-linecap: round; stroke-dasharray: 283;
-  stroke-dashoffset: calc(283 - (283 * 78 / 100));
+  stroke-dashoffset: 283;
   transition: stroke-dashoffset 1s ease;
 }
 .score-circle .score-value {
@@ -209,8 +206,6 @@ body {
 }
 .score-cta button:hover { transform: translateY(-2px); box-shadow: 0 15px 40px rgba(212, 175, 55, 0.5); }
 .score-cta .hint { color: var(--gray); font-size: 11px; }
-
-/* Section Title */
 .section-title {
   display: flex; align-items: center; justify-content: space-between;
   margin-bottom: 20px; animation: fadeInUp 0.6s ease-out 0.2s backwards;
@@ -225,8 +220,6 @@ body {
   padding: 3px 10px; border-radius: 10px;
   font-size: 11px; font-weight: 800;
 }
-
-/* Tools Grid */
 .tools-grid {
   display: grid; grid-template-columns: repeat(3, 1fr);
   gap: 16px; margin-bottom: 40px;
@@ -262,11 +255,6 @@ body {
   margin-bottom: 8px; position: relative; z-index: 2;
   display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
 }
-.tool-card h3 .trending {
-  background: rgba(239, 68, 68, 0.15); color: var(--red);
-  font-size: 9px; padding: 2px 8px; border-radius: 8px;
-  font-weight: 800; border: 1px solid rgba(239, 68, 68, 0.3);
-}
 .tool-card h3 .popular {
   background: rgba(212, 175, 55, 0.15); color: var(--gold);
   font-size: 9px; padding: 2px 8px; border-radius: 8px;
@@ -285,8 +273,6 @@ body {
 .tool-card .tool-stats strong { color: var(--gold); font-weight: 800; }
 .tool-card .tool-arrow { color: var(--gold); font-size: 16px; transition: transform 0.3s; }
 .tool-card:hover .tool-arrow { transform: translateX(-4px); }
-
-/* Simulator */
 .simulator-section {
   background: linear-gradient(135deg, rgba(139, 92, 246, 0.08), rgba(139, 92, 246, 0.02));
   border: 2px solid rgba(139, 92, 246, 0.25);
@@ -352,19 +338,10 @@ body {
   display: flex; align-items: center; justify-content: center; gap: 8px;
   box-shadow: 0 10px 30px rgba(139, 92, 246, 0.3);
 }
-.simulator-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 15px 40px rgba(139, 92, 246, 0.5);
-}
-.simulator-results {
-  margin-top: 22px; display: none; position: relative; z-index: 2;
-  animation: fadeInUp 0.5s ease-out;
-}
+.simulator-btn:hover { transform: translateY(-2px); box-shadow: 0 15px 40px rgba(139, 92, 246, 0.5); }
+.simulator-results { margin-top: 22px; display: none; position: relative; z-index: 2; animation: fadeInUp 0.5s ease-out; }
 .simulator-results.show { display: block; }
-.scenario-grid {
-  display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 12px; margin-bottom: 20px;
-}
+.scenario-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin-bottom: 20px; }
 .scenario-card {
   background: rgba(10, 10, 15, 0.5);
   border: 1px solid rgba(255, 255, 255, 0.08);
@@ -372,42 +349,19 @@ body {
   position: relative; transition: 0.3s;
 }
 [data-theme="light"] .scenario-card { background: #ffffff; }
-.scenario-card.winner {
-  border-color: rgba(16, 185, 129, 0.5);
-  background: linear-gradient(135deg, rgba(16, 185, 129, 0.12), rgba(16, 185, 129, 0.03));
-}
-.scenario-card.you {
-  border-color: rgba(212, 175, 55, 0.5);
-  background: linear-gradient(135deg, rgba(212, 175, 55, 0.12), rgba(212, 175, 55, 0.03));
-}
-.scenario-card .scenario-header {
-  display: flex; align-items: center; justify-content: space-between;
-  margin-bottom: 12px; flex-wrap: wrap; gap: 6px;
-}
-.scenario-card .scenario-name {
-  color: var(--white); font-size: 13px; font-weight: 800;
-  display: flex; align-items: center; gap: 6px;
-}
-.scenario-card .scenario-tag {
-  font-size: 9.5px; font-weight: 800;
-  padding: 2px 8px; border-radius: 8px;
-}
+.scenario-card.winner { border-color: rgba(16, 185, 129, 0.5); background: linear-gradient(135deg, rgba(16, 185, 129, 0.12), rgba(16, 185, 129, 0.03)); }
+.scenario-card.you { border-color: rgba(212, 175, 55, 0.5); background: linear-gradient(135deg, rgba(212, 175, 55, 0.12), rgba(212, 175, 55, 0.03)); }
+.scenario-card .scenario-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; flex-wrap: wrap; gap: 6px; }
+.scenario-card .scenario-name { color: var(--white); font-size: 13px; font-weight: 800; display: flex; align-items: center; gap: 6px; }
+.scenario-card .scenario-tag { font-size: 9.5px; font-weight: 800; padding: 2px 8px; border-radius: 8px; }
 .scenario-card .scenario-tag.best { background: rgba(16, 185, 129, 0.2); color: var(--green); }
 .scenario-card .scenario-tag.you { background: rgba(212, 175, 55, 0.2); color: var(--gold); }
-.scenario-card .scenario-value {
-  color: var(--white); font-size: 20px; font-weight: 900;
-  margin-bottom: 4px; font-variant-numeric: tabular-nums;
-}
+.scenario-card .scenario-value { color: var(--white); font-size: 20px; font-weight: 900; margin-bottom: 4px; font-variant-numeric: tabular-nums; }
 .scenario-card .scenario-return { font-size: 12px; font-weight: 700; margin-bottom: 10px; }
 .scenario-card .scenario-return.up { color: var(--green); }
 .scenario-card .scenario-return.down { color: var(--red); }
-.scenario-card .scenario-bar {
-  height: 5px; background: rgba(255, 255, 255, 0.08);
-  border-radius: 5px; overflow: hidden;
-}
-.scenario-card .scenario-bar-fill {
-  height: 100%; border-radius: 5px; transition: width 0.8s ease;
-}
+.scenario-card .scenario-bar { height: 5px; background: rgba(255, 255, 255, 0.08); border-radius: 5px; overflow: hidden; }
+.scenario-card .scenario-bar-fill { height: 100%; border-radius: 5px; transition: width 0.8s ease; }
 .scenario-summary {
   background: rgba(139, 92, 246, 0.1);
   border: 1px solid rgba(139, 92, 246, 0.3);
@@ -416,8 +370,6 @@ body {
 }
 [data-theme="light"] .scenario-summary { color: #6d28d9; }
 .scenario-summary strong { color: #a78bfa; font-weight: 900; }
-
-/* Social Proof */
 .social-proof {
   display: grid; grid-template-columns: repeat(4, 1fr);
   gap: 14px; margin-bottom: 40px;
@@ -429,18 +381,10 @@ body {
   border-radius: 18px; padding: 20px 15px;
   text-align: center; transition: 0.3s;
 }
-.proof-item:hover {
-  transform: translateY(-4px);
-  border-color: rgba(212, 175, 55, 0.4);
-}
+.proof-item:hover { transform: translateY(-4px); border-color: rgba(212, 175, 55, 0.4); }
 .proof-item .icon { font-size: 28px; margin-bottom: 10px; }
-.proof-item .value {
-  color: var(--gold); font-size: 24px; font-weight: 900;
-  margin-bottom: 5px; font-variant-numeric: tabular-nums;
-}
+.proof-item .value { color: var(--gold); font-size: 24px; font-weight: 900; margin-bottom: 5px; font-variant-numeric: tabular-nums; }
 .proof-item .label { color: var(--gray); font-size: 11.5px; }
-
-/* CTA */
 .cta-section {
   background: linear-gradient(135deg, rgba(212, 175, 55, 0.15), rgba(59, 130, 246, 0.05));
   border: 1px solid rgba(212, 175, 55, 0.3);
@@ -449,15 +393,9 @@ body {
   animation: fadeInUp 0.6s ease-out 0.5s backwards;
   position: relative; overflow: hidden;
 }
-.cta-section h2 {
-  color: var(--white); font-size: 24px; font-weight: 900;
-  margin-bottom: 12px;
-}
+.cta-section h2 { color: var(--white); font-size: 24px; font-weight: 900; margin-bottom: 12px; }
 .cta-section h2 .gold { color: var(--gold); }
-.cta-section p {
-  color: var(--gray); font-size: 14px; line-height: 1.8;
-  max-width: 550px; margin: 0 auto 22px;
-}
+.cta-section p { color: var(--gray); font-size: 14px; line-height: 1.8; max-width: 550px; margin: 0 auto 22px; }
 .cta-btn {
   display: inline-flex; align-items: center; gap: 8px;
   padding: 15px 32px;
@@ -467,277 +405,200 @@ body {
   box-shadow: 0 12px 35px rgba(212, 175, 55, 0.4);
   border: none; cursor: pointer; font-family: inherit;
 }
-.cta-btn:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 18px 45px rgba(212, 175, 55, 0.55);
-}
+.cta-btn:hover { transform: translateY(-3px); box-shadow: 0 18px 45px rgba(212, 175, 55, 0.55); }
 .footer {
   text-align: center; padding: 30px 20px;
   color: var(--gray); font-size: 12px;
   border-top: 1px solid var(--border-gold); margin-top: 30px;
 }
-
-/* Modal */
 .tool-modal-overlay {
-  position: fixed;
-  inset: 0;
+  position: fixed; inset: 0;
   background: rgba(0, 0, 0, 0.85);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
-  z-index: 99999;
-  display: none;
-  align-items: center;
-  justify-content: center;
-  padding: 20px;
-  overflow-y: auto;
+  z-index: 99999; display: none;
+  align-items: center; justify-content: center;
+  padding: 20px; overflow-y: auto;
 }
 .tool-modal-overlay.show { display: flex; }
 .tool-modal-box {
   background: var(--bg-card);
   border: 1px solid rgba(212, 175, 55, 0.3);
-  border-radius: 22px;
-  padding: 0;
-  max-width: 700px;
-  width: 100%;
-  max-height: 90vh;
-  overflow-y: auto;
+  border-radius: 22px; padding: 0;
+  max-width: 700px; width: 100%;
+  max-height: 90vh; overflow-y: auto;
   animation: fadeInUp 0.4s ease-out;
   position: relative;
 }
 .tool-modal-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  display: flex; justify-content: space-between; align-items: center;
   padding: 22px 25px;
   border-bottom: 1px solid rgba(212, 175, 55, 0.15);
-  position: sticky;
-  top: 0;
-  background: var(--bg-card);
-  z-index: 2;
+  position: sticky; top: 0;
+  background: var(--bg-card); z-index: 2;
   border-radius: 22px 22px 0 0;
 }
 .tool-modal-title {
-  color: var(--gold);
-  font-size: 18px;
-  font-weight: 900;
-  display: flex;
-  align-items: center;
-  gap: 10px;
+  color: var(--gold); font-size: 18px; font-weight: 900;
+  display: flex; align-items: center; gap: 10px;
 }
 .tool-modal-close {
-  width: 38px;
-  height: 38px;
-  border-radius: 10px;
+  width: 38px; height: 38px; border-radius: 10px;
   background: rgba(239, 68, 68, 0.1);
   border: 1px solid rgba(239, 68, 68, 0.3);
-  color: var(--red);
-  font-size: 18px;
-  cursor: pointer;
-  font-family: inherit;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: 0.3s;
-  flex-shrink: 0;
+  color: var(--red); font-size: 18px; cursor: pointer;
+  font-family: inherit; display: flex; align-items: center;
+  justify-content: center; transition: 0.3s; flex-shrink: 0;
 }
 .tool-modal-close:hover { background: rgba(239, 68, 68, 0.25); }
 .tool-modal-body { padding: 25px; }
-
-.form-group {
-  margin-bottom: 15px;
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-.form-group label {
-  color: var(--white);
-  font-size: 13px;
-  font-weight: 700;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-.form-group label .help {
-  color: var(--gray);
-  font-size: 11px;
-  font-weight: 400;
-}
+.form-group { margin-bottom: 15px; display: flex; flex-direction: column; gap: 6px; }
+.form-group label { color: var(--white); font-size: 13px; font-weight: 700; display: flex; align-items: center; gap: 6px; }
+.form-group label .help { color: var(--gray); font-size: 11px; font-weight: 400; }
 .form-input {
-  width: 100%;
-  padding: 12px 14px;
+  width: 100%; padding: 12px 14px;
   background: rgba(10, 10, 15, 0.6);
   border: 2px solid rgba(255, 255, 255, 0.08);
-  border-radius: 10px;
-  color: var(--white);
-  font-family: inherit;
-  font-size: 14px;
-  outline: none;
-  transition: 0.3s;
-  direction: ltr;
-  text-align: right;
+  border-radius: 10px; color: var(--white);
+  font-family: inherit; font-size: 14px; outline: none;
+  transition: 0.3s; direction: ltr; text-align: right;
   font-variant-numeric: tabular-nums;
 }
-[data-theme="light"] .form-input {
-  background: #ffffff;
-  border-color: rgba(0, 0, 0, 0.1);
-}
-.form-input:focus {
-  border-color: var(--gold);
-  box-shadow: 0 0 0 4px rgba(212, 175, 55, 0.1);
-}
+[data-theme="light"] .form-input { background: #ffffff; border-color: rgba(0, 0, 0, 0.1); }
+.form-input:focus { border-color: var(--gold); box-shadow: 0 0 0 4px rgba(212, 175, 55, 0.1); }
 .form-input::placeholder { color: rgba(148, 163, 184, 0.4); }
-.form-row-2 {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px;
-}
+.form-row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
 .calc-btn {
-  width: 100%;
-  padding: 14px;
+  width: 100%; padding: 14px;
   background: linear-gradient(135deg, var(--gold), var(--gold-dark));
-  color: #ffffff;
-  border: none;
-  border-radius: 12px;
-  font-family: inherit;
-  font-size: 15px;
-  font-weight: 800;
-  cursor: pointer;
-  transition: 0.3s;
-  box-shadow: var(--shadow-gold);
-  margin-top: 10px;
+  color: #ffffff; border: none; border-radius: 12px;
+  font-family: inherit; font-size: 15px; font-weight: 800;
+  cursor: pointer; transition: 0.3s;
+  box-shadow: var(--shadow-gold); margin-top: 10px;
 }
-.calc-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 15px 40px rgba(212, 175, 55, 0.5);
-}
+.calc-btn:hover { transform: translateY(-2px); box-shadow: 0 15px 40px rgba(212, 175, 55, 0.5); }
+.calc-btn:disabled { opacity: 0.5; cursor: not-allowed; }
 .result-card {
   background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(16, 185, 129, 0.03));
   border: 1px solid rgba(16, 185, 129, 0.3);
-  border-radius: 18px;
-  padding: 22px;
-  margin-top: 20px;
-  display: none;
-  animation: fadeInUp 0.4s ease-out;
+  border-radius: 18px; padding: 22px; margin-top: 20px;
+  display: none; animation: fadeInUp 0.4s ease-out;
 }
 .result-card.show { display: block; }
 .result-card h3 {
-  color: var(--green);
-  font-size: 15px;
-  font-weight: 800;
-  margin-bottom: 15px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
+  color: var(--green); font-size: 15px; font-weight: 800;
+  margin-bottom: 15px; display: flex; align-items: center; gap: 8px;
 }
-.result-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 12px;
-}
+.result-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
 .result-item {
-  background: rgba(10, 10, 15, 0.5);
-  padding: 14px;
-  border-radius: 12px;
-  border-right: 3px solid var(--green);
+  background: rgba(10, 10, 15, 0.5); padding: 14px;
+  border-radius: 12px; border-right: 3px solid var(--green);
 }
-[data-theme="light"] .result-item {
-  background: rgba(248, 250, 252, 0.8);
-}
+[data-theme="light"] .result-item { background: rgba(248, 250, 252, 0.8); }
 .result-item.gold { border-right-color: var(--gold); }
 .result-item.blue { border-right-color: var(--blue); }
-.result-item .label {
-  color: var(--gray);
-  font-size: 11px;
-  margin-bottom: 6px;
-}
-.result-item .value {
-  color: var(--white);
-  font-size: 16px;
-  font-weight: 900;
-  font-variant-numeric: tabular-nums;
-}
+.result-item .label { color: var(--gray); font-size: 11px; margin-bottom: 6px; }
+.result-item .value { color: var(--white); font-size: 16px; font-weight: 900; font-variant-numeric: tabular-nums; }
 .result-item .value.gold { color: var(--gold); }
 .result-item .value.green { color: var(--green); }
 .result-highlight {
   grid-column: 1 / -1;
   background: linear-gradient(135deg, rgba(212, 175, 55, 0.15), rgba(212, 175, 55, 0.05));
   border: 2px solid rgba(212, 175, 55, 0.4);
-  border-radius: 15px;
-  padding: 20px;
-  text-align: center;
+  border-radius: 15px; padding: 20px; text-align: center;
   margin-bottom: 15px;
 }
-.result-highlight .label {
-  color: var(--gold);
-  font-size: 13px;
-  margin-bottom: 8px;
-  font-weight: 700;
+.result-highlight .label { color: var(--gold); font-size: 13px; margin-bottom: 8px; font-weight: 700; }
+.result-highlight .value { color: var(--white); font-size: 26px; font-weight: 900; font-variant-numeric: tabular-nums; }
+.result-highlight .sub { color: var(--gray); font-size: 12px; margin-top: 6px; }
+.action-buttons {
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  gap: 8px; margin-top: 15px;
 }
-.result-highlight .value {
-  color: var(--white);
-  font-size: 26px;
-  font-weight: 900;
-  font-variant-numeric: tabular-nums;
+.action-btn {
+  padding: 11px 8px; border-radius: 10px; border: none;
+  font-family: inherit; font-size: 12px; font-weight: 800;
+  cursor: pointer; transition: 0.3s;
+  display: flex; align-items: center; justify-content: center; gap: 5px;
+  color: #fff;
 }
-.result-highlight .sub {
-  color: var(--gray);
-  font-size: 12px;
-  margin-top: 6px;
+.action-btn.save { background: linear-gradient(135deg, #10b981, #059669); }
+.action-btn.pdf { background: linear-gradient(135deg, #ef4444, #b91c1c); }
+.action-btn.excel { background: linear-gradient(135deg, #16a34a, #15803d); }
+.action-btn.ai { background: linear-gradient(135deg, #8b5cf6, #7c3aed); }
+.action-btn:hover:not(:disabled) { transform: translateY(-2px); filter: brightness(1.1); }
+.action-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+.ai-card {
+  background: linear-gradient(135deg, rgba(139, 92, 246, 0.08), rgba(139, 92, 246, 0.02));
+  border: 1px solid rgba(139, 92, 246, 0.3);
+  border-radius: 18px; padding: 20px; margin-top: 15px;
+  display: none; animation: fadeInUp 0.4s ease-out;
 }
-
-/* Risk Portfolio */
-.risk-portfolio-list {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
+.ai-card.show { display: block; }
+.ai-title {
+  color: #a78bfa; font-size: 14px; font-weight: 800;
+  margin-bottom: 12px; display: flex; align-items: center; gap: 8px;
 }
-.risk-portfolio-item {
-  background: rgba(10, 10, 15, 0.5);
-  padding: 14px;
-  border-radius: 12px;
-  border-right: 3px solid var(--gold);
-}
-[data-theme="light"] .risk-portfolio-item {
-  background: rgba(248, 250, 252, 0.8);
-}
-.risk-portfolio-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 6px;
-}
-.risk-portfolio-label {
-  color: var(--white);
-  font-size: 13px;
-  font-weight: 700;
-}
-.risk-portfolio-percent {
-  color: var(--gold);
-  font-size: 18px;
-  font-weight: 900;
-}
-.risk-portfolio-amount {
-  color: var(--gray);
-  font-size: 12px;
-  margin-bottom: 8px;
-}
-.risk-portfolio-bar {
-  height: 6px;
+.ai-output {
   background: rgba(10, 10, 15, 0.6);
-  border-radius: 6px;
-  overflow: hidden;
+  border: 1px solid rgba(139, 92, 246, 0.2);
+  border-radius: 12px; padding: 16px;
+  min-height: 80px; max-height: 400px; overflow-y: auto;
+  color: #cbd5e1; font-size: 13px; line-height: 1.9;
 }
-[data-theme="light"] .risk-portfolio-bar {
-  background: rgba(0, 0, 0, 0.08);
+[data-theme="light"] .ai-output { background: #ffffff; color: #334155; }
+.ai-output h1, .ai-output h2, .ai-output h3 { color: #a78bfa; margin: 10px 0 6px; }
+[data-theme="light"] .ai-output h1, [data-theme="light"] .ai-output h2, [data-theme="light"] .ai-output h3 { color: #7c3aed; }
+.ai-output strong { color: #ddd6fe; }
+[data-theme="light"] .ai-output strong { color: #6d28d9; }
+.ai-output p { margin-bottom: 8px; }
+.ai-output ul, .ai-output ol { margin: 8px 20px 8px 0; padding-right: 15px; }
+.ai-loading {
+  display: flex; flex-direction: column; align-items: center; gap: 10px;
+  padding: 20px; color: #a78bfa;
 }
+.spinner {
+  width: 32px; height: 32px;
+  border: 3px solid rgba(139, 92, 246, 0.2);
+  border-top-color: #8b5cf6; border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+.toast {
+  position: fixed; bottom: 30px; left: 50%;
+  transform: translateX(-50%) translateY(100px);
+  background: var(--bg-card); color: var(--white);
+  padding: 14px 24px; border-radius: 12px;
+  border-right: 4px solid var(--gold);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+  z-index: 200000; transition: 0.4s;
+  font-size: 13px; font-weight: 700;
+}
+.toast.show { transform: translateX(-50%) translateY(0); }
+.toast.success { border-right-color: var(--green); }
+.toast.error { border-right-color: var(--red); }
+.risk-portfolio-list { display: flex; flex-direction: column; gap: 12px; }
+.risk-portfolio-item {
+  background: rgba(10, 10, 15, 0.5); padding: 14px;
+  border-radius: 12px; border-right: 3px solid var(--gold);
+}
+[data-theme="light"] .risk-portfolio-item { background: rgba(248, 250, 252, 0.8); }
+.risk-portfolio-header {
+  display: flex; justify-content: space-between;
+  align-items: center; margin-bottom: 6px;
+}
+.risk-portfolio-label { color: var(--white); font-size: 13px; font-weight: 700; }
+.risk-portfolio-percent { color: var(--gold); font-size: 18px; font-weight: 900; }
+.risk-portfolio-amount { color: var(--gray); font-size: 12px; margin-bottom: 8px; }
+.risk-portfolio-bar {
+  height: 6px; background: rgba(10, 10, 15, 0.6);
+  border-radius: 6px; overflow: hidden;
+}
+[data-theme="light"] .risk-portfolio-bar { background: rgba(0, 0, 0, 0.08); }
 .risk-portfolio-bar-fill {
   height: 100%;
   background: linear-gradient(90deg, var(--gold), var(--gold-light));
-  border-radius: 6px;
-  transition: width 0.5s;
+  border-radius: 6px; transition: width 0.5s;
 }
-
-/* Responsive */
 @media (max-width: 900px) {
   .tools-grid { grid-template-columns: repeat(2, 1fr); }
   .social-proof { grid-template-columns: repeat(2, 1fr); }
@@ -747,6 +608,7 @@ body {
   .simulator-inputs { grid-template-columns: 1fr 1fr; }
   .form-row-2 { grid-template-columns: 1fr; }
   .result-grid { grid-template-columns: 1fr; }
+  .action-buttons { grid-template-columns: repeat(2, 1fr); }
 }
 @media (max-width: 600px) {
   .main-container { padding: 90px 15px 30px; }
@@ -793,7 +655,7 @@ body {
       <br>
       از عدد تا تصمیم، در ۳۰ ثانیه
     </h1>
-    <p>
+    <p id="heroText">
       ابزارهای مالی حرفه‌ای، تحلیل هوشمند با AI، و پیشنهاد شخصی‌سازی‌شده — همه در یک صفحه.
       بدون نیاز به دانش تخصصی، بدون هزینه.
     </p>
@@ -817,18 +679,14 @@ body {
           </linearGradient>
         </defs>
         <circle class="bg-circle" cx="50" cy="50" r="45"/>
-        <circle class="progress-circle" cx="50" cy="50" r="45"/>
+        <circle class="progress-circle" id="scoreProgress" cx="50" cy="50" r="45"/>
       </svg>
-      <div class="score-value">۷۸</div>
+      <div class="score-value" id="scoreValue">--</div>
     </div>
     <div class="score-info">
-      <h3>🏆 امتیاز مالی شما: <span class="gold">۷۸ از ۱۰۰</span></h3>
-      <p>سبد شما متعادل و متنوعه، ولی برای بهتر شدن پوشش تورم، پیشنهادهای زیر رو ببین.</p>
-      <div class="score-badges">
-        <span class="score-badge">✓ تنوع خوب</span>
-        <span class="score-badge warning">⚠️ پوشش تورم ضعیف</span>
-        <span class="score-badge neutral">ⓘ نظم DCA: متوسط</span>
-      </div>
+      <h3 id="scoreTitle">🏆 امتیاز مالی شما: <span class="gold" id="scoreText">-- از ۱۰۰</span></h3>
+      <p id="scoreDesc">برای دیدن امتیاز مالی، وارد حساب کاربری شو یا پرتفوی خودت رو بساز.</p>
+      <div class="score-badges" id="scoreBadges"></div>
     </div>
     <div class="score-cta">
       <button id="scoreCtaBtn">🔓 دیدن تحلیل کامل</button>
@@ -983,7 +841,7 @@ body {
 <div class="tool-modal-overlay" id="toolModal">
   <div class="tool-modal-box">
     <div class="tool-modal-header">
-      <div class="tool-modal-title" id="toolModalTitle">
+      <div class="tool-modal-title">
         <span id="toolModalIcon">💰</span>
         <span id="toolModalName">ابزار</span>
       </div>
@@ -993,11 +851,14 @@ body {
   </div>
 </div>
 
+<div id="toast" class="toast"></div>
+
 <footer class="footer">
   © ۱۴۰۵ آکادمی شمعدون | تمامی حقوق محفوظ است
 </footer>
 
-<script>
+<!-- ⬇️ اینجا منتظر پیام بعدی بمون — JavaScript رو جای این خط می‌ذاریم ⬇️ -->
+  <script>
 // ==========================================
 // 📌 ابزارهای عمومی
 // ==========================================
@@ -1018,6 +879,12 @@ function parseNum(str) {
   const en = toEnDigits(str).replace(/[^\d]/g, '');
   return en ? parseInt(en, 10) : 0;
 }
+function formatNum(num) {
+  if (num === null || num === undefined) return '۰';
+  const n = Math.round(Number(num));
+  if (!isFinite(n)) return '۰';
+  return toFa(n.toLocaleString('en-US'));
+}
 function formatBigNum(num) {
   if (!num || isNaN(num)) return '۰';
   const n = Number(num);
@@ -1030,14 +897,23 @@ function formatBigNum(num) {
   else r = Math.round(n).toString();
   return toFa(r);
 }
+function escapeHtml(t) {
+  if (!t) return '';
+  const d = document.createElement('div');
+  d.textContent = t;
+  return d.innerHTML;
+}
 function handleNumericInput(e) {
   const input = e.target;
   const raw = toEnDigits(input.value).replace(/[^\d]/g, '');
-  if (raw) {
-    input.value = toFa(parseInt(raw, 10).toLocaleString('en-US'));
-  } else {
-    input.value = '';
-  }
+  if (raw) input.value = toFa(parseInt(raw, 10).toLocaleString('en-US'));
+  else input.value = '';
+}
+function showToast(msg, type = 'success') {
+  const toast = document.getElementById('toast');
+  toast.textContent = msg;
+  toast.className = 'toast show ' + type;
+  setTimeout(() => toast.classList.remove('show'), 3000);
 }
 
 // ==========================================
@@ -1075,49 +951,207 @@ function initThemeButton() {
 // 🔌 اتصال به Supabase
 // ==========================================
 let currentUser = null;
+let currentFinancialScore = null;
 
 async function checkUser() {
   try {
     const { data: { session } } = await db.auth.getSession();
     const userArea = document.getElementById('snUserArea');
-    
+
     if (session?.user) {
       currentUser = session.user;
       const fullName = session.user.user_metadata?.full_name || session.user.email || 'کاربر';
       const firstLetter = fullName.charAt(0).toUpperCase();
       const userName = fullName.split(' ')[0] || 'کاربر';
-      
-      userArea.innerHTML = `<a href="dashboard.html" class="sn-user-avatar" title="${fullName}">${firstLetter}</a>`;
-      
-      const heroP = document.querySelector('.hero-section p');
-      if (heroP) {
-        heroP.innerHTML = `سلام <strong style="color: var(--gold);">${userName}</strong> 👋 خوش برگشتی!<br>امتیاز مالی و پیشنهادهای شخصی‌ت آماده‌ست.`;
+
+      userArea.innerHTML = `<a href="dashboard.html" class="sn-user-avatar" title="${escapeHtml(fullName)}">${firstLetter}</a>`;
+
+      const heroText = document.getElementById('heroText');
+      if (heroText) {
+        heroText.innerHTML = `سلام <strong style="color: var(--gold);">${escapeHtml(userName)}</strong> 👋 خوش برگشتی!<br>امتیاز مالی و پیشنهادهای شخصی‌ت آماده‌ست.`;
       }
-      
+
       const ctaBtn = document.getElementById('mainCtaBtn');
       if (ctaBtn) {
         ctaBtn.innerHTML = '📊 ورود به داشبورد';
         ctaBtn.onclick = () => window.location.href = 'dashboard.html';
       }
-      
+
       const scoreBtn = document.getElementById('scoreCtaBtn');
       if (scoreBtn) {
         scoreBtn.innerHTML = '📊 تحلیل کامل امتیاز';
         scoreBtn.onclick = () => window.location.href = 'dashboard.html';
       }
-      
+
+      // محاسبه امتیاز مالی واقعی
+      await calculateAndRenderScore();
+
     } else {
       userArea.innerHTML = `<a href="login.html" class="sn-user-avatar" title="ورود / ثبت‌نام" style="font-size: 18px;">👤</a>`;
+
+      // باگ fix: دکمه تحلیل برای کاربر مهمان
+      const scoreBtn = document.getElementById('scoreCtaBtn');
+      if (scoreBtn) {
+        scoreBtn.innerHTML = '🔓 دیدن تحلیل کامل';
+        scoreBtn.onclick = () => window.location.href = 'login.html';
+      }
+
+      // نمایش امتیاز پیش‌فرض برای مهمان
+      renderScoreDisplay(9, 'default', []);
     }
   } catch (e) {
     console.error('User check error:', e);
-    const userArea = document.getElementById('snUserArea');
-    if (userArea) userArea.innerHTML = `<a href="login.html" class="sn-user-avatar" title="ورود" style="font-size: 18px;">👤</a>`;
   }
 }
 
 // ==========================================
-// 📊 Market Ticker (Mock)
+// 🏆 امتیاز مالی واقعی
+// ==========================================
+async function calculateAndRenderScore() {
+  try {
+    const userId = currentUser.id;
+
+    // ۱. تنوع سبد
+    const { data: portfolio } = await db.from('user_portfolio').select('asset_category').eq('user_id', userId);
+    const categories = new Set((portfolio || []).map(p => p.asset_category));
+    const catCount = categories.size;
+    let diversity = 4;
+    if (catCount >= 5) diversity = 20;
+    else if (catCount === 4) diversity = 16;
+    else if (catCount === 3) diversity = 12;
+    else if (catCount === 2) diversity = 8;
+    else if (catCount === 1) diversity = 4;
+    else diversity = 0;
+
+    // ۲. پوشش تورم (بر اساس بازدهی سبد - تورم ۴۰٪)
+    const INFLATION = 40;
+    let inflationHedge = 5;
+    if (portfolio && portfolio.length > 0) {
+      let totalValue = 0, totalInvested = 0;
+      const { data: fullPortfolio } = await db.from('user_portfolio').select('quantity, buy_price, asset_symbol').eq('user_id', userId);
+      (fullPortfolio || []).forEach(item => {
+        const q = Number(item.quantity) || 0;
+        const bp = Number(item.buy_price) || 0;
+        totalInvested += q * bp;
+        totalValue += q * bp * 1.3; // فرض ۳۰٪ سود
+      });
+      if (totalInvested > 0) {
+        const returnPct = ((totalValue / totalInvested - 1) * 100);
+        const realReturn = returnPct - INFLATION;
+        if (realReturn >= 15) inflationHedge = 20;
+        else if (realReturn >= 10) inflationHedge = 15;
+        else if (realReturn >= 5) inflationHedge = 10;
+        else if (realReturn >= 0) inflationHedge = 5;
+        else inflationHedge = 0;
+      }
+    }
+
+    // ۳. نظم DCA
+    const threeMonthsAgo = new Date(Date.now() - 90 * 24 * 60 * 60 * 1000).toISOString();
+    const { count: dcaCount } = await db.from('saved_calculations').select('*', { count: 'exact', head: true }).eq('user_id', userId).eq('calc_type', 'dca').gte('created_at', threeMonthsAgo);
+    let dcaDiscipline = 0;
+    if (dcaCount >= 12) dcaDiscipline = 20;
+    else if (dcaCount >= 6) dcaDiscipline = 15;
+    else if (dcaCount >= 3) dcaDiscipline = 10;
+    else if (dcaCount >= 1) dcaDiscipline = 5;
+
+    // ۴. مدیریت ریسک
+    const { count: riskCount } = await db.from('saved_calculations').select('*', { count: 'exact', head: true }).eq('user_id', userId).in('calc_type', ['breakeven', 'position', 'risk']);
+    let riskManagement = Math.min((riskCount || 0) * 5, 20);
+
+    // ۵. پیشرفت هدف
+    const { data: goals } = await db.from('user_goals').select('*').eq('user_id', userId);
+    let goalProgress = 0;
+    if (goals && goals.length > 0) {
+      goalProgress = 5;
+      const activeGoal = goals[0];
+      if (activeGoal.target_amount > 0) {
+        const progress = (Number(activeGoal.current_amount) / Number(activeGoal.target_amount)) * 100;
+        if (progress >= 75) goalProgress = 20;
+        else if (progress >= 50) goalProgress = 15;
+        else if (progress >= 25) goalProgress = 10;
+      }
+    }
+
+    const totalScore = diversity + inflationHedge + dcaDiscipline + riskManagement + goalProgress;
+
+    // بج‌ها
+    const badges = [];
+    if (diversity >= 16) badges.push({ text: '✓ تنوع خوب', type: 'good' });
+    else if (diversity <= 8) badges.push({ text: '⚠️ تنوع کم', type: 'warning' });
+    if (inflationHedge >= 15) badges.push({ text: '💎 پوشش کامل تورم', type: 'good' });
+    else if (inflationHedge <= 5) badges.push({ text: '⚠️ پوشش تورم ضعیف', type: 'warning' });
+    if (dcaDiscipline >= 15) badges.push({ text: '🔥 DCA استاد', type: 'good' });
+    else if (dcaDiscipline <= 5) badges.push({ text: 'ⓘ نظم DCA: ضعیف', type: 'neutral' });
+    if (riskManagement >= 15) badges.push({ text: '🛡️ محافظ ریسک', type: 'good' });
+    if (goalProgress >= 15) badges.push({ text: '🎯 هدف‌محور', type: 'good' });
+
+    // ذخیره در Supabase
+    try {
+      await db.from('financial_scores').upsert({
+        user_id: userId,
+        score: totalScore,
+        diversity_score: diversity,
+        inflation_hedge_score: inflationHedge,
+        dca_discipline_score: dcaDiscipline,
+        risk_management_score: riskManagement,
+        goal_progress_score: goalProgress,
+        badges: badges,
+        calculated_at: new Date().toISOString()
+      }, { onConflict: 'user_id' });
+    } catch (e) { console.warn('Score save error:', e); }
+
+    currentFinancialScore = totalScore;
+    renderScoreDisplay(totalScore, 'real', badges);
+
+  } catch (e) {
+    console.error('Score calculation error:', e);
+    renderScoreDisplay(9, 'default', []);
+  }
+}
+
+function renderScoreDisplay(score, type, badges) {
+  const scoreValue = document.getElementById('scoreValue');
+  const scoreText = document.getElementById('scoreText');
+  const scoreDesc = document.getElementById('scoreDesc');
+  const scoreBadges = document.getElementById('scoreBadges');
+  const scoreProgress = document.getElementById('scoreProgress');
+
+  scoreValue.textContent = toFa(score);
+  scoreText.textContent = `${toFa(score)} از ۱۰۰`;
+
+  // انیمیشن دایره
+  if (scoreProgress) {
+    const dasharray = 2 * Math.PI * 45;
+    const offset = dasharray * (1 - score / 100);
+    setTimeout(() => { scoreProgress.style.strokeDashoffset = offset; }, 100);
+  }
+
+  // توضیحات
+  if (type === 'default') {
+    scoreDesc.textContent = 'برای دیدن امتیاز مالی، وارد حساب کاربری شو یا پرتفوی خودت رو بساز.';
+  } else if (score < 40) {
+    scoreDesc.textContent = '⚠️ وضعیت مالی شما نیاز به توجه داره. با شروع DCA و تنوع‌بخشی، می‌تونی امتیازت رو بالا ببری.';
+  } else if (score < 60) {
+    scoreDesc.textContent = '📊 وضعیت شما متوسطه. برای بهبود، روی تنوع‌بخشی و پوشش تورم تمرکز کن.';
+  } else if (score < 80) {
+    scoreDesc.textContent = '✅ وضعیت مالی خوبی داری! برای رسیدن به سطح عالی، نظم DCA رو بیشتر کن.';
+  } else {
+    scoreDesc.textContent = '🏆 تبریک! وضعیت مالیت عالیه. الان وقت یادگیری مباحث پیشرفته‌ست.';
+  }
+
+  // بج‌ها
+  if (badges && badges.length > 0) {
+    scoreBadges.innerHTML = badges.map(b => 
+      `<span class="score-badge ${b.type === 'warning' ? 'warning' : b.type === 'neutral' ? 'neutral' : ''}">${b.text}</span>`
+    ).join('');
+  } else {
+    scoreBadges.innerHTML = '';
+  }
+}
+
+// ==========================================
+// 📊 Market Ticker
 // ==========================================
 function mockMarketPrices() {
   const p = { gold18: 2950000, ch: 1.2, usd: 62500, uc: -0.5, btc: 88200, bc: 2.3 };
@@ -1126,17 +1160,17 @@ function mockMarketPrices() {
     el.innerHTML = `
       <div class="market-price-item">
         <span class="icon">🥇</span><span class="name">طلا ۱۸:</span>
-        <span class="price">${toFa(p.gold18.toLocaleString())}</span>
+        <span class="price">${formatNum(p.gold18)}</span>
         <span class="change up">+${toFa(p.ch)}٪</span>
       </div>
       <div class="market-price-item">
         <span class="icon">💵</span><span class="name">دلار:</span>
-        <span class="price">${toFa(p.usd.toLocaleString())}</span>
+        <span class="price">${formatNum(p.usd)}</span>
         <span class="change down">${toFa(p.uc)}٪</span>
       </div>
       <div class="market-price-item">
         <span class="icon">₿</span><span class="name">BTC:</span>
-        <span class="price">$${toFa(p.btc.toLocaleString())}</span>
+        <span class="price">$${formatNum(p.btc)}</span>
         <span class="change up">+${toFa(p.bc)}٪</span>
       </div>
     `;
@@ -1154,6 +1188,7 @@ const SCENARIOS = [
   { key: 'inflation', name: '📉 فقط تورم', rate: 40, color: '#ef4444' },
   { key: 'you', name: '🎯 سبد فعلی شما', rate: 32, color: '#d4af37', isYou: true }
 ];
+
 function runSimulation() {
   const capital = parseNum(document.getElementById('sim-capital').value);
   const monthly = parseNum(document.getElementById('sim-monthly').value);
@@ -1163,11 +1198,8 @@ function runSimulation() {
   const results = SCENARIOS.map(sc => {
     const mr = sc.rate / 100 / 12;
     let final;
-    if (mr === 0) { final = capital + (monthly * months); }
-    else {
-      const f = Math.pow(1 + mr, months);
-      final = capital * f + monthly * ((f - 1) / mr);
-    }
+    if (mr === 0) final = capital + (monthly * months);
+    else { const f = Math.pow(1 + mr, months); final = capital * f + monthly * ((f - 1) / mr); }
     const invested = capital + (monthly * months);
     return { ...sc, finalValue: final, invested, returnPercent: (final / invested - 1) * 100 };
   });
@@ -1175,8 +1207,7 @@ function runSimulation() {
   const maxV = winner.finalValue;
   const user = results.find(r => r.isYou);
 
-  const grid = document.getElementById('scenarioGrid');
-  grid.innerHTML = results.map(sc => {
+  document.getElementById('scenarioGrid').innerHTML = results.map(sc => {
     const bw = (sc.finalValue / maxV) * 100;
     const isW = sc.key === winner.key;
     const cls = ['scenario-card'];
@@ -1190,12 +1221,8 @@ function runSimulation() {
           ${sc.isYou ? '<span class="scenario-tag you">شما</span>' : ''}
         </div>
         <div class="scenario-value">${formatBigNum(sc.finalValue)}</div>
-        <div class="scenario-return ${sc.returnPercent >= 0 ? 'up' : 'down'}">
-          ${sc.returnPercent >= 0 ? '+' : ''}${toFa(sc.returnPercent.toFixed(1))}٪
-        </div>
-        <div class="scenario-bar">
-          <div class="scenario-bar-fill" style="width: ${bw}%; background: linear-gradient(90deg, ${sc.color}, ${sc.color}88);"></div>
-        </div>
+        <div class="scenario-return ${sc.returnPercent >= 0 ? 'up' : 'down'}">${sc.returnPercent >= 0 ? '+' : ''}${toFa(sc.returnPercent.toFixed(1))}٪</div>
+        <div class="scenario-bar"><div class="scenario-bar-fill" style="width: ${bw}%; background: linear-gradient(90deg, ${sc.color}, ${sc.color}88);"></div></div>
       </div>
     `;
   }).join('');
@@ -1203,13 +1230,9 @@ function runSimulation() {
   const diff = user.finalValue - winner.finalValue;
   const dp = (user.finalValue / winner.finalValue - 1) * 100;
   let summary = '';
-  if (user.key === winner.key) {
-    summary = `🏆 <strong>عالی!</strong> سبد فعلی شما بهترین سناریو در این دوره است.`;
-  } else if (dp > -10) {
-    summary = `⚖️ <strong>سبد شما نزدیک به بهترین گزینه‌ست.</strong> اگه روی «${winner.name}» تمرکز کنی، در ${toFa(years)} سال <strong>${formatBigNum(Math.abs(diff))}</strong> تومان بیشتر می‌داشتی.`;
-  } else {
-    summary = `⚠️ <strong>سبد فعلی شما از بهترین گزینه عقب‌تره.</strong> اگه روی «${winner.name}» سرمایه‌گذاری می‌کردی، <strong>${formatBigNum(Math.abs(diff))}</strong> تومان بیشتر (${toFa(Math.abs(dp).toFixed(1))}٪) می‌داشتی.`;
-  }
+  if (user.key === winner.key) summary = `🏆 <strong>عالی!</strong> سبد فعلی شما بهترین سناریو در این دوره است.`;
+  else if (dp > -10) summary = `⚖️ <strong>سبد شما نزدیک به بهترین گزینه‌ست.</strong> اگه روی «${winner.name}» تمرکز کنی، در ${toFa(years)} سال <strong>${formatBigNum(Math.abs(diff))}</strong> تومان بیشتر می‌داشتی.`;
+  else summary = `⚠️ <strong>سبد فعلی شما از بهترین گزینه عقب‌تره.</strong> اگه روی «${winner.name}» سرمایه‌گذاری می‌کردی، <strong>${formatBigNum(Math.abs(diff))}</strong> تومان بیشتر (${toFa(Math.abs(dp).toFixed(1))}٪) می‌داشتی.`;
   document.getElementById('scenarioSummary').innerHTML = summary;
   document.getElementById('simResults').classList.add('show');
   document.getElementById('simResults').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
@@ -1219,19 +1242,22 @@ function runSimulation() {
 // 🎯 Modal ابزارها
 // ==========================================
 const TOOLS_CONFIG = {
-  dca: { icon: '💰', name: 'سرمایه‌گذاری ماهانه (DCA)', render: renderDCATool },
-  compound: { icon: '🏦', name: 'سود مرکب', render: renderCompoundTool },
-  goal: { icon: '🎯', name: 'هدف مالی', render: renderGoalTool },
-  inflation: { icon: '📉', name: 'محاسبه تورم', render: renderInflationTool },
-  'inflation-history': { icon: '📊', name: 'تاریخچه تورم', render: renderInflationHistoryTool },
-  compare: { icon: '⚖️', name: 'مقایسه گزینه‌ها', render: renderCompareTool },
-  risk: { icon: '🎲', name: 'تحلیل ریسک', render: renderRiskTool },
-  position: { icon: '🎯', name: 'مدیریت پوزیشن', render: renderPositionTool }
+  dca: { icon: '💰', name: 'سرمایه‌گذاری ماهانه (DCA)', render: renderDCATool, calc: calcDCA, collect: collectDCA },
+  compound: { icon: '🏦', name: 'سود مرکب', render: renderCompoundTool, calc: calcCompound, collect: collectCompound },
+  goal: { icon: '🎯', name: 'هدف مالی', render: renderGoalTool, calc: calcGoal, collect: collectGoal },
+  inflation: { icon: '📉', name: 'محاسبه تورم', render: renderInflationTool, calc: calcInflation, collect: collectInflation },
+  'inflation-history': { icon: '📊', name: 'تاریخچه تورم', render: renderInflationHistoryTool, calc: null, collect: null },
+  compare: { icon: '⚖️', name: 'مقایسه گزینه‌ها', render: renderCompareTool, calc: calcCompare, collect: collectCompare },
+  risk: { icon: '🎲', name: 'تحلیل ریسک', render: renderRiskTool, calc: calcRisk, collect: collectRisk },
+  position: { icon: '🎯', name: 'مدیریت پوزیشن', render: renderPositionTool, calc: calcPosition, collect: collectPosition }
 };
+
+let activeTool = null;
 
 function openTool(toolKey) {
   const config = TOOLS_CONFIG[toolKey];
   if (!config) return;
+  activeTool = toolKey;
   document.getElementById('toolModalIcon').textContent = config.icon;
   document.getElementById('toolModalName').textContent = config.name;
   document.getElementById('toolModalBody').innerHTML = config.render();
@@ -1247,14 +1273,11 @@ function openTool(toolKey) {
 function closeToolModal() {
   document.getElementById('toolModal').classList.remove('show');
   document.body.style.overflow = '';
+  activeTool = null;
 }
 
-document.addEventListener('click', (e) => {
-  if (e.target.id === 'toolModal') closeToolModal();
-});
-document.addEventListener('keydown', (e) => {
-  if (e.key === 'Escape') closeToolModal();
-});
+document.addEventListener('click', (e) => { if (e.target.id === 'toolModal') closeToolModal(); });
+document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeToolModal(); });
 
 // ==========================================
 // 💰 ابزار DCA
@@ -1269,39 +1292,33 @@ function renderDCATool() {
       </div>
     </div>
     <div class="form-row-2">
-      <div class="form-group">
-        <label>💵 سرمایه‌گذاری ماهانه <span class="help">(تومان)</span></label>
-        <input type="text" id="dca-monthly" class="form-input" placeholder="5,000,000" inputmode="numeric">
-      </div>
-      <div class="form-group">
-        <label>⏳ مدت زمان <span class="help">(ماه)</span></label>
-        <input type="number" id="dca-months" class="form-input" placeholder="12" min="1" max="600" style="direction: rtl; text-align: right;">
-      </div>
+      <div class="form-group"><label>💵 سرمایه‌گذاری ماهانه <span class="help">(تومان)</span></label><input type="text" id="dca-monthly" class="form-input" placeholder="5,000,000" inputmode="numeric"></div>
+      <div class="form-group"><label>⏳ مدت زمان <span class="help">(ماه)</span></label><input type="number" id="dca-months" class="form-input" placeholder="12" min="1" max="600" style="direction: rtl; text-align: right;"></div>
     </div>
     <div class="form-row-2">
-      <div class="form-group">
-        <label>📈 بازدهی سالانه <span class="help">(٪)</span></label>
-        <input type="number" id="dca-rate" class="form-input" placeholder="30" step="0.1" style="direction: rtl; text-align: right;">
-      </div>
-      <div class="form-group">
-        <label>💹 موجودی فعلی <span class="help">(اختیاری)</span></label>
-        <input type="text" id="dca-initial" class="form-input" placeholder="0" inputmode="numeric">
-      </div>
+      <div class="form-group"><label>📈 بازدهی سالانه <span class="help">(٪)</span></label><input type="number" id="dca-rate" class="form-input" placeholder="30" step="0.1" style="direction: rtl; text-align: right;"></div>
+      <div class="form-group"><label>💹 موجودی فعلی <span class="help">(اختیاری)</span></label><input type="text" id="dca-initial" class="form-input" placeholder="0" inputmode="numeric"></div>
     </div>
     <button class="calc-btn" onclick="calcDCA()">🚀 محاسبه کن</button>
     <div class="result-card" id="result-dca">
       <h3>✅ نتیجه محاسبه</h3>
       <div class="result-grid">
-        <div class="result-highlight">
-          <div class="label">💎 سرمایه نهایی شما</div>
-          <div class="value" id="dca-final">--</div>
-          <div class="sub" id="dca-profit-sub">--</div>
-        </div>
+        <div class="result-highlight"><div class="label">💎 سرمایه نهایی شما</div><div class="value" id="dca-final">--</div><div class="sub" id="dca-profit-sub">--</div></div>
         <div class="result-item"><div class="label">📊 اصل سرمایه</div><div class="value" id="dca-principal">--</div></div>
         <div class="result-item"><div class="label">📈 سود کل</div><div class="value green" id="dca-profit">--</div></div>
         <div class="result-item gold"><div class="label">⚖️ نسبت رشد</div><div class="value gold" id="dca-ratio">--</div></div>
         <div class="result-item blue"><div class="label">📅 میانگین ماهانه</div><div class="value" id="dca-avg">--</div></div>
       </div>
+      <div class="action-buttons">
+        <button class="action-btn save" onclick="saveCalc('dca')" id="saveBtn-dca">💾 ذخیره</button>
+        <button class="action-btn pdf" onclick="downloadPDF('dca')" id="pdfBtn-dca">📄 PDF</button>
+        <button class="action-btn excel" onclick="downloadExcel('dca')" id="excelBtn-dca">📊 Excel</button>
+        <button class="action-btn ai" onclick="analyzeWithAI('dca')" id="aiBtn-dca">🤖 AI</button>
+      </div>
+    </div>
+    <div class="ai-card" id="ai-card-dca">
+      <div class="ai-title">🤖 تحلیل هوشمند</div>
+      <div class="ai-output" id="ai-output-dca"></div>
     </div>
   `;
 }
@@ -1320,7 +1337,7 @@ function calcDCA() {
   const totalProfit = final - totalPrincipal;
   const ratio = totalPrincipal > 0 ? (final / totalPrincipal) : 0;
   const avg = final / months;
-  document.getElementById('dca-final').textContent = formatBigNum(final) + ' تومان';
+  document.getElementById('dca-final').textContent = formatNum(final) + ' تومان';
   document.getElementById('dca-profit-sub').textContent = totalProfit > 0 ? `سود: ${formatBigNum(totalProfit)} تومان در ${toFa(months)} ماه` : '';
   document.getElementById('dca-principal').textContent = formatBigNum(totalPrincipal);
   document.getElementById('dca-profit').textContent = formatBigNum(totalProfit);
@@ -1328,6 +1345,15 @@ function calcDCA() {
   document.getElementById('dca-avg').textContent = formatBigNum(avg);
   document.getElementById('result-dca').classList.add('show');
   setTimeout(() => document.getElementById('result-dca').scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 100);
+}
+
+function collectDCA() {
+  return {
+    monthly: parseNum(document.getElementById('dca-monthly').value),
+    months: parseInt(toEnDigits(document.getElementById('dca-months').value)) || 0,
+    rate: parseFloat(toEnDigits(document.getElementById('dca-rate').value)) || 0,
+    initial: parseNum(document.getElementById('dca-initial').value)
+  };
 }
 
 // ==========================================
@@ -1351,11 +1377,8 @@ function renderCompoundTool() {
       <div class="form-group">
         <label>🔄 تعداد محاسبه سود</label>
         <select id="cmp-compound" class="form-input" style="direction: rtl; text-align: right; cursor: pointer;">
-          <option value="1">سالانه</option>
-          <option value="2">شش‌ماهه</option>
-          <option value="4">فصلی</option>
-          <option value="12" selected>ماهانه</option>
-          <option value="365">روزانه</option>
+          <option value="1">سالانه</option><option value="2">شش‌ماهه</option><option value="4">فصلی</option>
+          <option value="12" selected>ماهانه</option><option value="365">روزانه</option>
         </select>
       </div>
     </div>
@@ -1363,16 +1386,22 @@ function renderCompoundTool() {
     <div class="result-card" id="result-compound">
       <h3>✅ نتیجه محاسبه</h3>
       <div class="result-grid">
-        <div class="result-highlight">
-          <div class="label">💎 مبلغ نهایی شما</div>
-          <div class="value" id="cmp-final">--</div>
-          <div class="sub" id="cmp-profit-sub">--</div>
-        </div>
+        <div class="result-highlight"><div class="label">💎 مبلغ نهایی شما</div><div class="value" id="cmp-final">--</div><div class="sub" id="cmp-profit-sub">--</div></div>
         <div class="result-item"><div class="label">💰 اصل سرمایه</div><div class="value" id="cmp-principal-result">--</div></div>
         <div class="result-item"><div class="label">📈 سود کل</div><div class="value green" id="cmp-profit">--</div></div>
         <div class="result-item gold"><div class="label">📊 بازدهی کل</div><div class="value gold" id="cmp-total-return">--</div></div>
         <div class="result-item blue"><div class="label">📅 سود روزانه</div><div class="value" id="cmp-daily">--</div></div>
       </div>
+      <div class="action-buttons">
+        <button class="action-btn save" onclick="saveCalc('compound')" id="saveBtn-compound">💾 ذخیره</button>
+        <button class="action-btn pdf" onclick="downloadPDF('compound')" id="pdfBtn-compound">📄 PDF</button>
+        <button class="action-btn excel" onclick="downloadExcel('compound')" id="excelBtn-compound">📊 Excel</button>
+        <button class="action-btn ai" onclick="analyzeWithAI('compound')" id="aiBtn-compound">🤖 AI</button>
+      </div>
+    </div>
+    <div class="ai-card" id="ai-card-compound">
+      <div class="ai-title">🤖 تحلیل هوشمند</div>
+      <div class="ai-output" id="ai-output-compound"></div>
     </div>
   `;
 }
@@ -1388,7 +1417,7 @@ function calcCompound() {
   const profit = final - principal;
   const totalReturn = (final / principal - 1) * 100;
   const daily = profit / (years * 365);
-  document.getElementById('cmp-final').textContent = formatBigNum(final) + ' تومان';
+  document.getElementById('cmp-final').textContent = formatNum(final) + ' تومان';
   document.getElementById('cmp-profit-sub').textContent = `سود: ${formatBigNum(profit)} تومان در ${toFa(years)} سال`;
   document.getElementById('cmp-principal-result').textContent = formatBigNum(principal);
   document.getElementById('cmp-profit').textContent = formatBigNum(profit);
@@ -1396,6 +1425,15 @@ function calcCompound() {
   document.getElementById('cmp-daily').textContent = formatBigNum(daily);
   document.getElementById('result-compound').classList.add('show');
   setTimeout(() => document.getElementById('result-compound').scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 100);
+}
+
+function collectCompound() {
+  return {
+    principal: parseNum(document.getElementById('cmp-principal').value),
+    rate: parseFloat(toEnDigits(document.getElementById('cmp-rate').value)) || 0,
+    years: parseFloat(toEnDigits(document.getElementById('cmp-years').value)) || 0,
+    compound: parseInt(document.getElementById('cmp-compound').value) || 1
+  };
 }
 
 // ==========================================
@@ -1422,16 +1460,22 @@ function renderGoalTool() {
     <div class="result-card" id="result-goal">
       <h3>✅ نتیجه محاسبه</h3>
       <div class="result-grid">
-        <div class="result-highlight">
-          <div class="label">💰 پس‌انداز ماهانه لازم</div>
-          <div class="value" id="goal-monthly">--</div>
-          <div class="sub" id="goal-monthly-sub">--</div>
-        </div>
+        <div class="result-highlight"><div class="label">💰 پس‌انداز ماهانه لازم</div><div class="value" id="goal-monthly">--</div><div class="sub" id="goal-monthly-sub">--</div></div>
         <div class="result-item"><div class="label">💎 کل اصل سرمایه‌گذاری</div><div class="value" id="goal-principal">--</div></div>
         <div class="result-item"><div class="label">📈 سود مرکب</div><div class="value green" id="goal-profit">--</div></div>
         <div class="result-item gold"><div class="label">📅 تعداد ماه</div><div class="value gold" id="goal-months">--</div></div>
-        <div class="result-item blue"><div class="label">📊 درصد سود به هدف</div><div class="value" id="goal-profit-percent">--</div></div>
+        <div class="result-item blue"><div class="label">📊 درصد سود</div><div class="value" id="goal-profit-percent">--</div></div>
       </div>
+      <div class="action-buttons">
+        <button class="action-btn save" onclick="saveCalc('goal')" id="saveBtn-goal">💾 ذخیره</button>
+        <button class="action-btn pdf" onclick="downloadPDF('goal')" id="pdfBtn-goal">📄 PDF</button>
+        <button class="action-btn excel" onclick="downloadExcel('goal')" id="excelBtn-goal">📊 Excel</button>
+        <button class="action-btn ai" onclick="analyzeWithAI('goal')" id="aiBtn-goal">🤖 AI</button>
+      </div>
+    </div>
+    <div class="ai-card" id="ai-card-goal">
+      <div class="ai-title">🤖 تحلیل هوشمند</div>
+      <div class="ai-output" id="ai-output-goal"></div>
     </div>
   `;
 }
@@ -1446,14 +1490,11 @@ function calcGoal() {
   const mr = rate / 100 / 12;
   let monthlySaving;
   if (mr === 0) monthlySaving = (target - initial) / months;
-  else {
-    const f = Math.pow(1 + mr, months);
-    monthlySaving = ((target - initial * f) * mr) / (f - 1);
-  }
+  else { const f = Math.pow(1 + mr, months); monthlySaving = ((target - initial * f) * mr) / (f - 1); }
   const totalPrincipal = monthlySaving * months + initial;
   const profit = target - totalPrincipal;
   const profitPercent = target > 0 ? (profit / target * 100) : 0;
-  document.getElementById('goal-monthly').textContent = formatBigNum(monthlySaving) + ' تومان';
+  document.getElementById('goal-monthly').textContent = formatNum(monthlySaving) + ' تومان';
   document.getElementById('goal-monthly-sub').textContent = `در ${toFa(Math.round(months))} ماه`;
   document.getElementById('goal-principal').textContent = formatBigNum(totalPrincipal);
   document.getElementById('goal-profit').textContent = formatBigNum(profit);
@@ -1461,6 +1502,15 @@ function calcGoal() {
   document.getElementById('goal-profit-percent').textContent = toFa(profitPercent.toFixed(1)) + '٪';
   document.getElementById('result-goal').classList.add('show');
   setTimeout(() => document.getElementById('result-goal').scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 100);
+}
+
+function collectGoal() {
+  return {
+    target: parseNum(document.getElementById('goal-target').value),
+    years: parseFloat(toEnDigits(document.getElementById('goal-years').value)) || 0,
+    rate: parseFloat(toEnDigits(document.getElementById('goal-rate').value)) || 0,
+    initial: parseNum(document.getElementById('goal-initial').value)
+  };
 }
 
 // ==========================================
@@ -1484,16 +1534,22 @@ function renderInflationTool() {
     <div class="result-card" id="result-inflation">
       <h3>✅ نتیجه محاسبه</h3>
       <div class="result-grid">
-        <div class="result-highlight">
-          <div class="label">💸 قدرت خرید در پایان دوره</div>
-          <div class="value" id="inf-result">--</div>
-          <div class="sub" id="inf-result-sub">--</div>
-        </div>
+        <div class="result-highlight"><div class="label">💸 قدرت خرید در پایان</div><div class="value" id="inf-result">--</div><div class="sub" id="inf-result-sub">--</div></div>
         <div class="result-item" style="border-right-color: var(--red);"><div class="label">📉 کاهش ارزش پول</div><div class="value" style="color: var(--red);" id="inf-loss">--</div></div>
         <div class="result-item gold"><div class="label">📈 مبلغ برای حفظ ارزش</div><div class="value gold" id="inf-needed">--</div></div>
         <div class="result-item"><div class="label">💵 ارزش هر ۱ میلیون</div><div class="value" id="inf-per-million">--</div></div>
         <div class="result-item blue"><div class="label">⚡ بازدهی لازم</div><div class="value" id="inf-return-needed">--</div></div>
       </div>
+      <div class="action-buttons">
+        <button class="action-btn save" onclick="saveCalc('inflation')" id="saveBtn-inflation">💾 ذخیره</button>
+        <button class="action-btn pdf" onclick="downloadPDF('inflation')" id="pdfBtn-inflation">📄 PDF</button>
+        <button class="action-btn excel" onclick="downloadExcel('inflation')" id="excelBtn-inflation">📊 Excel</button>
+        <button class="action-btn ai" onclick="analyzeWithAI('inflation')" id="aiBtn-inflation">🤖 AI</button>
+      </div>
+    </div>
+    <div class="ai-card" id="ai-card-inflation">
+      <div class="ai-title">🤖 تحلیل هوشمند</div>
+      <div class="ai-output" id="ai-output-inflation"></div>
     </div>
   `;
 }
@@ -1507,7 +1563,7 @@ function calcInflation() {
   const loss = amount - futurePower;
   const needed = amount * Math.pow(1 + rate / 100, years);
   const perMillion = 1000000 / Math.pow(1 + rate / 100, years);
-  document.getElementById('inf-result').textContent = formatBigNum(futurePower) + ' تومان';
+  document.getElementById('inf-result').textContent = formatNum(futurePower) + ' تومان';
   document.getElementById('inf-result-sub').textContent = `به اندازه ${formatBigNum(futurePower)} امروز ارزش داره`;
   document.getElementById('inf-loss').textContent = formatBigNum(loss);
   document.getElementById('inf-needed').textContent = formatBigNum(needed);
@@ -1515,6 +1571,14 @@ function calcInflation() {
   document.getElementById('inf-return-needed').textContent = toFa(rate.toFixed(1)) + '٪';
   document.getElementById('result-inflation').classList.add('show');
   setTimeout(() => document.getElementById('result-inflation').scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 100);
+}
+
+function collectInflation() {
+  return {
+    amount: parseNum(document.getElementById('inf-amount').value),
+    rate: parseFloat(toEnDigits(document.getElementById('inf-rate').value)) || 0,
+    years: parseFloat(toEnDigits(document.getElementById('inf-years').value)) || 0
+  };
 }
 
 // ==========================================
@@ -1530,26 +1594,17 @@ function renderInflationHistoryTool() {
       </div>
     </div>
     <div class="form-row-2">
-      <div class="form-group"><label>📅 از سال <span class="help">(شمسی)</span></label><input type="number" id="inf-from-year" class="form-input" placeholder="1402" min="1300" max="1500" style="direction: rtl; text-align: right;"></div>
-      <div class="form-group"><label>📅 تا سال <span class="help">(شمسی)</span></label><input type="number" id="inf-to-year" class="form-input" placeholder="1405" min="1300" max="1500" style="direction: rtl; text-align: right;"></div>
+      <div class="form-group"><label>📅 از سال</label><input type="number" id="inf-from-year" class="form-input" placeholder="1402" min="1300" max="1500" style="direction: rtl; text-align: right;"></div>
+      <div class="form-group"><label>📅 تا سال</label><input type="number" id="inf-to-year" class="form-input" placeholder="1405" min="1300" max="1500" style="direction: rtl; text-align: right;"></div>
     </div>
     <button class="calc-btn" onclick="generateYearInputs()" style="margin-bottom: 15px;">📋 ساخت فیلدهای سال</button>
     <div id="inflationYearsContainer" style="display: flex; flex-direction: column; gap: 10px; margin-bottom: 15px;"></div>
     <div id="inflationSummary" style="display: none; padding: 18px; background: rgba(212, 175, 55, 0.08); border: 1px solid rgba(212, 175, 55, 0.3); border-radius: 15px;">
       <div style="color: var(--gold); font-size: 13px; font-weight: 800; margin-bottom: 12px;">📊 خلاصه تورم</div>
       <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;">
-        <div style="text-align: center;">
-          <div style="color: var(--gray); font-size: 11px; margin-bottom: 6px;">تورم تجمعی</div>
-          <div style="color: var(--gold); font-size: 18px; font-weight: 900;" id="infTotalMultiplier">--</div>
-        </div>
-        <div style="text-align: center;">
-          <div style="color: var(--gray); font-size: 11px; margin-bottom: 6px;">تورم کل</div>
-          <div style="color: var(--red); font-size: 18px; font-weight: 900;" id="infTotalPercent">--</div>
-        </div>
-        <div style="text-align: center;">
-          <div style="color: var(--gray); font-size: 11px; margin-bottom: 6px;">میانگین سالانه</div>
-          <div style="color: var(--green); font-size: 18px; font-weight: 900;" id="infAverageRate">--</div>
-        </div>
+        <div style="text-align: center;"><div style="color: var(--gray); font-size: 11px; margin-bottom: 6px;">تورم تجمعی</div><div style="color: var(--gold); font-size: 18px; font-weight: 900;" id="infTotalMultiplier">--</div></div>
+        <div style="text-align: center;"><div style="color: var(--gray); font-size: 11px; margin-bottom: 6px;">تورم کل</div><div style="color: var(--red); font-size: 18px; font-weight: 900;" id="infTotalPercent">--</div></div>
+        <div style="text-align: center;"><div style="color: var(--gray); font-size: 11px; margin-bottom: 6px;">میانگین سالانه</div><div style="color: var(--green); font-size: 18px; font-weight: 900;" id="infAverageRate">--</div></div>
       </div>
     </div>
   `;
@@ -1607,13 +1662,13 @@ function renderCompareTool() {
     <div style="display: grid; grid-template-columns: 1fr auto 1fr; gap: 12px; align-items: center; margin-bottom: 20px;">
       <div style="background: rgba(59, 130, 246, 0.08); padding: 15px; border-radius: 12px; border: 1px solid rgba(59, 130, 246, 0.3);">
         <h4 style="color: #60a5fa; font-size: 13px; font-weight: 800; margin-bottom: 12px; text-align: center;">🅰️ گزینه اول</h4>
-        <div class="form-group" style="margin-bottom: 10px;"><label style="font-size: 12px;">مبلغ (تومان)</label><input type="text" id="cmp-a-amount" class="form-input" placeholder="100,000,000" inputmode="numeric"></div>
+        <div class="form-group" style="margin-bottom: 10px;"><label style="font-size: 12px;">مبلغ</label><input type="text" id="cmp-a-amount" class="form-input" placeholder="100,000,000" inputmode="numeric"></div>
         <div class="form-group" style="margin-bottom: 0;"><label style="font-size: 12px;">بازدهی (٪)</label><input type="number" id="cmp-a-rate" class="form-input" placeholder="30" step="0.1" style="direction: rtl; text-align: right;"></div>
       </div>
       <div style="width: 45px; height: 45px; border-radius: 50%; background: var(--gold); color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 13px;">VS</div>
       <div style="background: rgba(212, 175, 55, 0.08); padding: 15px; border-radius: 12px; border: 1px solid rgba(212, 175, 55, 0.3);">
         <h4 style="color: var(--gold); font-size: 13px; font-weight: 800; margin-bottom: 12px; text-align: center;">🅱️ گزینه دوم</h4>
-        <div class="form-group" style="margin-bottom: 10px;"><label style="font-size: 12px;">مبلغ (تومان)</label><input type="text" id="cmp-b-amount" class="form-input" placeholder="100,000,000" inputmode="numeric"></div>
+        <div class="form-group" style="margin-bottom: 10px;"><label style="font-size: 12px;">مبلغ</label><input type="text" id="cmp-b-amount" class="form-input" placeholder="100,000,000" inputmode="numeric"></div>
         <div class="form-group" style="margin-bottom: 0;"><label style="font-size: 12px;">بازدهی (٪)</label><input type="number" id="cmp-b-rate" class="form-input" placeholder="25" step="0.1" style="direction: rtl; text-align: right;"></div>
       </div>
     </div>
@@ -1630,6 +1685,16 @@ function renderCompareTool() {
           <div class="sub" id="cmp-difference">--</div>
         </div>
       </div>
+      <div class="action-buttons">
+        <button class="action-btn save" onclick="saveCalc('compare')" id="saveBtn-compare">💾 ذخیره</button>
+        <button class="action-btn pdf" onclick="downloadPDF('compare')" id="pdfBtn-compare">📄 PDF</button>
+        <button class="action-btn excel" onclick="downloadExcel('compare')" id="excelBtn-compare">📊 Excel</button>
+        <button class="action-btn ai" onclick="analyzeWithAI('compare')" id="aiBtn-compare">🤖 AI</button>
+      </div>
+    </div>
+    <div class="ai-card" id="ai-card-compare">
+      <div class="ai-title">🤖 تحلیل هوشمند</div>
+      <div class="ai-output" id="ai-output-compare"></div>
     </div>
   `;
 }
@@ -1643,8 +1708,8 @@ function calcCompare() {
   if (aAmount <= 0 || bAmount <= 0 || years <= 0) { alert('لطفاً همه فیلدها رو پر کن'); return; }
   const aFinal = aAmount * Math.pow(1 + aRate / 100, years);
   const bFinal = bAmount * Math.pow(1 + bRate / 100, years);
-  document.getElementById('cmp-a-final').textContent = formatBigNum(aFinal);
-  document.getElementById('cmp-b-final').textContent = formatBigNum(bFinal);
+  document.getElementById('cmp-a-final').textContent = formatNum(aFinal);
+  document.getElementById('cmp-b-final').textContent = formatNum(bFinal);
   const winnerEl = document.getElementById('cmp-winner-highlight');
   const winnerText = document.getElementById('cmp-winner');
   const diffText = document.getElementById('cmp-difference');
@@ -1663,35 +1728,35 @@ function calcCompare() {
   setTimeout(() => document.getElementById('result-compare').scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 100);
 }
 
+function collectCompare() {
+  return {
+    aAmount: parseNum(document.getElementById('cmp-a-amount').value),
+    aRate: parseFloat(toEnDigits(document.getElementById('cmp-a-rate').value)) || 0,
+    bAmount: parseNum(document.getElementById('cmp-b-amount').value),
+    bRate: parseFloat(toEnDigits(document.getElementById('cmp-b-rate').value)) || 0,
+    years: parseFloat(toEnDigits(document.getElementById('cmp-years2').value)) || 0
+  };
+}
+
 // ==========================================
-// 🎲 ابزار تحلیل ریسک
+// 🎲 ابزار ریسک
 // ==========================================
 const RISK_PORTFOLIOS = {
   conservative: { name: '🛡️ محافظه‌کار', assets: [
-    { label: '🏦 درآمد ثابت', percent: 50 },
-    { label: '🥇 طلا و نقره', percent: 10 },
-    { label: '💵 ارز', percent: 25 },
-    { label: '📊 سهام کم‌ریسک', percent: 15 }
+    { label: '🏦 درآمد ثابت', percent: 50 }, { label: '🥇 طلا و نقره', percent: 10 },
+    { label: '💵 ارز', percent: 25 }, { label: '📊 سهام کم‌ریسک', percent: 15 }
   ]},
   balanced: { name: '⚖️ متعادل', assets: [
-    { label: '🏦 درآمد ثابت', percent: 30 },
-    { label: '🥇 طلا و نقره', percent: 20 },
-    { label: '📊 سهام بورس', percent: 30 },
-    { label: '💵 ارز', percent: 20 }
+    { label: '🏦 درآمد ثابت', percent: 30 }, { label: '🥇 طلا و نقره', percent: 20 },
+    { label: '📊 سهام بورس', percent: 30 }, { label: '💵 ارز', percent: 20 }
   ]},
   aggressive: { name: '🚀 جسور', assets: [
-    { label: '🏦 درآمد ثابت', percent: 15 },
-    { label: '🥇 طلا و نقره', percent: 25 },
-    { label: '📊 سهام بورس', percent: 35 },
-    { label: '₿ ارز دیجیتال', percent: 10 },
-    { label: '💵 ارز', percent: 15 }
+    { label: '🏦 درآمد ثابت', percent: 15 }, { label: '🥇 طلا و نقره', percent: 25 },
+    { label: '📊 سهام بورس', percent: 35 }, { label: '₿ ارز دیجیتال', percent: 10 }, { label: '💵 ارز', percent: 15 }
   ]},
   professional: { name: '🎯 حرفه‌ای', assets: [
-    { label: '🏦 درآمد ثابت', percent: 10 },
-    { label: '🥇 طلا و نقره', percent: 20 },
-    { label: '📊 سهام بورس', percent: 35 },
-    { label: '₿ ارز دیجیتال', percent: 25 },
-    { label: '💵 ارز', percent: 10 }
+    { label: '🏦 درآمد ثابت', percent: 10 }, { label: '🥇 طلا و نقره', percent: 20 },
+    { label: '📊 سهام بورس', percent: 35 }, { label: '₿ ارز دیجیتال', percent: 25 }, { label: '💵 ارز', percent: 10 }
   ]}
 };
 
@@ -1709,17 +1774,25 @@ function renderRiskTool() {
       <div class="form-group">
         <label>🎯 پروفایل ریسک</label>
         <select id="risk-profile" class="form-input" style="direction: rtl; text-align: right; cursor: pointer;">
-          <option value="conservative">🛡️ محافظه‌کار</option>
-          <option value="balanced" selected>⚖️ متعادل</option>
-          <option value="aggressive">🚀 جسور</option>
-          <option value="professional">🎯 حرفه‌ای</option>
+          <option value="conservative">🛡️ محافظه‌کار</option><option value="balanced" selected>⚖️ متعادل</option>
+          <option value="aggressive">🚀 جسور</option><option value="professional">🎯 حرفه‌ای</option>
         </select>
       </div>
     </div>
-    <button class="calc-btn" onclick="calcRisk()">🎲 محاسبه تخصیص بهینه</button>
+    <button class="calc-btn" onclick="calcRisk()">🎲 محاسبه تخصیص</button>
     <div class="result-card" id="result-risk" style="background: linear-gradient(135deg, rgba(212, 175, 55, 0.08), rgba(212, 175, 55, 0.02)); border-color: rgba(212, 175, 55, 0.3);">
       <h3 style="color: var(--gold);">✅ سبد پیشنهادی</h3>
       <div id="risk-portfolio" class="risk-portfolio-list"></div>
+      <div class="action-buttons">
+        <button class="action-btn save" onclick="saveCalc('risk')" id="saveBtn-risk">💾 ذخیره</button>
+        <button class="action-btn pdf" onclick="downloadPDF('risk')" id="pdfBtn-risk">📄 PDF</button>
+        <button class="action-btn excel" onclick="downloadExcel('risk')" id="excelBtn-risk">📊 Excel</button>
+        <button class="action-btn ai" onclick="analyzeWithAI('risk')" id="aiBtn-risk">🤖 AI</button>
+      </div>
+    </div>
+    <div class="ai-card" id="ai-card-risk">
+      <div class="ai-title">🤖 تحلیل هوشمند</div>
+      <div class="ai-output" id="ai-output-risk"></div>
     </div>
   `;
 }
@@ -1739,9 +1812,7 @@ function calcRisk() {
           <span class="risk-portfolio-percent">${toFa(asset.percent)}٪</span>
         </div>
         <div class="risk-portfolio-amount">💰 ${formatBigNum(amount)} تومان</div>
-        <div class="risk-portfolio-bar">
-          <div class="risk-portfolio-bar-fill" style="width: ${asset.percent}%"></div>
-        </div>
+        <div class="risk-portfolio-bar"><div class="risk-portfolio-bar-fill" style="width: ${asset.percent}%"></div></div>
       </div>
     `;
   }).join('');
@@ -1749,8 +1820,15 @@ function calcRisk() {
   setTimeout(() => document.getElementById('result-risk').scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 100);
 }
 
+function collectRisk() {
+  return {
+    total: parseNum(document.getElementById('risk-total').value),
+    profile: document.getElementById('risk-profile').value
+  };
+}
+
 // ==========================================
-// 🎯 ابزار مدیریت پوزیشن
+// 🎯 ابزار پوزیشن
 // ==========================================
 function renderPositionTool() {
   return `
@@ -1769,7 +1847,7 @@ function renderPositionTool() {
       <div class="form-group"><label>💵 قیمت ورود</label><input type="text" id="pos-entry" class="form-input" placeholder="1,000,000" inputmode="numeric"></div>
       <div class="form-group"><label>🛑 حد ضرر</label><input type="text" id="pos-stop" class="form-input" placeholder="950,000" inputmode="numeric"></div>
     </div>
-    <div class="form-group"><label>🎯 حد سود (هدف)</label><input type="text" id="pos-target" class="form-input" placeholder="1,200,000" inputmode="numeric"></div>
+    <div class="form-group"><label>🎯 حد سود</label><input type="text" id="pos-target" class="form-input" placeholder="1,200,000" inputmode="numeric"></div>
     <button class="calc-btn" onclick="calcPosition()">🎯 محاسبه</button>
     <div class="result-card" id="result-position">
       <h3>✅ نتیجه</h3>
@@ -1781,6 +1859,16 @@ function renderPositionTool() {
         <div class="result-item gold"><div class="label">⚖️ R/R</div><div class="value gold" id="pos-rr">--</div></div>
         <div class="result-item" style="border-right-color: var(--red);"><div class="label">📉 فاصله حد ضرر</div><div class="value" style="color: var(--red);" id="pos-stop-distance">--</div></div>
       </div>
+      <div class="action-buttons">
+        <button class="action-btn save" onclick="saveCalc('position')" id="saveBtn-position">💾 ذخیره</button>
+        <button class="action-btn pdf" onclick="downloadPDF('position')" id="pdfBtn-position">📄 PDF</button>
+        <button class="action-btn excel" onclick="downloadExcel('position')" id="excelBtn-position">📊 Excel</button>
+        <button class="action-btn ai" onclick="analyzeWithAI('position')" id="aiBtn-position">🤖 AI</button>
+      </div>
+    </div>
+    <div class="ai-card" id="ai-card-position">
+      <div class="ai-title">🤖 تحلیل هوشمند</div>
+      <div class="ai-output" id="ai-output-position"></div>
     </div>
   `;
 }
@@ -1791,7 +1879,7 @@ function calcPosition() {
   const entry = parseNum(document.getElementById('pos-entry').value);
   const stop = parseNum(document.getElementById('pos-stop').value);
   const target = parseNum(document.getElementById('pos-target').value);
-  if (total <= 0 || entry <= 0 || stop <= 0) { alert('لطفاً سرمایه، قیمت ورود و حد ضرر رو وارد کن'); return; }
+  if (total <= 0 || entry <= 0 || stop <= 0) { alert('لطفاً همه فیلدها رو پر کن'); return; }
   if (entry === stop) { alert('قیمت ورود و حد ضرر نباید یکسان باشن'); return; }
   const maxLoss = total * (riskPercent / 100);
   const stopDistance = Math.abs(entry - stop);
@@ -1801,7 +1889,7 @@ function calcPosition() {
   let maxProfit = 0;
   if (target > 0) maxProfit = positionSize * Math.abs(target - entry);
   const rr = maxLoss > 0 ? (maxProfit / maxLoss) : 0;
-  document.getElementById('pos-size').textContent = formatBigNum(positionSize) + ' واحد';
+  document.getElementById('pos-size').textContent = formatNum(positionSize) + ' واحد';
   document.getElementById('pos-amount').textContent = formatBigNum(positionAmount) + ' تومان';
   document.getElementById('pos-maxloss').textContent = formatBigNum(maxLoss) + ' تومان';
   document.getElementById('pos-maxprofit').textContent = target > 0 ? formatBigNum(maxProfit) + ' تومان' : '--';
@@ -1809,6 +1897,502 @@ function calcPosition() {
   document.getElementById('pos-stop-distance').textContent = toFa(stopPercent.toFixed(2)) + '٪';
   document.getElementById('result-position').classList.add('show');
   setTimeout(() => document.getElementById('result-position').scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 100);
+}
+
+function collectPosition() {
+  return {
+    total: parseNum(document.getElementById('pos-total').value),
+    riskPercent: parseFloat(toEnDigits(document.getElementById('pos-risk-percent').value)) || 0,
+    entry: parseNum(document.getElementById('pos-entry').value),
+    stop: parseNum(document.getElementById('pos-stop').value),
+    target: parseNum(document.getElementById('pos-target').value)
+  };
+}
+    // ==========================================
+// 💾 ذخیره محاسبه
+// ==========================================
+const CALC_TITLES = {
+  dca: '💰 DCA', compound: '🏦 سود مرکب', goal: '🎯 هدف مالی',
+  inflation: '📉 تورم', compare: '⚖️ مقایسه', risk: '🎲 ریسک', position: '🎯 پوزیشن'
+};
+
+function getCalcSummary(type, inputs) {
+  if (type === 'dca') {
+    const mr = inputs.rate / 100 / 12;
+    let final;
+    if (mr === 0) final = inputs.monthly * inputs.months + inputs.initial;
+    else { const f = Math.pow(1 + mr, inputs.months); final = inputs.monthly * ((f - 1) / mr) + inputs.initial * f; }
+    return `سرمایه نهایی: ${formatNum(final)} تومان`;
+  }
+  if (type === 'compound') {
+    const final = inputs.principal * Math.pow(1 + inputs.rate / 100 / inputs.compound, inputs.compound * inputs.years);
+    return `مبلغ نهایی: ${formatNum(final)} تومان`;
+  }
+  if (type === 'goal') {
+    const months = inputs.years * 12;
+    const mr = inputs.rate / 100 / 12;
+    let ms;
+    if (mr === 0) ms = (inputs.target - inputs.initial) / months;
+    else { const f = Math.pow(1 + mr, months); ms = ((inputs.target - inputs.initial * f) * mr) / (f - 1); }
+    return `پس‌انداز ماهانه: ${formatNum(ms)} تومان`;
+  }
+  if (type === 'inflation') {
+    const future = inputs.amount / Math.pow(1 + inputs.rate / 100, inputs.years);
+    return `قدرت خرید: ${formatNum(future)} تومان`;
+  }
+  if (type === 'compare') {
+    const aFinal = inputs.aAmount * Math.pow(1 + inputs.aRate / 100, inputs.years);
+    const bFinal = inputs.bAmount * Math.pow(1 + inputs.bRate / 100, inputs.years);
+    return `گزینه ۱: ${formatBigNum(aFinal)} | گزینه ۲: ${formatBigNum(bFinal)}`;
+  }
+  if (type === 'risk') {
+    return `سرمایه: ${formatBigNum(inputs.total)} | پروفایل: ${RISK_PORTFOLIOS[inputs.profile].name}`;
+  }
+  if (type === 'position') {
+    const maxLoss = inputs.total * (inputs.riskPercent / 100);
+    const stopDist = Math.abs(inputs.entry - inputs.stop);
+    return `حجم پوزیشن: ${formatNum(maxLoss / stopDist)} واحد`;
+  }
+  return '';
+}
+
+async function saveCalc(type) {
+  const btn = document.getElementById('saveBtn-' + type);
+  if (!btn) return;
+
+  if (!currentUser) {
+    showToast('❌ برای ذخیره باید وارد حساب کاربری بشی', 'error');
+    setTimeout(() => window.location.href = 'login.html', 1500);
+    return;
+  }
+
+  try {
+    const config = TOOLS_CONFIG[type];
+    const inputs = config.collect();
+    const summary = getCalcSummary(type, inputs);
+    const title = CALC_TITLES[type] + ' — ' + new Date().toLocaleDateString('fa-IR');
+
+    btn.disabled = true;
+    btn.textContent = '⏳...';
+
+    const { error } = await db.from('saved_calculations').insert({
+      user_id: currentUser.id,
+      calc_type: type,
+      title: title,
+      inputs: inputs,
+      results: {},
+      summary: summary
+    });
+
+    if (error) throw error;
+
+    showToast('✅ محاسبه ذخیره شد', 'success');
+    btn.textContent = '✅ ذخیره شد';
+
+    // به‌روزرسانی امتیاز مالی
+    await calculateAndRenderScore();
+
+    setTimeout(() => {
+      btn.textContent = '💾 ذخیره';
+      btn.disabled = false;
+    }, 2000);
+
+  } catch (err) {
+    console.error('Save error:', err);
+    showToast('❌ خطا در ذخیره: ' + err.message, 'error');
+    btn.disabled = false;
+    btn.textContent = '💾 ذخیره';
+  }
+}
+
+// ==========================================
+// 📄 گزارش PDF
+// ==========================================
+function buildReportData(type) {
+  const config = TOOLS_CONFIG[type];
+  const inputs = config.collect();
+  const now = new Date();
+  const dateStr = now.toLocaleDateString('fa-IR');
+  const timeStr = now.toLocaleTimeString('fa-IR', { hour: '2-digit', minute: '2-digit' });
+
+  let rows = [];
+
+  if (type === 'dca') {
+    const mr = inputs.rate / 100 / 12;
+    let final;
+    if (mr === 0) final = inputs.monthly * inputs.months + inputs.initial;
+    else { const f = Math.pow(1 + mr, inputs.months); final = inputs.monthly * ((f - 1) / mr) + inputs.initial * f; }
+    const totalPrincipal = inputs.monthly * inputs.months + inputs.initial;
+    const totalProfit = final - totalPrincipal;
+    rows = [
+      { k: 'سرمایه‌گذاری ماهانه', v: formatNum(inputs.monthly) + ' تومان' },
+      { k: 'مدت زمان', v: toFa(inputs.months) + ' ماه' },
+      { k: 'بازدهی سالانه', v: toFa(inputs.rate) + '٪' },
+      { k: 'موجودی فعلی', v: formatNum(inputs.initial) + ' تومان' },
+      { k: '---', v: '' },
+      { k: 'اصل سرمایه کل', v: formatNum(totalPrincipal) + ' تومان' },
+      { k: 'سود کل', v: formatNum(totalProfit) + ' تومان' },
+      { k: 'سرمایه نهایی', v: formatNum(final) + ' تومان', bold: true }
+    ];
+  } else if (type === 'compound') {
+    const final = inputs.principal * Math.pow(1 + inputs.rate / 100 / inputs.compound, inputs.compound * inputs.years);
+    const profit = final - inputs.principal;
+    rows = [
+      { k: 'مبلغ اصل', v: formatNum(inputs.principal) + ' تومان' },
+      { k: 'نرخ سود سالانه', v: toFa(inputs.rate) + '٪' },
+      { k: 'مدت زمان', v: toFa(inputs.years) + ' سال' },
+      { k: '---', v: '' },
+      { k: 'سود کل', v: formatNum(profit) + ' تومان' },
+      { k: 'مبلغ نهایی', v: formatNum(final) + ' تومان', bold: true }
+    ];
+  } else if (type === 'goal') {
+    const months = inputs.years * 12;
+    const mr = inputs.rate / 100 / 12;
+    let ms;
+    if (mr === 0) ms = (inputs.target - inputs.initial) / months;
+    else { const f = Math.pow(1 + mr, months); ms = ((inputs.target - inputs.initial * f) * mr) / (f - 1); }
+    rows = [
+      { k: 'هدف نهایی', v: formatNum(inputs.target) + ' تومان' },
+      { k: 'مدت زمان', v: toFa(inputs.years) + ' سال' },
+      { k: 'بازدهی سالانه', v: toFa(inputs.rate) + '٪' },
+      { k: '---', v: '' },
+      { k: 'پس‌انداز ماهانه لازم', v: formatNum(ms) + ' تومان', bold: true }
+    ];
+  } else if (type === 'inflation') {
+    const future = inputs.amount / Math.pow(1 + inputs.rate / 100, inputs.years);
+    const loss = inputs.amount - future;
+    rows = [
+      { k: 'مبلغ فعلی', v: formatNum(inputs.amount) + ' تومان' },
+      { k: 'نرخ تورم سالانه', v: toFa(inputs.rate) + '٪' },
+      { k: 'مدت زمان', v: toFa(inputs.years) + ' سال' },
+      { k: '---', v: '' },
+      { k: 'قدرت خرید در پایان', v: formatNum(future) + ' تومان', bold: true },
+      { k: 'کاهش ارزش پول', v: formatNum(loss) + ' تومان' }
+    ];
+  } else if (type === 'compare') {
+    const aFinal = inputs.aAmount * Math.pow(1 + inputs.aRate / 100, inputs.years);
+    const bFinal = inputs.bAmount * Math.pow(1 + inputs.bRate / 100, inputs.years);
+    rows = [
+      { k: 'گزینه اول - مبلغ', v: formatNum(inputs.aAmount) + ' تومان' },
+      { k: 'گزینه اول - بازدهی', v: toFa(inputs.aRate) + '٪' },
+      { k: 'گزینه دوم - مبلغ', v: formatNum(inputs.bAmount) + ' تومان' },
+      { k: 'گزینه دوم - بازدهی', v: toFa(inputs.bRate) + '٪' },
+      { k: 'مدت زمان', v: toFa(inputs.years) + ' سال' },
+      { k: '---', v: '' },
+      { k: 'نتیجه گزینه اول', v: formatNum(aFinal) + ' تومان' },
+      { k: 'نتیجه گزینه دوم', v: formatNum(bFinal) + ' تومان' },
+      { k: 'برنده', v: aFinal > bFinal ? 'گزینه اول' : (bFinal > aFinal ? 'گزینه دوم' : 'مساوی'), bold: true }
+    ];
+  } else if (type === 'risk') {
+    const profile = RISK_PORTFOLIOS[inputs.profile];
+    rows = [
+      { k: 'کل سرمایه', v: formatNum(inputs.total) + ' تومان' },
+      { k: 'پروفایل ریسک', v: profile.name },
+      { k: '---', v: '' }
+    ];
+    profile.assets.forEach(a => {
+      rows.push({ k: a.label, v: `${toFa(a.percent)}٪ (${formatNum(inputs.total * a.percent / 100)} تومان)` });
+    });
+  } else if (type === 'position') {
+    const maxLoss = inputs.total * (inputs.riskPercent / 100);
+    const stopDist = Math.abs(inputs.entry - inputs.stop);
+    const posSize = maxLoss / stopDist;
+    const maxProfit = inputs.target > 0 ? posSize * Math.abs(inputs.target - inputs.entry) : 0;
+    const rr = maxLoss > 0 ? maxProfit / maxLoss : 0;
+    rows = [
+      { k: 'کل سرمایه', v: formatNum(inputs.total) + ' تومان' },
+      { k: 'ریسک هر معامله', v: toFa(inputs.riskPercent) + '٪' },
+      { k: 'قیمت ورود', v: formatNum(inputs.entry) + ' تومان' },
+      { k: 'حد ضرر', v: formatNum(inputs.stop) + ' تومان' },
+      { k: '---', v: '' },
+      { k: 'حجم پوزیشن', v: formatNum(posSize) + ' واحد', bold: true },
+      { k: 'حداکثر ضرر', v: formatNum(maxLoss) + ' تومان' },
+      { k: 'سود بالقوه', v: formatNum(maxProfit) + ' تومان' },
+      { k: 'نسبت R/R', v: '۱ : ' + toFa(rr.toFixed(2)) }
+    ];
+  }
+
+  return { type, title: CALC_TITLES[type], dateStr, timeStr, rows };
+}
+
+async function downloadPDF(type) {
+  const btn = document.getElementById('pdfBtn-' + type);
+  if (!btn) return;
+
+  btn.disabled = true;
+  btn.textContent = '⏳';
+
+  try {
+    const report = buildReportData(type);
+
+    const rowsHTML = report.rows.map(r => {
+      if (r.k === '---') return '<tr><td colspan="2" style="border:none;padding:8px 0;"><hr style="border:none;border-top:1px dashed #d4af37;"></td></tr>';
+      return `<tr><td style="padding:10px 12px;color:#64748b;border-right:3px solid #d4af37;background:#f8fafc;">${r.k}</td><td style="padding:10px 12px;color:${r.bold ? '#b8860b' : '#1e293b'};font-weight:${r.bold ? '900' : '700'};background:#f8fafc;">${r.v}</td></tr>`;
+    }).join('');
+
+    const htmlContent = `
+      <div style="font-family: Tahoma, sans-serif; direction: rtl; padding: 30px; background: #ffffff; color: #1a1a24; width: 800px;">
+        <div style="text-align: center; border-bottom: 3px solid #d4af37; padding-bottom: 20px; margin-bottom: 25px;">
+          <h1 style="color: #b8860b; font-size: 26px; margin: 0 0 8px;">آکادمی شمعدون</h1>
+          <p style="color: #64748b; font-size: 14px; margin: 0;">گزارش ${report.title}</p>
+          <p style="color: #94a3b8; font-size: 12px; margin: 8px 0 0;">📅 ${report.dateStr} — 🕐 ${report.timeStr}</p>
+        </div>
+        <table style="width: 100%; border-collapse: collapse; font-size: 14px;">
+          ${rowsHTML}
+        </table>
+        <div style="margin-top: 30px; padding: 15px; background: #fffbeb; border-right: 4px solid #d4af37; border-radius: 8px; color: #92400e; font-size: 12px; line-height: 1.7;">
+          ⚠️ این گزارش صرفاً آموزشی است و به معنی توصیه سرمایه‌گذاری نیست.
+        </div>
+        <div style="text-align: center; margin-top: 25px; color: #94a3b8; font-size: 11px;">
+          🌐 shamdun.github.io/My-First-Project
+        </div>
+      </div>
+    `;
+
+    const wrapper = document.createElement('div');
+    wrapper.innerHTML = htmlContent;
+    wrapper.style.position = 'absolute';
+    wrapper.style.left = '-99999px';
+    wrapper.style.top = '0';
+    document.body.appendChild(wrapper);
+
+    const { jsPDF } = window.jspdf;
+    const pdf = new jsPDF({ unit: 'mm', format: 'a4', orientation: 'portrait' });
+    const pageWidth = pdf.internal.pageSize.getWidth();
+    const pageHeight = pdf.internal.pageSize.getHeight();
+
+    const canvas = await html2canvas(wrapper.firstElementChild, { scale: 2, backgroundColor: '#ffffff', logging: false });
+    const imgData = canvas.toDataURL('image/png');
+    const imgWidth = pageWidth - 20;
+    const imgHeight = (canvas.height * imgWidth) / canvas.width;
+
+    if (imgHeight <= pageHeight - 20) {
+      pdf.addImage(imgData, 'PNG', 10, 10, imgWidth, imgHeight);
+    } else {
+      let remainingHeight = imgHeight;
+      let sourceY = 0;
+      let firstPage = true;
+      while (remainingHeight > 0) {
+        const sliceHeight = Math.min(pageHeight - 20, remainingHeight);
+        const tempCanvas = document.createElement('canvas');
+        tempCanvas.width = canvas.width;
+        tempCanvas.height = Math.ceil((sliceHeight / imgHeight) * canvas.height);
+        const ctx = tempCanvas.getContext('2d');
+        ctx.drawImage(canvas, 0, sourceY, canvas.width, tempCanvas.height, 0, 0, canvas.width, tempCanvas.height);
+        const sliceData = tempCanvas.toDataURL('image/png');
+        if (!firstPage) pdf.addPage();
+        pdf.addImage(sliceData, 'PNG', 10, 10, imgWidth, sliceHeight);
+        remainingHeight -= sliceHeight;
+        sourceY += tempCanvas.height;
+        firstPage = false;
+      }
+    }
+
+    pdf.save(`shamdun-${type}-${Date.now()}.pdf`);
+    document.body.removeChild(wrapper);
+
+    showToast('✅ گزارش PDF دانلود شد', 'success');
+    btn.disabled = false;
+    btn.textContent = '📄 PDF';
+
+  } catch (err) {
+    console.error('PDF error:', err);
+    showToast('❌ خطا در ساخت PDF', 'error');
+    btn.disabled = false;
+    btn.textContent = '📄 PDF';
+  }
+}
+
+// ==========================================
+// 📊 گزارش Excel
+// ==========================================
+async function downloadExcel(type) {
+  const btn = document.getElementById('excelBtn-' + type);
+  if (!btn) return;
+
+  btn.disabled = true;
+  btn.textContent = '⏳';
+
+  try {
+    if (typeof ExcelJS === 'undefined') throw new Error('ExcelJS لود نشده');
+
+    const report = buildReportData(type);
+    const wb = new ExcelJS.Workbook();
+    wb.creator = 'آکادمی شمعدون';
+
+    const ws = wb.addWorksheet('گزارش', { views: [{ rightToLeft: true }] });
+    ws.columns = [{ width: 30 }, { width: 35 }];
+
+    ws.mergeCells('A1:B1');
+    const t1 = ws.getCell('A1');
+    t1.value = '🎯 آکادمی شمعدون';
+    t1.font = { name: 'Tahoma', size: 18, bold: true, color: { argb: 'FFFFFFFF' } };
+    t1.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FFD4AF37' } };
+    t1.alignment = { horizontal: 'center', vertical: 'middle' };
+    ws.getRow(1).height = 40;
+
+    ws.mergeCells('A2:B2');
+    const t2 = ws.getCell('A2');
+    t2.value = `📊 گزارش ${report.title}`;
+    t2.font = { name: 'Tahoma', size: 14, bold: true, color: { argb: 'FFB8860B' } };
+    t2.alignment = { horizontal: 'center' };
+    ws.getRow(2).height = 30;
+
+    ws.mergeCells('A3:B3');
+    const t3 = ws.getCell('A3');
+    t3.value = `📅 ${report.dateStr} | 🕐 ${report.timeStr}`;
+    t3.font = { name: 'Tahoma', size: 11, color: { argb: 'FF6B7280' } };
+    t3.alignment = { horizontal: 'center' };
+    ws.getRow(3).height = 25;
+
+    let rowIdx = 5;
+    report.rows.forEach(row => {
+      if (row.k === '---') { rowIdx++; return; }
+      const keyCell = ws.getCell(`A${rowIdx}`);
+      const valCell = ws.getCell(`B${rowIdx}`);
+      keyCell.value = row.k;
+      keyCell.font = { name: 'Tahoma', size: 12, color: { argb: 'FF6B7280' } };
+      keyCell.alignment = { horizontal: 'right', vertical: 'middle' };
+      keyCell.border = { right: { style: 'medium', color: { argb: 'FFD4AF37' } } };
+      keyCell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FFF9FAFB' } };
+
+      valCell.value = row.v;
+      valCell.font = { name: 'Tahoma', size: 13, bold: row.bold || false, color: { argb: row.bold ? 'FFB8860B' : 'FF1F2937' } };
+      valCell.alignment = { horizontal: 'right', vertical: 'middle' };
+      valCell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FFF9FAFB' } };
+
+      ws.getRow(rowIdx).height = 25;
+      rowIdx++;
+    });
+
+    rowIdx++;
+    ws.mergeCells(`A${rowIdx}:B${rowIdx}`);
+    const footer = ws.getCell(`A${rowIdx}`);
+    footer.value = '⚠️ این گزارش صرفاً آموزشی است. | 🌐 shamdun.github.io/My-First-Project';
+    footer.font = { name: 'Tahoma', size: 10, italic: true, color: { argb: 'FF92400E' } };
+    footer.alignment = { horizontal: 'center' };
+    footer.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FFFFFBEB' } };
+    ws.getRow(rowIdx).height = 30;
+
+    const buffer = await wb.xlsx.writeBuffer();
+    const blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+    saveAs(blob, `shamdun-${type}-${Date.now()}.xlsx`);
+
+    showToast('✅ گزارش Excel دانلود شد', 'success');
+    btn.disabled = false;
+    btn.textContent = '📊 Excel';
+
+  } catch (err) {
+    console.error('Excel error:', err);
+    showToast('❌ خطا در ساخت Excel', 'error');
+    btn.disabled = false;
+    btn.textContent = '📊 Excel';
+  }
+}
+
+// ==========================================
+// 🤖 تحلیل با AI
+// ==========================================
+const AVALAI_API_KEY = 'aa-B6ef1JQ4HnDNBMRw4598qRGOKr7z3TttiznZubQXfD2A1iMf';
+const AVALAI_URL = 'https://api.avalai.ir/v1/chat/completions';
+const AI_MODEL = 'gpt-4o-mini';
+
+function buildAIPrompt(type, inputs) {
+  let data = '';
+  if (type === 'dca') {
+    const mr = inputs.rate / 100 / 12;
+    let final;
+    if (mr === 0) final = inputs.monthly * inputs.months + inputs.initial;
+    else { const f = Math.pow(1 + mr, inputs.months); final = inputs.monthly * ((f - 1) / mr) + inputs.initial * f; }
+    data = `سرمایه‌گذاری ماهانه: ${formatNum(inputs.monthly)} تومان\nمدت: ${toFa(inputs.months)} ماه\nبازدهی: ${toFa(inputs.rate)}٪\nسرمایه نهایی: ${formatNum(final)} تومان`;
+  } else if (type === 'compound') {
+    const final = inputs.principal * Math.pow(1 + inputs.rate / 100 / inputs.compound, inputs.compound * inputs.years);
+    data = `اصل: ${formatNum(inputs.principal)} تومان\nنرخ: ${toFa(inputs.rate)}٪\nمدت: ${toFa(inputs.years)} سال\nنهایی: ${formatNum(final)} تومان`;
+  } else if (type === 'goal') {
+    const months = inputs.years * 12;
+    const mr = inputs.rate / 100 / 12;
+    let ms;
+    if (mr === 0) ms = (inputs.target - inputs.initial) / months;
+    else { const f = Math.pow(1 + mr, months); ms = ((inputs.target - inputs.initial * f) * mr) / (f - 1); }
+    data = `هدف: ${formatNum(inputs.target)} تومان\nمدت: ${toFa(inputs.years)} سال\nپس‌انداز ماهانه: ${formatNum(ms)} تومان`;
+  } else if (type === 'inflation') {
+    const future = inputs.amount / Math.pow(1 + inputs.rate / 100, inputs.years);
+    data = `مبلغ: ${formatNum(inputs.amount)} تومان\nتورم: ${toFa(inputs.rate)}٪\nمدت: ${toFa(inputs.years)} سال\nقدرت خرید: ${formatNum(future)} تومان`;
+  } else if (type === 'compare') {
+    const aFinal = inputs.aAmount * Math.pow(1 + inputs.aRate / 100, inputs.years);
+    const bFinal = inputs.bAmount * Math.pow(1 + inputs.bRate / 100, inputs.years);
+    data = `گزینه ۱: ${formatNum(inputs.aAmount)} با ${toFa(inputs.aRate)}٪ → ${formatNum(aFinal)}\nگزینه ۲: ${formatNum(inputs.bAmount)} با ${toFa(inputs.bRate)}٪ → ${formatNum(bFinal)}\nمدت: ${toFa(inputs.years)} سال`;
+  } else if (type === 'risk') {
+    const p = RISK_PORTFOLIOS[inputs.profile];
+    data = `سرمایه: ${formatNum(inputs.total)} تومان\nپروفایل: ${p.name}\nتخصیص: ${p.assets.map(a => `${a.label} ${toFa(a.percent)}٪`).join(', ')}`;
+  } else if (type === 'position') {
+    const maxLoss = inputs.total * (inputs.riskPercent / 100);
+    const stopDist = Math.abs(inputs.entry - inputs.stop);
+    const posSize = maxLoss / stopDist;
+    data = `سرمایه: ${formatNum(inputs.total)} تومان\nریسک: ${toFa(inputs.riskPercent)}٪\nورود: ${formatNum(inputs.entry)}\nحد ضرر: ${formatNum(inputs.stop)}\nحجم پوزیشن: ${formatNum(posSize)}`;
+  }
+
+  return `شما یک مشاور مالی حرفه‌ای ایرانی هستید. کاربر این محاسبه را انجام داده:\n\n${data}\n\nلطفاً در ۳۰۰ کلمه به فارسی، صمیمی و آموزشی تحلیل کن:\n۱. آیا این اعداد واقع‌بینانه است؟\n۲. مهم‌ترین ریسک‌ها چیست؟\n۳. ۳ پیشنهاد عملی بده\n۴. یک جمع‌بندی صادقانه\n\n⚠️ تحلیل صرفاً آموزشی است، نه توصیه سرمایه‌گذاری.`;
+}
+
+async function analyzeWithAI(type) {
+  const btn = document.getElementById('aiBtn-' + type);
+  const card = document.getElementById('ai-card-' + type);
+  const output = document.getElementById('ai-output-' + type);
+  if (!btn || !card || !output) return;
+
+  btn.disabled = true;
+  btn.textContent = '⏳';
+  card.classList.add('show');
+  output.innerHTML = '<div class="ai-loading"><div class="spinner"></div><div>🤖 AI در حال تحلیل...</div></div>';
+  card.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+  try {
+    const config = TOOLS_CONFIG[type];
+    const inputs = config.collect();
+    const prompt = buildAIPrompt(type, inputs);
+
+    const res = await fetch(AVALAI_URL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + AVALAI_API_KEY
+      },
+      body: JSON.stringify({
+        model: AI_MODEL,
+        messages: [
+          { role: 'system', content: 'شما یک مشاور مالی حرفه‌ای ایرانی هستید.' },
+          { role: 'user', content: prompt }
+        ],
+        temperature: 0.7,
+        max_tokens: 1200
+      })
+    });
+
+    if (!res.ok) throw new Error('API Error: ' + res.status);
+
+    const data = await res.json();
+    const text = data?.choices?.[0]?.message?.content || 'پاسخی دریافت نشد.';
+
+    let html = text;
+    if (window.marked) html = marked.parse(text);
+    if (window.DOMPurify) html = DOMPurify.sanitize(html);
+    output.innerHTML = html;
+
+    if (!currentUser) {
+      const notice = document.createElement('div');
+      notice.style.cssText = 'margin-top:12px; padding:10px; background:rgba(212,175,55,0.1); border:1px solid rgba(212,175,55,0.3); border-radius:10px; text-align:center; font-size:12px; color:var(--gold);';
+      notice.innerHTML = '💡 برای ذخیره تحلیل، <a href="login.html" style="color:var(--gold); font-weight:800;">وارد حساب کاربری شو</a>';
+      output.appendChild(notice);
+    }
+
+  } catch (err) {
+    console.error('AI error:', err);
+    output.innerHTML = `<div style="color:var(--red); text-align:center; padding:15px;">❌ خطا در تحلیل AI<br><small style="color:var(--gray); font-size:11px;">${err.message}</small></div>`;
+  }
+
+  btn.disabled = false;
+  btn.textContent = '🤖 AI';
 }
 
 // ==========================================
@@ -1823,3 +2407,4 @@ document.addEventListener('DOMContentLoaded', async () => {
 </script>
 </body>
 </html>
+    
