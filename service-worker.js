@@ -4,7 +4,7 @@
 // ==========================================
 
 // نسخه خودکار: هر بار که فایل تغییر کنه، نسخه جدید میاد
-const VERSION = 'v2.0.0';
+const VERSION = 'v2.1.0';
 const CACHE_NAME = `shamdun-${VERSION}`;
 
 const urlsToCache = [
@@ -37,6 +37,7 @@ const urlsToCache = [
     '/My-First-Project/personality-test.html',
     '/My-First-Project/assistant.html',
     '/My-First-Project/calculator.html',
+    '/My-First-Project/calculator-v2.html',
 
     // فایل‌های سیستمی
     '/My-First-Project/manifest.json',
