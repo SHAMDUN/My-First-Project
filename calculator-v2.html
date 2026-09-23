@@ -2533,11 +2533,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   initThemeButton();
   loadRealMarketPrices();
   await checkUser();
-  
-  // هر ۶۰ ثانیه آپدیت کن
   setInterval(loadRealMarketPrices, 60000);
-});
-  await checkUser();
 });
 </script>
 </body>
