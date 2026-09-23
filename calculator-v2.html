@@ -476,9 +476,8 @@ body {
   color: var(--gray); font-size: 12px;
   border-top: 1px solid var(--border-gold); margin-top: 30px;
 }
-/* ========================================== */
-/* 🎯 Modal — پنجره ابزارها                    */
-/* ========================================== */
+
+/* Modal */
 .tool-modal-overlay {
   position: fixed;
   inset: 0;
@@ -492,9 +491,7 @@ body {
   padding: 20px;
   overflow-y: auto;
 }
-.tool-modal-overlay.show {
-  display: flex;
-}
+.tool-modal-overlay.show { display: flex; }
 .tool-modal-box {
   background: var(--bg-card);
   border: 1px solid rgba(212, 175, 55, 0.3);
@@ -543,15 +540,9 @@ body {
   transition: 0.3s;
   flex-shrink: 0;
 }
-.tool-modal-close:hover {
-  background: rgba(239, 68, 68, 0.25);
-}
-.tool-modal-body {
-  padding: 25px;
-}
-.tool-modal-body .edu-card {
-  margin-bottom: 20px;
-}
+.tool-modal-close:hover { background: rgba(239, 68, 68, 0.25); }
+.tool-modal-body { padding: 25px; }
+
 .form-group {
   margin-bottom: 15px;
   display: flex;
@@ -594,9 +585,7 @@ body {
   border-color: var(--gold);
   box-shadow: 0 0 0 4px rgba(212, 175, 55, 0.1);
 }
-.form-input::placeholder {
-  color: rgba(148, 163, 184, 0.4);
-}
+.form-input::placeholder { color: rgba(148, 163, 184, 0.4); }
 .form-row-2 {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -630,9 +619,7 @@ body {
   display: none;
   animation: fadeInUp 0.4s ease-out;
 }
-.result-card.show {
-  display: block;
-}
+.result-card.show { display: block; }
 .result-card h3 {
   color: var(--green);
   font-size: 15px;
@@ -656,12 +643,8 @@ body {
 [data-theme="light"] .result-item {
   background: rgba(248, 250, 252, 0.8);
 }
-.result-item.gold {
-  border-right-color: var(--gold);
-}
-.result-item.blue {
-  border-right-color: var(--blue);
-}
+.result-item.gold { border-right-color: var(--gold); }
+.result-item.blue { border-right-color: var(--blue); }
 .result-item .label {
   color: var(--gray);
   font-size: 11px;
@@ -673,12 +656,8 @@ body {
   font-weight: 900;
   font-variant-numeric: tabular-nums;
 }
-.result-item .value.gold {
-  color: var(--gold);
-}
-.result-item .value.green {
-  color: var(--green);
-}
+.result-item .value.gold { color: var(--gold); }
+.result-item .value.green { color: var(--green); }
 .result-highlight {
   grid-column: 1 / -1;
   background: linear-gradient(135deg, rgba(212, 175, 55, 0.15), rgba(212, 175, 55, 0.05));
@@ -706,6 +685,58 @@ body {
   margin-top: 6px;
 }
 
+/* Risk Portfolio */
+.risk-portfolio-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.risk-portfolio-item {
+  background: rgba(10, 10, 15, 0.5);
+  padding: 14px;
+  border-radius: 12px;
+  border-right: 3px solid var(--gold);
+}
+[data-theme="light"] .risk-portfolio-item {
+  background: rgba(248, 250, 252, 0.8);
+}
+.risk-portfolio-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+}
+.risk-portfolio-label {
+  color: var(--white);
+  font-size: 13px;
+  font-weight: 700;
+}
+.risk-portfolio-percent {
+  color: var(--gold);
+  font-size: 18px;
+  font-weight: 900;
+}
+.risk-portfolio-amount {
+  color: var(--gray);
+  font-size: 12px;
+  margin-bottom: 8px;
+}
+.risk-portfolio-bar {
+  height: 6px;
+  background: rgba(10, 10, 15, 0.6);
+  border-radius: 6px;
+  overflow: hidden;
+}
+[data-theme="light"] .risk-portfolio-bar {
+  background: rgba(0, 0, 0, 0.08);
+}
+.risk-portfolio-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--gold), var(--gold-light));
+  border-radius: 6px;
+  transition: width 0.5s;
+}
+
 /* Responsive */
 @media (max-width: 900px) {
   .tools-grid { grid-template-columns: repeat(2, 1fr); }
@@ -714,6 +745,8 @@ body {
   .score-cta { grid-column: 1 / -1; align-items: stretch; }
   .score-cta button { width: 100%; }
   .simulator-inputs { grid-template-columns: 1fr 1fr; }
+  .form-row-2 { grid-template-columns: 1fr; }
+  .result-grid { grid-template-columns: 1fr; }
 }
 @media (max-width: 600px) {
   .main-container { padding: 90px 15px 30px; }
@@ -732,7 +765,6 @@ body {
 </head>
 <body>
 
-<!-- Navbar -->
 <nav class="sn-navbar">
   <div class="sn-navbar-container">
     <button class="sn-hamburger" id="snHamburger" aria-label="منو">
@@ -749,10 +781,8 @@ body {
   </div>
 </nav>
 
-<!-- Main -->
 <div class="main-container">
 
-  <!-- Hero -->
   <section class="hero-section">
     <div class="hero-badge">
       <span class="dot"></span>
@@ -769,23 +799,14 @@ body {
     </p>
   </section>
 
-  <!-- Market Ticker -->
   <div class="market-ticker">
     <div class="label">
       <span class="live"></span>
       <span>بازار زنده</span>
     </div>
-    <div class="market-prices" id="marketPrices">
-      <div class="market-price-item">
-        <span class="icon">🥇</span>
-        <span class="name">طلا ۱۸:</span>
-        <span class="price">--</span>
-        <span class="change up">--</span>
-      </div>
-    </div>
+    <div class="market-prices" id="marketPrices"></div>
   </div>
 
-  <!-- Score Card -->
   <section class="score-card">
     <div class="score-circle">
       <svg viewBox="0 0 100 100">
@@ -802,9 +823,7 @@ body {
     </div>
     <div class="score-info">
       <h3>🏆 امتیاز مالی شما: <span class="gold">۷۸ از ۱۰۰</span></h3>
-      <p>
-        سبد شما متعادل و متنوعه، ولی برای بهتر شدن پوشش تورم، پیشنهادهای زیر رو ببین.
-      </p>
+      <p>سبد شما متعادل و متنوعه، ولی برای بهتر شدن پوشش تورم، پیشنهادهای زیر رو ببین.</p>
       <div class="score-badges">
         <span class="score-badge">✓ تنوع خوب</span>
         <span class="score-badge warning">⚠️ پوشش تورم ضعیف</span>
@@ -812,14 +831,11 @@ body {
       </div>
     </div>
     <div class="score-cta">
-      <button onclick="alert('🔓 برای دیدن تحلیل کامل امتیاز، وارد حساب کاربری شو')">
-        🔓 دیدن تحلیل کامل
-      </button>
+      <button id="scoreCtaBtn">🔓 دیدن تحلیل کامل</button>
       <span class="hint">۲۰ ثانیه طول می‌کشه</span>
     </div>
   </section>
 
-  <!-- Tools Grid -->
   <div class="section-title">
     <h2>
       🧰 ابزارهای مالی
@@ -829,10 +845,7 @@ body {
   <div class="tools-grid">
     <div class="tool-card" onclick="openTool('dca')" style="animation-delay: 0.05s;">
       <div class="tool-icon">💰</div>
-      <h3>
-        سرمایه‌گذاری ماهانه
-        <span class="popular">🔥 محبوب</span>
-      </h3>
+      <h3>سرمایه‌گذاری ماهانه <span class="popular">🔥 محبوب</span></h3>
       <p>هر ماه یه مبلغ ثابت سرمایه‌گذاری کن و قدرت سود مرکب رو ببین</p>
       <div class="tool-footer">
         <span class="tool-stats">👥 <strong>۱۲۴۸</strong> کاربر امروز</span>
@@ -859,10 +872,7 @@ body {
     </div>
     <div class="tool-card" onclick="openTool('inflation')" style="animation-delay: 0.2s;">
       <div class="tool-icon">📉</div>
-      <h3>
-        محاسبه تورم
-        <span class="popular">🔥 ترند</span>
-      </h3>
+      <h3>محاسبه تورم <span class="popular">🔥 ترند</span></h3>
       <p>۱۰۰ میلیون امروز، ۱ سال دیگه چقدر ارزش داره؟</p>
       <div class="tool-footer">
         <span class="tool-stats">👥 <strong>۱۵۶۷</strong> کاربر امروز</span>
@@ -907,7 +917,6 @@ body {
     </div>
   </div>
 
-  <!-- Scenario Simulator -->
   <section class="simulator-section">
     <div class="simulator-header">
       <div class="simulator-icon">🎮</div>
@@ -930,19 +939,16 @@ body {
       </div>
       <div class="sim-input-group">
         <label>⏳ مدت زمان (سال)</label>
-        <input type="number" id="sim-years" value="5" min="1" max="30">
+        <input type="number" id="sim-years" value="5" min="1" max="30" style="direction: rtl; text-align: right;">
       </div>
     </div>
-    <button class="simulator-btn" onclick="runSimulation()">
-      🎯 شبیه‌سازی کن
-    </button>
+    <button class="simulator-btn" onclick="runSimulation()">🎯 شبیه‌سازی کن</button>
     <div class="simulator-results" id="simResults">
       <div class="scenario-grid" id="scenarioGrid"></div>
       <div class="scenario-summary" id="scenarioSummary"></div>
     </div>
   </section>
 
-  <!-- Social Proof -->
   <section class="social-proof">
     <div class="proof-item">
       <div class="icon">👥</div>
@@ -966,21 +972,14 @@ body {
     </div>
   </section>
 
-  <!-- CTA -->
   <section class="cta-section">
     <h2>آماده‌ای <span class="gold">تصمیم‌های هوشمندانه‌تر</span> بگیری؟</h2>
-    <p>
-      عضو آکادمی شمعدون شو، امتیاز مالی خودت رو ببین و مسیر حرفه‌ای شدن رو شروع کن.
-    </p>
-    <button class="cta-btn" onclick="window.location.href='login.html'">
-      🚀 شروع رایگان
-    </button>
+    <p>عضو آکادمی شمعدون شو، امتیاز مالی خودت رو ببین و مسیر حرفه‌ای شدن رو شروع کن.</p>
+    <button class="cta-btn" id="mainCtaBtn">🚀 شروع رایگان</button>
   </section>
 
 </div>
-<!-- ========================================== -->
-<!-- 🎯 Modal ابزارها                            -->
-<!-- ========================================== -->
+
 <div class="tool-modal-overlay" id="toolModal">
   <div class="tool-modal-box">
     <div class="tool-modal-header">
@@ -990,9 +989,7 @@ body {
       </div>
       <button class="tool-modal-close" onclick="closeToolModal()" aria-label="بستن">✕</button>
     </div>
-    <div class="tool-modal-body" id="toolModalBody">
-      <!-- محتوا اینجا رندر می‌شه -->
-    </div>
+    <div class="tool-modal-body" id="toolModalBody"></div>
   </div>
 </div>
 
@@ -1001,7 +998,9 @@ body {
 </footer>
 
 <script>
-// ابزارها
+// ==========================================
+// 📌 ابزارهای عمومی
+// ==========================================
 function toFa(num) {
   if (num === null || num === undefined) return '۰';
   const d = ['۰','۱','۲','۳','۴','۵','۶','۷','۸','۹'];
@@ -1031,8 +1030,19 @@ function formatBigNum(num) {
   else r = Math.round(n).toString();
   return toFa(r);
 }
+function handleNumericInput(e) {
+  const input = e.target;
+  const raw = toEnDigits(input.value).replace(/[^\d]/g, '');
+  if (raw) {
+    input.value = toFa(parseInt(raw, 10).toLocaleString('en-US'));
+  } else {
+    input.value = '';
+  }
+}
 
-// تم شب/روز با پشتیبانی از تم پویا
+// ==========================================
+// 🌙 تم شب/روز
+// ==========================================
 function getAutoTheme() {
   const hour = new Date().getHours();
   return (hour >= 6 && hour < 18) ? 'light' : 'dark';
@@ -1040,12 +1050,7 @@ function getAutoTheme() {
 function applyTheme() {
   const saved = localStorage.getItem('shamdun-theme');
   const auto = localStorage.getItem('shamdun-theme-auto');
-  let theme;
-  if (auto === 'true' || !saved) {
-    theme = getAutoTheme();
-  } else {
-    theme = saved;
-  }
+  let theme = (auto === 'true' || !saved) ? getAutoTheme() : saved;
   document.documentElement.setAttribute('data-theme', theme);
   const icon = document.getElementById('snThemeIcon');
   if (icon) icon.textContent = theme === 'dark' ? '🌙' : '☀️';
@@ -1066,7 +1071,81 @@ function initThemeButton() {
   });
 }
 
-// شبیه‌ساز سناریو
+// ==========================================
+// 🔌 اتصال به Supabase
+// ==========================================
+let currentUser = null;
+
+async function checkUser() {
+  try {
+    const { data: { session } } = await db.auth.getSession();
+    const userArea = document.getElementById('snUserArea');
+    
+    if (session?.user) {
+      currentUser = session.user;
+      const fullName = session.user.user_metadata?.full_name || session.user.email || 'کاربر';
+      const firstLetter = fullName.charAt(0).toUpperCase();
+      const userName = fullName.split(' ')[0] || 'کاربر';
+      
+      userArea.innerHTML = `<a href="dashboard.html" class="sn-user-avatar" title="${fullName}">${firstLetter}</a>`;
+      
+      const heroP = document.querySelector('.hero-section p');
+      if (heroP) {
+        heroP.innerHTML = `سلام <strong style="color: var(--gold);">${userName}</strong> 👋 خوش برگشتی!<br>امتیاز مالی و پیشنهادهای شخصی‌ت آماده‌ست.`;
+      }
+      
+      const ctaBtn = document.getElementById('mainCtaBtn');
+      if (ctaBtn) {
+        ctaBtn.innerHTML = '📊 ورود به داشبورد';
+        ctaBtn.onclick = () => window.location.href = 'dashboard.html';
+      }
+      
+      const scoreBtn = document.getElementById('scoreCtaBtn');
+      if (scoreBtn) {
+        scoreBtn.innerHTML = '📊 تحلیل کامل امتیاز';
+        scoreBtn.onclick = () => window.location.href = 'dashboard.html';
+      }
+      
+    } else {
+      userArea.innerHTML = `<a href="login.html" class="sn-user-avatar" title="ورود / ثبت‌نام" style="font-size: 18px;">👤</a>`;
+    }
+  } catch (e) {
+    console.error('User check error:', e);
+    const userArea = document.getElementById('snUserArea');
+    if (userArea) userArea.innerHTML = `<a href="login.html" class="sn-user-avatar" title="ورود" style="font-size: 18px;">👤</a>`;
+  }
+}
+
+// ==========================================
+// 📊 Market Ticker (Mock)
+// ==========================================
+function mockMarketPrices() {
+  const p = { gold18: 2950000, ch: 1.2, usd: 62500, uc: -0.5, btc: 88200, bc: 2.3 };
+  const el = document.getElementById('marketPrices');
+  if (el) {
+    el.innerHTML = `
+      <div class="market-price-item">
+        <span class="icon">🥇</span><span class="name">طلا ۱۸:</span>
+        <span class="price">${toFa(p.gold18.toLocaleString())}</span>
+        <span class="change up">+${toFa(p.ch)}٪</span>
+      </div>
+      <div class="market-price-item">
+        <span class="icon">💵</span><span class="name">دلار:</span>
+        <span class="price">${toFa(p.usd.toLocaleString())}</span>
+        <span class="change down">${toFa(p.uc)}٪</span>
+      </div>
+      <div class="market-price-item">
+        <span class="icon">₿</span><span class="name">BTC:</span>
+        <span class="price">$${toFa(p.btc.toLocaleString())}</span>
+        <span class="change up">+${toFa(p.bc)}٪</span>
+      </div>
+    `;
+  }
+}
+
+// ==========================================
+// 🎮 شبیه‌ساز سناریو
+// ==========================================
 const SCENARIOS = [
   { key: 'gold', name: '🥇 فقط طلا', rate: 35, color: '#D4AF37' },
   { key: 'usd', name: '💵 فقط دلار', rate: 28, color: '#10b981' },
@@ -1078,7 +1157,7 @@ const SCENARIOS = [
 function runSimulation() {
   const capital = parseNum(document.getElementById('sim-capital').value);
   const monthly = parseNum(document.getElementById('sim-monthly').value);
-  const years = parseFloat(document.getElementById('sim-years').value) || 5;
+  const years = parseFloat(toEnDigits(document.getElementById('sim-years').value)) || 5;
   if (capital <= 0 || years <= 0) { alert('لطفاً سرمایه و مدت زمان رو درست وارد کن'); return; }
   const months = years * 12;
   const results = SCENARIOS.map(sc => {
@@ -1136,161 +1215,28 @@ function runSimulation() {
   document.getElementById('simResults').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 }
 
-// قیمت‌های بازار (Mock)
-function mockMarketPrices() {
-  const p = { gold18: 2950000, ch: 1.2, usd: 62500, uc: -0.5, btc: 88200, bc: 2.3 };
-  const el = document.getElementById('marketPrices');
-  if (el) {
-    el.innerHTML = `
-      <div class="market-price-item">
-        <span class="icon">🥇</span><span class="name">طلا ۱۸:</span>
-        <span class="price">${toFa(p.gold18.toLocaleString())}</span>
-        <span class="change up">+${toFa(p.ch)}٪</span>
-      </div>
-      <div class="market-price-item">
-        <span class="icon">💵</span><span class="name">دلار:</span>
-        <span class="price">${toFa(p.usd.toLocaleString())}</span>
-        <span class="change down">${toFa(p.uc)}٪</span>
-      </div>
-      <div class="market-price-item">
-        <span class="icon">₿</span><span class="name">BTC:</span>
-        <span class="price">$${toFa(p.btc.toLocaleString())}</span>
-        <span class="change up">+${toFa(p.bc)}٪</span>
-      </div>
-    `;
-  }
-}
-
-// ==========================================
-// 🔌 اتصال به Supabase — کاربر فعلی
-// ==========================================
-let currentUser = null;
-
-async function checkUser() {
-  try {
-    const { data: { session } } = await db.auth.getSession();
-    const userArea = document.getElementById('snUserArea');
-    
-    if (session?.user) {
-      currentUser = session.user;
-      const fullName = session.user.user_metadata?.full_name || session.user.email || 'کاربر';
-      const firstLetter = fullName.charAt(0).toUpperCase();
-      const userName = fullName.split(' ')[0] || 'کاربر';
-      
-      userArea.innerHTML = `
-        <a href="dashboard.html" class="sn-user-avatar" title="${fullName}">
-          ${firstLetter}
-        </a>
-      `;
-      
-      // تغییر Hero بر اساس کاربر لاگین‌شده
-      const heroP = document.querySelector('.hero-section p');
-      if (heroP) {
-        heroP.innerHTML = `سلام <strong style="color: var(--gold);">${userName}</strong> 👋 خوش برگشتی!<br>امتیاز مالی و پیشنهادهای شخصی‌ت آماده‌ست.`;
-      }
-      
-      // دکمه CTA رو تغییر بده
-      const ctaBtn = document.querySelector('.cta-btn');
-      if (ctaBtn) {
-        ctaBtn.innerHTML = '📊 ورود به داشبورد';
-        ctaBtn.onclick = () => window.location.href = 'dashboard.html';
-      }
-      
-      // Score Card CTA رو تغییر بده
-      const scoreBtn = document.querySelector('.score-cta button');
-      if (scoreBtn) {
-        scoreBtn.innerHTML = '📊 تحلیل کامل امتیاز';
-        scoreBtn.onclick = () => window.location.href = 'dashboard.html';
-      }
-      
-      console.log('✅ کاربر لاگین‌شده:', fullName);
-      
-    } else {
-      // کاربر مهمان
-      userArea.innerHTML = `
-        <a href="login.html" class="sn-user-avatar" title="ورود / ثبت‌نام" style="font-size: 18px;">
-          👤
-        </a>
-      `;
-      
-      console.log('👤 کاربر مهمان');
-    }
-  } catch (e) {
-    console.error('User check error:', e);
-    const userArea = document.getElementById('snUserArea');
-    userArea.innerHTML = `
-      <a href="login.html" class="sn-user-avatar" title="ورود" style="font-size: 18px;">
-        👤
-      </a>
-    `;
-  }
-}
 // ==========================================
 // 🎯 Modal ابزارها
 // ==========================================
 const TOOLS_CONFIG = {
-  dca: {
-    icon: '💰',
-    name: 'سرمایه‌گذاری ماهانه (DCA)',
-    render: renderDCATool
-  },
-  compound: {
-    icon: '🏦',
-    name: 'سود مرکب',
-    render: renderCompoundTool
-  },
-  goal: {
-    icon: '🎯',
-    name: 'هدف مالی',
-    render: renderGoalTool
-  },
-  inflation: {
-    icon: '📉',
-    name: 'محاسبه تورم',
-    render: renderInflationTool
-  },
-  'inflation-history': {
-    icon: '📊',
-    name: 'تاریخچه تورم',
-    render: renderInflationHistoryTool
-  },
-  compare: {
-    icon: '⚖️',
-    name: 'مقایسه گزینه‌ها',
-    render: renderCompareTool
-  },
-  risk: {
-    icon: '🎲',
-    name: 'تحلیل ریسک',
-    render: renderRiskTool
-  },
-  position: {
-    icon: '🎯',
-    name: 'مدیریت پوزیشن',
-    render: renderPositionTool
-  }
+  dca: { icon: '💰', name: 'سرمایه‌گذاری ماهانه (DCA)', render: renderDCATool },
+  compound: { icon: '🏦', name: 'سود مرکب', render: renderCompoundTool },
+  goal: { icon: '🎯', name: 'هدف مالی', render: renderGoalTool },
+  inflation: { icon: '📉', name: 'محاسبه تورم', render: renderInflationTool },
+  'inflation-history': { icon: '📊', name: 'تاریخچه تورم', render: renderInflationHistoryTool },
+  compare: { icon: '⚖️', name: 'مقایسه گزینه‌ها', render: renderCompareTool },
+  risk: { icon: '🎲', name: 'تحلیل ریسک', render: renderRiskTool },
+  position: { icon: '🎯', name: 'مدیریت پوزیشن', render: renderPositionTool }
 };
 
 function openTool(toolKey) {
   const config = TOOLS_CONFIG[toolKey];
-  if (!config) {
-    console.warn('ابزار ناشناخته:', toolKey);
-    return;
-  }
-  
-  // تنظیم عنوان
+  if (!config) return;
   document.getElementById('toolModalIcon').textContent = config.icon;
   document.getElementById('toolModalName').textContent = config.name;
-  
-  // رندر محتوا
-  const body = document.getElementById('toolModalBody');
-  body.innerHTML = config.render();
-  
-  // نمایش Modal
+  document.getElementById('toolModalBody').innerHTML = config.render();
   document.getElementById('toolModal').classList.add('show');
   document.body.style.overflow = 'hidden';
-  
-  // فعال‌سازی فرمت اعداد
   setTimeout(() => {
     document.querySelectorAll('#toolModalBody input[inputmode="numeric"]').forEach(inp => {
       inp.addEventListener('input', handleNumericInput);
@@ -1303,18 +1249,11 @@ function closeToolModal() {
   document.body.style.overflow = '';
 }
 
-// بستن با کلیک روی overlay
 document.addEventListener('click', (e) => {
-  if (e.target.id === 'toolModal') {
-    closeToolModal();
-  }
+  if (e.target.id === 'toolModal') closeToolModal();
 });
-
-// بستن با Escape
 document.addEventListener('keydown', (e) => {
-  if (e.key === 'Escape') {
-    closeToolModal();
-  }
+  if (e.key === 'Escape') closeToolModal();
 });
 
 // ==========================================
@@ -1322,14 +1261,13 @@ document.addEventListener('keydown', (e) => {
 // ==========================================
 function renderDCATool() {
   return `
-    <div class="edu-card" style="background: linear-gradient(135deg, rgba(59, 130, 246, 0.08), rgba(59, 130, 246, 0.02)); border: 1px solid rgba(59, 130, 246, 0.25); border-radius: 16px; padding: 16px 18px; margin-bottom: 20px; display: flex; gap: 12px; align-items: flex-start;">
-      <div style="font-size: 24px; flex-shrink: 0;">📖</div>
-      <div style="flex: 1;">
+    <div style="background: linear-gradient(135deg, rgba(59, 130, 246, 0.08), rgba(59, 130, 246, 0.02)); border: 1px solid rgba(59, 130, 246, 0.25); border-radius: 16px; padding: 16px 18px; margin-bottom: 20px; display: flex; gap: 12px;">
+      <div style="font-size: 24px;">📖</div>
+      <div>
         <div style="color: #60a5fa; font-size: 13px; font-weight: 800; margin-bottom: 8px;">این ابزار چیکار می‌کنه؟</div>
         <div style="color: #cbd5e1; font-size: 12.5px; line-height: 1.8;">اگه هر ماه یه مبلغ ثابت سرمایه‌گذاری کنی، با سود مرکب چقدر می‌شه؟</div>
       </div>
     </div>
-    
     <div class="form-row-2">
       <div class="form-group">
         <label>💵 سرمایه‌گذاری ماهانه <span class="help">(تومان)</span></label>
@@ -1340,7 +1278,6 @@ function renderDCATool() {
         <input type="number" id="dca-months" class="form-input" placeholder="12" min="1" max="600" style="direction: rtl; text-align: right;">
       </div>
     </div>
-    
     <div class="form-row-2">
       <div class="form-group">
         <label>📈 بازدهی سالانه <span class="help">(٪)</span></label>
@@ -1351,9 +1288,7 @@ function renderDCATool() {
         <input type="text" id="dca-initial" class="form-input" placeholder="0" inputmode="numeric">
       </div>
     </div>
-    
     <button class="calc-btn" onclick="calcDCA()">🚀 محاسبه کن</button>
-    
     <div class="result-card" id="result-dca">
       <h3>✅ نتیجه محاسبه</h3>
       <div class="result-grid">
@@ -1362,22 +1297,10 @@ function renderDCATool() {
           <div class="value" id="dca-final">--</div>
           <div class="sub" id="dca-profit-sub">--</div>
         </div>
-        <div class="result-item">
-          <div class="label">📊 اصل سرمایه</div>
-          <div class="value" id="dca-principal">--</div>
-        </div>
-        <div class="result-item">
-          <div class="label">📈 سود کل</div>
-          <div class="value green" id="dca-profit">--</div>
-        </div>
-        <div class="result-item gold">
-          <div class="label">⚖️ نسبت رشد</div>
-          <div class="value gold" id="dca-ratio">--</div>
-        </div>
-        <div class="result-item blue">
-          <div class="label">📅 میانگین ماهانه</div>
-          <div class="value" id="dca-avg">--</div>
-        </div>
+        <div class="result-item"><div class="label">📊 اصل سرمایه</div><div class="value" id="dca-principal">--</div></div>
+        <div class="result-item"><div class="label">📈 سود کل</div><div class="value green" id="dca-profit">--</div></div>
+        <div class="result-item gold"><div class="label">⚖️ نسبت رشد</div><div class="value gold" id="dca-ratio">--</div></div>
+        <div class="result-item blue"><div class="label">📅 میانگین ماهانه</div><div class="value" id="dca-avg">--</div></div>
       </div>
     </div>
   `;
@@ -1388,70 +1311,509 @@ function calcDCA() {
   const months = parseInt(toEnDigits(document.getElementById('dca-months').value)) || 0;
   const annualRate = parseFloat(toEnDigits(document.getElementById('dca-rate').value)) || 0;
   const initial = parseNum(document.getElementById('dca-initial').value);
-  
-  if (monthly <= 0 || months <= 0) {
-    alert('لطفاً مبلغ ماهانه و مدت زمان رو وارد کن');
-    return;
-  }
-  
-  const monthlyRate = annualRate / 100 / 12;
-  let futureValue;
-  
-  if (monthlyRate === 0) {
-    futureValue = monthly * months + initial;
-  } else {
-    const factor = Math.pow(1 + monthlyRate, months);
-    futureValue = monthly * ((factor - 1) / monthlyRate) + initial * factor;
-  }
-  
+  if (monthly <= 0 || months <= 0) { alert('لطفاً مبلغ ماهانه و مدت زمان رو وارد کن'); return; }
+  const mr = annualRate / 100 / 12;
+  let final;
+  if (mr === 0) final = monthly * months + initial;
+  else { const f = Math.pow(1 + mr, months); final = monthly * ((f - 1) / mr) + initial * f; }
   const totalPrincipal = monthly * months + initial;
-  const totalProfit = futureValue - totalPrincipal;
-  const ratio = totalPrincipal > 0 ? (futureValue / totalPrincipal) : 0;
-  const avgMonthly = futureValue / months;
-  
-  document.getElementById('dca-final').textContent = formatBigNum(futureValue) + ' تومان';
-  document.getElementById('dca-profit-sub').textContent = totalProfit > 0
-    ? `سود: ${formatBigNum(totalProfit)} تومان در ${toFa(months)} ماه`
-    : '';
+  const totalProfit = final - totalPrincipal;
+  const ratio = totalPrincipal > 0 ? (final / totalPrincipal) : 0;
+  const avg = final / months;
+  document.getElementById('dca-final').textContent = formatBigNum(final) + ' تومان';
+  document.getElementById('dca-profit-sub').textContent = totalProfit > 0 ? `سود: ${formatBigNum(totalProfit)} تومان در ${toFa(months)} ماه` : '';
   document.getElementById('dca-principal').textContent = formatBigNum(totalPrincipal);
   document.getElementById('dca-profit').textContent = formatBigNum(totalProfit);
   document.getElementById('dca-ratio').textContent = toFa(ratio.toFixed(2)) + ' برابر';
-  document.getElementById('dca-avg').textContent = formatBigNum(avgMonthly);
-  
+  document.getElementById('dca-avg').textContent = formatBigNum(avg);
   document.getElementById('result-dca').classList.add('show');
-  
-  // اسکرول به نتیجه
-  setTimeout(() => {
-    document.getElementById('result-dca').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-  }, 100);
+  setTimeout(() => document.getElementById('result-dca').scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 100);
 }
 
 // ==========================================
-// 📌 Placeholder برای بقیه ابزارها
+// 🏦 ابزار سود مرکب
 // ==========================================
 function renderCompoundTool() {
-  return '<div style="text-align:center; padding:40px; color:var(--gray);">🏦 ابزار سود مرکب — به زودی</div>';
-}
-function renderGoalTool() {
-  return '<div style="text-align:center; padding:40px; color:var(--gray);">🎯 ابزار هدف مالی — به زودی</div>';
-}
-function renderInflationTool() {
-  return '<div style="text-align:center; padding:40px; color:var(--gray);">📉 ابزار تورم — به زودی</div>';
-}
-function renderInflationHistoryTool() {
-  return '<div style="text-align:center; padding:40px; color:var(--gray);">📊 تاریخچه تورم — به زودی</div>';
-}
-function renderCompareTool() {
-  return '<div style="text-align:center; padding:40px; color:var(--gray);">⚖️ مقایسه — به زودی</div>';
-}
-function renderRiskTool() {
-  return '<div style="text-align:center; padding:40px; color:var(--gray);">🎲 تحلیل ریسک — به زودی</div>';
-}
-function renderPositionTool() {
-  return '<div style="text-align:center; padding:40px; color:var(--gray);">🎯 مدیریت پوزیشن — به زودی</div>';
+  return `
+    <div style="background: linear-gradient(135deg, rgba(59, 130, 246, 0.08), rgba(59, 130, 246, 0.02)); border: 1px solid rgba(59, 130, 246, 0.25); border-radius: 16px; padding: 16px 18px; margin-bottom: 20px; display: flex; gap: 12px;">
+      <div style="font-size: 24px;">📖</div>
+      <div>
+        <div style="color: #60a5fa; font-size: 13px; font-weight: 800; margin-bottom: 8px;">این ابزار چیکار می‌کنه؟</div>
+        <div style="color: #cbd5e1; font-size: 12.5px; line-height: 1.8;">اگه یه مبلغ رو با نرخ سود مشخص سرمایه‌گذاری کنی، با سود مرکب چقدر می‌شه؟</div>
+      </div>
+    </div>
+    <div class="form-row-2">
+      <div class="form-group"><label>💰 مبلغ اصل <span class="help">(تومان)</span></label><input type="text" id="cmp-principal" class="form-input" placeholder="100,000,000" inputmode="numeric"></div>
+      <div class="form-group"><label>📈 نرخ سود سالانه <span class="help">(٪)</span></label><input type="number" id="cmp-rate" class="form-input" placeholder="20" step="0.1" style="direction: rtl; text-align: right;"></div>
+    </div>
+    <div class="form-row-2">
+      <div class="form-group"><label>⏳ مدت زمان <span class="help">(سال)</span></label><input type="number" id="cmp-years" class="form-input" placeholder="5" min="0.1" max="100" step="0.1" style="direction: rtl; text-align: right;"></div>
+      <div class="form-group">
+        <label>🔄 تعداد محاسبه سود</label>
+        <select id="cmp-compound" class="form-input" style="direction: rtl; text-align: right; cursor: pointer;">
+          <option value="1">سالانه</option>
+          <option value="2">شش‌ماهه</option>
+          <option value="4">فصلی</option>
+          <option value="12" selected>ماهانه</option>
+          <option value="365">روزانه</option>
+        </select>
+      </div>
+    </div>
+    <button class="calc-btn" onclick="calcCompound()">🚀 محاسبه کن</button>
+    <div class="result-card" id="result-compound">
+      <h3>✅ نتیجه محاسبه</h3>
+      <div class="result-grid">
+        <div class="result-highlight">
+          <div class="label">💎 مبلغ نهایی شما</div>
+          <div class="value" id="cmp-final">--</div>
+          <div class="sub" id="cmp-profit-sub">--</div>
+        </div>
+        <div class="result-item"><div class="label">💰 اصل سرمایه</div><div class="value" id="cmp-principal-result">--</div></div>
+        <div class="result-item"><div class="label">📈 سود کل</div><div class="value green" id="cmp-profit">--</div></div>
+        <div class="result-item gold"><div class="label">📊 بازدهی کل</div><div class="value gold" id="cmp-total-return">--</div></div>
+        <div class="result-item blue"><div class="label">📅 سود روزانه</div><div class="value" id="cmp-daily">--</div></div>
+      </div>
+    </div>
+  `;
 }
 
-// Init
+function calcCompound() {
+  const principal = parseNum(document.getElementById('cmp-principal').value);
+  const rate = parseFloat(toEnDigits(document.getElementById('cmp-rate').value)) || 0;
+  const years = parseFloat(toEnDigits(document.getElementById('cmp-years').value)) || 0;
+  const n = parseInt(document.getElementById('cmp-compound').value) || 1;
+  if (principal <= 0 || rate <= 0 || years <= 0) { alert('لطفاً همه فیلدها رو پر کن'); return; }
+  const r = rate / 100;
+  const final = principal * Math.pow(1 + r / n, n * years);
+  const profit = final - principal;
+  const totalReturn = (final / principal - 1) * 100;
+  const daily = profit / (years * 365);
+  document.getElementById('cmp-final').textContent = formatBigNum(final) + ' تومان';
+  document.getElementById('cmp-profit-sub').textContent = `سود: ${formatBigNum(profit)} تومان در ${toFa(years)} سال`;
+  document.getElementById('cmp-principal-result').textContent = formatBigNum(principal);
+  document.getElementById('cmp-profit').textContent = formatBigNum(profit);
+  document.getElementById('cmp-total-return').textContent = toFa(totalReturn.toFixed(2)) + '٪';
+  document.getElementById('cmp-daily').textContent = formatBigNum(daily);
+  document.getElementById('result-compound').classList.add('show');
+  setTimeout(() => document.getElementById('result-compound').scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 100);
+}
+
+// ==========================================
+// 🎯 ابزار هدف مالی
+// ==========================================
+function renderGoalTool() {
+  return `
+    <div style="background: linear-gradient(135deg, rgba(59, 130, 246, 0.08), rgba(59, 130, 246, 0.02)); border: 1px solid rgba(59, 130, 246, 0.25); border-radius: 16px; padding: 16px 18px; margin-bottom: 20px; display: flex; gap: 12px;">
+      <div style="font-size: 24px;">📖</div>
+      <div>
+        <div style="color: #60a5fa; font-size: 13px; font-weight: 800; margin-bottom: 8px;">این ابزار چیکار می‌کنه؟</div>
+        <div style="color: #cbd5e1; font-size: 12.5px; line-height: 1.8;">می‌خوای ۳ سال دیگه ۱ میلیارد تومان داشته باشی؟ این ابزار می‌گه ماهی چقدر باید پس‌انداز کنی.</div>
+      </div>
+    </div>
+    <div class="form-row-2">
+      <div class="form-group"><label>🎯 هدف نهایی <span class="help">(تومان)</span></label><input type="text" id="goal-target" class="form-input" placeholder="1,000,000,000" inputmode="numeric"></div>
+      <div class="form-group"><label>⏳ مدت زمان <span class="help">(سال)</span></label><input type="number" id="goal-years" class="form-input" placeholder="3" min="0.5" max="50" step="0.5" style="direction: rtl; text-align: right;"></div>
+    </div>
+    <div class="form-row-2">
+      <div class="form-group"><label>📈 بازدهی سالانه <span class="help">(٪)</span></label><input type="number" id="goal-rate" class="form-input" placeholder="30" step="0.1" style="direction: rtl; text-align: right;"></div>
+      <div class="form-group"><label>💹 موجودی فعلی <span class="help">(اختیاری)</span></label><input type="text" id="goal-initial" class="form-input" placeholder="0" inputmode="numeric"></div>
+    </div>
+    <button class="calc-btn" onclick="calcGoal()">🎯 محاسبه پس‌انداز لازم</button>
+    <div class="result-card" id="result-goal">
+      <h3>✅ نتیجه محاسبه</h3>
+      <div class="result-grid">
+        <div class="result-highlight">
+          <div class="label">💰 پس‌انداز ماهانه لازم</div>
+          <div class="value" id="goal-monthly">--</div>
+          <div class="sub" id="goal-monthly-sub">--</div>
+        </div>
+        <div class="result-item"><div class="label">💎 کل اصل سرمایه‌گذاری</div><div class="value" id="goal-principal">--</div></div>
+        <div class="result-item"><div class="label">📈 سود مرکب</div><div class="value green" id="goal-profit">--</div></div>
+        <div class="result-item gold"><div class="label">📅 تعداد ماه</div><div class="value gold" id="goal-months">--</div></div>
+        <div class="result-item blue"><div class="label">📊 درصد سود به هدف</div><div class="value" id="goal-profit-percent">--</div></div>
+      </div>
+    </div>
+  `;
+}
+
+function calcGoal() {
+  const target = parseNum(document.getElementById('goal-target').value);
+  const years = parseFloat(toEnDigits(document.getElementById('goal-years').value)) || 0;
+  const rate = parseFloat(toEnDigits(document.getElementById('goal-rate').value)) || 0;
+  const initial = parseNum(document.getElementById('goal-initial').value);
+  if (target <= 0 || years <= 0) { alert('لطفاً هدف و مدت زمان رو وارد کن'); return; }
+  const months = years * 12;
+  const mr = rate / 100 / 12;
+  let monthlySaving;
+  if (mr === 0) monthlySaving = (target - initial) / months;
+  else {
+    const f = Math.pow(1 + mr, months);
+    monthlySaving = ((target - initial * f) * mr) / (f - 1);
+  }
+  const totalPrincipal = monthlySaving * months + initial;
+  const profit = target - totalPrincipal;
+  const profitPercent = target > 0 ? (profit / target * 100) : 0;
+  document.getElementById('goal-monthly').textContent = formatBigNum(monthlySaving) + ' تومان';
+  document.getElementById('goal-monthly-sub').textContent = `در ${toFa(Math.round(months))} ماه`;
+  document.getElementById('goal-principal').textContent = formatBigNum(totalPrincipal);
+  document.getElementById('goal-profit').textContent = formatBigNum(profit);
+  document.getElementById('goal-months').textContent = toFa(Math.round(months)) + ' ماه';
+  document.getElementById('goal-profit-percent').textContent = toFa(profitPercent.toFixed(1)) + '٪';
+  document.getElementById('result-goal').classList.add('show');
+  setTimeout(() => document.getElementById('result-goal').scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 100);
+}
+
+// ==========================================
+// 📉 ابزار تورم
+// ==========================================
+function renderInflationTool() {
+  return `
+    <div style="background: linear-gradient(135deg, rgba(59, 130, 246, 0.08), rgba(59, 130, 246, 0.02)); border: 1px solid rgba(59, 130, 246, 0.25); border-radius: 16px; padding: 16px 18px; margin-bottom: 20px; display: flex; gap: 12px;">
+      <div style="font-size: 24px;">📖</div>
+      <div>
+        <div style="color: #60a5fa; font-size: 13px; font-weight: 800; margin-bottom: 8px;">این ابزار چیکار می‌کنه؟</div>
+        <div style="color: #cbd5e1; font-size: 12.5px; line-height: 1.8;">اگه تورم ۴۰٪ باشه، ۱۰۰ میلیون تومان امروز، ۱ سال دیگه چقدر ارزش داره؟</div>
+      </div>
+    </div>
+    <div class="form-row-2">
+      <div class="form-group"><label>💰 مبلغ فعلی <span class="help">(تومان)</span></label><input type="text" id="inf-amount" class="form-input" placeholder="100,000,000" inputmode="numeric"></div>
+      <div class="form-group"><label>📈 نرخ تورم سالانه <span class="help">(٪)</span></label><input type="number" id="inf-rate" class="form-input" placeholder="40" step="0.1" style="direction: rtl; text-align: right;"></div>
+    </div>
+    <div class="form-group"><label>⏳ مدت زمان <span class="help">(سال)</span></label><input type="number" id="inf-years" class="form-input" placeholder="3" min="0.1" max="50" step="0.5" style="direction: rtl; text-align: right;"></div>
+    <button class="calc-btn" onclick="calcInflation()">📉 محاسبه کن</button>
+    <div class="result-card" id="result-inflation">
+      <h3>✅ نتیجه محاسبه</h3>
+      <div class="result-grid">
+        <div class="result-highlight">
+          <div class="label">💸 قدرت خرید در پایان دوره</div>
+          <div class="value" id="inf-result">--</div>
+          <div class="sub" id="inf-result-sub">--</div>
+        </div>
+        <div class="result-item" style="border-right-color: var(--red);"><div class="label">📉 کاهش ارزش پول</div><div class="value" style="color: var(--red);" id="inf-loss">--</div></div>
+        <div class="result-item gold"><div class="label">📈 مبلغ برای حفظ ارزش</div><div class="value gold" id="inf-needed">--</div></div>
+        <div class="result-item"><div class="label">💵 ارزش هر ۱ میلیون</div><div class="value" id="inf-per-million">--</div></div>
+        <div class="result-item blue"><div class="label">⚡ بازدهی لازم</div><div class="value" id="inf-return-needed">--</div></div>
+      </div>
+    </div>
+  `;
+}
+
+function calcInflation() {
+  const amount = parseNum(document.getElementById('inf-amount').value);
+  const rate = parseFloat(toEnDigits(document.getElementById('inf-rate').value)) || 0;
+  const years = parseFloat(toEnDigits(document.getElementById('inf-years').value)) || 0;
+  if (amount <= 0 || rate <= 0 || years <= 0) { alert('لطفاً همه فیلدها رو پر کن'); return; }
+  const futurePower = amount / Math.pow(1 + rate / 100, years);
+  const loss = amount - futurePower;
+  const needed = amount * Math.pow(1 + rate / 100, years);
+  const perMillion = 1000000 / Math.pow(1 + rate / 100, years);
+  document.getElementById('inf-result').textContent = formatBigNum(futurePower) + ' تومان';
+  document.getElementById('inf-result-sub').textContent = `به اندازه ${formatBigNum(futurePower)} امروز ارزش داره`;
+  document.getElementById('inf-loss').textContent = formatBigNum(loss);
+  document.getElementById('inf-needed').textContent = formatBigNum(needed);
+  document.getElementById('inf-per-million').textContent = formatBigNum(perMillion);
+  document.getElementById('inf-return-needed').textContent = toFa(rate.toFixed(1)) + '٪';
+  document.getElementById('result-inflation').classList.add('show');
+  setTimeout(() => document.getElementById('result-inflation').scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 100);
+}
+
+// ==========================================
+// 📊 ابزار تاریخچه تورم
+// ==========================================
+function renderInflationHistoryTool() {
+  return `
+    <div style="background: linear-gradient(135deg, rgba(59, 130, 246, 0.08), rgba(59, 130, 246, 0.02)); border: 1px solid rgba(59, 130, 246, 0.25); border-radius: 16px; padding: 16px 18px; margin-bottom: 20px; display: flex; gap: 12px;">
+      <div style="font-size: 24px;">📖</div>
+      <div>
+        <div style="color: #60a5fa; font-size: 13px; font-weight: 800; margin-bottom: 8px;">تورم تجمعی چیه؟</div>
+        <div style="color: #cbd5e1; font-size: 12.5px; line-height: 1.8;">نرخ تورم هر سال متفاوته. برای محاسبه دقیق، باید تورم <strong>هر سال</strong> رو جدا وارد کنی.</div>
+      </div>
+    </div>
+    <div class="form-row-2">
+      <div class="form-group"><label>📅 از سال <span class="help">(شمسی)</span></label><input type="number" id="inf-from-year" class="form-input" placeholder="1402" min="1300" max="1500" style="direction: rtl; text-align: right;"></div>
+      <div class="form-group"><label>📅 تا سال <span class="help">(شمسی)</span></label><input type="number" id="inf-to-year" class="form-input" placeholder="1405" min="1300" max="1500" style="direction: rtl; text-align: right;"></div>
+    </div>
+    <button class="calc-btn" onclick="generateYearInputs()" style="margin-bottom: 15px;">📋 ساخت فیلدهای سال</button>
+    <div id="inflationYearsContainer" style="display: flex; flex-direction: column; gap: 10px; margin-bottom: 15px;"></div>
+    <div id="inflationSummary" style="display: none; padding: 18px; background: rgba(212, 175, 55, 0.08); border: 1px solid rgba(212, 175, 55, 0.3); border-radius: 15px;">
+      <div style="color: var(--gold); font-size: 13px; font-weight: 800; margin-bottom: 12px;">📊 خلاصه تورم</div>
+      <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;">
+        <div style="text-align: center;">
+          <div style="color: var(--gray); font-size: 11px; margin-bottom: 6px;">تورم تجمعی</div>
+          <div style="color: var(--gold); font-size: 18px; font-weight: 900;" id="infTotalMultiplier">--</div>
+        </div>
+        <div style="text-align: center;">
+          <div style="color: var(--gray); font-size: 11px; margin-bottom: 6px;">تورم کل</div>
+          <div style="color: var(--red); font-size: 18px; font-weight: 900;" id="infTotalPercent">--</div>
+        </div>
+        <div style="text-align: center;">
+          <div style="color: var(--gray); font-size: 11px; margin-bottom: 6px;">میانگین سالانه</div>
+          <div style="color: var(--green); font-size: 18px; font-weight: 900;" id="infAverageRate">--</div>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function generateYearInputs() {
+  const fromYear = parseInt(toEnDigits(document.getElementById('inf-from-year').value));
+  const toYear = parseInt(toEnDigits(document.getElementById('inf-to-year').value));
+  const container = document.getElementById('inflationYearsContainer');
+  if (!fromYear || !toYear || fromYear > toYear) { alert('لطفاً سال‌ها رو درست وارد کن'); return; }
+  if (toYear - fromYear > 30) { alert('حداکثر ۳۰ سال'); return; }
+  let html = '';
+  for (let y = fromYear; y <= toYear; y++) {
+    html += `
+      <div style="display: grid; grid-template-columns: 80px 1fr; gap: 12px; align-items: center;">
+        <div style="color: var(--gold); font-size: 14px; font-weight: 800; text-align: center; background: rgba(212, 175, 55, 0.1); padding: 8px; border-radius: 10px; border: 1px solid rgba(212, 175, 55, 0.2);">${toFa(y)}</div>
+        <input type="number" id="inf-year-${y}" class="form-input" placeholder="مثلاً 40" step="0.1" min="0" max="500" style="direction: rtl; text-align: right;" oninput="updateInflationSummary()">
+      </div>
+    `;
+  }
+  container.innerHTML = html;
+}
+
+function updateInflationSummary() {
+  const fromYear = parseInt(toEnDigits(document.getElementById('inf-from-year').value));
+  const toYear = parseInt(toEnDigits(document.getElementById('inf-to-year').value));
+  if (!fromYear || !toYear) return;
+  let multiplier = 1, sum = 0, count = 0;
+  for (let y = fromYear; y <= toYear; y++) {
+    const input = document.getElementById('inf-year-' + y);
+    if (!input) continue;
+    const rate = parseFloat(toEnDigits(input.value));
+    if (!isNaN(rate) && rate > 0) { multiplier *= (1 + rate / 100); sum += rate; count++; }
+  }
+  const summary = document.getElementById('inflationSummary');
+  if (count === 0) { summary.style.display = 'none'; return; }
+  document.getElementById('infTotalMultiplier').textContent = toFa(multiplier.toFixed(2)) + ' برابر';
+  document.getElementById('infTotalPercent').textContent = toFa(((multiplier - 1) * 100).toFixed(1)) + '٪';
+  document.getElementById('infAverageRate').textContent = toFa((sum / count).toFixed(1)) + '٪';
+  summary.style.display = 'block';
+}
+
+// ==========================================
+// ⚖️ ابزار مقایسه
+// ==========================================
+function renderCompareTool() {
+  return `
+    <div style="background: linear-gradient(135deg, rgba(59, 130, 246, 0.08), rgba(59, 130, 246, 0.02)); border: 1px solid rgba(59, 130, 246, 0.25); border-radius: 16px; padding: 16px 18px; margin-bottom: 20px; display: flex; gap: 12px;">
+      <div style="font-size: 24px;">📖</div>
+      <div>
+        <div style="color: #60a5fa; font-size: 13px; font-weight: 800; margin-bottom: 8px;">این ابزار چیکار می‌کنه؟</div>
+        <div style="color: #cbd5e1; font-size: 12.5px; line-height: 1.8;">دو گزینه سرمایه‌گذاری مختلف رو کنار هم بذار و ببین کدوم بهتره.</div>
+      </div>
+    </div>
+    <div style="display: grid; grid-template-columns: 1fr auto 1fr; gap: 12px; align-items: center; margin-bottom: 20px;">
+      <div style="background: rgba(59, 130, 246, 0.08); padding: 15px; border-radius: 12px; border: 1px solid rgba(59, 130, 246, 0.3);">
+        <h4 style="color: #60a5fa; font-size: 13px; font-weight: 800; margin-bottom: 12px; text-align: center;">🅰️ گزینه اول</h4>
+        <div class="form-group" style="margin-bottom: 10px;"><label style="font-size: 12px;">مبلغ (تومان)</label><input type="text" id="cmp-a-amount" class="form-input" placeholder="100,000,000" inputmode="numeric"></div>
+        <div class="form-group" style="margin-bottom: 0;"><label style="font-size: 12px;">بازدهی (٪)</label><input type="number" id="cmp-a-rate" class="form-input" placeholder="30" step="0.1" style="direction: rtl; text-align: right;"></div>
+      </div>
+      <div style="width: 45px; height: 45px; border-radius: 50%; background: var(--gold); color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 13px;">VS</div>
+      <div style="background: rgba(212, 175, 55, 0.08); padding: 15px; border-radius: 12px; border: 1px solid rgba(212, 175, 55, 0.3);">
+        <h4 style="color: var(--gold); font-size: 13px; font-weight: 800; margin-bottom: 12px; text-align: center;">🅱️ گزینه دوم</h4>
+        <div class="form-group" style="margin-bottom: 10px;"><label style="font-size: 12px;">مبلغ (تومان)</label><input type="text" id="cmp-b-amount" class="form-input" placeholder="100,000,000" inputmode="numeric"></div>
+        <div class="form-group" style="margin-bottom: 0;"><label style="font-size: 12px;">بازدهی (٪)</label><input type="number" id="cmp-b-rate" class="form-input" placeholder="25" step="0.1" style="direction: rtl; text-align: right;"></div>
+      </div>
+    </div>
+    <div class="form-group" style="margin-bottom: 20px;"><label>⏳ مدت زمان <span class="help">(سال)</span></label><input type="number" id="cmp-years2" class="form-input" placeholder="5" min="0.1" max="50" step="0.5" style="direction: rtl; text-align: right;"></div>
+    <button class="calc-btn" onclick="calcCompare()">⚖️ مقایسه کن</button>
+    <div class="result-card" id="result-compare">
+      <h3>✅ نتیجه مقایسه</h3>
+      <div class="result-grid">
+        <div class="result-item blue"><div class="label">🅰️ گزینه اول</div><div class="value" style="color: #60a5fa;" id="cmp-a-final">--</div></div>
+        <div class="result-item gold"><div class="label">🅱️ گزینه دوم</div><div class="value gold" id="cmp-b-final">--</div></div>
+        <div class="result-highlight" id="cmp-winner-highlight" style="display:none;">
+          <div class="label">🏆 برنده</div>
+          <div class="value" id="cmp-winner">--</div>
+          <div class="sub" id="cmp-difference">--</div>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function calcCompare() {
+  const aAmount = parseNum(document.getElementById('cmp-a-amount').value);
+  const aRate = parseFloat(toEnDigits(document.getElementById('cmp-a-rate').value)) || 0;
+  const bAmount = parseNum(document.getElementById('cmp-b-amount').value);
+  const bRate = parseFloat(toEnDigits(document.getElementById('cmp-b-rate').value)) || 0;
+  const years = parseFloat(toEnDigits(document.getElementById('cmp-years2').value)) || 0;
+  if (aAmount <= 0 || bAmount <= 0 || years <= 0) { alert('لطفاً همه فیلدها رو پر کن'); return; }
+  const aFinal = aAmount * Math.pow(1 + aRate / 100, years);
+  const bFinal = bAmount * Math.pow(1 + bRate / 100, years);
+  document.getElementById('cmp-a-final').textContent = formatBigNum(aFinal);
+  document.getElementById('cmp-b-final').textContent = formatBigNum(bFinal);
+  const winnerEl = document.getElementById('cmp-winner-highlight');
+  const winnerText = document.getElementById('cmp-winner');
+  const diffText = document.getElementById('cmp-difference');
+  if (aFinal > bFinal) {
+    winnerText.textContent = '🅰️ گزینه اول برنده شد!';
+    diffText.textContent = `اختلاف: ${formatBigNum(aFinal - bFinal)} تومان بیشتر`;
+  } else if (bFinal > aFinal) {
+    winnerText.textContent = '🅱️ گزینه دوم برنده شد!';
+    diffText.textContent = `اختلاف: ${formatBigNum(bFinal - aFinal)} تومان بیشتر`;
+  } else {
+    winnerText.textContent = '⚖️ مساوی!';
+    diffText.textContent = 'هر دو گزینه نتیجه یکسان دارن';
+  }
+  winnerEl.style.display = 'block';
+  document.getElementById('result-compare').classList.add('show');
+  setTimeout(() => document.getElementById('result-compare').scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 100);
+}
+
+// ==========================================
+// 🎲 ابزار تحلیل ریسک
+// ==========================================
+const RISK_PORTFOLIOS = {
+  conservative: { name: '🛡️ محافظه‌کار', assets: [
+    { label: '🏦 درآمد ثابت', percent: 50 },
+    { label: '🥇 طلا و نقره', percent: 10 },
+    { label: '💵 ارز', percent: 25 },
+    { label: '📊 سهام کم‌ریسک', percent: 15 }
+  ]},
+  balanced: { name: '⚖️ متعادل', assets: [
+    { label: '🏦 درآمد ثابت', percent: 30 },
+    { label: '🥇 طلا و نقره', percent: 20 },
+    { label: '📊 سهام بورس', percent: 30 },
+    { label: '💵 ارز', percent: 20 }
+  ]},
+  aggressive: { name: '🚀 جسور', assets: [
+    { label: '🏦 درآمد ثابت', percent: 15 },
+    { label: '🥇 طلا و نقره', percent: 25 },
+    { label: '📊 سهام بورس', percent: 35 },
+    { label: '₿ ارز دیجیتال', percent: 10 },
+    { label: '💵 ارز', percent: 15 }
+  ]},
+  professional: { name: '🎯 حرفه‌ای', assets: [
+    { label: '🏦 درآمد ثابت', percent: 10 },
+    { label: '🥇 طلا و نقره', percent: 20 },
+    { label: '📊 سهام بورس', percent: 35 },
+    { label: '₿ ارز دیجیتال', percent: 25 },
+    { label: '💵 ارز', percent: 10 }
+  ]}
+};
+
+function renderRiskTool() {
+  return `
+    <div style="background: linear-gradient(135deg, rgba(59, 130, 246, 0.08), rgba(59, 130, 246, 0.02)); border: 1px solid rgba(59, 130, 246, 0.25); border-radius: 16px; padding: 16px 18px; margin-bottom: 20px; display: flex; gap: 12px;">
+      <div style="font-size: 24px;">📖</div>
+      <div>
+        <div style="color: #60a5fa; font-size: 13px; font-weight: 800; margin-bottom: 8px;">این ابزار چیکار می‌کنه؟</div>
+        <div style="color: #cbd5e1; font-size: 12.5px; line-height: 1.8;">سرمایه‌ات رو چطور بین دارایی‌ها پخش کنی تا ریسک متعادل باشه؟</div>
+      </div>
+    </div>
+    <div class="form-row-2">
+      <div class="form-group"><label>💵 کل سرمایه <span class="help">(تومان)</span></label><input type="text" id="risk-total" class="form-input" placeholder="100,000,000" inputmode="numeric"></div>
+      <div class="form-group">
+        <label>🎯 پروفایل ریسک</label>
+        <select id="risk-profile" class="form-input" style="direction: rtl; text-align: right; cursor: pointer;">
+          <option value="conservative">🛡️ محافظه‌کار</option>
+          <option value="balanced" selected>⚖️ متعادل</option>
+          <option value="aggressive">🚀 جسور</option>
+          <option value="professional">🎯 حرفه‌ای</option>
+        </select>
+      </div>
+    </div>
+    <button class="calc-btn" onclick="calcRisk()">🎲 محاسبه تخصیص بهینه</button>
+    <div class="result-card" id="result-risk" style="background: linear-gradient(135deg, rgba(212, 175, 55, 0.08), rgba(212, 175, 55, 0.02)); border-color: rgba(212, 175, 55, 0.3);">
+      <h3 style="color: var(--gold);">✅ سبد پیشنهادی</h3>
+      <div id="risk-portfolio" class="risk-portfolio-list"></div>
+    </div>
+  `;
+}
+
+function calcRisk() {
+  const total = parseNum(document.getElementById('risk-total').value);
+  const profileKey = document.getElementById('risk-profile').value;
+  if (total <= 0) { alert('لطفاً کل سرمایه رو وارد کن'); return; }
+  const profile = RISK_PORTFOLIOS[profileKey];
+  const container = document.getElementById('risk-portfolio');
+  container.innerHTML = profile.assets.map(asset => {
+    const amount = total * (asset.percent / 100);
+    return `
+      <div class="risk-portfolio-item">
+        <div class="risk-portfolio-header">
+          <span class="risk-portfolio-label">${asset.label}</span>
+          <span class="risk-portfolio-percent">${toFa(asset.percent)}٪</span>
+        </div>
+        <div class="risk-portfolio-amount">💰 ${formatBigNum(amount)} تومان</div>
+        <div class="risk-portfolio-bar">
+          <div class="risk-portfolio-bar-fill" style="width: ${asset.percent}%"></div>
+        </div>
+      </div>
+    `;
+  }).join('');
+  document.getElementById('result-risk').classList.add('show');
+  setTimeout(() => document.getElementById('result-risk').scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 100);
+}
+
+// ==========================================
+// 🎯 ابزار مدیریت پوزیشن
+// ==========================================
+function renderPositionTool() {
+  return `
+    <div style="background: linear-gradient(135deg, rgba(59, 130, 246, 0.08), rgba(59, 130, 246, 0.02)); border: 1px solid rgba(59, 130, 246, 0.25); border-radius: 16px; padding: 16px 18px; margin-bottom: 20px; display: flex; gap: 12px;">
+      <div style="font-size: 24px;">📖</div>
+      <div>
+        <div style="color: #60a5fa; font-size: 13px; font-weight: 800; margin-bottom: 8px;">این ابزار چیکار می‌کنه؟</div>
+        <div style="color: #cbd5e1; font-size: 12.5px; line-height: 1.8;">چقدر سرمایه‌گذاری کنی که اگه حد ضرر خورد، ضررت قابل مدیریت باشه؟</div>
+      </div>
+    </div>
+    <div class="form-row-2">
+      <div class="form-group"><label>💵 کل سرمایه <span class="help">(تومان)</span></label><input type="text" id="pos-total" class="form-input" placeholder="100,000,000" inputmode="numeric"></div>
+      <div class="form-group"><label>📉 درصد ریسک <span class="help">(٪)</span></label><input type="number" id="pos-risk-percent" class="form-input" placeholder="2" step="0.1" value="2" style="direction: rtl; text-align: right;"></div>
+    </div>
+    <div class="form-row-2">
+      <div class="form-group"><label>💵 قیمت ورود</label><input type="text" id="pos-entry" class="form-input" placeholder="1,000,000" inputmode="numeric"></div>
+      <div class="form-group"><label>🛑 حد ضرر</label><input type="text" id="pos-stop" class="form-input" placeholder="950,000" inputmode="numeric"></div>
+    </div>
+    <div class="form-group"><label>🎯 حد سود (هدف)</label><input type="text" id="pos-target" class="form-input" placeholder="1,200,000" inputmode="numeric"></div>
+    <button class="calc-btn" onclick="calcPosition()">🎯 محاسبه</button>
+    <div class="result-card" id="result-position">
+      <h3>✅ نتیجه</h3>
+      <div class="result-grid">
+        <div class="result-item gold"><div class="label">📊 حجم پوزیشن</div><div class="value gold" id="pos-size">--</div></div>
+        <div class="result-item"><div class="label">💰 مبلغ سرمایه‌گذاری</div><div class="value" id="pos-amount">--</div></div>
+        <div class="result-item" style="border-right-color: var(--red);"><div class="label">🔴 حداکثر ضرر</div><div class="value" style="color: var(--red);" id="pos-maxloss">--</div></div>
+        <div class="result-item"><div class="label">🟢 سود بالقوه</div><div class="value green" id="pos-maxprofit">--</div></div>
+        <div class="result-item gold"><div class="label">⚖️ R/R</div><div class="value gold" id="pos-rr">--</div></div>
+        <div class="result-item" style="border-right-color: var(--red);"><div class="label">📉 فاصله حد ضرر</div><div class="value" style="color: var(--red);" id="pos-stop-distance">--</div></div>
+      </div>
+    </div>
+  `;
+}
+
+function calcPosition() {
+  const total = parseNum(document.getElementById('pos-total').value);
+  const riskPercent = parseFloat(toEnDigits(document.getElementById('pos-risk-percent').value)) || 0;
+  const entry = parseNum(document.getElementById('pos-entry').value);
+  const stop = parseNum(document.getElementById('pos-stop').value);
+  const target = parseNum(document.getElementById('pos-target').value);
+  if (total <= 0 || entry <= 0 || stop <= 0) { alert('لطفاً سرمایه، قیمت ورود و حد ضرر رو وارد کن'); return; }
+  if (entry === stop) { alert('قیمت ورود و حد ضرر نباید یکسان باشن'); return; }
+  const maxLoss = total * (riskPercent / 100);
+  const stopDistance = Math.abs(entry - stop);
+  const stopPercent = (stopDistance / entry) * 100;
+  const positionSize = maxLoss / stopDistance;
+  const positionAmount = positionSize * entry;
+  let maxProfit = 0;
+  if (target > 0) maxProfit = positionSize * Math.abs(target - entry);
+  const rr = maxLoss > 0 ? (maxProfit / maxLoss) : 0;
+  document.getElementById('pos-size').textContent = formatBigNum(positionSize) + ' واحد';
+  document.getElementById('pos-amount').textContent = formatBigNum(positionAmount) + ' تومان';
+  document.getElementById('pos-maxloss').textContent = formatBigNum(maxLoss) + ' تومان';
+  document.getElementById('pos-maxprofit').textContent = target > 0 ? formatBigNum(maxProfit) + ' تومان' : '--';
+  document.getElementById('pos-rr').textContent = rr > 0 ? '۱ : ' + toFa(rr.toFixed(2)) : '--';
+  document.getElementById('pos-stop-distance').textContent = toFa(stopPercent.toFixed(2)) + '٪';
+  document.getElementById('result-position').classList.add('show');
+  setTimeout(() => document.getElementById('result-position').scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 100);
+}
+
+// ==========================================
+// 🚀 Init
+// ==========================================
 document.addEventListener('DOMContentLoaded', async () => {
   applyTheme();
   initThemeButton();
