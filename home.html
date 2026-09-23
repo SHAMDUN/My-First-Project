@@ -1186,24 +1186,6 @@
 </style>
 
 <script src="navbar.js" defer></script>
-<script>
-    document.addEventListener('DOMContentLoaded', () => {
-        setTimeout(() => {
-            const themeBtn = document.getElementById('snThemeBtn');
-            if (themeBtn && !themeBtn.hasAttribute('data-bound')) {
-                themeBtn.setAttribute('data-bound', 'true');
-                themeBtn.addEventListener('click', () => {
-                    const current = document.documentElement.getAttribute('data-theme') || 'dark';
-                    const newTheme = current === 'dark' ? 'light' : 'dark';
-                    document.documentElement.setAttribute('data-theme', newTheme);
-                    localStorage.setItem('shamdun-theme', newTheme);
-                    const icon = document.getElementById('snThemeIcon');
-                    if (icon) icon.textContent = newTheme === 'dark' ? '🌙' : '☀️';
-                });
-            }
-        }, 1000);
-    });
-</script>
 
 <script src="https://s3.tradingview.com/tv.js"></script>
 <script>
@@ -1311,6 +1293,11 @@
     let currentChartTheme = document.documentElement.getAttribute('data-theme') || 'dark';
 
     function initChart(symbol) {
+        // 🛡️ محافظت: اگه symbol نامعتبر بود، از قبلی استفاده کن
+        if (!symbol || typeof symbol !== 'string' || !symbol.includes(':')) {
+            symbol = currentChartSymbol || 'BINANCE:BTCUSDT';
+        }
+    
         currentChartSymbol = symbol;
         const container = document.getElementById('tvchart');
         if (!container) return;
@@ -1318,6 +1305,12 @@
 
         const theme = document.documentElement.getAttribute('data-theme') || 'dark';
         currentChartTheme = theme;
+
+        // 🛡️ پاک کردن widget قبلی (جلوگیری از leak)
+        if (tvWidget && tvWidget.remove) {
+            try { tvWidget.remove(); } catch(e) {}
+        }
+        tvWidget = null;
 
         tvWidget = new TradingView.widget({
             "container_id": "tvchart",
@@ -1337,7 +1330,6 @@
             "studies": ["RSI@tv-basicstudies"]
         });
     }
-
     function switchChart(symbol, btn) {
         document.querySelectorAll('.chart-tab').forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
@@ -1369,18 +1361,32 @@
         }
     });
 
+    let themeChangeTimeout = null;
+
     const themeObserver = new MutationObserver((mutations) => {
         mutations.forEach((mutation) => {
             if (mutation.attributeName === 'data-theme') {
                 const newTheme = document.documentElement.getAttribute('data-theme');
                 if (newTheme !== currentChartTheme) {
-                    setTimeout(() => initChart(currentChartSymbol), 200);
+                    currentChartTheme = newTheme;
+                
+                    // پاک کردن timeout قبلی (جلوگیری از دو بار اجرا)
+                    if (themeChangeTimeout) {
+                        clearTimeout(themeChangeTimeout);
+                    }
+                
+                    themeChangeTimeout = setTimeout(() => {
+                        initChart(currentChartSymbol);
+                        themeChangeTimeout = null;
+                    }, 300);
                 }
             }
         });
     });
-    themeObserver.observe(document.documentElement, { attributes: true });
-
+    themeObserver.observe(document.documentElement, { 
+        attributes: true,
+        attributeFilter: ['data-theme']
+    });
     let globalOunceGold = 0;
     let globalOunceSilver = 0;
     let globalUSD = 0;
