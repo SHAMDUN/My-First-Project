@@ -14,6 +14,8 @@
 <script src="https://cdn.jsdelivr.net/npm/exceljs@4.4.0/dist/exceljs.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/file-saver@2.0.5/dist/FileSaver.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
 <script src="supabase-config.js"></script>
 <style>
 :root {
@@ -2114,7 +2116,6 @@ function buildReportData(type) {
 
   return { type, title: CALC_TITLES[type], dateStr, timeStr, rows };
 }
-
 async function downloadPDF(type) {
   const btn = document.getElementById('pdfBtn-' + type);
   if (!btn) return;
@@ -2127,20 +2128,20 @@ async function downloadPDF(type) {
 
     const rowsHTML = report.rows.map(r => {
       if (r.k === '---') return '<tr><td colspan="2" style="border:none;padding:8px 0;"><hr style="border:none;border-top:1px dashed #d4af37;"></td></tr>';
-      return `<tr><td style="padding:10px 12px;color:#64748b;border-right:3px solid #d4af37;background:#f8fafc;">${r.k}</td><td style="padding:10px 12px;color:${r.bold ? '#b8860b' : '#1e293b'};font-weight:${r.bold ? '900' : '700'};background:#f8fafc;">${r.v}</td></tr>`;
+      return `<tr><td style="padding:10px 12px;color:#64748b;border-right:3px solid #d4af37;background:#f8fafc;font-family:Vazirmatn,Tahoma,sans-serif;">${r.k}</td><td style="padding:10px 12px;color:${r.bold ? '#b8860b' : '#1e293b'};font-weight:${r.bold ? '900' : '700'};background:#f8fafc;font-family:Vazirmatn,Tahoma,sans-serif;">${r.v}</td></tr>`;
     }).join('');
 
     const htmlContent = `
-      <div style="font-family: Tahoma, sans-serif; direction: rtl; padding: 30px; background: #ffffff; color: #1a1a24; width: 800px;">
+      <div style="font-family: Vazirmatn, Tahoma, sans-serif; direction: rtl; padding: 30px; background: #ffffff; color: #1a1a24; width: 800px; box-sizing: border-box;">
         <div style="text-align: center; border-bottom: 3px solid #d4af37; padding-bottom: 20px; margin-bottom: 25px;">
-          <h1 style="color: #b8860b; font-size: 26px; margin: 0 0 8px;">آکادمی شمعدون</h1>
-          <p style="color: #64748b; font-size: 14px; margin: 0;">گزارش ${report.title}</p>
+          <h1 style="color: #b8860b; font-size: 28px; margin: 0 0 8px; font-weight: 900;">🎯 آکادمی شمعدون</h1>
+          <p style="color: #64748b; font-size: 15px; margin: 0; font-weight: 700;">گزارش ${report.title}</p>
           <p style="color: #94a3b8; font-size: 12px; margin: 8px 0 0;">📅 ${report.dateStr} — 🕐 ${report.timeStr}</p>
         </div>
         <table style="width: 100%; border-collapse: collapse; font-size: 14px;">
           ${rowsHTML}
         </table>
-        <div style="margin-top: 30px; padding: 15px; background: #fffbeb; border-right: 4px solid #d4af37; border-radius: 8px; color: #92400e; font-size: 12px; line-height: 1.7;">
+        <div style="margin-top: 30px; padding: 15px; background: #fffbeb; border-right: 4px solid #d4af37; border-radius: 8px; color: #92400e; font-size: 12px; line-height: 1.8; font-family: Vazirmatn, Tahoma, sans-serif;">
           ⚠️ این گزارش صرفاً آموزشی است و به معنی توصیه سرمایه‌گذاری نیست.
         </div>
         <div style="text-align: center; margin-top: 25px; color: #94a3b8; font-size: 11px;">
@@ -2156,13 +2157,32 @@ async function downloadPDF(type) {
     wrapper.style.top = '0';
     document.body.appendChild(wrapper);
 
+    if (typeof html2canvas === 'undefined') {
+      throw new Error('html2canvas لود نشده — صفحه رو رفرش کن');
+    }
+    if (!window.jspdf || !window.jspdf.jsPDF) {
+      throw new Error('jsPDF لود نشده — صفحه رو رفرش کن');
+    }
+
+    if (document.fonts && document.fonts.ready) {
+      await document.fonts.ready;
+    }
+    await new Promise(resolve => setTimeout(resolve, 300));
+
+    const canvas = await html2canvas(wrapper.firstElementChild, {
+      scale: 2,
+      backgroundColor: '#ffffff',
+      logging: false,
+      useCORS: true,
+      allowTaint: true
+    });
+
+    const imgData = canvas.toDataURL('image/png');
+
     const { jsPDF } = window.jspdf;
     const pdf = new jsPDF({ unit: 'mm', format: 'a4', orientation: 'portrait' });
     const pageWidth = pdf.internal.pageSize.getWidth();
     const pageHeight = pdf.internal.pageSize.getHeight();
-
-    const canvas = await html2canvas(wrapper.firstElementChild, { scale: 2, backgroundColor: '#ffffff', logging: false });
-    const imgData = canvas.toDataURL('image/png');
     const imgWidth = pageWidth - 20;
     const imgHeight = (canvas.height * imgWidth) / canvas.width;
 
@@ -2197,12 +2217,11 @@ async function downloadPDF(type) {
 
   } catch (err) {
     console.error('PDF error:', err);
-    showToast('❌ خطا در ساخت PDF', 'error');
+    showToast('❌ خطا در ساخت PDF: ' + err.message, 'error');
     btn.disabled = false;
     btn.textContent = '📄 PDF';
   }
 }
-
 // ==========================================
 // 📊 گزارش Excel
 // ==========================================
