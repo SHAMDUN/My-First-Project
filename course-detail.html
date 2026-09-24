@@ -101,12 +101,24 @@
             text-align: center;
             animation: fadeInUp 0.6s ease-out;
         }
-        .course-hero .icon { font-size: 70px; margin-bottom: 15px; }
-        .course-hero .level {
-            color: var(--gold);
-            font-size: 13px;
-            font-weight: 800;
-            margin-bottom: 8px;
+        .course-hero .icon {
+            font-size: 70px;
+            margin-bottom: 15px;
+            width: 120px;
+            height: 120px;
+            margin-left: auto;
+            margin-right: auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            border-radius: 16px;
+        }
+        .course-hero .icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 16px;
         }
         .course-hero h1 {
             color: var(--white);
@@ -832,7 +844,11 @@
                 <div class="message" id="message"></div>
 
                 <div class="course-hero">
-                    <div class="icon">${course.icon}</div>
+                    <div class="icon">
+                        ${isImageUrl(course.icon) 
+                            ? `<img src="${getCourseIconSrc(course.icon)}" alt="${escapeHtml(course.title)}" style="width:100%;height:100%;object-fit:cover;border-radius:16px;">`
+                            : (course.icon || '📚')}
+                    </div>
                     <div class="level">${course.level}</div>
                     <h1>${escapeHtml(course.title)}</h1>
                     <p>${escapeHtml(course.desc)}</p>
@@ -1030,6 +1046,33 @@
             const div = document.createElement('div');
             div.textContent = text;
             return div.innerHTML;
+        }
+        // ==========================================
+        // 🖼️ تشخیص عکس یا ایموجی
+        // ==========================================
+        function isImageUrl(str) {
+            if (!str) return false;
+            const s = String(str).trim().toLowerCase();
+            return s.endsWith('.jpg') || 
+                   s.endsWith('.jpeg') || 
+                   s.endsWith('.png') || 
+                   s.endsWith('.gif') || 
+                   s.endsWith('.webp') || 
+                   s.endsWith('.svg') || 
+                   s.startsWith('http://') || 
+                   s.startsWith('https://') ||
+                   s.startsWith('files/');
+        }
+
+        function getCourseIconSrc(icon) {
+            if (!icon) return '';
+            const s = String(icon).trim();
+            if (!isImageUrl(s)) return '';
+            if (s.startsWith('http')) return s;
+            if (s.startsWith('files/')) {
+                return 'https://shamdun.github.io/My-First-Project/' + s;
+            }
+            return 'https://shamdun.github.io/My-First-Project/files/' + s;
         }
 
         async function enrollCourse(courseId) {
