@@ -670,132 +670,112 @@ function escapeHtml(text) {
 }
 
 // ==========================================
-// 📌 ذخیره خودکار در localStorage
-// ==========================================
-const FIELDS = ['lessonTitle', 'lessonCourse', 'lessonNumber', 'lessonLevel', 'lessonTime', 'lessonTeacher', 'lessonContent'];
-
-FIELDS.forEach(id => {
-  const el = document.getElementById(id);
-  if (!el) return;
-  
-  // لود از localStorage
-  const saved = localStorage.getItem('pdfmaker_' + id);
-  if (saved && !el.value) {
-    el.value = saved;
-  }
-  
-  // ذخیره در localStorage
-  el.addEventListener('input', () => {
-    localStorage.setItem('pdfmaker_' + id, el.value);
-  });
-});
-
-// ==========================================
-// 📥 لود اطلاعات از localStorage
+// 📥 لود اطلاعات از pdfmaker_data (اولویت اول)
 // ==========================================
 function loadFromParams() {
-    console.log('🔍 شروع لود اطلاعات...');
-    
-    // ⚠️ فقط از localStorage بخون (نه URL)
     try {
         const savedData = localStorage.getItem('pdfmaker_data');
         
         if (!savedData) {
-            console.log('⚠️ هیچ داده‌ای در localStorage نیست');
-            updatePreview();
-            return;
+            console.log('ℹ️ pdfmaker_data موجود نیست');
+            return false;
         }
         
         const data = JSON.parse(savedData);
-        console.log('📦 داده‌های ذخیره‌شده:', {
+        
+        // چک کن داده قدیمی نباشه (بیشتر از ۲ ساعت)
+        const twoHours = 2 * 60 * 60 * 1000;
+        if (data.timestamp && (Date.now() - data.timestamp) > twoHours) {
+            console.log('⚠️ داده‌ها قدیمی هستند');
+            localStorage.removeItem('pdfmaker_data');
+            return false;
+        }
+        
+        // پر کردن فیلدها (اجباری، همیشه overwrite)
+        if (data.title) document.getElementById('lessonTitle').value = data.title;
+        if (data.course) document.getElementById('lessonCourse').value = data.course;
+        if (data.number) document.getElementById('lessonNumber').value = data.number;
+        if (data.level) document.getElementById('lessonLevel').value = data.level;
+        if (data.time) document.getElementById('lessonTime').value = data.time;
+        if (data.content) document.getElementById('lessonContent').value = data.content;
+        
+        console.log('✅ اطلاعات از pdfmaker_data لود شد:', {
             title: data.title,
             course: data.course,
             contentLength: data.content ? data.content.length : 0
         });
         
-        // ⏰ چک کن داده قدیمی نباشه (بیشتر از ۲ ساعت)
-        const twoHours = 2 * 60 * 60 * 1000;
-        if (data.timestamp && (Date.now() - data.timestamp) > twoHours) {
-            console.warn('⚠️ داده‌ها قدیمی هستند');
-            localStorage.removeItem('pdfmaker_data');
-            updatePreview();
-            return;
-        }
-        
-        // 🎯 پر کردن فیلدها
-        const titleEl = document.getElementById('lessonTitle');
-        const courseEl = document.getElementById('lessonCourse');
-        const numberEl = document.getElementById('lessonNumber');
-        const levelEl = document.getElementById('lessonLevel');
-        const timeEl = document.getElementById('lessonTime');
-        const contentEl = document.getElementById('lessonContent');
-        
-        if (titleEl && data.title) {
-            titleEl.value = data.title;
-            console.log('✅ عنوان تنظیم شد');
-        }
-        if (courseEl && data.course) {
-            courseEl.value = data.course;
-            console.log('✅ دوره تنظیم شد');
-        }
-        if (numberEl && data.number) {
-            numberEl.value = data.number;
-        }
-        if (levelEl && data.level) {
-            levelEl.value = data.level;
-        }
-        if (timeEl && data.time) {
-            timeEl.value = data.time;
-        }
-        if (contentEl && data.content) {
-            contentEl.value = data.content;
-            console.log('✅ محتوا تنظیم شد، طول:', data.content.length);
-        }
-        
-        console.log('✅ همه اطلاعات لود شد');
-        
-        // ⚠️ پاک نکن! کاربر ممکنه بخواد دوباره PDF بسازه
+        return true;
         
     } catch (e) {
-        console.error('❌ خطا در خواندن localStorage:', e);
+        console.error('❌ خطا در خواندن pdfmaker_data:', e);
+        return false;
     }
-    
-    // اجرای پیش‌نمایش
-    updatePreview();
 }
 
-loadFromParams();
+// ==========================================
+// 🚀 اجرای اصلی — اولویت: pdfmaker_data → pdfmaker_*
+// ==========================================
+const FIELDS = ['lessonTitle', 'lessonCourse', 'lessonNumber', 'lessonLevel', 'lessonTime', 'lessonTeacher', 'lessonContent'];
+
+// ۱. اول از pdfmaker_data لود کن (اطلاعات از پنل ادمین)
+const loadedFromData = loadFromParams();
+
+// ۲. اگه pdfmaker_data نبود، از مقادیر قبلی هر فیلد لود کن
+if (!loadedFromData) {
+    FIELDS.forEach(id => {
+        const el = document.getElementById(id);
+        if (!el) return;
+        
+        const saved = localStorage.getItem('pdfmaker_' + id);
+        if (saved && !el.value) {
+            el.value = saved;
+        }
+    });
+}
+
+// ۳. ذخیره خودکار فرم هنگام تایپ
+FIELDS.forEach(id => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    
+    el.addEventListener('input', () => {
+        localStorage.setItem('pdfmaker_' + id, el.value);
+    });
+});
+
+// ۴. به‌روزرسانی پیش‌نمایش
+updatePreview();
 
 // ==========================================
 // 📌 پاک کردن فرم
 // ==========================================
 function clearForm() {
-  if (!confirm('مطمئنی می‌خوای فرم رو پاک کنی؟')) return;
-  FIELDS.forEach(id => {
-    const el = document.getElementById(id);
-    if (el) {
-      el.value = '';
-      localStorage.removeItem('pdfmaker_' + id);
-    }
-  });
-  updatePreview();
-  showToast('🗑️ فرم پاک شد');
+    if (!confirm('مطمئنی می‌خوای فرم رو پاک کنی؟')) return;
+    FIELDS.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) {
+            el.value = '';
+            localStorage.removeItem('pdfmaker_' + id);
+        }
+    });
+    localStorage.removeItem('pdfmaker_data');
+    updatePreview();
+    showToast('🗑️ فرم پاک شد');
 }
 
 // ==========================================
 // 📌 کلیدهای میانبر
 // ==========================================
 document.addEventListener('keydown', (e) => {
-  // Ctrl+S = ساخت PDF
-  if ((e.ctrlKey || e.metaKey) && e.key === 's') {
-    e.preventDefault();
-    generatePDF();
-  }
-  // Ctrl+K = پاک کردن
-  if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
-    e.preventDefault();
-    clearForm();
-  }
+    if ((e.ctrlKey || e.metaKey) && e.key === 's') {
+        e.preventDefault();
+        generatePDF();
+    }
+    if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+        e.preventDefault();
+        clearForm();
+    }
 });
 </script>
 
