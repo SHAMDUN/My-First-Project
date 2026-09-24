@@ -691,72 +691,73 @@ FIELDS.forEach(id => {
 });
 
 // ==========================================
-// 📥 لود اطلاعات از sessionStorage
+// 📥 لود اطلاعات از localStorage
 // ==========================================
 function loadFromParams() {
-    console.log('🔍 شروع loadFromParams...');
+    console.log('🔍 شروع لود اطلاعات...');
     
-    // اول از URL
-    const params = new URLSearchParams(window.location.search);
-    let loadedFromUrl = false;
-    
-    if (params.get('title')) {
-        document.getElementById('lessonTitle').value = decodeURIComponent(params.get('title'));
-        loadedFromUrl = true;
-    }
-    if (params.get('course')) {
-        document.getElementById('lessonCourse').value = decodeURIComponent(params.get('course'));
-        loadedFromUrl = true;
-    }
-    if (params.get('number')) {
-        document.getElementById('lessonNumber').value = params.get('number');
-        loadedFromUrl = true;
-    }
-    if (params.get('level')) {
-        document.getElementById('lessonLevel').value = decodeURIComponent(params.get('level'));
-        loadedFromUrl = true;
-    }
-    if (params.get('time')) {
-        document.getElementById('lessonTime').value = params.get('time');
-        loadedFromUrl = true;
-    }
-    if (params.get('content')) {
-        document.getElementById('lessonContent').value = decodeURIComponent(params.get('content'));
-        loadedFromUrl = true;
-    }
-    
-    // اگه از URL لود نشد، از sessionStorage
-    if (!loadedFromUrl) {
-        try {
-            const savedData = localStorage.getItem('pdfmaker_data');
-            console.log('📦 sessionStorage data:', savedData ? 'موجود' : 'خالی');
-            
-            if (savedData) {
-                const data = JSON.parse(savedData);
-                const oneHour = 60 * 60 * 1000;
-                
-                if (data.timestamp && (Date.now() - data.timestamp) < oneHour) {
-                    if (data.title) document.getElementById('lessonTitle').value = data.title;
-                    if (data.course) document.getElementById('lessonCourse').value = data.course;
-                    if (data.number) document.getElementById('lessonNumber').value = data.number;
-                    if (data.level) document.getElementById('lessonLevel').value = data.level;
-                    if (data.time) document.getElementById('lessonTime').value = data.time;
-                    if (data.content) document.getElementById('lessonContent').value = data.content;
-                    
-                    
-                  console.log('✅ اطلاعات از localStorage لود شد');
-
-                  // پاک کردن localStorage بعد از لود
-                  localStorage.removeItem('pdfmaker_data');
-                } else {
-                    console.warn('⚠️ اطلاعات قدیمی هستند');
-                }
-            }
-        } catch (e) {
-            console.error('❌ خطا در خواندن sessionStorage:', e);
+    // ⚠️ فقط از localStorage بخون (نه URL)
+    try {
+        const savedData = localStorage.getItem('pdfmaker_data');
+        
+        if (!savedData) {
+            console.log('⚠️ هیچ داده‌ای در localStorage نیست');
+            updatePreview();
+            return;
         }
-    } else {
-        console.log('✅ اطلاعات از URL لود شد');
+        
+        const data = JSON.parse(savedData);
+        console.log('📦 داده‌های ذخیره‌شده:', {
+            title: data.title,
+            course: data.course,
+            contentLength: data.content ? data.content.length : 0
+        });
+        
+        // ⏰ چک کن داده قدیمی نباشه (بیشتر از ۲ ساعت)
+        const twoHours = 2 * 60 * 60 * 1000;
+        if (data.timestamp && (Date.now() - data.timestamp) > twoHours) {
+            console.warn('⚠️ داده‌ها قدیمی هستند');
+            localStorage.removeItem('pdfmaker_data');
+            updatePreview();
+            return;
+        }
+        
+        // 🎯 پر کردن فیلدها
+        const titleEl = document.getElementById('lessonTitle');
+        const courseEl = document.getElementById('lessonCourse');
+        const numberEl = document.getElementById('lessonNumber');
+        const levelEl = document.getElementById('lessonLevel');
+        const timeEl = document.getElementById('lessonTime');
+        const contentEl = document.getElementById('lessonContent');
+        
+        if (titleEl && data.title) {
+            titleEl.value = data.title;
+            console.log('✅ عنوان تنظیم شد');
+        }
+        if (courseEl && data.course) {
+            courseEl.value = data.course;
+            console.log('✅ دوره تنظیم شد');
+        }
+        if (numberEl && data.number) {
+            numberEl.value = data.number;
+        }
+        if (levelEl && data.level) {
+            levelEl.value = data.level;
+        }
+        if (timeEl && data.time) {
+            timeEl.value = data.time;
+        }
+        if (contentEl && data.content) {
+            contentEl.value = data.content;
+            console.log('✅ محتوا تنظیم شد، طول:', data.content.length);
+        }
+        
+        console.log('✅ همه اطلاعات لود شد');
+        
+        // ⚠️ پاک نکن! کاربر ممکنه بخواد دوباره PDF بسازه
+        
+    } catch (e) {
+        console.error('❌ خطا در خواندن localStorage:', e);
     }
     
     // اجرای پیش‌نمایش
