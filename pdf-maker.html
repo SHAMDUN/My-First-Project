@@ -685,7 +685,36 @@ FIELDS.forEach(id => {
     localStorage.setItem('pdfmaker_' + id, el.value);
   });
 });
+// ==========================================
+// 📥 لود اطلاعات از URL Parameters
+// ==========================================
+function loadFromParams() {
+    const params = new URLSearchParams(window.location.search);
+    
+    if (params.get('title')) {
+        document.getElementById('lessonTitle').value = decodeURIComponent(params.get('title'));
+    }
+    if (params.get('course')) {
+        document.getElementById('lessonCourse').value = decodeURIComponent(params.get('course'));
+    }
+    if (params.get('number')) {
+        document.getElementById('lessonNumber').value = params.get('number');
+    }
+    if (params.get('level')) {
+        document.getElementById('lessonLevel').value = decodeURIComponent(params.get('level'));
+    }
+    if (params.get('time')) {
+        document.getElementById('lessonTime').value = params.get('time');
+    }
+    if (params.get('content')) {
+        document.getElementById('lessonContent').value = decodeURIComponent(params.get('content'));
+    }
+    
+    // اگه پارامتر داشت، پیش‌نمایش رو به‌روز کن
+    updatePreview();
+}
 
+loadFromParams();
 // لود اولیه پیش‌نمایش
 updatePreview();
 
