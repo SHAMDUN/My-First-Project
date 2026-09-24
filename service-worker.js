@@ -4,7 +4,7 @@
 // ==========================================
 
 // نسخه خودکار: هر بار که فایل تغییر کنه، نسخه جدید میاد
-const VERSION = 'v2.2.1';
+const VERSION = 'v2.2.2';
 const CACHE_NAME = `shamdun-${VERSION}`;
 
 const urlsToCache = [
