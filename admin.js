@@ -1878,3 +1878,32 @@ function filterUsers() {
     );
     renderUsers(filtered);
 }
+// ==========================================
+// 📢 ارسال به کانال تلگرام
+// ==========================================
+const TELEGRAM_FUNCTION_URL = 'https://wyytevpnwhiynyrumlko.supabase.co/functions/v1/publish-to-telegram';
+
+async function publishToTelegram(type, data) {
+  try {
+    console.log('📤 ارسال به تلگرام:', type, data.title);
+    
+    const res = await fetch(TELEGRAM_FUNCTION_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ type, data })
+    });
+    
+    const result = await res.json();
+    
+    if (result.success) {
+      console.log('✅ به تلگرام ارسال شد. message_id:', result.message_id);
+      return true;
+    } else {
+      console.error('❌ خطا در ارسال به تلگرام:', result.error);
+      return false;
+    }
+  } catch (e) {
+    console.error('❌ خطای شبکه:', e);
+    return false;
+  }
+}
