@@ -865,50 +865,81 @@ async function saveLesson() {
 }
 
 // ==========================================
-// 📄 ساخت PDF درس
+// 📄 ساخت PDF درس (با postMessage)
 // ==========================================
 function generateLessonPDF() {
-    // گرفتن اطلاعات از فرم
     const title = document.getElementById('lessonTitle').value.trim();
     const content = document.getElementById('lessonContent').value.trim();
     
-    // اعتبارسنجی
     if (!content) {
         showToast('❌ اول محتوای درس را وارد کن', 'error');
         return;
     }
     
-    // گرفتن اسم دوره از select
     const courseSelect = document.getElementById('lessonCourse');
     let courseTitle = '';
     if (courseSelect && courseSelect.selectedIndex >= 0) {
         courseTitle = courseSelect.options[courseSelect.selectedIndex]?.text || '';
     }
     
-    // اگه عنوان خالی بود، پیش‌فرض
     const finalTitle = title || ('درس شماره ' + (document.getElementById('lessonOrder').value || '1'));
-    
-    // اگه دوره خالی بود، پیش‌فرض
     const finalCourse = courseTitle || 'آکادمی شمعدون';
-    
-    // شماره ترتیب
     const orderNum = document.getElementById('lessonOrder').value || '1';
     
-    // محاسبه زمان مطالعه تقریبی
     const plainText = content.replace(/<[^>]*>/g, ' ');
     const wordCount = plainText.split(/\s+/).filter(w => w.length > 0).length;
     const readTime = Math.max(5, Math.round(wordCount / 200));
     
-    // 🔑 ذخیره همه‌چیز توی localStorage
     const pdfData = {
         title: finalTitle,
         course: finalCourse,
         number: orderNum,
         level: 'متوسط',
         time: readTime.toString(),
-        content: content,
-        timestamp: Date.now()
+        content: content
     };
+    
+    // ⚠️ ذخیره توی localStorage برای fallback
+    try {
+        localStorage.setItem('pdfmaker_data', JSON.stringify(pdfData));
+    } catch (e) {
+        console.warn('localStorage failed:', e);
+    }
+    
+    // 🔑 باز کردن PDF ساز
+    const pdfWindow = window.open('pdf-maker.html', '_blank');
+    
+    if (!pdfWindow) {
+        showToast('❌ مرورگر پاپ‌آپ را بلاک کرده. لطفاً اجازه بده.', 'error');
+        return;
+    }
+    
+    // 🔑 ارسال اطلاعات از طریق postMessage
+    // به‌طور مکرر تلاش کن تا PDF ساز لود شود
+    let attempts = 0;
+    const maxAttempts = 30; // ۳۰ بار × ۲۰۰ میلی‌ثانیه = ۶ ثانیه
+    
+    const sendData = () => {
+        attempts++;
+        try {
+            pdfWindow.postMessage({
+                type: 'PDFMAKER_DATA',
+                data: pdfData
+            }, '*');
+            console.log(`📤 پیام ارسال شد (تلاش ${attempts})`);
+        } catch (e) {
+            console.warn('postMessage failed:', e);
+        }
+        
+        if (attempts < maxAttempts) {
+            setTimeout(sendData, 200);
+        }
+    };
+    
+    setTimeout(sendData, 300);
+    
+    showToast('✅ PDF ساز در تب جدید باز شد', 'success');
+}
     
     try {
         localStorage.setItem('pdfmaker_data', JSON.stringify(pdfData));
