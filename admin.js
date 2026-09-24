@@ -892,25 +892,26 @@ function generateLessonPDF() {
     // شماره ترتیب
     const orderNum = document.getElementById('lessonOrder').value || '1';
     
-    // محاسبه زمان مطالعه تقریبی (۲۰۰ کلمه در دقیقه)
+    // محاسبه زمان مطالعه تقریبی
     const plainText = content.replace(/<[^>]*>/g, ' ');
     const wordCount = plainText.split(/\s+/).filter(w => w.length > 0).length;
     const readTime = Math.max(5, Math.round(wordCount / 200));
     
-    // ساخت URL با پارامترها
-    const params = new URLSearchParams({
+    // 🔑 ذخیره اطلاعات توی sessionStorage (به‌جای URL)
+    const pdfData = {
         title: title,
         course: courseTitle,
         number: orderNum,
         level: 'متوسط',
         time: readTime.toString(),
-        content: content
-    });
+        content: content,
+        timestamp: Date.now()
+    };
     
-    const pdfMakerUrl = `pdf-maker.html?${params.toString()}`;
+    sessionStorage.setItem('pdfmaker_data', JSON.stringify(pdfData));
     
-    // باز کردن در تب جدید
-    window.open(pdfMakerUrl, '_blank');
+    // باز کردن PDF ساز در تب جدید
+    window.open('pdf-maker.html', '_blank');
     
     showToast('✅ PDF ساز در تب جدید باز شد', 'success');
 }
