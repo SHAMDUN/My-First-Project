@@ -657,7 +657,7 @@ async function loadCourses() {
             <tbody>
                 ${data.map(c => `
                     <tr>
-                        <td style="font-size:22px;">${c.icon || '📚'}</td>
+                        <td>${renderCourseIcon(c.icon)}</td>
                         <td>${escapeHtml(c.title || '')}</td>
                         <td>${c.level || '-'}</td>
                         <td>
@@ -1949,4 +1949,41 @@ function filterUsers() {
         (u.email || '').toLowerCase().includes(q)
     );
     renderUsers(filtered);
+}
+// ==========================================
+// 🖼️ نمایش آیکون یا تصویر دوره
+// ==========================================
+function isImageUrl(str) {
+  if (!str) return false;
+  const s = String(str).trim().toLowerCase();
+  return s.endsWith('.jpg') || 
+         s.endsWith('.jpeg') || 
+         s.endsWith('.png') || 
+         s.endsWith('.gif') || 
+         s.endsWith('.webp') || 
+         s.endsWith('.svg') || 
+         s.startsWith('http://') || 
+         s.startsWith('https://') ||
+         s.startsWith('files/');
+}
+
+function renderCourseIcon(icon) {
+  if (!icon) return '<span style="font-size:22px;">📚</span>';
+  
+  if (isImageUrl(icon)) {
+    let src = icon;
+    if (!icon.startsWith('http')) {
+      src = icon.startsWith('files/') ? icon : 'files/' + icon;
+    }
+    return `
+      <img 
+        src="${src}" 
+        alt="تصویر دوره" 
+        style="width:44px; height:44px; object-fit:cover; border-radius:10px; border:1px solid rgba(212,175,55,0.3);"
+        onerror="this.outerHTML='<span style=\\'font-size:22px;\\'>📚</span>'"
+      >
+    `;
+  }
+  
+  return `<span style="font-size:22px;">${icon}</span>`;
 }
