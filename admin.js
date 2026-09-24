@@ -873,10 +873,6 @@ function generateLessonPDF() {
     const content = document.getElementById('lessonContent').value.trim();
     
     // اعتبارسنجی
-    if (!title) {
-        showToast('❌ اول عنوان درس را وارد کن', 'error');
-        return;
-    }
     if (!content) {
         showToast('❌ اول محتوای درس را وارد کن', 'error');
         return;
@@ -889,6 +885,12 @@ function generateLessonPDF() {
         courseTitle = courseSelect.options[courseSelect.selectedIndex]?.text || '';
     }
     
+    // اگه عنوان خالی بود، پیش‌فرض
+    const finalTitle = title || ('درس شماره ' + (document.getElementById('lessonOrder').value || '1'));
+    
+    // اگه دوره خالی بود، پیش‌فرض
+    const finalCourse = courseTitle || 'آکادمی شمعدون';
+    
     // شماره ترتیب
     const orderNum = document.getElementById('lessonOrder').value || '1';
     
@@ -897,10 +899,10 @@ function generateLessonPDF() {
     const wordCount = plainText.split(/\s+/).filter(w => w.length > 0).length;
     const readTime = Math.max(5, Math.round(wordCount / 200));
     
-    // 🔑 ذخیره اطلاعات توی sessionStorage (به‌جای URL)
+    // 🔑 ذخیره همه‌چیز توی localStorage
     const pdfData = {
-        title: title,
-        course: courseTitle,
+        title: finalTitle,
+        course: finalCourse,
         number: orderNum,
         level: 'متوسط',
         time: readTime.toString(),
@@ -908,9 +910,20 @@ function generateLessonPDF() {
         timestamp: Date.now()
     };
     
-    localStorage.setItem('pdfmaker_data', JSON.stringify(pdfData));
-    console.log('✅ اطلاعات در localStorage ذخیره شد:', pdfData.title);
-    // باز کردن PDF ساز در تب جدید
+    try {
+        localStorage.setItem('pdfmaker_data', JSON.stringify(pdfData));
+        console.log('✅ اطلاعات ذخیره شد:', {
+            title: finalTitle,
+            course: finalCourse,
+            contentLength: content.length
+        });
+    } catch (e) {
+        console.error('❌ خطا در ذخیره:', e);
+        showToast('❌ خطا در ذخیره اطلاعات', 'error');
+        return;
+    }
+    
+    // ⚠️ URL ساده — بدون پارامتر
     window.open('pdf-maker.html', '_blank');
     
     showToast('✅ PDF ساز در تب جدید باز شد', 'success');
