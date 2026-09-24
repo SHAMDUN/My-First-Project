@@ -908,8 +908,8 @@ function generateLessonPDF() {
         timestamp: Date.now()
     };
     
-    sessionStorage.setItem('pdfmaker_data', JSON.stringify(pdfData));
-    
+    localStorage.setItem('pdfmaker_data', JSON.stringify(pdfData));
+    console.log('✅ اطلاعات در localStorage ذخیره شد:', pdfData.title);
     // باز کردن PDF ساز در تب جدید
     window.open('pdf-maker.html', '_blank');
     
