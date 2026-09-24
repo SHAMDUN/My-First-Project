@@ -646,6 +646,8 @@ if (!course) {
     // پاکسازی
     document.body.removeChild(wrapper);
 
+    // پاک کردن داده‌های موقت
+    localStorage.removeItem('pdfmaker_data');
     showToast('✅ PDF ساخته و دانلود شد', 'success');
 
   } catch (err) {
@@ -726,7 +728,7 @@ function loadFromParams() {
     // اگه از URL لود نشد، از sessionStorage
     if (!loadedFromUrl) {
         try {
-            const savedData = sessionStorage.getItem('pdfmaker_data');
+            const savedData = localStorage.getItem('pdfmaker_data');
             console.log('📦 sessionStorage data:', savedData ? 'موجود' : 'خالی');
             
             if (savedData) {
@@ -741,7 +743,11 @@ function loadFromParams() {
                     if (data.time) document.getElementById('lessonTime').value = data.time;
                     if (data.content) document.getElementById('lessonContent').value = data.content;
                     
-                    console.log('✅ اطلاعات از sessionStorage لود شد');
+                    
+                  console.log('✅ اطلاعات از localStorage لود شد');
+
+                  // پاک کردن localStorage بعد از لود
+                  localStorage.removeItem('pdfmaker_data');
                 } else {
                     console.warn('⚠️ اطلاعات قدیمی هستند');
                 }
