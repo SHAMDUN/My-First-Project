@@ -637,12 +637,22 @@
 
         /* ===== Responsive ===== */
         @media (max-width: 700px) {
-            .article-title { font-size: 24px; }
-            .article-content { padding: 22px 18px; font-size: 14.5px; }
-            .article-content h1 { font-size: 22px; }
-            .article-content h2 { font-size: 18px; }
-            .cover-image { height: 240px; font-size: 70px; }
-            .signal-box { grid-template-columns: 1fr; }
+          .main-container { padding: 80px 12px 30px !important; }
+          .article-title { font-size: 22px !important; line-height: 1.5 !important; }
+          .article-content { padding: 20px 15px !important; font-size: 14.5px !important; line-height: 1.9 !important; }
+          .article-content h1 { font-size: 20px !important; margin: 22px 0 12px !important; }
+          .article-content h2 { font-size: 17px !important; margin: 18px 0 10px !important; }
+          .article-content h3 { font-size: 15px !important; }
+          .cover-image { height: auto !important; aspect-ratio: 16/9 !important; min-height: 180px !important; max-height: 220px !important; }
+          .signal-box { grid-template-columns: 1fr !important; padding: 15px !important; gap: 15px !important; }
+          .signal-value { padding: 8px 16px !important; font-size: 14px !important; }
+          .article-meta { font-size: 12px !important; gap: 10px !important; }
+          .article-content table { font-size: 12px !important; }
+          .article-content table th,
+          .article-content table td { padding: 6px 8px !important; }
+          .share-buttons { justify-content: center !important; }
+          .share-btn { font-size: 12px !important; padding: 8px 12px !important; }
+          .warning-box { font-size: 12px !important; padding: 12px 15px !important; }
         }
         @media (max-width: 500px) {
             .main-container { padding: 90px 15px 30px; }
