@@ -23,6 +23,36 @@ const AVALAI_API_KEY = 'aa-B6ef1JQ4HnDNBMRw4598qRGOKr7z3TttiznZubQXfD2A1iMf';
 const AVALAI_API_URL = 'https://api.avalai.ir/v1/chat/completions';
 
 // ==========================================
+// 📢 ارسال به کانال تلگرام
+// ==========================================
+const TELEGRAM_FUNCTION_URL = 'https://wyytevpnwhiynyrumlko.supabase.co/functions/v1/publish-to-telegram';
+
+async function publishToTelegram(type, data) {
+  try {
+    console.log('📤 ارسال به تلگرام:', type, data.title);
+    
+    const res = await fetch(TELEGRAM_FUNCTION_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ type, data })
+    });
+    
+    const result = await res.json();
+    
+    if (result.success) {
+      console.log('✅ به تلگرام ارسال شد. message_id:', result.message_id);
+      return true;
+    } else {
+      console.error('❌ خطا در ارسال به تلگرام:', result.error);
+      return false;
+    }
+  } catch (e) {
+    console.error('❌ خطای شبکه:', e);
+    return false;
+  }
+}
+
+// ==========================================
 // ورود ادمین
 // ==========================================
 async function loginAdmin() {
@@ -195,7 +225,6 @@ async function loadDashboard() {
             statAnalysesEl.textContent = e5 ? 'خطا' : (analysisCount || 0);
         }
 
-        // NEW: آمار پیام‌ها
         const { count: messageCount, error: e6 } = await db
             .from('contact_messages')
             .select('*', { count: 'exact', head: true });
@@ -330,7 +359,6 @@ async function loadMessages() {
 
         messagesCache = data || [];
 
-        // بروزرسانی بج
         updateMessagesBadge();
 
         if (messagesCache.length === 0) {
@@ -420,7 +448,6 @@ async function viewMessage(id) {
     const msg = messagesCache.find(m => m.id === id);
     if (!msg) return;
 
-    // علامت خوانده‌شده
     if (msg.status === 'new') {
         await markMessageAsRead(id);
     }
@@ -478,7 +505,6 @@ async function markMessageAsRead(id) {
         return;
     }
 
-    // آپدیت local cache
     const msg = messagesCache.find(m => m.id === id);
     if (msg) msg.status = 'read';
 
@@ -1044,6 +1070,17 @@ async function saveBlogPost(status = 'draft') {
         return showToast('خطا: ' + error.message, 'error');
     }
 
+    // 📢 ارسال به تلگرام فقط اگه منتشر شده
+    if (status === 'published') {
+        await publishToTelegram('article', {
+            title: title,
+            slug: slug,
+            summary: excerpt,
+            category: category,
+            read_time: readTime
+        });
+    }
+
     showToast(status === 'published' ? '🚀 مقاله منتشر شد!' : '💾 پیش‌نویس ذخیره شد');
     closeModal('blogModal');
     loadBlogPosts();
@@ -1064,6 +1101,17 @@ async function togglePublishStatus(id) {
     const { error } = await db.from('blog_posts').update(updates).eq('id', id);
 
     if (error) return showToast('خطا: ' + error.message, 'error');
+
+    // 📢 اگه منتشر شد، به تلگرام بفرست
+    if (newStatus === 'published') {
+        await publishToTelegram('article', {
+            title: post.title,
+            slug: post.slug,
+            summary: post.excerpt,
+            category: post.category,
+            read_time: post.read_time
+        });
+    }
 
     showToast(newStatus === 'published' ? '🚀 منتشر شد' : '↩️ به پیش‌نویس منتقل شد');
     loadBlogPosts();
@@ -1340,6 +1388,18 @@ async function saveAnalysis(status = 'draft') {
         return showToast('خطا: ' + error.message, 'error');
     }
 
+    // 📢 ارسال به تلگرام فقط اگه منتشر شده
+    if (status === 'published') {
+        await publishToTelegram('analysis', {
+            title: title,
+            slug: slug,
+            summary: excerpt,
+            category: analysis_type === 'weekly' ? 'تحلیل هفتگی' : 'تحلیل روزانه',
+            analysis_type: analysis_type === 'weekly' ? 'هفتگی' : 'روزانه',
+            signal: signal === 'up' ? 'صعودی 🟢' : signal === 'down' ? 'نزولی 🔴' : 'خنثی ⚪'
+        });
+    }
+
     showToast(status === 'published' ? '🚀 تحلیل منتشر شد!' : '💾 پیش‌نویس ذخیره شد');
     closeModal('analysisModal');
     loadAnalyses();
@@ -1360,6 +1420,18 @@ async function toggleAnalysisPublish(id) {
     const { error } = await db.from('daily_analysis').update(updates).eq('id', id);
 
     if (error) return showToast('خطا: ' + error.message, 'error');
+
+    // 📢 اگه منتشر شد، به تلگرام بفرست
+    if (newStatus === 'published') {
+        await publishToTelegram('analysis', {
+            title: a.title,
+            slug: a.slug,
+            summary: a.excerpt,
+            category: a.analysis_type === 'weekly' ? 'تحلیل هفتگی' : 'تحلیل روزانه',
+            analysis_type: a.analysis_type === 'weekly' ? 'هفتگی' : 'روزانه',
+            signal: a.signal === 'up' ? 'صعودی 🟢' : a.signal === 'down' ? 'نزولی 🔴' : 'خنثی ⚪'
+        });
+    }
 
     showToast(newStatus === 'published' ? '🚀 منتشر شد' : '↩️ به پیش‌نویس منتقل شد');
     loadAnalyses();
@@ -1877,33 +1949,4 @@ function filterUsers() {
         (u.email || '').toLowerCase().includes(q)
     );
     renderUsers(filtered);
-}
-// ==========================================
-// 📢 ارسال به کانال تلگرام
-// ==========================================
-const TELEGRAM_FUNCTION_URL = 'https://wyytevpnwhiynyrumlko.supabase.co/functions/v1/publish-to-telegram';
-
-async function publishToTelegram(type, data) {
-  try {
-    console.log('📤 ارسال به تلگرام:', type, data.title);
-    
-    const res = await fetch(TELEGRAM_FUNCTION_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ type, data })
-    });
-    
-    const result = await res.json();
-    
-    if (result.success) {
-      console.log('✅ به تلگرام ارسال شد. message_id:', result.message_id);
-      return true;
-    } else {
-      console.error('❌ خطا در ارسال به تلگرام:', result.error);
-      return false;
-    }
-  } catch (e) {
-    console.error('❌ خطای شبکه:', e);
-    return false;
-  }
 }
