@@ -864,6 +864,56 @@ async function saveLesson() {
     loadDashboard();
 }
 
+// ==========================================
+// 📄 ساخت PDF درس
+// ==========================================
+function generateLessonPDF() {
+    // گرفتن اطلاعات از فرم
+    const title = document.getElementById('lessonTitle').value.trim();
+    const content = document.getElementById('lessonContent').value.trim();
+    
+    // اعتبارسنجی
+    if (!title) {
+        showToast('❌ اول عنوان درس را وارد کن', 'error');
+        return;
+    }
+    if (!content) {
+        showToast('❌ اول محتوای درس را وارد کن', 'error');
+        return;
+    }
+    
+    // گرفتن اسم دوره از select
+    const courseSelect = document.getElementById('lessonCourse');
+    let courseTitle = '';
+    if (courseSelect && courseSelect.selectedIndex >= 0) {
+        courseTitle = courseSelect.options[courseSelect.selectedIndex]?.text || '';
+    }
+    
+    // شماره ترتیب
+    const orderNum = document.getElementById('lessonOrder').value || '1';
+    
+    // محاسبه زمان مطالعه تقریبی (۲۰۰ کلمه در دقیقه)
+    const plainText = content.replace(/<[^>]*>/g, ' ');
+    const wordCount = plainText.split(/\s+/).filter(w => w.length > 0).length;
+    const readTime = Math.max(5, Math.round(wordCount / 200));
+    
+    // ساخت URL با پارامترها
+    const params = new URLSearchParams({
+        title: title,
+        course: courseTitle,
+        number: orderNum,
+        level: 'متوسط',
+        time: readTime.toString(),
+        content: content
+    });
+    
+    const pdfMakerUrl = `pdf-maker.html?${params.toString()}`;
+    
+    // باز کردن در تب جدید
+    window.open(pdfMakerUrl, '_blank');
+    
+    showToast('✅ PDF ساز در تب جدید باز شد', 'success');
+}
 async function deleteLesson(id) {
     if (!confirm('مطمئنی؟')) return;
     const { error } = await db.from('lessons').delete().eq('id', id);
