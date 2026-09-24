@@ -17,6 +17,7 @@
   --green: #10b981;
   --red: #ef4444;
   --blue: #3b82f6;
+  --purple: #8b5cf6;
   --white: #f8fafc;
   --gray: #94a3b8;
   --border: rgba(212, 175, 55, 0.15);
@@ -32,6 +33,7 @@
   --green: #059669;
   --red: #dc2626;
   --blue: #2563eb;
+  --purple: #7c3aed;
   --white: #0f172a;
   --gray: #64748b;
   --border: rgba(184, 134, 11, 0.2);
@@ -104,6 +106,86 @@ body {
   border: 1px solid rgba(212, 175, 55, 0.3);
 }
 
+/* ===== Strategy Presets ===== */
+.presets-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 12px;
+  margin-bottom: 10px;
+}
+.preset-card {
+  background: rgba(10, 10, 15, 0.6);
+  border: 2px solid rgba(255, 255, 255, 0.08);
+  border-radius: 14px;
+  padding: 14px 16px;
+  cursor: pointer;
+  transition: 0.3s;
+  text-align: right;
+  font-family: inherit;
+  color: var(--white);
+  position: relative;
+  overflow: hidden;
+}
+[data-theme="light"] .preset-card {
+  background: #ffffff;
+  border-color: rgba(0, 0, 0, 0.08);
+}
+.preset-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 4px;
+  background: var(--gold);
+  opacity: 0.5;
+  transition: 0.3s;
+}
+.preset-card:hover {
+  border-color: rgba(212, 175, 55, 0.5);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(212, 175, 55, 0.15);
+}
+.preset-card:hover::before {
+  opacity: 1;
+  width: 6px;
+}
+.preset-card.active {
+  background: linear-gradient(135deg, rgba(212, 175, 55, 0.15), rgba(212, 175, 55, 0.03));
+  border-color: var(--gold);
+}
+.preset-card .preset-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+.preset-card .preset-icon {
+  font-size: 22px;
+}
+.preset-card .preset-name {
+  color: var(--gold);
+  font-size: 13px;
+  font-weight: 900;
+}
+.preset-card .preset-desc {
+  color: var(--gray);
+  font-size: 11px;
+  line-height: 1.6;
+}
+.preset-card .preset-badge {
+  display: inline-block;
+  background: rgba(59, 130, 246, 0.15);
+  color: var(--blue);
+  padding: 2px 8px;
+  border-radius: 6px;
+  font-size: 9px;
+  font-weight: 700;
+  margin-top: 6px;
+  border: 1px solid rgba(59, 130, 246, 0.3);
+}
+
+/* ===== Table ===== */
 .positions-table-wrapper {
   overflow-x: auto;
   border-radius: 12px;
@@ -312,6 +394,25 @@ body {
   cursor: wait;
 }
 
+.btn-clear {
+  padding: 12px 18px;
+  background: rgba(239, 68, 68, 0.1);
+  color: var(--red);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  border-radius: 12px;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: 0.3s;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.btn-clear:hover {
+  background: rgba(239, 68, 68, 0.2);
+}
+
 .strategy-info {
   display: flex;
   flex-wrap: wrap;
@@ -435,18 +536,54 @@ body {
 .price-status.manual { color: var(--gold); }
 .price-status.error { color: var(--red); }
 
+/* Tabs for presets/custom */
+.tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid var(--border);
+}
+.tab-btn {
+  padding: 12px 20px;
+  background: transparent;
+  color: var(--gray);
+  border: none;
+  border-bottom: 3px solid transparent;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: 0.3s;
+}
+.tab-btn:hover {
+  color: var(--gold);
+}
+.tab-btn.active {
+  color: var(--gold);
+  border-bottom-color: var(--gold);
+}
+.tab-content {
+  display: none;
+}
+.tab-content.active {
+  display: block;
+}
+
 @media (max-width: 900px) {
   .positions-table th { padding: 8px 4px; font-size: 10px; }
   .positions-table td { padding: 6px 4px; }
   .cell-input, .cell-select { padding: 7px 6px; font-size: 11px; min-width: 70px; }
   .side-btn { font-size: 10px; padding: 6px 4px; }
   .btn-remove { width: 28px; height: 28px; font-size: 12px; }
+  .presets-grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); }
 }
 @media (max-width: 600px) {
   .container { padding: 15px 10px 40px; }
   .page-header h1 { font-size: 20px; }
   .page-header p { font-size: 12px; }
   .panel { padding: 14px; }
+  .tabs { flex-wrap: wrap; }
+  .tab-btn { font-size: 12px; padding: 10px 14px; }
 }
 </style>
 </head>
@@ -456,17 +593,65 @@ body {
 
   <div class="page-header">
     <h1>📊 شبیه‌ساز حرفه‌ای استراتژی آپشن</h1>
-    <p>پوزیشن‌های خود را اضافه کنید و نمودار سود و زیان زنده را ببینید</p>
+    <p>استراتژی آماده را انتخاب کن یا پوزیشن سفارشی خودت را بساز</p>
   </div>
 
+  <!-- ===== Tabs ===== -->
+  <div class="tabs">
+    <button class="tab-btn active" onclick="switchTab('presets', this)">🎯 استراتژی‌های آماده</button>
+    <button class="tab-btn" onclick="switchTab('custom', this)">🛠️ پوزیشن سفارشی</button>
+  </div>
+
+  <!-- ===== Tab: Presets ===== -->
+  <div class="tab-content active" id="tab-presets">
+    <div class="panel">
+      <div class="panel-header">
+        <div class="panel-title">
+          🎯 استراتژی آماده را انتخاب کن
+          <span class="badge">۱۵ استراتژی</span>
+        </div>
+        <button class="btn-clear" onclick="clearAllPositions()">
+          🗑️ پاک کردن همه
+        </button>
+      </div>
+
+      <div class="presets-grid" id="presetsGrid"></div>
+
+      <div class="info-box" style="background: rgba(59, 130, 246, 0.08); border: 1px solid rgba(59, 130, 246, 0.3); border-radius: 12px; padding: 14px 18px; margin-top: 16px; color: #93c5fd; font-size: 13px; line-height: 1.8;">
+        <strong style="color: #60a5fa;">💡 راهنما:</strong> روی هر استراتژی کلیک کن تا پوزیشن‌های آماده در جدول باز بشن. بعد فقط <strong>قیمت فعلی، قیمت اعمال و پرمیوم</strong> رو تنظیم کن.
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== Tab: Custom ===== -->
+  <div class="tab-content" id="tab-custom">
+    <div class="panel">
+      <div class="panel-header">
+        <div class="panel-title">
+          🛠️ پوزیشن سفارشی
+          <span class="badge" id="positionsCount">۰ پوزیشن</span>
+        </div>
+        <div style="display:flex; gap:10px; flex-wrap:wrap;">
+          <button class="btn-refresh" onclick="refreshAllPrices()" id="refreshBtn">
+            🔄 به‌روزرسانی قیمت‌ها
+          </button>
+          <button class="btn-primary" onclick="updateChart()">
+            📈 ساخت نمودار
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== جدول پوزیشن‌ها (همیشه نمایش داده می‌شه) ===== -->
   <div class="panel">
     <div class="panel-header">
       <div class="panel-title">
         📋 پوزیشن‌های شما
-        <span class="badge" id="positionsCount">۰ پوزیشن</span>
+        <span class="badge" id="positionsCount2">۰ پوزیشن</span>
       </div>
       <div style="display:flex; gap:10px; flex-wrap:wrap;">
-        <button class="btn-refresh" onclick="refreshAllPrices()" id="refreshBtn">
+        <button class="btn-refresh" onclick="refreshAllPrices()">
           🔄 به‌روزرسانی قیمت‌ها
         </button>
         <button class="btn-primary" onclick="updateChart()">
@@ -502,6 +687,7 @@ body {
     </button>
   </div>
 
+  <!-- ===== اطلاعات استراتژی ===== -->
   <div class="strategy-info">
     <div class="strategy-name">
       🎯 <span id="strategyName">استراتژی سفارشی</span>
@@ -513,6 +699,7 @@ body {
     </div>
   </div>
 
+  <!-- ===== نتایج ===== -->
   <div class="results-grid">
     <div class="result-card profit">
       <div class="label">📈 حداکثر سود</div>
@@ -536,6 +723,7 @@ body {
     </div>
   </div>
 
+  <!-- ===== نمودار ===== -->
   <div class="chart-container">
     <div class="panel-title" style="margin-bottom: 18px;">
       📈 نمودار سود و زیان (در سررسید)
@@ -562,7 +750,7 @@ const BRS_API_KEYS = [
 let brsKeyIndex = 0;
 
 // ==========================================
-// 🎯 دارایی‌های پشتیبانی‌شده
+// 🎯 دارایی‌ها
 // ==========================================
 const ASSETS = [
   { key: 'btc', name: 'بیت‌کوین', emoji: '₿', defaultPrice: 100000 },
@@ -574,23 +762,260 @@ const ASSETS = [
 ];
 
 // ==========================================
-// 📊 پوزیشن‌ها
+// 🎯 Preset Strategies
 // ==========================================
-let positions = [
+const PRESETS = [
   {
-    id: Date.now(),
-    asset: 'btc',
-    side: 'buy',
-    type: 'call',
-    quantity: 1,
-    currentPrice: 100000,
-    strike: 105000,
-    premium: 2500,
-    delta: 0.45,
-    margin: 0,
-    priceSource: 'default'
+    key: 'longCall',
+    name: 'Long Call',
+    icon: '🟢',
+    desc: 'خرید Call — سود نامحدود در صعود',
+    badge: 'صعودی',
+    positions: [
+      { side: 'buy', type: 'call', strikeOffset: 0.05, premiumRatio: 0.025 }
+    ]
+  },
+  {
+    key: 'shortCall',
+    name: 'Short Call',
+    icon: '🔴',
+    desc: 'فروش Call — درآمد از پرمیوم',
+    badge: 'نزولی/خنثی',
+    positions: [
+      { side: 'sell', type: 'call', strikeOffset: 0.05, premiumRatio: 0.025 }
+    ]
+  },
+  {
+    key: 'longPut',
+    name: 'Long Put',
+    icon: '🔴',
+    desc: 'خرید Put — سود در نزول',
+    badge: 'نزولی',
+    positions: [
+      { side: 'buy', type: 'put', strikeOffset: -0.05, premiumRatio: 0.025 }
+    ]
+  },
+  {
+    key: 'shortPut',
+    name: 'Short Put',
+    icon: '🟢',
+    desc: 'فروش Put — درآمد از پرمیوم',
+    badge: 'صعودی/خنثی',
+    positions: [
+      { side: 'sell', type: 'put', strikeOffset: -0.05, premiumRatio: 0.025 }
+    ]
+  },
+  {
+    key: 'bullCallSpread',
+    name: 'Bull Call Spread',
+    icon: '📈',
+    desc: 'صعودی محدود — ریسک و پاداش محدود',
+    badge: 'صعودی',
+    positions: [
+      { side: 'buy', type: 'call', strikeOffset: 0, premiumRatio: 0.03 },
+      { side: 'sell', type: 'call', strikeOffset: 0.05, premiumRatio: 0.015 }
+    ]
+  },
+  {
+    key: 'bearPutSpread',
+    name: 'Bear Put Spread',
+    icon: '📉',
+    desc: 'نزولی محدود — ریسک و پاداش محدود',
+    badge: 'نزولی',
+    positions: [
+      { side: 'buy', type: 'put', strikeOffset: 0, premiumRatio: 0.03 },
+      { side: 'sell', type: 'put', strikeOffset: -0.05, premiumRatio: 0.015 }
+    ]
+  },
+  {
+    key: 'bullPutSpread',
+    name: 'Bull Put Spread',
+    icon: '🟢',
+    desc: 'درآمد از پرمیوم در صعودی',
+    badge: 'صعودی',
+    positions: [
+      { side: 'sell', type: 'put', strikeOffset: -0.02, premiumRatio: 0.02 },
+      { side: 'buy', type: 'put', strikeOffset: -0.07, premiumRatio: 0.01 }
+    ]
+  },
+  {
+    key: 'bearCallSpread',
+    name: 'Bear Call Spread',
+    icon: '🔴',
+    desc: 'درآمد از پرمیوم در نزولی',
+    badge: 'نزولی',
+    positions: [
+      { side: 'sell', type: 'call', strikeOffset: 0.02, premiumRatio: 0.02 },
+      { side: 'buy', type: 'call', strikeOffset: 0.07, premiumRatio: 0.01 }
+    ]
+  },
+  {
+    key: 'longStraddle',
+    name: 'Long Straddle',
+    icon: '⚡',
+    desc: 'سود از نوسان شدید در هر جهت',
+    badge: 'نوسانی',
+    positions: [
+      { side: 'buy', type: 'call', strikeOffset: 0, premiumRatio: 0.025 },
+      { side: 'buy', type: 'put', strikeOffset: 0, premiumRatio: 0.025 }
+    ]
+  },
+  {
+    key: 'shortStraddle',
+    name: 'Short Straddle',
+    icon: '💤',
+    desc: 'سود از بازار آرام',
+    badge: 'خنثی',
+    positions: [
+      { side: 'sell', type: 'call', strikeOffset: 0, premiumRatio: 0.025 },
+      { side: 'sell', type: 'put', strikeOffset: 0, premiumRatio: 0.025 }
+    ]
+  },
+  {
+    key: 'longStrangle',
+    name: 'Long Strangle',
+    icon: '⚡',
+    desc: 'نوسانی با هزینه کمتر',
+    badge: 'نوسانی',
+    positions: [
+      { side: 'buy', type: 'call', strikeOffset: 0.05, premiumRatio: 0.015 },
+      { side: 'buy', type: 'put', strikeOffset: -0.05, premiumRatio: 0.015 }
+    ]
+  },
+  {
+    key: 'shortStrangle',
+    name: 'Short Strangle',
+    icon: '💤',
+    desc: 'خنثی با ریسک بیشتر',
+    badge: 'خنثی',
+    positions: [
+      { side: 'sell', type: 'call', strikeOffset: 0.05, premiumRatio: 0.015 },
+      { side: 'sell', type: 'put', strikeOffset: -0.05, premiumRatio: 0.015 }
+    ]
+  },
+  {
+    key: 'coveredCall',
+    name: 'Covered Call',
+    icon: '🛡️',
+    desc: 'درآمد از سهام موجود',
+    badge: 'پوششی',
+    positions: [
+      { side: 'buy', type: 'spot', strikeOffset: 0, premiumRatio: 0 },
+      { side: 'sell', type: 'call', strikeOffset: 0.05, premiumRatio: 0.02 }
+    ]
+  },
+  {
+    key: 'protectivePut',
+    name: 'Protective Put',
+    icon: '🏥',
+    desc: 'بیمه کردن پورتفوی موجود',
+    badge: 'بیمه',
+    positions: [
+      { side: 'buy', type: 'spot', strikeOffset: 0, premiumRatio: 0 },
+      { side: 'buy', type: 'put', strikeOffset: -0.05, premiumRatio: 0.02 }
+    ]
+  },
+  {
+    key: 'ironCondor',
+    name: 'Iron Condor',
+    icon: '🦅',
+    desc: 'سود در بازار خنثی با ریسک محدود',
+    badge: 'خنثی',
+    positions: [
+      { side: 'sell', type: 'put', strikeOffset: -0.05, premiumRatio: 0.015 },
+      { side: 'buy', type: 'put', strikeOffset: -0.10, premiumRatio: 0.008 },
+      { side: 'sell', type: 'call', strikeOffset: 0.05, premiumRatio: 0.015 },
+      { side: 'buy', type: 'call', strikeOffset: 0.10, premiumRatio: 0.008 }
+    ]
   }
 ];
+
+// ==========================================
+// 📊 State
+// ==========================================
+let positions = [];
+let currentPreset = null;
+
+// ==========================================
+// 🎯 رندر Presets
+// ==========================================
+function renderPresets() {
+  const grid = document.getElementById('presetsGrid');
+  grid.innerHTML = PRESETS.map(p => `
+    <button class="preset-card ${currentPreset === p.key ? 'active' : ''}" onclick="applyPreset('${p.key}')">
+      <div class="preset-header">
+        <span class="preset-icon">${p.icon}</span>
+        <span class="preset-name">${p.name}</span>
+      </div>
+      <div class="preset-desc">${p.desc}</div>
+      <span class="preset-badge">${p.badge}</span>
+    </button>
+  `).join('');
+}
+
+// ==========================================
+// 🎯 اعمال Preset
+// ==========================================
+function applyPreset(presetKey) {
+  const preset = PRESETS.find(p => p.key === presetKey);
+  if (!preset) return;
+  
+  currentPreset = presetKey;
+  
+  // Asset انتخاب‌شده (اگه هست)
+  const assetKey = positions[0]?.asset || 'btc';
+  const asset = getAsset(assetKey);
+  const basePrice = asset.defaultPrice;
+  
+  // ساخت پوزیشن‌های جدید
+  positions = preset.positions.map((posDef, idx) => {
+    const strike = posDef.type === 'spot' ? 0 : Math.round(basePrice * (1 + posDef.strikeOffset));
+    const premium = posDef.type === 'spot' ? 0 : Math.round(basePrice * posDef.premiumRatio);
+    
+    return {
+      id: Date.now() + idx + Math.random(),
+      asset: assetKey,
+      side: posDef.side,
+      type: posDef.type,
+      quantity: 1,
+      currentPrice: basePrice,
+      strike: strike,
+      premium: premium,
+      delta: posDef.type === 'call' ? 0.5 : (posDef.type === 'put' ? -0.5 : 1),
+      margin: posDef.side === 'sell' ? Math.round(basePrice * 0.1) : 0,
+      priceSource: 'default'
+    };
+  });
+  
+  renderPresets();
+  renderPositions();
+  updateChart();
+  
+  showNotification(`✅ استراتژی «${preset.name}» اعمال شد`, 'success');
+}
+
+// ==========================================
+// 🗑️ پاک کردن همه
+// ==========================================
+function clearAllPositions() {
+  if (!confirm('مطمئنی می‌خوای همه‌ی پوزیشن‌ها رو پاک کنی؟')) return;
+  positions = [];
+  currentPreset = null;
+  renderPresets();
+  renderPositions();
+  updateChart();
+  showNotification('🗑️ همه‌ی پوزیشن‌ها پاک شد', 'success');
+}
+
+// ==========================================
+// 🎯 سوییچ Tab
+// ==========================================
+function switchTab(tabName, btn) {
+  document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + tabName).classList.add('active');
+  if (btn) btn.classList.add('active');
+}
 
 // ==========================================
 // 🔧 ابزارها
@@ -616,7 +1041,7 @@ function getAsset(key) {
 }
 
 // ==========================================
-// 🌐 BrsApi Fetch با Key Rotation
+// 🌐 BrsApi
 // ==========================================
 async function fetchBrsApi(baseUrl) {
   for (let i = 0; i < BRS_API_KEYS.length; i++) {
@@ -641,80 +1066,51 @@ async function fetchBrsApi(baseUrl) {
   throw new Error('همه کلیدها fail');
 }
 
-// ==========================================
-// 📊 دریافت قیمت
-// ==========================================
 async function fetchPrice(assetKey) {
-  // ===== کریپتو از CoinGecko =====
+  // کریپتو
   if (assetKey === 'btc' || assetKey === 'eth') {
     const id = assetKey === 'btc' ? 'bitcoin' : 'ethereum';
     try {
       const res = await fetch(`https://api.coingecko.com/api/v3/simple/price?ids=${id}&vs_currencies=usd`);
       const data = await res.json();
-      if (data[id] && data[id].usd) {
-        return { price: data[id].usd, source: 'live' };
-      }
-    } catch (e) {
-      console.warn('CoinGecko error:', e);
-    }
+      if (data[id] && data[id].usd) return { price: data[id].usd, source: 'live' };
+    } catch (e) {}
   }
   
-  // ===== طلا، نقره، نفت از BrsApi Commodity =====
+  // طلا، نقره، نفت
   if (assetKey === 'gold' || assetKey === 'silver' || assetKey === 'oil') {
     try {
       const data = await fetchBrsApi('https://Api.BrsApi.ir/Market/Commodity.php');
-      
-      // طلا و نقره
-      if ((assetKey === 'gold' || assetKey === 'silver') && data.metal_precious && Array.isArray(data.metal_precious)) {
+      if ((assetKey === 'gold' || assetKey === 'silver') && data.metal_precious) {
         const symbol = assetKey === 'gold' ? 'XAUUSD' : 'XAGUSD';
         const item = data.metal_precious.find(i => i.symbol === symbol);
-        if (item && item.price) {
-          return { price: parseFloat(item.price), source: 'live' };
-        }
+        if (item && item.price) return { price: parseFloat(item.price), source: 'live' };
       }
-      
-      // نفت
-      if (assetKey === 'oil' && data.energy && Array.isArray(data.energy)) {
+      if (assetKey === 'oil' && data.energy) {
         const item = data.energy.find(i => i.symbol === 'BRENT' || i.symbol === 'BRENT_OIL');
-        if (item && item.price) {
-          return { price: parseFloat(item.price), source: 'live' };
-        }
+        if (item && item.price) return { price: parseFloat(item.price), source: 'live' };
       }
-    } catch (e) {
-      console.warn('BrsApi error:', e);
-    }
+    } catch (e) {}
   }
   
   return null;
 }
 
-// ==========================================
-// 🔄 به‌روزرسانی همه‌ی قیمت‌ها
-// ==========================================
 async function refreshAllPrices() {
-  const btn = document.getElementById('refreshBtn');
-  btn.disabled = true;
-  btn.innerHTML = '<span class="loading-indicator"></span>در حال دریافت...';
+  const btns = document.querySelectorAll('.btn-refresh');
+  btns.forEach(b => { b.disabled = true; b.innerHTML = '<span class="loading-indicator"></span>در حال دریافت...'; });
   
   try {
     const uniqueAssets = [...new Set(positions.map(p => p.asset))];
-    console.log('🔄 شروع به‌روزرسانی قیمت‌ها برای:', uniqueAssets);
-    
-    const results = await Promise.all(
-      uniqueAssets.map(async (assetKey) => {
-        try {
-          const result = await fetchPrice(assetKey);
-          return { assetKey, result };
-        } catch (e) {
-          console.warn(`❌ خطا در ${assetKey}:`, e);
-          return { assetKey, result: null };
-        }
-      })
-    );
+    const results = await Promise.all(uniqueAssets.map(async (assetKey) => {
+      try {
+        return { assetKey, result: await fetchPrice(assetKey) };
+      } catch (e) {
+        return { assetKey, result: null };
+      }
+    }));
     
     let successCount = 0;
-    let failCount = 0;
-    
     results.forEach(({ assetKey, result }) => {
       if (result && result.price) {
         positions.forEach(p => {
@@ -724,10 +1120,6 @@ async function refreshAllPrices() {
           }
         });
         successCount++;
-        console.log(`✅ ${assetKey}: $${result.price}`);
-      } else {
-        failCount++;
-        console.warn(`⚠️ ${assetKey}: دریافت نشد`);
       }
     });
     
@@ -739,18 +1131,16 @@ async function refreshAllPrices() {
     
     renderPositions();
     updateChart();
-    
   } catch (e) {
-    console.error('❌ خطا:', e);
+    console.error(e);
     showNotification('❌ خطا در دریافت قیمت‌ها', 'error');
   }
   
-  btn.disabled = false;
-  btn.innerHTML = '🔄 به‌روزرسانی قیمت‌ها';
+  btns.forEach(b => { b.disabled = false; b.innerHTML = '🔄 به‌روزرسانی قیمت‌ها'; });
 }
 
 // ==========================================
-// 📢 نمایش پیام
+// 📢 Notification
 // ==========================================
 function showNotification(message, type = 'success') {
   const existing = document.getElementById('customNotification');
@@ -760,24 +1150,16 @@ function showNotification(message, type = 'success') {
   notification.id = 'customNotification';
   notification.textContent = message;
   notification.style.cssText = `
-    position: fixed;
-    bottom: 30px;
-    left: 50%;
+    position: fixed; bottom: 30px; left: 50%;
     transform: translateX(-50%) translateY(100px);
-    background: var(--bg-card);
-    color: var(--white);
-    padding: 14px 24px;
-    border-radius: 12px;
+    background: var(--bg-card); color: var(--white);
+    padding: 14px 24px; border-radius: 12px;
     border-right: 4px solid ${type === 'success' ? 'var(--green)' : 'var(--red)'};
     box-shadow: 0 10px 40px rgba(0,0,0,0.5);
-    z-index: 999999;
-    transition: 0.4s;
-    font-size: 14px;
-    font-weight: 700;
+    z-index: 999999; transition: 0.4s;
+    font-size: 14px; font-weight: 700;
     font-family: 'Vazirmatn', Tahoma, sans-serif;
-    direction: rtl;
-    max-width: 90vw;
-    text-align: center;
+    direction: rtl; max-width: 90vw; text-align: center;
   `;
   
   document.body.appendChild(notification);
@@ -793,23 +1175,22 @@ function showNotification(message, type = 'success') {
 // ==========================================
 function renderPositions() {
   const body = document.getElementById('positionsBody');
+  const count = positions.length;
+  document.getElementById('positionsCount').textContent = toFa(count) + ' پوزیشن';
+  document.getElementById('positionsCount2').textContent = toFa(count) + ' پوزیشن';
   
-  if (positions.length === 0) {
+  if (count === 0) {
     body.innerHTML = `
       <tr>
         <td colspan="11" style="text-align:center; padding: 30px; color: var(--gray);">
-          📭 هنوز پوزیشنی اضافه نشده. روی «افزودن پوزیشن» کلیک کنید.
+          📭 هنوز پوزیشنی اضافه نشده. از تب «استراتژی‌های آماده» استفاده کن یا دستی اضافه کن.
         </td>
       </tr>
     `;
-    document.getElementById('positionsCount').textContent = '۰ پوزیشن';
     return;
   }
 
-  document.getElementById('positionsCount').textContent = toFa(positions.length) + ' پوزیشن';
-
   body.innerHTML = positions.map((p) => {
-    const asset = getAsset(p.asset);
     const sourceClass = p.priceSource === 'live' ? 'live' : (p.priceSource === 'manual' ? 'manual' : '');
     const sourceText = p.priceSource === 'live' ? '🟢 زنده' : (p.priceSource === 'manual' ? '🟡 دستی' : '⚪ پیش‌فرض');
     
@@ -853,6 +1234,7 @@ function renderPositions() {
         
         <td>
           <input type="number" class="cell-input" value="${p.strike}" min="0" step="0.01"
+                 ${p.type === 'spot' ? 'disabled' : ''}
                  onchange="updatePosition(${p.id}, 'strike', this.value)">
         </td>
         
@@ -887,9 +1269,6 @@ function renderPositions() {
   }).join('');
 }
 
-// ==========================================
-// 💰 محاسبه ارزش
-// ==========================================
 function calculatePositionValue(p) {
   if (p.type === 'spot') {
     const total = p.quantity * p.currentPrice * (p.side === 'buy' ? 1 : -1);
@@ -900,12 +1279,15 @@ function calculatePositionValue(p) {
   }
 }
 
-// ==========================================
-// 🔄 به‌روزرسانی پوزیشن
-// ==========================================
 function updatePosition(id, field, value) {
   const pos = positions.find(p => p.id === id);
   if (!pos) return;
+  
+  // اگه کاربر دستی تغییر داد، preset رو غیرفعال کن
+  if (field !== 'currentPrice') {
+    currentPreset = null;
+    renderPresets();
+  }
   
   if (field === 'asset') {
     pos.asset = value;
@@ -916,47 +1298,29 @@ function updatePosition(id, field, value) {
       pos.strike = Math.round(asset.defaultPrice * 1.05);
       pos.premium = Math.round(asset.defaultPrice * 0.025);
     }
-  } else if (field === 'side') {
-    pos.side = value;
-  } else if (field === 'type') {
-    pos.type = value;
-    if (value === 'spot') {
-      pos.strike = 0;
-      pos.delta = 1;
-      pos.margin = 0;
-    } else {
-      if (pos.strike === 0) {
-        const asset = getAsset(pos.asset);
-        pos.strike = Math.round(asset.defaultPrice * 1.05);
-        pos.premium = Math.round(asset.defaultPrice * 0.025);
-      }
-    }
-  } else if (field === 'quantity') {
-    pos.quantity = parseFloat(value) || 0;
-  } else if (field === 'currentPrice') {
+  } else if (field === 'side') pos.side = value;
+  else if (field === 'type') pos.type = value;
+  else if (field === 'quantity') pos.quantity = parseFloat(value) || 0;
+  else if (field === 'currentPrice') {
     pos.currentPrice = parseFloat(value) || 0;
     pos.priceSource = 'manual';
-  } else if (field === 'strike') {
-    pos.strike = parseFloat(value) || 0;
-  } else if (field === 'premium') {
-    pos.premium = parseFloat(value) || 0;
-  } else if (field === 'delta') {
-    pos.delta = parseFloat(value) || 0;
-  } else if (field === 'margin') {
-    pos.margin = parseFloat(value) || 0;
   }
+  else if (field === 'strike') pos.strike = parseFloat(value) || 0;
+  else if (field === 'premium') pos.premium = parseFloat(value) || 0;
+  else if (field === 'delta') pos.delta = parseFloat(value) || 0;
+  else if (field === 'margin') pos.margin = parseFloat(value) || 0;
   
   renderPositions();
   updateChart();
 }
 
-// ==========================================
-// ➕ افزودن پوزیشن
-// ==========================================
 function addPosition() {
   const lastPos = positions[positions.length - 1];
   const asset = lastPos ? lastPos.asset : 'btc';
   const assetData = getAsset(asset);
+  
+  currentPreset = null;
+  renderPresets();
   
   positions.push({
     id: Date.now() + Math.random(),
@@ -977,42 +1341,28 @@ function addPosition() {
 }
 
 function removePosition(id) {
+  currentPreset = null;
+  renderPresets();
   positions = positions.filter(p => p.id !== id);
   renderPositions();
   updateChart();
 }
 
 // ==========================================
-// 📊 محاسبه سود/زیان
+// 📊 محاسبات
 // ==========================================
 function calculatePayoff(price, pos) {
   const multiplier = pos.quantity * (pos.side === 'buy' ? 1 : -1);
-  
-  if (pos.type === 'call') {
-    const intrinsic = Math.max(price - pos.strike, 0);
-    return (intrinsic - pos.premium) * multiplier;
-  } else if (pos.type === 'put') {
-    const intrinsic = Math.max(pos.strike - price, 0);
-    return (intrinsic - pos.premium) * multiplier;
-  } else if (pos.type === 'spot') {
-    return (price - pos.currentPrice) * multiplier;
-  }
+  if (pos.type === 'call') return (Math.max(price - pos.strike, 0) - pos.premium) * multiplier;
+  if (pos.type === 'put') return (Math.max(pos.strike - price, 0) - pos.premium) * multiplier;
+  if (pos.type === 'spot') return (price - pos.currentPrice) * multiplier;
   return 0;
 }
 
-// ==========================================
-// 📈 رسم نمودار
-// ==========================================
 function updateChart() {
   if (positions.length === 0) {
-    document.getElementById('payoffChart').innerHTML = `
-      <text x="500" y="240" text-anchor="middle" fill="#94a3b8" font-size="16" font-family="Vazirmatn">
-        📭 پوزیشنی برای نمایش وجود ندارد
-      </text>
-    `;
-    ['maxProfit','maxLoss','breakeven','rrRatio','currentPnL'].forEach(id => {
-      document.getElementById(id).textContent = '--';
-    });
+    document.getElementById('payoffChart').innerHTML = `<text x="500" y="240" text-anchor="middle" fill="#94a3b8" font-size="16" font-family="Vazirmatn">📭 پوزیشنی برای نمایش وجود ندارد</text>`;
+    ['maxProfit','maxLoss','breakeven','rrRatio','currentPnL'].forEach(id => document.getElementById(id).textContent = '--');
     document.getElementById('totalInvestment').textContent = '۰';
     document.getElementById('strategyName').textContent = 'استراتژی سفارشی';
     document.getElementById('strategyTags').textContent = 'در انتظار پوزیشن...';
@@ -1025,7 +1375,6 @@ function updateChart() {
   const minK = Math.min(...allPrices);
   const maxK = Math.max(...allPrices);
   const range = maxK - minK || maxK * 0.3;
-  
   const priceMin = Math.max(0, minK - range * 0.5);
   const priceMax = maxK + range * 0.5;
   
@@ -1043,36 +1392,34 @@ function updateChart() {
   const minPnL = Math.min(...pnls);
   const absMax = Math.max(Math.abs(maxPnL), Math.abs(minPnL)) || 1;
   
-  const strategyInfo = detectStrategy();
+  // اسم استراتژی
+  let strategyInfo;
+  if (currentPreset) {
+    const preset = PRESETS.find(p => p.key === currentPreset);
+    strategyInfo = { name: preset.icon + ' ' + preset.name, tags: preset.badge };
+  } else {
+    strategyInfo = detectStrategy();
+  }
   document.getElementById('strategyName').textContent = strategyInfo.name;
   document.getElementById('strategyTags').textContent = strategyInfo.tags;
   
   let totalInvestment = 0;
   positions.forEach(p => {
-    if (p.type === 'spot') {
-      totalInvestment += p.quantity * p.currentPrice * (p.side === 'buy' ? 1 : -1);
-    } else {
-      totalInvestment += p.quantity * p.premium * (p.side === 'buy' ? -1 : 1);
-    }
+    if (p.type === 'spot') totalInvestment += p.quantity * p.currentPrice * (p.side === 'buy' ? 1 : -1);
+    else totalInvestment += p.quantity * p.premium * (p.side === 'buy' ? -1 : 1);
   });
-  document.getElementById('totalInvestment').textContent = 
-    (totalInvestment >= 0 ? '+' : '') + toFa(formatNum(totalInvestment)) + ' $';
+  document.getElementById('totalInvestment').textContent = (totalInvestment >= 0 ? '+' : '') + toFa(formatNum(totalInvestment)) + ' $';
   
   const breakevens = findBreakevens(points);
-  
   const currentPrice = positions[0].currentPrice;
   let currentPnL = 0;
   positions.forEach(pos => currentPnL += calculatePayoff(currentPrice, pos));
-  document.getElementById('currentPnL').textContent = 
-    (currentPnL >= 0 ? '+' : '') + toFa(formatNum(currentPnL)) + ' $';
+  document.getElementById('currentPnL').textContent = (currentPnL >= 0 ? '+' : '') + toFa(formatNum(currentPnL)) + ' $';
   document.getElementById('currentPnL').style.color = currentPnL >= 0 ? 'var(--green)' : 'var(--red)';
   
-  document.getElementById('maxProfit').textContent = 
-    maxPnL === Infinity ? 'نامحدود' : (maxPnL >= 0 ? '+' : '') + toFa(formatNum(maxPnL)) + ' $';
-  document.getElementById('maxLoss').textContent = 
-    minPnL === -Infinity ? 'نامحدود' : toFa(formatNum(minPnL)) + ' $';
-  document.getElementById('breakeven').textContent = 
-    breakevens.length > 0 ? breakevens.map(b => toFa(formatNum(b, 1))).join(' | ') : '--';
+  document.getElementById('maxProfit').textContent = maxPnL === Infinity ? 'نامحدود' : (maxPnL >= 0 ? '+' : '') + toFa(formatNum(maxPnL)) + ' $';
+  document.getElementById('maxLoss').textContent = minPnL === -Infinity ? 'نامحدود' : toFa(formatNum(minPnL)) + ' $';
+  document.getElementById('breakeven').textContent = breakevens.length > 0 ? breakevens.map(b => toFa(formatNum(b, 1))).join(' | ') : '--';
   
   if (maxPnL > 0 && minPnL < 0 && maxPnL !== Infinity && minPnL !== -Infinity) {
     document.getElementById('rrRatio').textContent = '1 : ' + toFa(Math.abs(maxPnL / minPnL).toFixed(2));
@@ -1085,9 +1432,6 @@ function updateChart() {
   drawChart(points, breakevens, currentPrice, priceMin, priceMax, absMax);
 }
 
-// ==========================================
-// 🎯 تشخیص استراتژی
-// ==========================================
 function detectStrategy() {
   const n = positions.length;
   if (n === 0) return { name: 'استراتژی سفارشی', tags: 'در انتظار...' };
@@ -1106,10 +1450,8 @@ function detectStrategy() {
   }
   
   if (n === 2) {
-    const hasBC = count('buy-call') === 1;
-    const hasSC = count('sell-call') === 1;
-    const hasBP = count('buy-put') === 1;
-    const hasSP = count('sell-put') === 1;
+    const hasBC = count('buy-call') === 1, hasSC = count('sell-call') === 1;
+    const hasBP = count('buy-put') === 1, hasSP = count('sell-put') === 1;
     
     if (hasBC && hasSC) {
       const calls = positions.filter(p => p.type === 'call');
@@ -1128,7 +1470,7 @@ function detectStrategy() {
         : { name: '📈 Bull Put Spread', tags: 'صعودی محدود' };
     }
     if (hasBC && hasBP) return { name: '⚡ Long Straddle', tags: 'نوسانی' };
-    if (hasSC && hasSP) return { name: '💤 Short Straddle', tags: 'آرامش بازار' };
+    if (hasSC && hasSP) return { name: '💤 Short Straddle', tags: 'خنثی' };
     if (count('buy-spot') === 1 && hasSC) return { name: '🛡️ Covered Call', tags: 'پوششی' };
     if (count('buy-spot') === 1 && hasBP) return { name: '🏥 Protective Put', tags: 'بیمه' };
   }
@@ -1143,8 +1485,7 @@ function detectStrategy() {
 function findBreakevens(points) {
   const be = [];
   for (let i = 1; i < points.length; i++) {
-    const prev = points[i - 1].pnl;
-    const curr = points[i].pnl;
+    const prev = points[i - 1].pnl, curr = points[i].pnl;
     if ((prev < 0 && curr >= 0) || (prev > 0 && curr <= 0)) {
       const t = Math.abs(prev) / (Math.abs(prev) + Math.abs(curr));
       const price = points[i - 1].price + t * (points[i].price - points[i - 1].price);
@@ -1154,28 +1495,17 @@ function findBreakevens(points) {
   return be;
 }
 
-// ==========================================
-// 📊 رسم SVG
-// ==========================================
 function drawChart(points, breakevens, currentPrice, priceMin, priceMax, absMax) {
   const svg = document.getElementById('payoffChart');
   const W = 1000, H = 480;
   const padding = { top: 30, right: 40, bottom: 50, left: 70 };
   const chartW = W - padding.left - padding.right;
   const chartH = H - padding.top - padding.bottom;
-  
   const xScale = (price) => padding.left + ((price - priceMin) / (priceMax - priceMin)) * chartW;
   const yScale = (pnl) => padding.top + chartH / 2 - (pnl / absMax) * (chartH / 2);
   const zeroY = yScale(0);
   
-  let svgContent = '';
-  
-  svgContent += `<defs>
-    <linearGradient id="lineGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%" stop-color="#d4af37"/>
-      <stop offset="100%" stop-color="#f4d47c"/>
-    </linearGradient>
-  </defs>`;
+  let svgContent = `<defs><linearGradient id="lineGrad" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#d4af37"/><stop offset="100%" stop-color="#f4d47c"/></linearGradient></defs>`;
   
   for (let i = -4; i <= 4; i++) {
     const y = yScale((absMax / 4) * i);
@@ -1227,17 +1557,14 @@ function drawChart(points, breakevens, currentPrice, priceMin, priceMax, absMax)
 // ==========================================
 // 🚀 شروع
 // ==========================================
+renderPresets();
 renderPositions();
 updateChart();
 
-// تلاش برای دریافت قیمت‌های زنده در شروع
 setTimeout(() => {
-  refreshAllPrices();
+  if (positions.length > 0) refreshAllPrices();
 }, 800);
 
-// ==========================================
-// 🌙 تم
-// ==========================================
 function applyTheme() {
   const saved = localStorage.getItem('shamdun-theme') || 'dark';
   document.documentElement.setAttribute('data-theme', saved);
