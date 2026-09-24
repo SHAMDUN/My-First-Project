@@ -17,7 +17,6 @@
   --green: #10b981;
   --red: #ef4444;
   --blue: #3b82f6;
-  --purple: #8b5cf6;
   --white: #f8fafc;
   --gray: #94a3b8;
   --border: rgba(212, 175, 55, 0.15);
@@ -33,7 +32,6 @@
   --green: #059669;
   --red: #dc2626;
   --blue: #2563eb;
-  --purple: #7c3aed;
   --white: #0f172a;
   --gray: #64748b;
   --border: rgba(184, 134, 11, 0.2);
@@ -50,11 +48,9 @@ body {
   color: var(--white);
   min-height: 100vh;
   direction: rtl;
-  transition: background-color 0.3s, color 0.3s;
 }
 .container { max-width: 1500px; margin: 0 auto; padding: 30px 20px 60px; }
 
-/* ===== Header ===== */
 .page-header {
   text-align: center;
   margin-bottom: 30px;
@@ -74,7 +70,6 @@ body {
 }
 .page-header p { color: var(--gray); font-size: 14px; }
 
-/* ===== Panel ===== */
 .panel {
   background: var(--bg-card);
   border: 1px solid var(--border);
@@ -109,48 +104,45 @@ body {
   border: 1px solid rgba(212, 175, 55, 0.3);
 }
 
-/* ===== Table ===== */
+.positions-table-wrapper {
+  overflow-x: auto;
+  border-radius: 12px;
+  margin-bottom: 15px;
+}
 .positions-table {
   width: 100%;
   border-collapse: collapse;
-  margin-bottom: 15px;
+  min-width: 1200px;
 }
 .positions-table th {
   background: linear-gradient(135deg, rgba(212, 175, 55, 0.12), rgba(212, 175, 55, 0.04));
   color: var(--gold);
   padding: 12px 8px;
   text-align: right;
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 800;
   border-bottom: 2px solid rgba(212, 175, 55, 0.3);
   white-space: nowrap;
 }
-.positions-table th:first-child { border-radius: 0 12px 0 0; }
-.positions-table th:last-child { border-radius: 12px 0 0 0; }
 .positions-table td {
   padding: 8px;
   border-bottom: 1px solid var(--border-soft);
   vertical-align: middle;
 }
-.positions-table tr:last-child td { border-bottom: none; }
-.positions-table tbody tr {
-  transition: background 0.2s;
-}
 .positions-table tbody tr:hover {
   background: rgba(212, 175, 55, 0.03);
 }
 
-/* ===== Inputs ===== */
 .cell-input {
   width: 100%;
-  min-width: 70px;
+  min-width: 85px;
   padding: 9px 10px;
   background: rgba(10, 10, 15, 0.6);
   border: 2px solid rgba(255, 255, 255, 0.08);
   border-radius: 8px;
   color: var(--white);
   font-family: inherit;
-  font-size: 13px;
+  font-size: 12px;
   outline: none;
   transition: 0.2s;
   direction: ltr;
@@ -165,17 +157,23 @@ body {
   border-color: var(--gold);
   box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.1);
 }
+.cell-input.highlight {
+  border-color: var(--gold);
+  background: rgba(212, 175, 55, 0.08);
+  color: var(--gold);
+  font-weight: 800;
+}
 
 .cell-select {
   width: 100%;
-  min-width: 90px;
+  min-width: 100px;
   padding: 9px 10px;
   background: rgba(10, 10, 15, 0.6);
   border: 2px solid rgba(255, 255, 255, 0.08);
   border-radius: 8px;
   color: var(--white);
   font-family: inherit;
-  font-size: 13px;
+  font-size: 12px;
   outline: none;
   cursor: pointer;
   transition: 0.2s;
@@ -186,7 +184,6 @@ body {
 }
 .cell-select:focus { border-color: var(--gold); }
 
-/* ===== Toggle خرید/فروش ===== */
 .side-toggle {
   display: inline-flex;
   background: rgba(10, 10, 15, 0.6);
@@ -194,7 +191,7 @@ body {
   border-radius: 8px;
   overflow: hidden;
   width: 100%;
-  min-width: 100px;
+  min-width: 110px;
 }
 [data-theme="light"] .side-toggle {
   background: #ffffff;
@@ -207,7 +204,7 @@ body {
   color: var(--gray);
   border: none;
   font-family: inherit;
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 700;
   cursor: pointer;
   transition: 0.2s;
@@ -222,7 +219,6 @@ body {
   color: #fff;
 }
 
-/* ===== دکمه حذف ===== */
 .btn-remove {
   width: 34px;
   height: 34px;
@@ -243,7 +239,6 @@ body {
   transform: scale(1.05);
 }
 
-/* ===== دکمه افزودن ===== */
 .btn-add {
   padding: 12px 22px;
   background: linear-gradient(135deg, rgba(212, 175, 55, 0.15), rgba(212, 175, 55, 0.05));
@@ -258,7 +253,6 @@ body {
   display: flex;
   align-items: center;
   gap: 8px;
-  margin-top: 10px;
 }
 .btn-add:hover {
   background: linear-gradient(135deg, rgba(212, 175, 55, 0.25), rgba(212, 175, 55, 0.1));
@@ -266,15 +260,14 @@ body {
   transform: translateY(-2px);
 }
 
-/* ===== دکمه ساخت نمودار ===== */
 .btn-primary {
-  padding: 14px 32px;
+  padding: 12px 24px;
   background: linear-gradient(135deg, var(--gold), var(--gold-dark));
   color: #fff;
   border: none;
   border-radius: 12px;
   font-family: inherit;
-  font-size: 15px;
+  font-size: 14px;
   font-weight: 800;
   cursor: pointer;
   transition: 0.3s;
@@ -287,8 +280,30 @@ body {
   transform: translateY(-2px);
   box-shadow: 0 12px 35px rgba(212, 175, 55, 0.5);
 }
+.btn-primary:disabled {
+  opacity: 0.6;
+  cursor: wait;
+}
 
-/* ===== Strategy Info ===== */
+.btn-refresh {
+  padding: 10px 16px;
+  background: rgba(59, 130, 246, 0.1);
+  color: var(--blue);
+  border: 1px solid rgba(59, 130, 246, 0.3);
+  border-radius: 10px;
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: 0.3s;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.btn-refresh:hover {
+  background: rgba(59, 130, 246, 0.2);
+}
+
 .strategy-info {
   display: flex;
   flex-wrap: wrap;
@@ -318,7 +333,6 @@ body {
   font-weight: 700;
 }
 
-/* ===== Results ===== */
 .results-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
@@ -340,9 +354,6 @@ body {
   color: var(--gray);
   font-size: 11px;
   margin-bottom: 6px;
-  display: flex;
-  align-items: center;
-  gap: 5px;
 }
 .result-card .value {
   color: var(--white);
@@ -354,7 +365,6 @@ body {
 .result-card.loss .value { color: var(--red); }
 .result-card.blue .value { color: var(--blue); }
 
-/* ===== Chart ===== */
 .chart-container {
   background: var(--bg-card);
   border: 1px solid var(--border);
@@ -394,27 +404,33 @@ body {
   border-radius: 3px;
 }
 
-/* ===== Asset Badge ===== */
-.asset-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 6px 12px;
-  background: rgba(212, 175, 55, 0.1);
-  border: 1px solid rgba(212, 175, 55, 0.3);
-  border-radius: 10px;
-  color: var(--gold);
-  font-size: 12px;
-  font-weight: 700;
+.loading-indicator {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border: 2px solid rgba(59, 130, 246, 0.3);
+  border-top-color: var(--blue);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  margin-right: 6px;
 }
-.asset-badge .emoji { font-size: 16px; }
+@keyframes spin { to { transform: rotate(360deg); } }
 
-/* ===== Responsive ===== */
+.price-status {
+  font-size: 10px;
+  color: var(--gray);
+  display: block;
+  margin-top: 2px;
+  text-align: center;
+}
+.price-status.live { color: var(--green); }
+.price-status.manual { color: var(--gold); }
+.price-status.error { color: var(--red); }
+
 @media (max-width: 900px) {
-  .positions-table { font-size: 11px; }
   .positions-table th { padding: 8px 4px; font-size: 10px; }
   .positions-table td { padding: 6px 4px; }
-  .cell-input, .cell-select { padding: 7px 6px; font-size: 11px; min-width: 55px; }
+  .cell-input, .cell-select { padding: 7px 6px; font-size: 11px; min-width: 70px; }
   .side-btn { font-size: 10px; padding: 6px 4px; }
   .btn-remove { width: 28px; height: 28px; font-size: 12px; }
 }
@@ -423,11 +439,6 @@ body {
   .page-header h1 { font-size: 20px; }
   .page-header p { font-size: 12px; }
   .panel { padding: 14px; }
-  .positions-table-wrapper { overflow-x: auto; }
-}
-.positions-table-wrapper {
-  overflow-x: auto;
-  border-radius: 12px;
 }
 </style>
 </head>
@@ -440,16 +451,20 @@ body {
     <p>پوزیشن‌های خود را اضافه کنید و نمودار سود و زیان زنده را ببینید</p>
   </div>
 
-  <!-- ===== جدول پوزیشن‌ها ===== -->
   <div class="panel">
     <div class="panel-header">
       <div class="panel-title">
         📋 پوزیشن‌های شما
         <span class="badge" id="positionsCount">۰ پوزیشن</span>
       </div>
-      <button class="btn-primary" onclick="updateChart()">
-        🔄 ساخت نمودار
-      </button>
+      <div style="display:flex; gap:10px; flex-wrap:wrap;">
+        <button class="btn-refresh" onclick="refreshAllPrices()" id="refreshBtn">
+          🔄 به‌روزرسانی قیمت‌ها
+        </button>
+        <button class="btn-primary" onclick="updateChart()">
+          📈 ساخت نمودار
+        </button>
+      </div>
     </div>
 
     <div class="positions-table-wrapper">
@@ -457,10 +472,11 @@ body {
         <thead>
           <tr>
             <th>دارایی</th>
-            <th>خرید / فروش</th>
+            <th>خرید/فروش</th>
             <th>نوع</th>
             <th>مقدار</th>
-            <th>قیمت اعمال</th>
+            <th>💵 قیمت فعلی</th>
+            <th>🎯 قیمت اعمال</th>
             <th>پرمیوم</th>
             <th>دلتا</th>
             <th>وجه تضمین</th>
@@ -468,9 +484,7 @@ body {
             <th></th>
           </tr>
         </thead>
-        <tbody id="positionsBody">
-          <!-- پر می‌شه با JS -->
-        </tbody>
+        <tbody id="positionsBody"></tbody>
       </table>
     </div>
 
@@ -480,19 +494,17 @@ body {
     </button>
   </div>
 
-  <!-- ===== اطلاعات استراتژی ===== -->
   <div class="strategy-info">
     <div class="strategy-name">
       🎯 <span id="strategyName">استراتژی سفارشی</span>
     </div>
     <div class="strategy-tag" id="strategyTags">در انتظار پوزیشن...</div>
     <div style="margin-right: auto;">
-      <span style="color: var(--gray); font-size: 12px;">💰 مجموع سرمایه‌گذاری:</span>
+      <span style="color: var(--gray); font-size: 12px;">💰 مجموع سرمایه:</span>
       <span style="color: var(--gold); font-weight: 900; font-size: 15px; margin-right: 8px;" id="totalInvestment">۰</span>
     </div>
   </div>
 
-  <!-- ===== نتایج ===== -->
   <div class="results-grid">
     <div class="result-card profit">
       <div class="label">📈 حداکثر سود</div>
@@ -516,19 +528,16 @@ body {
     </div>
   </div>
 
-  <!-- ===== نمودار ===== -->
   <div class="chart-container">
     <div class="panel-title" style="margin-bottom: 18px;">
       📈 نمودار سود و زیان (در سررسید)
     </div>
-    <svg id="payoffChart" viewBox="0 0 1000 480" preserveAspectRatio="xMidYMid meet">
-      <!-- پر می‌شه با JS -->
-    </svg>
+    <svg id="payoffChart" viewBox="0 0 1000 480" preserveAspectRatio="xMidYMid meet"></svg>
     <div class="legend">
       <div class="legend-item"><div class="legend-dot" style="background:#10b981;"></div> ناحیه سود</div>
       <div class="legend-item"><div class="legend-dot" style="background:#ef4444;"></div> ناحیه ضرر</div>
       <div class="legend-item"><div class="legend-dot" style="background:#d4af37;"></div> نقطه سربه‌سر</div>
-      <div class="legend-item"><div class="legend-dot" style="background:#3b82f6;"></div> قیمت فعلی دارایی</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#3b82f6;"></div> قیمت فعلی</div>
     </div>
   </div>
 
@@ -539,12 +548,12 @@ body {
 // 🎯 دارایی‌های پشتیبانی‌شده
 // ==========================================
 const ASSETS = [
-  { key: 'btc', name: 'بیت‌کوین', emoji: '₿', defaultPrice: 100000 },
-  { key: 'eth', name: 'اتریوم', emoji: '⟠', defaultPrice: 4000 },
-  { key: 'gold', name: 'انس طلا', emoji: '🥇', defaultPrice: 2700 },
-  { key: 'silver', name: 'انس نقره', emoji: '🥈', defaultPrice: 32 },
-  { key: 'oil', name: 'نفت برنت', emoji: '🛢️', defaultPrice: 75 },
-  { key: 'stock', name: 'سهام', emoji: '📈', defaultPrice: 100 }
+  { key: 'btc', name: 'بیت‌کوین', emoji: '₿', defaultPrice: 100000, api: 'BTC' },
+  { key: 'eth', name: 'اتریوم', emoji: '⟠', defaultPrice: 4000, api: 'ETH' },
+  { key: 'gold', name: 'انس طلا', emoji: '🥇', defaultPrice: 2700, api: 'GOLD' },
+  { key: 'silver', name: 'انس نقره', emoji: '🥈', defaultPrice: 32, api: 'SILVER' },
+  { key: 'oil', name: 'نفت برنت', emoji: '🛢️', defaultPrice: 75, api: null },
+  { key: 'stock', name: 'سهام', emoji: '📈', defaultPrice: 100, api: null }
 ];
 
 // ==========================================
@@ -557,10 +566,12 @@ let positions = [
     side: 'buy',
     type: 'call',
     quantity: 1,
+    currentPrice: 100000,
     strike: 105000,
     premium: 2500,
     delta: 0.45,
-    margin: 0
+    margin: 0,
+    priceSource: 'default'
   }
 ];
 
@@ -588,7 +599,72 @@ function getAsset(key) {
 }
 
 // ==========================================
-// 📋 رندر جدول پوزیشن‌ها
+// 🌐 دریافت قیمت از API
+// ==========================================
+async function fetchPrice(assetKey) {
+  try {
+    // کریپتو از CoinGecko
+    if (assetKey === 'btc' || assetKey === 'eth') {
+      const id = assetKey === 'btc' ? 'bitcoin' : 'ethereum';
+      const res = await fetch(`https://api.coingecko.com/api/v3/simple/price?ids=${id}&vs_currencies=usd`);
+      const data = await res.json();
+      if (data[id] && data[id].usd) {
+        return { price: data[id].usd, source: 'live' };
+      }
+    }
+    
+    // طلا و نقره از BrsApi
+    if (assetKey === 'gold' || assetKey === 'silver') {
+      // API ممکنه CORS بده، پس از قیمت پیش‌فرض استفاده می‌کنیم
+      // می‌تونی بعداً از یه proxy یا API داخلی استفاده کنی
+      return null;
+    }
+    
+    return null;
+  } catch (e) {
+    console.warn('API error:', e);
+    return null;
+  }
+}
+
+// ==========================================
+// 🔄 به‌روزرسانی قیمت‌ها
+// ==========================================
+async function refreshAllPrices() {
+  const btn = document.getElementById('refreshBtn');
+  btn.disabled = true;
+  btn.innerHTML = '<span class="loading-indicator"></span>در حال دریافت...';
+  
+  // پیدا کردن دارایی‌های یکتا
+  const uniqueAssets = [...new Set(positions.map(p => p.asset))];
+  
+  const results = await Promise.all(
+    uniqueAssets.map(async (assetKey) => {
+      const result = await fetchPrice(assetKey);
+      return { assetKey, result };
+    })
+  );
+  
+  results.forEach(({ assetKey, result }) => {
+    if (result && result.price) {
+      positions.forEach(p => {
+        if (p.asset === assetKey) {
+          p.currentPrice = result.price;
+          p.priceSource = 'live';
+        }
+      });
+    }
+  });
+  
+  btn.disabled = false;
+  btn.innerHTML = '🔄 به‌روزرسانی قیمت‌ها';
+  
+  renderPositions();
+  updateChart();
+}
+
+// ==========================================
+// 📋 رندر جدول
 // ==========================================
 function renderPositions() {
   const body = document.getElementById('positionsBody');
@@ -596,7 +672,7 @@ function renderPositions() {
   if (positions.length === 0) {
     body.innerHTML = `
       <tr>
-        <td colspan="10" style="text-align:center; padding: 30px; color: var(--gray);">
+        <td colspan="11" style="text-align:center; padding: 30px; color: var(--gray);">
           📭 هنوز پوزیشنی اضافه نشده. روی «افزودن پوزیشن» کلیک کنید.
         </td>
       </tr>
@@ -607,11 +683,13 @@ function renderPositions() {
 
   document.getElementById('positionsCount').textContent = toFa(positions.length) + ' پوزیشن';
 
-  body.innerHTML = positions.map((p, idx) => {
+  body.innerHTML = positions.map((p) => {
     const asset = getAsset(p.asset);
+    const sourceClass = p.priceSource === 'live' ? 'live' : (p.priceSource === 'manual' ? 'manual' : '');
+    const sourceText = p.priceSource === 'live' ? '🟢 زنده' : (p.priceSource === 'manual' ? '🟡 دستی' : '⚪ پیش‌فرض');
+    
     return `
       <tr data-id="${p.id}">
-        <!-- دارایی -->
         <td>
           <select class="cell-select" onchange="updatePosition(${p.id}, 'asset', this.value)">
             ${ASSETS.map(a => `
@@ -622,19 +700,13 @@ function renderPositions() {
           </select>
         </td>
         
-        <!-- خرید / فروش -->
         <td>
           <div class="side-toggle">
-            <button class="side-btn ${p.side === 'buy' ? 'active-buy' : ''}" onclick="updatePosition(${p.id}, 'side', 'buy')">
-              خرید
-            </button>
-            <button class="side-btn ${p.side === 'sell' ? 'active-sell' : ''}" onclick="updatePosition(${p.id}, 'side', 'sell')">
-              فروش
-            </button>
+            <button class="side-btn ${p.side === 'buy' ? 'active-buy' : ''}" onclick="updatePosition(${p.id}, 'side', 'buy')">خرید</button>
+            <button class="side-btn ${p.side === 'sell' ? 'active-sell' : ''}" onclick="updatePosition(${p.id}, 'side', 'sell')">فروش</button>
           </div>
         </td>
         
-        <!-- نوع -->
         <td>
           <select class="cell-select" onchange="updatePosition(${p.id}, 'type', this.value)">
             <option value="call" ${p.type === 'call' ? 'selected' : ''}>اختیار خرید</option>
@@ -643,47 +715,46 @@ function renderPositions() {
           </select>
         </td>
         
-        <!-- مقدار -->
         <td>
           <input type="number" class="cell-input" value="${p.quantity}" min="0" step="1" 
                  onchange="updatePosition(${p.id}, 'quantity', this.value)">
         </td>
         
-        <!-- قیمت اعمال -->
+        <td>
+          <input type="number" class="cell-input highlight" value="${p.currentPrice}" min="0" step="0.01"
+                 onchange="updatePosition(${p.id}, 'currentPrice', this.value)">
+          <span class="price-status ${sourceClass}">${sourceText}</span>
+        </td>
+        
         <td>
           <input type="number" class="cell-input" value="${p.strike}" min="0" step="0.01"
                  ${p.type === 'spot' ? 'disabled' : ''}
                  onchange="updatePosition(${p.id}, 'strike', this.value)">
         </td>
         
-        <!-- پرمیوم -->
         <td>
           <input type="number" class="cell-input" value="${p.premium}" min="0" step="0.01"
                  onchange="updatePosition(${p.id}, 'premium', this.value)">
         </td>
         
-        <!-- دلتا -->
         <td>
           <input type="number" class="cell-input" value="${p.delta}" min="-1" max="1" step="0.01"
                  ${p.type === 'spot' ? 'disabled' : ''}
                  onchange="updatePosition(${p.id}, 'delta', this.value)">
         </td>
         
-        <!-- وجه تضمین -->
         <td>
           <input type="number" class="cell-input" value="${p.margin}" min="0" step="0.01"
                  ${p.side === 'buy' ? 'disabled' : ''}
                  onchange="updatePosition(${p.id}, 'margin', this.value)">
         </td>
         
-        <!-- مجموع -->
         <td style="text-align: center;">
           <span style="color: var(--gold); font-weight: 900; font-size: 13px;">
             ${calculatePositionValue(p)}
           </span>
         </td>
         
-        <!-- حذف -->
         <td>
           <button class="btn-remove" onclick="removePosition(${p.id})" title="حذف">✕</button>
         </td>
@@ -693,12 +764,11 @@ function renderPositions() {
 }
 
 // ==========================================
-// 💰 محاسبه ارزش هر پوزیشن
+// 💰 محاسبه ارزش
 // ==========================================
 function calculatePositionValue(p) {
   if (p.type === 'spot') {
-    const asset = getAsset(p.asset);
-    const total = p.quantity * asset.defaultPrice * (p.side === 'buy' ? 1 : -1);
+    const total = p.quantity * p.currentPrice * (p.side === 'buy' ? 1 : -1);
     return toFa(formatNum(total)) + ' $';
   } else {
     const total = p.quantity * p.premium * (p.side === 'buy' ? -1 : 1);
@@ -715,10 +785,13 @@ function updatePosition(id, field, value) {
   
   if (field === 'asset') {
     pos.asset = value;
-    // آپدیت قیمت پیش‌فرض
     const asset = getAsset(value);
-    pos.strike = Math.round(asset.defaultPrice * 1.05);
-    pos.premium = Math.round(asset.defaultPrice * 0.025);
+    pos.currentPrice = asset.defaultPrice;
+    pos.priceSource = 'default';
+    if (pos.type !== 'spot') {
+      pos.strike = Math.round(asset.defaultPrice * 1.05);
+      pos.premium = Math.round(asset.defaultPrice * 0.025);
+    }
   } else if (field === 'side') {
     pos.side = value;
   } else if (field === 'type') {
@@ -730,6 +803,9 @@ function updatePosition(id, field, value) {
     }
   } else if (field === 'quantity') {
     pos.quantity = parseFloat(value) || 0;
+  } else if (field === 'currentPrice') {
+    pos.currentPrice = parseFloat(value) || 0;
+    pos.priceSource = 'manual';
   } else if (field === 'strike') {
     pos.strike = parseFloat(value) || 0;
   } else if (field === 'premium') {
@@ -758,19 +834,18 @@ function addPosition() {
     side: 'buy',
     type: 'call',
     quantity: 1,
+    currentPrice: assetData.defaultPrice,
     strike: Math.round(assetData.defaultPrice * 1.05),
     premium: Math.round(assetData.defaultPrice * 0.025),
     delta: 0.45,
-    margin: 0
+    margin: 0,
+    priceSource: 'default'
   });
   
   renderPositions();
   updateChart();
 }
 
-// ==========================================
-// 🗑️ حذف پوزیشن
-// ==========================================
 function removePosition(id) {
   positions = positions.filter(p => p.id !== id);
   renderPositions();
@@ -778,7 +853,7 @@ function removePosition(id) {
 }
 
 // ==========================================
-// 📊 محاسبه سود/زیان در سررسید
+// 📊 محاسبه سود/زیان
 // ==========================================
 function calculatePayoff(price, pos) {
   const multiplier = pos.quantity * (pos.side === 'buy' ? 1 : -1);
@@ -790,8 +865,7 @@ function calculatePayoff(price, pos) {
     const intrinsic = Math.max(pos.strike - price, 0);
     return (intrinsic - pos.premium) * multiplier;
   } else if (pos.type === 'spot') {
-    const asset = getAsset(pos.asset);
-    return (price - asset.defaultPrice) * multiplier;
+    return (price - pos.currentPrice) * multiplier;
   }
   return 0;
 }
@@ -806,25 +880,18 @@ function updateChart() {
         📭 پوزیشنی برای نمایش وجود ندارد
       </text>
     `;
-    document.getElementById('maxProfit').textContent = '--';
-    document.getElementById('maxLoss').textContent = '--';
-    document.getElementById('breakeven').textContent = '--';
-    document.getElementById('rrRatio').textContent = '--';
-    document.getElementById('currentPnL').textContent = '--';
+    ['maxProfit','maxLoss','breakeven','rrRatio','currentPnL'].forEach(id => {
+      document.getElementById(id).textContent = '--';
+    });
     document.getElementById('totalInvestment').textContent = '۰';
     document.getElementById('strategyName').textContent = 'استراتژی سفارشی';
     document.getElementById('strategyTags').textContent = 'در انتظار پوزیشن...';
     return;
   }
 
-  // ==== تعیین محدوده قیمت ====
-  const strikes = positions.filter(p => p.type !== 'spot').map(p => p.strike);
-  const spotPrices = positions.filter(p => p.type === 'spot').map(p => getAsset(p.asset).defaultPrice);
-  
-  const allPrices = [...strikes, ...spotPrices].filter(p => p > 0);
-  if (allPrices.length === 0) {
-    allPrices.push(100);
-  }
+  // محدوده قیمت
+  const allPrices = positions.map(p => p.type === 'spot' ? p.currentPrice : p.strike).filter(p => p > 0);
+  if (allPrices.length === 0) allPrices.push(100);
   
   const minK = Math.min(...allPrices);
   const maxK = Math.max(...allPrices);
@@ -833,34 +900,31 @@ function updateChart() {
   const priceMin = Math.max(0, minK - range * 0.5);
   const priceMax = maxK + range * 0.5;
   
-  // ==== محاسبه نقاط نمودار ====
+  // نقاط نمودار
   const steps = 200;
   const points = [];
   for (let i = 0; i <= steps; i++) {
     const price = priceMin + ((priceMax - priceMin) / steps) * i;
     let totalPnL = 0;
-    positions.forEach(pos => {
-      totalPnL += calculatePayoff(price, pos);
-    });
+    positions.forEach(pos => totalPnL += calculatePayoff(price, pos));
     points.push({ price, pnl: totalPnL });
   }
   
-  // ==== محاسبه حداکثر سود/ضرر ====
   const pnls = points.map(p => p.pnl);
   const maxPnL = Math.max(...pnls);
   const minPnL = Math.min(...pnls);
   const absMax = Math.max(Math.abs(maxPnL), Math.abs(minPnL)) || 1;
   
-  // ==== تعیین برچسب استراتژی ====
+  // استراتژی
   const strategyInfo = detectStrategy();
   document.getElementById('strategyName').textContent = strategyInfo.name;
   document.getElementById('strategyTags').textContent = strategyInfo.tags;
   
-  // ==== محاسبه مجموع سرمایه ====
+  // مجموع سرمایه
   let totalInvestment = 0;
   positions.forEach(p => {
     if (p.type === 'spot') {
-      totalInvestment += p.quantity * getAsset(p.asset).defaultPrice * (p.side === 'buy' ? 1 : -1);
+      totalInvestment += p.quantity * p.currentPrice * (p.side === 'buy' ? 1 : -1);
     } else {
       totalInvestment += p.quantity * p.premium * (p.side === 'buy' ? -1 : 1);
     }
@@ -868,24 +932,18 @@ function updateChart() {
   document.getElementById('totalInvestment').textContent = 
     (totalInvestment >= 0 ? '+' : '') + toFa(formatNum(totalInvestment)) + ' $';
   
-  // ==== محاسبه نقاط سربه‌سر ====
+  // Breakevens
   const breakevens = findBreakevens(points);
   
-  // ==== محاسبه PnL فعلی (بر اساس اولین دارایی) ====
-  const firstSpot = positions.find(p => p.type === 'spot') || positions[0];
-  const currentPrice = firstSpot.type === 'spot' 
-    ? getAsset(firstSpot.asset).defaultPrice 
-    : firstSpot.strike;
-  
+  // PnL فعلی
+  const currentPrice = positions[0].currentPrice;
   let currentPnL = 0;
-  positions.forEach(pos => {
-    currentPnL += calculatePayoff(currentPrice, pos);
-  });
+  positions.forEach(pos => currentPnL += calculatePayoff(currentPrice, pos));
   document.getElementById('currentPnL').textContent = 
     (currentPnL >= 0 ? '+' : '') + toFa(formatNum(currentPnL)) + ' $';
   document.getElementById('currentPnL').style.color = currentPnL >= 0 ? 'var(--green)' : 'var(--red)';
   
-  // ==== نمایش نتایج ====
+  // نتایج
   document.getElementById('maxProfit').textContent = 
     maxPnL === Infinity ? 'نامحدود' : (maxPnL >= 0 ? '+' : '') + toFa(formatNum(maxPnL)) + ' $';
   document.getElementById('maxLoss').textContent = 
@@ -893,17 +951,14 @@ function updateChart() {
   document.getElementById('breakeven').textContent = 
     breakevens.length > 0 ? breakevens.map(b => toFa(formatNum(b, 1))).join(' | ') : '--';
   
-  // ==== نسبت R/R ====
   if (maxPnL > 0 && minPnL < 0 && maxPnL !== Infinity && minPnL !== -Infinity) {
-    const rr = Math.abs(maxPnL / minPnL);
-    document.getElementById('rrRatio').textContent = '1 : ' + toFa(rr.toFixed(2));
+    document.getElementById('rrRatio').textContent = '1 : ' + toFa(Math.abs(maxPnL / minPnL).toFixed(2));
   } else if (maxPnL === Infinity) {
     document.getElementById('rrRatio').textContent = 'بی‌نهایت';
   } else {
     document.getElementById('rrRatio').textContent = '--';
   }
   
-  // ==== رسم SVG ====
   drawChart(points, breakevens, currentPrice, priceMin, priceMax, absMax);
 }
 
@@ -912,26 +967,21 @@ function updateChart() {
 // ==========================================
 function detectStrategy() {
   const n = positions.length;
-  if (n === 0) return { name: 'استراتژی سفارشی', tags: 'در انتظار پوزیشن...' };
+  if (n === 0) return { name: 'استراتژی سفارشی', tags: 'در انتظار...' };
   
   const types = positions.map(p => `${p.side}-${p.type}`);
   const count = (t) => types.filter(x => x === t).length;
   
-  // تک‌پایه
   if (n === 1) {
     const p = positions[0];
     const names = {
-      'buy-call': '🟢 Long Call',
-      'sell-call': '🔴 Short Call',
-      'buy-put': '🔴 Long Put',
-      'sell-put': '🟢 Short Put',
-      'buy-spot': '📈 خرید دارایی پایه',
-      'sell-spot': '📉 فروش دارایی پایه'
+      'buy-call': '🟢 Long Call', 'sell-call': '🔴 Short Call',
+      'buy-put': '🔴 Long Put', 'sell-put': '🟢 Short Put',
+      'buy-spot': '📈 خرید دارایی پایه', 'sell-spot': '📉 فروش دارایی پایه'
     };
-    return { name: names[`${p.side}-${p.type}`] || 'پوزیشن تک‌پایه', tags: getAsset(p.asset).name };
+    return { name: names[`${p.side}-${p.type}`] || 'تک‌پایه', tags: getAsset(p.asset).name };
   }
   
-  // دو پایه
   if (n === 2) {
     const hasBC = count('buy-call') === 1;
     const hasSC = count('sell-call') === 1;
@@ -942,15 +992,17 @@ function detectStrategy() {
       const calls = positions.filter(p => p.type === 'call');
       const longCall = calls.find(p => p.side === 'buy');
       const shortCall = calls.find(p => p.side === 'sell');
-      if (longCall.strike < shortCall.strike) return { name: '📈 Bull Call Spread', tags: 'صعودی محدود' };
-      return { name: '📉 Bear Call Spread', tags: 'نزولی محدود' };
+      return longCall.strike < shortCall.strike 
+        ? { name: '📈 Bull Call Spread', tags: 'صعودی محدود' }
+        : { name: '📉 Bear Call Spread', tags: 'نزولی محدود' };
     }
     if (hasBP && hasSP) {
       const puts = positions.filter(p => p.type === 'put');
       const longPut = puts.find(p => p.side === 'buy');
       const shortPut = puts.find(p => p.side === 'sell');
-      if (longPut.strike > shortPut.strike) return { name: '📉 Bear Put Spread', tags: 'نزولی محدود' };
-      return { name: '📈 Bull Put Spread', tags: 'صعودی محدود' };
+      return longPut.strike > shortPut.strike
+        ? { name: '📉 Bear Put Spread', tags: 'نزولی محدود' }
+        : { name: '📈 Bull Put Spread', tags: 'صعودی محدود' };
     }
     if (hasBC && hasBP) return { name: '⚡ Long Straddle', tags: 'نوسانی' };
     if (hasSC && hasSP) return { name: '💤 Short Straddle', tags: 'آرامش بازار' };
@@ -958,27 +1010,19 @@ function detectStrategy() {
     if (count('buy-spot') === 1 && hasBP) return { name: '🏥 Protective Put', tags: 'بیمه' };
   }
   
-  // چندپایه
-  if (n === 4) {
-    if (count('buy-call') === 1 && count('sell-call') === 1 && count('buy-put') === 1 && count('sell-put') === 1) {
-      return { name: '🦅 Iron Condor', tags: 'خنثی' };
-    }
+  if (n === 4 && count('buy-call') === 1 && count('sell-call') === 1 && count('buy-put') === 1 && count('sell-put') === 1) {
+    return { name: '🦅 Iron Condor', tags: 'خنثی' };
   }
   
   return { name: '🎯 استراتژی سفارشی', tags: toFa(n) + ' پوزیشن' };
 }
 
-// ==========================================
-// 🎯 پیدا کردن نقاط سربه‌سر
-// ==========================================
 function findBreakevens(points) {
   const be = [];
   for (let i = 1; i < points.length; i++) {
     const prev = points[i - 1].pnl;
     const curr = points[i].pnl;
-    
     if ((prev < 0 && curr >= 0) || (prev > 0 && curr <= 0)) {
-      // interpolation خطی
       const t = Math.abs(prev) / (Math.abs(prev) + Math.abs(curr));
       const price = points[i - 1].price + t * (points[i].price - points[i - 1].price);
       be.push(Math.round(price * 100) / 100);
@@ -999,22 +1043,17 @@ function drawChart(points, breakevens, currentPrice, priceMin, priceMax, absMax)
   
   const xScale = (price) => padding.left + ((price - priceMin) / (priceMax - priceMin)) * chartW;
   const yScale = (pnl) => padding.top + chartH / 2 - (pnl / absMax) * (chartH / 2);
-  
   const zeroY = yScale(0);
   
   let svgContent = '';
   
-  // ==== تعریف gradient ====
-  svgContent += `
-    <defs>
-      <linearGradient id="lineGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-        <stop offset="0%" stop-color="#d4af37"/>
-        <stop offset="100%" stop-color="#f4d47c"/>
-      </linearGradient>
-    </defs>
-  `;
+  svgContent += `<defs>
+    <linearGradient id="lineGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#d4af37"/>
+      <stop offset="100%" stop-color="#f4d47c"/>
+    </linearGradient>
+  </defs>`;
   
-  // ==== Grid افقی ====
   for (let i = -4; i <= 4; i++) {
     const y = yScale((absMax / 4) * i);
     if (y >= padding.top && y <= H - padding.bottom) {
@@ -1023,36 +1062,26 @@ function drawChart(points, breakevens, currentPrice, priceMin, priceMax, absMax)
     }
   }
   
-  // ==== ناحیه سود (سبز) ====
   svgContent += `<rect x="${padding.left}" y="${padding.top}" width="${chartW}" height="${zeroY - padding.top}" fill="#10b981" opacity="0.04"/>`;
-  
-  // ==== ناحیه ضرر (قرمز) ====
   svgContent += `<rect x="${padding.left}" y="${zeroY}" width="${chartW}" height="${H - padding.bottom - zeroY}" fill="#ef4444" opacity="0.04"/>`;
-  
-  // ==== محورها ====
   svgContent += `<line x1="${padding.left}" y1="${zeroY}" x2="${W - padding.right}" y2="${zeroY}" stroke="#94a3b8" stroke-width="2"/>`;
   svgContent += `<line x1="${padding.left}" y1="${padding.top}" x2="${padding.left}" y2="${H - padding.bottom}" stroke="#94a3b8" stroke-width="2"/>`;
   
-  // ==== برچسب محور X ====
   for (let i = 0; i <= 6; i++) {
     const price = priceMin + ((priceMax - priceMin) / 6) * i;
     const x = xScale(price);
-    svgContent += `<line x1="${x}" y1="${H - padding.bottom}" x2="${x}" y2="${H - padding.bottom + 5}" stroke="#94a3b8" stroke-width="1"/>`;
     svgContent += `<text x="${x}" y="${H - padding.bottom + 20}" text-anchor="middle" fill="#94a3b8" font-size="10" font-family="Vazirmatn">${toFa(formatNum(price))}</text>`;
   }
   svgContent += `<text x="${W / 2}" y="${H - 10}" text-anchor="middle" fill="#94a3b8" font-size="12" font-family="Vazirmatn" font-weight="700">قیمت دارایی پایه در سررسید</text>`;
   
-  // ==== خط سود/زیان ====
   let pathD = '';
   points.forEach((p, i) => {
     const x = xScale(p.price);
     const y = yScale(p.pnl);
-    if (i === 0) pathD += `M${x},${y}`;
-    else pathD += ` L${x},${y}`;
+    pathD += (i === 0 ? 'M' : ' L') + x + ',' + y;
   });
-  svgContent += `<path d="${pathD}" stroke="url(#lineGrad)" stroke-width="3.5" fill="none" stroke-linejoin="round" stroke-linecap="round"/>`;
+  svgContent += `<path d="${pathD}" stroke="url(#lineGrad)" stroke-width="3.5" fill="none" stroke-linejoin="round"/>`;
   
-  // ==== نقاط سربه‌سر ====
   breakevens.forEach(be => {
     if (be > priceMin && be < priceMax) {
       const x = xScale(be);
@@ -1062,26 +1091,12 @@ function drawChart(points, breakevens, currentPrice, priceMin, priceMax, absMax)
     }
   });
   
-  // ==== خط قیمت فعلی ====
   const spotX = xScale(currentPrice);
   if (spotX >= padding.left && spotX <= W - padding.right) {
-    svgContent += `<line x1="${spotX}" y1="${padding.top}" x2="${spotX}" y2="${H - padding.bottom}" stroke="#3b82f6" stroke-width="2" stroke-dasharray="6,4" opacity="0.8"/>`;
-    svgContent += `<rect x="${spotX - 40}" y="${padding.top - 22}" width="80" height="20" rx="6" fill="#3b82f6" opacity="0.9"/>`;
+    svgContent += `<line x1="${spotX}" y1="${padding.top}" x2="${spotX}" y2="${H - padding.bottom}" stroke="#3b82f6" stroke-width="2" stroke-dasharray="6,4" opacity="0.9"/>`;
+    svgContent += `<rect x="${spotX - 45}" y="${padding.top - 22}" width="90" height="20" rx="6" fill="#3b82f6"/>`;
     svgContent += `<text x="${spotX}" y="${padding.top - 8}" text-anchor="middle" fill="#fff" font-size="10" font-family="Vazirmatn" font-weight="700">قیمت فعلی</text>`;
   }
-  
-  // ==== Strike ها ====
-  const strikes = [...new Set(positions.filter(p => p.type !== 'spot').map(p => p.strike))];
-  strikes.forEach(strike => {
-    if (strike > priceMin && strike < priceMax) {
-      const x = xScale(strike);
-      svgContent += `<line x1="${x}" y1="${padding.top}" x2="${x}" y2="${H - padding.bottom}" stroke="#a8862a" stroke-width="1" stroke-dasharray="3,4" opacity="0.4"/>`;
-    }
-  });
-  
-  // ==== برچسب محورها ====
-  svgContent += `<text x="${padding.left - 50}" y="${padding.top + 12}" fill="#10b981" font-size="11" font-family="Vazirmatn" font-weight="700">سود ↑</text>`;
-  svgContent += `<text x="${padding.left - 50}" y="${H - padding.bottom - 4}" fill="#ef4444" font-size="11" font-family="Vazirmatn" font-weight="700">ضرر ↓</text>`;
   
   svg.innerHTML = svgContent;
 }
@@ -1092,8 +1107,13 @@ function drawChart(points, breakevens, currentPrice, priceMin, priceMax, absMax)
 renderPositions();
 updateChart();
 
+// تلاش برای دریافت قیمت‌های زنده در شروع
+setTimeout(() => {
+  refreshAllPrices();
+}, 500);
+
 // ==========================================
-// 🌙 تم شب/روز (اگه navbar.js لود شده)
+// 🌙 تم
 // ==========================================
 function applyTheme() {
   const saved = localStorage.getItem('shamdun-theme') || 'dark';
