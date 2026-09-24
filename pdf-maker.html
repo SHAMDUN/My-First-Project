@@ -411,10 +411,15 @@ async function generatePDF() {
   const teacher = document.getElementById('lessonTeacher').value.trim();
   const content = document.getElementById('lessonContent').value.trim();
 
-  // اعتبارسنجی
-  if (!title) return showToast('❌ عنوان درس الزامی است', 'error');
-  if (!course) return showToast('❌ نام دوره الزامی است', 'error');
   if (!content) return showToast('❌ محتوای درس الزامی است', 'error');
+  if (!title) {
+    // اگه عنوان خالی بود، یه عنوان پیش‌فرض بذار
+    document.getElementById('lessonTitle').value = 'درس شماره ' + (document.getElementById('lessonNumber').value || '1');
+}
+if (!course) {
+    // اگه دوره خالی بود، یه پیش‌فرض بذار
+    document.getElementById('lessonCourse').value = 'آکادمی شمعدون';
+}
 
   const btn = document.getElementById('generateBtn');
   btn.disabled = true;
@@ -611,14 +616,11 @@ async function generatePDF() {
     }
     await new Promise(r => setTimeout(r, 500));
 
-    // اسم فایل
-    const slug = title
-      .toLowerCase()
-      .replace(/[^\w\s-]/g, '')
-      .replace(/\s+/g, '-')
-      .substring(0, 50) || 'lesson';
-    const fileName = `lesson-${number}-${slug}.pdf`;
-
+    // اسم فایل بهتر: از تاریخ و شماره درس
+    const today = new Date();
+    const dateStr = `${today.getFullYear()}${String(today.getMonth() + 1).padStart(2, '0')}${String(today.getDate()).padStart(2, '0')}`;
+    const fileName = `lesson-${number}-shamdun-${dateStr}.pdf`;
+    
     // تنظیمات html2pdf
     const options = {
       margin: [10, 10, 10, 10],
@@ -690,44 +692,47 @@ FIELDS.forEach(id => {
 // 📥 لود اطلاعات از sessionStorage
 // ==========================================
 function loadFromParams() {
-    // اول از URL بخون (برای پشتیبانی از هر دو روش)
+    console.log('🔍 شروع loadFromParams...');
+    
+    // اول از URL
     const params = new URLSearchParams(window.location.search);
-    let loaded = false;
+    let loadedFromUrl = false;
     
     if (params.get('title')) {
         document.getElementById('lessonTitle').value = decodeURIComponent(params.get('title'));
-        loaded = true;
+        loadedFromUrl = true;
     }
     if (params.get('course')) {
         document.getElementById('lessonCourse').value = decodeURIComponent(params.get('course'));
-        loaded = true;
+        loadedFromUrl = true;
     }
     if (params.get('number')) {
         document.getElementById('lessonNumber').value = params.get('number');
-        loaded = true;
+        loadedFromUrl = true;
     }
     if (params.get('level')) {
         document.getElementById('lessonLevel').value = decodeURIComponent(params.get('level'));
-        loaded = true;
+        loadedFromUrl = true;
     }
     if (params.get('time')) {
         document.getElementById('lessonTime').value = params.get('time');
-        loaded = true;
+        loadedFromUrl = true;
     }
     if (params.get('content')) {
         document.getElementById('lessonContent').value = decodeURIComponent(params.get('content'));
-        loaded = true;
+        loadedFromUrl = true;
     }
     
-    // اگه از URL چیزی لود نشد، از sessionStorage بخون
-    if (!loaded) {
+    // اگه از URL لود نشد، از sessionStorage
+    if (!loadedFromUrl) {
         try {
             const savedData = sessionStorage.getItem('pdfmaker_data');
+            console.log('📦 sessionStorage data:', savedData ? 'موجود' : 'خالی');
+            
             if (savedData) {
                 const data = JSON.parse(savedData);
-                
-                // چک کن داده قدیمی نباشه (بیشتر از ۱ ساعت)
                 const oneHour = 60 * 60 * 1000;
+                
                 if (data.timestamp && (Date.now() - data.timestamp) < oneHour) {
                     if (data.title) document.getElementById('lessonTitle').value = data.title;
                     if (data.course) document.getElementById('lessonCourse').value = data.course;
@@ -737,17 +742,23 @@ function loadFromParams() {
                     if (data.content) document.getElementById('lessonContent').value = data.content;
                     
                     console.log('✅ اطلاعات از sessionStorage لود شد');
+                } else {
+                    console.warn('⚠️ اطلاعات قدیمی هستند');
                 }
             }
         } catch (e) {
-            console.error('خطا در خواندن sessionStorage:', e);
+            console.error('❌ خطا در خواندن sessionStorage:', e);
         }
+    } else {
+        console.log('✅ اطلاعات از URL لود شد');
     }
     
+    // اجرای پیش‌نمایش
     updatePreview();
 }
 
 loadFromParams();
+  
 // لود اولیه پیش‌نمایش
 updatePreview();
 
