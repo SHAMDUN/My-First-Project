@@ -685,32 +685,65 @@ FIELDS.forEach(id => {
     localStorage.setItem('pdfmaker_' + id, el.value);
   });
 });
+
 // ==========================================
-// 📥 لود اطلاعات از URL Parameters
+// 📥 لود اطلاعات از sessionStorage
 // ==========================================
 function loadFromParams() {
+    // اول از URL بخون (برای پشتیبانی از هر دو روش)
     const params = new URLSearchParams(window.location.search);
+    let loaded = false;
     
     if (params.get('title')) {
         document.getElementById('lessonTitle').value = decodeURIComponent(params.get('title'));
+        loaded = true;
     }
     if (params.get('course')) {
         document.getElementById('lessonCourse').value = decodeURIComponent(params.get('course'));
+        loaded = true;
     }
     if (params.get('number')) {
         document.getElementById('lessonNumber').value = params.get('number');
+        loaded = true;
     }
     if (params.get('level')) {
         document.getElementById('lessonLevel').value = decodeURIComponent(params.get('level'));
+        loaded = true;
     }
     if (params.get('time')) {
         document.getElementById('lessonTime').value = params.get('time');
+        loaded = true;
     }
     if (params.get('content')) {
         document.getElementById('lessonContent').value = decodeURIComponent(params.get('content'));
+        loaded = true;
     }
     
-    // اگه پارامتر داشت، پیش‌نمایش رو به‌روز کن
+    // اگه از URL چیزی لود نشد، از sessionStorage بخون
+    if (!loaded) {
+        try {
+            const savedData = sessionStorage.getItem('pdfmaker_data');
+            if (savedData) {
+                const data = JSON.parse(savedData);
+                
+                // چک کن داده قدیمی نباشه (بیشتر از ۱ ساعت)
+                const oneHour = 60 * 60 * 1000;
+                if (data.timestamp && (Date.now() - data.timestamp) < oneHour) {
+                    if (data.title) document.getElementById('lessonTitle').value = data.title;
+                    if (data.course) document.getElementById('lessonCourse').value = data.course;
+                    if (data.number) document.getElementById('lessonNumber').value = data.number;
+                    if (data.level) document.getElementById('lessonLevel').value = data.level;
+                    if (data.time) document.getElementById('lessonTime').value = data.time;
+                    if (data.content) document.getElementById('lessonContent').value = data.content;
+                    
+                    console.log('✅ اطلاعات از sessionStorage لود شد');
+                }
+            }
+        } catch (e) {
+            console.error('خطا در خواندن sessionStorage:', e);
+        }
+    }
+    
     updatePreview();
 }
 
