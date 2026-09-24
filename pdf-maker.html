@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PDF ساز | آکادمی شمعدون</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css">
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/dompurify@3.0.6/dist/purify.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+<style>
+:root {
+  --bg-primary: #0a0a0f;
+  --bg-secondary: #14141c;
+  --bg-card: #1a1a24;
+  --gold: #d4af37;
+  --gold-light: #f4d47c;
+  --gold-dark: #a8862a;
+  --green: #10b981;
+  --red: #ef4444;
+  --blue: #3b82f6;
+  --white: #f8fafc;
+  --gray: #94a3b8;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: 'Vazirmatn', Tahoma, sans-serif;
+  background: var(--bg-primary);
+  color: var(--white);
+  min-height: 100vh;
+  direction: rtl;
+  padding: 20px;
+}
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.header {
+  text-align: center;
+  padding: 20px 0;
+  border-bottom: 2px solid var(--gold);
+  margin-bottom: 25px;
+}
+.header h1 {
+  color: var(--gold);
+  font-size: 28px;
+  font-weight: 900;
+  margin-bottom: 8px;
+}
+.header p {
+  color: var(--gray);
+  font-size: 14px;
+}
+.layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+@media (max-width: 900px) {
+  .layout { grid-template-columns: 1fr; }
+}
+.panel {
+  background: var(--bg-card);
+  border: 1px solid rgba(212, 175, 55, 0.2);
+  border-radius: 18px;
+  padding: 22px;
+}
+.panel-title {
+  color: var(--gold);
+  font-size: 16px;
+  font-weight: 800;
+  margin-bottom: 18px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.form-group {
+  margin-bottom: 14px;
+}
+.form-group label {
+  display: block;
+  color: var(--white);
+  font-size: 13px;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+.form-group input,
+.form-group select,
+.form-group textarea {
+  width: 100%;
+  padding: 11px 14px;
+  background: rgba(10, 10, 15, 0.6);
+  border: 2px solid rgba(255, 255, 255, 0.08);
+  border-radius: 10px;
+  color: var(--white);
+  font-family: inherit;
+  font-size: 13px;
+  outline: none;
+  transition: 0.3s;
+}
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  border-color: var(--gold);
+}
+.form-group textarea {
+  min-height: 350px;
+  resize: vertical;
+  line-height: 1.8;
+  font-family: 'Courier New', monospace;
+  font-size: 12px;
+}
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+.btn {
+  width: 100%;
+  padding: 15px;
+  border: none;
+  border-radius: 12px;
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: 0.3s;
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+.btn-primary {
+  background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+  color: #fff;
+  box-shadow: 0 10px 30px rgba(212, 175, 55, 0.3);
+}
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 15px 40px rgba(212, 175, 55, 0.5);
+}
+.btn-primary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.btn-preview {
+  background: rgba(212, 175, 55, 0.1);
+  color: var(--gold);
+  border: 1px solid rgba(212, 175, 55, 0.3);
+}
+.preview-box {
+  background: #fff;
+  color: #1a1a24;
+  border-radius: 12px;
+  padding: 25px;
+  max-height: 700px;
+  overflow-y: auto;
+  font-size: 13px;
+  line-height: 1.9;
+}
+.preview-box h1, .preview-box h2 {
+  color: #b8860b;
+  margin: 15px 0 10px;
+  padding-bottom: 6px;
+  border-bottom: 2px solid rgba(212, 175, 55, 0.3);
+}
+.preview-box h1 { font-size: 20px; }
+.preview-box h2 { font-size: 17px; }
+.preview-box h3 { color: #1a1a24; font-size: 15px; margin: 12px 0 8px; }
+.preview-box p { margin-bottom: 10px; color: #334155; }
+.preview-box ul, .preview-box ol { margin: 10px 20px 15px 0; padding-right: 20px; }
+.preview-box li { margin-bottom: 5px; color: #334155; }
+.preview-box strong { color: #b8860b; }
+.preview-box blockquote {
+  background: rgba(212, 175, 55, 0.08);
+  border-right: 4px solid #d4af37;
+  padding: 12px 16px;
+  margin: 15px 0;
+  border-radius: 6px;
+  color: #8b6508;
+  font-style: italic;
+}
+.preview-box table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 15px 0;
+  font-size: 12px;
+}
+.preview-box th {
+  background: rgba(212, 175, 55, 0.15);
+  color: #8b6508;
+  padding: 8px;
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  font-weight: 800;
+}
+.preview-box td {
+  padding: 8px;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  color: #334155;
+}
+.preview-box hr {
+  border: none;
+  border-top: 1px solid rgba(212, 175, 55, 0.3);
+  margin: 18px 0;
+}
+.preview-box code {
+  background: rgba(212, 175, 55, 0.1);
+  color: #8b6508;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-family: 'Courier New', monospace;
+  font-size: 12px;
+}
+.preview-box pre {
+  background: #f8fafc;
+  padding: 12px;
+  border-radius: 8px;
+  overflow-x: auto;
+  direction: ltr;
+  text-align: left;
+  border: 1px solid #e2e8f0;
+}
+.preview-box pre code {
+  background: transparent;
+  padding: 0;
+  color: #334155;
+}
+.empty-state {
+  text-align: center;
+  padding: 80px 20px;
+  color: var(--gray);
+}
+.empty-state .icon {
+  font-size: 60px;
+  margin-bottom: 15px;
+  opacity: 0.4;
+}
+.info-box {
+  background: rgba(59, 130, 246, 0.08);
+  border: 1px solid rgba(59, 130, 246, 0.3);
+  border-radius: 10px;
+  padding: 12px 15px;
+  margin-bottom: 15px;
+  color: #93c5fd;
+  font-size: 12px;
+  line-height: 1.7;
+}
+.info-box strong { color: #60a5fa; }
+.toast {
+  position: fixed;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%) translateY(100px);
+  background: var(--bg-card);
+  color: var(--white);
+  padding: 14px 24px;
+  border-radius: 12px;
+  border-right: 4px solid var(--gold);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+  z-index: 2000;
+  transition: 0.4s;
+  font-size: 14px;
+  font-weight: 700;
+}
+.toast.show { transform: translateX(-50%) translateY(0); }
+.toast.success { border-right-color: var(--green); }
+.toast.error { border-right-color: var(--red); }
+
+/* استایل PDF */
+.pdf-content {
+  background: #ffffff;
+  color: #1a1a24;
+  font-family: 'Vazirmatn', Tahoma, sans-serif;
+  direction: rtl;
+  padding: 0;
+  line-height: 1.9;
+  font-size: 11pt;
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+  <div class="header">
+    <h1>📄 PDF ساز دروس</h1>
+    <p>محتوای درس رو پیست کن، دکمه‌ی ساخت PDF رو بزن</p>
+  </div>
+
+  <div class="info-box">
+    <strong>💡 راهنما:</strong> محتوای درس رو به فرمت <strong>Markdown</strong> بنویس یا پیست کن. Markdown یعنی: <code>##</code> برای تیتر، <code>**متن**</code> برای بولد، <code>-</code> برای لیست، <code>></code> برای نقل‌قول، و <code>|</code> برای جدول. پیش‌نمایش زنده پایین می‌بینی.
+  </div>
+
+  <div class="layout">
+
+    <!-- ===== پنل ورودی ===== -->
+    <div class="panel">
+      <div class="panel-title">📝 اطلاعات درس</div>
+
+      <div class="form-group">
+        <label>عنوان درس *</label>
+        <input type="text" id="lessonTitle" placeholder="مثال: تفاوت تحلیل تکنیکال و بنیادی">
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label>دوره *</label>
+          <input type="text" id="lessonCourse" placeholder="مثال: مبانی تحلیل تکنیکال">
+        </div>
+        <div class="form-group">
+          <label>شماره درس *</label>
+          <input type="number" id="lessonNumber" value="1" min="1">
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label>سطح</label>
+          <select id="lessonLevel">
+            <option value="مبتدی">مبتدی</option>
+            <option value="مبتدی تا متوسط" selected>مبتدی تا متوسط</option>
+            <option value="متوسط">متوسط</option>
+            <option value="پیشرفته">پیشرفته</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>زمان مطالعه (دقیقه)</label>
+          <input type="number" id="lessonTime" value="15" min="1">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>مدرس</label>
+        <input type="text" id="lessonTeacher" value="مهدی — بنیان‌گذار آکادمی شمعدون">
+      </div>
+
+      <div class="form-group">
+        <label>محتوای درس (Markdown) *</label>
+        <textarea id="lessonContent" placeholder="## مقدمه&#10;&#10;متن درس را اینجا بنویسید...&#10;&#10;## بخش اول&#10;&#10;- نکته اول&#10;- نکته دوم&#10;&#10;> این یک نقل‌قول مهم است."></textarea>
+      </div>
+
+      <button class="btn btn-primary" id="generateBtn" onclick="generatePDF()">
+        📥 ساخت و دانلود PDF
+      </button>
+    </div>
+
+    <!-- ===== پنل پیش‌نمایش ===== -->
+    <div class="panel">
+      <div class="panel-title">👁️ پیش‌نمایش زنده</div>
+      <div class="preview-box" id="previewBox">
+        <div class="empty-state">
+          <div class="icon">📄</div>
+          <div>پیش‌نمایش اینجا نمایش داده می‌شود</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ==========================================
+// 📌 پیش‌نمایش زنده
+// ==========================================
+const contentEl = document.getElementById('lessonContent');
+const previewBox = document.getElementById('previewBox');
+
+contentEl.addEventListener('input', updatePreview);
+
+function updatePreview() {
+  const md = contentEl.value.trim();
+  if (!md) {
+    previewBox.innerHTML = `
+      <div class="empty-state">
+        <div class="icon">📄</div>
+        <div>پیش‌نمایش اینجا نمایش داده می‌شود</div>
+      </div>
+    `;
+    return;
+  }
+  try {
+    const rawHtml = marked.parse(md);
+    const cleanHtml = DOMPurify.sanitize(rawHtml);
+    previewBox.innerHTML = cleanHtml;
+  } catch (e) {
+    previewBox.innerHTML = '<p style="color:#ef4444;">❌ خطا در پیش‌نمایش</p>';
+  }
+}
+
+// ==========================================
+// 📌 Toast
+// ==========================================
+function showToast(msg, type = 'success') {
+  const toast = document.getElementById('toast');
+  toast.textContent = msg;
+  toast.className = 'toast show ' + type;
+  setTimeout(() => toast.classList.remove('show'), 3000);
+}
+
+// ==========================================
+// 📌 ساخت PDF
+// ==========================================
+async function generatePDF() {
+  const title = document.getElementById('lessonTitle').value.trim();
+  const course = document.getElementById('lessonCourse').value.trim();
+  const number = document.getElementById('lessonNumber').value || '1';
+  const level = document.getElementById('lessonLevel').value;
+  const time = document.getElementById('lessonTime').value || '15';
+  const teacher = document.getElementById('lessonTeacher').value.trim();
+  const content = document.getElementById('lessonContent').value.trim();
+
+  // اعتبارسنجی
+  if (!title) return showToast('❌ عنوان درس الزامی است', 'error');
+  if (!course) return showToast('❌ نام دوره الزامی است', 'error');
+  if (!content) return showToast('❌ محتوای درس الزامی است', 'error');
+
+  const btn = document.getElementById('generateBtn');
+  btn.disabled = true;
+  btn.innerHTML = '⏳ در حال ساخت PDF...';
+
+  try {
+    // تبدیل Markdown به HTML
+    const rawHtml = marked.parse(content);
+    const cleanHtml = DOMPurify.sanitize(rawHtml);
+
+    // تاریخ شمسی
+    const today = new Date();
+    const dateStr = new Intl.DateTimeFormat('fa-IR', {
+      year: 'numeric', month: 'long', day: 'numeric'
+    }).format(today);
+
+    // ساخت HTML کامل PDF
+    const pdfHtml = `
+      <div class="pdf-content">
+        <!-- Cover Page -->
+        <div style="text-align: center; padding: 60px 20px; min-height: 250mm; display: flex; flex-direction: column; justify-content: center; align-items: center; page-break-after: always;">
+          <div style="width: 120px; height: 120px; border-radius: 50%; background: linear-gradient(135deg, #d4af37, #a8862a); display: flex; align-items: center; justify-content: center; color: #fff; font-size: 60px; font-weight: 900; margin-bottom: 30px; box-shadow: 0 10px 40px rgba(212, 175, 55, 0.4);">
+            🎓
+          </div>
+          <div style="display: inline-block; background: linear-gradient(135deg, #d4af37, #a8862a); color: #fff; padding: 10px 25px; border-radius: 30px; font-size: 12pt; font-weight: 800; margin-bottom: 20px;">
+            📚 دوره‌ی آموزشی
+          </div>
+          <h1 style="color: #b8860b; font-size: 26pt; font-weight: 900; margin-bottom: 15px; line-height: 1.4;">
+            ${escapeHtml(course)}
+          </h1>
+          <div style="color: #64748b; font-size: 13pt; margin-bottom: 40px;">
+            آکادمی شمعدون
+          </div>
+          <div style="width: 60px; height: 3px; background: #d4af37; margin: 30px auto; border-radius: 2px;"></div>
+          <h2 style="color: #1a1a24; font-size: 18pt; margin-bottom: 10px; border: none; padding: 0;">
+            درس ${escapeHtml(number)}: ${escapeHtml(title)}
+          </h2>
+          <div style="margin-top: 50px; color: #94a3b8; font-size: 11pt; line-height: 2;">
+            <div>👨‍🏫 مدرس: ${escapeHtml(teacher)}</div>
+            <div>📅 تاریخ انتشار: ${dateStr}</div>
+            <div>⏱ زمان مطالعه: ${escapeHtml(time)} دقیقه</div>
+            <div>🎯 سطح: ${escapeHtml(level)}</div>
+          </div>
+        </div>
+
+        <!-- Content Page -->
+        <div style="page-break-before: always; padding: 0;">
+          <!-- Header -->
+          <div style="text-align: center; padding-bottom: 15px; border-bottom: 3px solid #d4af37; margin-bottom: 25px;">
+            <div style="width: 60px; height: 60px; border-radius: 50%; background: linear-gradient(135deg, #d4af37, #a8862a); display: inline-flex; align-items: center; justify-content: center; color: #fff; font-size: 28px; font-weight: 900; margin-bottom: 10px;">
+              🎓
+            </div>
+            <div style="color: #a8862a; font-size: 20pt; font-weight: 900; margin-bottom: 4px;">
+              آکادمی شمعدون
+            </div>
+            <div style="color: #64748b; font-size: 10pt;">
+              از عدد تا تصمیم، در ۳۰ ثانیه
+            </div>
+          </div>
+
+          <!-- Lesson Info -->
+          <div style="background: linear-gradient(135deg, rgba(212, 175, 55, 0.1), rgba(212, 175, 55, 0.02)); border: 1px solid rgba(212, 175, 55, 0.3); border-radius: 12px; padding: 18px; margin-bottom: 25px; page-break-inside: avoid;">
+            <h1 style="color: #b8860b; font-size: 18pt; font-weight: 900; margin-bottom: 10px; line-height: 1.5; border: none; padding: 0;">
+              درس ${escapeHtml(number)}: ${escapeHtml(title)}
+            </h1>
+            <div style="display: flex; flex-wrap: wrap; gap: 15px; font-size: 10pt; color: #64748b;">
+              <span style="background: #d4af37; color: #fff; padding: 3px 10px; border-radius: 6px; font-size: 9pt; font-weight: 700;">
+                📚 ${escapeHtml(course)}
+              </span>
+              <span>📅 ${dateStr}</span>
+              <span>⏱ ${escapeHtml(time)} دقیقه</span>
+              <span>🎯 ${escapeHtml(level)}</span>
+            </div>
+          </div>
+
+          <!-- Main Content -->
+          <div style="color: #334155;">
+            ${cleanHtml}
+          </div>
+
+          <!-- Footer -->
+          <div style="margin-top: 30px; padding-top: 15px; border-top: 2px solid rgba(212, 175, 55, 0.3); text-align: center; color: #94a3b8; font-size: 9pt;">
+            <div style="color: #b8860b; font-weight: 800; font-size: 10pt;">🎓 آکادمی شمعدون</div>
+            <div>از عدد تا تصمیم، در ۳۰ ثانیه</div>
+            <div style="direction: ltr; margin-top: 4px;">🌐 shamdun.github.io/My-First-Project</div>
+            <div style="margin-top: 10px;">© ۱۴۰۵ آکادمی شمعدون | تمامی حقوق محفوظ است</div>
+          </div>
+        </div>
+      </div>
+    `;
+
+    // استایل‌های PDF (برای html2pdf)
+    const styleTag = `
+      <style>
+        @page { size: A4; margin: 15mm 12mm; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body, .pdf-content {
+          font-family: 'Vazirmatn', Tahoma, sans-serif;
+          direction: rtl;
+          background: #ffffff;
+          color: #1a1a24;
+          line-height: 1.9;
+        }
+        h1, h2 {
+          color: #b8860b;
+          font-weight: 800;
+          margin: 22px 0 10px;
+          padding-bottom: 6px;
+          border-bottom: 2px solid rgba(212, 175, 55, 0.3);
+          page-break-after: avoid;
+        }
+        h1 { font-size: 18pt; }
+        h2 { font-size: 15pt; }
+        h3 {
+          color: #1a1a24;
+          font-size: 12pt;
+          font-weight: 800;
+          margin: 16px 0 8px;
+          page-break-after: avoid;
+        }
+        p { margin-bottom: 10px; text-align: justify; color: #334155; }
+        ul, ol { margin: 10px 20px 15px 0; padding-right: 20px; }
+        li { margin-bottom: 6px; color: #334155; }
+        strong { color: #b8860b; font-weight: 800; }
+        em { color: #b8860b; }
+        blockquote {
+          background: rgba(212, 175, 55, 0.08);
+          border-right: 4px solid #d4af37;
+          padding: 12px 16px;
+          margin: 15px 0;
+          border-radius: 6px;
+          color: #8b6508;
+          font-style: italic;
+          page-break-inside: avoid;
+        }
+        hr {
+          border: none;
+          border-top: 1px solid rgba(212, 175, 55, 0.3);
+          margin: 20px 0;
+        }
+        table {
+          width: 100%;
+          border-collapse: collapse;
+          margin: 15px 0;
+          font-size: 10pt;
+          page-break-inside: avoid;
+        }
+        table th {
+          background: rgba(212, 175, 55, 0.15);
+          color: #8b6508;
+          padding: 10px;
+          text-align: right;
+          border: 1px solid rgba(212, 175, 55, 0.3);
+          font-weight: 800;
+        }
+        table td {
+          padding: 10px;
+          border: 1px solid rgba(0, 0, 0, 0.08);
+          color: #334155;
+        }
+        code {
+          background: rgba(212, 175, 55, 0.1);
+          color: #8b6508;
+          padding: 2px 6px;
+          border-radius: 4px;
+          font-family: 'Courier New', monospace;
+          font-size: 10pt;
+        }
+        pre {
+          background: #f8fafc;
+          padding: 12px;
+          border-radius: 8px;
+          overflow-x: auto;
+          direction: ltr;
+          text-align: left;
+          border: 1px solid #e2e8f0;
+        }
+        pre code { background: transparent; padding: 0; color: #334155; }
+        img { max-width: 100%; height: auto; border-radius: 8px; }
+      </style>
+    `;
+
+    // ساخت container مخفی
+    const wrapper = document.createElement('div');
+    wrapper.innerHTML = styleTag + pdfHtml;
+    wrapper.style.position = 'absolute';
+    wrapper.style.left = '-99999px';
+    wrapper.style.top = '0';
+    document.body.appendChild(wrapper);
+
+    // صبر برای لود فونت
+    if (document.fonts && document.fonts.ready) {
+      await document.fonts.ready;
+    }
+    await new Promise(r => setTimeout(r, 500));
+
+    // اسم فایل
+    const slug = title
+      .toLowerCase()
+      .replace(/[^\w\s-]/g, '')
+      .replace(/\s+/g, '-')
+      .substring(0, 50) || 'lesson';
+    const fileName = `lesson-${number}-${slug}.pdf`;
+
+    // تنظیمات html2pdf
+    const options = {
+      margin: [10, 10, 10, 10],
+      filename: fileName,
+      image: { type: 'jpeg', quality: 0.98 },
+      html2canvas: {
+        scale: 2,
+        useCORS: true,
+        backgroundColor: '#ffffff',
+        logging: false
+      },
+      jsPDF: {
+        unit: 'mm',
+        format: 'a4',
+        orientation: 'portrait'
+      },
+      pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }
+    };
+
+    // ساخت PDF
+    await html2pdf().set(options).from(wrapper.firstElementChild.nextElementSibling || wrapper).save();
+
+    // پاکسازی
+    document.body.removeChild(wrapper);
+
+    showToast('✅ PDF ساخته و دانلود شد', 'success');
+
+  } catch (err) {
+    console.error('PDF error:', err);
+    showToast('❌ خطا در ساخت PDF: ' + err.message, 'error');
+  }
+
+  btn.disabled = false;
+  btn.innerHTML = '📥 ساخت و دانلود PDF';
+}
+
+// ==========================================
+// 📌 ابزار escape
+// ==========================================
+function escapeHtml(text) {
+  if (!text) return '';
+  const div = document.createElement('div');
+  div.textContent = text;
+  return div.innerHTML;
+}
+
+// ==========================================
+// 📌 ذخیره خودکار در localStorage
+// ==========================================
+const FIELDS = ['lessonTitle', 'lessonCourse', 'lessonNumber', 'lessonLevel', 'lessonTime', 'lessonTeacher', 'lessonContent'];
+
+FIELDS.forEach(id => {
+  const el = document.getElementById(id);
+  if (!el) return;
+  
+  // لود از localStorage
+  const saved = localStorage.getItem('pdfmaker_' + id);
+  if (saved && !el.value) {
+    el.value = saved;
+  }
+  
+  // ذخیره در localStorage
+  el.addEventListener('input', () => {
+    localStorage.setItem('pdfmaker_' + id, el.value);
+  });
+});
+
+// لود اولیه پیش‌نمایش
+updatePreview();
+
+// ==========================================
+// 📌 پاک کردن فرم
+// ==========================================
+function clearForm() {
+  if (!confirm('مطمئنی می‌خوای فرم رو پاک کنی؟')) return;
+  FIELDS.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) {
+      el.value = '';
+      localStorage.removeItem('pdfmaker_' + id);
+    }
+  });
+  updatePreview();
+  showToast('🗑️ فرم پاک شد');
+}
+
+// ==========================================
+// 📌 کلیدهای میانبر
+// ==========================================
+document.addEventListener('keydown', (e) => {
+  // Ctrl+S = ساخت PDF
+  if ((e.ctrlKey || e.metaKey) && e.key === 's') {
+    e.preventDefault();
+    generatePDF();
+  }
+  // Ctrl+K = پاک کردن
+  if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+    e.preventDefault();
+    clearForm();
+  }
+});
+</script>
+
+</body>
+</html>
