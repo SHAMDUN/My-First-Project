@@ -96,33 +96,28 @@
             background: linear-gradient(135deg, var(--bg-card), var(--bg-secondary));
             border: 1px solid rgba(212, 175, 55, 0.15);
             border-radius: 25px;
-            padding: 20px 25px;
+            padding: 0 25px 30px 25px;
             margin-bottom: 25px;
             text-align: center;
             animation: fadeInUp 0.6s ease-out;
-            max-width: 500px;
-            margin-left: auto;
-            margin-right: auto;
+            overflow: hidden;
         }
         .course-hero .icon {
             font-size: 70px;
-            margin-bottom: 15px;
-            width: 180px;
-            height: 180px;
-            margin-left: auto;
-            margin-right: auto;
+            width: 100%;
+            height: 200px;
+            margin: -30px -25px 20px -25px;
             display: flex;
             align-items: center;
             justify-content: center;
             overflow: hidden;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.25);
+            border-radius: 25px 25px 0 0;
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.15), rgba(20, 20, 28, 0.9));
         }
         .course-hero .icon img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            border-radius: 20px;
         }
         .course-hero .icon img {
             width: 100%;
@@ -856,7 +851,7 @@
                 <div class="course-hero">
                     <div class="icon">
                         ${isImageUrl(course.icon) 
-                            ? `<img src="${getCourseIconSrc(course.icon)}" alt="${escapeHtml(course.title)}" style="width:100%;height:100%;object-fit:cover;border-radius:16px;">`
+                            ? `<img src="${getCourseIconSrc(course.icon)}" alt="${escapeHtml(course.title)}">`
                             : (course.icon || '📚')}
                     </div>
                     <div class="level">${course.level}</div>
