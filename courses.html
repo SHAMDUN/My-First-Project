@@ -222,13 +222,20 @@
             box-shadow: none;
         }
         .course-image {
-            height: 130px;
+            height: 160px;
             background: linear-gradient(135deg, rgba(212, 175, 55, 0.15), rgba(20, 20, 28, 0.9));
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 55px;
             position: relative;
+            overflow: hidden;
+        }
+        .course-image img {
+            transition: transform 0.3s ease;
+        }
+        .course-card:hover .course-image img {
+            transform: scale(1.05);
         }
         .lock-overlay {
             position: absolute;
@@ -577,6 +584,33 @@
             if (level === 'پیشرفته' || level === 'advanced') return '🔴 پیشرفته';
             return '🟢 مبتدی';
         }
+        // ==========================================
+        // 🖼️ تشخیص عکس یا ایموجی
+        // ==========================================
+        function isImageUrl(str) {
+            if (!str) return false;
+            const s = String(str).trim().toLowerCase();
+            return s.endsWith('.jpg') || 
+                   s.endsWith('.jpeg') || 
+                   s.endsWith('.png') || 
+                   s.endsWith('.gif') || 
+                   s.endsWith('.webp') || 
+                   s.endsWith('.svg') || 
+                   s.startsWith('http://') || 
+                   s.startsWith('https://') ||
+                   s.startsWith('files/');
+        }
+
+        function getCourseIconSrc(icon) {
+            if (!icon) return '';
+            const s = String(icon).trim();
+            if (!isImageUrl(s)) return '';
+            if (s.startsWith('http')) return s;
+            if (s.startsWith('files/')) {
+                return 'https://shamdun.github.io/My-First-Project/' + s;
+            }
+            return 'https://shamdun.github.io/My-First-Project/files/' + s;
+        }
 
         function getLevelKey(level) {
             if (level === 'مبتدی' || level === 'beginner') return 'beginner';
@@ -691,7 +725,10 @@
                 return `
                     <div class="course-card ${isLocked ? 'locked' : ''}" onclick="${isLocked ? '' : `goToCourse(${courseIdForClick}, ${isDynamic})`}">
                         <div class="course-image">
-                            ${course.icon}
+                            ${isImageUrl(course.icon) 
+                                ? `<img src="${getCourseIconSrc(course.icon)}" alt="${course.title}" style="width:100%;height:100%;object-fit:cover;position:absolute;top:0;left:0;" onerror="this.style.display='none';this.parentElement.innerHTML='<span style=\\'font-size:55px;\\'>📚</span>'">`
+                                : `<span style="font-size:55px;">${course.icon || '📚'}</span>`
+                            }
                             ${course.isFree && !course.isNew ? '<div class="free-badge">🎁 رایگان</div>' : ''}
                             ${course.isNew ? '<div class="new-badge">✨ جدید</div>' : ''}
                             ${isLocked ? '<div class="lock-overlay">🔒</div>' : ''}
