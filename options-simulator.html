@@ -112,7 +112,7 @@ body {
 .positions-table {
   width: 100%;
   border-collapse: collapse;
-  min-width: 1200px;
+  min-width: 1250px;
 }
 .positions-table th {
   background: linear-gradient(135deg, rgba(212, 175, 55, 0.12), rgba(212, 175, 55, 0.04));
@@ -162,6 +162,10 @@ body {
   background: rgba(212, 175, 55, 0.08);
   color: var(--gold);
   font-weight: 800;
+}
+.cell-input:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
 .cell-select {
@@ -286,13 +290,13 @@ body {
 }
 
 .btn-refresh {
-  padding: 10px 16px;
+  padding: 12px 18px;
   background: rgba(59, 130, 246, 0.1);
   color: var(--blue);
   border: 1px solid rgba(59, 130, 246, 0.3);
-  border-radius: 10px;
+  border-radius: 12px;
   font-family: inherit;
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 800;
   cursor: pointer;
   transition: 0.3s;
@@ -302,6 +306,10 @@ body {
 }
 .btn-refresh:hover {
   background: rgba(59, 130, 246, 0.2);
+}
+.btn-refresh:disabled {
+  opacity: 0.6;
+  cursor: wait;
 }
 
 .strategy-info {
@@ -545,15 +553,24 @@ body {
 
 <script>
 // ==========================================
+// 🔑 BrsApi Configuration
+// ==========================================
+const BRS_API_KEYS = [
+  'B4xp2gWXASUmB3n6WPHtJxhjyJkgcBJz',
+  'BvUj3cMKWNBK87KW9xhNccCThmfVbd8u'
+];
+let brsKeyIndex = 0;
+
+// ==========================================
 // 🎯 دارایی‌های پشتیبانی‌شده
 // ==========================================
 const ASSETS = [
-  { key: 'btc', name: 'بیت‌کوین', emoji: '₿', defaultPrice: 100000, api: 'BTC' },
-  { key: 'eth', name: 'اتریوم', emoji: '⟠', defaultPrice: 4000, api: 'ETH' },
-  { key: 'gold', name: 'انس طلا', emoji: '🥇', defaultPrice: 2700, api: 'GOLD' },
-  { key: 'silver', name: 'انس نقره', emoji: '🥈', defaultPrice: 32, api: 'SILVER' },
-  { key: 'oil', name: 'نفت برنت', emoji: '🛢️', defaultPrice: 75, api: null },
-  { key: 'stock', name: 'سهام', emoji: '📈', defaultPrice: 100, api: null }
+  { key: 'btc', name: 'بیت‌کوین', emoji: '₿', defaultPrice: 100000 },
+  { key: 'eth', name: 'اتریوم', emoji: '⟠', defaultPrice: 4000 },
+  { key: 'gold', name: 'انس طلا', emoji: '🥇', defaultPrice: 2700 },
+  { key: 'silver', name: 'انس نقره', emoji: '🥈', defaultPrice: 32 },
+  { key: 'oil', name: 'نفت برنت', emoji: '🛢️', defaultPrice: 75 },
+  { key: 'stock', name: 'سهام', emoji: '📈', defaultPrice: 100 }
 ];
 
 // ==========================================
@@ -599,68 +616,176 @@ function getAsset(key) {
 }
 
 // ==========================================
-// 🌐 دریافت قیمت از API
+// 🌐 BrsApi Fetch با Key Rotation
+// ==========================================
+async function fetchBrsApi(baseUrl) {
+  for (let i = 0; i < BRS_API_KEYS.length; i++) {
+    const key = BRS_API_KEYS[brsKeyIndex];
+    try {
+      const sep = baseUrl.includes('?') ? '&' : '?';
+      const res = await fetch(`${baseUrl}${sep}key=${key}`);
+      if (!res.ok) {
+        brsKeyIndex = (brsKeyIndex + 1) % BRS_API_KEYS.length;
+        continue;
+      }
+      const text = await res.text();
+      if (text.trim().startsWith('<')) {
+        brsKeyIndex = (brsKeyIndex + 1) % BRS_API_KEYS.length;
+        continue;
+      }
+      return JSON.parse(text);
+    } catch (e) {
+      brsKeyIndex = (brsKeyIndex + 1) % BRS_API_KEYS.length;
+    }
+  }
+  throw new Error('همه کلیدها fail');
+}
+
+// ==========================================
+// 📊 دریافت قیمت
 // ==========================================
 async function fetchPrice(assetKey) {
-  try {
-    // کریپتو از CoinGecko
-    if (assetKey === 'btc' || assetKey === 'eth') {
-      const id = assetKey === 'btc' ? 'bitcoin' : 'ethereum';
+  // ===== کریپتو از CoinGecko =====
+  if (assetKey === 'btc' || assetKey === 'eth') {
+    const id = assetKey === 'btc' ? 'bitcoin' : 'ethereum';
+    try {
       const res = await fetch(`https://api.coingecko.com/api/v3/simple/price?ids=${id}&vs_currencies=usd`);
       const data = await res.json();
       if (data[id] && data[id].usd) {
         return { price: data[id].usd, source: 'live' };
       }
+    } catch (e) {
+      console.warn('CoinGecko error:', e);
     }
-    
-    // طلا و نقره از BrsApi
-    if (assetKey === 'gold' || assetKey === 'silver') {
-      // API ممکنه CORS بده، پس از قیمت پیش‌فرض استفاده می‌کنیم
-      // می‌تونی بعداً از یه proxy یا API داخلی استفاده کنی
-      return null;
-    }
-    
-    return null;
-  } catch (e) {
-    console.warn('API error:', e);
-    return null;
   }
+  
+  // ===== طلا، نقره، نفت از BrsApi Commodity =====
+  if (assetKey === 'gold' || assetKey === 'silver' || assetKey === 'oil') {
+    try {
+      const data = await fetchBrsApi('https://Api.BrsApi.ir/Market/Commodity.php');
+      
+      // طلا و نقره
+      if ((assetKey === 'gold' || assetKey === 'silver') && data.metal_precious && Array.isArray(data.metal_precious)) {
+        const symbol = assetKey === 'gold' ? 'XAUUSD' : 'XAGUSD';
+        const item = data.metal_precious.find(i => i.symbol === symbol);
+        if (item && item.price) {
+          return { price: parseFloat(item.price), source: 'live' };
+        }
+      }
+      
+      // نفت
+      if (assetKey === 'oil' && data.energy && Array.isArray(data.energy)) {
+        const item = data.energy.find(i => i.symbol === 'BRENT' || i.symbol === 'BRENT_OIL');
+        if (item && item.price) {
+          return { price: parseFloat(item.price), source: 'live' };
+        }
+      }
+    } catch (e) {
+      console.warn('BrsApi error:', e);
+    }
+  }
+  
+  return null;
 }
 
 // ==========================================
-// 🔄 به‌روزرسانی قیمت‌ها
+// 🔄 به‌روزرسانی همه‌ی قیمت‌ها
 // ==========================================
 async function refreshAllPrices() {
   const btn = document.getElementById('refreshBtn');
   btn.disabled = true;
   btn.innerHTML = '<span class="loading-indicator"></span>در حال دریافت...';
   
-  // پیدا کردن دارایی‌های یکتا
-  const uniqueAssets = [...new Set(positions.map(p => p.asset))];
-  
-  const results = await Promise.all(
-    uniqueAssets.map(async (assetKey) => {
-      const result = await fetchPrice(assetKey);
-      return { assetKey, result };
-    })
-  );
-  
-  results.forEach(({ assetKey, result }) => {
-    if (result && result.price) {
-      positions.forEach(p => {
-        if (p.asset === assetKey) {
-          p.currentPrice = result.price;
-          p.priceSource = 'live';
+  try {
+    const uniqueAssets = [...new Set(positions.map(p => p.asset))];
+    console.log('🔄 شروع به‌روزرسانی قیمت‌ها برای:', uniqueAssets);
+    
+    const results = await Promise.all(
+      uniqueAssets.map(async (assetKey) => {
+        try {
+          const result = await fetchPrice(assetKey);
+          return { assetKey, result };
+        } catch (e) {
+          console.warn(`❌ خطا در ${assetKey}:`, e);
+          return { assetKey, result: null };
         }
-      });
+      })
+    );
+    
+    let successCount = 0;
+    let failCount = 0;
+    
+    results.forEach(({ assetKey, result }) => {
+      if (result && result.price) {
+        positions.forEach(p => {
+          if (p.asset === assetKey && p.priceSource !== 'manual') {
+            p.currentPrice = result.price;
+            p.priceSource = 'live';
+          }
+        });
+        successCount++;
+        console.log(`✅ ${assetKey}: $${result.price}`);
+      } else {
+        failCount++;
+        console.warn(`⚠️ ${assetKey}: دریافت نشد`);
+      }
+    });
+    
+    if (successCount > 0) {
+      showNotification(`✅ ${toFa(successCount)} قیمت به‌روز شد`, 'success');
+    } else {
+      showNotification('⚠️ قیمت زنده دریافت نشد', 'error');
     }
-  });
+    
+    renderPositions();
+    updateChart();
+    
+  } catch (e) {
+    console.error('❌ خطا:', e);
+    showNotification('❌ خطا در دریافت قیمت‌ها', 'error');
+  }
   
   btn.disabled = false;
   btn.innerHTML = '🔄 به‌روزرسانی قیمت‌ها';
+}
+
+// ==========================================
+// 📢 نمایش پیام
+// ==========================================
+function showNotification(message, type = 'success') {
+  const existing = document.getElementById('customNotification');
+  if (existing) existing.remove();
   
-  renderPositions();
-  updateChart();
+  const notification = document.createElement('div');
+  notification.id = 'customNotification';
+  notification.textContent = message;
+  notification.style.cssText = `
+    position: fixed;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%) translateY(100px);
+    background: var(--bg-card);
+    color: var(--white);
+    padding: 14px 24px;
+    border-radius: 12px;
+    border-right: 4px solid ${type === 'success' ? 'var(--green)' : 'var(--red)'};
+    box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+    z-index: 999999;
+    transition: 0.4s;
+    font-size: 14px;
+    font-weight: 700;
+    font-family: 'Vazirmatn', Tahoma, sans-serif;
+    direction: rtl;
+    max-width: 90vw;
+    text-align: center;
+  `;
+  
+  document.body.appendChild(notification);
+  setTimeout(() => notification.style.transform = 'translateX(-50%) translateY(0)', 10);
+  setTimeout(() => {
+    notification.style.transform = 'translateX(-50%) translateY(100px)';
+    setTimeout(() => notification.remove(), 400);
+  }, 3000);
 }
 
 // ==========================================
@@ -728,7 +853,6 @@ function renderPositions() {
         
         <td>
           <input type="number" class="cell-input" value="${p.strike}" min="0" step="0.01"
-                 ${p.type === 'spot' ? 'disabled' : ''}
                  onchange="updatePosition(${p.id}, 'strike', this.value)">
         </td>
         
@@ -800,6 +924,12 @@ function updatePosition(id, field, value) {
       pos.strike = 0;
       pos.delta = 1;
       pos.margin = 0;
+    } else {
+      if (pos.strike === 0) {
+        const asset = getAsset(pos.asset);
+        pos.strike = Math.round(asset.defaultPrice * 1.05);
+        pos.premium = Math.round(asset.defaultPrice * 0.025);
+      }
     }
   } else if (field === 'quantity') {
     pos.quantity = parseFloat(value) || 0;
@@ -889,7 +1019,6 @@ function updateChart() {
     return;
   }
 
-  // محدوده قیمت
   const allPrices = positions.map(p => p.type === 'spot' ? p.currentPrice : p.strike).filter(p => p > 0);
   if (allPrices.length === 0) allPrices.push(100);
   
@@ -900,7 +1029,6 @@ function updateChart() {
   const priceMin = Math.max(0, minK - range * 0.5);
   const priceMax = maxK + range * 0.5;
   
-  // نقاط نمودار
   const steps = 200;
   const points = [];
   for (let i = 0; i <= steps; i++) {
@@ -915,12 +1043,10 @@ function updateChart() {
   const minPnL = Math.min(...pnls);
   const absMax = Math.max(Math.abs(maxPnL), Math.abs(minPnL)) || 1;
   
-  // استراتژی
   const strategyInfo = detectStrategy();
   document.getElementById('strategyName').textContent = strategyInfo.name;
   document.getElementById('strategyTags').textContent = strategyInfo.tags;
   
-  // مجموع سرمایه
   let totalInvestment = 0;
   positions.forEach(p => {
     if (p.type === 'spot') {
@@ -932,10 +1058,8 @@ function updateChart() {
   document.getElementById('totalInvestment').textContent = 
     (totalInvestment >= 0 ? '+' : '') + toFa(formatNum(totalInvestment)) + ' $';
   
-  // Breakevens
   const breakevens = findBreakevens(points);
   
-  // PnL فعلی
   const currentPrice = positions[0].currentPrice;
   let currentPnL = 0;
   positions.forEach(pos => currentPnL += calculatePayoff(currentPrice, pos));
@@ -943,7 +1067,6 @@ function updateChart() {
     (currentPnL >= 0 ? '+' : '') + toFa(formatNum(currentPnL)) + ' $';
   document.getElementById('currentPnL').style.color = currentPnL >= 0 ? 'var(--green)' : 'var(--red)';
   
-  // نتایج
   document.getElementById('maxProfit').textContent = 
     maxPnL === Infinity ? 'نامحدود' : (maxPnL >= 0 ? '+' : '') + toFa(formatNum(maxPnL)) + ' $';
   document.getElementById('maxLoss').textContent = 
@@ -1110,7 +1233,7 @@ updateChart();
 // تلاش برای دریافت قیمت‌های زنده در شروع
 setTimeout(() => {
   refreshAllPrices();
-}, 500);
+}, 800);
 
 // ==========================================
 // 🌙 تم
