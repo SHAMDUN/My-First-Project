@@ -718,7 +718,26 @@ function loadFromParams() {
 // ==========================================
 const FIELDS = ['lessonTitle', 'lessonCourse', 'lessonNumber', 'lessonLevel', 'lessonTime', 'lessonTeacher', 'lessonContent'];
 
-// ۱. اول از pdfmaker_data لود کن (اطلاعات از پنل ادمین)
+// 📨 دریافت اطلاعات از پنل ادمین (postMessage)
+// ==========================================
+window.addEventListener('message', function(event) {
+    if (!event.data || event.data.type !== 'PDFMAKER_DATA') return;
+    
+    console.log('📨 پیام دریافت شد:', event.data.data.title);
+    
+    const data = event.data.data;
+    
+    if (data.title) document.getElementById('lessonTitle').value = data.title;
+    if (data.course) document.getElementById('lessonCourse').value = data.course;
+    if (data.number) document.getElementById('lessonNumber').value = data.number;
+    if (data.level) document.getElementById('lessonLevel').value = data.level;
+    if (data.time) document.getElementById('lessonTime').value = data.time;
+    if (data.content) document.getElementById('lessonContent').value = data.content;
+    
+    console.log('✅ فیلدها از postMessage پر شدند');
+    updatePreview();
+});
+  
 const loadedFromData = loadFromParams();
 
 // ۲. اگه pdfmaker_data نبود، از مقادیر قبلی هر فیلد لود کن
