@@ -22,6 +22,15 @@
   --gray: #94a3b8;
   --border: rgba(212, 175, 55, 0.15);
   --border-soft: rgba(255, 255, 255, 0.06);
+
+  --chart-bg-from: #0f0f18;
+  --chart-bg-to: #1a1a26;
+  --chart-grid: #2a2a3a;
+  --chart-axis: #94a3b8;
+  --chart-line-from: #d4af37;
+  --chart-line-to: #f4d47c;
+  --chart-profit-fill: rgba(16, 185, 129, 0.05);
+  --chart-loss-fill: rgba(239, 68, 68, 0.05);
 }
 [data-theme="light"] {
   --bg-primary: #f8fafc;
@@ -38,6 +47,15 @@
   --gray: #64748b;
   --border: rgba(184, 134, 11, 0.2);
   --border-soft: rgba(0, 0, 0, 0.06);
+
+  --chart-bg-from: #ffffff;
+  --chart-bg-to: #f1f5f9;
+  --chart-grid: #cbd5e1;
+  --chart-axis: #475569;
+  --chart-line-from: #d97706;
+  --chart-line-to: #f59e0b;
+  --chart-profit-fill: rgba(16, 185, 129, 0.13);
+  --chart-loss-fill: rgba(239, 68, 68, 0.13);
 }
 * { margin: 0; padding: 0; box-sizing: border-box; }
 body {
@@ -106,7 +124,7 @@ body {
   border: 1px solid rgba(212, 175, 55, 0.3);
 }
 
-/* ===== Strategy Presets ===== */
+/* Presets */
 .presets-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
@@ -146,10 +164,7 @@ body {
   transform: translateY(-3px);
   box-shadow: 0 8px 25px rgba(212, 175, 55, 0.15);
 }
-.preset-card:hover::before {
-  opacity: 1;
-  width: 6px;
-}
+.preset-card:hover::before { opacity: 1; width: 6px; }
 .preset-card.active {
   background: linear-gradient(135deg, rgba(212, 175, 55, 0.15), rgba(212, 175, 55, 0.03));
   border-color: var(--gold);
@@ -175,7 +190,7 @@ body {
   border: 1px solid rgba(59, 130, 246, 0.3);
 }
 
-/* ===== Table ===== */
+/* Table */
 .positions-table-wrapper {
   overflow-x: auto;
   border-radius: 12px;
@@ -184,7 +199,7 @@ body {
 .positions-table {
   width: 100%;
   border-collapse: collapse;
-  min-width: 1300px;
+  min-width: 1420px;
 }
 .positions-table th {
   background: linear-gradient(135deg, rgba(212, 175, 55, 0.12), rgba(212, 175, 55, 0.04));
@@ -201,15 +216,7 @@ body {
   border-bottom: 1px solid var(--border-soft);
   vertical-align: middle;
 }
-.positions-table tbody tr:hover {
-  background: rgba(212, 175, 55, 0.03);
-}
-
-/* ستون اول — پهن‌تر برای نمایش نام + نماد */
-.positions-table th:first-child,
-.positions-table td:first-child {
-  min-width: 190px;
-}
+.positions-table tbody tr:hover { background: rgba(212, 175, 55, 0.03); }
 
 .cell-input {
   width: 100%;
@@ -241,9 +248,18 @@ body {
   color: var(--gold);
   font-weight: 800;
 }
-.cell-input:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
+.cell-input:disabled { opacity: 0.5; cursor: not-allowed; }
+
+.cell-input.locked-cell {
+  background: rgba(148, 163, 184, 0.08) !important;
+  border-color: rgba(148, 163, 184, 0.2) !important;
+  color: var(--gray) !important;
+  cursor: not-allowed !important;
+  opacity: 0.55 !important;
+}
+.cell-input.locked-cell:focus {
+  box-shadow: none !important;
+  border-color: rgba(148, 163, 184, 0.2) !important;
 }
 
 .cell-select {
@@ -301,53 +317,60 @@ body {
   color: #fff;
 }
 
-/* ===== نماد بزرگ و جذاب ===== */
+/* Symbol column */
 .symbol-badge {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  margin-top: 6px;
-  padding: 5px 12px;
-  background: linear-gradient(135deg, rgba(212, 175, 55, 0.18), rgba(212, 175, 55, 0.06));
-  border: 1.5px solid rgba(212, 175, 55, 0.5);
+  justify-content: center;
+  gap: 5px;
+  padding: 6px 14px;
   border-radius: 10px;
-  color: var(--gold-light);
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 900;
   letter-spacing: 0.5px;
   font-family: 'Vazirmatn', Tahoma, sans-serif;
   direction: rtl;
-  box-shadow: 0 2px 8px rgba(212, 175, 55, 0.15);
+  white-space: nowrap;
   transition: 0.2s;
   width: 100%;
-  justify-content: center;
-}
-.symbol-badge .sym-type {
-  font-size: 10px;
-  color: var(--gray);
-  font-weight: 600;
-  background: rgba(0,0,0,0.3);
-  padding: 1px 6px;
-  border-radius: 5px;
+  min-width: 90px;
+  border: 2px solid;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
 }
 .symbol-badge.call {
-  background: linear-gradient(135deg, rgba(16, 185, 129, 0.18), rgba(16, 185, 129, 0.06));
-  border-color: rgba(16, 185, 129, 0.5);
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.22), rgba(16, 185, 129, 0.08));
+  border-color: rgba(16, 185, 129, 0.6);
   color: #34d399;
+  text-shadow: 0 0 12px rgba(16, 185, 129, 0.4);
 }
 .symbol-badge.put {
-  background: linear-gradient(135deg, rgba(239, 68, 68, 0.18), rgba(239, 68, 68, 0.06));
-  border-color: rgba(239, 68, 68, 0.5);
+  background: linear-gradient(135deg, rgba(239, 68, 68, 0.22), rgba(239, 68, 68, 0.08));
+  border-color: rgba(239, 68, 68, 0.6);
   color: #f87171;
+  text-shadow: 0 0 12px rgba(239, 68, 68, 0.4);
 }
 .symbol-badge.spot {
-  background: linear-gradient(135deg, rgba(59, 130, 246, 0.18), rgba(59, 130, 246, 0.06));
-  border-color: rgba(59, 130, 246, 0.5);
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.22), rgba(59, 130, 246, 0.08));
+  border-color: rgba(59, 130, 246, 0.6);
   color: #60a5fa;
+  text-shadow: 0 0 12px rgba(59, 130, 246, 0.4);
 }
-.symbol-badge:hover {
-  transform: scale(1.03);
+[data-theme="light"] .symbol-badge.call {
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(16, 185, 129, 0.05));
+  color: #047857;
+  text-shadow: none;
 }
+[data-theme="light"] .symbol-badge.put {
+  background: linear-gradient(135deg, rgba(239, 68, 68, 0.15), rgba(239, 68, 68, 0.05));
+  color: #b91c1c;
+  text-shadow: none;
+}
+[data-theme="light"] .symbol-badge.spot {
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(59, 130, 246, 0.05));
+  color: #1d4ed8;
+  text-shadow: none;
+}
+.symbol-badge:hover { transform: scale(1.04); }
 
 .btn-remove {
   width: 34px;
@@ -364,10 +387,7 @@ body {
   transition: 0.2s;
   font-family: inherit;
 }
-.btn-remove:hover {
-  background: rgba(239, 68, 68, 0.25);
-  transform: scale(1.05);
-}
+.btn-remove:hover { background: rgba(239, 68, 68, 0.25); transform: scale(1.05); }
 
 .btn-add {
   padding: 12px 22px;
@@ -406,10 +426,7 @@ body {
   align-items: center;
   gap: 8px;
 }
-.btn-primary:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 12px 35px rgba(212, 175, 55, 0.5);
-}
+.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 35px rgba(212, 175, 55, 0.5); }
 .btn-primary:disabled { opacity: 0.6; cursor: wait; }
 
 .btn-refresh {
@@ -514,23 +531,79 @@ body {
 #payoffChart {
   width: 100%;
   height: auto;
-  background: linear-gradient(135deg, rgba(10, 10, 15, 0.6), rgba(20, 20, 28, 0.9));
+  background: linear-gradient(135deg, var(--chart-bg-from), var(--chart-bg-to));
   border-radius: 15px;
   display: block;
   position: relative;
   cursor: crosshair;
   user-select: none;
+  touch-action: none;
 }
-[data-theme="light"] #payoffChart {
-  background: linear-gradient(135deg, #f8fafc, #eef2f7);
-}
+.chart-container.panning #payoffChart { cursor: grabbing; }
 
-/* حالت قفل‌شده — نشانگر روی نمودار */
-.chart-container.locked #payoffChart { cursor: pointer; }
-.chart-container.locked {
-  border-color: var(--gold);
-  box-shadow: 0 0 0 2px rgba(212, 175, 55, 0.2);
+.chart-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-top: 12px;
+  padding: 10px 14px;
+  background: rgba(10, 10, 15, 0.5);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  font-size: 12px;
 }
+[data-theme="light"] .chart-toolbar { background: rgba(248, 250, 252, 0.9); }
+.chart-toolbar-label {
+  color: var(--gray);
+  font-weight: 700;
+  margin-inline-end: 4px;
+  font-size: 11px;
+}
+.zoom-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  min-width: 36px;
+  height: 32px;
+  padding: 0 10px;
+  background: rgba(212, 175, 55, 0.08);
+  color: var(--gold);
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  border-radius: 8px;
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: 0.2s;
+}
+.zoom-btn:hover { background: rgba(212, 175, 55, 0.2); transform: translateY(-1px); }
+.zoom-btn:active { transform: translateY(0); }
+.zoom-btn.active {
+  background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+  color: #fff;
+  border-color: var(--gold);
+}
+.zoom-btn.reset {
+  background: rgba(239, 68, 68, 0.08);
+  color: var(--red);
+  border-color: rgba(239, 68, 68, 0.3);
+}
+.zoom-btn.reset:hover { background: rgba(239, 68, 68, 0.2); }
+.zoom-info {
+  margin-inline-start: auto;
+  color: var(--gray);
+  font-size: 11px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  direction: ltr;
+  padding: 4px 10px;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 6px;
+}
+[data-theme="light"] .zoom-info { background: rgba(0, 0, 0, 0.05); }
+
 .chart-hint {
   display: flex;
   align-items: center;
@@ -544,6 +617,14 @@ body {
   color: #93c5fd;
   font-size: 12px;
   font-weight: 600;
+  text-align: center;
+  line-height: 1.7;
+  flex-wrap: wrap;
+}
+[data-theme="light"] .chart-hint {
+  background: rgba(37, 99, 235, 0.06);
+  border-color: rgba(37, 99, 235, 0.2);
+  color: #1d4ed8;
 }
 .chart-hint.locked {
   background: rgba(212, 175, 55, 0.1);
@@ -552,14 +633,13 @@ body {
 }
 .chart-hint .lock-icon { font-size: 14px; }
 
-/* ===== Chart Tooltip ===== */
 #chartTooltip {
   position: fixed;
   pointer-events: none;
-  background: rgba(20, 20, 28, 0.96);
+  background: rgba(20, 20, 28, 0.97);
   border: 1.5px solid var(--gold);
   border-radius: 10px;
-  padding: 9px 13px;
+  padding: 10px 14px;
   font-family: 'Vazirmatn', Tahoma, sans-serif;
   font-size: 12px;
   font-weight: 700;
@@ -571,7 +651,8 @@ body {
   white-space: nowrap;
   box-shadow: 0 6px 24px rgba(0,0,0,0.5);
   font-variant-numeric: tabular-nums;
-  line-height: 1.7;
+  line-height: 1.8;
+  min-width: 200px;
 }
 [data-theme="light"] #chartTooltip {
   background: rgba(255, 255, 255, 0.98);
@@ -583,17 +664,24 @@ body {
   border-color: var(--gold);
   box-shadow: 0 0 0 2px rgba(212, 175, 55, 0.25), 0 6px 24px rgba(0,0,0,0.5);
 }
-#chartTooltip .tt-price {
-  color: var(--gold);
-  font-size: 13px;
-  font-weight: 900;
-  border-bottom: 1px solid var(--border);
-  padding-bottom: 4px;
-  margin-bottom: 4px;
-  display: block;
+#chartTooltip .tt-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 2px 0;
 }
-#chartTooltip .tt-pnl-profit { color: var(--green); }
-#chartTooltip .tt-pnl-loss { color: var(--red); }
+#chartTooltip .tt-row .k { color: var(--gray); font-weight: 600; font-size: 11px; }
+#chartTooltip .tt-row .v { font-weight: 900; font-variant-numeric: tabular-nums; direction: ltr; }
+#chartTooltip .tt-price .v { color: var(--gold); font-size: 13px; }
+#chartTooltip .tt-pnl-profit .v { color: var(--green); }
+#chartTooltip .tt-pnl-loss .v { color: var(--red); }
+#chartTooltip .tt-pct-profit .v { color: var(--green); }
+#chartTooltip .tt-pct-loss .v { color: var(--red); }
+#chartTooltip .tt-divider {
+  height: 1px;
+  background: var(--border);
+  margin: 5px 0;
+}
 
 .legend {
   display: flex;
@@ -604,17 +692,8 @@ body {
   border-top: 1px solid var(--border);
   font-size: 12px;
 }
-.legend-item {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  color: var(--gray);
-}
-.legend-dot {
-  width: 12px;
-  height: 12px;
-  border-radius: 3px;
-}
+.legend-item { display: flex; align-items: center; gap: 6px; color: var(--gray); }
+.legend-dot { width: 12px; height: 12px; border-radius: 3px; }
 
 .loading-indicator {
   display: inline-block;
@@ -669,8 +748,7 @@ body {
   .side-btn { font-size: 10px; padding: 6px 4px; }
   .btn-remove { width: 28px; height: 28px; font-size: 12px; }
   .presets-grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); }
-  .symbol-badge { font-size: 12px; padding: 4px 8px; }
-  .symbol-badge .sym-type { font-size: 9px; }
+  .symbol-badge { font-size: 12px; padding: 5px 10px; min-width: 70px; }
 }
 @media (max-width: 600px) {
   .container { padding: 15px 10px 40px; }
@@ -679,6 +757,7 @@ body {
   .panel { padding: 14px; }
   .tabs { flex-wrap: wrap; }
   .tab-btn { font-size: 12px; padding: 10px 14px; }
+  .chart-toolbar { font-size: 11px; }
 }
 </style>
 </head>
@@ -691,7 +770,6 @@ body {
     <p>استراتژی آماده را انتخاب کن یا پوزیشن سفارشی خودت را بساز</p>
   </div>
 
-  <!-- Tabs -->
   <div class="tabs">
     <button class="tab-btn active" onclick="switchTab('presets', this)">🎯 استراتژی‌های آماده</button>
     <button class="tab-btn" onclick="switchTab('custom', this)">🛠️ پوزیشن سفارشی</button>
@@ -704,9 +782,7 @@ body {
           🎯 استراتژی آماده را انتخاب کن
           <span class="badge">۱۵ استراتژی</span>
         </div>
-        <button class="btn-clear" onclick="clearAllPositions()">
-          🗑️ پاک کردن همه
-        </button>
+        <button class="btn-clear" onclick="clearAllPositions()">🗑️ پاک کردن همه</button>
       </div>
       <div class="presets-grid" id="presetsGrid"></div>
       <div class="info-box" style="background: rgba(59, 130, 246, 0.08); border: 1px solid rgba(59, 130, 246, 0.3); border-radius: 12px; padding: 14px 18px; margin-top: 16px; color: #93c5fd; font-size: 13px; line-height: 1.8;">
@@ -723,18 +799,13 @@ body {
           <span class="badge" id="positionsCount">۰ پوزیشن</span>
         </div>
         <div style="display:flex; gap:10px; flex-wrap:wrap;">
-          <button class="btn-refresh" onclick="refreshAllPrices()" id="refreshBtn">
-            🔄 به‌روزرسانی قیمت‌ها
-          </button>
-          <button class="btn-primary" onclick="updateChart()">
-            📈 ساخت نمودار
-          </button>
+          <button class="btn-refresh" onclick="refreshAllPrices()">🔄 به‌روزرسانی قیمت‌ها</button>
+          <button class="btn-primary" onclick="updateChart()">📈 ساخت نمودار</button>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- جدول پوزیشن‌ها -->
   <div class="panel">
     <div class="panel-header">
       <div class="panel-title">
@@ -742,12 +813,8 @@ body {
         <span class="badge" id="positionsCount2">۰ پوزیشن</span>
       </div>
       <div style="display:flex; gap:10px; flex-wrap:wrap;">
-        <button class="btn-refresh" onclick="refreshAllPrices()">
-          🔄 به‌روزرسانی قیمت‌ها
-        </button>
-        <button class="btn-primary" onclick="updateChart()">
-          📈 ساخت نمودار
-        </button>
+        <button class="btn-refresh" onclick="refreshAllPrices()">🔄 به‌روزرسانی قیمت‌ها</button>
+        <button class="btn-primary" onclick="updateChart()">📈 ساخت نمودار</button>
       </div>
     </div>
 
@@ -758,6 +825,7 @@ body {
             <th>دارایی پایه</th>
             <th>خرید/فروش</th>
             <th>نوع</th>
+            <th>نام نماد</th>
             <th>مقدار</th>
             <th>💵 قیمت فعلی</th>
             <th>🎯 قیمت اعمال</th>
@@ -778,11 +846,8 @@ body {
     </button>
   </div>
 
-  <!-- اطلاعات استراتژی -->
   <div class="strategy-info">
-    <div class="strategy-name">
-      🎯 <span id="strategyName">استراتژی سفارشی</span>
-    </div>
+    <div class="strategy-name">🎯 <span id="strategyName">استراتژی سفارشی</span></div>
     <div class="strategy-tag" id="strategyTags">در انتظار پوزیشن...</div>
     <div style="margin-right: auto;">
       <span style="color: var(--gray); font-size: 12px;">💰 مجموع سرمایه:</span>
@@ -790,7 +855,6 @@ body {
     </div>
   </div>
 
-  <!-- نتایج -->
   <div class="results-grid">
     <div class="result-card profit">
       <div class="label">📈 حداکثر سود</div>
@@ -814,16 +878,26 @@ body {
     </div>
   </div>
 
-  <!-- نمودار -->
   <div class="chart-container" id="chartContainer">
-    <div class="panel-title" style="margin-bottom: 18px;">
-      📈 نمودار سود و زیان (در سررسید)
-    </div>
+    <div class="panel-title" style="margin-bottom: 18px;">📈 نمودار سود و زیان (در سررسید)</div>
     <svg id="payoffChart" viewBox="0 0 1000 480" preserveAspectRatio="xMidYMid meet"></svg>
+
+    <div class="chart-toolbar">
+      <span class="chart-toolbar-label">🔍 زوم:</span>
+      <button class="zoom-btn" onclick="zoomIn('both')" title="زوم افقی و عمودی">➕➕</button>
+      <button class="zoom-btn" onclick="zoomIn('x')" title="زوم افقی">➕↔️</button>
+      <button class="zoom-btn" onclick="zoomIn('y')" title="زوم عمودی">➕↕️</button>
+      <button class="zoom-btn" onclick="zoomOut()" title="زوم اوت">➖</button>
+      <button class="zoom-btn reset" onclick="resetZoom()" title="بازگشت به حالت اول">🔄 ریست</button>
+      <button class="zoom-btn" id="panBtn" onclick="togglePan()" title="جابجایی (Pan)">✋ Pan</button>
+      <span class="zoom-info" id="zoomInfo">۱٫۰× | ۱٫۰×</span>
+    </div>
+
     <div class="chart-hint" id="chartHint">
       <span class="lock-icon">🖱️</span>
-      <span>موس را روی نمودار حرکت بده — برای <strong>قفل کردن</strong> روی نقطه مورد نظر <strong>کلیک کن</strong></span>
+      <span>اسکرول = زوم | درگ = جابجایی | کلیک = قفل نقطه | برای آزادسازی دوباره کلیک کن</span>
     </div>
+
     <div class="legend">
       <div class="legend-item"><div class="legend-dot" style="background:#10b981;"></div> ناحیه سود</div>
       <div class="legend-item"><div class="legend-dot" style="background:#ef4444;"></div> ناحیه ضرر</div>
@@ -847,42 +921,39 @@ const BRS_API_KEYS = [
 let brsKeyIndex = 0;
 
 // ==========================================
-// 🎯 دارایی‌ها — کریپتو + کالا + نمادهای بورس ایران
+// 🎯 دارایی‌ها
 // ==========================================
 const ASSETS = [
-  // کریپتو
-  { key: 'btc', name: 'بیت‌کوین', emoji: '₿', defaultPrice: 100000, call: '—', put: '—', group: 'کریپتو' },
-  { key: 'eth', name: 'اتریوم', emoji: '⟠', defaultPrice: 4000, call: '—', put: '—', group: 'کریپتو' },
-  // کالا
-  { key: 'gold', name: 'انس طلا', emoji: '🥇', defaultPrice: 2700, call: '—', put: '—', group: 'کالا' },
-  { key: 'silver', name: 'انس نقره', emoji: '🥈', defaultPrice: 32, call: '—', put: '—', group: 'کالا' },
-  { key: 'oil', name: 'نفت برنت', emoji: '🛢️', defaultPrice: 75, call: '—', put: '—', group: 'کالا' },
-  // بورس ایران
-  { key: 'اخابر', name: 'اخابر', emoji: '📡', defaultPrice: 8500, call: 'ضمخا', put: 'طمخا', group: 'بورس' },
-  { key: 'اطلس', name: 'اطلس', emoji: '🏗️', defaultPrice: 12000, call: 'ضاطلس', put: 'طاطلس', group: 'بورس' },
-  { key: 'اهرم', name: 'اهرم', emoji: '⚡', defaultPrice: 4200, call: 'ضهرم', put: 'طهرم', group: 'بورس' },
-  { key: 'بساما', name: 'بساما', emoji: '🛡️', defaultPrice: 6800, call: 'ضبساما', put: 'طبساما', group: 'بورس' },
-  { key: 'تاصیکو', name: 'تاصیکو', emoji: '💎', defaultPrice: 5400, call: 'ضتاس', put: 'طتاس', group: 'بورس' },
-  { key: 'توان', name: 'توان', emoji: '🔋', defaultPrice: 7600, call: 'ضتوان', put: 'طتوان', group: 'بورس' },
-  { key: 'جوانه کوچک', name: 'جوانه کوچک', emoji: '🌱', defaultPrice: 3100, call: 'ضجوا', put: 'طجوا', group: 'بورس' },
-  { key: 'خبهمن', name: 'خبهمن', emoji: '🚗', defaultPrice: 2900, call: 'ضهمن', put: 'طهمن', group: 'بورس' },
-  { key: 'خساپا', name: 'خساپا', emoji: '🚙', defaultPrice: 685, call: 'ضسپا', put: 'طسپا', group: 'بورس' },
-  { key: 'خودرو', name: 'خودرو', emoji: '🚘', defaultPrice: 2450, call: 'ضخود', put: 'طخود', group: 'بورس' },
-  { key: 'دارونو', name: 'دارونو', emoji: '💊', defaultPrice: 5800, call: 'ضدروا', put: 'طدروا', group: 'بورس' },
-  { key: 'دزاگرس', name: 'دزاگرس', emoji: '🏭', defaultPrice: 4300, call: 'ضدزاگرس', put: 'طدزاگرس', group: 'بورس' },
-  { key: 'ذوب', name: 'ذوب', emoji: '🔩', defaultPrice: 2100, call: 'ضذوب', put: 'طذوب', group: 'بورس' },
-  { key: 'شپنا', name: 'شپنا', emoji: '🛢️', defaultPrice: 3600, call: 'ضشنا', put: 'طشنا', group: 'بورس' },
-  { key: 'شستا', name: 'شستا', emoji: '🏢', defaultPrice: 1250, call: 'ضستا', put: 'طستا', group: 'بورس' },
-  { key: 'طعام', name: 'طعام', emoji: '🍞', defaultPrice: 1900, call: 'ضطعام', put: 'ططعام', group: 'بورس' },
-  { key: 'فرابورس', name: 'فرابورس', emoji: '🏦', defaultPrice: 3200, call: 'ضفرابورس', put: 'طفرابورس', group: 'بورس' },
-  { key: 'فزر', name: 'فزر', emoji: '🥇', defaultPrice: 8900, call: 'ضفزر', put: 'طفزر', group: 'بورس' },
-  { key: 'فملی', name: 'فملی', emoji: '🏅', defaultPrice: 4700, call: 'ضملی', put: 'طملی', group: 'بورس' },
-  { key: 'کاریس', name: 'کاریس', emoji: '⚙️', defaultPrice: 6100, call: 'ضکاریس', put: 'طکاریس', group: 'بورس' },
-  { key: 'موج', name: 'موج', emoji: '🌊', defaultPrice: 2800, call: 'ضموج', put: 'طموج', group: 'بورس' },
-  { key: 'وبصادر', name: 'وبصادر', emoji: '🏛️', defaultPrice: 1750, call: 'ضصاد', put: 'طصاد', group: 'بورس' },
-  { key: 'وبملت', name: 'وبملت', emoji: '🏦', defaultPrice: 1950, call: 'ضملت', put: 'طملت', group: 'بورس' },
-  { key: 'وتجارت', name: 'وتجارت', emoji: '💳', defaultPrice: 2300, call: 'ضجار', put: 'طجار', group: 'بورس' },
-  { key: 'هم تراز', name: 'هم تراز', emoji: '⚖️', defaultPrice: 1500, call: 'ضراز', put: 'طراز', group: 'بورس' }
+  { key: 'btc', name: 'بیت‌کوین', emoji: '₿', defaultPrice: 100000, call: '—', put: '—', group: 'کریپتو', currency: 'USD' },
+  { key: 'eth', name: 'اتریوم', emoji: '⟠', defaultPrice: 4000, call: '—', put: '—', group: 'کریپتو', currency: 'USD' },
+  { key: 'gold', name: 'انس طلا', emoji: '🥇', defaultPrice: 2700, call: '—', put: '—', group: 'کالا', currency: 'USD' },
+  { key: 'silver', name: 'انس نقره', emoji: '🥈', defaultPrice: 32, call: '—', put: '—', group: 'کالا', currency: 'USD' },
+  { key: 'oil', name: 'نفت برنت', emoji: '🛢️', defaultPrice: 75, call: '—', put: '—', group: 'کالا', currency: 'USD' },
+  { key: 'اخابر', name: 'اخابر', emoji: '📡', defaultPrice: 8500, call: 'ضمخا', put: 'طمخا', group: 'بورس', currency: 'IRT' },
+  { key: 'اطلس', name: 'اطلس', emoji: '🏗️', defaultPrice: 12000, call: 'ضاطلس', put: 'طاطلس', group: 'بورس', currency: 'IRT' },
+  { key: 'اهرم', name: 'اهرم', emoji: '⚡', defaultPrice: 4200, call: 'ضهرم', put: 'طهرم', group: 'بورس', currency: 'IRT' },
+  { key: 'بساما', name: 'بساما', emoji: '🛡️', defaultPrice: 6800, call: 'ضبساما', put: 'طبساما', group: 'بورس', currency: 'IRT' },
+  { key: 'تاصیکو', name: 'تاصیکو', emoji: '💎', defaultPrice: 5400, call: 'ضتاس', put: 'طتاس', group: 'بورس', currency: 'IRT' },
+  { key: 'توان', name: 'توان', emoji: '🔋', defaultPrice: 7600, call: 'ضتوان', put: 'طتوان', group: 'بورس', currency: 'IRT' },
+  { key: 'جوانه کوچک', name: 'جوانه کوچک', emoji: '🌱', defaultPrice: 3100, call: 'ضجوا', put: 'طجوا', group: 'بورس', currency: 'IRT' },
+  { key: 'خبهمن', name: 'خبهمن', emoji: '🚗', defaultPrice: 2900, call: 'ضهمن', put: 'طهمن', group: 'بورس', currency: 'IRT' },
+  { key: 'خساپا', name: 'خساپا', emoji: '🚙', defaultPrice: 685, call: 'ضسپا', put: 'طسپا', group: 'بورس', currency: 'IRT' },
+  { key: 'خودرو', name: 'خودرو', emoji: '🚘', defaultPrice: 2450, call: 'ضخود', put: 'طخود', group: 'بورس', currency: 'IRT' },
+  { key: 'دارونو', name: 'دارونو', emoji: '💊', defaultPrice: 5800, call: 'ضدروا', put: 'طدروا', group: 'بورس', currency: 'IRT' },
+  { key: 'دزاگرس', name: 'دزاگرس', emoji: '🏭', defaultPrice: 4300, call: 'ضدزاگرس', put: 'طدزاگرس', group: 'بورس', currency: 'IRT' },
+  { key: 'ذوب', name: 'ذوب', emoji: '🔩', defaultPrice: 2100, call: 'ضذوب', put: 'طذوب', group: 'بورس', currency: 'IRT' },
+  { key: 'شپنا', name: 'شپنا', emoji: '🛢️', defaultPrice: 3600, call: 'ضشنا', put: 'طشنا', group: 'بورس', currency: 'IRT' },
+  { key: 'شستا', name: 'شستا', emoji: '🏢', defaultPrice: 1250, call: 'ضستا', put: 'طستا', group: 'بورس', currency: 'IRT' },
+  { key: 'طعام', name: 'طعام', emoji: '🍞', defaultPrice: 1900, call: 'ضطعام', put: 'ططعام', group: 'بورس', currency: 'IRT' },
+  { key: 'فرابورس', name: 'فرابورس', emoji: '🏦', defaultPrice: 3200, call: 'ضفرابورس', put: 'طفرابورس', group: 'بورس', currency: 'IRT' },
+  { key: 'فزر', name: 'فزر', emoji: '🥇', defaultPrice: 8900, call: 'ضفزر', put: 'طفزر', group: 'بورس', currency: 'IRT' },
+  { key: 'فملی', name: 'فملی', emoji: '🏅', defaultPrice: 4700, call: 'ضملی', put: 'طملی', group: 'بورس', currency: 'IRT' },
+  { key: 'کاریس', name: 'کاریس', emoji: '⚙️', defaultPrice: 6100, call: 'ضکاریس', put: 'طکاریس', group: 'بورس', currency: 'IRT' },
+  { key: 'موج', name: 'موج', emoji: '🌊', defaultPrice: 2800, call: 'ضموج', put: 'طموج', group: 'بورس', currency: 'IRT' },
+  { key: 'وبصادر', name: 'وبصادر', emoji: '🏛️', defaultPrice: 1750, call: 'ضصاد', put: 'طصاد', group: 'بورس', currency: 'IRT' },
+  { key: 'وبملت', name: 'وبملت', emoji: '🏦', defaultPrice: 1950, call: 'ضملت', put: 'طملت', group: 'بورس', currency: 'IRT' },
+  { key: 'وتجارت', name: 'وتجارت', emoji: '💳', defaultPrice: 2300, call: 'ضجار', put: 'طجار', group: 'بورس', currency: 'IRT' },
+  { key: 'هم تراز', name: 'هم تراز', emoji: '⚖️', defaultPrice: 1500, call: 'ضراز', put: 'طراز', group: 'بورس', currency: 'IRT' }
 ];
 
 // ==========================================
@@ -893,17 +964,17 @@ const PRESETS = [
   { key: 'shortCall', name: 'Short Call', icon: '🔴', desc: 'فروش Call — درآمد از پرمیوم', badge: 'نزولی/خنثی', positions: [{ side: 'sell', type: 'call', strikeOffset: 0.05, premiumRatio: 0.025 }] },
   { key: 'longPut', name: 'Long Put', icon: '🔴', desc: 'خرید Put — سود در نزول', badge: 'نزولی', positions: [{ side: 'buy', type: 'put', strikeOffset: -0.05, premiumRatio: 0.025 }] },
   { key: 'shortPut', name: 'Short Put', icon: '🟢', desc: 'فروش Put — درآمد از پرمیوم', badge: 'صعودی/خنثی', positions: [{ side: 'sell', type: 'put', strikeOffset: -0.05, premiumRatio: 0.025 }] },
-  { key: 'bullCallSpread', name: 'Bull Call Spread', icon: '📈', desc: 'صعودی محدود — ریسک و پاداش محدود', badge: 'صعودی', positions: [{ side: 'buy', type: 'call', strikeOffset: 0, premiumRatio: 0.03 }, { side: 'sell', type: 'call', strikeOffset: 0.05, premiumRatio: 0.015 }] },
-  { key: 'bearPutSpread', name: 'Bear Put Spread', icon: '📉', desc: 'نزولی محدود — ریسک و پاداش محدود', badge: 'نزولی', positions: [{ side: 'buy', type: 'put', strikeOffset: 0, premiumRatio: 0.03 }, { side: 'sell', type: 'put', strikeOffset: -0.05, premiumRatio: 0.015 }] },
+  { key: 'bullCallSpread', name: 'Bull Call Spread', icon: '📈', desc: 'صعودی محدود', badge: 'صعودی', positions: [{ side: 'buy', type: 'call', strikeOffset: 0, premiumRatio: 0.03 }, { side: 'sell', type: 'call', strikeOffset: 0.05, premiumRatio: 0.015 }] },
+  { key: 'bearPutSpread', name: 'Bear Put Spread', icon: '📉', desc: 'نزولی محدود', badge: 'نزولی', positions: [{ side: 'buy', type: 'put', strikeOffset: 0, premiumRatio: 0.03 }, { side: 'sell', type: 'put', strikeOffset: -0.05, premiumRatio: 0.015 }] },
   { key: 'bullPutSpread', name: 'Bull Put Spread', icon: '🟢', desc: 'درآمد از پرمیوم در صعودی', badge: 'صعودی', positions: [{ side: 'sell', type: 'put', strikeOffset: -0.02, premiumRatio: 0.02 }, { side: 'buy', type: 'put', strikeOffset: -0.07, premiumRatio: 0.01 }] },
   { key: 'bearCallSpread', name: 'Bear Call Spread', icon: '🔴', desc: 'درآمد از پرمیوم در نزولی', badge: 'نزولی', positions: [{ side: 'sell', type: 'call', strikeOffset: 0.02, premiumRatio: 0.02 }, { side: 'buy', type: 'call', strikeOffset: 0.07, premiumRatio: 0.01 }] },
-  { key: 'longStraddle', name: 'Long Straddle', icon: '⚡', desc: 'سود از نوسان شدید در هر جهت', badge: 'نوسانی', positions: [{ side: 'buy', type: 'call', strikeOffset: 0, premiumRatio: 0.025 }, { side: 'buy', type: 'put', strikeOffset: 0, premiumRatio: 0.025 }] },
+  { key: 'longStraddle', name: 'Long Straddle', icon: '⚡', desc: 'سود از نوسان شدید', badge: 'نوسانی', positions: [{ side: 'buy', type: 'call', strikeOffset: 0, premiumRatio: 0.025 }, { side: 'buy', type: 'put', strikeOffset: 0, premiumRatio: 0.025 }] },
   { key: 'shortStraddle', name: 'Short Straddle', icon: '💤', desc: 'سود از بازار آرام', badge: 'خنثی', positions: [{ side: 'sell', type: 'call', strikeOffset: 0, premiumRatio: 0.025 }, { side: 'sell', type: 'put', strikeOffset: 0, premiumRatio: 0.025 }] },
   { key: 'longStrangle', name: 'Long Strangle', icon: '⚡', desc: 'نوسانی با هزینه کمتر', badge: 'نوسانی', positions: [{ side: 'buy', type: 'call', strikeOffset: 0.05, premiumRatio: 0.015 }, { side: 'buy', type: 'put', strikeOffset: -0.05, premiumRatio: 0.015 }] },
   { key: 'shortStrangle', name: 'Short Strangle', icon: '💤', desc: 'خنثی با ریسک بیشتر', badge: 'خنثی', positions: [{ side: 'sell', type: 'call', strikeOffset: 0.05, premiumRatio: 0.015 }, { side: 'sell', type: 'put', strikeOffset: -0.05, premiumRatio: 0.015 }] },
   { key: 'coveredCall', name: 'Covered Call', icon: '🛡️', desc: 'درآمد از سهام موجود', badge: 'پوششی', positions: [{ side: 'buy', type: 'spot', strikeOffset: 0, premiumRatio: 0 }, { side: 'sell', type: 'call', strikeOffset: 0.05, premiumRatio: 0.02 }] },
-  { key: 'protectivePut', name: 'Protective Put', icon: '🏥', desc: 'بیمه کردن پورتفوی موجود', badge: 'بیمه', positions: [{ side: 'buy', type: 'spot', strikeOffset: 0, premiumRatio: 0 }, { side: 'buy', type: 'put', strikeOffset: -0.05, premiumRatio: 0.02 }] },
-  { key: 'ironCondor', name: 'Iron Condor', icon: '🦅', desc: 'سود در بازار خنثی با ریسک محدود', badge: 'خنثی', positions: [{ side: 'sell', type: 'put', strikeOffset: -0.05, premiumRatio: 0.015 }, { side: 'buy', type: 'put', strikeOffset: -0.10, premiumRatio: 0.008 }, { side: 'sell', type: 'call', strikeOffset: 0.05, premiumRatio: 0.015 }, { side: 'buy', type: 'call', strikeOffset: 0.10, premiumRatio: 0.008 }] }
+  { key: 'protectivePut', name: 'Protective Put', icon: '🏥', desc: 'بیمه کردن پورتفوی', badge: 'بیمه', positions: [{ side: 'buy', type: 'spot', strikeOffset: 0, premiumRatio: 0 }, { side: 'buy', type: 'put', strikeOffset: -0.05, premiumRatio: 0.02 }] },
+  { key: 'ironCondor', name: 'Iron Condor', icon: '🦅', desc: 'سود در بازار خنثی', badge: 'خنثی', positions: [{ side: 'sell', type: 'put', strikeOffset: -0.05, premiumRatio: 0.015 }, { side: 'buy', type: 'put', strikeOffset: -0.10, premiumRatio: 0.008 }, { side: 'sell', type: 'call', strikeOffset: 0.05, premiumRatio: 0.015 }, { side: 'buy', type: 'call', strikeOffset: 0.10, premiumRatio: 0.008 }] }
 ];
 
 // ==========================================
@@ -914,8 +985,59 @@ let currentPreset = null;
 let chartPoints = [];
 let chartMeta = null;
 let svgGeometry = null;
-let isLocked = false;          // آیا تولتیپ قفل شده؟
-let lockedPoint = null;        // نقطه قفل‌شده
+let isLocked = false;
+let lockedPoint = null;
+let panMode = false;
+
+// زوم
+const zoomState = { x: 1, y: 1, offsetX: 0, offsetY: 0 };
+
+// ==========================================
+// 🔧 ابزارها
+// ==========================================
+function formatNum(num, decimals = 0) {
+  if (num === null || num === undefined || isNaN(num)) return '0';
+  const n = Number(num);
+  if (!isFinite(n)) return '∞';
+  let str = decimals > 0 ? n.toFixed(decimals) : Math.round(n).toString();
+  const parts = str.split('.');
+  parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+  return parts.join('.');
+}
+
+function toFa(num) {
+  if (num === null || num === undefined) return '۰';
+  const d = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
+  return String(num).replace(/\d/g, x => d[x]);
+}
+
+function getAsset(key) {
+  return ASSETS.find(a => a.key === key) || ASSETS[0];
+}
+
+function getCurrency(pos) {
+  const asset = getAsset(pos.asset);
+  if (asset.group === 'بورس') return { label: 'تومان', symbol: 'تومان' };
+  return { label: 'دلار', symbol: '$' };
+}
+
+// واحد پول بر اساس asset
+function currencyFor(assetKey) {
+  const asset = getAsset(assetKey);
+  return asset.group === 'بورس' ? { label: 'تومان', short: 'ت' } : { label: 'دلار', short: '$' };
+}
+
+function getSymbolInfo(pos) {
+  const asset = getAsset(pos.asset);
+  if (pos.type === 'spot') return { sym: asset.key, typeClass: 'spot', typeLabel: 'دارایی پایه' };
+  if (asset.group !== 'بورس') {
+    const typeLabel = pos.type === 'call' ? 'Call' : 'Put';
+    return { sym: asset.name, typeClass: pos.type, typeLabel: typeLabel };
+  }
+  if (pos.type === 'call') return { sym: asset.call, typeClass: 'call', typeLabel: 'اختیار خرید' };
+  if (pos.type === 'put')  return { sym: asset.put,  typeClass: 'put',  typeLabel: 'اختیار فروش' };
+  return { sym: asset.key, typeClass: 'spot', typeLabel: 'دارایی پایه' };
+}
 
 // ==========================================
 // 🎯 رندر Presets
@@ -934,9 +1056,6 @@ function renderPresets() {
   `).join('');
 }
 
-// ==========================================
-// 🎯 اعمال Preset
-// ==========================================
 function applyPreset(presetKey) {
   const preset = PRESETS.find(p => p.key === presetKey);
   if (!preset) return;
@@ -988,45 +1107,6 @@ function switchTab(tabName, btn) {
 }
 
 // ==========================================
-// 🔧 ابزارها
-// ==========================================
-function formatNum(num, decimals = 0) {
-  if (num === null || num === undefined || isNaN(num)) return '0';
-  const n = Number(num);
-  if (!isFinite(n)) return '∞';
-  let str = decimals > 0 ? n.toFixed(decimals) : Math.round(n).toString();
-  const parts = str.split('.');
-  parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-  return parts.join('.');
-}
-
-function toFa(num) {
-  if (num === null || num === undefined) return '۰';
-  const d = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
-  return String(num).replace(/\d/g, x => d[x]);
-}
-
-function getAsset(key) {
-  return ASSETS.find(a => a.key === key) || ASSETS[0];
-}
-
-// نماد نمایشی + نوع
-function getSymbolInfo(pos) {
-  const asset = getAsset(pos.asset);
-  if (pos.type === 'spot') {
-    return { sym: asset.key, typeClass: 'spot', typeLabel: 'دارایی پایه', isCrypto: asset.group !== 'بورس' };
-  }
-  if (asset.group !== 'بورس') {
-    // کریپتو / کالا → آپشن نداره
-    const typeLabel = pos.type === 'call' ? 'Call' : 'Put';
-    return { sym: asset.name, typeClass: pos.type, typeLabel: typeLabel, isCrypto: true };
-  }
-  if (pos.type === 'call') return { sym: asset.call, typeClass: 'call', typeLabel: 'اختیار خرید', isCrypto: false };
-  if (pos.type === 'put')  return { sym: asset.put,  typeClass: 'put',  typeLabel: 'اختیار فروش', isCrypto: false };
-  return { sym: asset.key, typeClass: 'spot', typeLabel: 'دارایی پایه', isCrypto: false };
-}
-
-// ==========================================
 // 🌐 BrsApi
 // ==========================================
 async function fetchBrsApi(baseUrl) {
@@ -1047,7 +1127,6 @@ async function fetchBrsApi(baseUrl) {
 async function fetchPrice(assetKey) {
   const asset = getAsset(assetKey);
 
-  // کریپتو → CoinGecko
   if (assetKey === 'btc' || assetKey === 'eth') {
     const id = assetKey === 'btc' ? 'bitcoin' : 'ethereum';
     try {
@@ -1057,7 +1136,6 @@ async function fetchPrice(assetKey) {
     } catch (e) {}
   }
 
-  // طلا / نقره / نفت → BrsApi Commodity
   if (assetKey === 'gold' || assetKey === 'silver' || assetKey === 'oil') {
     try {
       const data = await fetchBrsApi('https://Api.BrsApi.ir/Market/Commodity.php');
@@ -1073,7 +1151,6 @@ async function fetchPrice(assetKey) {
     } catch (e) {}
   }
 
-  // بورس ایران → BrsApi Stock
   if (asset.group === 'بورس') {
     try {
       const data = await fetchBrsApi('https://Api.BrsApi.ir/Market/Stock.php');
@@ -1164,7 +1241,7 @@ function renderPositions() {
   if (count === 0) {
     body.innerHTML = `
       <tr>
-        <td colspan="11" style="text-align:center; padding: 30px; color: var(--gray);">
+        <td colspan="12" style="text-align:center; padding: 30px; color: var(--gray);">
           📭 هنوز پوزیشنی اضافه نشده. از تب «استراتژی‌های آماده» استفاده کن یا دستی اضافه کن.
         </td>
       </tr>
@@ -1172,21 +1249,14 @@ function renderPositions() {
     return;
   }
 
-  // گروه‌بندی دارایی‌ها برای select
   const groups = ['کریپتو', 'کالا', 'بورس'];
-  const groupedOptions = groups.map(g => {
-    const opts = ASSETS.filter(a => a.group === g).map(a =>
-      `<option value="${a.key}" ${a.key === '' ? 'selected' : ''}>${a.emoji} ${a.name}</option>`
-    ).join('');
-    return `<optgroup label="${g}">${opts}</optgroup>`;
-  }).join('');
 
   body.innerHTML = positions.map((p) => {
     const sourceClass = p.priceSource === 'live' ? 'live' : (p.priceSource === 'manual' ? 'manual' : '');
     const sourceText = p.priceSource === 'live' ? '🟢 زنده' : (p.priceSource === 'manual' ? '🟡 دستی' : '⚪ پیش‌فرض');
     const symInfo = getSymbolInfo(p);
+    const isSpot = p.type === 'spot';
 
-    // ساخت optionها با selected درست
     const assetOptions = groups.map(g => {
       const opts = ASSETS.filter(a => a.group === g).map(a =>
         `<option value="${a.key}" ${a.key === p.asset ? 'selected' : ''}>${a.emoji} ${a.name}</option>`
@@ -1200,10 +1270,6 @@ function renderPositions() {
           <select class="cell-select" onchange="updatePosition(${p.id}, 'asset', this.value)">
             ${assetOptions}
           </select>
-          <div class="symbol-badge ${symInfo.typeClass}" title="${symInfo.typeLabel}">
-            <span>${symInfo.sym}</span>
-            <span class="sym-type">${symInfo.typeLabel}</span>
-          </div>
         </td>
 
         <td>
@@ -1222,6 +1288,12 @@ function renderPositions() {
         </td>
 
         <td>
+          <div class="symbol-badge ${symInfo.typeClass}" title="${symInfo.typeLabel}">
+            ${symInfo.sym}
+          </div>
+        </td>
+
+        <td>
           <input type="number" class="cell-input" value="${p.quantity}" min="0" step="1"
                  onchange="updatePosition(${p.id}, 'quantity', this.value)">
         </td>
@@ -1233,24 +1305,29 @@ function renderPositions() {
         </td>
 
         <td>
-          <input type="number" class="cell-input" value="${p.strike}" min="0" step="0.01"
-                 ${p.type === 'spot' ? 'disabled' : ''}
+          <input type="number" class="cell-input ${isSpot ? 'locked-cell' : ''}"
+                 value="${isSpot ? 0 : p.strike}" min="0" step="0.01"
+                 ${isSpot ? 'disabled' : ''}
                  onchange="updatePosition(${p.id}, 'strike', this.value)">
         </td>
 
         <td>
-          <input type="number" class="cell-input" value="${p.premium}" min="0" step="0.01"
+          <input type="number" class="cell-input ${isSpot ? 'locked-cell' : ''}"
+                 value="${isSpot ? 0 : p.premium}" min="0" step="0.01"
+                 ${isSpot ? 'disabled' : ''}
                  onchange="updatePosition(${p.id}, 'premium', this.value)">
         </td>
 
         <td>
-          <input type="number" class="cell-input" value="${p.delta}" min="-1" max="1" step="0.01"
-                 ${p.type === 'spot' ? 'disabled' : ''}
+          <input type="number" class="cell-input ${isSpot ? 'locked-cell' : ''}"
+                 value="${isSpot ? 1 : p.delta}" min="-1" max="1" step="0.01"
+                 ${isSpot ? 'disabled' : ''}
                  onchange="updatePosition(${p.id}, 'delta', this.value)">
         </td>
 
         <td>
-          <input type="number" class="cell-input" value="${p.margin}" min="0" step="0.01"
+          <input type="number" class="cell-input ${p.side === 'buy' ? 'locked-cell' : ''}"
+                 value="${p.margin}" min="0" step="0.01"
                  ${p.side === 'buy' ? 'disabled' : ''}
                  onchange="updatePosition(${p.id}, 'margin', this.value)">
         </td>
@@ -1270,12 +1347,13 @@ function renderPositions() {
 }
 
 function calculatePositionValue(p) {
+  const cur = getCurrency(p);
   if (p.type === 'spot') {
     const total = p.quantity * p.currentPrice * (p.side === 'buy' ? 1 : -1);
-    return toFa(formatNum(total)) + ' $';
+    return toFa(formatNum(total)) + ' ' + cur.short;
   } else {
     const total = p.quantity * p.premium * (p.side === 'buy' ? -1 : 1);
-    return (total >= 0 ? '+' : '') + toFa(formatNum(total)) + ' $';
+    return (total >= 0 ? '+' : '') + toFa(formatNum(total)) + ' ' + cur.short;
   }
 }
 
@@ -1297,8 +1375,24 @@ function updatePosition(id, field, value) {
       pos.strike = Math.round(asset.defaultPrice * 1.05);
       pos.premium = Math.round(asset.defaultPrice * 0.025);
     }
-  } else if (field === 'side') pos.side = value;
-  else if (field === 'type') pos.type = value;
+  } else if (field === 'side') {
+    pos.side = value;
+    if (value === 'buy') pos.margin = 0;
+  }
+  else if (field === 'type') {
+    pos.type = value;
+    const asset = getAsset(pos.asset);
+    if (value === 'spot') {
+      pos.strike = 0;
+      pos.premium = 0;
+      pos.delta = 1;
+      pos.margin = 0;
+    } else {
+      if (pos.strike === 0) pos.strike = Math.round(asset.defaultPrice * 1.05);
+      if (pos.premium === 0) pos.premium = Math.round(asset.defaultPrice * 0.025);
+      pos.delta = value === 'call' ? 0.5 : -0.5;
+    }
+  }
   else if (field === 'quantity') pos.quantity = parseFloat(value) || 0;
   else if (field === 'currentPrice') { pos.currentPrice = parseFloat(value) || 0; pos.priceSource = 'manual'; }
   else if (field === 'strike') pos.strike = parseFloat(value) || 0;
@@ -1409,17 +1503,18 @@ function updateChart() {
     if (p.type === 'spot') totalInvestment += p.quantity * p.currentPrice * (p.side === 'buy' ? 1 : -1);
     else totalInvestment += p.quantity * p.premium * (p.side === 'buy' ? -1 : 1);
   });
-  document.getElementById('totalInvestment').textContent = (totalInvestment >= 0 ? '+' : '') + toFa(formatNum(totalInvestment)) + ' $';
+  const cur = getCurrency(positions[0]);
+  document.getElementById('totalInvestment').textContent = (totalInvestment >= 0 ? '+' : '') + toFa(formatNum(totalInvestment)) + ' ' + cur.short;
 
   const breakevens = findBreakevens(points);
   const currentPrice = positions[0].currentPrice;
   let currentPnL = 0;
   positions.forEach(pos => currentPnL += calculatePayoff(currentPrice, pos));
-  document.getElementById('currentPnL').textContent = (currentPnL >= 0 ? '+' : '') + toFa(formatNum(currentPnL)) + ' $';
+  document.getElementById('currentPnL').textContent = (currentPnL >= 0 ? '+' : '') + toFa(formatNum(currentPnL)) + ' ' + cur.short;
   document.getElementById('currentPnL').style.color = currentPnL >= 0 ? 'var(--green)' : 'var(--red)';
 
-  document.getElementById('maxProfit').textContent = maxPnL === Infinity ? 'نامحدود' : (maxPnL >= 0 ? '+' : '') + toFa(formatNum(maxPnL)) + ' $';
-  document.getElementById('maxLoss').textContent = minPnL === -Infinity ? 'نامحدود' : toFa(formatNum(minPnL)) + ' $';
+  document.getElementById('maxProfit').textContent = maxPnL === Infinity ? 'نامحدود' : (maxPnL >= 0 ? '+' : '') + toFa(formatNum(maxPnL)) + ' ' + cur.short;
+  document.getElementById('maxLoss').textContent = minPnL === -Infinity ? 'نامحدود' : toFa(formatNum(minPnL)) + ' ' + cur.short;
   document.getElementById('breakeven').textContent = breakevens.length > 0 ? breakevens.map(b => toFa(formatNum(b, 1))).join(' | ') : '--';
 
   if (maxPnL > 0 && minPnL < 0 && maxPnL !== Infinity && minPnL !== -Infinity) {
@@ -1431,7 +1526,7 @@ function updateChart() {
   }
 
   chartPoints = points;
-  chartMeta = { priceMin, priceMax, absMax, currentPrice, breakevens };
+  chartMeta = { priceMin, priceMax, absMax, currentPrice, breakevens, currency: cur };
 
   drawChart(points, breakevens, currentPrice, priceMin, priceMax, absMax);
 }
@@ -1439,7 +1534,6 @@ function updateChart() {
 function detectStrategy() {
   const n = positions.length;
   if (n === 0) return { name: 'استراتژی سفارشی', tags: 'در انتظار...' };
-
   const types = positions.map(p => `${p.side}-${p.type}`);
   const count = (t) => types.filter(x => x === t).length;
 
@@ -1452,11 +1546,9 @@ function detectStrategy() {
     };
     return { name: names[`${p.side}-${p.type}`] || 'تک‌پایه', tags: getAsset(p.asset).name };
   }
-
   if (n === 2) {
     const hasBC = count('buy-call') === 1, hasSC = count('sell-call') === 1;
     const hasBP = count('buy-put') === 1, hasSP = count('sell-put') === 1;
-
     if (hasBC && hasSC) {
       const calls = positions.filter(p => p.type === 'call');
       const longCall = calls.find(p => p.side === 'buy');
@@ -1478,11 +1570,9 @@ function detectStrategy() {
     if (count('buy-spot') === 1 && hasSC) return { name: '🛡️ Covered Call', tags: 'پوششی' };
     if (count('buy-spot') === 1 && hasBP) return { name: '🏥 Protective Put', tags: 'بیمه' };
   }
-
   if (n === 4 && count('buy-call') === 1 && count('sell-call') === 1 && count('buy-put') === 1 && count('sell-put') === 1) {
     return { name: '🦅 Iron Condor', tags: 'خنثی' };
   }
-
   return { name: '🎯 استراتژی سفارشی', tags: toFa(n) + ' پوزیشن' };
 }
 
@@ -1500,7 +1590,7 @@ function findBreakevens(points) {
 }
 
 // ==========================================
-// 📈 رسم نمودار
+// 📈 رسم نمودار با زوم/پن
 // ==========================================
 function drawChart(points, breakevens, currentPrice, priceMin, priceMax, absMax) {
   const svg = document.getElementById('payoffChart');
@@ -1508,42 +1598,72 @@ function drawChart(points, breakevens, currentPrice, priceMin, priceMax, absMax)
   const padding = { top: 30, right: 40, bottom: 50, left: 70 };
   const chartW = W - padding.left - padding.right;
   const chartH = H - padding.top - padding.bottom;
-  const xScale = (price) => padding.left + ((price - priceMin) / (priceMax - priceMin)) * chartW;
-  const yScale = (pnl) => padding.top + chartH / 2 - (pnl / absMax) * (chartH / 2);
+
+  // اعمال زوم
+  const zx = zoomState.x;
+  const zy = zoomState.y;
+
+  // محدوده‌ی نمایش بر اساس زوم
+  const viewPriceMin = priceMin + (priceMax - priceMin) * (1 - 1/zx) / 2 + zoomState.offsetX * (priceMax - priceMin) / zx;
+  const viewPriceMax = viewPriceMin + (priceMax - priceMin) / zx;
+
+  const viewAbsMax = absMax / zy;
+
+  const xScale = (price) => padding.left + ((price - viewPriceMin) / (viewPriceMax - viewPriceMin)) * chartW;
+  const yScale = (pnl) => padding.top + chartH / 2 - (pnl / viewAbsMax) * (chartH / 2);
   const zeroY = yScale(0);
 
-  svgGeometry = { W, H, padding, chartW, chartH, priceMin, priceMax, absMax, zeroY, xScale, yScale };
+  svgGeometry = {
+    W, H, padding, chartW, chartH,
+    priceMin: viewPriceMin, priceMax: viewPriceMax,
+    absMax: viewAbsMax, zeroY, xScale, yScale,
+    origPriceMin: priceMin, origPriceMax: priceMax, origAbsMax: absMax
+  };
 
   let svgContent = `<defs>
     <linearGradient id="lineGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%" stop-color="#d4af37"/>
-      <stop offset="100%" stop-color="#f4d47c"/>
+      <stop offset="0%" stop-color="var(--chart-line-from)"/>
+      <stop offset="100%" stop-color="var(--chart-line-to)"/>
     </linearGradient>
     <clipPath id="chartClip">
       <rect x="${padding.left}" y="${padding.top}" width="${chartW}" height="${chartH}"/>
     </clipPath>
   </defs>`;
 
+  // خطوط افقی
   for (let i = -4; i <= 4; i++) {
-    const y = yScale((absMax / 4) * i);
+    const y = yScale((viewAbsMax / 4) * i);
     if (y >= padding.top && y <= H - padding.bottom) {
-      svgContent += `<line x1="${padding.left}" y1="${y}" x2="${W - padding.right}" y2="${y}" stroke="#2a2a3a" stroke-width="1" opacity="0.4"/>`;
-      svgContent += `<text x="${padding.left - 10}" y="${y + 4}" text-anchor="end" fill="#94a3b8" font-size="10" font-family="Vazirmatn">${toFa(formatNum((absMax / 4) * i))}</text>`;
+      svgContent += `<line x1="${padding.left}" y1="${y}" x2="${W - padding.right}" y2="${y}" stroke="var(--chart-grid)" stroke-width="1" opacity="0.5"/>`;
+      svgContent += `<text x="${padding.left - 10}" y="${y + 4}" text-anchor="end" fill="var(--chart-axis)" font-size="10" font-family="Vazirmatn">${toFa(formatNum((viewAbsMax / 4) * i))}</text>`;
     }
   }
 
-  svgContent += `<rect x="${padding.left}" y="${padding.top}" width="${chartW}" height="${zeroY - padding.top}" fill="#10b981" opacity="0.04"/>`;
-  svgContent += `<rect x="${padding.left}" y="${zeroY}" width="${chartW}" height="${H - padding.bottom - zeroY}" fill="#ef4444" opacity="0.04"/>`;
-  svgContent += `<line x1="${padding.left}" y1="${zeroY}" x2="${W - padding.right}" y2="${zeroY}" stroke="#94a3b8" stroke-width="2"/>`;
-  svgContent += `<line x1="${padding.left}" y1="${padding.top}" x2="${padding.left}" y2="${H - padding.bottom}" stroke="#94a3b8" stroke-width="2"/>`;
-
-  for (let i = 0; i <= 6; i++) {
-    const price = priceMin + ((priceMax - priceMin) / 6) * i;
-    const x = xScale(price);
-    svgContent += `<text x="${x}" y="${H - padding.bottom + 20}" text-anchor="middle" fill="#94a3b8" font-size="10" font-family="Vazirmatn">${toFa(formatNum(price))}</text>`;
+  // پس‌زمینه سود و ضرر
+  const profitTop = Math.max(padding.top, yScale(viewAbsMax));
+  const profitBottom = zeroY;
+  if (profitBottom > profitTop) {
+    svgContent += `<rect x="${padding.left}" y="${profitTop}" width="${chartW}" height="${profitBottom - profitTop}" fill="var(--chart-profit-fill)"/>`;
   }
-  svgContent += `<text x="${W / 2}" y="${H - 10}" text-anchor="middle" fill="#94a3b8" font-size="12" font-family="Vazirmatn" font-weight="700">قیمت دارایی پایه در سررسید</text>`;
+  const lossTop = zeroY;
+  const lossBottom = Math.min(H - padding.bottom, yScale(-viewAbsMax));
+  if (lossBottom > lossTop) {
+    svgContent += `<rect x="${padding.left}" y="${lossTop}" width="${chartW}" height="${lossBottom - lossTop}" fill="var(--chart-loss-fill)"/>`;
+  }
 
+  // محورها
+  svgContent += `<line x1="${padding.left}" y1="${zeroY}" x2="${W - padding.right}" y2="${zeroY}" stroke="var(--chart-axis)" stroke-width="2"/>`;
+  svgContent += `<line x1="${padding.left}" y1="${padding.top}" x2="${padding.left}" y2="${H - padding.bottom}" stroke="var(--chart-axis)" stroke-width="2"/>`;
+
+  // محور X
+  for (let i = 0; i <= 6; i++) {
+    const price = viewPriceMin + ((viewPriceMax - viewPriceMin) / 6) * i;
+    const x = xScale(price);
+    svgContent += `<text x="${x}" y="${H - padding.bottom + 20}" text-anchor="middle" fill="var(--chart-axis)" font-size="10" font-family="Vazirmatn">${toFa(formatNum(price))}</text>`;
+  }
+  svgContent += `<text x="${W / 2}" y="${H - 10}" text-anchor="middle" fill="var(--chart-axis)" font-size="12" font-family="Vazirmatn" font-weight="700">قیمت دارایی پایه در سررسید</text>`;
+
+  // منحنی
   let pathD = '';
   points.forEach((p, i) => {
     const x = xScale(p.price);
@@ -1552,51 +1672,127 @@ function drawChart(points, breakevens, currentPrice, priceMin, priceMax, absMax)
   });
   svgContent += `<path d="${pathD}" stroke="url(#lineGrad)" stroke-width="3.5" fill="none" stroke-linejoin="round" clip-path="url(#chartClip)"/>`;
 
+  // نقاط سربه‌سر
   breakevens.forEach(be => {
-    if (be > priceMin && be < priceMax) {
+    if (be > viewPriceMin && be < viewPriceMax) {
       const x = xScale(be);
-      svgContent += `<line x1="${x}" y1="${padding.top}" x2="${x}" y2="${H - padding.bottom}" stroke="#d4af37" stroke-width="1.5" stroke-dasharray="5,5" opacity="0.7"/>`;
-      svgContent += `<circle cx="${x}" cy="${zeroY}" r="6" fill="#d4af37" stroke="#0a0a0f" stroke-width="2"/>`;
-      svgContent += `<text x="${x}" y="${zeroY - 14}" text-anchor="middle" fill="#d4af37" font-size="10" font-family="Vazirmatn" font-weight="700">BE ${toFa(formatNum(be, 1))}</text>`;
+      svgContent += `<line x1="${x}" y1="${padding.top}" x2="${x}" y2="${H - padding.bottom}" stroke="var(--gold)" stroke-width="1.5" stroke-dasharray="5,5" opacity="0.7"/>`;
+      svgContent += `<circle cx="${x}" cy="${zeroY}" r="6" fill="var(--gold)" stroke="var(--bg-primary)" stroke-width="2"/>`;
+      svgContent += `<text x="${x}" y="${zeroY - 14}" text-anchor="middle" fill="var(--gold)" font-size="10" font-family="Vazirmatn" font-weight="700">BE ${toFa(formatNum(be, 1))}</text>`;
     }
   });
 
+  // قیمت فعلی
   const spotX = xScale(currentPrice);
   if (spotX >= padding.left && spotX <= W - padding.right) {
-    svgContent += `<line x1="${spotX}" y1="${padding.top}" x2="${spotX}" y2="${H - padding.bottom}" stroke="#3b82f6" stroke-width="2" stroke-dasharray="6,4" opacity="0.9"/>`;
-    svgContent += `<rect x="${spotX - 45}" y="${padding.top - 22}" width="90" height="20" rx="6" fill="#3b82f6"/>`;
+    svgContent += `<line x1="${spotX}" y1="${padding.top}" x2="${spotX}" y2="${H - padding.bottom}" stroke="var(--blue)" stroke-width="2" stroke-dasharray="6,4" opacity="0.9"/>`;
+    svgContent += `<rect x="${spotX - 45}" y="${padding.top - 22}" width="90" height="20" rx="6" fill="var(--blue)"/>`;
     svgContent += `<text x="${spotX}" y="${padding.top - 8}" text-anchor="middle" fill="#fff" font-size="10" font-family="Vazirmatn" font-weight="700">قیمت فعلی</text>`;
   }
 
   // crosshair + dot
-  svgContent += `<line id="crosshairX" x1="0" y1="${padding.top}" x2="0" y2="${H - padding.bottom}" stroke="#d4af37" stroke-width="1.5" stroke-dasharray="4,4" opacity="0" style="pointer-events:none"/>`;
-  svgContent += `<circle id="crosshairDot" cx="0" cy="0" r="6" fill="#d4af37" stroke="#0a0a0f" stroke-width="2" opacity="0" style="pointer-events:none"/>`;
+  svgContent += `<line id="crosshairX" x1="0" y1="${padding.top}" x2="0" y2="${H - padding.bottom}" stroke="var(--gold)" stroke-width="1.5" stroke-dasharray="4,4" opacity="0" style="pointer-events:none"/>`;
+  svgContent += `<circle id="crosshairDot" cx="0" cy="0" r="6" fill="var(--gold)" stroke="var(--bg-primary)" stroke-width="2" opacity="0" style="pointer-events:none"/>`;
 
-  // لایه دریافت رویداد موس
-  svgContent += `<rect id="hoverZone" x="${padding.left}" y="${padding.top}" width="${chartW}" height="${chartH}" fill="transparent" style="cursor:crosshair"/>`;
+  // لایه دریافت رویداد
+  svgContent += `<rect id="hoverZone" x="${padding.left}" y="${padding.top}" width="${chartW}" height="${chartH}" fill="transparent" style="cursor:${panMode ? 'grab' : 'crosshair'}"/>`;
 
   svg.innerHTML = svgContent;
 
-  // اگه نقطه‌ی قفل‌شده داشتیم، دوباره نمایش بده
   if (isLocked && lockedPoint) {
     applyLockedPoint(lockedPoint);
   }
 }
 
 // ==========================================
-// 🖱️ Tooltip + قفل کردن
+// 🔍 زوم / پن
+// ==========================================
+function zoomIn(axis = 'both') {
+  if (axis === 'both' || axis === 'x') zoomState.x = Math.min(zoomState.x * 1.25, 20);
+  if (axis === 'both' || axis === 'y') zoomState.y = Math.min(zoomState.y * 1.25, 20);
+  applyZoom();
+}
+
+function zoomOut() {
+  zoomState.x = Math.max(zoomState.x / 1.25, 1);
+  zoomState.y = Math.max(zoomState.y / 1.25, 1);
+  if (zoomState.x === 1) zoomState.offsetX = 0;
+  if (zoomState.y === 1) zoomState.offsetY = 0;
+  applyZoom();
+}
+
+function resetZoom() {
+  zoomState.x = 1;
+  zoomState.y = 1;
+  zoomState.offsetX = 0;
+  zoomState.offsetY = 0;
+  applyZoom();
+}
+
+function applyZoom() {
+  document.getElementById('zoomInfo').textContent = `${toFa(zoomState.x.toFixed(1))}× | ${toFa(zoomState.y.toFixed(1))}×`;
+  if (positions.length === 0) return;
+  if (!chartMeta) return;
+  updateChart();
+}
+
+function togglePan() {
+  panMode = !panMode;
+  document.getElementById('panBtn').classList.toggle('active', panMode);
+  document.getElementById('chartContainer').classList.toggle('panning', panMode);
+}
+
+// اسکرول روی نمودار = زوم
+document.getElementById('payoffChart').addEventListener('wheel', (e) => {
+  if (positions.length === 0) return;
+  e.preventDefault();
+  const factor = e.deltaY < 0 ? 1.1 : 0.9;
+  if (e.shiftKey) {
+    zoomState.x = Math.max(1, Math.min(zoomState.x * factor, 20));
+  } else if (e.ctrlKey || e.altKey) {
+    zoomState.y = Math.max(1, Math.min(zoomState.y * factor, 20));
+  } else {
+    zoomState.x = Math.max(1, Math.min(zoomState.x * factor, 20));
+    zoomState.y = Math.max(1, Math.min(zoomState.y * factor, 20));
+  }
+  applyZoom();
+}, { passive: false });
+
+// ==========================================
+// 🖱️ Mouse events: hover + pan + lock
 // ==========================================
 const tooltipEl = document.getElementById('chartTooltip');
 const payoffSvg = document.getElementById('payoffChart');
 const chartContainer = document.getElementById('chartContainer');
 const chartHint = document.getElementById('chartHint');
 
-function showChartTooltip(price, pnl, mouseX, mouseY) {
+let isDragging = false;
+let dragStartX = 0;
+let dragStartOffsetX = 0;
+let mouseDownX = 0;
+let mouseDownY = 0;
+
+function showChartTooltip(price, pnl, mouseX, mouseY, percent) {
+  const cur = chartMeta ? chartMeta.currency : { short: '$' };
   const profitClass = pnl >= 0 ? 'tt-pnl-profit' : 'tt-pnl-loss';
+  const pctClass = pnl >= 0 ? 'tt-pct-profit' : 'tt-pct-loss';
   const sign = pnl >= 0 ? '+' : '';
+  const pctSign = percent >= 0 ? '+' : '';
+
   tooltipEl.innerHTML = `
-    <span class="tt-price">قیمت: ${toFa(formatNum(price, 1))}</span>
-    <span class="${profitClass}">سود/زیان: ${sign}${toFa(formatNum(pnl))} $</span>
+    <div class="tt-row tt-price">
+      <span class="k">قیمت:</span>
+      <span class="v">${toFa(formatNum(price, 1))}</span>
+    </div>
+    <div class="tt-divider"></div>
+    <div class="tt-row ${pctClass}">
+      <span class="k">سود/زیان:</span>
+      <span class="v">${pctSign}${toFa(percent.toFixed(1))}٪</span>
+    </div>
+    <div class="tt-row ${profitClass}">
+      <span class="k">مبلغ:</span>
+      <span class="v">${sign}${toFa(formatNum(pnl))} ${cur.short}</span>
+    </div>
   `;
   tooltipEl.classList.add('visible');
   tooltipEl.classList.toggle('locked', isLocked);
@@ -1622,10 +1818,8 @@ function updateCrosshair(price, pnl) {
   const cx = document.getElementById('crosshairX');
   const cd = document.getElementById('crosshairDot');
   if (!cx || !cd || !svgGeometry) return;
-
   const px = svgGeometry.xScale(price);
   const py = svgGeometry.yScale(pnl);
-
   cx.setAttribute('x1', px);
   cx.setAttribute('x2', px);
   cx.setAttribute('opacity', '0.85');
@@ -1642,16 +1836,14 @@ function clearCrosshair() {
 }
 
 function resetLockUI() {
-  chartContainer.classList.remove('locked');
   chartHint.classList.remove('locked');
   chartHint.innerHTML = `
     <span class="lock-icon">🖱️</span>
-    <span>موس را روی نمودار حرکت بده — برای <strong>قفل کردن</strong> روی نقطه مورد نظر <strong>کلیک کن</strong></span>
+    <span>اسکرول = زوم | درگ = جابجایی | کلیک = قفل نقطه | برای آزادسازی دوباره کلیک کن</span>
   `;
 }
 
 function applyLockedPoint(point) {
-  chartContainer.classList.add('locked');
   chartHint.classList.add('locked');
   chartHint.innerHTML = `
     <span class="lock-icon">🔒</span>
@@ -1659,25 +1851,43 @@ function applyLockedPoint(point) {
   `;
   updateCrosshair(point.price, point.pnl);
 
-  // tooltip رو کنار نقطه قفل نمایش بده
   const rect = payoffSvg.getBoundingClientRect();
   const scaleX = rect.width / svgGeometry.W;
   const scaleY = rect.height / svgGeometry.H;
   const px = svgGeometry.xScale(point.price) * scaleX + rect.left;
   const py = svgGeometry.yScale(point.pnl) * scaleY + rect.top;
-  showChartTooltip(point.price, point.pnl, px, py);
+
+  // محاسبه درصد
+  let totalInvestment = 0;
+  positions.forEach(p => {
+    if (p.type === 'spot') totalInvestment += Math.abs(p.quantity * p.currentPrice);
+    else totalInvestment += Math.abs(p.quantity * p.premium);
+  });
+  const percent = totalInvestment > 0 ? (point.pnl / totalInvestment) * 100 : 0;
+
+  showChartTooltip(point.price, point.pnl, px, py, percent);
 }
 
-// حرکت موس
+// mousemove
 payoffSvg.addEventListener('mousemove', (e) => {
   if (!svgGeometry || chartPoints.length === 0) return;
-  if (isLocked) return; // اگه قفله، حرکت موس کاری نکنه
+
+  // درگ (Pan)
+  if (isDragging && panMode) {
+    const rect = payoffSvg.getBoundingClientRect();
+    const dx = (e.clientX - dragStartX) / rect.width;
+    zoomState.offsetX = dragStartOffsetX - dx / zoomState.x;
+    zoomState.offsetX = Math.max(-1, Math.min(1, zoomState.offsetX));
+    applyZoom();
+    return;
+  }
+
+  if (isLocked) return;
+  if (panMode) return;
 
   const rect = payoffSvg.getBoundingClientRect();
   const scaleX = svgGeometry.W / rect.width;
-  const scaleY = svgGeometry.H / rect.height;
   const svgX = (e.clientX - rect.left) * scaleX;
-
   const { padding, chartW, priceMin, priceMax } = svgGeometry;
 
   if (svgX < padding.left || svgX > padding.left + chartW) {
@@ -1696,28 +1906,62 @@ payoffSvg.addEventListener('mousemove', (e) => {
     if (d < minDist) { minDist = d; nearest = pt; }
   });
 
+  // محاسبه درصد
+  let totalInvestment = 0;
+  positions.forEach(p => {
+    if (p.type === 'spot') totalInvestment += Math.abs(p.quantity * p.currentPrice);
+    else totalInvestment += Math.abs(p.quantity * p.premium);
+  });
+  const percent = totalInvestment > 0 ? (nearest.pnl / totalInvestment) * 100 : 0;
+
   updateCrosshair(nearest.price, nearest.pnl);
-  showChartTooltip(nearest.price, nearest.pnl, e.clientX, e.clientY);
+  showChartTooltip(nearest.price, nearest.pnl, e.clientX, e.clientY, percent);
 });
 
 payoffSvg.addEventListener('mouseleave', () => {
-  if (isLocked) return; // اگه قفله، با خروج موس پاک نشه
+  if (isLocked) return;
+  if (isDragging) return;
   hideChartTooltip();
   clearCrosshair();
 });
 
-// کلیک → قفل / آزادسازی
-payoffSvg.addEventListener('click', (e) => {
+// mousedown
+payoffSvg.addEventListener('mousedown', (e) => {
+  if (positions.length === 0) return;
+  mouseDownX = e.clientX;
+  mouseDownY = e.clientY;
+  if (panMode) {
+    isDragging = true;
+    dragStartX = e.clientX;
+    dragStartOffsetX = zoomState.offsetX;
+    payoffSvg.style.cursor = 'grabbing';
+  }
+});
+
+// mouseup
+document.addEventListener('mouseup', (e) => {
+  if (isDragging) {
+    isDragging = false;
+    payoffSvg.style.cursor = panMode ? 'grab' : 'crosshair';
+    return;
+  }
+
+  // تشخیص کلیک واقعی (نه درگ)
+  const dx = Math.abs(e.clientX - mouseDownX);
+  const dy = Math.abs(e.clientY - mouseDownY);
+  if (dx > 5 || dy > 5) return;
+
+  // بررسی که کلیک روی svg بوده
+  if (e.target !== payoffSvg && !payoffSvg.contains(e.target)) return;
   if (!svgGeometry || chartPoints.length === 0) return;
+  if (panMode) return;
 
   if (isLocked) {
-    // آزادسازی
     isLocked = false;
     lockedPoint = null;
     resetLockUI();
     hideChartTooltip();
     clearCrosshair();
-    showNotification('🔓 قفل نقطه باز شد', 'success');
     return;
   }
 
@@ -1741,7 +1985,6 @@ payoffSvg.addEventListener('click', (e) => {
   isLocked = true;
   lockedPoint = nearest;
   applyLockedPoint(nearest);
-  showNotification('🔒 نقطه قفل شد', 'success');
 });
 
 // ==========================================
