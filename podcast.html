@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>پادکست | سایت من</title>
+  <link rel="stylesheet" href="jalali-datepicker.css">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: Tahoma, Arial, sans-serif;
+      background: #0f172a;
+      color: #e2e8f0;
+      padding: 20px;
+      transition: background 0.3s, color 0.3s;
+    }
+    body.light {
+      background: #f8fafc;
+      color: #1e293b;
+    }
+    .container { max-width: 800px; margin: 0 auto; }
+    h1 {
+      text-align: center;
+      margin: 30px 0;
+      font-size: 2rem;
+      color: #38bdf8;
+    }
+    .episode {
+      background: #1e293b;
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 20px;
+      border-right: 4px solid #38bdf8;
+      transition: transform 0.2s;
+    }
+    body.light .episode {
+      background: #ffffff;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+    .episode:hover { transform: translateX(-4px); }
+    .episode h2 {
+      font-size: 1.2rem;
+      margin-bottom: 8px;
+      color: #38bdf8;
+    }
+    .episode .meta {
+      font-size: 0.85rem;
+      opacity: 0.7;
+      margin-bottom: 12px;
+    }
+    .episode p {
+      font-size: 0.95rem;
+      line-height: 1.7;
+      margin-bottom: 15px;
+      opacity: 0.9;
+    }
+    audio {
+      width: 100%;
+      border-radius: 8px;
+      outline: none;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h1>🎙️ پادکست</h1>
+
+    <!-- قسمت ۱ -->
+    <div class="episode">
+      <h2>قسمت اول: عنوان اپیزود</h2>
+      <div class="meta">۱۴۰۵/۰۷/۰۴ · ۱۲ دقیقه</div>
+      <p>توضیح کوتاه درباره‌ی این قسمت. اینجا می‌تونی خلاصه‌ای از موضوع بنویسی.</p>
+      <audio controls preload="none">
+        <source src="https://raw.githubusercontent.com/SHAMDUN/My-First-Project/main/audio/ep1.mp3" type="audio/mpeg">
+        مرورگر شما از پخش صدا پشتیبانی نمی‌کند.
+      </audio>
+    </div>
+
+    <!-- قسمت ۲ -->
+    <div class="episode">
+      <h2>قسمت دوم: عنوان اپیزود</h2>
+      <div class="meta">۱۴۰۵/۰۷/۱۱ · ۱۵ دقیقه</div>
+      <p>توضیح کوتاه درباره‌ی این قسمت.</p>
+      <audio controls preload="none">
+        <source src="https://raw.githubusercontent.com/SHAMDUN/My-First-Project/main/audio/ep2.mp3" type="audio/mpeg">
+      </audio>
+    </div>
+
+  </div>
+
+  <script src="navbar.js"></script>
+  <script>
+    // هماهنگی با تم سایت
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'light') document.body.classList.add('light');
+
+    // گوش دادن به تغییر تم از navbar
+    window.addEventListener('message', (e) => {
+      if (e.data === 'light') document.body.classList.add('light');
+      if (e.data === 'dark') document.body.classList.remove('light');
+    });
+  </script>
+</body>
+</html>
