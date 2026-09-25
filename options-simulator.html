@@ -7,11 +7,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css">
-<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700;800&display=swap" rel="stylesheet">
 <meta name="theme-color" content="#d4af37">
 <style>
 :root {
-  /* ===== پالت مدرن Linear/Vercel (Dark) ===== */
   --bg-primary: #08090c;
   --bg-elevated: #0d0f14;
   --bg-card: #11141a;
@@ -43,7 +41,6 @@
   --shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.45);
   --shadow-glow: 0 0 40px rgba(212, 175, 55, 0.08);
 
-  --mono: 'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace;
   --sans: 'Vazirmatn', Tahoma, sans-serif;
 }
 [data-theme="light"] {
@@ -100,10 +97,11 @@ body {
 }
 .container { max-width: 1500px; margin: 0 auto; padding: 32px 24px 80px; }
 
-/* ===== اعداد مونواسپیس ===== */
+/* ===== اعداد — فونت Vazirmatn با tabular-nums ===== */
 .num, .mono, input[type="number"], .value, .zoom-info {
-  font-family: var(--mono);
-  font-feature-settings: 'tnum' 1, 'zero' 1;
+  font-family: var(--sans);
+  font-feature-settings: 'tnum' 1;
+  font-variant-numeric: tabular-nums;
 }
 
 /* ===== HEADER ===== */
@@ -181,7 +179,6 @@ body {
   font-size: 11px;
   font-weight: 800;
   border: 1px solid rgba(212, 175, 55, 0.25);
-  font-family: var(--mono);
 }
 
 /* ===== Tabs ===== */
@@ -252,18 +249,6 @@ body {
   border-color: rgba(212, 175, 55, 0.5);
   box-shadow: 0 0 0 1px rgba(212, 175, 55, 0.2), var(--shadow-md);
 }
-.preset-card.active::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  border-radius: 12px;
-  padding: 1px;
-  background: linear-gradient(135deg, var(--gold), transparent);
-  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
-  pointer-events: none;
-}
 .preset-card .preset-header {
   display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;
 }
@@ -283,7 +268,6 @@ body {
   font-weight: 800;
   margin-top: 8px;
   border: 1px solid rgba(59, 130, 246, 0.2);
-  font-family: var(--mono);
 }
 
 /* ===== TABLE ===== */
@@ -294,7 +278,7 @@ body {
   border: 1px solid var(--border);
   background: var(--bg-card-2);
 }
-.positions-table { width: 100%; border-collapse: collapse; min-width: 1460px; }
+.positions-table { width: 100%; border-collapse: collapse; min-width: 1560px; }
 .positions-table th {
   background: var(--bg-elevated);
   color: var(--text-secondary);
@@ -305,7 +289,6 @@ body {
   border-bottom: 1px solid var(--border);
   white-space: nowrap;
   letter-spacing: 0.3px;
-  text-transform: uppercase;
 }
 .positions-table td {
   padding: 10px;
@@ -319,7 +302,6 @@ body {
 /* ===== INPUTS ===== */
 .cell-input, .cell-select {
   width: 100%;
-  min-width: 88px;
   padding: 9px 11px;
   background: var(--bg-input);
   border: 1px solid var(--border);
@@ -334,11 +316,14 @@ body {
   text-align: right;
 }
 .cell-input {
-  font-family: var(--mono);
+  min-width: 95px;
   font-feature-settings: 'tnum' 1;
   letter-spacing: -0.2px;
 }
-.cell-select { cursor: pointer; }
+.cell-select {
+  min-width: 130px;
+  cursor: pointer;
+}
 .cell-input:hover, .cell-select:hover { border-color: var(--border-strong); }
 .cell-input:focus, .cell-select:focus {
   border-color: var(--gold);
@@ -360,7 +345,6 @@ body {
 }
 .cell-select.placeholder-active {
   color: var(--text-muted);
-  font-style: italic;
   font-weight: 500;
 }
 
@@ -441,7 +425,6 @@ body {
   color: var(--text-muted);
   font-size: 11px;
   font-weight: 600;
-  font-style: italic;
 }
 [data-theme="light"] .symbol-badge.call { color: #16a34a; }
 [data-theme="light"] .symbol-badge.put { color: #dc2626; }
@@ -581,7 +564,6 @@ body {
   font-size: 11px;
   border: 1px solid rgba(212, 175, 55, 0.25);
   font-weight: 700;
-  font-family: var(--mono);
 }
 
 /* ===== EXPLANATION ===== */
@@ -696,14 +678,13 @@ body {
   font-size: 18px;
   font-weight: 800;
   letter-spacing: -0.5px;
-  font-family: var(--mono);
 }
 .result-card.profit .value { color: var(--green); }
 .result-card.loss .value { color: var(--red); }
 .result-card.blue .value { color: var(--blue); }
 
 /* ============================================================
-   نمودار مدرن Linear/Vercel
+   نمودار مدرن
    ============================================================ */
 .chart-container {
   position: relative;
@@ -751,7 +732,6 @@ body {
   font-size: 10px;
   font-weight: 800;
   border: 1px solid rgba(34, 197, 94, 0.25);
-  font-family: var(--mono);
 }
 .chart-header .live-badge::before {
   content: '';
@@ -785,7 +765,7 @@ body {
 }
 .chart-canvas-wrap.panning #payoffChart { cursor: grabbing !important; }
 
-/* ===== TOOLTIP داخل chart-canvas-wrap ===== */
+/* ===== TOOLTIP ===== */
 #chartTooltip {
   position: absolute;
   pointer-events: none;
@@ -836,7 +816,7 @@ body {
 [data-theme="light"] #chartTooltip .tt-row .k { color: #5b6471; }
 #chartTooltip .tt-row .v {
   font-weight: 800;
-  font-family: var(--mono);
+  font-family: var(--sans);
   font-feature-settings: 'tnum' 1;
   direction: ltr;
   letter-spacing: -0.3px;
@@ -872,7 +852,6 @@ body {
   margin-inline-end: 6px;
   font-size: 11px;
   letter-spacing: 0.3px;
-  text-transform: uppercase;
 }
 .zoom-btn {
   display: inline-flex;
@@ -1068,13 +1047,6 @@ body {
   color: var(--text-primary);
 }
 .modal-btn:hover { background: var(--bg-elevated); border-color: var(--border-strong); }
-.modal-btn.primary {
-  background: linear-gradient(135deg, var(--gold), var(--gold-dark));
-  color: #fff;
-  border-color: transparent;
-  box-shadow: 0 2px 8px rgba(212, 175, 55, 0.3);
-}
-.modal-btn.primary:hover { transform: translateY(-1px); box-shadow: 0 4px 16px rgba(212, 175, 55, 0.4); }
 .modal-btn.danger {
   background: var(--red);
   color: #fff;
@@ -1088,7 +1060,8 @@ body {
   .container { padding: 20px 14px 60px; }
   .positions-table th { padding: 8px 5px; font-size: 10px; }
   .positions-table td { padding: 7px 5px; }
-  .cell-input, .cell-select { padding: 7px 8px; font-size: 11px; min-width: 70px; }
+  .cell-input { min-width: 75px; padding: 7px 8px; font-size: 11px; }
+  .cell-select { min-width: 105px; padding: 7px 8px; font-size: 11px; }
   .side-btn { font-size: 10px; padding: 6px 4px; }
   .btn-remove { width: 28px; height: 28px; font-size: 12px; }
   .presets-grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); }
@@ -1261,7 +1234,6 @@ body {
 
 </div>
 
-<!-- ===== MODAL ===== -->
 <div class="modal-overlay" id="customModal">
   <div class="modal-box">
     <div class="modal-icon" id="modalIcon">⚠️</div>
@@ -1622,7 +1594,6 @@ function applyPreset(presetKey) {
   const preset = PRESETS.find(p => p.key === presetKey);
   if (!preset) return;
 
-  // اگه استراتژی دیگه‌ای فعاله → تأیید بگیر
   if (currentPreset && currentPreset !== presetKey) {
     openModal({
       icon: '🔄',
@@ -1643,10 +1614,9 @@ function applyPresetInternal(presetKey) {
 
   currentPreset = presetKey;
 
-  // پوزیشن‌ها بدون دارایی ساخته می‌شن — کاربر باید دارایی انتخاب کنه
   positions = preset.positions.map((posDef, idx) => ({
     id: Date.now() + idx + Math.random(),
-    asset: '',  // خالی برای placeholder
+    asset: '',
     side: posDef.side,
     type: posDef.type,
     quantity: 1,
@@ -1656,7 +1626,6 @@ function applyPresetInternal(presetKey) {
     delta: posDef.type === 'call' ? 0.5 : (posDef.type === 'put' ? -0.5 : 1),
     margin: 0,
     priceSource: 'default',
-    // ذخیره‌ی نسبت‌ها برای بعد از انتخاب دارایی
     _strikeOffset: posDef.strikeOffset,
     _premiumRatio: posDef.premiumRatio
   }));
@@ -1857,12 +1826,11 @@ function renderPositions() {
     const symInfo = getSymbolInfo(p);
     const isSpot = p.type === 'spot';
     const hasAsset = !!p.asset;
-    const locked = isEmptyStrategy && hasAsset; // اگه استراتژی دارای دارایی اولیه شده، بقیه قفل
+    const locked = isEmptyStrategy && hasAsset;
 
-    // ساخت options
     let assetOptions = '';
     if (!hasAsset) {
-      assetOptions += `<option value="" disabled selected hidden>دارایی پایه را انتخاب کنید...</option>`;
+      assetOptions += `<option value="" disabled selected hidden>یک دارایی را انتخاب کنید</option>`;
     }
     groups.forEach(g => {
       const opts = ASSETS.filter(a => a.group === g).map(a => {
@@ -1975,14 +1943,11 @@ function updatePosition(id, field, value) {
   if (!pos) return;
 
   if (field === 'asset') {
-    // قانون: دارایی یک پوزیشن جدید انتخاب شد → همه‌ی پوزیشن‌ها با هم عوض بشن
     pos.asset = value;
     const asset = getAsset(value);
 
-    // محاسبه‌ی مقادیر پیش‌فرض برای بقیه پوزیشن‌ها
     positions.forEach(p => {
       if (p.id !== id) {
-        // دارایی بقیه رو هم عوض کن
         p.asset = value;
         if (p.type === 'spot') {
           p.currentPrice = asset.defaultPrice;
@@ -2005,7 +1970,6 @@ function updatePosition(id, field, value) {
       }
     });
 
-    // مقدار پوزیشن جاری
     if (pos.type === 'spot') {
       pos.currentPrice = asset.defaultPrice;
       pos.strike = 0;
@@ -2029,10 +1993,6 @@ function updatePosition(id, field, value) {
     renderPositions();
     updateChart();
     return;
-  }
-
-  if (field !== 'currentPrice') {
-    // تغییرات دیگه استراتژی رو غیرفعال نمی‌کنن (کادر آموزشی می‌مونه)
   }
 
   if (field === 'side') {
@@ -2065,7 +2025,6 @@ function updatePosition(id, field, value) {
 }
 
 function addPosition() {
-  // اگه استراتژی فعاله → پاپ‌آپ هشدار
   if (currentPreset && positions.length > 0) {
     openModal({
       icon: '⚠️',
@@ -2109,7 +2068,6 @@ function addPositionInternal() {
 
 function removePosition(id) {
   positions = positions.filter(p => p.id !== id);
-  // اگه همه‌ی پوزیشن‌ها حذف شدن، استراتژی هم پاک شه
   if (positions.length === 0) {
     currentPreset = null;
     renderPresets();
@@ -2146,10 +2104,10 @@ function updateChart() {
 
   if (validPositions.length === 0) {
     document.getElementById('payoffChart').innerHTML = `
-      <text x="500" y="230" text-anchor="middle" fill="#5c6169" font-size="14" font-family="Vazirmatn" font-weight="600">
+      <text x="500" y="230" text-anchor="middle" fill="#5c6169" font-size="14" font-family="Vazirmatn, sans-serif" font-weight="600">
         📭 در انتظار انتخاب دارایی پایه
       </text>
-      <text x="500" y="258" text-anchor="middle" fill="#5c6169" font-size="11" font-family="Vazirmatn">
+      <text x="500" y="258" text-anchor="middle" fill="#5c6169" font-size="11" font-family="Vazirmatn, sans-serif">
         برای دیدن نمودار، دارایی پایه را از جدول بالا انتخاب کنید
       </text>
     `;
@@ -2315,7 +2273,7 @@ function findBreakevens(points) {
 }
 
 // ==========================================
-// 📈 رسم نمودار — سبک Linear/Vercel
+// 📈 رسم نمودار
 // ==========================================
 let currentBreakevens = [];
 
@@ -2343,10 +2301,8 @@ function drawChart(points, breakevens, currentPrice) {
     zeroY, xScale, yScale
   };
 
-  const cs = getComputedStyle(document.documentElement);
   const isDark = document.documentElement.getAttribute('data-theme') !== 'light';
 
-  // پالت رنگ
   const cGrid = isDark ? 'rgba(255, 255, 255, 0.035)' : 'rgba(0, 0, 0, 0.04)';
   const cAxis = isDark ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.08)';
   const cText = isDark ? '#5c6169' : '#8a919c';
@@ -2364,10 +2320,6 @@ function drawChart(points, breakevens, currentPrice) {
       <stop offset="50%" stop-color="${cGoldLight}"/>
       <stop offset="100%" stop-color="${cGold}"/>
     </linearGradient>
-    <linearGradient id="areaGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" stop-color="${cGold}" stop-opacity="0.12"/>
-      <stop offset="100%" stop-color="${cGold}" stop-opacity="0"/>
-    </linearGradient>
     <filter id="lineGlow" x="-20%" y="-20%" width="140%" height="140%">
       <feGaussianBlur stdDeviation="3" result="blur"/>
       <feMerge>
@@ -2380,7 +2332,6 @@ function drawChart(points, breakevens, currentPrice) {
     </clipPath>
   </defs>`;
 
-  // ناحیه سود / ضرر
   const profitBottomY = Math.max(padding.top, Math.min(H - padding.bottom, zeroY));
   if (profitBottomY > padding.top) {
     svgContent += `<rect x="${padding.left}" y="${padding.top}" width="${chartW}" height="${profitBottomY - padding.top}" fill="${cGreen}" clip-path="url(#chartClip)"/>`;
@@ -2390,7 +2341,6 @@ function drawChart(points, breakevens, currentPrice) {
     svgContent += `<rect x="${padding.left}" y="${lossTopY}" width="${chartW}" height="${H - padding.bottom - lossTopY}" fill="${cRed}" clip-path="url(#chartClip)"/>`;
   }
 
-  // شبکه نقطه‌چین فوق‌محو
   for (let i = 0; i <= 12; i++) {
     const price = xMin + ((xMax - xMin) / 12) * i;
     const x = xScale(price);
@@ -2402,26 +2352,22 @@ function drawChart(points, breakevens, currentPrice) {
     svgContent += `<line x1="${padding.left}" y1="${y}" x2="${W - padding.right}" y2="${y}" stroke="${cGrid}" stroke-width="1"/>`;
   }
 
-  // محور صفر
   svgContent += `<line x1="${padding.left}" y1="${zeroY}" x2="${W - padding.right}" y2="${zeroY}" stroke="${cAxis}" stroke-width="1"/>`;
   svgContent += `<line x1="${padding.left}" y1="${padding.top}" x2="${padding.left}" y2="${H - padding.bottom}" stroke="${cAxis}" stroke-width="1"/>`;
 
-  // برچسب Y
   for (let i = 0; i <= 8; i++) {
     const pnl = yMin + ((yMax - yMin) / 8) * i;
     const y = yScale(pnl);
-    svgContent += `<text x="${padding.left - 12}" y="${y + 4}" text-anchor="end" fill="${cText}" font-size="10" font-family="JetBrains Mono, monospace" font-weight="500">${toFa(formatNum(pnl))}</text>`;
+    svgContent += `<text x="${padding.left - 12}" y="${y + 4}" text-anchor="end" fill="${cText}" font-size="10" font-family="Vazirmatn, sans-serif" font-weight="500">${toFa(formatNum(pnl))}</text>`;
   }
 
-  // برچسب X
   for (let i = 0; i <= 6; i++) {
     const price = xMin + ((xMax - xMin) / 6) * i;
     const x = xScale(price);
-    svgContent += `<text x="${x}" y="${H - padding.bottom + 22}" text-anchor="middle" fill="${cText}" font-size="10" font-family="JetBrains Mono, monospace" font-weight="500">${toFa(formatNum(price))}</text>`;
+    svgContent += `<text x="${x}" y="${H - padding.bottom + 22}" text-anchor="middle" fill="${cText}" font-size="10" font-family="Vazirmatn, sans-serif" font-weight="500">${toFa(formatNum(price))}</text>`;
   }
   svgContent += `<text x="${W / 2}" y="${H - 12}" text-anchor="middle" fill="${cTextStrong}" font-size="10" font-family="Vazirmatn, sans-serif" font-weight="600">قیمت دارایی پایه در سررسید</text>`;
 
-  // منحنی
   let pathD = '';
   points.forEach((p, i) => {
     const x = xScale(p.price);
@@ -2432,17 +2378,15 @@ function drawChart(points, breakevens, currentPrice) {
   svgContent += `<path d="${pathD}" stroke="${cGoldLight}" stroke-width="5" fill="none" stroke-linejoin="round" opacity="0.12" filter="url(#lineGlow)" clip-path="url(#chartClip)"/>`;
   svgContent += `<path d="${pathD}" stroke="url(#lineGrad)" stroke-width="2.2" fill="none" stroke-linejoin="round" clip-path="url(#chartClip)"/>`;
 
-  // نقاط سربه‌سر
   breakevens.forEach(be => {
     if (be > xMin && be < xMax) {
       const x = xScale(be);
       svgContent += `<line x1="${x}" y1="${padding.top}" x2="${x}" y2="${H - padding.bottom}" stroke="${cGold}" stroke-width="1" stroke-dasharray="3,4" opacity="0.45"/>`;
       svgContent += `<circle cx="${x}" cy="${zeroY}" r="4.5" fill="${cGold}" stroke="${cBg}" stroke-width="1.5"/>`;
-      svgContent += `<text x="${x}" y="${zeroY - 12}" text-anchor="middle" fill="${cGold}" font-size="10" font-family="JetBrains Mono, monospace" font-weight="700">BE ${toFa(formatNum(be, 0))}</text>`;
+      svgContent += `<text x="${x}" y="${zeroY - 12}" text-anchor="middle" fill="${cGold}" font-size="10" font-family="Vazirmatn, sans-serif" font-weight="700">BE ${toFa(formatNum(be, 0))}</text>`;
     }
   });
 
-  // قیمت فعلی
   const spotX = xScale(currentPrice);
   if (spotX >= padding.left && spotX <= W - padding.right) {
     svgContent += `<line x1="${spotX}" y1="${padding.top}" x2="${spotX}" y2="${H - padding.bottom}" stroke="${cSpot}" stroke-width="1.3" stroke-dasharray="4,4" opacity="0.85"/>`;
@@ -2450,7 +2394,6 @@ function drawChart(points, breakevens, currentPrice) {
     svgContent += `<text x="${spotX}" y="${padding.top - 9}" text-anchor="middle" fill="#fff" font-size="9" font-family="Vazirmatn, sans-serif" font-weight="800">قیمت فعلی</text>`;
   }
 
-  // crosshair
   svgContent += `<line id="crosshairX" x1="0" y1="${padding.top}" x2="0" y2="${H - padding.bottom}" stroke="${cGold}" stroke-width="1" stroke-dasharray="3,3" opacity="0" style="pointer-events:none"/>`;
   svgContent += `<circle id="crosshairDot" cx="0" cy="0" r="5" fill="${cGold}" stroke="${cBg}" stroke-width="2" opacity="0" style="pointer-events:none"/>`;
 
