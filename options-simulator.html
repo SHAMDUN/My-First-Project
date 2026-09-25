@@ -22,7 +22,6 @@
   --gray: #94a3b8;
   --border: rgba(212, 175, 55, 0.15);
   --border-soft: rgba(255, 255, 255, 0.06);
-
   --chart-bg-from: #0f0f18;
   --chart-bg-to: #1a1a26;
   --chart-grid: #2a2a3a;
@@ -47,7 +46,6 @@
   --gray: #64748b;
   --border: rgba(184, 134, 11, 0.2);
   --border-soft: rgba(0, 0, 0, 0.06);
-
   --chart-bg-from: #ffffff;
   --chart-bg-to: #f1f5f9;
   --chart-grid: #cbd5e1;
@@ -355,21 +353,9 @@ body {
   color: #60a5fa;
   text-shadow: 0 0 12px rgba(59, 130, 246, 0.4);
 }
-[data-theme="light"] .symbol-badge.call {
-  background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(16, 185, 129, 0.05));
-  color: #047857;
-  text-shadow: none;
-}
-[data-theme="light"] .symbol-badge.put {
-  background: linear-gradient(135deg, rgba(239, 68, 68, 0.15), rgba(239, 68, 68, 0.05));
-  color: #b91c1c;
-  text-shadow: none;
-}
-[data-theme="light"] .symbol-badge.spot {
-  background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(59, 130, 246, 0.05));
-  color: #1d4ed8;
-  text-shadow: none;
-}
+[data-theme="light"] .symbol-badge.call { color: #047857; text-shadow: none; }
+[data-theme="light"] .symbol-badge.put { color: #b91c1c; text-shadow: none; }
+[data-theme="light"] .symbol-badge.spot { color: #1d4ed8; text-shadow: none; }
 .symbol-badge:hover { transform: scale(1.04); }
 
 .btn-remove {
@@ -491,6 +477,128 @@ body {
   font-size: 11px;
   border: 1px solid rgba(212, 175, 55, 0.3);
   font-weight: 700;
+}
+
+/* ===== کادر توضیح استراتژی ===== */
+.strategy-explanation {
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 20px;
+  padding: 20px 22px;
+  border-radius: 16px;
+  background:
+    linear-gradient(135deg, rgba(59, 130, 246, 0.10), rgba(139, 92, 246, 0.05)),
+    var(--bg-card);
+  border: 1px solid rgba(59, 130, 246, 0.28);
+  animation: fadeSlideIn 0.35s ease;
+}
+[data-theme="light"] .strategy-explanation {
+  background:
+    linear-gradient(135deg, rgba(37, 99, 235, 0.08), rgba(124, 58, 237, 0.04)),
+    #ffffff;
+  border-color: rgba(37, 99, 235, 0.25);
+}
+.strategy-explanation::before {
+  content: '';
+  position: absolute;
+  top: 0; right: 0; bottom: 0;
+  width: 4px;
+  background: linear-gradient(to bottom, var(--blue), var(--purple));
+}
+@keyframes fadeSlideIn {
+  from { opacity: 0; transform: translateY(-6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.exp-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+  padding-bottom: 10px;
+  border-bottom: 1px dashed rgba(59, 130, 246, 0.25);
+}
+.exp-header .exp-icon {
+  display: inline-flex;
+  width: 34px; height: 34px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.2), rgba(139, 92, 246, 0.1));
+  font-size: 17px;
+}
+.exp-header .exp-title {
+  font-size: 14px;
+  font-weight: 900;
+  color: var(--white);
+}
+.exp-header .exp-sub {
+  font-size: 11px;
+  color: var(--gray);
+  margin-top: 2px;
+}
+.exp-body {
+  display: grid;
+  gap: 12px;
+  grid-template-columns: 1fr;
+}
+@media (min-width: 900px) {
+  .exp-body { grid-template-columns: 1.3fr 1fr 1fr; gap: 14px; }
+}
+.exp-block {
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 11px;
+  padding: 12px 14px;
+}
+[data-theme="light"] .exp-block {
+  background: rgba(241, 245, 249, 0.7);
+  border-color: rgba(0, 0, 0, 0.06);
+}
+.exp-block .blk-title {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 900;
+  margin-bottom: 8px;
+  color: var(--white);
+}
+.exp-block .blk-title.pros { color: var(--green); }
+.exp-block .blk-title.cons { color: var(--red); }
+.exp-block p {
+  font-size: 12px;
+  line-height: 1.9;
+  color: var(--gray);
+}
+.exp-block ul {
+  list-style: none;
+  display: grid;
+  gap: 5px;
+}
+.exp-block ul li {
+  font-size: 12px;
+  line-height: 1.8;
+  color: var(--gray);
+  padding-right: 16px;
+  position: relative;
+}
+.exp-block ul li::before {
+  content: '▪';
+  position: absolute;
+  right: 0;
+  top: 0;
+  font-size: 10px;
+}
+.exp-block.pros ul li::before { color: var(--green); }
+.exp-block.cons ul li::before { color: var(--red); }
+.exp-highlight {
+  display: inline-block;
+  padding: 1px 6px;
+  border-radius: 5px;
+  background: rgba(212, 175, 55, 0.15);
+  color: var(--gold);
+  font-weight: 700;
+  font-size: 11px;
 }
 
 .results-grid {
@@ -633,36 +741,38 @@ body {
 }
 .chart-hint .lock-icon { font-size: 14px; }
 
+/* ===== Chart Tooltip — ثابت روی صفحه ===== */
 #chartTooltip {
   position: fixed;
   pointer-events: none;
-  background: rgba(20, 20, 28, 0.97);
+  background: rgba(15, 15, 22, 0.98);
   border: 1.5px solid var(--gold);
-  border-radius: 10px;
-  padding: 10px 14px;
+  border-radius: 12px;
+  padding: 11px 15px;
   font-family: 'Vazirmatn', Tahoma, sans-serif;
   font-size: 12px;
   font-weight: 700;
   color: var(--white);
-  z-index: 99999;
+  z-index: 999999;
   opacity: 0;
   transition: opacity 0.12s;
   direction: rtl;
   white-space: nowrap;
-  box-shadow: 0 6px 24px rgba(0,0,0,0.5);
+  box-shadow: 0 10px 32px rgba(0,0,0,0.75), 0 0 0 1px rgba(212, 175, 55, 0.2);
   font-variant-numeric: tabular-nums;
-  line-height: 1.8;
-  min-width: 200px;
+  line-height: 1.85;
+  min-width: 215px;
+  backdrop-filter: blur(10px);
 }
 [data-theme="light"] #chartTooltip {
-  background: rgba(255, 255, 255, 0.98);
+  background: rgba(255, 255, 255, 0.99);
   color: #0f172a;
-  box-shadow: 0 6px 24px rgba(0,0,0,0.15);
+  box-shadow: 0 10px 32px rgba(0,0,0,0.22), 0 0 0 1px rgba(184, 134, 11, 0.25);
 }
 #chartTooltip.visible { opacity: 1; }
 #chartTooltip.locked {
   border-color: var(--gold);
-  box-shadow: 0 0 0 2px rgba(212, 175, 55, 0.25), 0 6px 24px rgba(0,0,0,0.5);
+  box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.3), 0 10px 32px rgba(0,0,0,0.75);
 }
 #chartTooltip .tt-row {
   display: flex;
@@ -680,7 +790,7 @@ body {
 #chartTooltip .tt-divider {
   height: 1px;
   background: var(--border);
-  margin: 5px 0;
+  margin: 6px 0;
 }
 
 .legend {
@@ -846,6 +956,7 @@ body {
     </button>
   </div>
 
+  <!-- اطلاعات استراتژی -->
   <div class="strategy-info">
     <div class="strategy-name">🎯 <span id="strategyName">استراتژی سفارشی</span></div>
     <div class="strategy-tag" id="strategyTags">در انتظار پوزیشن...</div>
@@ -855,6 +966,10 @@ body {
     </div>
   </div>
 
+  <!-- کادر توضیح استراتژی -->
+  <div class="strategy-explanation" id="strategyExplanation" style="display: none;"></div>
+
+  <!-- نتایج -->
   <div class="results-grid">
     <div class="result-card profit">
       <div class="label">📈 حداکثر سود</div>
@@ -878,6 +993,7 @@ body {
     </div>
   </div>
 
+  <!-- نمودار -->
   <div class="chart-container" id="chartContainer">
     <div class="panel-title" style="margin-bottom: 18px;">📈 نمودار سود و زیان (در سررسید)</div>
     <svg id="payoffChart" viewBox="0 0 1000 480" preserveAspectRatio="xMidYMid meet"></svg>
@@ -960,21 +1076,283 @@ const ASSETS = [
 // 🎯 Preset Strategies
 // ==========================================
 const PRESETS = [
-  { key: 'longCall', name: 'Long Call', icon: '🟢', desc: 'خرید Call — سود نامحدود در صعود', badge: 'صعودی', positions: [{ side: 'buy', type: 'call', strikeOffset: 0.05, premiumRatio: 0.025 }] },
-  { key: 'shortCall', name: 'Short Call', icon: '🔴', desc: 'فروش Call — درآمد از پرمیوم', badge: 'نزولی/خنثی', positions: [{ side: 'sell', type: 'call', strikeOffset: 0.05, premiumRatio: 0.025 }] },
-  { key: 'longPut', name: 'Long Put', icon: '🔴', desc: 'خرید Put — سود در نزول', badge: 'نزولی', positions: [{ side: 'buy', type: 'put', strikeOffset: -0.05, premiumRatio: 0.025 }] },
-  { key: 'shortPut', name: 'Short Put', icon: '🟢', desc: 'فروش Put — درآمد از پرمیوم', badge: 'صعودی/خنثی', positions: [{ side: 'sell', type: 'put', strikeOffset: -0.05, premiumRatio: 0.025 }] },
-  { key: 'bullCallSpread', name: 'Bull Call Spread', icon: '📈', desc: 'صعودی محدود', badge: 'صعودی', positions: [{ side: 'buy', type: 'call', strikeOffset: 0, premiumRatio: 0.03 }, { side: 'sell', type: 'call', strikeOffset: 0.05, premiumRatio: 0.015 }] },
-  { key: 'bearPutSpread', name: 'Bear Put Spread', icon: '📉', desc: 'نزولی محدود', badge: 'نزولی', positions: [{ side: 'buy', type: 'put', strikeOffset: 0, premiumRatio: 0.03 }, { side: 'sell', type: 'put', strikeOffset: -0.05, premiumRatio: 0.015 }] },
-  { key: 'bullPutSpread', name: 'Bull Put Spread', icon: '🟢', desc: 'درآمد از پرمیوم در صعودی', badge: 'صعودی', positions: [{ side: 'sell', type: 'put', strikeOffset: -0.02, premiumRatio: 0.02 }, { side: 'buy', type: 'put', strikeOffset: -0.07, premiumRatio: 0.01 }] },
-  { key: 'bearCallSpread', name: 'Bear Call Spread', icon: '🔴', desc: 'درآمد از پرمیوم در نزولی', badge: 'نزولی', positions: [{ side: 'sell', type: 'call', strikeOffset: 0.02, premiumRatio: 0.02 }, { side: 'buy', type: 'call', strikeOffset: 0.07, premiumRatio: 0.01 }] },
-  { key: 'longStraddle', name: 'Long Straddle', icon: '⚡', desc: 'سود از نوسان شدید', badge: 'نوسانی', positions: [{ side: 'buy', type: 'call', strikeOffset: 0, premiumRatio: 0.025 }, { side: 'buy', type: 'put', strikeOffset: 0, premiumRatio: 0.025 }] },
-  { key: 'shortStraddle', name: 'Short Straddle', icon: '💤', desc: 'سود از بازار آرام', badge: 'خنثی', positions: [{ side: 'sell', type: 'call', strikeOffset: 0, premiumRatio: 0.025 }, { side: 'sell', type: 'put', strikeOffset: 0, premiumRatio: 0.025 }] },
-  { key: 'longStrangle', name: 'Long Strangle', icon: '⚡', desc: 'نوسانی با هزینه کمتر', badge: 'نوسانی', positions: [{ side: 'buy', type: 'call', strikeOffset: 0.05, premiumRatio: 0.015 }, { side: 'buy', type: 'put', strikeOffset: -0.05, premiumRatio: 0.015 }] },
-  { key: 'shortStrangle', name: 'Short Strangle', icon: '💤', desc: 'خنثی با ریسک بیشتر', badge: 'خنثی', positions: [{ side: 'sell', type: 'call', strikeOffset: 0.05, premiumRatio: 0.015 }, { side: 'sell', type: 'put', strikeOffset: -0.05, premiumRatio: 0.015 }] },
-  { key: 'coveredCall', name: 'Covered Call', icon: '🛡️', desc: 'درآمد از سهام موجود', badge: 'پوششی', positions: [{ side: 'buy', type: 'spot', strikeOffset: 0, premiumRatio: 0 }, { side: 'sell', type: 'call', strikeOffset: 0.05, premiumRatio: 0.02 }] },
-  { key: 'protectivePut', name: 'Protective Put', icon: '🏥', desc: 'بیمه کردن پورتفوی', badge: 'بیمه', positions: [{ side: 'buy', type: 'spot', strikeOffset: 0, premiumRatio: 0 }, { side: 'buy', type: 'put', strikeOffset: -0.05, premiumRatio: 0.02 }] },
-  { key: 'ironCondor', name: 'Iron Condor', icon: '🦅', desc: 'سود در بازار خنثی', badge: 'خنثی', positions: [{ side: 'sell', type: 'put', strikeOffset: -0.05, premiumRatio: 0.015 }, { side: 'buy', type: 'put', strikeOffset: -0.10, premiumRatio: 0.008 }, { side: 'sell', type: 'call', strikeOffset: 0.05, premiumRatio: 0.015 }, { side: 'buy', type: 'call', strikeOffset: 0.10, premiumRatio: 0.008 }] }
+  { key: 'longCall', name: 'Long Call', icon: '🟢', desc: 'خرید Call — سود نامحدود در صعود', badge: 'صعودی',
+    positions: [{ side: 'buy', type: 'call', strikeOffset: 0.05, premiumRatio: 0.025 }],
+    explanation: {
+      what: 'خرید یک قرارداد اختیار خرید به این معنی است که شما حق (نه تعهد) خرید دارایی پایه را در قیمت اعمال مشخص تا سررسید دارید. برای این حق، پرمیوم پرداخت می‌کنید.',
+      who: 'مناسب برای کسانی که انتظار رشد قابل توجه قیمت دارایی پایه را دارند و می‌خواهند با سرمایه کم، از رشد قیمت سود ببرند بدون اینکه کل مبلغ دارایی را بپردازند.',
+      pros: [
+        'سود بالقوه نامحدود در صورت رشد شدید قیمت',
+        'حداکثر ضرر محدود به پرمیوم پرداختی',
+        'اهرم بالا با سرمایه کم',
+        'بدون نیاز به وجه تضمین'
+      ],
+      cons: [
+        'احتمال از دست دادن کل پرمیوم در صورت عدم رشد',
+        'اثر زوال زمانی (Theta) روی قیمت آپشن',
+        'نیاز به رشد سریع و قابل توجه قیمت برای سوددهی'
+      ]
+    }
+  },
+  { key: 'shortCall', name: 'Short Call', icon: '🔴', desc: 'فروش Call — درآمد از پرمیوم', badge: 'نزولی/خنثی',
+    positions: [{ side: 'sell', type: 'call', strikeOffset: 0.05, premiumRatio: 0.025 }],
+    explanation: {
+      what: 'فروش یک قرارداد اختیار خرید به این معنی است که در ازای دریافت پرمیوم، متعهد می‌شوید در صورت اعمال، دارایی پایه را به قیمت اعمال بفروشید.',
+      who: 'مناسب برای کسانی که معتقدند قیمت دارایی پایه به قیمت اعمال نمی‌رسد یا رشد آن محدود خواهد بود. معمولاً توسط معامله‌گران حرفه‌ای و با پوشش (Covered) استفاده می‌شود.',
+      pros: [
+        'درآمد فوری از پرمیوم دریافتی',
+        'سود از زوال زمانی (Theta) و ثبات قیمت',
+        'استفاده در استراتژی‌های درآمدزایی'
+      ],
+      cons: [
+        'ضرر بالقوه نامحدود در صورت رشد شدید قیمت',
+        'نیاز به وجه تضمین قابل توجه',
+        'ریسک اعمال زودهنگام در برخی شرایط'
+      ]
+    }
+  },
+  { key: 'longPut', name: 'Long Put', icon: '🔴', desc: 'خرید Put — سود در نزول', badge: 'نزولی',
+    positions: [{ side: 'buy', type: 'put', strikeOffset: -0.05, premiumRatio: 0.025 }],
+    explanation: {
+      what: 'خرید یک قرارداد اختیار فروش به این معنی است که شما حق (نه تعهد) فروش دارایی پایه را در قیمت اعمال مشخص تا سررسید دارید.',
+      who: 'مناسب برای کسانی که انتظار افت قیمت دارایی پایه را دارند یا می‌خواهند پورتفوی خود را در برابر ریزش بیمه کنند.',
+      pros: [
+        'سود بالقوه بالا در صورت افت شدید قیمت',
+        'حداکثر ضرر محدود به پرمیوم پرداختی',
+        'ابزار عالی برای پوشش ریسک (Hedge)',
+        'سود در بازارهای نزولی یا پرنوسان'
+      ],
+      cons: [
+        'احتمال از دست دادن کل پرمیوم در صورت عدم افت',
+        'اثر زوال زمانی روی قیمت آپشن',
+        'نیاز به افت سریع و قابل توجه قیمت برای سوددهی'
+      ]
+    }
+  },
+  { key: 'shortPut', name: 'Short Put', icon: '🟢', desc: 'فروش Put — درآمد از پرمیوم', badge: 'صعودی/خنثی',
+    positions: [{ side: 'sell', type: 'put', strikeOffset: -0.05, premiumRatio: 0.025 }],
+    explanation: {
+      what: 'فروش یک قرارداد اختیار فروش به این معنی است که در ازای دریافت پرمیوم، متعهد می‌شوید در صورت اعمال، دارایی پایه را به قیمت اعمال بخرید.',
+      who: 'مناسب برای کسانی که معتقدند قیمت دارایی پایه به قیمت اعمال نمی‌رسد و مایل به خرید در قیمت پایین‌تر هستند.',
+      pros: [
+        'درآمد فوری از پرمیوم دریافتی',
+        'سود از ثبات یا رشد ملایم قیمت',
+        'امکان خرید دارایی در قیمت پایین‌تر از بازار'
+      ],
+      cons: [
+        'ضرر بالقوه بالا در صورت افت شدید قیمت',
+        'نیاز به وجه تضمین قابل توجه',
+        'ریسک تخصیص دارایی در قیمت نامناسب'
+      ]
+    }
+  },
+  { key: 'bullCallSpread', name: 'Bull Call Spread', icon: '📈', desc: 'صعودی محدود', badge: 'صعودی',
+    positions: [{ side: 'buy', type: 'call', strikeOffset: 0, premiumRatio: 0.03 }, { side: 'sell', type: 'call', strikeOffset: 0.05, premiumRatio: 0.015 }],
+    explanation: {
+      what: 'ترکیب خرید یک Call با قیمت اعمال پایین‌تر و فروش یک Call با قیمت اعمال بالاتر. هر دو در یک سررسید.',
+      who: 'مناسب برای کسانی که انتظار رشد محدود قیمت را دارند و می‌خواهند هزینه ورود را کاهش دهند.',
+      pros: [
+        'هزینه اولیه کمتر از Long Call ساده',
+        'ریسک محدود و مشخص',
+        'سود در صورت رشد ملایم قیمت',
+        'نسبت ریسک به پاداش قابل قبول'
+      ],
+      cons: [
+        'سود بالقوه سقف‌دار (محدود به فاصله دو قیمت اعمال)',
+        'نیاز به پرداخت وجه تضمین برای سمت فروش',
+        'پیچیدگی بیشتر از استراتژی‌های تک‌پایه'
+      ]
+    }
+  },
+  { key: 'bearPutSpread', name: 'Bear Put Spread', icon: '📉', desc: 'نزولی محدود', badge: 'نزولی',
+    positions: [{ side: 'buy', type: 'put', strikeOffset: 0, premiumRatio: 0.03 }, { side: 'sell', type: 'put', strikeOffset: -0.05, premiumRatio: 0.015 }],
+    explanation: {
+      what: 'ترکیب خرید یک Put با قیمت اعمال بالاتر و فروش یک Put با قیمت اعمال پایین‌تر.',
+      who: 'مناسب برای کسانی که انتظار افت محدود قیمت را دارند و می‌خواهند هزینه ورود را کاهش دهند.',
+      pros: [
+        'هزینه کمتر از Long Put ساده',
+        'ریسک محدود و مشخص',
+        'سود در صورت افت ملایم قیمت',
+        'ساختار سود و زیان قابل پیش‌بینی'
+      ],
+      cons: [
+        'سود بالقوه سقف‌دار',
+        'نیاز به وجه تضمین برای سمت فروش',
+        'کاهش پتانسیل سود نسبت به Put ساده'
+      ]
+    }
+  },
+  { key: 'bullPutSpread', name: 'Bull Put Spread', icon: '🟢', desc: 'درآمد از پرمیوم در صعودی', badge: 'صعودی',
+    positions: [{ side: 'sell', type: 'put', strikeOffset: -0.02, premiumRatio: 0.02 }, { side: 'buy', type: 'put', strikeOffset: -0.07, premiumRatio: 0.01 }],
+    explanation: {
+      what: 'ترکیب فروش یک Put با قیمت اعمال بالاتر و خرید یک Put با قیمت اعمال پایین‌تر برای محدود کردن ریسک.',
+      who: 'مناسب برای کسانی که انتظار رشد ملایم یا ثبات قیمت را دارند و می‌خواهند از پرمیوم درآمد کسب کنند.',
+      pros: [
+        'درآمد خالص از پرمیوم',
+        'ریسک محدود و مشخص',
+        'برد بالا (سود در بیش‌تر سناریوها)',
+        'استفاده بهینه از زوال زمانی'
+      ],
+      cons: [
+        'سود سقف‌دار',
+        'نیاز به وجه تضمین',
+        'ضرر در صورت افت شدید قیمت'
+      ]
+    }
+  },
+  { key: 'bearCallSpread', name: 'Bear Call Spread', icon: '🔴', desc: 'درآمد از پرمیوم در نزولی', badge: 'نزولی',
+    positions: [{ side: 'sell', type: 'call', strikeOffset: 0.02, premiumRatio: 0.02 }, { side: 'buy', type: 'call', strikeOffset: 0.07, premiumRatio: 0.01 }],
+    explanation: {
+      what: 'ترکیب فروش یک Call با قیمت اعمال پایین‌تر و خرید یک Call با قیمت اعمال بالاتر.',
+      who: 'مناسب برای کسانی که انتظار افت ملایم یا ثبات قیمت را دارند و می‌خواهند درآمد کسب کنند.',
+      pros: [
+        'درآمد خالص از پرمیوم',
+        'ریسک محدود',
+        'برد بالا در بازارهای نزولی یا خنثی',
+        'بهترین عملکرد در بازار آرام'
+      ],
+      cons: [
+        'سود سقف‌دار',
+        'نیاز به وجه تضمین',
+        'ضرر در صورت رشد شدید قیمت'
+      ]
+    }
+  },
+  { key: 'longStraddle', name: 'Long Straddle', icon: '⚡', desc: 'سود از نوسان شدید', badge: 'نوسانی',
+    positions: [{ side: 'buy', type: 'call', strikeOffset: 0, premiumRatio: 0.025 }, { side: 'buy', type: 'put', strikeOffset: 0, premiumRatio: 0.025 }],
+    explanation: {
+      what: 'خرید همزمان یک Call و یک Put با قیمت اعمال یکسان. سود در صورت حرکت شدید قیمت در هر جهت.',
+      who: 'مناسب برای کسانی که انتظار نوسان شدید قیمت را دارند ولی جهت آن را نمی‌دانند (مثلاً قبل از اعلام خبر مهم).',
+      pros: [
+        'سود بالقوه نامحدود در هر دو جهت',
+        'عدم نیاز به پیش‌بینی جهت بازار',
+        'مناسب برای رویدادهای خبری',
+        'ریسک محدود به مجموع پرمیوم‌ها'
+      ],
+      cons: [
+        'هزینه اولیه بالا (دو پرمیوم)',
+        'نیاز به نوسان شدید برای سربه‌سر شدن',
+        'اثر شدید زوال زمانی',
+        'احتمال ضرر در بازار آرام'
+      ]
+    }
+  },
+  { key: 'shortStraddle', name: 'Short Straddle', icon: '💤', desc: 'سود از بازار آرام', badge: 'خنثی',
+    positions: [{ side: 'sell', type: 'call', strikeOffset: 0, premiumRatio: 0.025 }, { side: 'sell', type: 'put', strikeOffset: 0, premiumRatio: 0.025 }],
+    explanation: {
+      what: 'فروش همزمان یک Call و یک Put با قیمت اعمال یکسان. سود در صورت باقی ماندن قیمت نزدیک قیمت اعمال.',
+      who: 'مناسب برای کسانی که انتظار بازار آرام و بدون نوسان را دارند. حرفه‌ای‌ترین استراتژی درآمدزایی از پرمیوم.',
+      pros: [
+        'درآمد بالا از دو پرمیوم',
+        'سود از زوال زمانی (Theta)',
+        'حداکثر سود در حالت ثبات قیمت',
+        'بدون نیاز به پیش‌بینی جهت'
+      ],
+      cons: [
+        'ضرر بالقوه نامحدود در هر دو جهت',
+        'نیاز به وجه تضمین بالا',
+        'پرریسک‌ترین استراتژی برای تازه‌کارها',
+        'نیاز به مدیریت فعال موقعیت'
+      ]
+    }
+  },
+  { key: 'longStrangle', name: 'Long Strangle', icon: '⚡', desc: 'نوسانی با هزینه کمتر', badge: 'نوسانی',
+    positions: [{ side: 'buy', type: 'call', strikeOffset: 0.05, premiumRatio: 0.015 }, { side: 'buy', type: 'put', strikeOffset: -0.05, premiumRatio: 0.015 }],
+    explanation: {
+      what: 'خرید یک Call با قیمت اعمال بالاتر و یک Put با قیمت اعمال پایین‌تر. شبیه Long Straddle ولی ارزان‌تر.',
+      who: 'مناسب برای کسانی که انتظار نوسان شدید دارند ولی می‌خواهند هزینه کمتری بپردازند.',
+      pros: [
+        'هزینه اولیه کمتر از Straddle',
+        'سود بالقوه بالا در هر دو جهت',
+        'ریسک محدود',
+        'مناسب برای رویدادهای پرنوسان'
+      ],
+      cons: [
+        'نیاز به نوسان شدیدتر برای سوددهی',
+        'زوال زمانی سریع',
+        'فاصله بیشتر تا نقاط سربه‌سر'
+      ]
+    }
+  },
+  { key: 'shortStrangle', name: 'Short Strangle', icon: '💤', desc: 'خنثی با ریسک بیشتر', badge: 'خنثی',
+    positions: [{ side: 'sell', type: 'call', strikeOffset: 0.05, premiumRatio: 0.015 }, { side: 'sell', type: 'put', strikeOffset: -0.05, premiumRatio: 0.015 }],
+    explanation: {
+      what: 'فروش یک Call با قیمت اعمال بالاتر و یک Put با قیمت اعمال پایین‌تر. سود در صورت باقی ماندن قیمت در محدوده.',
+      who: 'مناسب برای معامله‌گران با تجربه که انتظار بازار آرام با نوسان محدود را دارند.',
+      pros: [
+        'درآمد خالص از دو پرمیوم',
+        'محدوده سود بزرگ‌تر از Straddle',
+        'سود از زوال زمانی',
+        'برد بالا در بازارهای آرام'
+      ],
+      cons: [
+        'ضرر بالقوه نامحدود در دو جهت',
+        'نیاز به وجه تضمین بالا',
+        'پرریسک و مناسب حرفه‌ای‌ها',
+        'نیاز به مدیریت فعال'
+      ]
+    }
+  },
+  { key: 'coveredCall', name: 'Covered Call', icon: '🛡️', desc: 'درآمد از سهام موجود', badge: 'پوششی',
+    positions: [{ side: 'buy', type: 'spot', strikeOffset: 0, premiumRatio: 0 }, { side: 'sell', type: 'call', strikeOffset: 0.05, premiumRatio: 0.02 }],
+    explanation: {
+      what: 'خرید دارایی پایه + فروش یک Call روی همان دارایی. فروش Call درآمد پرمیوم ایجاد می‌کند.',
+      who: 'مناسب برای کسانی که دارایی پایه را در اختیار دارند و انتظار رشد محدود قیمت را دارند.',
+      pros: [
+        'درآمد اضافی از پرمیوم',
+        'کاهش هزینه نگهداری دارایی',
+        'مناسب برای بازارهای خنثی یا صعودی ملایم',
+        'ریسک کمتر از فروش Call ساده'
+      ],
+      cons: [
+        'سود سقف‌دار (اگر قیمت بالا برود)',
+        'ریسک نزولی روی دارایی پایه باقی می‌ماند',
+        'نیاز به سرمایه اولیه برای خرید دارایی'
+      ]
+    }
+  },
+  { key: 'protectivePut', name: 'Protective Put', icon: '🏥', desc: 'بیمه کردن پورتفوی', badge: 'بیمه',
+    positions: [{ side: 'buy', type: 'spot', strikeOffset: 0, premiumRatio: 0 }, { side: 'buy', type: 'put', strikeOffset: -0.05, premiumRatio: 0.02 }],
+    explanation: {
+      what: 'خرید دارایی پایه + خرید یک Put برای بیمه کردن در برابر افت قیمت. مثل بیمه‌نامه پورتفوی.',
+      who: 'مناسب برای سرمایه‌گذارانی که دارایی پایه را در اختیار دارند و نگران ریزش هستند ولی نمی‌خواهند بفروشند.',
+      pros: [
+        'محافظت کامل در برابر افت شدید',
+        'حفظ پتانسیل صعودی دارایی',
+        'آرامش روانی در بازارهای پرنوسان',
+        'ریسک محدود و مشخص'
+      ],
+      cons: [
+        'هزینه بیمه (پرمیوم Put)',
+        'کاهش بازده کل در صورت رشد',
+        'زوال زمانی روی Put'
+      ]
+    }
+  },
+  { key: 'ironCondor', name: 'Iron Condor', icon: '🦅', desc: 'سود در بازار خنثی', badge: 'خنثی',
+    positions: [
+      { side: 'sell', type: 'put', strikeOffset: -0.05, premiumRatio: 0.015 },
+      { side: 'buy', type: 'put', strikeOffset: -0.10, premiumRatio: 0.008 },
+      { side: 'sell', type: 'call', strikeOffset: 0.05, premiumRatio: 0.015 },
+      { side: 'buy', type: 'call', strikeOffset: 0.10, premiumRatio: 0.008 }
+    ],
+    explanation: {
+      what: 'ترکیب دو استراتژی اسپرد: Bull Put Spread + Bear Call Spread. چهار پوزیشن با قیمت‌های اعمال متفاوت.',
+      who: 'مناسب برای معامله‌گران حرفه‌ای که انتظار بازار آرام با نوسان محدود در محدوده قیمتی مشخص را دارند.',
+      pros: [
+        'ریسک و پاداش محدود و مشخص',
+        'برد بالا در بازارهای آرام',
+        'درآمد از چهار پرمیوم',
+        'محدوده سود قابل تنظیم'
+      ],
+      cons: [
+        'نیاز به سرمایه و وجه تضمین بالا',
+        'پیچیدگی مدیریت چهار پوزیشن',
+        'سود محدود به پرمیوم خالص',
+        'نیاز به تجربه در آپشن‌نویسی'
+      ]
+    }
+  }
 ];
 
 // ==========================================
@@ -988,12 +1366,10 @@ let svgGeometry = null;
 let isLocked = false;
 let lockedPoint = null;
 let panMode = false;
-
-// زوم
 const zoomState = { x: 1, y: 1, offsetX: 0, offsetY: 0 };
 
 // ==========================================
-// 🔧 ابزارها
+// 🔧 Helpers
 // ==========================================
 function formatNum(num, decimals = 0) {
   if (num === null || num === undefined || isNaN(num)) return '0';
@@ -1015,16 +1391,22 @@ function getAsset(key) {
   return ASSETS.find(a => a.key === key) || ASSETS[0];
 }
 
-function getCurrency(pos) {
-  const asset = getAsset(pos.asset);
-  if (asset.group === 'بورس') return { label: 'تومان', symbol: 'تومان' };
-  return { label: 'دلار', symbol: '$' };
+// واحد پول بر اساس asset key
+function getCurrency(assetKey) {
+  const asset = getAsset(assetKey);
+  return asset.group === 'بورس'
+    ? { label: 'تومان', short: 'تومان' }
+    : { label: 'دلار', short: '$' };
 }
 
-// واحد پول بر اساس asset
-function currencyFor(assetKey) {
-  const asset = getAsset(assetKey);
-  return asset.group === 'بورس' ? { label: 'تومان', short: 'ت' } : { label: 'دلار', short: '$' };
+// واحد پول بر اساس پوزیشن
+function currencyOfPosition(p) {
+  return getCurrency(p.asset);
+}
+
+// واحد پول بر اساس asset (برای مواقعی که فقط asset رو داریم)
+function currencyOfAsset(assetKey) {
+  return getCurrency(assetKey);
 }
 
 function getSymbolInfo(pos) {
@@ -1037,6 +1419,18 @@ function getSymbolInfo(pos) {
   if (pos.type === 'call') return { sym: asset.call, typeClass: 'call', typeLabel: 'اختیار خرید' };
   if (pos.type === 'put')  return { sym: asset.put,  typeClass: 'put',  typeLabel: 'اختیار فروش' };
   return { sym: asset.key, typeClass: 'spot', typeLabel: 'دارایی پایه' };
+}
+
+// گرفتن واحد پول غالب پرتفوی (اگه پوزیشن‌ها از یک گروه بودن)
+function getPortfolioCurrency() {
+  if (positions.length === 0) return { label: 'دلار', short: '$' };
+  const groups = new Set(positions.map(p => getAsset(p.asset).group));
+  // اگه همه بورس بودن → تومان
+  if (groups.size === 1 && groups.has('بورس')) return { label: 'تومان', short: 'تومان' };
+  // اگه همه دلاری بودن → دلار
+  if (groups.size === 1 && !groups.has('بورس')) return { label: 'دلار', short: '$' };
+  // مختلط → از اولین پوزیشن استفاده کن
+  return getCurrency(positions[0].asset);
 }
 
 // ==========================================
@@ -1054,6 +1448,41 @@ function renderPresets() {
       <span class="preset-badge">${p.badge}</span>
     </button>
   `).join('');
+}
+
+function renderExplanation(preset) {
+  const box = document.getElementById('strategyExplanation');
+  if (!preset || !preset.explanation) {
+    box.style.display = 'none';
+    box.innerHTML = '';
+    return;
+  }
+  const e = preset.explanation;
+  box.style.display = 'block';
+  box.innerHTML = `
+    <div class="exp-header">
+      <span class="exp-icon">${preset.icon}</span>
+      <div>
+        <div class="exp-title">آموزش استراتژی ${preset.name}</div>
+        <div class="exp-sub">راهنمای کامل — چه زمانی، برای چه کسی، و با چه مزایا و معایبی</div>
+      </div>
+    </div>
+    <div class="exp-body">
+      <div class="exp-block">
+        <div class="blk-title">📖 این استراتژی چیه؟</div>
+        <p>${e.what}</p>
+        <p style="margin-top:8px;"><span class="exp-highlight">مناسب برای:</span> ${e.who}</p>
+      </div>
+      <div class="exp-block pros">
+        <div class="blk-title pros">✅ مزایا</div>
+        <ul>${e.pros.map(x => `<li>${x}</li>`).join('')}</ul>
+      </div>
+      <div class="exp-block cons">
+        <div class="blk-title cons">⚠️ معایب</div>
+        <ul>${e.cons.map(x => `<li>${x}</li>`).join('')}</ul>
+      </div>
+    </div>
+  `;
 }
 
 function applyPreset(presetKey) {
@@ -1084,6 +1513,7 @@ function applyPreset(presetKey) {
   });
 
   renderPresets();
+  renderExplanation(preset);
   renderPositions();
   updateChart();
   showNotification(`✅ استراتژی «${preset.name}» اعمال شد`, 'success');
@@ -1094,6 +1524,7 @@ function clearAllPositions() {
   positions = [];
   currentPreset = null;
   renderPresets();
+  renderExplanation(null);
   renderPositions();
   updateChart();
   showNotification('🗑️ همه‌ی پوزیشن‌ها پاک شد', 'success');
@@ -1347,7 +1778,7 @@ function renderPositions() {
 }
 
 function calculatePositionValue(p) {
-  const cur = getCurrency(p);
+  const cur = currencyOfPosition(p);
   if (p.type === 'spot') {
     const total = p.quantity * p.currentPrice * (p.side === 'buy' ? 1 : -1);
     return toFa(formatNum(total)) + ' ' + cur.short;
@@ -1364,6 +1795,7 @@ function updatePosition(id, field, value) {
   if (field !== 'currentPrice') {
     currentPreset = null;
     renderPresets();
+    renderExplanation(null);
   }
 
   if (field === 'asset') {
@@ -1411,6 +1843,7 @@ function addPosition() {
 
   currentPreset = null;
   renderPresets();
+  renderExplanation(null);
 
   positions.push({
     id: Date.now() + Math.random(),
@@ -1433,6 +1866,7 @@ function addPosition() {
 function removePosition(id) {
   currentPreset = null;
   renderPresets();
+  renderExplanation(null);
   positions = positions.filter(p => p.id !== id);
   renderPositions();
   updateChart();
@@ -1447,6 +1881,16 @@ function calculatePayoff(price, pos) {
   if (pos.type === 'put') return (Math.max(pos.strike - price, 0) - pos.premium) * multiplier;
   if (pos.type === 'spot') return (price - pos.currentPrice) * multiplier;
   return 0;
+}
+
+// محاسبه مجموع سرمایه اولیه (برای درصد)
+function totalInvestmentValue() {
+  let total = 0;
+  positions.forEach(p => {
+    if (p.type === 'spot') total += Math.abs(p.quantity * p.currentPrice);
+    else total += Math.abs(p.quantity * p.premium);
+  });
+  return total || 1; // جلوگیری از تقسیم بر صفر
 }
 
 function updateChart() {
@@ -1464,6 +1908,8 @@ function updateChart() {
     hideChartTooltip();
     return;
   }
+
+  const cur = getPortfolioCurrency();
 
   const allPrices = positions.map(p => p.type === 'spot' ? p.currentPrice : p.strike).filter(p => p > 0);
   if (allPrices.length === 0) allPrices.push(100);
@@ -1503,7 +1949,6 @@ function updateChart() {
     if (p.type === 'spot') totalInvestment += p.quantity * p.currentPrice * (p.side === 'buy' ? 1 : -1);
     else totalInvestment += p.quantity * p.premium * (p.side === 'buy' ? -1 : 1);
   });
-  const cur = getCurrency(positions[0]);
   document.getElementById('totalInvestment').textContent = (totalInvestment >= 0 ? '+' : '') + toFa(formatNum(totalInvestment)) + ' ' + cur.short;
 
   const breakevens = findBreakevens(points);
@@ -1590,7 +2035,7 @@ function findBreakevens(points) {
 }
 
 // ==========================================
-// 📈 رسم نمودار با زوم/پن
+// 📈 رسم نمودار
 // ==========================================
 function drawChart(points, breakevens, currentPrice, priceMin, priceMax, absMax) {
   const svg = document.getElementById('payoffChart');
@@ -1599,14 +2044,11 @@ function drawChart(points, breakevens, currentPrice, priceMin, priceMax, absMax)
   const chartW = W - padding.left - padding.right;
   const chartH = H - padding.top - padding.bottom;
 
-  // اعمال زوم
   const zx = zoomState.x;
   const zy = zoomState.y;
 
-  // محدوده‌ی نمایش بر اساس زوم
   const viewPriceMin = priceMin + (priceMax - priceMin) * (1 - 1/zx) / 2 + zoomState.offsetX * (priceMax - priceMin) / zx;
   const viewPriceMax = viewPriceMin + (priceMax - priceMin) / zx;
-
   const viewAbsMax = absMax / zy;
 
   const xScale = (price) => padding.left + ((price - viewPriceMin) / (viewPriceMax - viewPriceMin)) * chartW;
@@ -1630,7 +2072,6 @@ function drawChart(points, breakevens, currentPrice, priceMin, priceMax, absMax)
     </clipPath>
   </defs>`;
 
-  // خطوط افقی
   for (let i = -4; i <= 4; i++) {
     const y = yScale((viewAbsMax / 4) * i);
     if (y >= padding.top && y <= H - padding.bottom) {
@@ -1639,7 +2080,6 @@ function drawChart(points, breakevens, currentPrice, priceMin, priceMax, absMax)
     }
   }
 
-  // پس‌زمینه سود و ضرر
   const profitTop = Math.max(padding.top, yScale(viewAbsMax));
   const profitBottom = zeroY;
   if (profitBottom > profitTop) {
@@ -1651,11 +2091,9 @@ function drawChart(points, breakevens, currentPrice, priceMin, priceMax, absMax)
     svgContent += `<rect x="${padding.left}" y="${lossTop}" width="${chartW}" height="${lossBottom - lossTop}" fill="var(--chart-loss-fill)"/>`;
   }
 
-  // محورها
   svgContent += `<line x1="${padding.left}" y1="${zeroY}" x2="${W - padding.right}" y2="${zeroY}" stroke="var(--chart-axis)" stroke-width="2"/>`;
   svgContent += `<line x1="${padding.left}" y1="${padding.top}" x2="${padding.left}" y2="${H - padding.bottom}" stroke="var(--chart-axis)" stroke-width="2"/>`;
 
-  // محور X
   for (let i = 0; i <= 6; i++) {
     const price = viewPriceMin + ((viewPriceMax - viewPriceMin) / 6) * i;
     const x = xScale(price);
@@ -1663,7 +2101,6 @@ function drawChart(points, breakevens, currentPrice, priceMin, priceMax, absMax)
   }
   svgContent += `<text x="${W / 2}" y="${H - 10}" text-anchor="middle" fill="var(--chart-axis)" font-size="12" font-family="Vazirmatn" font-weight="700">قیمت دارایی پایه در سررسید</text>`;
 
-  // منحنی
   let pathD = '';
   points.forEach((p, i) => {
     const x = xScale(p.price);
@@ -1672,7 +2109,6 @@ function drawChart(points, breakevens, currentPrice, priceMin, priceMax, absMax)
   });
   svgContent += `<path d="${pathD}" stroke="url(#lineGrad)" stroke-width="3.5" fill="none" stroke-linejoin="round" clip-path="url(#chartClip)"/>`;
 
-  // نقاط سربه‌سر
   breakevens.forEach(be => {
     if (be > viewPriceMin && be < viewPriceMax) {
       const x = xScale(be);
@@ -1682,7 +2118,6 @@ function drawChart(points, breakevens, currentPrice, priceMin, priceMax, absMax)
     }
   });
 
-  // قیمت فعلی
   const spotX = xScale(currentPrice);
   if (spotX >= padding.left && spotX <= W - padding.right) {
     svgContent += `<line x1="${spotX}" y1="${padding.top}" x2="${spotX}" y2="${H - padding.bottom}" stroke="var(--blue)" stroke-width="2" stroke-dasharray="6,4" opacity="0.9"/>`;
@@ -1690,11 +2125,8 @@ function drawChart(points, breakevens, currentPrice, priceMin, priceMax, absMax)
     svgContent += `<text x="${spotX}" y="${padding.top - 8}" text-anchor="middle" fill="#fff" font-size="10" font-family="Vazirmatn" font-weight="700">قیمت فعلی</text>`;
   }
 
-  // crosshair + dot
   svgContent += `<line id="crosshairX" x1="0" y1="${padding.top}" x2="0" y2="${H - padding.bottom}" stroke="var(--gold)" stroke-width="1.5" stroke-dasharray="4,4" opacity="0" style="pointer-events:none"/>`;
   svgContent += `<circle id="crosshairDot" cx="0" cy="0" r="6" fill="var(--gold)" stroke="var(--bg-primary)" stroke-width="2" opacity="0" style="pointer-events:none"/>`;
-
-  // لایه دریافت رویداد
   svgContent += `<rect id="hoverZone" x="${padding.left}" y="${padding.top}" width="${chartW}" height="${chartH}" fill="transparent" style="cursor:${panMode ? 'grab' : 'crosshair'}"/>`;
 
   svg.innerHTML = svgContent;
@@ -1742,7 +2174,6 @@ function togglePan() {
   document.getElementById('chartContainer').classList.toggle('panning', panMode);
 }
 
-// اسکرول روی نمودار = زوم
 document.getElementById('payoffChart').addEventListener('wheel', (e) => {
   if (positions.length === 0) return;
   e.preventDefault();
@@ -1759,7 +2190,7 @@ document.getElementById('payoffChart').addEventListener('wheel', (e) => {
 }, { passive: false });
 
 // ==========================================
-// 🖱️ Mouse events: hover + pan + lock
+// 🖱️ Tooltip + قفل
 // ==========================================
 const tooltipEl = document.getElementById('chartTooltip');
 const payoffSvg = document.getElementById('payoffChart');
@@ -1772,7 +2203,7 @@ let dragStartOffsetX = 0;
 let mouseDownX = 0;
 let mouseDownY = 0;
 
-function showChartTooltip(price, pnl, mouseX, mouseY, percent) {
+function showChartTooltip(price, pnl, percent, mouseX, mouseY) {
   const cur = chartMeta ? chartMeta.currency : { short: '$' };
   const profitClass = pnl >= 0 ? 'tt-pnl-profit' : 'tt-pnl-loss';
   const pctClass = pnl >= 0 ? 'tt-pct-profit' : 'tt-pct-loss';
@@ -1797,13 +2228,14 @@ function showChartTooltip(price, pnl, mouseX, mouseY, percent) {
   tooltipEl.classList.add('visible');
   tooltipEl.classList.toggle('locked', isLocked);
 
+  // تولتیپ همیشه بالای موس می‌مونه و از لبه صفحه رد نمی‌شه
   const rect = tooltipEl.getBoundingClientRect();
   let left = mouseX + 16;
-  let top = mouseY - rect.height - 12;
+  let top = mouseY - rect.height - 14;
 
   if (left + rect.width > window.innerWidth - 10) left = mouseX - rect.width - 16;
   if (left < 10) left = 10;
-  if (top < 10) top = mouseY + 18;
+  if (top < 10) top = mouseY + 20;
 
   tooltipEl.style.left = left + 'px';
   tooltipEl.style.top = top + 'px';
@@ -1857,22 +2289,16 @@ function applyLockedPoint(point) {
   const px = svgGeometry.xScale(point.price) * scaleX + rect.left;
   const py = svgGeometry.yScale(point.pnl) * scaleY + rect.top;
 
-  // محاسبه درصد
-  let totalInvestment = 0;
-  positions.forEach(p => {
-    if (p.type === 'spot') totalInvestment += Math.abs(p.quantity * p.currentPrice);
-    else totalInvestment += Math.abs(p.quantity * p.premium);
-  });
-  const percent = totalInvestment > 0 ? (point.pnl / totalInvestment) * 100 : 0;
+  const totalInv = totalInvestmentValue();
+  const percent = (point.pnl / totalInv) * 100;
 
-  showChartTooltip(point.price, point.pnl, px, py, percent);
+  showChartTooltip(point.price, point.pnl, percent, px, py);
 }
 
 // mousemove
 payoffSvg.addEventListener('mousemove', (e) => {
   if (!svgGeometry || chartPoints.length === 0) return;
 
-  // درگ (Pan)
   if (isDragging && panMode) {
     const rect = payoffSvg.getBoundingClientRect();
     const dx = (e.clientX - dragStartX) / rect.width;
@@ -1906,16 +2332,11 @@ payoffSvg.addEventListener('mousemove', (e) => {
     if (d < minDist) { minDist = d; nearest = pt; }
   });
 
-  // محاسبه درصد
-  let totalInvestment = 0;
-  positions.forEach(p => {
-    if (p.type === 'spot') totalInvestment += Math.abs(p.quantity * p.currentPrice);
-    else totalInvestment += Math.abs(p.quantity * p.premium);
-  });
-  const percent = totalInvestment > 0 ? (nearest.pnl / totalInvestment) * 100 : 0;
+  const totalInv = totalInvestmentValue();
+  const percent = (nearest.pnl / totalInv) * 100;
 
   updateCrosshair(nearest.price, nearest.pnl);
-  showChartTooltip(nearest.price, nearest.pnl, e.clientX, e.clientY, percent);
+  showChartTooltip(nearest.price, nearest.pnl, percent, e.clientX, e.clientY);
 });
 
 payoffSvg.addEventListener('mouseleave', () => {
@@ -1925,7 +2346,6 @@ payoffSvg.addEventListener('mouseleave', () => {
   clearCrosshair();
 });
 
-// mousedown
 payoffSvg.addEventListener('mousedown', (e) => {
   if (positions.length === 0) return;
   mouseDownX = e.clientX;
@@ -1938,7 +2358,6 @@ payoffSvg.addEventListener('mousedown', (e) => {
   }
 });
 
-// mouseup
 document.addEventListener('mouseup', (e) => {
   if (isDragging) {
     isDragging = false;
@@ -1946,12 +2365,10 @@ document.addEventListener('mouseup', (e) => {
     return;
   }
 
-  // تشخیص کلیک واقعی (نه درگ)
   const dx = Math.abs(e.clientX - mouseDownX);
   const dy = Math.abs(e.clientY - mouseDownY);
   if (dx > 5 || dy > 5) return;
 
-  // بررسی که کلیک روی svg بوده
   if (e.target !== payoffSvg && !payoffSvg.contains(e.target)) return;
   if (!svgGeometry || chartPoints.length === 0) return;
   if (panMode) return;
