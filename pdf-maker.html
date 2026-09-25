@@ -4,11 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>PDF ساز | آکادمی شمعدون</title>
+<link rel="preconnect" href="https://cdn.jsdelivr.net">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css">
-<link rel="preload" href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" as="style">
 <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/dompurify@3.0.6/dist/purify.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 <style>
 :root {
   --bg-primary: #0a0a0f;
@@ -186,6 +185,14 @@ body {
   line-height: 1.7;
 }
 .info-box strong { color: #60a5fa; }
+.info-box code {
+  background: rgba(59, 130, 246, 0.15);
+  color: #60a5fa;
+  padding: 1px 6px;
+  border-radius: 4px;
+  font-family: monospace;
+  font-size: 11px;
+}
 .toast {
   position: fixed;
   bottom: 30px;
@@ -205,6 +212,324 @@ body {
 .toast.show { transform: translateX(-50%) translateY(0); }
 .toast.success { border-right-color: var(--green); }
 .toast.error { border-right-color: var(--red); }
+
+/* ============================================
+   🖨️ PRINT AREA — این بخش فقط در زمان چاپ نمایش داده می‌شود
+   ============================================ */
+#printArea {
+  display: none;
+}
+
+/* ============================================
+   🖨️ استایل‌های چاپ (Media Print)
+   ============================================ */
+@media print {
+  /* مخفی کردن رابط کاربری */
+  body > *:not(#printArea) {
+    display: none !important;
+  }
+
+  /* ریست استایل‌های پایه */
+  html, body {
+    background: #ffffff !important;
+    color: #1a1a24 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    direction: rtl !important;
+    font-family: 'Vazirmatn', Tahoma, sans-serif !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  /* نمایش ناحیه چاپ */
+  #printArea {
+    display: block !important;
+  }
+
+  /* تنظیمات صفحه */
+  @page {
+    size: A4 portrait;
+    margin: 15mm 12mm 18mm 12mm;
+  }
+
+  @page :first {
+    margin: 0;
+  }
+
+  /* ===== صفحه کاور ===== */
+  .print-cover {
+    width: 100%;
+    height: 267mm; /* ارتفاع A4 منهای margin */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 40mm 20mm;
+    box-sizing: border-box;
+    page-break-after: always;
+    background: #ffffff;
+    position: relative;
+  }
+
+  .print-cover-logo {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #d4af37, #a8862a);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 50px;
+    margin-bottom: 30px;
+    box-shadow: 0 10px 40px rgba(212, 175, 55, 0.4);
+  }
+
+  .print-cover-badge {
+    display: inline-block;
+    background: linear-gradient(135deg, #d4af37, #a8862a);
+    color: #fff;
+    padding: 8px 24px;
+    border-radius: 30px;
+    font-size: 13px;
+    font-weight: 800;
+    margin-bottom: 20px;
+  }
+
+  .print-cover h1 {
+    color: #b8860b;
+    font-size: 32px;
+    font-weight: 900;
+    margin-bottom: 15px;
+    line-height: 1.4;
+    border: none;
+    padding: 0;
+  }
+
+  .print-cover .brand-sub {
+    color: #64748b;
+    font-size: 16px;
+    margin-bottom: 40px;
+  }
+
+  .print-cover-divider {
+    width: 80px;
+    height: 3px;
+    background: #d4af37;
+    margin: 30px auto;
+    border-radius: 2px;
+  }
+
+  .print-cover h2 {
+    color: #1a1a24;
+    font-size: 22px;
+    margin-bottom: 15px;
+    border: none;
+    padding: 0;
+  }
+
+  .print-cover-meta {
+    margin-top: 50px;
+    color: #64748b;
+    font-size: 13px;
+    line-height: 2.2;
+  }
+
+  .print-cover-meta strong {
+    color: #1a1a24;
+  }
+
+  /* ===== صفحه محتوا ===== */
+  .print-content {
+    width: 100%;
+    background: #ffffff;
+    page-break-before: always;
+    padding: 0;
+  }
+
+  .print-header {
+    text-align: center;
+    padding-bottom: 12px;
+    border-bottom: 3px solid #d4af37;
+    margin-bottom: 20px;
+  }
+
+  .print-header .brand {
+    color: #a8862a;
+    font-size: 22px;
+    font-weight: 900;
+    margin-bottom: 4px;
+  }
+
+  .print-header .tagline {
+    color: #64748b;
+    font-size: 11px;
+  }
+
+  .print-title-box {
+    background: #fef9e7;
+    border: 1px solid rgba(212, 175, 55, 0.35);
+    border-radius: 10px;
+    padding: 16px 20px;
+    margin-bottom: 22px;
+  }
+
+  .print-title-box h1 {
+    color: #b8860b;
+    font-size: 20px;
+    font-weight: 900;
+    margin-bottom: 8px;
+    line-height: 1.5;
+    border: none;
+    padding: 0;
+  }
+
+  .print-title-box .meta {
+    color: #64748b;
+    font-size: 11px;
+    line-height: 1.8;
+  }
+
+  /* استایل محتوا */
+  .print-body {
+    color: #334155;
+    font-size: 12px;
+    line-height: 1.9;
+  }
+
+  .print-body h1,
+  .print-body h2 {
+    color: #b8860b;
+    font-weight: 800;
+    margin: 20px 0 10px;
+    padding-bottom: 5px;
+    border-bottom: 2px solid rgba(212, 175, 55, 0.3);
+    page-break-after: avoid;
+  }
+
+  .print-body h1 { font-size: 17px; }
+  .print-body h2 { font-size: 15px; }
+  .print-body h3 {
+    color: #1a1a24;
+    font-size: 13px;
+    font-weight: 800;
+    margin: 15px 0 8px;
+    page-break-after: avoid;
+  }
+
+  .print-body p {
+    margin-bottom: 10px;
+    text-align: justify;
+    color: #334155;
+    orphans: 3;
+    widows: 3;
+  }
+
+  .print-body ul,
+  .print-body ol {
+    margin: 10px 20px 12px 0;
+    padding-right: 20px;
+  }
+
+  .print-body li {
+    margin-bottom: 5px;
+    color: #334155;
+    page-break-inside: avoid;
+  }
+
+  .print-body strong {
+    color: #b8860b;
+    font-weight: 800;
+  }
+
+  .print-body em {
+    color: #b8860b;
+  }
+
+  .print-body blockquote {
+    background: rgba(212, 175, 55, 0.08);
+    border-right: 4px solid #d4af37;
+    padding: 10px 14px;
+    margin: 12px 0;
+    border-radius: 6px;
+    color: #8b6508;
+    font-style: italic;
+    page-break-inside: avoid;
+  }
+
+  .print-body hr {
+    border: none;
+    border-top: 1px solid rgba(212, 175, 55, 0.3);
+    margin: 18px 0;
+  }
+
+  .print-body table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 12px 0;
+    font-size: 11px;
+    page-break-inside: avoid;
+  }
+
+  .print-body table th {
+    background: rgba(212, 175, 55, 0.15);
+    color: #8b6508;
+    padding: 8px 6px;
+    text-align: right;
+    border: 1px solid rgba(212, 175, 55, 0.35);
+    font-weight: 800;
+  }
+
+  .print-body table td {
+    padding: 7px 6px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    color: #334155;
+  }
+
+  .print-body code {
+    background: rgba(212, 175, 55, 0.1);
+    color: #8b6508;
+    padding: 1px 5px;
+    border-radius: 4px;
+    font-family: 'Courier New', monospace;
+    font-size: 10px;
+  }
+
+  .print-body pre {
+    background: #f8fafc;
+    padding: 10px;
+    border-radius: 8px;
+    direction: ltr;
+    text-align: left;
+    border: 1px solid #e2e8f0;
+    page-break-inside: avoid;
+  }
+
+  .print-body pre code {
+    background: transparent;
+    padding: 0;
+    color: #334155;
+  }
+
+  /* ===== فوتر ===== */
+  .print-footer {
+    margin-top: 25px;
+    padding-top: 12px;
+    border-top: 2px solid rgba(212, 175, 55, 0.3);
+    text-align: center;
+    color: #94a3b8;
+    font-size: 10px;
+    page-break-inside: avoid;
+  }
+
+  .print-footer .brand {
+    color: #b8860b;
+    font-weight: 800;
+    font-size: 11px;
+    margin-bottom: 3px;
+  }
+}
 </style>
 </head>
 <body>
@@ -216,7 +541,7 @@ body {
   </div>
 
   <div class="info-box">
-    <strong>💡 راهنما:</strong> محتوای درس رو به فرمت <strong>Markdown</strong> بنویس. Markdown یعنی: <code>##</code> برای تیتر، <code>**متن**</code> برای بولد، <code>-</code> برای لیست، <code>></code> برای نقل‌قول، و <code>|</code> برای جدول.
+    <strong>💡 راهنما:</strong> محتوای درس رو به فرمت <strong>Markdown</strong> بنویس. Markdown یعنی: <code>##</code> برای تیتر، <code>**متن**</code> برای بولد، <code>-</code> برای لیست، <code>&gt;</code> برای نقل‌قول، و <code>|</code> برای جدول.
   </div>
 
   <div class="layout">
@@ -282,6 +607,11 @@ body {
   </div>
 </div>
 
+<!-- ============================================
+     🖨️ ناحیه چاپ — این قسمت فقط در زمان چاپ فعال می‌شود
+     ============================================ -->
+<div id="printArea"></div>
+
 <div class="toast" id="toast"></div>
 
 <script>
@@ -335,11 +665,9 @@ function escapeHtml(text) {
 }
 
 // ==========================================
-// 📌 ساخت PDF
+// 📌 ساخت PDF با window.print()
 // ==========================================
 async function generatePDF() {
-  console.log('🚀 شروع generatePDF...');
-  
   const title = document.getElementById('lessonTitle').value.trim();
   const course = document.getElementById('lessonCourse').value.trim();
   const number = document.getElementById('lessonNumber').value || '1';
@@ -348,36 +676,25 @@ async function generatePDF() {
   const teacher = document.getElementById('lessonTeacher').value.trim() || 'آکادمی شمعدون';
   const content = document.getElementById('lessonContent').value.trim();
 
-  console.log('📋 اطلاعات:', { title, course, number, level, time, contentLength: content.length });
-
   // اعتبارسنجی
   if (!content) {
     return showToast('❌ محتوای درس الزامی است', 'error');
   }
-  
+
   const finalTitle = title || ('درس شماره ' + number);
   const finalCourse = course || 'آکادمی شمعدون';
 
   const btn = document.getElementById('generateBtn');
   btn.disabled = true;
-  btn.innerHTML = '⏳ در حال ساخت PDF...';
+  btn.innerHTML = '⏳ در حال آماده‌سازی...';
 
   try {
-    // چک کن کتابخانه‌ها لود شدن
-    if (typeof html2pdf === 'undefined') {
-      throw new Error('html2pdf لود نشده. صفحه رو رفرش کن.');
-    }
+    // تبدیل Markdown به HTML
     if (typeof marked === 'undefined') {
       throw new Error('marked لود نشده. صفحه رو رفرش کن.');
     }
-
-    console.log('✅ کتابخانه‌ها لود شدن');
-
-    // تبدیل Markdown به HTML
     const rawHtml = marked.parse(content);
     const cleanHtml = DOMPurify.sanitize(rawHtml);
-
-    console.log('✅ Markdown تبدیل شد');
 
     // تاریخ شمسی
     const today = new Date();
@@ -385,213 +702,72 @@ async function generatePDF() {
       year: 'numeric', month: 'long', day: 'numeric'
     }).format(today);
 
-    // ساخت HTML کامل PDF
-    const pdfHtml = `
-        <div class="pdf-content" style=" background: #ffffff; color: #1a1a24; font-family: 'Vazirmatn', Tahoma, sans-serif; direction: rtl; padding: 15mm 12mm; width: 210mm; min-height: 297mm; margin: 0 auto; box-sizing: border-box; line-height: 1.9; font-size: 11pt; ">
-        <!-- Cover Page -->
-        <div style=" text-align: center; padding: 60px 20px; height: 297mm; display: flex; flex-direction: column; justify-content: center; align-items: center; page-break-after: always; box-sizing: border-box;">
-          <div style="width: 120px; height: 120px; border-radius: 50%; background: linear-gradient(135deg, #d4af37, #a8862a); display: flex; align-items: center; justify-content: center; color: #fff; font-size: 60px; font-weight: 900; margin-bottom: 30px;">
-            🎓
-          </div>
-          <div style="display: inline-block; background: linear-gradient(135deg, #d4af37, #a8862a); color: #fff; padding: 10px 25px; border-radius: 30px; font-size: 12pt; font-weight: 800; margin-bottom: 20px;">
-            📚 دوره‌ی آموزشی
-          </div>
-          <h1 style="color: #b8860b; font-size: 26pt; font-weight: 900; margin-bottom: 15px; line-height: 1.4;">
-            ${escapeHtml(finalCourse)}
-          </h1>
-          <div style="color: #64748b; font-size: 13pt; margin-bottom: 40px;">
-            آکادمی شمعدون
-          </div>
-          <div style="width: 60px; height: 3px; background: #d4af37; margin: 30px auto; border-radius: 2px;"></div>
-          <h2 style="color: #1a1a24; font-size: 18pt; margin-bottom: 10px; border: none; padding: 0;">
-            درس ${escapeHtml(number)}: ${escapeHtml(finalTitle)}
-          </h2>
-          <div style="margin-top: 50px; color: #94a3b8; font-size: 11pt; line-height: 2;">
-            <div>👨‍🏫 مدرس: ${escapeHtml(teacher)}</div>
-            <div>📅 تاریخ: ${dateStr}</div>
-            <div>⏱ زمان مطالعه: ${escapeHtml(time)} دقیقه</div>
-            <div>🎯 سطح: ${escapeHtml(level)}</div>
+    // ساخت ناحیه چاپ
+    const printArea = document.getElementById('printArea');
+    printArea.innerHTML = `
+      <!-- صفحه کاور -->
+      <div class="print-cover">
+        <div class="print-cover-logo">🎓</div>
+        <div class="print-cover-badge">📚 دوره‌ی آموزشی</div>
+        <h1>${escapeHtml(finalCourse)}</h1>
+        <div class="brand-sub">آکادمی شمعدون</div>
+        <div class="print-cover-divider"></div>
+        <h2>درس ${escapeHtml(number)}: ${escapeHtml(finalTitle)}</h2>
+        <div class="print-cover-meta">
+          <div>👨‍🏫 مدرس: <strong>${escapeHtml(teacher)}</strong></div>
+          <div>📅 تاریخ: <strong>${dateStr}</strong></div>
+          <div>⏱ زمان مطالعه: <strong>${escapeHtml(time)} دقیقه</strong></div>
+          <div>🎯 سطح: <strong>${escapeHtml(level)}</strong></div>
+        </div>
+      </div>
+
+      <!-- صفحه محتوا -->
+      <div class="print-content">
+        <div class="print-header">
+          <div class="brand">🎓 آکادمی شمعدون</div>
+          <div class="tagline">از عدد تا تصمیم، در ۳۰ ثانیه</div>
+        </div>
+
+        <div class="print-title-box">
+          <h1>درس ${escapeHtml(number)}: ${escapeHtml(finalTitle)}</h1>
+          <div class="meta">
+            📚 ${escapeHtml(finalCourse)} &nbsp;|&nbsp; 📅 ${dateStr} &nbsp;|&nbsp; ⏱ ${escapeHtml(time)} دقیقه &nbsp;|&nbsp; 🎯 ${escapeHtml(level)}
           </div>
         </div>
 
-        <!-- Content Page -->
-        <div style="page-break-before: always; padding: 0;">
-          <div style="text-align: center; padding-bottom: 15px; border-bottom: 3px solid #d4af37; margin-bottom: 25px;">
-            <div style="color: #a8862a; font-size: 20pt; font-weight: 900; margin-bottom: 4px;">
-              🎓 آکادمی شمعدون
-            </div>
-            <div style="color: #64748b; font-size: 10pt;">
-              از عدد تا تصمیم، در ۳۰ ثانیه
-            </div>
-          </div>
+        <div class="print-body">
+          ${cleanHtml}
+        </div>
 
-          <div style="background: #fef9e7; border: 1px solid rgba(212, 175, 55, 0.3); border-radius: 12px; padding: 18px; margin-bottom: 25px;">
-            <h1 style="color: #b8860b; font-size: 18pt; font-weight: 900; margin-bottom: 10px; line-height: 1.5;">
-              درس ${escapeHtml(number)}: ${escapeHtml(finalTitle)}
-            </h1>
-            <div style="font-size: 10pt; color: #64748b;">
-              📚 ${escapeHtml(finalCourse)} | 📅 ${dateStr} | ⏱ ${escapeHtml(time)} دقیقه | 🎯 ${escapeHtml(level)}
-            </div>
-          </div>
-
-          <div style="color: #334155; line-height: 1.9;">
-            ${cleanHtml}
-          </div>
-
-          <div style="margin-top: 30px; padding-top: 15px; border-top: 2px solid rgba(212, 175, 55, 0.3); text-align: center; color: #94a3b8; font-size: 9pt;">
-            <div style="color: #b8860b; font-weight: 800; font-size: 10pt;">🎓 آکادمی شمعدون</div>
-            <div>از عدد تا تصمیم، در ۳۰ ثانیه</div>
-            <div style="direction: ltr; margin-top: 4px;">🌐 shamdun.github.io/My-First-Project</div>
-          </div>
+        <div class="print-footer">
+          <div class="brand">🎓 آکادمی شمعدون</div>
+          <div>از عدد تا تصمیم، در ۳۰ ثانیه</div>
+          <div style="direction: ltr; margin-top: 4px;">🌐 shamdun.github.io/My-First-Project</div>
         </div>
       </div>
     `;
 
-    // استایل‌های PDF
-    const styleTag = `
-      <style>
-        @page { 
-           size: A4 portrait; 
-           margin: 0;
-        }
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Vazirmatn', Tahoma, sans-serif; direction: rtl; }
-        h1, h2 {
-          color: #b8860b;
-          font-weight: 800;
-          margin: 22px 0 10px;
-          padding-bottom: 6px;
-          border-bottom: 2px solid rgba(212, 175, 55, 0.3);
-        }
-        h1 { font-size: 18pt; }
-        h2 { font-size: 15pt; }
-        h3 { color: #1a1a24; font-size: 12pt; font-weight: 800; margin: 16px 0 8px; }
-        p { margin-bottom: 10px; text-align: justify; color: #334155; }
-        ul, ol { margin: 10px 20px 15px 0; padding-right: 20px; }
-        li { margin-bottom: 6px; color: #334155; }
-        strong { color: #b8860b; font-weight: 800; }
-        em { color: #b8860b; }
-        blockquote {
-          background: rgba(212, 175, 55, 0.08);
-          border-right: 4px solid #d4af37;
-          padding: 12px 16px;
-          margin: 15px 0;
-          border-radius: 6px;
-          color: #8b6508;
-          font-style: italic;
-        }
-        hr { border: none; border-top: 1px solid rgba(212, 175, 55, 0.3); margin: 20px 0; }
-        table { width: 100%; border-collapse: collapse; margin: 15px 0; font-size: 10pt; }
-        table th {
-          background: rgba(212, 175, 55, 0.15);
-          color: #8b6508;
-          padding: 10px;
-          text-align: right;
-          border: 1px solid rgba(212, 175, 55, 0.3);
-          font-weight: 800;
-        }
-        table td { padding: 10px; border: 1px solid rgba(0, 0, 0, 0.08); color: #334155; }
-        code {
-          background: rgba(212, 175, 55, 0.1);
-          color: #8b6508;
-          padding: 2px 6px;
-          border-radius: 4px;
-          font-family: 'Courier New', monospace;
-          font-size: 10pt;
-        }
-        pre {
-          background: #f8fafc;
-          padding: 12px;
-          border-radius: 8px;
-          overflow-x: auto;
-          direction: ltr;
-          text-align: left;
-          border: 1px solid #e2e8f0;
-        }
-        pre code { background: transparent; padding: 0; }
-        img { max-width: 100%; height: auto; }
-      </style>
-    `;
-
-   // ساخت container مخفی
-    const wrapper = document.createElement('div');
-    wrapper.innerHTML = styleTag + pdfHtml;
-    wrapper.style.position = 'absolute';
-    wrapper.style.left = '-99999px';
-    wrapper.style.top = '0';
-    wrapper.style.width = '210mm';
-    document.body.appendChild(wrapper);
-
-    console.log('✅ Container ساخته شد');
-
-    // ⬇️⬇️⬇️ اینجا کد جدید:
+    // اطمینان از لود فونت‌ها قبل از چاپ
     if (document.fonts && document.fonts.ready) {
       await document.fonts.ready;
     }
-    await new Promise(r => setTimeout(r, 800));   // ← از 500 به 800 افزایش بده
+    await new Promise(r => setTimeout(r, 600));
 
-    console.log('✅ فونت لود شد');
-    
-    // ساخت container 
-    // اسم فایل
-    const dateStr2 = `${today.getFullYear()}${String(today.getMonth() + 1).padStart(2, '0')}${String(today.getDate()).padStart(2, '0')}`;
-    const fileName = `lesson-${number}-shamdun-${dateStr2}.pdf`;
+    showToast('✅ پنجره چاپ باز می‌شود — گزینه «Save as PDF» را انتخاب کن', 'success');
 
-    // ==========================================
-    // 📌 تنظیمات html2pdf — اصلاح‌شده
-    // ==========================================
-    const options = {
-      margin: [12, 12, 15, 12],  // فاصله‌های استاندارد A4: بالا، راست، پایین، چپ
-      filename: fileName,
-      image: { type: 'jpeg', quality: 0.98 },
-      html2canvas: {
-        scale: 2,                    // کیفیت رتینا
-        useCORS: true,
-        backgroundColor: '#ffffff',
-        logging: false,
-        width: 794,                  // عرض دقیق A4 در 96 DPI
-        windowWidth: 794,            // ← مهم: هم‌راستا با width
-        scrollY: 0,
-        scrollX: 0,
-        letterRendering: true,
-        dpi: 96,
-        removeContainer: false
-      },
-      jsPDF: {
-        unit: 'mm',
-        format: 'a4',
-        orientation: 'portrait',
-        compress: true,
-        putOnlyUsedFonts: true
-      },
-      pagebreak: {
-        mode: ['css', 'legacy'],     // ← حذف avoid-all
-        before: '.page-break-before',
-        after: '.page-break-after',
-        avoid: ['tr', 'td', 'th', 'blockquote', 'h1', 'h2', 'h3', 'p']
-      }
-    };
-
-    console.log('⏳ در حال ساخت PDF...');
-
-    // ساخت PDF - فقط از pdf-content استفاده کن
-    const pdfElement = wrapper.querySelector('.pdf-content');
-    await html2pdf().set(options).from(pdfElement).save();
-
-    console.log('✅ PDF ساخته شد');
-
-    // پاکسازی
-    document.body.removeChild(wrapper);
-
-    showToast('✅ PDF ساخته و دانلود شد', 'success');
+    // باز کردن پنجره چاپ
+    setTimeout(() => {
+      window.print();
+      btn.disabled = false;
+      btn.innerHTML = '📥 ساخت و دانلود PDF';
+    }, 300);
 
   } catch (err) {
     console.error('❌ PDF error:', err);
     showToast('❌ خطا: ' + err.message, 'error');
+    btn.disabled = false;
+    btn.innerHTML = '📥 ساخت و دانلود PDF';
   }
-
-  btn.disabled = false;
-  btn.innerHTML = '📥 ساخت و دانلود PDF';
 }
 
 // ==========================================
