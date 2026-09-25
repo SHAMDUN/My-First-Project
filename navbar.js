@@ -29,6 +29,7 @@
         {
             title: 'ابزارهای مالی',
             items: [
+                { href: 'options-simulator.html', icon: '🎯', label: 'شبیه‌ساز آپشن' },
                 { href: 'calculator-v2.html', icon: '🧮', label: 'همراه مالی هوشمند' },
                 { href: 'portfolio.html', icon: '💼', label: 'پرتفوی من' }
             ]
@@ -729,6 +730,7 @@
         pages: [
             { title: 'نمای بازار', url: 'home.html', icon: '📊', type: 'صفحه' },
             { title: 'بورس ایران', url: 'bourse.html', icon: '📈', type: 'صفحه' },
+            { title: 'شبیه‌ساز آپشن', url: 'options-simulator.html', icon: '🎯', type: 'صفحه' },
             { title: 'اخبار اقتصادی', url: 'news.html', icon: '📰', type: 'صفحه' },
             { title: 'دانش‌نامه اقتصادی', url: 'dictionary.html', icon: '🎓', type: 'صفحه' },
             { title: 'دستیار هوشمند', url: 'assistant.html', icon: '🤖', type: 'صفحه' },
