@@ -693,8 +693,33 @@ async function generatePDF() {
     if (typeof marked === 'undefined') {
       throw new Error('marked لود نشده. صفحه رو رفرش کن.');
     }
-    const rawHtml = marked.parse(content);
-    const cleanHtml = DOMPurify.sanitize(rawHtml);
+    // تبدیل هوشمند: HTML یا Markdown
+    let rawHtml;
+    const trimmedContent = content.trim();
+
+    // چک کن آیا HTML هست یا Markdown
+    const looksLikeHtml = trimmedContent.startsWith('<') && 
+                          (trimmedContent.includes('</p>') || 
+                           trimmedContent.includes('</h2>') || 
+                           trimmedContent.includes('</div>') ||
+                           trimmedContent.includes('</svg>') ||
+                           trimmedContent.includes('</table>'));
+
+    if (looksLikeHtml) {
+      // محتوا HTML هست، مستقیم استفاده کن
+      console.log('📄 محتوا HTML تشخیص داده شد');
+      rawHtml = content;
+    } else {
+      // محتوا Markdown هست، تبدیل کن
+      console.log('📝 محتوا Markdown تشخیص داده شد');
+      rawHtml = marked.parse(content);
+    }
+
+    // Sanitize با تنظیمات مخصوص SVG
+    const cleanHtml = DOMPurify.sanitize(rawHtml, {
+      ADD_TAGS: ['svg', 'path', 'g', 'text', 'line', 'rect', 'circle', 'polygon', 'polyline', 'defs', 'linearGradient', 'stop', 'tspan', 'use', 'symbol', 'marker'],
+      ADD_ATTR: ['viewBox', 'xmlns', 'fill', 'stroke', 'stroke-width', 'stroke-dasharray', 'stroke-linecap', 'stroke-linejoin', 'font-size', 'font-weight', 'font-family', 'text-anchor', 'x', 'y', 'x1', 'y1', 'x2', 'y2', 'cx', 'cy', 'r', 'd', 'points', 'width', 'height', 'rx', 'ry', 'opacity', 'transform', 'gradientUnits', 'offset', 'stop-color', 'stop-opacity']
+    });
 
     // تاریخ شمسی
     const today = new Date();
