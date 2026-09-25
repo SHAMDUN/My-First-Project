@@ -717,9 +717,25 @@
         }
 
         // ===== Render Categories =====
+        // ===== Render Categories =====
         function renderCategories() {
             const bar = document.getElementById('categoriesBar');
-            const total = Object.values(DICTIONARY).reduce((sum, arr) => sum + arr.length, 0);
+    
+            // شمارش از دیتابیس اگه موجود باشه، وگرنه از داده‌های ثابت
+            const counts = {};
+    
+            if (dictionaryFromDB && dictionaryFromDB.length > 0) {
+                dictionaryFromDB.forEach(item => {
+                    const cat = item.category || 'economy';
+                    counts[cat] = (counts[cat] || 0) + 1;
+                });
+            } else {
+                Object.keys(DICTIONARY).forEach(key => {
+                    counts[key] = DICTIONARY[key].length;
+                });
+            }
+
+            const total = Object.values(counts).reduce((sum, n) => sum + n, 0);
 
             let html = `<button class="dict-cat-btn ${currentCategory === 'all' ? 'active' : ''}" onclick="selectCategory('all', this)">
                 <span>🌐 همه</span>
@@ -728,7 +744,7 @@
 
             Object.keys(CATEGORIES).forEach(key => {
                 const cat = CATEGORIES[key];
-                const count = DICTIONARY[key]?.length || 0;
+                const count = counts[key] || 0;
                 html += `<button class="dict-cat-btn ${currentCategory === key ? 'active' : ''}" onclick="selectCategory('${key}', this)">
                     <span>${cat.icon} ${cat.name}</span>
                     <span class="count">${toFa(count)}</span>
@@ -743,34 +759,54 @@
         }
 
         // ===== Render Dictionary =====
+        // ===== Render Dictionary =====
         function renderDictionary() {
             const grid = document.getElementById('dictGrid');
             let items = [];
 
-            if (currentCategory === 'all') {
-                Object.keys(DICTIONARY).forEach(key => {
-                    DICTIONARY[key].forEach(item => {
-                        items.push({ ...item, catKey: key, catName: CATEGORIES[key].name, catIcon: CATEGORIES[key].icon });
-                    });
-                });
+            // منبع داده: اول دیتابیس، بعد داده‌های ثابت
+            if (dictionaryFromDB && dictionaryFromDB.length > 0) {
+                // از دیتابیس
+                const source = currentCategory === 'all' 
+                    ? dictionaryFromDB 
+                    : dictionaryFromDB.filter(item => item.category === currentCategory);
+        
+                items = source.map(item => ({
+                    term: item.term,
+                    def: item.definition,
+                    example: item.example,
+                    catKey: item.category,
+                    catName: CATEGORIES[item.category]?.name || item.category,
+                    catIcon: CATEGORIES[item.category]?.icon || '📁'
+                }));
             } else {
-                (DICTIONARY[currentCategory] || []).forEach(item => {
-                    items.push({ ...item, catKey: currentCategory, catName: CATEGORIES[currentCategory].name, catIcon: CATEGORIES[currentCategory].icon });
-                });
+                // از داده‌های ثابت
+                if (currentCategory === 'all') {
+                    Object.keys(DICTIONARY).forEach(key => {
+                        DICTIONARY[key].forEach(item => {
+                            items.push({ ...item, catKey: key, catName: CATEGORIES[key].name, catIcon: CATEGORIES[key].icon });
+                        });
+                    });
+                } else {
+                    (DICTIONARY[currentCategory] || []).forEach(item => {
+                        items.push({ ...item, catKey: currentCategory, catName: CATEGORIES[currentCategory].name, catIcon: CATEGORIES[currentCategory].icon });
+                    });
+                }
             }
 
+            // جستجو
             if (searchTerm) {
                 const term = searchTerm.toLowerCase();
                 items = items.filter(it =>
                     it.term.toLowerCase().includes(term) ||
                     it.def.toLowerCase().includes(term)
                 );
-            }
+             }
 
             document.getElementById('resultCount').textContent = toFa(items.length);
 
-            if (items.length === 0) {
-                grid.innerHTML = `
+             if (items.length === 0) {
+                 grid.innerHTML = `
                     <div class="empty-state">
                         <div class="icon">🔍</div>
                         <p>هیچ اصطلاحی با «${escapeHtml(searchTerm)}» پیدا نشد</p>
@@ -791,6 +827,8 @@
                 </div>
             `).join('');
         }
+        
+            
 
         function selectCategory(cat, btn) {
             currentCategory = cat;
