@@ -853,6 +853,99 @@
                 </div>
             </div>
         </div>
+<!-- ===== تب دانش‌نامه ===== -->
+<div id="tab-dictionary" class="tab-content">
+    <div class="tab-actions">
+        <h2>🎓 مدیریت دانش‌نامه</h2>
+        <button class="btn btn-primary" onclick="openDictModal()">➕ اصطلاح جدید</button>
+    </div>
+    
+    <div style="display:flex; gap:10px; margin-bottom:15px; flex-wrap:wrap;">
+        <input type="text" id="dictSearch" placeholder="🔍 جستجوی اصطلاح..." 
+               style="flex:1; min-width:200px; padding:10px 14px; 
+                      background:rgba(10,10,15,0.8); 
+                      border:1px solid rgba(255,255,255,0.1); 
+                      border-radius:10px; 
+                      color:var(--white); 
+                      font-family:inherit; font-size:13px;"
+               oninput="filterDictionary()">
+        <select id="dictCategoryFilter" 
+                style="padding:10px 14px; 
+                       background:rgba(10,10,15,0.8); 
+                       border:1px solid rgba(255,255,255,0.1); 
+                       border-radius:10px; 
+                       color:var(--white); 
+                       font-family:inherit; font-size:13px; cursor:pointer;"
+                onchange="filterDictionary()">
+            <option value="">🌐 همه دسته‌ها</option>
+        </select>
+    </div>
+    
+    <div class="stats-grid" style="margin-bottom:20px;">
+        <div class="stat-card">
+            <div class="icon">📚</div>
+            <div class="value" id="dictTotal">-</div>
+            <div class="label">کل اصطلاحات</div>
+        </div>
+        <div class="stat-card">
+            <div class="icon">📂</div>
+            <div class="value" id="dictCategories">-</div>
+            <div class="label">دسته‌بندی</div>
+        </div>
+        <div class="stat-card">
+            <div class="icon">🔎</div>
+            <div class="value" id="dictFiltered">-</div>
+            <div class="label">نمایش</div>
+        </div>
+    </div>
+    
+    <div id="dictionaryList" class="loading">
+        <div class="spinner"></div>
+        در حال بارگذاری...
+    </div>
+</div>
+
+<!-- ===== Modal: Dictionary ===== -->
+<div id="dictModal" class="modal-overlay">
+    <div class="modal">
+        <h2 id="dictModalTitle">➕ اصطلاح جدید</h2>
+        <input type="hidden" id="dictId">
+        
+        <div class="form-group">
+            <label>📝 اصطلاح *</label>
+            <input type="text" id="dictTerm" placeholder="مثال: تورم">
+        </div>
+        
+        <div class="form-group">
+            <label>📖 تعریف *</label>
+            <textarea id="dictDefinition" rows="3" placeholder="توضیح کامل اصطلاح..."></textarea>
+        </div>
+        
+        <div class="form-group">
+            <label>💡 مثال (اختیاری)</label>
+            <textarea id="dictExample" rows="2" placeholder="مثال کاربردی..."></textarea>
+        </div>
+        
+        <div class="form-group">
+            <label>📂 دسته‌بندی *</label>
+            <select id="dictCategorySelect">
+                <option value="economy">🏦 اقتصاد کلان</option>
+                <option value="bourse">📈 بورس ایران</option>
+                <option value="currency">💵 ارز و طلا</option>
+                <option value="crypto">🪙 کریپتوکارنسی</option>
+                <option value="forex">🌍 فارکس و جهانی</option>
+                <option value="federal">🇺🇸 فدرال رزرو</option>
+                <option value="technical">📊 تحلیل تکنیکال</option>
+                <option value="fundamental">🔬 تحلیل بنیادی</option>
+            </select>
+        </div>
+        
+        <div class="modal-actions">
+            <button class="btn btn-secondary" onclick="closeModal('dictModal')">لغو</button>
+            <button class="btn btn-primary" onclick="saveDictionaryItem()">💾 ذخیره</button>
+        </div>
+    </div>
+</div>
 
         <!-- ===== تب صندوق پیام ===== -->
         <div id="tab-messages" class="tab-content">
