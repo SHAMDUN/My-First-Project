@@ -22,6 +22,20 @@
   --gray: #94a3b8;
   --border: rgba(212, 175, 55, 0.15);
   --border-soft: rgba(255, 255, 255, 0.06);
+
+  /* ==== پالت حرفه‌ای نمودار (دارک) — الگوی Bloomberg/GitHub Dark ==== */
+  --chart-bg-1: #0d1117;
+  --chart-bg-2: #161b22;
+  --chart-grid: rgba(139, 148, 158, 0.12);
+  --chart-axis-line: rgba(139, 148, 158, 0.35);
+  --chart-text: #8b949e;
+  --chart-text-strong: #c9d1d9;
+  --chart-line-1: #d4af37;
+  --chart-line-2: #e5c158;
+  --chart-profit: rgba(16, 185, 129, 0.14);
+  --chart-loss: rgba(239, 68, 68, 0.14);
+  --chart-spot: #58a6ff;
+  --chart-be: #d4af37;
 }
 [data-theme="light"] {
   --bg-primary: #f8fafc;
@@ -38,6 +52,20 @@
   --gray: #64748b;
   --border: rgba(184, 134, 11, 0.2);
   --border-soft: rgba(0, 0, 0, 0.06);
+
+  /* ==== پالت حرفه‌ای نمودار (لایت) — الگوی TradingView Light ==== */
+  --chart-bg-1: #ffffff;
+  --chart-bg-2: #f6f8fa;
+  --chart-grid: rgba(140, 149, 159, 0.16);
+  --chart-axis-line: rgba(140, 149, 159, 0.5);
+  --chart-text: #57606a;
+  --chart-text-strong: #24292f;
+  --chart-line-1: #b8860b;
+  --chart-line-2: #d4af37;
+  --chart-profit: rgba(16, 185, 129, 0.12);
+  --chart-loss: rgba(239, 68, 68, 0.12);
+  --chart-spot: #0969da;
+  --chart-be: #b8860b;
 }
 * { margin: 0; padding: 0; box-sizing: border-box; }
 body {
@@ -106,6 +134,7 @@ body {
   border: 1px solid rgba(212, 175, 55, 0.3);
 }
 
+/* Presets */
 .presets-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
@@ -258,7 +287,6 @@ body {
 .side-btn.active-buy { background: linear-gradient(135deg, #10b981, #059669); color: #fff; }
 .side-btn.active-sell { background: linear-gradient(135deg, #ef4444, #b91c1c); color: #fff; }
 
-/* Symbol column */
 .symbol-badge {
   display: inline-flex;
   align-items: center;
@@ -502,28 +530,20 @@ body {
 .result-card.loss .value { color: var(--red); }
 .result-card.blue .value { color: var(--blue); }
 
-/* =====================================
-   نمودار مدرن با افکت شیشه‌ای
-   ===================================== */
+/* ============================================================
+   نمودار حرفه‌ای — بدون گرادیان پرسروصدا
+   ============================================================ */
 .chart-container {
   position: relative;
   overflow: hidden;
-  background:
-    radial-gradient(ellipse at top, rgba(212, 175, 55, 0.08), transparent 60%),
-    radial-gradient(ellipse at bottom, rgba(59, 130, 246, 0.08), transparent 60%),
-    linear-gradient(135deg, var(--bg-card), var(--bg-secondary));
+  background: var(--bg-card);
   border: 1px solid var(--border);
   border-radius: 20px;
   padding: 22px;
   margin-bottom: 20px;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.25);
 }
 [data-theme="light"] .chart-container {
-  background:
-    radial-gradient(ellipse at top, rgba(212, 175, 55, 0.06), transparent 60%),
-    radial-gradient(ellipse at bottom, rgba(59, 130, 246, 0.06), transparent 60%),
-    linear-gradient(135deg, #ffffff, #f1f5f9);
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+  background: #ffffff;
 }
 .chart-header {
   display: flex;
@@ -565,30 +585,82 @@ body {
   50% { opacity: 0.5; transform: scale(1.3); }
 }
 
+/* ==== wrapper نمودار + تولتیپ داخل آن ==== */
+.chart-canvas-wrap {
+  position: relative;
+  width: 100%;
+  border-radius: 12px;
+  overflow: hidden;
+  background: linear-gradient(180deg, var(--chart-bg-1), var(--chart-bg-2));
+  border: 1px solid var(--border-soft);
+}
+[data-theme="light"] .chart-canvas-wrap {
+  border-color: rgba(0, 0, 0, 0.06);
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.03);
+}
 #payoffChart {
   width: 100%;
   height: auto;
   display: block;
-  border-radius: 15px;
   cursor: crosshair;
   user-select: none;
   touch-action: none;
-  background:
-    radial-gradient(ellipse at 30% 20%, rgba(212, 175, 55, 0.10), transparent 55%),
-    radial-gradient(ellipse at 70% 80%, rgba(59, 130, 246, 0.10), transparent 55%),
-    linear-gradient(135deg, rgba(15, 15, 25, 0.7), rgba(20, 20, 32, 0.9));
-  backdrop-filter: blur(12px);
-  transition: filter .2s;
-  filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.25));
 }
-[data-theme="light"] #payoffChart {
-  background:
-    radial-gradient(ellipse at 30% 20%, rgba(212, 175, 55, 0.08), transparent 55%),
-    radial-gradient(ellipse at 70% 80%, rgba(59, 130, 246, 0.08), transparent 55%),
-    linear-gradient(135deg, rgba(255, 255, 255, 0.85), rgba(241, 245, 249, 0.95));
-  filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.06));
+.chart-canvas-wrap.panning #payoffChart { cursor: grabbing !important; }
+
+/* ==== Tooltip داخل chart-container ==== */
+#chartTooltip {
+  position: absolute;
+  pointer-events: none;
+  background: rgba(22, 27, 34, 0.97);
+  border: 1px solid rgba(212, 175, 55, 0.55);
+  border-radius: 10px;
+  padding: 10px 14px;
+  font-family: 'Vazirmatn', Tahoma, sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  color: #c9d1d9;
+  z-index: 50;
+  opacity: 0;
+  transition: opacity 0.1s ease;
+  direction: rtl;
+  white-space: nowrap;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.55);
+  font-variant-numeric: tabular-nums;
+  line-height: 1.85;
+  min-width: 210px;
+  max-width: 90%;
 }
-.chart-container.panning #payoffChart { cursor: grabbing !important; }
+[data-theme="light"] #chartTooltip {
+  background: rgba(255, 255, 255, 0.99);
+  color: #24292f;
+  border-color: rgba(184, 134, 11, 0.45);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.18);
+}
+#chartTooltip.visible { opacity: 1; }
+#chartTooltip.locked {
+  border-color: var(--gold);
+  box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.28), 0 8px 24px rgba(0,0,0,0.55);
+}
+#chartTooltip .tt-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 2px 0;
+}
+#chartTooltip .tt-row .k { color: #8b949e; font-weight: 600; font-size: 11px; }
+[data-theme="light"] #chartTooltip .tt-row .k { color: #57606a; }
+#chartTooltip .tt-row .v { font-weight: 900; font-variant-numeric: tabular-nums; direction: ltr; }
+#chartTooltip .tt-price .v { color: var(--gold); font-size: 13px; }
+#chartTooltip .tt-pnl-profit .v { color: var(--green); }
+#chartTooltip .tt-pnl-loss .v { color: var(--red); }
+#chartTooltip .tt-pct-profit .v { color: var(--green); }
+#chartTooltip .tt-pct-loss .v { color: var(--red); }
+#chartTooltip .tt-divider {
+  height: 1px;
+  background: rgba(139, 148, 158, 0.25);
+  margin: 6px 0;
+}
 
 .chart-toolbar {
   display: flex;
@@ -597,15 +669,12 @@ body {
   gap: 8px;
   margin-top: 12px;
   padding: 10px 14px;
-  background: rgba(10, 10, 15, 0.55);
+  background: rgba(10, 10, 15, 0.5);
   border: 1px solid var(--border);
   border-radius: 12px;
   font-size: 12px;
-  backdrop-filter: blur(10px);
 }
-[data-theme="light"] .chart-toolbar {
-  background: rgba(248, 250, 252, 0.85);
-}
+[data-theme="light"] .chart-toolbar { background: rgba(248, 250, 252, 0.9); }
 .chart-toolbar-label {
   color: var(--gray);
   font-weight: 700;
@@ -684,59 +753,6 @@ body {
   color: var(--gold);
 }
 .chart-hint .lock-icon { font-size: 14px; }
-
-/* Tooltip شیشه‌ای */
-#chartTooltip {
-  position: fixed;
-  pointer-events: none;
-  background: rgba(15, 15, 22, 0.98);
-  border: 1.5px solid var(--gold);
-  border-radius: 12px;
-  padding: 11px 15px;
-  font-family: 'Vazirmatn', Tahoma, sans-serif;
-  font-size: 12px;
-  font-weight: 700;
-  color: var(--white);
-  z-index: 999999;
-  opacity: 0;
-  transition: opacity 0.12s;
-  direction: rtl;
-  white-space: nowrap;
-  box-shadow: 0 12px 40px rgba(0,0,0,0.7), 0 0 0 1px rgba(212, 175, 55, 0.2);
-  font-variant-numeric: tabular-nums;
-  line-height: 1.85;
-  min-width: 215px;
-  backdrop-filter: blur(12px);
-  will-change: transform, left, top;
-}
-[data-theme="light"] #chartTooltip {
-  background: rgba(255, 255, 255, 0.99);
-  color: #0f172a;
-  box-shadow: 0 12px 40px rgba(0,0,0,0.22), 0 0 0 1px rgba(184, 134, 11, 0.25);
-}
-#chartTooltip.visible { opacity: 1; }
-#chartTooltip.locked {
-  border-color: var(--gold);
-  box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.3), 0 12px 40px rgba(0,0,0,0.7);
-}
-#chartTooltip .tt-row {
-  display: flex;
-  justify-content: space-between;
-  gap: 1rem;
-  padding: 2px 0;
-}
-#chartTooltip .tt-row .k { color: var(--gray); font-weight: 600; font-size: 11px; }
-#chartTooltip .tt-row .v { font-weight: 900; font-variant-numeric: tabular-nums; direction: ltr; }
-#chartTooltip .tt-price .v { color: var(--gold); font-size: 13px; }
-#chartTooltip .tt-pnl-profit .v { color: var(--green); }
-#chartTooltip .tt-pnl-loss .v { color: var(--red); }
-#chartTooltip .tt-pct-profit .v { color: var(--green); }
-#chartTooltip .tt-pct-loss .v { color: var(--red); }
-#chartTooltip .tt-divider {
-  height: 1px;
-  background: var(--border);
-  margin: 6px 0;
-}
 
 .legend {
   display: flex;
@@ -940,7 +956,11 @@ body {
       <div class="title">📈 نمودار سود و زیان (در سررسید)</div>
       <div class="live-badge">زنده</div>
     </div>
-    <svg id="payoffChart" viewBox="0 0 1000 480" preserveAspectRatio="xMidYMid meet"></svg>
+
+    <div class="chart-canvas-wrap" id="chartCanvasWrap">
+      <svg id="payoffChart" viewBox="0 0 1000 480" preserveAspectRatio="xMidYMid meet"></svg>
+      <div id="chartTooltip"></div>
+    </div>
 
     <div class="chart-toolbar">
       <span class="chart-toolbar-label">🔍 زوم:</span>
@@ -962,13 +982,11 @@ body {
       <div class="legend-item"><div class="legend-dot" style="background:#10b981;"></div> ناحیه سود</div>
       <div class="legend-item"><div class="legend-dot" style="background:#ef4444;"></div> ناحیه ضرر</div>
       <div class="legend-item"><div class="legend-dot" style="background:#d4af37;"></div> نقطه سربه‌سر</div>
-      <div class="legend-item"><div class="legend-dot" style="background:#3b82f6;"></div> قیمت فعلی</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#58a6ff;"></div> قیمت فعلی</div>
     </div>
   </div>
 
 </div>
-
-<div id="chartTooltip"></div>
 
 <script>
 // ==========================================
@@ -1174,9 +1192,8 @@ let isLocked = false;
 let lockedPoint = null;
 let panMode = false;
 
-// state زوم با مرکز روی موس
 const view = {
-  xMin: 0, xMax: 1,       // نسبت‌های نرمال‌شده
+  xMin: 0, xMax: 1,
   yMin: -1, yMax: 1,
   fullXMin: 0, fullXMax: 1,
   fullYMin: -1, fullYMax: 1
@@ -1222,11 +1239,8 @@ function getCurrency(assetKey) {
 
 function currencyOfPosition(p) { return getCurrency(p.asset); }
 
-// ===== نماد: برای کریپتو/کالا همیشه نام فارسی =====
 function getSymbolInfo(pos) {
   const asset = getAsset(pos.asset);
-
-  // کریپتو و کالا → همیشه نام فارسی (نه BTC، نه Ethereum)
   if (asset.group !== 'بورس') {
     if (pos.type === 'spot') return { sym: asset.name, typeClass: 'spot', typeLabel: 'دارایی پایه' };
     return {
@@ -1235,8 +1249,6 @@ function getSymbolInfo(pos) {
       typeLabel: pos.type === 'call' ? 'Call' : 'Put'
     };
   }
-
-  // بورس
   if (pos.type === 'spot') return { sym: asset.key, typeClass: 'spot', typeLabel: 'دارایی پایه' };
   if (pos.type === 'call') return { sym: asset.call, typeClass: 'call', typeLabel: 'اختیار خرید' };
   if (pos.type === 'put')  return { sym: asset.put,  typeClass: 'put',  typeLabel: 'اختیار فروش' };
@@ -1743,7 +1755,6 @@ function updateChart() {
   const minPnL = Math.min(...pnls);
   const fullAbsMax = Math.max(Math.abs(maxPnL), Math.abs(minPnL)) || 1;
 
-  // اگر پوزیشن‌ها تغییر کرده باشند، view رو ریست کن
   if (view.fullXMin !== fullPriceMin || view.fullXMax !== fullPriceMax) {
     resetViewInternal(fullPriceMin, fullPriceMax, -fullAbsMax, fullAbsMax);
   }
@@ -1864,7 +1875,7 @@ function findBreakevens(points) {
 }
 
 // ==========================================
-// 📈 رسم نمودار مدرن با گرادیان و افکت شیشه‌ای
+// 📈 رسم نمودار حرفه‌ای
 // ==========================================
 let currentBreakevens = [];
 
@@ -1876,7 +1887,6 @@ function drawChart(points, breakevens, currentPrice) {
   const chartW = W - padding.left - padding.right;
   const chartH = H - padding.top - padding.bottom;
 
-  // viewport فعلی
   const xMin = view.xMin;
   const xMax = view.xMax;
   const yMin = view.yMin;
@@ -1893,98 +1903,78 @@ function drawChart(points, breakevens, currentPrice) {
     zeroY, xScale, yScale
   };
 
-  // ==== Defs: گرادیان‌ها و فیلترها ====
+  const cs = getComputedStyle(document.documentElement);
+  const colorGrid = cs.getPropertyValue('--chart-grid').trim();
+  const colorAxis = cs.getPropertyValue('--chart-axis-line').trim();
+  const colorText = cs.getPropertyValue('--chart-text').trim();
+  const colorProfit = cs.getPropertyValue('--chart-profit').trim();
+  const colorLoss = cs.getPropertyValue('--chart-loss').trim();
+  const colorSpot = cs.getPropertyValue('--chart-spot').trim();
+  const colorLine1 = cs.getPropertyValue('--chart-line-1').trim();
+  const colorLine2 = cs.getPropertyValue('--chart-line-2').trim();
+  const colorBE = cs.getPropertyValue('--chart-be').trim();
+
   let svgContent = `<defs>
-    <!-- خط منحنی طلایی -->
     <linearGradient id="lineGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%" stop-color="#a8862a"/>
-      <stop offset="25%" stop-color="#d4af37"/>
-      <stop offset="50%" stop-color="#f4d47c"/>
-      <stop offset="75%" stop-color="#d4af37"/>
-      <stop offset="100%" stop-color="#a8862a"/>
+      <stop offset="0%" stop-color="${colorLine1}"/>
+      <stop offset="100%" stop-color="${colorLine2}"/>
     </linearGradient>
-
-    <!-- ناحیه سود: گرادیان سبز -->
-    <linearGradient id="profitFill" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" stop-color="#10b981" stop-opacity="0.32"/>
-      <stop offset="100%" stop-color="#10b981" stop-opacity="0.02"/>
-    </linearGradient>
-
-    <!-- ناحیه ضرر: گرادیان قرمز -->
-    <linearGradient id="lossFill" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" stop-color="#ef4444" stop-opacity="0.02"/>
-      <stop offset="100%" stop-color="#ef4444" stop-opacity="0.32"/>
-    </linearGradient>
-
-    <!-- درخشش خط -->
-    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
-      <feGaussianBlur stdDeviation="4" result="blur"/>
+    <filter id="softGlow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="3.5" result="blur"/>
       <feMerge>
         <feMergeNode in="blur"/>
         <feMergeNode in="SourceGraphic"/>
       </feMerge>
     </filter>
-
     <clipPath id="chartClip">
-      <rect x="${padding.left}" y="${padding.top}" width="${chartW}" height="${chartH}" rx="8"/>
+      <rect x="${padding.left}" y="${padding.top}" width="${chartW}" height="${chartH}"/>
     </clipPath>
   </defs>`;
 
-  // ==== پس‌زمینه شیشه‌ای چارت ====
-  svgContent += `<rect x="${padding.left}" y="${padding.top}" width="${chartW}" height="${chartH}" rx="8"
-    fill="url(#chartBgGlass)" opacity="0.35"/>`;
-
-  // ناحیه‌ی سود (بالای صفر)
+  // ناحیه سود و ضرر — رنگ‌های نرم
   const profitTopY = padding.top;
   const profitBottomY = Math.max(padding.top, Math.min(H - padding.bottom, zeroY));
   if (profitBottomY > profitTopY) {
-    svgContent += `<rect x="${padding.left}" y="${profitTopY}" width="${chartW}" height="${profitBottomY - profitTopY}" fill="url(#profitFill)" clip-path="url(#chartClip)"/>`;
+    svgContent += `<rect x="${padding.left}" y="${profitTopY}" width="${chartW}" height="${profitBottomY - profitTopY}" fill="${colorProfit}" clip-path="url(#chartClip)"/>`;
   }
-
-  // ناحیه‌ی ضرر (زیر صفر)
   const lossTopY = Math.max(padding.top, Math.min(H - padding.bottom, zeroY));
   const lossBottomY = H - padding.bottom;
   if (lossBottomY > lossTopY) {
-    svgContent += `<rect x="${padding.left}" y="${lossTopY}" width="${chartW}" height="${lossBottomY - lossTopY}" fill="url(#lossFill)" clip-path="url(#chartClip)"/>`;
+    svgContent += `<rect x="${padding.left}" y="${lossTopY}" width="${chartW}" height="${lossBottomY - lossTopY}" fill="${colorLoss}" clip-path="url(#chartClip)"/>`;
   }
 
-  // ==== خطوط شبکه عمودی ====
-  const gridStepsX = 8;
-  for (let i = 0; i <= gridStepsX; i++) {
-    const price = xMin + ((xMax - xMin) / gridStepsX) * i;
+  // شبکه نقطه‌چین افقی و عمودی
+  for (let i = 0; i <= 10; i++) {
+    const price = xMin + ((xMax - xMin) / 10) * i;
     const x = xScale(price);
-    svgContent += `<line x1="${x}" y1="${padding.top}" x2="${x}" y2="${H - padding.bottom}"
-      stroke="rgba(148, 163, 184, 0.10)" stroke-width="1" stroke-dasharray="2,4"/>`;
+    svgContent += `<line x1="${x}" y1="${padding.top}" x2="${x}" y2="${H - padding.bottom}" stroke="${colorGrid}" stroke-width="1" stroke-dasharray="1,4"/>`;
   }
-
-  // ==== خطوط شبکه افقی + برچسب ====
-  const gridStepsY = 8;
-  for (let i = 0; i <= gridStepsY; i++) {
-    const pnl = yMin + ((yMax - yMin) / gridStepsY) * i;
+  for (let i = 0; i <= 8; i++) {
+    const pnl = yMin + ((yMax - yMin) / 8) * i;
     const y = yScale(pnl);
-    svgContent += `<line x1="${padding.left}" y1="${y}" x2="${W - padding.right}" y2="${y}"
-      stroke="rgba(148, 163, 184, 0.10)" stroke-width="1" stroke-dasharray="2,4"/>`;
-    svgContent += `<text x="${padding.left - 12}" y="${y + 4}" text-anchor="end"
-      fill="#94a3b8" font-size="10" font-family="Vazirmatn">${toFa(formatNum(pnl))}</text>`;
+    svgContent += `<line x1="${padding.left}" y1="${y}" x2="${W - padding.right}" y2="${y}" stroke="${colorGrid}" stroke-width="1" stroke-dasharray="1,4"/>`;
   }
 
-  // ==== محورها ====
-  svgContent += `<line x1="${padding.left}" y1="${zeroY}" x2="${W - padding.right}" y2="${zeroY}"
-    stroke="#64748b" stroke-width="1.5"/>`;
-  svgContent += `<line x1="${padding.left}" y1="${padding.top}" x2="${padding.left}" y2="${H - padding.bottom}"
-    stroke="#64748b" stroke-width="1.5"/>`;
+  // محور صفر و Y
+  svgContent += `<line x1="${padding.left}" y1="${zeroY}" x2="${W - padding.right}" y2="${zeroY}" stroke="${colorAxis}" stroke-width="1.2"/>`;
+  svgContent += `<line x1="${padding.left}" y1="${padding.top}" x2="${padding.left}" y2="${H - padding.bottom}" stroke="${colorAxis}" stroke-width="1.2"/>`;
 
-  // ==== برچسب‌های محور X ====
+  // برچسب‌های Y
+  for (let i = 0; i <= 8; i++) {
+    const pnl = yMin + ((yMax - yMin) / 8) * i;
+    const y = yScale(pnl);
+    svgContent += `<text x="${padding.left - 12}" y="${y + 4}" text-anchor="end" fill="${colorText}" font-size="10" font-family="Vazirmatn">${toFa(formatNum(pnl))}</text>`;
+  }
+
+  // برچسب‌های X
   for (let i = 0; i <= 6; i++) {
     const price = xMin + ((xMax - xMin) / 6) * i;
     const x = xScale(price);
-    svgContent += `<text x="${x}" y="${H - padding.bottom + 22}" text-anchor="middle"
-      fill="#94a3b8" font-size="10" font-family="Vazirmatn">${toFa(formatNum(price))}</text>`;
+    svgContent += `<text x="${x}" y="${H - padding.bottom + 22}" text-anchor="middle" fill="${colorText}" font-size="10" font-family="Vazirmatn">${toFa(formatNum(price))}</text>`;
   }
-  svgContent += `<text x="${W / 2}" y="${H - 10}" text-anchor="middle"
-    fill="#94a3b8" font-size="12" font-family="Vazirmatn" font-weight="700">قیمت دارایی پایه در سررسید</text>`;
+  svgContent += `<text x="${W / 2}" y="${H - 10}" text-anchor="middle" fill="${colorText}" font-size="11" font-family="Vazirmatn" font-weight="700">قیمت دارایی پایه در سررسید</text>`;
 
-  // ==== مسیر منحنی با درخشش ====
+  // منحنی — خط اصلی + درخشش ملایم
   let pathD = '';
   points.forEach((p, i) => {
     const x = xScale(p.price);
@@ -1992,45 +1982,33 @@ function drawChart(points, breakevens, currentPrice) {
     pathD += (i === 0 ? 'M' : ' L') + x + ',' + y;
   });
 
-  // سایه زیر منحنی
-  svgContent += `<path d="${pathD}" stroke="#d4af37" stroke-width="6" fill="none" stroke-linejoin="round"
-    opacity="0.18" filter="url(#glow)" clip-path="url(#chartClip)"/>`;
-  // خط اصلی
-  svgContent += `<path d="${pathD}" stroke="url(#lineGrad)" stroke-width="3"
-    fill="none" stroke-linejoin="round" clip-path="url(#chartClip)"/>`;
+  svgContent += `<path d="${pathD}" stroke="${colorLine2}" stroke-width="6" fill="none" stroke-linejoin="round" opacity="0.15" filter="url(#softGlow)" clip-path="url(#chartClip)"/>`;
+  svgContent += `<path d="${pathD}" stroke="url(#lineGrad)" stroke-width="2.5" fill="none" stroke-linejoin="round" clip-path="url(#chartClip)"/>`;
 
-  // ==== نقاط سربه‌سر ====
+  // نقاط سربه‌سر
   breakevens.forEach(be => {
     if (be > xMin && be < xMax) {
       const x = xScale(be);
-      svgContent += `<line x1="${x}" y1="${padding.top}" x2="${x}" y2="${H - padding.bottom}"
-        stroke="#d4af37" stroke-width="1.2" stroke-dasharray="4,5" opacity="0.55"/>`;
-      svgContent += `<circle cx="${x}" cy="${zeroY}" r="7" fill="#d4af37" stroke="#0a0a0f" stroke-width="2.5"/>`;
-      svgContent += `<circle cx="${x}" cy="${zeroY}" r="11" fill="none" stroke="#d4af37" stroke-width="1" opacity="0.5"/>`;
-      svgContent += `<text x="${x}" y="${zeroY - 18}" text-anchor="middle"
-        fill="#d4af37" font-size="10" font-family="Vazirmatn" font-weight="800">BE ${toFa(formatNum(be, 0))}</text>`;
+      svgContent += `<line x1="${x}" y1="${padding.top}" x2="${x}" y2="${H - padding.bottom}" stroke="${colorBE}" stroke-width="1" stroke-dasharray="4,5" opacity="0.55"/>`;
+      svgContent += `<circle cx="${x}" cy="${zeroY}" r="5" fill="${colorBE}" stroke="var(--bg-card)" stroke-width="1.5"/>`;
+      svgContent += `<text x="${x}" y="${zeroY - 14}" text-anchor="middle" fill="${colorBE}" font-size="10" font-family="Vazirmatn" font-weight="800">BE ${toFa(formatNum(be, 0))}</text>`;
     }
   });
 
-  // ==== قیمت فعلی ====
+  // قیمت فعلی
   const spotX = xScale(currentPrice);
   if (spotX >= padding.left && spotX <= W - padding.right) {
-    svgContent += `<line x1="${spotX}" y1="${padding.top}" x2="${spotX}" y2="${H - padding.bottom}"
-      stroke="#3b82f6" stroke-width="1.8" stroke-dasharray="6,4" opacity="0.85"/>`;
-    svgContent += `<rect x="${spotX - 42}" y="${padding.top - 24}" width="84" height="20" rx="6"
-      fill="#3b82f6" filter="url(#glow)"/>`;
-    svgContent += `<text x="${spotX}" y="${padding.top - 10}" text-anchor="middle"
-      fill="#fff" font-size="10" font-family="Vazirmatn" font-weight="800">قیمت فعلی</text>`;
+    svgContent += `<line x1="${spotX}" y1="${padding.top}" x2="${spotX}" y2="${H - padding.bottom}" stroke="${colorSpot}" stroke-width="1.5" stroke-dasharray="5,4" opacity="0.9"/>`;
+    svgContent += `<rect x="${spotX - 42}" y="${padding.top - 22}" width="84" height="18" rx="5" fill="${colorSpot}"/>`;
+    svgContent += `<text x="${spotX}" y="${padding.top - 9}" text-anchor="middle" fill="#fff" font-size="10" font-family="Vazirmatn" font-weight="800">قیمت فعلی</text>`;
   }
 
-  // ==== crosshair و dot ====
-  svgContent += `<line id="crosshairX" x1="0" y1="${padding.top}" x2="0" y2="${H - padding.bottom}"
-    stroke="#d4af37" stroke-width="1.2" stroke-dasharray="4,4" opacity="0" style="pointer-events:none"/>`;
-  svgContent += `<circle id="crosshairDot" cx="0" cy="0" r="6" fill="#d4af37" stroke="#0a0a0f" stroke-width="2" opacity="0" style="pointer-events:none"/>`;
+  // crosshair + dot (SVG، پس هیچ‌وقت از SVG خارج نمی‌شود)
+  svgContent += `<line id="crosshairX" x1="0" y1="${padding.top}" x2="0" y2="${H - padding.bottom}" stroke="${colorBE}" stroke-width="1" stroke-dasharray="3,3" opacity="0" style="pointer-events:none"/>`;
+  svgContent += `<circle id="crosshairDot" cx="0" cy="0" r="5" fill="${colorBE}" stroke="var(--bg-card)" stroke-width="2" opacity="0" style="pointer-events:none"/>`;
 
-  // ==== لایه رویداد ====
-  svgContent += `<rect id="hoverZone" x="${padding.left}" y="${padding.top}" width="${chartW}" height="${chartH}"
-    fill="transparent" style="cursor:${panMode ? 'grab' : 'crosshair'}"/>`;
+  // لایه رویداد
+  svgContent += `<rect id="hoverZone" x="${padding.left}" y="${padding.top}" width="${chartW}" height="${chartH}" fill="transparent" style="cursor:${panMode ? 'grab' : 'crosshair'}"/>`;
 
   svg.innerHTML = svgContent;
 
@@ -2038,7 +2016,7 @@ function drawChart(points, breakevens, currentPrice) {
 }
 
 // ==========================================
-// 🔍 زوم با مرکز موس (مثل TradingView)
+// 🔍 زوم / پن
 // ==========================================
 function getSVGCoords(clientX, clientY) {
   const svg = document.getElementById('payoffChart');
@@ -2053,14 +2031,12 @@ function getSVGCoords(clientX, clientY) {
 }
 
 function zoomAt(centerX, centerY, factorX, factorY) {
-  // centerX/Y داخل مختصات داده
   const xRange = view.xMax - view.xMin;
   const yRange = view.yMax - view.yMin;
 
   const newXRange = Math.max((view.fullXMax - view.fullXMin) / 40, Math.min((view.fullXMax - view.fullXMin), xRange / factorX));
   const newYRange = Math.max((view.fullYMax - view.fullYMin) / 40, Math.min((view.fullYMax - view.fullYMin), yRange / factorY));
 
-  // نسبت مرکز
   const relX = (centerX - view.xMin) / xRange;
   const relY = (centerY - view.yMin) / yRange;
 
@@ -2069,7 +2045,6 @@ function zoomAt(centerX, centerY, factorX, factorY) {
   let newYMin = centerY - relY * newYRange;
   let newYMax = newYMin + newYRange;
 
-  // محدود کردن به بازه‌ی کامل
   if (newXMin < view.fullXMin) { newXMin = view.fullXMin; newXMax = newXMin + newXRange; }
   if (newXMax > view.fullXMax) { newXMax = view.fullXMax; newXMin = newXMax - newXRange; }
   if (newYMin < view.fullYMin) { newYMin = view.fullYMin; newYMax = newYMin + newYRange; }
@@ -2117,15 +2092,15 @@ function applyZoom() {
 function togglePan() {
   panMode = !panMode;
   document.getElementById('panBtn').classList.toggle('active', panMode);
-  document.getElementById('chartContainer').classList.toggle('panning', panMode);
+  document.getElementById('chartCanvasWrap').classList.toggle('panning', panMode);
 }
 
 // ==========================================
-// 🖱️ Tooltip + Pan + Lock
+// 🖱️ Tooltip داخل chart-container
 // ==========================================
 const tooltipEl = document.getElementById('chartTooltip');
 const payoffSvg = document.getElementById('payoffChart');
-const chartContainer = document.getElementById('chartContainer');
+const chartCanvasWrap = document.getElementById('chartCanvasWrap');
 const chartHint = document.getElementById('chartHint');
 
 let isDragging = false;
@@ -2135,7 +2110,7 @@ let dragStartView = null;
 let mouseDownX = 0;
 let mouseDownY = 0;
 
-function showChartTooltip(price, pnl, percent, mouseX, mouseY) {
+function showChartTooltip(price, pnl, percent, clientX, clientY) {
   const cur = chartMeta ? chartMeta.currency : { short: '$' };
   const profitClass = pnl >= 0 ? 'tt-pnl-profit' : 'tt-pnl-loss';
   const pctClass = pnl >= 0 ? 'tt-pct-profit' : 'tt-pct-loss';
@@ -2160,13 +2135,26 @@ function showChartTooltip(price, pnl, percent, mouseX, mouseY) {
   tooltipEl.classList.add('visible');
   tooltipEl.classList.toggle('locked', isLocked);
 
-  const rect = tooltipEl.getBoundingClientRect();
-  let left = mouseX + 18;
-  let top = mouseY - rect.height - 14;
+  // موقعیت داخل chart-canvas-wrap (نه نسبت به body)
+  const wrapRect = chartCanvasWrap.getBoundingClientRect();
+  const tipRect = tooltipEl.getBoundingClientRect();
 
-  if (left + rect.width > window.innerWidth - 10) left = mouseX - rect.width - 18;
-  if (left < 10) left = 10;
-  if (top < 10) top = mouseY + 22;
+  let left = clientX - wrapRect.left + 16;
+  let top = clientY - wrapRect.top - tipRect.height - 12;
+
+  // اگه از لبه راست بیرون زد
+  if (left + tipRect.width > wrapRect.width - 8) {
+    left = clientX - wrapRect.left - tipRect.width - 16;
+  }
+  if (left < 8) left = 8;
+
+  // اگه از بالا بیرون زد
+  if (top < 8) top = clientY - wrapRect.top + 20;
+
+  // اگه از پایین بیرون زد
+  if (top + tipRect.height > wrapRect.height - 8) {
+    top = wrapRect.height - tipRect.height - 8;
+  }
 
   tooltipEl.style.left = left + 'px';
   tooltipEl.style.top = top + 'px';
@@ -2185,7 +2173,7 @@ function updateCrosshair(price, pnl) {
   const py = svgGeometry.yScale(pnl);
   cx.setAttribute('x1', px);
   cx.setAttribute('x2', px);
-  cx.setAttribute('opacity', '0.85');
+  cx.setAttribute('opacity', '0.8');
   cd.setAttribute('cx', px);
   cd.setAttribute('cy', py);
   cd.setAttribute('opacity', '1');
@@ -2214,26 +2202,25 @@ function applyLockedPoint(point) {
   `;
   updateCrosshair(point.price, point.pnl);
 
-  const rect = payoffSvg.getBoundingClientRect();
-  const scaleX = rect.width / svgGeometry.W;
-  const scaleY = rect.height / svgGeometry.H;
-  const px = svgGeometry.xScale(point.price) * scaleX + rect.left;
-  const py = svgGeometry.yScale(point.pnl) * scaleY + rect.top;
+  const svgRect = payoffSvg.getBoundingClientRect();
+  const scaleX = svgRect.width / svgGeometry.W;
+  const scaleY = svgRect.height / svgGeometry.H;
+  const clientX = svgGeometry.xScale(point.price) * scaleX + svgRect.left;
+  const clientY = svgGeometry.yScale(point.pnl) * scaleY + svgRect.top;
 
   const totalInv = totalInvestmentValue();
   const percent = (point.pnl / totalInv) * 100;
 
-  showChartTooltip(point.price, point.pnl, percent, px, py);
+  showChartTooltip(point.price, point.pnl, percent, clientX, clientY);
 }
 
-// اسکرول = زوم روی موس
+// wheel = زوم روی موس
 payoffSvg.addEventListener('wheel', (e) => {
   if (positions.length === 0) return;
   e.preventDefault();
 
-  const { x: svgX, y: svgY, rect } = getSVGCoords(e.clientX, e.clientY);
+  const { x: svgX, y: svgY } = getSVGCoords(e.clientX, e.clientY);
 
-  // تبدیل به مختصات داده
   const cx = view.xMin + ((svgX - svgGeometry.padding.left) / svgGeometry.chartW) * (view.xMax - view.xMin);
   const cy = view.yMax - ((svgY - svgGeometry.padding.top) / svgGeometry.chartH) * (view.yMax - view.yMin);
 
@@ -2249,7 +2236,6 @@ payoffSvg.addEventListener('wheel', (e) => {
   applyZoom();
 }, { passive: false });
 
-// mousemove: pan یا tooltip
 payoffSvg.addEventListener('mousemove', (e) => {
   if (!svgGeometry || chartPoints.length === 0) return;
 
@@ -2263,7 +2249,6 @@ payoffSvg.addEventListener('mousemove', (e) => {
     let newYMin = dragStartView.yMin + dy;
     let newYMax = dragStartView.yMax + dy;
 
-    // محدود کردن به بازه‌ی کامل
     const xRange = dragStartView.xMax - dragStartView.xMin;
     const yRange = dragStartView.yMax - dragStartView.yMin;
 
@@ -2377,6 +2362,11 @@ document.addEventListener('mouseup', (e) => {
   lockedPoint = nearest;
   applyLockedPoint(nearest);
 });
+
+// اسکرول صفحه: تولتیپ رو مخفی کن (پاکسازی)
+window.addEventListener('scroll', () => {
+  if (!isLocked) hideChartTooltip();
+}, { passive: true });
 
 // ==========================================
 // 🚀 شروع
