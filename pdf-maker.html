@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>PDF ساز | آکادمی شمعدون</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" as="style">
 <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/dompurify@3.0.6/dist/purify.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
@@ -386,9 +387,9 @@ async function generatePDF() {
 
     // ساخت HTML کامل PDF
     const pdfHtml = `
-      <div class="pdf-content" style="background: #ffffff; color: #1a1a24; font-family: 'Vazirmatn', Tahoma, sans-serif; direction: rtl; padding: 0; line-height: 1.9; font-size: 11pt;">
+        <div class="pdf-content" style=" background: #ffffff; color: #1a1a24; font-family: 'Vazirmatn', Tahoma, sans-serif; direction: rtl; padding: 15mm 12mm; width: 210mm; min-height: 297mm; margin: 0 auto; box-sizing: border-box; line-height: 1.9; font-size: 11pt; ">
         <!-- Cover Page -->
-        <div style="text-align: center; padding: 60px 20px; min-height: 250mm; display: flex; flex-direction: column; justify-content: center; align-items: center; page-break-after: always;">
+        <div style=" text-align: center; padding: 60px 20px; height: 297mm; display: flex; flex-direction: column; justify-content: center; align-items: center; page-break-after: always; box-sizing: border-box;">
           <div style="width: 120px; height: 120px; border-radius: 50%; background: linear-gradient(135deg, #d4af37, #a8862a); display: flex; align-items: center; justify-content: center; color: #fff; font-size: 60px; font-weight: 900; margin-bottom: 30px;">
             🎓
           </div>
@@ -449,7 +450,10 @@ async function generatePDF() {
     // استایل‌های PDF
     const styleTag = `
       <style>
-        @page { size: A4; margin: 15mm 12mm; }
+        @page { 
+           size: A4 portrait; 
+           margin: 0;
+        }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Vazirmatn', Tahoma, sans-serif; direction: rtl; }
         h1, h2 {
@@ -509,7 +513,7 @@ async function generatePDF() {
       </style>
     `;
 
-    // ساخت container مخفی
+   // ساخت container مخفی
     const wrapper = document.createElement('div');
     wrapper.innerHTML = styleTag + pdfHtml;
     wrapper.style.position = 'absolute';
@@ -520,36 +524,52 @@ async function generatePDF() {
 
     console.log('✅ Container ساخته شد');
 
-    // صبر برای لود فونت
+    // ⬇️⬇️⬇️ اینجا کد جدید:
     if (document.fonts && document.fonts.ready) {
       await document.fonts.ready;
     }
-    await new Promise(r => setTimeout(r, 500));
+    await new Promise(r => setTimeout(r, 800));   // ← از 500 به 800 افزایش بده
 
     console.log('✅ فونت لود شد');
-
+    
+    // ساخت container 
     // اسم فایل
     const dateStr2 = `${today.getFullYear()}${String(today.getMonth() + 1).padStart(2, '0')}${String(today.getDate()).padStart(2, '0')}`;
     const fileName = `lesson-${number}-shamdun-${dateStr2}.pdf`;
 
-    // تنظیمات html2pdf
+    // ==========================================
+    // 📌 تنظیمات html2pdf — اصلاح‌شده
+    // ==========================================
     const options = {
-      margin: [10, 10, 10, 10],
+      margin: [12, 12, 15, 12],  // فاصله‌های استاندارد A4: بالا، راست، پایین، چپ
       filename: fileName,
       image: { type: 'jpeg', quality: 0.98 },
       html2canvas: {
-        scale: 2,
+        scale: 2,                    // کیفیت رتینا
         useCORS: true,
         backgroundColor: '#ffffff',
         logging: false,
-        windowWidth: 800
+        width: 794,                  // عرض دقیق A4 در 96 DPI
+        windowWidth: 794,            // ← مهم: هم‌راستا با width
+        scrollY: 0,
+        scrollX: 0,
+        letterRendering: true,
+        dpi: 96,
+        removeContainer: false
       },
       jsPDF: {
         unit: 'mm',
         format: 'a4',
-        orientation: 'portrait'
+        orientation: 'portrait',
+        compress: true,
+        putOnlyUsedFonts: true
       },
-      pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }
+      pagebreak: {
+        mode: ['css', 'legacy'],     // ← حذف avoid-all
+        before: '.page-break-before',
+        after: '.page-break-after',
+        avoid: ['tr', 'td', 'th', 'blockquote', 'h1', 'h2', 'h3', 'p']
+      }
     };
 
     console.log('⏳ در حال ساخت PDF...');
