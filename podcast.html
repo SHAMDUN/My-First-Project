@@ -1,94 +1,456 @@
 <!DOCTYPE html>
-<html lang="fa" dir="rtl">
+<html lang="fa" dir="rtl" data-theme="dark">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>پادکست | آکادمی شمعدون</title>
-  <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-      font-family: Tahoma, Arial, sans-serif;
-      background: #0f172a;
-      color: #e2e8f0;
-      padding: 20px;
-      transition: background 0.3s, color 0.3s;
-    }
-    body.light {
-      background: #f8fafc;
-      color: #1e293b;
-    }
-    .container { max-width: 800px; margin: 0 auto; }
-    h1 {
-      text-align: center;
-      margin: 30px 0;
-      font-size: 2rem;
-      color: #38bdf8;
-    }
-    .episode {
-      background: #1e293b;
-      border-radius: 12px;
-      padding: 20px;
-      margin-bottom: 20px;
-      border-right: 4px solid #38bdf8;
-      transition: transform 0.2s;
-    }
-    body.light .episode {
-      background: #ffffff;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-    }
-    .episode:hover { transform: translateX(-4px); }
-    .episode h2 {
-      font-size: 1.2rem;
-      margin-bottom: 8px;
-      color: #38bdf8;
-    }
-    .episode .meta {
-      font-size: 0.85rem;
-      opacity: 0.7;
-      margin-bottom: 12px;
-    }
-    .episode p {
-      font-size: 0.95rem;
-      line-height: 1.7;
-      margin-bottom: 15px;
-      opacity: 0.9;
-    }
-    audio {
-      width: 100%;
-      border-radius: 8px;
-      outline: none;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>پادکست | آکادمی شمعدون</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css">
+    <meta name="theme-color" content="#d4af37">
+    <style>
+        :root {
+            --bg-primary: #0a0a0f;
+            --bg-secondary: #14141c;
+            --bg-card: #1a1a24;
+            --gold: #d4af37;
+            --gold-light: #f4d47c;
+            --gold-dark: #a8862a;
+            --green: #10b981;
+            --red: #ef4444;
+            --blue: #3b82f6;
+            --white: #f8fafc;
+            --gray: #94a3b8;
+        }
+
+        [data-theme="light"] {
+            --bg-primary: #f8fafc;
+            --bg-secondary: #eef2f7;
+            --bg-card: #ffffff;
+            --gold: #b8860b;
+            --gold-light: #d4af37;
+            --gold-dark: #8b6508;
+            --green: #059669;
+            --red: #dc2626;
+            --blue: #2563eb;
+            --white: #0f172a;
+            --gray: #64748b;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Vazirmatn', Tahoma, sans-serif;
+            background-color: var(--bg-primary);
+            background-image:
+                radial-gradient(circle at 0% 0%, rgba(212, 175, 55, 0.08) 0%, transparent 40%),
+                radial-gradient(circle at 100% 100%, rgba(59, 130, 246, 0.06) 0%, transparent 40%),
+                linear-gradient(rgba(255, 255, 255, 0.015) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
+            background-size: 100% 100%, 100% 100%, 60px 60px, 60px 60px;
+            background-attachment: fixed;
+            color: var(--white);
+            min-height: 100vh;
+            direction: rtl;
+            overflow-x: hidden;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        [data-theme="light"] body {
+            background-image:
+                radial-gradient(circle at 0% 0%, rgba(184, 134, 11, 0.06) 0%, transparent 40%),
+                radial-gradient(circle at 100% 100%, rgba(37, 99, 235, 0.05) 0%, transparent 40%),
+                linear-gradient(rgba(0, 0, 0, 0.025) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 0, 0, 0.025) 1px, transparent 1px);
+        }
+        [data-theme="light"] .page-header h1 {
+            background: linear-gradient(135deg, #b8860b, #8b6508) !important;
+            -webkit-background-clip: text !important;
+            -webkit-text-fill-color: transparent !important;
+            background-clip: text !important;
+        }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        .main-container { max-width: 1200px; margin: 0 auto; padding: 100px 20px 40px; }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 30px;
+            animation: fadeInUp 0.6s ease-out;
+        }
+        .page-header h1 {
+            font-size: 36px; font-weight: 900; margin-bottom: 10px;
+            background: linear-gradient(135deg, var(--gold), var(--gold-light));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .page-header p { color: var(--gray); font-size: 14px; }
+
+        .search-box {
+            max-width: 600px;
+            margin: 0 auto 25px;
+            position: relative;
+        }
+        .search-box input {
+            width: 100%;
+            padding: 15px 50px 15px 20px;
+            background: rgba(20, 20, 28, 0.8);
+            border: 2px solid rgba(212, 175, 55, 0.2);
+            border-radius: 14px;
+            color: var(--white);
+            font-size: 14px;
+            font-family: inherit;
+            outline: none;
+            transition: 0.3s;
+        }
+        .search-box input:focus {
+            border-color: var(--gold);
+            box-shadow: 0 0 0 4px rgba(212, 175, 55, 0.1);
+        }
+        .search-box input::placeholder { color: var(--gray); }
+        .search-icon {
+            position: absolute;
+            right: 18px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 20px;
+            pointer-events: none;
+        }
+
+        .episodes-list {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        .episode-card {
+            background: linear-gradient(135deg, var(--bg-card), var(--bg-secondary));
+            border: 1px solid rgba(212, 175, 55, 0.15);
+            border-radius: 18px;
+            overflow: hidden;
+            transition: 0.3s;
+            display: flex;
+            flex-direction: column;
+            animation: fadeInUp 0.4s ease-out backwards;
+        }
+        .episode-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(212, 175, 55, 0.5);
+            box-shadow: 0 15px 40px rgba(212, 175, 55, 0.15);
+        }
+        .episode-header {
+            padding: 20px 22px 15px;
+            border-bottom: 1px solid rgba(212, 175, 55, 0.1);
+        }
+        .episode-badge {
+            display: inline-block;
+            background: rgba(212, 175, 55, 0.15);
+            color: var(--gold);
+            padding: 4px 12px;
+            border-radius: 8px;
+            font-size: 11px;
+            font-weight: 800;
+            margin-bottom: 12px;
+        }
+        .episode-title {
+            color: var(--white);
+            font-size: 18px;
+            font-weight: 800;
+            line-height: 1.6;
+            margin-bottom: 8px;
+        }
+        .episode-meta {
+            display: flex;
+            gap: 15px;
+            color: var(--gray);
+            font-size: 12px;
+            flex-wrap: wrap;
+        }
+        .episode-meta span {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .episode-player {
+            padding: 18px 22px 22px;
+        }
+        .episode-player audio {
+            width: 100%;
+            border-radius: 10px;
+            outline: none;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--gray);
+        }
+        .spinner {
+            width: 40px; height: 40px;
+            border: 4px solid rgba(212, 175, 55, 0.2);
+            border-top-color: var(--gold);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 15px;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 30px 20px;
+            color: var(--gray);
+            font-size: 12px;
+            border-top: 1px solid rgba(212, 175, 55, 0.1);
+            margin-top: 40px;
+        }
+
+        /* ===== تم روشن ===== */
+        [data-theme="light"] body {
+            background-color: #f8fafc !important;
+            color: #0f172a !important;
+        }
+        [data-theme="light"] .search-box input {
+            background: #ffffff !important;
+            border-color: rgba(184, 134, 11, 0.3) !important;
+            color: #0f172a !important;
+        }
+        [data-theme="light"] .search-box input::placeholder {
+            color: #94a3b8 !important;
+        }
+        [data-theme="light"] .episode-card {
+            background: linear-gradient(135deg, #ffffff, #eef2f7) !important;
+            border-color: rgba(184, 134, 11, 0.15) !important;
+        }
+        [data-theme="light"] .episode-card:hover {
+            border-color: rgba(184, 134, 11, 0.5) !important;
+        }
+        [data-theme="light"] .episode-header {
+            border-bottom-color: rgba(0, 0, 0, 0.06) !important;
+        }
+        [data-theme="light"] .episode-title {
+            color: #0f172a !important;
+        }
+        [data-theme="light"] .episode-meta {
+            color: #64748b !important;
+        }
+        [data-theme="light"] .loading {
+            color: #64748b !important;
+        }
+        [data-theme="light"] .footer {
+            color: #64748b !important;
+        }
+
+        @media (max-width: 600px) {
+            .main-container { padding: 90px 15px 30px; }
+            .page-header h1 { font-size: 26px; }
+            .episode-title { font-size: 16px; }
+            .episode-header { padding: 16px 18px 12px; }
+            .episode-player { padding: 14px 18px 18px; }
+        }
+    </style>
 </head>
 <body>
 
-  <div class="container">
-    <h1>🎙️ پادکست آکادمی شمعدون</h1>
+    <div class="main-container">
+        <div class="page-header">
+            <h1>🎙️ پادکست شمعدون</h1>
+            <p>تحلیل‌های صوتی بازارهای مالی</p>
+        </div>
 
-    <!-- قسمت اول -->
-    <div class="episode">
-      <h2>قسمت اول: مالیات بر عایدی سرمایه (CGT)</h2>
-      <div class="meta">📅 ۱۴۰۵/۰۷/۰۴ · ⏱️ ۱۲ دقیقه</div>
-      <p>تحلیل عمیق اثر مالیات بر عایدی سرمایه بر طلا، دلار، بورس، مسکن و کریپتو — و راهکارهای قانونی برای حفظ سرمایه.</p>
-      <audio controls preload="none">
-        <source src="audio/ep1.mp3" type="audio/mpeg">
-        مرورگر شما از پخش صدا پشتیبانی نمی‌کند.
-      </audio>
+        <div class="search-box">
+            <input type="text" id="searchInput" placeholder="جستجو در قسمت‌ها..." oninput="handleSearch()">
+            <span class="search-icon">🔍</span>
+        </div>
+
+        <div class="episodes-list" id="episodesList">
+            <div class="loading">
+                <div class="spinner"></div>
+                ⏳ در حال بارگذاری پادکست‌ها...
+            </div>
+        </div>
     </div>
 
-  </div>
+    <footer class="footer">
+        © ۱۴۰۵ آکادمی شمعدون | تمامی حقوق محفوظ است
+    </footer>
 
-  <script src="navbar.js"></script>
-  <script>
-    // هماهنگی با تم سایت
-    const savedTheme = localStorage.getItem('theme');
-    if (savedTheme === 'light') document.body.classList.add('light');
+    <script src="navbar.js"></script>
 
-    // گوش دادن به تغییر تم از navbar
-    window.addEventListener('message', (e) => {
-      if (e.data === 'light') document.body.classList.add('light');
-      if (e.data === 'dark') document.body.classList.remove('light');
-    });
-  </script>
+    <script>
+        let allEpisodes = [];
+        let filteredEpisodes = [];
+        let currentSearch = '';
+
+        // ==========================================
+        // ابزارها
+        // ==========================================
+        function toFa(num) {
+            if (num === null || num === undefined) return '۰';
+            const persianDigits = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
+            return String(num).replace(/\d/g, d => persianDigits[d]);
+        }
+
+        function escapeHtml(text) {
+            if (!text) return '';
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        function formatSize(bytes) {
+            if (!bytes) return '';
+            const mb = bytes / 1024 / 1024;
+            if (mb < 1) {
+                return toFa((bytes / 1024).toFixed(0)) + ' کیلوبایت';
+            }
+            return toFa(mb.toFixed(1)) + ' مگابایت';
+        }
+
+        function formatDate(iso) {
+            if (!iso) return '';
+            try {
+                const d = new Date(iso);
+                return new Intl.DateTimeFormat('fa-IR', {
+                    year: 'numeric', month: 'short', day: 'numeric'
+                }).format(d);
+            } catch (e) { return ''; }
+        }
+
+        // ==========================================
+        // لود پادکست‌ها از playlist.json
+        // ==========================================
+        async function loadEpisodes() {
+            const list = document.getElementById('episodesList');
+
+            try {
+                const response = await fetch('playlist.json?t=' + Date.now());
+                if (!response.ok) throw new Error('playlist.json not found');
+
+                allEpisodes = await response.json();
+
+                if (allEpisodes.length === 0) {
+                    list.innerHTML = `
+                        <div class="loading">
+                            📭 هنوز قسمتی منتشر نشده
+                        </div>
+                    `;
+                    return;
+                }
+
+                renderEpisodes();
+
+            } catch (e) {
+                console.error('Load episodes error:', e);
+                list.innerHTML = `
+                    <div class="loading">
+                        ❌ خطا در بارگذاری پادکست‌ها<br>
+                        <small style="font-size:11px;opacity:0.7;">(فایل playlist.json پیدا نشد)</small>
+                    </div>
+                `;
+            }
+        }
+
+        // ==========================================
+        // جستجو
+        // ==========================================
+        function handleSearch() {
+            currentSearch = document.getElementById('searchInput').value.trim().toLowerCase();
+            renderEpisodes();
+        }
+
+        // ==========================================
+        // رندر قسمت‌ها
+        // ==========================================
+        function renderEpisodes() {
+            filteredEpisodes = allEpisodes.filter(ep => {
+                if (!currentSearch) return true;
+                const text = ((ep.title || '') + ' ' + (ep.file || '')).toLowerCase();
+                return text.includes(currentSearch);
+            });
+
+            const list = document.getElementById('episodesList');
+
+            if (filteredEpisodes.length === 0) {
+                list.innerHTML = `
+                    <div class="loading">
+                        📭 قسمتی با این فیلتر یافت نشد
+                    </div>
+                `;
+                return;
+            }
+
+            list.innerHTML = filteredEpisodes.map((ep, idx) => `
+                <div class="episode-card" style="animation-delay: ${Math.min(idx * 0.05, 0.5)}s">
+                    <div class="episode-header">
+                        <span class="episode-badge">🎧 قسمت ${toFa(idx + 1)}</span>
+                        <h3 class="episode-title">${escapeHtml(ep.title)}</h3>
+                        <div class="episode-meta">
+                            <span>📅 ${formatDate(ep.date)}</span>
+                            <span>💾 ${formatSize(ep.size)}</span>
+                        </div>
+                    </div>
+                    <div class="episode-player">
+                        <audio controls preload="none">
+                            <source src="${escapeHtml(ep.url)}" type="audio/mpeg">
+                            مرورگر شما از پخش صدا پشتیبانی نمی‌کند.
+                        </audio>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // ==========================================
+        // 🌙 تم شب/روز
+        // ==========================================
+        function applyTheme() {
+            const saved = localStorage.getItem('shamdun-theme') || 'dark';
+            document.documentElement.setAttribute('data-theme', saved);
+            const icon = document.getElementById('snThemeIcon');
+            if (icon) icon.textContent = saved === 'dark' ? '🌙' : '☀️';
+        }
+
+        function addThemeButtonToNavbar() {
+            const navbarContainer = document.querySelector('.sn-navbar-container');
+            if (!navbarContainer) {
+                setTimeout(addThemeButtonToNavbar, 200);
+                return;
+            }
+            if (document.getElementById('snThemeBtn')) return;
+
+            const themeBtn = document.createElement('button');
+            themeBtn.className = 'sn-action-btn';
+            themeBtn.id = 'snThemeBtn';
+            themeBtn.setAttribute('aria-label', 'تغییر تم');
+            themeBtn.setAttribute('title', 'تغییر تم');
+            themeBtn.style.cssText = 'width:42px;height:42px;border-radius:12px;background:rgba(212,175,55,0.08);border:1px solid rgba(212,175,55,0.25);color:var(--gold);font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-family:inherit;';
+            themeBtn.innerHTML = '<span id="snThemeIcon">🌙</span>';
+
+            const userArea = navbarContainer.querySelector('.sn-user-area');
+            if (userArea) {
+                navbarContainer.insertBefore(themeBtn, userArea);
+            } else {
+                navbarContainer.appendChild(themeBtn);
+            }
+
+            themeBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                const current = document.documentElement.getAttribute('data-theme') || 'dark';
+                const newTheme = current === 'dark' ? 'light' : 'dark';
+                document.documentElement.setAttribute('data-theme', newTheme);
+                localStorage.setItem('shamdun-theme', newTheme);
+                const icon = document.getElementById('snThemeIcon');
+                if (icon) icon.textContent = newTheme === 'dark' ? '🌙' : '☀️';
+            });
+        }
+
+        // ==========================================
+        // راه‌اندازی
+        // ==========================================
+        document.addEventListener('DOMContentLoaded', () => {
+            applyTheme();
+            setTimeout(addThemeButtonToNavbar, 500);
+            setTimeout(addThemeButtonToNavbar, 1500);
+            loadEpisodes();
+        });
+    </script>
 </body>
 </html>
