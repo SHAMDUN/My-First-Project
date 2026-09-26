@@ -2627,8 +2627,7 @@ function drawChart(points, breakevens, currentPrice) {
   const wrap = document.getElementById('chartCanvasWrap');
   const wrapW = wrap.clientWidth || 1000;
   const isLandscape = window.innerWidth > window.innerHeight;
-  const wrapH = isLandscape ? Math.max(300, window.innerHeight * 0.6) : Math.max(360, wrapW * 0.5);
-
+  const wrapH = isLandscape ? Math.max(320, window.innerHeight * 0.75) : Math.max(360, wrapW * 0.5);
   const W = Math.round(wrapW);
   const H = Math.round(wrapH);
 
@@ -2637,7 +2636,7 @@ function drawChart(points, breakevens, currentPrice) {
   svg.setAttribute('height', H);
   svg.style.height = H + 'px';
 
-  const padding = { top: 32, right: 32, bottom: 52, left: 80 };
+  const padding = { top: 28, right: 20, bottom: 40, left: 54 };
   const chartW = W - padding.left - padding.right;
   const chartH = H - padding.top - padding.bottom;
 
