@@ -91,7 +91,7 @@ body {
     radial-gradient(ellipse 80% 50% at 50% -20%, rgba(124, 58, 237, 0.04), transparent),
     radial-gradient(ellipse 60% 50% at 100% 100%, rgba(168, 120, 0, 0.03), transparent);
 }
-.container { max-width: 1500px; margin: 0 auto; padding: 32px 24px 80px; }
+.container { max-width: 1500px; margin: 0 auto; padding: 100px 24px 80px; }
 
 .num, .mono, input[type="number"], .value, .zoom-info {
   font-family: var(--sans);
@@ -1124,8 +1124,51 @@ body {
 }
 .modal-btn.danger:hover { transform: translateY(-1px); box-shadow: 0 4px 16px rgba(239, 68, 68, 0.5); }
 
+ /* ===== حالت تمام‌صفحه ===== */
+.chart-container.fullscreen {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  margin: 0;
+  border-radius: 0;
+  padding: 12px;
+  background: var(--bg-primary);
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+.chart-container.fullscreen .chart-canvas-wrap {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.chart-container.fullscreen #payoffChart {
+  max-height: 100%;
+  width: 100%;
+  height: auto;
+}
+.chart-container.fullscreen .chart-header {
+  padding-bottom: 10px;
+  margin-bottom: 10px;
+}
+.chart-container.fullscreen .chart-toolbar,
+.chart-container.fullscreen .chart-hint,
+.chart-container.fullscreen .legend {
+  flex-shrink: 0;
+}
+
+/* دکمه fullscreen توی موبایل کمی بزرگ‌تر بشه */
+@media (max-width: 600px) {
+  .zoom-btn#fullscreenBtn {
+    background: var(--gold-glow);
+    border-color: rgba(212, 175, 55, 0.4);
+    color: var(--gold);
+  }
+} 
 @media (max-width: 900px) {
-  .container { padding: 20px 14px 60px; }
+  .container { padding: 90px 14px 60px; }
   .positions-table th { padding: 8px 5px; font-size: 10px; }
   .positions-table td { padding: 7px 5px; }
   .cell-input { min-width: 75px; padding: 7px 8px; font-size: 11px; }
@@ -1137,7 +1180,7 @@ body {
   .page-header h1 { font-size: 22px; }
 }
 @media (max-width: 600px) {
-  .container { padding: 16px 10px 40px; }
+  .container { padding: 86px 10px 40px; }
   .page-header h1 { font-size: 19px; }
   .page-header p { font-size: 12px; }
   .panel { padding: 16px; border-radius: 14px; }
@@ -1148,6 +1191,12 @@ body {
   .modal-box { padding: 22px; }
   .modal-actions { flex-direction: column-reverse; }
   .modal-btn { width: 100%; justify-content: center; }
+    /* دکمه fullscreen توی موبایل با رنگ طلایی */
+  .zoom-btn#fullscreenBtn {
+    background: var(--gold-glow);
+    border-color: rgba(212, 175, 55, 0.4);
+    color: var(--gold);
+  }
 }
 </style>
 </head>
@@ -1300,6 +1349,7 @@ body {
       <button class="zoom-btn" onclick="zoomOut()" title="زوم اوت">➖</button>
       <button class="zoom-btn reset" onclick="resetZoom()" title="ریست">🔄 ریست</button>
       <button class="zoom-btn" id="panBtn" onclick="togglePan()" title="جابجایی">✋ Pan</button>
+      <button class="zoom-btn" id="fullscreenBtn" onclick="toggleFullscreen()" title="تمام صفحه">⛶</button>
       <span class="zoom-info" id="zoomInfo">1.0× | 1.0×</span>
     </div>
 
@@ -2741,7 +2791,48 @@ function togglePan() {
   document.getElementById('panBtn').classList.toggle('active', panMode);
   document.getElementById('chartCanvasWrap').classList.toggle('panning', panMode);
 }
+// ==========================================
+// ⛶ حالت تمام‌صفحه
+// ==========================================
+function toggleFullscreen() {
+  const container = document.getElementById('chartContainer');
+  const btn = document.getElementById('fullscreenBtn');
+  if (!container) return;
 
+  const isNowFullscreen = container.classList.toggle('fullscreen');
+  btn.classList.toggle('active', isNowFullscreen);
+  btn.textContent = isNowFullscreen ? '✕' : '⛶';
+  btn.title = isNowFullscreen ? 'خروج از تمام صفحه' : 'تمام صفحه';
+
+  // جلوگیری از اسکرول صفحه اصلی
+  document.body.style.overflow = isNowFullscreen ? 'hidden' : '';
+
+  // رندر مجدد نمودار بعد از تغییر اندازه
+  setTimeout(() => {
+    if (chartPoints.length > 0 && chartMeta) {
+      drawChart(chartPoints, currentBreakevens, chartMeta.currentPrice);
+    }
+  }, 80);
+}
+
+// خروج با کلید Escape
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') {
+    const container = document.getElementById('chartContainer');
+    if (container && container.classList.contains('fullscreen')) {
+      toggleFullscreen();
+    }
+  }
+});
+
+// اصلاح موقعیت tooltip هنگام تغییر اندازه
+window.addEventListener('resize', () => {
+  const container = document.getElementById('chartContainer');
+  if (container && container.classList.contains('fullscreen') && chartPoints.length > 0 && chartMeta) {
+    drawChart(chartPoints, currentBreakevens, chartMeta.currentPrice);
+  }
+});
+  
 // ==========================================
 // 🖱️ Tooltip
 // ==========================================
