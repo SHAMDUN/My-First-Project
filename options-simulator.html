@@ -2459,8 +2459,8 @@ function updateChart() {
   const pnls = points.map(p => p.pnl);
   const maxPnL = Math.max(...pnls);
   const minPnL = Math.min(...pnls);
-  const fullAbsMax = Math.max(Math.abs(maxPnL), Math.abs(minPnL)) || 1;
-
+  // ۴۰٪ حاشیه بالا و پایین تا خطوط صاف داخل کادر بمونن
+  const fullAbsMax = Math.max(Math.abs(maxPnL), Math.abs(minPnL)) * 1.4 || 1;
   if (view.fullXMin !== fullPriceMin || view.fullXMax !== fullPriceMax) {
     resetViewInternal(fullPriceMin, fullPriceMax, -fullAbsMax, fullAbsMax);
   }
