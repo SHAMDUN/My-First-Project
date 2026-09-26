@@ -836,13 +836,11 @@ body {
 }
 #payoffChart {
   width: 100%;
-  height: 60vh;
-  min-height: 380px;
-  max-height: 600px;
+  height: auto;
   display: block;
   cursor: crosshair;
   user-select: none;
-  touch-action: none;
+  touch-action: pan-y;
 }
 .chart-canvas-wrap.panning #payoffChart { cursor: grabbing !important; }
 
@@ -1373,7 +1371,7 @@ body {
     </div>
 
     <div class="chart-canvas-wrap" id="chartCanvasWrap">
-      <svg id="payoffChart" viewBox="0 0 1000 480" preserveAspectRatio="none"></svg>
+      <svg id="payoffChart" preserveAspectRatio="none"></svg>
       <div id="chartTooltip"></div>
     </div>
 
@@ -2624,7 +2622,21 @@ let currentBreakevens = [];
 function drawChart(points, breakevens, currentPrice) {
   currentBreakevens = breakevens;
   const svg = document.getElementById('payoffChart');
-  const W = 1000, H = 480;
+
+  // ===== رسم داینامیک بر اساس اندازه واقعی کادر =====
+  const wrap = document.getElementById('chartCanvasWrap');
+  const wrapW = wrap.clientWidth || 1000;
+  const isLandscape = window.innerWidth > window.innerHeight;
+  const wrapH = isLandscape ? Math.max(300, window.innerHeight * 0.6) : Math.max(360, wrapW * 0.5);
+
+  const W = Math.round(wrapW);
+  const H = Math.round(wrapH);
+
+  svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
+  svg.setAttribute('width', W);
+  svg.setAttribute('height', H);
+  svg.style.height = H + 'px';
+
   const padding = { top: 32, right: 32, bottom: 52, left: 80 };
   const chartW = W - padding.left - padding.right;
   const chartH = H - padding.top - padding.bottom;
@@ -2754,8 +2766,8 @@ function drawChart(points, breakevens, currentPrice) {
 function getSVGCoords(clientX, clientY) {
   const svg = document.getElementById('payoffChart');
   const rect = svg.getBoundingClientRect();
-  const scaleX = 1000 / rect.width;
-  const scaleY = 480 / rect.height;
+const scaleX = svgGeometry ? svgGeometry.W / rect.width : 1;
+const scaleY = svgGeometry ? svgGeometry.H / rect.height : 1;
   return {
     x: (clientX - rect.left) * scaleX,
     y: (clientY - rect.top) * scaleY,
@@ -3148,6 +3160,25 @@ function applyTheme() {
   document.documentElement.setAttribute('data-theme', saved);
 }
 applyTheme();
+  // ===== رسم مجدد نمودار در تغییر اندازه صفحه =====
+let resizeTimer = null;
+window.addEventListener('resize', () => {
+  clearTimeout(resizeTimer);
+  resizeTimer = setTimeout(() => {
+    if (chartPoints.length > 0) {
+      updateChart();
+    }
+  }, 250);
+});
+
+// ===== رسم مجدد در تغییر جهت صفحه =====
+window.addEventListener('orientationchange', () => {
+  setTimeout(() => {
+    if (chartPoints.length > 0) {
+      updateChart();
+    }
+  }, 400);
+});
 </script>
 
 <script src="navbar.js" defer></script>
