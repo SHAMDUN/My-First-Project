@@ -1122,49 +1122,200 @@ body {
 }
 .modal-btn.danger:hover { transform: translateY(-1px); box-shadow: 0 4px 16px rgba(239, 68, 68, 0.5); }
 
- /* ===== حالت تمام‌صفحه ===== */
+ /* ===== حالت تمام‌صفحه حرفه‌ای نمودار ===== */
 .chart-container.fullscreen {
   position: fixed;
   inset: 0;
   z-index: 99999;
+  width: 100vw;
+  height: 100dvh;
+  max-width: none;
   margin: 0;
+  border: 0;
   border-radius: 0;
   padding: 12px;
   background: var(--bg-primary);
-  overflow-y: auto;
+  overflow: hidden;
   display: flex;
   flex-direction: column;
+  box-shadow: none;
 }
-.chart-container.fullscreen .chart-canvas-wrap {
-  flex: 1;
-  min-height: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.chart-container.fullscreen #payoffChart {
-  max-height: 100%;
-  width: 100%;
-  height: auto;
-}
+
 .chart-container.fullscreen .chart-header {
+  flex: 0 0 auto;
   padding-bottom: 10px;
   margin-bottom: 10px;
 }
+
+.chart-container.fullscreen .chart-canvas-wrap {
+  flex: 1 1 auto;
+  min-height: 0;
+  height: auto;
+  width: 100%;
+  display: block;
+  overflow: hidden;
+}
+
+.chart-container.fullscreen #payoffChart {
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  max-height: none;
+  display: block;
+}
+
 .chart-container.fullscreen .chart-toolbar,
 .chart-container.fullscreen .chart-hint,
 .chart-container.fullscreen .legend {
-  flex-shrink: 0;
+  flex: 0 0 auto;
 }
 
-/* دکمه fullscreen توی موبایل کمی بزرگ‌تر بشه */
-@media (max-width: 600px) {
-  .zoom-btn#fullscreenBtn {
-    background: var(--gold-glow);
-    border-color: rgba(212, 175, 55, 0.4);
-    color: var(--gold);
+/* فضای استاندارد نمودار در حالت عادی */
+.chart-canvas-wrap {
+  height: clamp(320px, 48vw, 560px);
+  min-height: 320px;
+  max-height: 560px;
+  touch-action: none;
+  overscroll-behavior: contain;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+#payoffChart {
+  width: 100%;
+  height: 100%;
+  max-width: 100%;
+  max-height: 100%;
+  display: block;
+  touch-action: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.chart-container.fullscreen .chart-canvas-wrap {
+  height: auto;
+}
+
+@media (max-width: 900px) {
+  .chart-container {
+    padding: 16px;
   }
-} 
+
+  .chart-canvas-wrap {
+    height: clamp(300px, 56vw, 460px);
+    min-height: 300px;
+    max-height: 460px;
+  }
+}
+
+@media (max-width: 600px) {
+  .chart-container {
+    padding: 12px;
+    border-radius: 14px;
+  }
+
+  .chart-canvas-wrap {
+    height: clamp(300px, 76vw, 430px);
+    min-height: 300px;
+    max-height: 430px;
+    border-radius: 10px;
+  }
+
+  .chart-toolbar {
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    scrollbar-width: thin;
+  }
+
+  .chart-toolbar-label {
+    flex: 0 0 auto;
+  }
+
+  .zoom-btn {
+    flex: 0 0 auto;
+  }
+
+  .zoom-info {
+    flex: 0 0 auto;
+  }
+
+  .chart-hint {
+    font-size: 11px;
+    padding: 8px 10px;
+  }
+
+  .chart-container.fullscreen {
+    height: 100dvh;
+    min-height: 100dvh;
+    padding: max(8px, env(safe-area-inset-top))
+             max(8px, env(safe-area-inset-right))
+             max(8px, env(safe-area-inset-bottom))
+             max(8px, env(safe-area-inset-left));
+  }
+
+  .chart-container.fullscreen .chart-header .title {
+    font-size: 13px;
+  }
+
+  .chart-container.fullscreen .chart-canvas-wrap {
+    min-height: 0;
+    height: auto;
+  }
+
+  .chart-container.fullscreen .chart-toolbar {
+    margin-top: 8px;
+  }
+}
+
+@media (max-width: 600px) and (orientation: portrait) {
+  .chart-canvas-wrap {
+    height: min(74vw, 410px);
+    min-height: 300px;
+  }
+}
+
+@media (max-width: 900px) and (orientation: landscape) {
+  .chart-canvas-wrap {
+    height: min(64vh, 430px);
+    min-height: 260px;
+    max-height: 430px;
+  }
+
+  .chart-container.fullscreen .chart-canvas-wrap {
+    height: auto;
+    min-height: 0;
+  }
+}
+
+@media (min-width: 901px) {
+  .chart-container.fullscreen {
+    padding: 14px 18px;
+  }
+
+  .chart-container.fullscreen .chart-canvas-wrap {
+    min-height: 0;
+  }
+}
+
+/* Fullscreen واقعی مرورگر */
+.chart-container:fullscreen {
+  width: 100vw;
+  height: 100vh;
+  height: 100dvh;
+  max-width: none;
+  border: 0;
+  border-radius: 0;
+}
+
+.chart-container:-webkit-full-screen {
+  width: 100vw;
+  height: 100vh;
+  max-width: none;
+  border: 0;
+  border-radius: 0;
+}
+
+/* ===== Responsive rules خارج از نمودار — حفظ رفتار قبلی صفحه ===== */
 @media (max-width: 900px) {
   .container { padding: 90px 14px 60px; }
   .positions-table th { padding: 8px 5px; font-size: 10px; }
@@ -1177,42 +1328,6 @@ body {
   .symbol-badge { font-size: 11px; padding: 5px 9px; min-width: 66px; }
   .page-header h1 { font-size: 22px; }
 }
-
-/* ===== حالت افقی (Landscape) ===== */
-@media (max-width: 900px) and (orientation: landscape) {
-  .chart-canvas-wrap {
-    max-height: 70vh;
-    height: 70vh;
-  }
-  #payoffChart {
-    width: 100%;
-    height: 100%;
-    min-height: 280px;
-    max-height: none;
-  }
-  .chart-container {
-    padding: 16px;
-  }
-  .chart-header .title {
-    font-size: 13px;
-  }
-  .chart-toolbar {
-    padding: 8px 10px;
-  }
-  .zoom-btn {
-    min-width: 30px;
-    height: 28px;
-    font-size: 11px;
-  }
-  .chart-hint {
-    font-size: 11px;
-    padding: 8px 12px;
-  }
-  .legend {
-    gap: 12px;
-    font-size: 11px;
-  }
-}
 @media (max-width: 600px) {
   .container { padding: 86px 10px 40px; }
   .page-header h1 { font-size: 19px; }
@@ -1220,18 +1335,16 @@ body {
   .panel { padding: 16px; border-radius: 14px; }
   .tabs { flex-wrap: wrap; width: 100%; }
   .tab-btn { font-size: 12px; padding: 9px 14px; }
-  .chart-toolbar { font-size: 11px; padding: 8px; }
-  .zoom-btn { min-width: 30px; height: 28px; padding: 0 8px; font-size: 11px; }
   .modal-box { padding: 22px; }
   .modal-actions { flex-direction: column-reverse; }
   .modal-btn { width: 100%; justify-content: center; }
-    /* دکمه fullscreen توی موبایل با رنگ طلایی */
   .zoom-btn#fullscreenBtn {
     background: var(--gold-glow);
     border-color: rgba(212, 175, 55, 0.4);
     color: var(--gold);
   }
 }
+
 </style>
 </head>
 <body>
@@ -2623,18 +2736,31 @@ function drawChart(points, breakevens, currentPrice) {
   currentBreakevens = breakevens;
   const svg = document.getElementById('payoffChart');
 
-  // ===== رسم داینامیک بر اساس اندازه واقعی کادر =====
+  // ===== اندازه‌گیری حرفه‌ای بر اساس خود کادر نمودار =====
+  // مهم: ارتفاع دیگر از window محاسبه نمی‌شود؛ خود chart wrapper مرجع است.
   const wrap = document.getElementById('chartCanvasWrap');
-  const wrapW = wrap.clientWidth || 1000;
-  const isLandscape = window.innerWidth > window.innerHeight;
-  const wrapH = isLandscape ? Math.max(320, window.innerHeight * 0.75) : Math.max(360, wrapW * 0.5);
-  const W = Math.round(wrapW);
-  const H = Math.round(wrapH);
+  const container = document.getElementById('chartContainer');
+  const isFullscreen = !!(container && container.classList.contains('fullscreen'));
+  const wrapW = Math.max(280, Math.round(wrap.clientWidth || 1000));
+
+  // ارتفاع توسط CSS تعیین می‌شود تا در موبایل عمودی/افقی و دسکتاپ پایدار باشد.
+  // در fullscreen، wrapper فضای باقیمانده را می‌گیرد.
+  const measuredH = wrap.getBoundingClientRect().height;
+  const fallbackRatio = isFullscreen ? 0.72 : 0.52;
+  const wrapH = Math.max(
+    isFullscreen ? 260 : 260,
+    Math.round(measuredH || (wrapW * fallbackRatio))
+  );
+
+  const W = wrapW;
+  const H = wrapH;
 
   svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
   svg.setAttribute('width', W);
   svg.setAttribute('height', H);
-  svg.style.height = H + 'px';
+  svg.style.width = '100%';
+  svg.style.height = '100%';
+  svg.style.display = 'block';
 
   const padding = { top: 28, right: 20, bottom: 40, left: 54 };
   const chartW = W - padding.left - padding.right;
@@ -2841,26 +2967,68 @@ function togglePan() {
 // ==========================================
 // ⛶ حالت تمام‌صفحه
 // ==========================================
-function toggleFullscreen() {
+async function toggleFullscreen() {
   const container = document.getElementById('chartContainer');
   const btn = document.getElementById('fullscreenBtn');
   if (!container) return;
 
-  const isNowFullscreen = container.classList.toggle('fullscreen');
-  btn.classList.toggle('active', isNowFullscreen);
-  btn.textContent = isNowFullscreen ? '✕' : '⛶';
-  btn.title = isNowFullscreen ? 'خروج از تمام صفحه' : 'تمام صفحه';
+  const nativeFullscreen = document.fullscreenElement === container ||
+                           document.webkitFullscreenElement === container;
 
-  // جلوگیری از اسکرول صفحه اصلی
-  document.body.style.overflow = isNowFullscreen ? 'hidden' : '';
-
-  // رندر مجدد نمودار بعد از تغییر اندازه
-  setTimeout(() => {
-    if (chartPoints.length > 0 && chartMeta) {
-      drawChart(chartPoints, currentBreakevens, chartMeta.currentPrice);
+  try {
+    if (!nativeFullscreen && !container.classList.contains('fullscreen')) {
+      // اول Fullscreen API؛ اگر مرورگر اجازه نداد، fallback CSS فعال می‌شود.
+      if (container.requestFullscreen) {
+        await container.requestFullscreen({ navigationUI: 'hide' });
+      } else if (container.webkitRequestFullscreen) {
+        container.webkitRequestFullscreen();
+      } else {
+        container.classList.add('fullscreen');
+      }
+    } else {
+      if (document.exitFullscreen && nativeFullscreen) {
+        await document.exitFullscreen();
+      } else if (document.webkitExitFullscreen && nativeFullscreen) {
+        document.webkitExitFullscreen();
+      } else {
+        container.classList.remove('fullscreen');
+      }
     }
-  }, 80);
+  } catch (err) {
+    // بعضی موبایل‌ها Fullscreen API را محدود می‌کنند؛ حالت CSS همچنان قابل استفاده است.
+    container.classList.toggle('fullscreen', !container.classList.contains('fullscreen'));
+  }
+
+  updateFullscreenUI();
 }
+
+function updateFullscreenUI() {
+  const container = document.getElementById('chartContainer');
+  const btn = document.getElementById('fullscreenBtn');
+  if (!container || !btn) return;
+
+  const active = document.fullscreenElement === container ||
+                 document.webkitFullscreenElement === container ||
+                 container.classList.contains('fullscreen');
+
+  btn.classList.toggle('active', active);
+  btn.textContent = active ? '✕' : '⛶';
+  btn.title = active ? 'خروج از تمام صفحه' : 'تمام صفحه';
+  btn.setAttribute('aria-label', active ? 'خروج از تمام صفحه' : 'تمام صفحه');
+
+  document.body.style.overflow = active ? 'hidden' : '';
+
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      if (chartPoints.length > 0 && chartMeta) {
+        drawChart(chartPoints, currentBreakevens, chartMeta.currentPrice);
+      }
+    });
+  });
+}
+
+document.addEventListener('fullscreenchange', updateFullscreenUI);
+document.addEventListener('webkitfullscreenchange', updateFullscreenUI);
 
 // خروج با کلید Escape
 document.addEventListener('keydown', (e) => {
@@ -2872,13 +3040,24 @@ document.addEventListener('keydown', (e) => {
   }
 });
 
-// اصلاح موقعیت tooltip هنگام تغییر اندازه
-window.addEventListener('resize', () => {
-  const container = document.getElementById('chartContainer');
-  if (container && container.classList.contains('fullscreen') && chartPoints.length > 0 && chartMeta) {
-    drawChart(chartPoints, currentBreakevens, chartMeta.currentPrice);
-  }
-});
+// رندر دقیق هنگام تغییر اندازه/چرخش؛ با requestAnimationFrame از رندرهای اضافه جلوگیری می‌شود.
+let chartResizeRAF = 0;
+function requestChartResize() {
+  cancelAnimationFrame(chartResizeRAF);
+  chartResizeRAF = requestAnimationFrame(() => {
+    if (chartPoints.length > 0 && chartMeta) {
+      drawChart(chartPoints, currentBreakevens, chartMeta.currentPrice);
+    }
+  });
+}
+window.addEventListener('resize', requestChartResize, { passive: true });
+window.addEventListener('orientationchange', () => setTimeout(requestChartResize, 120), { passive: true });
+
+if (window.ResizeObserver) {
+  const chartResizeObserver = new ResizeObserver(() => requestChartResize());
+  const wrapForObserver = document.getElementById('chartCanvasWrap');
+  if (wrapForObserver) chartResizeObserver.observe(wrapForObserver);
+}
   
 // ==========================================
 // 🖱️ Tooltip
@@ -3137,6 +3316,242 @@ document.addEventListener('mouseup', (e) => {
   lockedPoint = nearest;
   applyLockedPoint(nearest);
 });
+
+
+// ==========================================
+// 📱 Touch / Pinch / Drag — رفتار موبایلی
+// ==========================================
+let touchMode = null;
+let touchStart = null;
+let pinchStartDistance = 0;
+let pinchStartView = null;
+let pinchCenter = null;
+
+function getTouchDistance(a, b) {
+  return Math.hypot(a.clientX - b.clientX, a.clientY - b.clientY);
+}
+
+function getTouchCenter(a, b) {
+  return {
+    x: (a.clientX + b.clientX) / 2,
+    y: (a.clientY + b.clientY) / 2
+  };
+}
+
+function clientToData(clientX, clientY) {
+  if (!svgGeometry) return null;
+  const rect = payoffSvg.getBoundingClientRect();
+  const sx = svgGeometry.W / rect.width;
+  const sy = svgGeometry.H / rect.height;
+  const x = (clientX - rect.left) * sx;
+  const y = (clientY - rect.top) * sy;
+
+  const xRatio = (x - svgGeometry.padding.left) / svgGeometry.chartW;
+  const yRatio = (y - svgGeometry.padding.top) / svgGeometry.chartH;
+
+  return {
+    svgX: x,
+    svgY: y,
+    price: svgGeometry.priceMin + xRatio * (svgGeometry.priceMax - svgGeometry.priceMin),
+    pnl: view.yMax - yRatio * (view.yMax - view.yMin)
+  };
+}
+
+payoffSvg.addEventListener('touchstart', (e) => {
+  if (positions.length === 0 || !svgGeometry) return;
+
+  if (e.touches.length === 2) {
+    e.preventDefault();
+    touchMode = 'pinch';
+    pinchStartDistance = getTouchDistance(e.touches[0], e.touches[1]);
+    pinchCenter = getTouchCenter(e.touches[0], e.touches[1]);
+    pinchStartView = {
+      xMin: view.xMin, xMax: view.xMax,
+      yMin: view.yMin, yMax: view.yMax
+    };
+    isDragging = false;
+    hideChartTooltip();
+    return;
+  }
+
+  if (e.touches.length !== 1) return;
+
+  const t = e.touches[0];
+  touchStart = {
+    x: t.clientX,
+    y: t.clientY,
+    time: performance.now()
+  };
+
+  // روی موبایل Drag همیشه فعال است؛ نیازی به روشن کردن Pan نیست.
+  touchMode = panMode ? 'pan' : 'inspect';
+  isDragging = false;
+}, { passive: false });
+
+payoffSvg.addEventListener('touchmove', (e) => {
+  if (positions.length === 0 || !svgGeometry) return;
+
+  if (e.touches.length === 2 && pinchStartView) {
+    e.preventDefault();
+
+    const distance = getTouchDistance(e.touches[0], e.touches[1]);
+    if (!distance || !pinchStartDistance) return;
+
+    const center = getTouchCenter(e.touches[0], e.touches[1]);
+    const scale = distance / pinchStartDistance;
+
+    const startXRange = pinchStartView.xMax - pinchStartView.xMin;
+    const startYRange = pinchStartView.yMax - pinchStartView.yMin;
+
+    const dataCenter = clientToData(pinchCenter.x, pinchCenter.y);
+    if (!dataCenter) return;
+
+    const newXRange = Math.max(
+      (view.fullXMax - view.fullXMin) / 40,
+      Math.min(view.fullXMax - view.fullXMin, startXRange / scale)
+    );
+    const newYRange = Math.max(
+      (view.fullYMax - view.fullYMin) / 40,
+      Math.min(view.fullYMax - view.fullYMin, startYRange / scale)
+    );
+
+    const relX = (dataCenter.price - pinchStartView.xMin) / startXRange;
+    const relY = (dataCenter.pnl - pinchStartView.yMin) / startYRange;
+
+    let newXMin = dataCenter.price - relX * newXRange;
+    let newYMin = dataCenter.pnl - relY * newYRange;
+
+    newXMin = Math.max(view.fullXMin, Math.min(view.fullXMax - newXRange, newXMin));
+    newYMin = Math.max(view.fullYMin, Math.min(view.fullYMax - newYRange, newYMin));
+
+    view.xMin = newXMin;
+    view.xMax = newXMin + newXRange;
+    view.yMin = newYMin;
+    view.yMax = newYMin + newYRange;
+
+    applyZoom();
+    return;
+  }
+
+  if (e.touches.length !== 1 || !touchStart) return;
+
+  const t = e.touches[0];
+  const dxPx = t.clientX - touchStart.x;
+  const dyPx = t.clientY - touchStart.y;
+
+  // جلوگیری از اسکرول صفحه هنگام تعامل واقعی با نمودار
+  if (Math.abs(dxPx) > 6 || Math.abs(dyPx) > 6) {
+    e.preventDefault();
+  }
+
+  if (Math.abs(dxPx) < 6 && Math.abs(dyPx) < 6) return;
+
+  if (touchMode === 'inspect') {
+    // با Drag روی موبایل، نمودار را مثل چارت‌های مالی Pan می‌کنیم.
+    touchMode = 'pan';
+    dragStartX = touchStart.x;
+    dragStartY = touchStart.y;
+    dragStartView = {
+      xMin: view.xMin, xMax: view.xMax,
+      yMin: view.yMin, yMax: view.yMax
+    };
+    isDragging = true;
+  }
+
+  if (touchMode === 'pan' && dragStartView) {
+    const rect = payoffSvg.getBoundingClientRect();
+    const dx = dxPx / rect.width * (dragStartView.xMax - dragStartView.xMin);
+    const dy = dyPx / rect.height * (dragStartView.yMax - dragStartView.yMin);
+
+    const xRange = dragStartView.xMax - dragStartView.xMin;
+    const yRange = dragStartView.yMax - dragStartView.yMin;
+
+    let newXMin = dragStartView.xMin - dx;
+    let newXMax = dragStartView.xMax - dx;
+    let newYMin = dragStartView.yMin + dy;
+    let newYMax = dragStartView.yMax + dy;
+
+    if (newXMin < view.fullXMin) {
+      newXMin = view.fullXMin;
+      newXMax = newXMin + xRange;
+    }
+    if (newXMax > view.fullXMax) {
+      newXMax = view.fullXMax;
+      newXMin = newXMax - xRange;
+    }
+    if (newYMin < view.fullYMin) {
+      newYMin = view.fullYMin;
+      newYMax = newYMin + yRange;
+    }
+    if (newYMax > view.fullYMax) {
+      newYMax = view.fullYMax;
+      newYMin = newYMax - yRange;
+    }
+
+    view.xMin = newXMin;
+    view.xMax = newXMax;
+    view.yMin = newYMin;
+    view.yMax = newYMax;
+
+    applyZoom();
+  }
+}, { passive: false });
+
+payoffSvg.addEventListener('touchend', (e) => {
+  if (!touchStart) return;
+
+  if (e.touches.length > 0) return;
+
+  const changed = e.changedTouches && e.changedTouches[0];
+  const endX = changed ? changed.clientX : touchStart.x;
+  const endY = changed ? changed.clientY : touchStart.y;
+  const moved = Math.hypot(endX - touchStart.x, endY - touchStart.y) > 10;
+  const duration = performance.now() - touchStart.time;
+
+  // Tap = tooltip lock؛ Drag/Pan = فقط جابجایی.
+  if (!moved && duration < 500 && !panMode && chartPoints.length > 0) {
+    const data = clientToData(endX, endY);
+    if (data && data.svgX >= svgGeometry.padding.left &&
+        data.svgX <= svgGeometry.padding.left + svgGeometry.chartW) {
+
+      let nearest = chartPoints[0];
+      let minDist = Infinity;
+      chartPoints.forEach(pt => {
+        const d = Math.abs(pt.price - data.price);
+        if (d < minDist) {
+          minDist = d;
+          nearest = pt;
+        }
+      });
+
+      if (isLocked) {
+        isLocked = false;
+        lockedPoint = null;
+        resetLockUI();
+        hideChartTooltip();
+        clearCrosshair();
+      } else {
+        isLocked = true;
+        lockedPoint = nearest;
+        applyLockedPoint(nearest);
+      }
+    }
+  }
+
+  touchStart = null;
+  touchMode = null;
+  pinchStartView = null;
+  pinchStartDistance = 0;
+  isDragging = false;
+}, { passive: false });
+
+payoffSvg.addEventListener('touchcancel', () => {
+  touchStart = null;
+  touchMode = null;
+  pinchStartView = null;
+  pinchStartDistance = 0;
+  isDragging = false;
+}, { passive: false });
 
 window.addEventListener('scroll', () => {
   if (!isLocked) hideChartTooltip();
