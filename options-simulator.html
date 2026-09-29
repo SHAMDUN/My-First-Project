@@ -3320,12 +3320,20 @@ document.addEventListener('mouseup', (e) => {
 
 // ==========================================
 // 📱 Touch / Pinch / Drag — رفتار موبایلی
+//    یک ضربه = نمایش و دنبال‌کردن نقطه
+//    دو ضربه سریع = قفل نقطه
+//    ضربه بعدی = باز کردن قفل
 // ==========================================
 let touchMode = null;
 let touchStart = null;
 let pinchStartDistance = 0;
 let pinchStartView = null;
 let pinchCenter = null;
+let touchInspectActive = false;
+let lastTapTime = 0;
+let lastTapPoint = null;
+const DOUBLE_TAP_DELAY = 330;
+const DOUBLE_TAP_DISTANCE = 42;
 
 function getTouchDistance(a, b) {
   return Math.hypot(a.clientX - b.clientX, a.clientY - b.clientY);
@@ -3357,6 +3365,40 @@ function clientToData(clientX, clientY) {
   };
 }
 
+function getNearestChartPoint(clientX, clientY) {
+  const data = clientToData(clientX, clientY);
+  if (!data || !svgGeometry || !chartPoints.length) return null;
+
+  const p = svgGeometry.padding;
+  if (data.svgX < p.left || data.svgX > p.left + svgGeometry.chartW ||
+      data.svgY < p.top || data.svgY > p.top + svgGeometry.chartH) {
+    return null;
+  }
+
+  let nearest = chartPoints[0];
+  let minDist = Infinity;
+  chartPoints.forEach(pt => {
+    const d = Math.abs(pt.price - data.price);
+    if (d < minDist) {
+      minDist = d;
+      nearest = pt;
+    }
+  });
+  return nearest;
+}
+
+function inspectAtTouch(clientX, clientY) {
+  const nearest = getNearestChartPoint(clientX, clientY);
+  if (!nearest) return false;
+
+  const totalInv = totalInvestmentValue();
+  const percent = totalInv ? (nearest.pnl / totalInv) * 100 : 0;
+  updateCrosshair(nearest.price, nearest.pnl);
+  showChartTooltip(nearest.price, nearest.pnl, percent, clientX, clientY);
+  touchInspectActive = true;
+  return true;
+}
+
 payoffSvg.addEventListener('touchstart', (e) => {
   if (positions.length === 0 || !svgGeometry) return;
 
@@ -3369,8 +3411,8 @@ payoffSvg.addEventListener('touchstart', (e) => {
       xMin: view.xMin, xMax: view.xMax,
       yMin: view.yMin, yMax: view.yMax
     };
+    touchStart = null;
     isDragging = false;
-    hideChartTooltip();
     return;
   }
 
@@ -3382,10 +3424,13 @@ payoffSvg.addEventListener('touchstart', (e) => {
     y: t.clientY,
     time: performance.now()
   };
-
-  // روی موبایل Drag همیشه فعال است؛ نیازی به روشن کردن Pan نیست.
-  touchMode = panMode ? 'pan' : 'inspect';
+  touchMode = 'inspect';
   isDragging = false;
+
+  // اولین لمس بلافاصله مثل حرکت موس عمل می‌کند؛ نیازی به نگه‌داشتن انگشت نیست.
+  if (!isLocked) {
+    inspectAtTouch(t.clientX, t.clientY);
+  }
 }, { passive: false });
 
 payoffSvg.addEventListener('touchmove', (e) => {
@@ -3402,7 +3447,6 @@ payoffSvg.addEventListener('touchmove', (e) => {
 
     const startXRange = pinchStartView.xMax - pinchStartView.xMin;
     const startYRange = pinchStartView.yMax - pinchStartView.yMin;
-
     const dataCenter = clientToData(pinchCenter.x, pinchCenter.y);
     if (!dataCenter) return;
 
@@ -3439,67 +3483,58 @@ payoffSvg.addEventListener('touchmove', (e) => {
   const dxPx = t.clientX - touchStart.x;
   const dyPx = t.clientY - touchStart.y;
 
-  // جلوگیری از اسکرول صفحه هنگام تعامل واقعی با نمودار
-  if (Math.abs(dxPx) > 6 || Math.abs(dyPx) > 6) {
+  // در حالت تک‌انگشتی، رفتار اصلی مثل موس است: انگشت را حرکت بده و Tooltip دنبال کند.
+  if (!isLocked && touchMode === 'inspect') {
     e.preventDefault();
+    inspectAtTouch(t.clientX, t.clientY);
+    return;
   }
 
-  if (Math.abs(dxPx) < 6 && Math.abs(dyPx) < 6) return;
+  // اگر نقطه قفل شده باشد، حرکت انگشت آن را جابه‌جا نمی‌کند.
+  if (isLocked) return;
 
-  if (touchMode === 'inspect') {
-    // با Drag روی موبایل، نمودار را مثل چارت‌های مالی Pan می‌کنیم.
-    touchMode = 'pan';
-    dragStartX = touchStart.x;
-    dragStartY = touchStart.y;
-    dragStartView = {
-      xMin: view.xMin, xMax: view.xMax,
-      yMin: view.yMin, yMax: view.yMax
-    };
-    isDragging = true;
-  }
+  // Pan تک‌انگشتی فقط در صورت فعال بودن Pan Mode انجام می‌شود.
+  if (panMode) {
+    if (Math.abs(dxPx) > 6 || Math.abs(dyPx) > 6) e.preventDefault();
+    if (Math.abs(dxPx) < 6 && Math.abs(dyPx) < 6) return;
 
-  if (touchMode === 'pan' && dragStartView) {
+    if (!isDragging) {
+      touchMode = 'pan';
+      dragStartX = touchStart.x;
+      dragStartY = touchStart.y;
+      dragStartView = {
+        xMin: view.xMin, xMax: view.xMax,
+        yMin: view.yMin, yMax: view.yMax
+      };
+      isDragging = true;
+    }
+
     const rect = payoffSvg.getBoundingClientRect();
-    const dx = dxPx / rect.width * (dragStartView.xMax - dragStartView.xMin);
-    const dy = dyPx / rect.height * (dragStartView.yMax - dragStartView.yMin);
-
     const xRange = dragStartView.xMax - dragStartView.xMin;
     const yRange = dragStartView.yMax - dragStartView.yMin;
+    const dx = dxPx / rect.width * xRange;
+    const dy = dyPx / rect.height * yRange;
 
     let newXMin = dragStartView.xMin - dx;
     let newXMax = dragStartView.xMax - dx;
     let newYMin = dragStartView.yMin + dy;
     let newYMax = dragStartView.yMax + dy;
 
-    if (newXMin < view.fullXMin) {
-      newXMin = view.fullXMin;
-      newXMax = newXMin + xRange;
-    }
-    if (newXMax > view.fullXMax) {
-      newXMax = view.fullXMax;
-      newXMin = newXMax - xRange;
-    }
-    if (newYMin < view.fullYMin) {
-      newYMin = view.fullYMin;
-      newYMax = newYMin + yRange;
-    }
-    if (newYMax > view.fullYMax) {
-      newYMax = view.fullYMax;
-      newYMin = newYMax - yRange;
-    }
+    if (newXMin < view.fullXMin) { newXMin = view.fullXMin; newXMax = newXMin + xRange; }
+    if (newXMax > view.fullXMax) { newXMax = view.fullXMax; newXMin = newXMax - xRange; }
+    if (newYMin < view.fullYMin) { newYMin = view.fullYMin; newYMax = newYMin + yRange; }
+    if (newYMax > view.fullYMax) { newYMax = view.fullYMax; newYMin = newYMax - yRange; }
 
     view.xMin = newXMin;
     view.xMax = newXMax;
     view.yMin = newYMin;
     view.yMax = newYMax;
-
     applyZoom();
   }
 }, { passive: false });
 
 payoffSvg.addEventListener('touchend', (e) => {
   if (!touchStart) return;
-
   if (e.touches.length > 0) return;
 
   const changed = e.changedTouches && e.changedTouches[0];
@@ -3508,32 +3543,39 @@ payoffSvg.addEventListener('touchend', (e) => {
   const moved = Math.hypot(endX - touchStart.x, endY - touchStart.y) > 10;
   const duration = performance.now() - touchStart.time;
 
-  // Tap = tooltip lock؛ Drag/Pan = فقط جابجایی.
   if (!moved && duration < 500 && !panMode && chartPoints.length > 0) {
-    const data = clientToData(endX, endY);
-    if (data && data.svgX >= svgGeometry.padding.left &&
-        data.svgX <= svgGeometry.padding.left + svgGeometry.chartW) {
+    const now = performance.now();
+    const point = getNearestChartPoint(endX, endY);
 
-      let nearest = chartPoints[0];
-      let minDist = Infinity;
-      chartPoints.forEach(pt => {
-        const d = Math.abs(pt.price - data.price);
-        if (d < minDist) {
-          minDist = d;
-          nearest = pt;
-        }
-      });
+    if (isLocked) {
+      // بعد از قفل، یک ضربه = باز کردن قفل.
+      isLocked = false;
+      lockedPoint = null;
+      resetLockUI();
+      touchInspectActive = false;
+      hideChartTooltip();
+      clearCrosshair();
+      lastTapTime = 0;
+      lastTapPoint = null;
+    } else if (point) {
+      const isDoubleTap =
+        lastTapTime > 0 &&
+        now - lastTapTime <= DOUBLE_TAP_DELAY &&
+        lastTapPoint &&
+        Math.hypot(endX - lastTapPoint.x, endY - lastTapPoint.y) <= DOUBLE_TAP_DISTANCE;
 
-      if (isLocked) {
-        isLocked = false;
-        lockedPoint = null;
-        resetLockUI();
-        hideChartTooltip();
-        clearCrosshair();
-      } else {
+      // ضربه دوم سریع روی همان ناحیه = قفل.
+      if (isDoubleTap) {
         isLocked = true;
-        lockedPoint = nearest;
-        applyLockedPoint(nearest);
+        lockedPoint = point;
+        applyLockedPoint(point);
+        lastTapTime = 0;
+        lastTapPoint = null;
+      } else {
+        // ضربه اول/تک‌ضربه فقط نقطه را نشان می‌دهد و دنبال می‌کند.
+        inspectAtTouch(endX, endY);
+        lastTapTime = now;
+        lastTapPoint = { x: endX, y: endY };
       }
     }
   }
@@ -3551,7 +3593,7 @@ payoffSvg.addEventListener('touchcancel', () => {
   pinchStartView = null;
   pinchStartDistance = 0;
   isDragging = false;
-}, { passive: false });
+});
 
 window.addEventListener('scroll', () => {
   if (!isLocked) hideChartTooltip();
