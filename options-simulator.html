@@ -3271,6 +3271,10 @@ payoffSvg.addEventListener('mousedown', (e) => {
 });
 
 document.addEventListener('mouseup', (e) => {
+  // لمس موبایل نباید رویداد mouseup مصنوعی مرورگر را فعال کند؛
+  // در غیر این صورت اولین تپ ممکن است ناخواسته نقطه را قفل کند.
+  if (window.__lastTouchEventTime && performance.now() - window.__lastTouchEventTime < 700) return;
+
   if (isDragging) {
     isDragging = false;
     payoffSvg.style.cursor = panMode ? 'grab' : 'crosshair';
@@ -3418,6 +3422,10 @@ payoffSvg.addEventListener('touchstart', (e) => {
 
   if (e.touches.length !== 1) return;
 
+  // از ایجاد mouse event مصنوعی جلوگیری می‌کنیم تا تپ اول ناخواسته قفل نشود.
+  e.preventDefault();
+  window.__lastTouchEventTime = performance.now();
+
   const t = e.touches[0];
   touchStart = {
     x: t.clientX,
@@ -3434,6 +3442,7 @@ payoffSvg.addEventListener('touchstart', (e) => {
 }, { passive: false });
 
 payoffSvg.addEventListener('touchmove', (e) => {
+  window.__lastTouchEventTime = performance.now();
   if (positions.length === 0 || !svgGeometry) return;
 
   if (e.touches.length === 2 && pinchStartView) {
@@ -3534,6 +3543,7 @@ payoffSvg.addEventListener('touchmove', (e) => {
 }, { passive: false });
 
 payoffSvg.addEventListener('touchend', (e) => {
+  window.__lastTouchEventTime = performance.now();
   if (!touchStart) return;
   if (e.touches.length > 0) return;
 
