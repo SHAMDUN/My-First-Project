@@ -650,6 +650,365 @@
             .ai-actions { flex-direction: column; }
             .ai-actions .btn { width: 100%; justify-content: center; }
         }
+
+        /* ==========================================
+           Responsive Fixes — Mobile Only
+           فقط برای بهبود نمایش در موبایل
+           ========================================== */
+        @media (max-width: 900px) {
+            html, body {
+                max-width: 100%;
+                overflow-x: hidden;
+            }
+
+            .admin-header {
+                padding: 12px 15px;
+                gap: 8px;
+            }
+
+            .admin-header h1 {
+                font-size: 17px;
+                min-width: 0;
+            }
+
+            .admin-user {
+                min-width: 0;
+            }
+
+            .container {
+                width: 100%;
+                max-width: 100%;
+                padding: 15px;
+                overflow: hidden;
+            }
+
+            .chart-box,
+            .form-box {
+                max-width: 100%;
+            }
+
+            .chart-box canvas {
+                max-width: 100% !important;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                gap: 10px;
+            }
+
+            .stat-card {
+                min-width: 0;
+                padding: 15px 10px;
+            }
+
+            .stat-card .icon {
+                font-size: 25px;
+                margin-bottom: 7px;
+            }
+
+            .stat-card .value {
+                font-size: 22px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .admin-header {
+                padding: 10px 12px;
+                align-items: center;
+            }
+
+            .admin-header h1 {
+                font-size: 15px;
+                line-height: 1.5;
+                flex: 1;
+            }
+
+            .admin-user {
+                gap: 6px;
+                font-size: 11px;
+            }
+
+            .admin-user span {
+                display: none;
+            }
+
+            .logout-btn {
+                padding: 8px 10px;
+                font-size: 11px;
+            }
+
+            /* تبدیل نوار تب‌ها به منوی دو ستونه در موبایل */
+            .tabs {
+                display: grid;
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                gap: 7px;
+                padding: 10px;
+                overflow-x: visible;
+                border-bottom: 1px solid rgba(212, 175, 55, 0.1);
+            }
+
+            .tab-btn {
+                width: 100%;
+                min-width: 0;
+                min-height: 42px;
+                padding: 9px 7px;
+                border: 1px solid rgba(255, 255, 255, 0.06);
+                border-radius: 9px;
+                font-size: 11.5px;
+                line-height: 1.4;
+                white-space: normal;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                text-align: center;
+            }
+
+            .tab-btn.active {
+                border-color: rgba(212, 175, 55, 0.55);
+                border-bottom-color: var(--gold);
+                background: rgba(212, 175, 55, 0.08);
+            }
+
+            .container {
+                padding: 12px;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                gap: 8px;
+                margin-bottom: 15px;
+            }
+
+            .stat-card {
+                padding: 12px 8px;
+                border-radius: 12px;
+            }
+
+            .stat-card .icon {
+                font-size: 22px;
+                margin-bottom: 5px;
+            }
+
+            .stat-card .value {
+                font-size: 19px;
+            }
+
+            .stat-card .label {
+                font-size: 11px;
+                line-height: 1.5;
+            }
+
+            .chart-box,
+            .form-box {
+                padding: 14px;
+                border-radius: 12px;
+            }
+
+            .chart-box h3,
+            .form-box h3 {
+                font-size: 14px;
+            }
+
+            .tab-actions {
+                align-items: stretch;
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .tab-actions h2 {
+                font-size: 16px;
+            }
+
+            .tab-actions .btn {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .filter-tabs {
+                gap: 6px;
+            }
+
+            .filter-tab {
+                flex: 1 1 auto;
+                min-height: 38px;
+                padding: 8px 10px;
+                text-align: center;
+            }
+
+            /* جدول‌ها داخل خودشان اسکرول می‌شوند و صفحه را نمی‌شکنند */
+            .data-table {
+                display: block;
+                width: 100%;
+                max-width: 100%;
+                overflow-x: auto;
+                overflow-y: hidden;
+                -webkit-overflow-scrolling: touch;
+                border-radius: 12px;
+            }
+
+            .data-table th,
+            .data-table td {
+                padding: 10px 8px;
+                font-size: 11.5px;
+                white-space: nowrap;
+            }
+
+            .data-table th {
+                font-size: 11.5px;
+            }
+
+            .data-table tbody tr:last-child td {
+                border-bottom: 0;
+            }
+
+            .data-table .btn-small {
+                min-width: 38px;
+                min-height: 36px;
+                padding: 6px 8px;
+            }
+
+            .btn {
+                min-height: 42px;
+            }
+
+            .btn-small {
+                min-height: 36px;
+            }
+
+            .modal-overlay {
+                padding: 8px;
+                align-items: flex-start;
+            }
+
+            .modal,
+            .modal.large {
+                width: 100%;
+                max-width: 100%;
+                max-height: calc(100vh - 16px);
+                margin: 0;
+                padding: 16px;
+                border-radius: 14px;
+            }
+
+            .modal h2 {
+                font-size: 16px;
+                margin-bottom: 15px;
+            }
+
+            .modal-actions {
+                gap: 8px;
+                flex-direction: column;
+            }
+
+            .modal-actions .btn {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .form-row,
+            .form-row-3 {
+                grid-template-columns: 1fr;
+                gap: 0;
+            }
+
+            .form-group input,
+            .form-group textarea,
+            .form-group select {
+                font-size: 13px;
+            }
+
+            .blog-editor {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+
+            .blog-editor textarea {
+                min-height: 300px;
+            }
+
+            .blog-preview {
+                min-height: 300px;
+                max-height: 400px;
+            }
+
+            .ai-actions {
+                flex-direction: column;
+                width: 100%;
+            }
+
+            .ai-actions .btn {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .ai-model-selector {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 8px;
+            }
+
+            .ai-model-selector label {
+                white-space: normal;
+            }
+
+            .message-card,
+            .testimonial-card {
+                padding: 14px;
+            }
+
+            .tac-author,
+            .tac-actions {
+                align-items: stretch;
+            }
+
+            .tac-actions .btn {
+                flex: 1 1 auto;
+            }
+
+            .login-screen {
+                padding: 12px;
+            }
+
+            .login-card {
+                width: 100%;
+                max-width: 100%;
+                padding: 20px 15px;
+            }
+        }
+
+        @media (max-width: 380px) {
+            .admin-header h1 {
+                font-size: 14px;
+            }
+
+            .logout-btn {
+                padding: 7px 8px;
+            }
+
+            .tabs {
+                gap: 5px;
+                padding: 8px;
+            }
+
+            .tab-btn {
+                min-height: 40px;
+                padding: 8px 5px;
+                font-size: 10.5px;
+            }
+
+            .container {
+                padding: 10px;
+            }
+
+            .stats-grid {
+                gap: 6px;
+            }
+
+            .stat-card .value {
+                font-size: 17px;
+            }
+        }
+
     </style>
 </head>
 <body>
