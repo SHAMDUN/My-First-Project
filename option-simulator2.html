@@ -1,186 +1,2335 @@
-<!doctype html>
-<html lang="fa" dir="rtl">
+<!DOCTYPE html>
+<html lang="fa" dir="rtl" data-theme="dark">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Options Lab | شمعدون</title>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>آپشن | شبیه‌ساز و تحلیل استراتژی — شمعدون</title>
+
+<link rel="stylesheet"
+      href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css">
+
+<meta name="theme-color" content="#d4af37">
+
 <style>
-:root{--bg:#08111f;--card:#101b2d;--card2:#15243a;--line:#263a58;--text:#eef3f8;--muted:#8fa0b8;--gold:#c89b3c;--green:#19a974;--red:#df5555;--blue:#4c8dff}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:Vazirmatn,Tahoma,sans-serif}button,input,select{font:inherit}button{cursor:pointer}a{text-decoration:none;color:inherit}
-.top{position:sticky;top:0;z-index:5;background:#091321f2;border-bottom:1px solid var(--line);backdrop-filter:blur(12px)}
-.nav{max-width:1400px;margin:auto;padding:10px 18px;display:flex;align-items:center;gap:5px}.brand{font-weight:900;color:var(--gold);font-size:19px;margin-left:15px}.nav a:not(.brand){font-size:12px;color:var(--muted);padding:9px 11px;border-radius:8px}.nav a:hover{background:var(--card2);color:var(--text)}.grow{flex:1}.live{font-size:10px;color:var(--green)}
-main{max-width:1400px;margin:auto;padding:25px 18px 60px}.hero{display:flex;justify-content:space-between;gap:20px;align-items:end;margin-bottom:16px}.eyebrow{font-size:10px;color:var(--gold);font-weight:900;letter-spacing:1px}.hero h1{font-size:28px;margin:5px 0}.hero p{margin:0;color:var(--muted);font-size:12px}.actions{display:flex;gap:7px}.btn{border:1px solid var(--line);background:var(--card2);color:var(--text);padding:9px 13px;border-radius:9px;font-size:11px;font-weight:700}.primary{background:var(--gold);color:#111b29;border-color:var(--gold)}
-.status{display:flex;gap:18px;flex-wrap:wrap;background:var(--card);border:1px solid var(--line);padding:10px 13px;border-radius:10px;margin-bottom:15px;color:var(--muted);font-size:10px}.status b{color:var(--text)}
-.layout{display:grid;grid-template-columns:minmax(0,1fr) 330px;gap:15px}.card{background:var(--card);border:1px solid var(--line);border-radius:13px;padding:15px;margin-bottom:15px}.head{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}.head h2{font-size:13px;margin:0}.muted{font-size:9px;color:var(--muted)}
-.filters{display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;gap:8px}.field label{display:block;color:var(--muted);font-size:9px;margin-bottom:4px}.field input,.field select{width:100%;background:#0b1626;border:1px solid var(--line);color:var(--text);border-radius:8px;padding:9px;outline:0}
-.stats{display:grid;grid-template-columns:1.5fr repeat(4,1fr);gap:8px}.stat{background:var(--card2);padding:10px;border-radius:9px;border:1px solid var(--line)}.stat small{display:block;color:var(--muted);font-size:9px}.stat strong{display:block;font-size:15px;margin-top:3px}.up{color:var(--green)}.down{color:var(--red)}
-.tablebox{overflow:auto;border:1px solid var(--line);border-radius:10px}.chain{width:100%;border-collapse:collapse;min-width:850px}.chain th{background:#0c1727;color:var(--muted);font-size:9px;padding:9px;text-align:right}.chain td{padding:8px;border-top:1px solid #20314a;font-size:10px;white-space:nowrap}.chain tr:hover{background:#17273f}.pill{padding:3px 6px;border-radius:5px;font-size:8px;font-weight:900}.call{color:#41d19c;background:#10362d}.put{color:#ff7777;background:#3b2025}.add{border:1px solid var(--gold);background:transparent;color:var(--gold);border-radius:6px;padding:4px 7px;font-size:9px}
-.legs{display:grid;gap:7px}.leg{display:grid;grid-template-columns:1.5fr 75px 80px 65px 25px;gap:6px;align-items:center;background:var(--card2);padding:8px;border:1px solid var(--line);border-radius:8px;font-size:10px}.leg select,.leg input{background:#0b1626;color:var(--text);border:1px solid var(--line);border-radius:6px;padding:6px;font-size:9px}.remove{background:none;border:0;color:var(--red);font-size:17px}
-canvas{display:block;width:100%;height:350px;background:#0a1423;border:1px solid var(--line);border-radius:10px}
-.results{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}.result{background:var(--card2);border:1px solid var(--line);padding:11px;border-radius:9px}.result small{display:block;color:var(--muted);font-size:8px}.result b{display:block;font-size:14px;margin-top:3px}
-.scenarios{display:grid;grid-template-columns:repeat(4,1fr);gap:7px}.scenario{text-align:center;background:var(--card2);padding:9px;border:1px solid var(--line);border-radius:8px}.scenario b{display:block;font-size:11px}.scenario span{font-size:9px;color:var(--muted)}
-.note{font-size:10px;color:var(--muted);line-height:2}.links{display:grid;gap:7px}.links a{background:var(--card2);border:1px solid var(--line);padding:9px;border-radius:8px;font-size:10px}
-.empty{text-align:center;color:var(--muted);padding:28px;font-size:11px}.error{color:var(--red)!important}
-@media(max-width:1000px){.layout{grid-template-columns:1fr}.filters{grid-template-columns:1fr 1fr}.stats{grid-template-columns:1fr 1fr 1fr}.hero{display:block}.actions{margin-top:12px}}
-@media(max-width:620px){main{padding:15px 9px}.nav a:not(.brand){display:none}.hero h1{font-size:22px}.filters,.stats{grid-template-columns:1fr}.results,.scenarios{grid-template-columns:1fr 1fr}.leg{grid-template-columns:1fr 65px 70px 55px 20px}}
+
+/* =========================================================
+   SHAMDUN — OPTIONS
+   Visual identity preserved
+   ========================================================= */
+
+:root {
+    --bg-primary: #08090c;
+    --bg-elevated: #0d0f14;
+    --bg-card: #11141a;
+    --bg-card-2: #171a21;
+    --bg-input: #0a0c10;
+
+    --border: rgba(255,255,255,.06);
+    --border-strong: rgba(255,255,255,.10);
+    --border-soft: rgba(255,255,255,.04);
+
+    --text-primary: #e6e8eb;
+    --text-secondary: #8b9099;
+    --text-muted: #5c6169;
+
+    --gold: #d4af37;
+    --gold-light: #f4d47c;
+    --gold-dark: #a8862a;
+    --gold-glow: rgba(212,175,55,.15);
+
+    --green: #22c55e;
+    --green-soft: rgba(34,197,94,.12);
+
+    --red: #ef4444;
+    --red-soft: rgba(239,68,68,.12);
+
+    --blue: #3b82f6;
+    --blue-soft: rgba(59,130,246,.12);
+
+    --purple: #8b5cf6;
+
+    --sans: 'Vazirmatn', Tahoma, sans-serif;
+
+    --shadow-sm: 0 1px 2px rgba(0,0,0,.3);
+    --shadow-md: 0 8px 24px rgba(0,0,0,.28);
+}
+
+[data-theme="light"] {
+
+    --bg-primary: #fafbfc;
+    --bg-elevated: #ffffff;
+    --bg-card: #ffffff;
+    --bg-card-2: #f7f8fa;
+    --bg-input: #ffffff;
+
+    --border: rgba(0,0,0,.06);
+    --border-strong: rgba(0,0,0,.10);
+    --border-soft: rgba(0,0,0,.04);
+
+    --text-primary: #0a0c10;
+    --text-secondary: #5b6471;
+    --text-muted: #8a919c;
+
+    --gold: #a87800;
+    --gold-light: #c8991f;
+    --gold-dark: #7a5700;
+    --gold-glow: rgba(168,120,0,.10);
+
+    --green: #16a34a;
+    --green-soft: rgba(22,163,74,.10);
+
+    --red: #dc2626;
+    --red-soft: rgba(220,38,38,.10);
+
+    --blue: #2563eb;
+    --blue-soft: rgba(37,99,235,.10);
+}
+
+/* =========================================================
+   RESET
+   ========================================================= */
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    min-height: 100vh;
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    font-family: var(--sans);
+
+    background-image:
+        radial-gradient(
+            ellipse 80% 45% at 50% -15%,
+            rgba(139,92,246,.08),
+            transparent
+        ),
+        radial-gradient(
+            ellipse 55% 45% at 100% 100%,
+            rgba(212,175,55,.05),
+            transparent
+        );
+}
+
+button,
+input,
+select {
+    font-family: var(--sans);
+}
+
+button {
+    cursor: pointer;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+.num {
+    font-variant-numeric: tabular-nums;
+}
+
+/* =========================================================
+   PAGE
+   ========================================================= */
+
+.page {
+    max-width: 1540px;
+    margin: auto;
+    padding: 94px 22px 60px;
+}
+
+.topline {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+}
+
+.breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    color: var(--text-muted);
+    font-size: 12px;
+}
+
+.breadcrumb b {
+    color: var(--gold);
+}
+
+.live-state {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    color: var(--text-secondary);
+    font-size: 11px;
+}
+
+.live-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--text-muted);
+}
+
+.live-dot.active {
+    background: var(--green);
+    box-shadow: 0 0 9px var(--green);
+}
+
+/* =========================================================
+   HERO
+   ========================================================= */
+
+.hero {
+    position: relative;
+    overflow: hidden;
+
+    border: 1px solid var(--border);
+    border-radius: 20px;
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--bg-card),
+            var(--bg-elevated)
+        );
+
+    padding: 25px 27px;
+    margin-bottom: 16px;
+
+    box-shadow: var(--shadow-sm);
+}
+
+.hero::before {
+    content: "";
+
+    position: absolute;
+    top: 0;
+    left: 15%;
+    right: 15%;
+
+    height: 1px;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            var(--gold),
+            transparent
+        );
+
+    opacity: .65;
+}
+
+.hero-grid {
+    display: grid;
+    grid-template-columns: minmax(0,1fr) auto;
+    align-items: center;
+    gap: 25px;
+}
+
+.hero h1 {
+    font-size: 26px;
+    line-height: 1.5;
+    font-weight: 900;
+    letter-spacing: -.6px;
+}
+
+.hero h1 span {
+    color: var(--gold);
+}
+
+.hero p {
+    max-width: 760px;
+
+    margin-top: 7px;
+
+    color: var(--text-secondary);
+    font-size: 12px;
+    line-height: 1.9;
+}
+
+.hero-actions {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+/* =========================================================
+   BUTTONS
+   ========================================================= */
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+
+    border: 1px solid var(--border);
+    border-radius: 10px;
+
+    background: var(--bg-card-2);
+    color: var(--text-primary);
+
+    padding: 10px 14px;
+
+    font-size: 12px;
+    font-weight: 700;
+
+    transition: .18s;
+}
+
+.btn:hover {
+    border-color: var(--border-strong);
+    transform: translateY(-1px);
+}
+
+.btn.gold {
+    border: 0;
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--gold),
+            var(--gold-dark)
+        );
+
+    color: #fff;
+
+    box-shadow:
+        0 5px 18px rgba(212,175,55,.22);
+}
+
+.btn.ghost {
+    background: transparent;
+}
+
+/* =========================================================
+   MARKET STRIP
+   ========================================================= */
+
+.market-strip {
+
+    display: grid;
+
+    grid-template-columns:
+        1.3fr
+        repeat(4,1fr);
+
+    gap: 1px;
+
+    overflow: hidden;
+
+    border: 1px solid var(--border);
+    border-radius: 14px;
+
+    background: var(--border);
+
+    margin-bottom: 16px;
+}
+
+.market-cell {
+    min-width: 0;
+
+    background: var(--bg-card);
+
+    padding: 13px 15px;
+}
+
+.market-cell small {
+    display: block;
+
+    margin-bottom: 5px;
+
+    color: var(--text-muted);
+    font-size: 10px;
+}
+
+.market-cell strong {
+    font-size: 15px;
+    font-weight: 850;
+}
+
+.market-sub {
+    display: block;
+
+    margin-top: 4px;
+
+    color: var(--text-muted);
+    font-size: 10px;
+}
+
+.up {
+    color: var(--green);
+}
+
+.down {
+    color: var(--red);
+}
+
+.gold-text {
+    color: var(--gold);
+}
+
+/* =========================================================
+   MAIN LAYOUT
+   ========================================================= */
+
+.layout {
+
+    display: grid;
+
+    grid-template-columns:
+        minmax(0,1.72fr)
+        minmax(320px,.68fr);
+
+    gap: 16px;
+
+    align-items: start;
+}
+
+.card {
+
+    background: var(--bg-card);
+
+    border: 1px solid var(--border);
+    border-radius: 16px;
+
+    box-shadow: var(--shadow-sm);
+
+    overflow: hidden;
+}
+
+.card + .card {
+    margin-top: 16px;
+}
+
+.card-head {
+
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 12px;
+
+    padding: 16px 18px;
+
+    border-bottom: 1px solid var(--border);
+}
+
+.card-title {
+
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    font-size: 14px;
+    font-weight: 850;
+}
+
+.badge {
+
+    display: inline-flex;
+
+    padding: 3px 8px;
+
+    border-radius: 5px;
+
+    background: var(--gold-glow);
+
+    border: 1px solid rgba(212,175,55,.2);
+
+    color: var(--gold);
+
+    font-size: 9px;
+    font-weight: 800;
+}
+
+.card-body {
+    padding: 16px 18px;
+}
+
+/* =========================================================
+   FILTERS
+   ========================================================= */
+
+.controls {
+
+    display: grid;
+
+    grid-template-columns:
+        1.2fr
+        1fr
+        1fr
+        auto;
+
+    gap: 8px;
+
+    margin-bottom: 12px;
+}
+
+.input,
+.select {
+
+    width: 100%;
+
+    background: var(--bg-input);
+
+    border: 1px solid var(--border);
+
+    border-radius: 9px;
+
+    color: var(--text-primary);
+
+    padding: 10px 11px;
+
+    font-size: 11px;
+    font-weight: 600;
+
+    outline: none;
+}
+
+.input:focus,
+.select:focus {
+
+    border-color: var(--gold);
+
+    box-shadow:
+        0 0 0 3px var(--gold-glow);
+}
+
+/* =========================================================
+   OPTION CHAIN
+   ========================================================= */
+
+.chain-wrap {
+
+    overflow: auto;
+
+    border: 1px solid var(--border);
+
+    border-radius: 12px;
+}
+
+.chain {
+
+    width: 100%;
+
+    min-width: 920px;
+
+    border-collapse: collapse;
+}
+
+.chain th {
+
+    background: var(--bg-elevated);
+
+    color: var(--text-muted);
+
+    padding: 11px 9px;
+
+    border-bottom: 1px solid var(--border);
+
+    font-size: 10px;
+    font-weight: 700;
+
+    white-space: nowrap;
+}
+
+.chain td {
+
+    padding: 10px 9px;
+
+    border-bottom: 1px solid var(--border-soft);
+
+    font-size: 11px;
+
+    white-space: nowrap;
+}
+
+.chain tbody tr:hover {
+
+    background:
+        rgba(212,175,55,.025);
+}
+
+.chain tbody tr:last-child td {
+    border-bottom: 0;
+}
+
+.option-type {
+
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    min-width: 42px;
+
+    padding: 4px 7px;
+
+    border-radius: 5px;
+
+    font-size: 9px;
+    font-weight: 900;
+}
+
+.option-type.call {
+
+    color: #4ade80;
+
+    background:
+        var(--green-soft);
+}
+
+.option-type.put {
+
+    color: #f87171;
+
+    background:
+        var(--red-soft);
+}
+
+.quote {
+    font-weight: 800;
+}
+
+.add-option {
+
+    border: 1px solid var(--border);
+
+    background: transparent;
+
+    color: var(--text-secondary);
+
+    border-radius: 7px;
+
+    padding: 6px 9px;
+
+    font-size: 10px;
+    font-weight: 700;
+
+    transition: .18s;
+}
+
+.add-option:hover {
+
+    color: var(--gold);
+
+    border-color: var(--gold);
+
+    background: var(--gold-glow);
+}
+
+/* =========================================================
+   EMPTY STATE
+   ========================================================= */
+
+.empty {
+
+    padding: 45px 20px;
+
+    text-align: center;
+
+    color: var(--text-muted);
+
+    font-size: 12px;
+
+    line-height: 2;
+}
+
+.empty strong {
+
+    display: block;
+
+    margin-bottom: 5px;
+
+    color: var(--text-secondary);
+
+    font-size: 13px;
+}
+
+/* =========================================================
+   STRATEGY
+   ========================================================= */
+
+.tabs {
+
+    display: flex;
+
+    gap: 4px;
+
+    padding: 4px;
+
+    margin-bottom: 14px;
+
+    background: var(--bg-card-2);
+
+    border: 1px solid var(--border);
+
+    border-radius: 11px;
+}
+
+.tab {
+
+    flex: 1;
+
+    border: 0;
+
+    background: transparent;
+
+    color: var(--text-secondary);
+
+    padding: 9px 10px;
+
+    border-radius: 7px;
+
+    font-size: 11px;
+    font-weight: 700;
+}
+
+.tab.active {
+
+    background: var(--bg-elevated);
+
+    color: var(--gold);
+
+    box-shadow: var(--shadow-sm);
+}
+
+.tab-panel {
+    display: none;
+}
+
+.tab-panel.active {
+    display: block;
+}
+
+/* =========================================================
+   LEGS
+   ========================================================= */
+
+.leg-list {
+
+    display: grid;
+
+    gap: 8px;
+}
+
+.leg {
+
+    display: grid;
+
+    grid-template-columns:
+        auto
+        1fr
+        auto
+        auto;
+
+    align-items: center;
+
+    gap: 10px;
+
+    padding: 11px;
+
+    background: var(--bg-card-2);
+
+    border: 1px solid var(--border);
+
+    border-radius: 11px;
+}
+
+.leg-icon {
+
+    width: 35px;
+    height: 35px;
+
+    display: grid;
+    place-items: center;
+
+    border-radius: 9px;
+
+    font-size: 12px;
+    font-weight: 900;
+}
+
+.leg-icon.call {
+
+    color: var(--green);
+
+    background: var(--green-soft);
+}
+
+.leg-icon.put {
+
+    color: var(--red);
+
+    background: var(--red-soft);
+}
+
+.leg-name {
+
+    font-size: 12px;
+    font-weight: 800;
+}
+
+.leg-meta {
+
+    margin-top: 3px;
+
+    color: var(--text-muted);
+
+    font-size: 10px;
+}
+
+.leg-price {
+
+    font-size: 12px;
+    font-weight: 850;
+}
+
+.remove {
+
+    border: 0;
+
+    background: transparent;
+
+    color: var(--text-muted);
+
+    font-size: 17px;
+}
+
+.remove:hover {
+    color: var(--red);
+}
+
+.no-leg {
+
+    padding: 28px;
+
+    text-align: center;
+
+    border: 1px dashed var(--border-strong);
+
+    border-radius: 11px;
+
+    color: var(--text-muted);
+
+    font-size: 11px;
+
+    line-height: 1.9;
+}
+
+/* =========================================================
+   METRICS
+   ========================================================= */
+
+.metrics {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(2,1fr);
+
+    gap: 8px;
+}
+
+.metric {
+
+    padding: 12px;
+
+    background: var(--bg-card-2);
+
+    border: 1px solid var(--border);
+
+    border-radius: 10px;
+}
+
+.metric small {
+
+    display: block;
+
+    margin-bottom: 5px;
+
+    color: var(--text-muted);
+
+    font-size: 10px;
+}
+
+.metric strong {
+    font-size: 14px;
+}
+
+/* =========================================================
+   PAYOFF CHART
+   ========================================================= */
+
+.chart-card {
+    margin-top: 16px;
+}
+
+.chart {
+
+    position: relative;
+
+    height: 330px;
+
+    overflow: hidden;
+
+    border: 1px solid var(--border);
+
+    border-radius: 11px;
+
+    background-color: var(--bg-input);
+
+    background-image:
+        linear-gradient(
+            rgba(255,255,255,.035) 1px,
+            transparent 1px
+        ),
+        linear-gradient(
+            90deg,
+            rgba(255,255,255,.035) 1px,
+            transparent 1px
+        );
+
+    background-size: 42px 42px;
+}
+
+.chart svg {
+
+    width: 100%;
+    height: 100%;
+}
+
+.chart-label {
+
+    fill: var(--text-muted);
+
+    font-size: 10px;
+}
+
+.chart-axis {
+
+    stroke: var(--border-strong);
+
+    stroke-width: 1;
+}
+
+.chart-zero {
+
+    stroke: var(--gold);
+
+    stroke-width: 1;
+
+    stroke-dasharray: 5 5;
+
+    opacity: .7;
+}
+
+.chart-curve {
+
+    fill: none;
+
+    stroke: var(--gold);
+
+    stroke-width: 3;
+
+    stroke-linecap: round;
+
+    stroke-linejoin: round;
+}
+
+.chart-area {
+
+    fill: url(#payoffGradient);
+
+    opacity: .2;
+}
+
+.chart-note {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    gap: 10px;
+
+    margin-top: 8px;
+
+    color: var(--text-muted);
+
+    font-size: 10px;
+}
+
+/* =========================================================
+   INFO
+   ========================================================= */
+
+.side-stack {
+
+    display: grid;
+
+    gap: 16px;
+}
+
+.info-box {
+
+    padding: 14px 16px;
+
+    border: 1px solid var(--border);
+
+    border-radius: 12px;
+
+    background: var(--bg-card-2);
+}
+
+.info-box h3 {
+
+    margin-bottom: 9px;
+
+    font-size: 12px;
+}
+
+.info-box p,
+.info-box li {
+
+    color: var(--text-secondary);
+
+    font-size: 10.5px;
+
+    line-height: 1.9;
+}
+
+.info-box ul {
+    padding-right: 17px;
+}
+
+.info-box li::marker {
+    color: var(--gold);
+}
+
+.info-box.notice {
+
+    border-color:
+        rgba(212,175,55,.18);
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--gold-glow),
+            transparent
+        );
+}
+
+.info-box.notice h3 {
+    color: var(--gold);
+}
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width:1050px) {
+
+    .layout {
+        grid-template-columns: 1fr;
+    }
+
+    .market-strip {
+        grid-template-columns:
+            repeat(3,1fr);
+    }
+}
+
+@media (max-width:700px) {
+
+    .page {
+        padding:
+            78px
+            12px
+            40px;
+    }
+
+    .hero-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .hero h1 {
+        font-size: 21px;
+    }
+
+    .market-strip {
+        grid-template-columns:
+            repeat(2,1fr);
+    }
+
+    .controls {
+        grid-template-columns:
+            1fr 1fr;
+    }
+
+    .controls .input {
+        grid-column: 1 / -1;
+    }
+
+    .leg {
+        grid-template-columns:
+            auto
+            1fr
+            auto;
+    }
+
+    .leg-price {
+        grid-column: 2;
+    }
+
+    .remove {
+        grid-column: 3;
+        grid-row: 1 / 3;
+    }
+}
+
 </style>
 </head>
+
 <body>
-<header class="top"><nav class="nav">
-<a class="brand" href="home.html">شمعدون</a>
-<a href="home.html">خانه</a><a href="bourse.html">بازار</a><a href="analysis.html">تحلیل</a><a href="news.html">اخبار</a><a href="calculator.html">ابزارها</a><a href="courses.html">آموزش</a><a href="portfolio.html">پرتفوی</a><a href="dashboard.html">حساب</a>
-<span class="grow"></span><span class="live" id="live">● اتصال به بازار</span>
-</nav></header>
-<main>
-<section class="hero"><div><div class="eyebrow">SHAMDUN OPTIONS LAB</div><h1>آزمایشگاه استراتژی آپشن</h1><p>داده زنده بازار، زنجیره قراردادها و محاسبه سود و زیان روی قراردادهای واقعی.</p></div><div class="actions"><button class="btn" id="refresh">↻ بروزرسانی</button><button class="btn primary" id="save">ذخیره استراتژی</button></div></section>
-<div class="status"><span>منبع: <b>TSETMC / webgw</b></span><span>بروزرسانی: <b id="time">—</b></span><span>قراردادها: <b id="count">—</b></span><span id="message">در حال دریافت داده...</span></div>
-<div class="layout"><section>
-<div class="card"><div class="head"><h2>۱. دارایی پایه و فیلتر زنجیره</h2><span class="muted">بدون اعداد ساختگی</span></div>
-<div class="filters"><div class="field"><label>دارایی پایه</label><select id="base"><option>در حال دریافت...</option></select></div><div class="field"><label>سررسید</label><select id="expiry"><option value="">همه</option></select></div><div class="field"><label>نوع قرارداد</label><select id="type"><option value="">همه</option><option value="call">Call</option><option value="put">Put</option></select></div><div class="field"><label>جستجو</label><input id="search" placeholder="نماد قرارداد"></div></div></div>
-<div class="card"><div class="stats"><div class="stat"><small>قیمت دارایی پایه</small><strong id="price">—</strong></div><div class="stat"><small>تغییر</small><strong id="change">—</strong></div><div class="stat"><small>آخرین معامله</small><strong id="last">—</strong></div><div class="stat"><small>حجم</small><strong id="volume">—</strong></div><div class="stat"><small>وضعیت</small><strong id="state">—</strong></div></div></div>
-<div class="card"><div class="head"><h2>زنجیره واقعی اختیار معامله</h2><span class="muted">روی افزودن کلیک کن</span></div><div id="chain"><div class="empty">در حال دریافت...</div></div></div>
-<div class="card"><div class="head"><h2>۲. پوزیشن‌های استراتژی</h2><button class="btn" id="manual">+ پوزیشن دستی</button></div><div id="legs" class="legs"><div class="empty">یک قرارداد از زنجیره انتخاب کن.</div></div></div>
-<div class="card"><div class="head"><h2>۳. Payoff در سررسید</h2><span class="muted">بر اساس قیمت و Strike واقعی قراردادها</span></div><canvas id="chart"></canvas></div>
-<div class="card"><div class="head"><h2>نتیجه</h2></div><div class="results"><div class="result"><small>حداکثر سود در بازه</small><b id="maxp">—</b></div><div class="result"><small>حداکثر زیان در بازه</small><b id="maxl">—</b></div><div class="result"><small>Break-even</small><b id="be">—</b></div><div class="result"><small>P/L قیمت فعلی</small><b id="pnl">—</b></div></div></div>
-<div class="card"><div class="head"><h2>سناریو</h2><span class="muted">نسبت به قیمت زنده پایه</span></div><div id="scenarios" class="scenarios"></div></div>
-</section>
-<aside>
-<div class="card"><div class="head"><h2>Greeks</h2></div><div class="results" style="grid-template-columns:1fr 1fr"><div class="result"><small>Delta</small><b id="delta">—</b></div><div class="result"><small>Gamma</small><b id="gamma">—</b></div><div class="result"><small>Theta</small><b id="theta">—</b></div><div class="result"><small>Vega</small><b id="vega">—</b></div></div></div>
-<div class="card"><div class="head"><h2>پارامتر محاسبات</h2></div><div class="field"><label>نرخ بدون ریسک سالانه %</label><input id="rate" type="number" value="25" step=".1"></div><br><button class="btn" style="width:100%" id="recalc">محاسبه مجدد</button><p class="note">Greeks با فرض Black‑Scholes اروپایی و با استفاده از قیمت بازار قرارداد محاسبه می‌شوند. برای قراردادهای ایرانی باید شرایط تسویه، اندازه قرارداد و وجه تضمین نیز در مدل نهایی لحاظ شود.</p></div>
-<div class="card"><div class="head"><h2>ناوبری شمعدون</h2></div><div class="links"><a href="bourse.html">📈 بازار و دیده‌بان</a><a href="portfolio.html">💼 پرتفوی</a><a href="calculator.html">🧮 ماشین‌حساب‌ها</a><a href="dictionary.html">📚 دانش‌نامه</a><a href="analysis.html">📊 تحلیل‌ها</a><a href="news.html">📰 اخبار</a></div></div>
-<div class="card"><div class="note">داده‌های بازار از gateway بازار سرمایه دریافت می‌شوند. این gateway و endpoint اختصاصی اختیار معامله در مستندات عمومی TSETMC/webgw ثبت شده‌اند. دسترسی ممکن است بر اساس شبکه یا IP محدود شود.</div></div>
-</aside></div></main>
+
+<!-- ======================================================
+     ناوبر فعلی شمعدون
+     ====================================================== -->
+
+<script src="navbar.js" defer></script>
+
+
+<main class="page">
+
+    <!-- ==================================================
+         TOP
+         ================================================== -->
+
+    <div class="topline">
+
+        <div class="breadcrumb">
+
+            <span>ابزارها</span>
+
+            <span>‹</span>
+
+            <b>آپشن</b>
+
+        </div>
+
+
+        <div class="live-state">
+
+            <span
+                id="liveDot"
+                class="live-dot">
+            </span>
+
+            <span id="liveText">
+                در انتظار اتصال به منبع داده
+            </span>
+
+        </div>
+
+    </div>
+
+
+    <!-- ==================================================
+         HERO
+         ================================================== -->
+
+    <section class="hero">
+
+        <div class="hero-grid">
+
+            <div>
+
+                <h1>
+                    شبیه‌ساز
+                    <span>آپشن</span>
+                    شمعدون
+                </h1>
+
+                <p>
+                    مشاهده زنجیره اختیار خرید و فروش،
+                    ساخت استراتژی، بررسی سود و زیان
+                    و تحلیل سناریوها در یک محیط یکپارچه.
+                </p>
+
+            </div>
+
+
+            <div class="hero-actions">
+
+                <button
+                    class="btn gold"
+                    id="newStrategyBtn">
+
+                    ＋ استراتژی جدید
+
+                </button>
+
+
+                <button
+                    class="btn"
+                    id="refreshBtn">
+
+                    ↻ بروزرسانی
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ==================================================
+         MARKET SUMMARY
+         ================================================== -->
+
+    <section class="market-strip">
+
+        <div class="market-cell">
+
+            <small>
+                دارایی پایه
+            </small>
+
+            <strong id="underlyingName">
+                —
+            </strong>
+
+            <span
+                class="market-sub"
+                id="underlyingState">
+
+                داده‌ای دریافت نشده
+
+            </span>
+
+        </div>
+
+
+        <div class="market-cell">
+
+            <small>
+                قیمت پایه
+            </small>
+
+            <strong
+                class="num"
+                id="underlyingPrice">
+
+                —
+
+            </strong>
+
+        </div>
+
+
+        <div class="market-cell">
+
+            <small>
+                تغییر
+            </small>
+
+            <strong id="underlyingChange">
+                —
+            </strong>
+
+        </div>
+
+
+        <div class="market-cell">
+
+            <small>
+                سررسید
+            </small>
+
+            <strong id="expiryValue">
+                —
+            </strong>
+
+        </div>
+
+
+        <div class="market-cell">
+
+            <small>
+                وضعیت داده
+            </small>
+
+            <strong
+                class="gold-text"
+                id="dataState">
+
+                آماده
+
+            </strong>
+
+        </div>
+
+    </section>
+
+
+    <!-- ==================================================
+         MAIN
+         ================================================== -->
+
+    <div class="layout">
+
+
+        <!-- =================================================
+             LEFT
+             ================================================= -->
+
+        <section>
+
+
+            <!-- =============================================
+                 OPTION CHAIN
+                 ============================================= -->
+
+            <div class="card">
+
+                <div class="card-head">
+
+                    <div class="card-title">
+
+                        زنجیره آپشن
+
+                        <span class="badge">
+                            CALL / PUT
+                        </span>
+
+                    </div>
+
+
+                    <button
+                        class="btn ghost"
+                        id="clearFiltersBtn">
+
+                        پاک کردن فیلتر
+
+                    </button>
+
+                </div>
+
+
+                <div class="card-body">
+
+
+                    <!-- FILTERS -->
+
+                    <div class="controls">
+
+                        <input
+                            class="input"
+                            id="symbolSearch"
+                            placeholder="جستجوی نماد؛ مثل ضخود یا طخود">
+
+
+                        <select
+                            class="select"
+                            id="typeFilter">
+
+                            <option value="all">
+                                همه قراردادها
+                            </option>
+
+                            <option value="call">
+                                اختیار خرید
+                            </option>
+
+                            <option value="put">
+                                اختیار فروش
+                            </option>
+
+                        </select>
+
+
+                        <select
+                            class="select"
+                            id="expiryFilter">
+
+                            <option value="all">
+                                همه سررسیدها
+                            </option>
+
+                        </select>
+
+
+                        <button
+                            class="btn gold"
+                            id="structureBtn">
+
+                            نمایش ساختار
+
+                        </button>
+
+                    </div>
+
+
+                    <!-- TABLE -->
+
+                    <div class="chain-wrap">
+
+                        <table class="chain">
+
+                            <thead>
+
+                                <tr>
+
+                                    <th>
+                                        نوع
+                                    </th>
+
+                                    <th>
+                                        نماد
+                                    </th>
+
+                                    <th>
+                                        دارایی پایه
+                                    </th>
+
+                                    <th>
+                                        قیمت اعمال
+                                    </th>
+
+                                    <th>
+                                        آخرین
+                                    </th>
+
+                                    <th>
+                                        خرید
+                                    </th>
+
+                                    <th>
+                                        فروش
+                                    </th>
+
+                                    <th>
+                                        حجم
+                                    </th>
+
+                                    <th>
+                                        افزودن
+                                    </th>
+
+                                </tr>
+
+                            </thead>
+
+
+                            <tbody id="chainBody">
+
+                                <tr>
+
+                                    <td colspan="9">
+
+                                        <div class="empty">
+
+                                            <strong>
+                                                زنجیره هنوز بارگذاری نشده
+                                            </strong>
+
+                                            پس از اتصال منبع داده،
+                                            قراردادهای واقعی اینجا قرار می‌گیرند.
+
+                                        </div>
+
+                                    </td>
+
+                                </tr>
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 PAYOFF
+                 ================================================= -->
+
+            <div class="card chart-card">
+
+                <div class="card-head">
+
+                    <div class="card-title">
+
+                        نمودار سود و زیان استراتژی
+
+                        <span class="badge">
+                            PAYOFF
+                        </span>
+
+                    </div>
+
+
+                    <button
+                        class="btn"
+                        id="resetChartBtn">
+
+                        ↺ بازنشانی
+
+                    </button>
+
+                </div>
+
+
+                <div class="card-body">
+
+                    <div
+                        class="chart"
+                        id="payoffChart">
+
+                        <svg
+                            viewBox="0 0 900 330"
+                            preserveAspectRatio="none">
+
+                            <defs>
+
+                                <linearGradient
+                                    id="payoffGradient"
+                                    x1="0"
+                                    x2="0"
+                                    y1="0"
+                                    y2="1">
+
+                                    <stop
+                                        offset="0"
+                                        stop-color="#d4af37"/>
+
+                                    <stop
+                                        offset="1"
+                                        stop-color="#d4af37"
+                                        stop-opacity="0"/>
+
+                                </linearGradient>
+
+                            </defs>
+
+
+                            <line
+                                class="chart-axis"
+                                x1="55"
+                                y1="165"
+                                x2="875"
+                                y2="165"/>
+
+
+                            <line
+                                class="chart-zero"
+                                x1="55"
+                                y1="165"
+                                x2="875"
+                                y2="165"/>
+
+
+                            <line
+                                class="chart-axis"
+                                x1="55"
+                                y1="20"
+                                x2="55"
+                                y2="300"/>
+
+
+                            <path
+                                id="areaPath"
+                                class="chart-area"
+                                d="
+                                M55 240
+                                L190 210
+                                L325 178
+                                L460 150
+                                L595 118
+                                L730 92
+                                L875 70
+                                L875 165
+                                L55 165
+                                Z
+                                "/>
+
+
+                            <path
+                                id="curvePath"
+                                class="chart-curve"
+                                d="
+                                M55 240
+                                L190 210
+                                L325 178
+                                L460 150
+                                L595 118
+                                L730 92
+                                L875 70
+                                "/>
+
+
+                            <text
+                                class="chart-label"
+                                x="18"
+                                y="25">
+
+                                سود
+
+                            </text>
+
+
+                            <text
+                                class="chart-label"
+                                x="18"
+                                y="305">
+
+                                زیان
+
+                            </text>
+
+
+                            <text
+                                class="chart-label"
+                                x="55"
+                                y="322">
+
+                                قیمت پایه
+
+                            </text>
+
+
+                            <text
+                                class="chart-label"
+                                x="825"
+                                y="322">
+
+                                سناریو ↑
+
+                            </text>
+
+                        </svg>
+
+                    </div>
+
+
+                    <div class="chart-note">
+
+                        <span>
+                            نمودار پس از ورود موقعیت‌ها
+                            بر اساس داده واقعی محاسبه می‌شود.
+                        </span>
+
+                        <span id="chartMode">
+                            مدل: Payoff
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             RIGHT
+             ================================================= -->
+
+        <aside class="side-stack">
+
+
+            <!-- =============================================
+                 STRATEGY
+                 ============================================= -->
+
+            <div class="card">
+
+                <div class="card-head">
+
+                    <div class="card-title">
+                        استراتژی من
+                    </div>
+
+                    <span
+                        class="badge"
+                        style="color:var(--blue)">
+
+                        LIVE MODEL
+
+                    </span>
+
+                </div>
+
+
+                <div class="card-body">
+
+
+                    <div class="tabs">
+
+                        <button
+                            class="tab active"
+                            data-tab="legsTab">
+
+                            موقعیت‌ها
+
+                        </button>
+
+
+                        <button
+                            class="tab"
+                            data-tab="resultsTab">
+
+                            خروجی
+
+                        </button>
+
+                    </div>
+
+
+                    <!-- POSITIONS -->
+
+                    <div
+                        class="tab-panel active"
+                        id="legsTab">
+
+                        <div
+                            class="leg-list"
+                            id="legList">
+
+                            <div class="no-leg">
+
+                                هنوز قراردادی به استراتژی اضافه نشده.
+
+                                <br>
+
+                                از جدول زنجیره،
+                                «افزودن» را بزن.
+
+                            </div>
+
+                        </div>
+
+
+                        <button
+                            class="btn"
+                            id="manualPositionBtn"
+                            style="
+                                width:100%;
+                                margin-top:10px;
+                            ">
+
+                            ＋ افزودن موقعیت دستی
+
+                        </button>
+
+                    </div>
+
+
+                    <!-- RESULTS -->
+
+                    <div
+                        class="tab-panel"
+                        id="resultsTab">
+
+                        <div class="metrics">
+
+
+                            <div class="metric">
+
+                                <small>
+                                    حداکثر سود
+                                </small>
+
+                                <strong id="maxProfit">
+                                    —
+                                </strong>
+
+                            </div>
+
+
+                            <div class="metric">
+
+                                <small>
+                                    حداکثر زیان
+                                </small>
+
+                                <strong id="maxLoss">
+                                    —
+                                </strong>
+
+                            </div>
+
+
+                            <div class="metric">
+
+                                <small>
+                                    نقطه سر‌به‌سر
+                                </small>
+
+                                <strong id="breakEven">
+                                    —
+                                </strong>
+
+                            </div>
+
+
+                            <div class="metric">
+
+                                <small>
+                                    تعداد موقعیت
+                                </small>
+
+                                <strong id="legCount">
+                                    ۰
+                                </strong>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- =============================================
+                 INFO
+                 ============================================= -->
+
+            <div class="info-box notice">
+
+                <h3>
+                    ساختار جدید صفحه
+                </h3>
+
+                <p>
+
+                    ابتدا داده بازار و زنجیره قراردادها
+                    نمایش داده می‌شود؛ سپس کاربر قراردادها
+                    را وارد استراتژی می‌کند و نتیجه در همان
+                    صفحه تحلیل می‌شود.
+
+                </p>
+
+            </div>
+
+
+            <div class="info-box">
+
+                <h3>
+                    قابلیت‌های این ساختار
+                </h3>
+
+                <ul>
+
+                    <li>
+                        تمرکز روی Option Chain
+                    </li>
+
+                    <li>
+                        تفکیک داده بازار از محاسبات
+                    </li>
+
+                    <li>
+                        نمایش همزمان موقعیت‌ها و Payoff
+                    </li>
+
+                    <li>
+                        آماده توسعه برای Greeks
+                    </li>
+
+                    <li>
+                        آماده توسعه برای سناریوها
+                    </li>
+
+                    <li>
+                        آماده ذخیره استراتژی
+                    </li>
+
+                </ul>
+
+            </div>
+
+        </aside>
+
+    </div>
+
+</main>
+
+
 <script>
-const API='https://webgw.tse.ir/InstrumentProvider/api/v1';
-const S={cash:[],options:[],base:null,legs:[]};
-const $=x=>document.getElementById(x);
-const num=x=>Number(x)||0;
-const fa=x=>new Intl.NumberFormat('fa-IR',{maximumFractionDigits:2}).format(num(x));
-const priceText=(x,quote=false)=>{
-  if(x===null || x===undefined || x==='' || !Number.isFinite(Number(x)) || (quote && Number(x)===0))
-    return quote?'بدون مظنه':'بدون معامله';
-  return fa(x);
-};
-const str=x=>x==null?'':typeof x==='object'?(x.value??JSON.stringify(x)):String(x);
-function pick(o,a){for(const k of a)if(o&&o[k]!=null&&o[k]!=='')return o[k];return null}
-async function api(path){const r=await fetch(API+path,{cache:'no-store'});if(!r.ok)throw Error('HTTP '+r.status);return r.json()}
-function list(d){return Array.isArray(d)?d:(d?.Items||d?.items||[])}
-function cashNorm(d){return list(d).map(x=>({id:str(x.instrumentId),name:str(pick(x,['instrumentName','instrument_Name'])),last:num(pick(x,['lastPrice','lastprice'])),change:num(pick(x,['lastPriceChange','pricechange'])),pct:num(pick(x,['lastPricePercent','pricechangepercent'])),volume:num(pick(x,['tradeVolume','volume'])),state:str(pick(x,['statename','state']))})).filter(x=>x.name)}
-function optNorm(d){
-  return list(d).map(x=>{
-    const n=str(pick(x,['instrumentName','instrument_Name','symbol','instrumentSymbol']));
-    const company=str(pick(x,['companyNamePersian','company_Name_Persian']));
-    const v=k=>{
-      const z=x?.[k];
-      return z && typeof z==='object' && 'value' in z ? z.value : z;
-    };
-    const strike=Number(v('qeymateEmal'));
-    const base=Number(v('qeymateMabna'));
-    const days=Number(v('baghimandetasarresid'));
-    const last=v('lastPrice'), bid=v('buyPrice'), ask=v('sellPrice');
-    return {
-      id:str(x.instrumentId),
-      name:n,
-      company,
-      strike:Number.isFinite(strike)?strike:null,
-      base:Number.isFinite(base)?base:null,
-      last:last==null?null:Number(last),
-      bid:bid==null?null:Number(bid),
-      ask:ask==null?null:Number(ask),
-      volume:Number(v('tradeVolume') ?? v('volume'))||0,
-      oi:Number(v('openInterest') ?? v('openinterest'))||0,
-      days:Number.isFinite(days)?days:null,
-      expiry:v('tarixSarresid') ?? null,
-      state:str(pick(x,['statename','state'])),
-      market:str(pick(x,['marketname','marketName'])),
-      // The supplied MarketWatchOption payload does not expose a guaranteed
-      // semantic Call/Put field. Do not silently invent one.
-      type:'unknown',
-      raw:x
-    };
-  }).filter(x=>x.name);
+
+/* =========================================================
+   SHAMDUN OPTIONS — FRONTEND STATE
+   ========================================================= */
+
+const legs = [];
+
+
+/* =========================================================
+   DOM
+   ========================================================= */
+
+const chainBody =
+    document.getElementById("chainBody");
+
+const legList =
+    document.getElementById("legList");
+
+const legCount =
+    document.getElementById("legCount");
+
+
+/* =========================================================
+   PERSIAN NUMBERS
+   ========================================================= */
+
+function faNumber(value) {
+
+    return String(value)
+        .replace(/\d/g, d => "۰۱۲۳۴۵۶۷۸۹"[d]);
+
 }
-function isForBase(o,b){
-  if(!b) return false;
-  const baseName=(b.name||'').trim();
-  if(!baseName) return false;
-  return o.name.includes(baseName) || o.company.includes(baseName);
-}
-function renderBase(){let b=S.base||{};$('price').textContent=fa(b.last);$('last').textContent=fa(b.last);$('change').textContent=(b.pct>0?'+':'')+fa(b.pct)+'٪';$('change').className='up';$('volume').textContent=fa(b.volume);$('state').textContent=b.state||'—'}
-function renderBases(){let a=S.cash.filter(x=>x.last>0);$('base').innerHTML=a.map(x=>`<option value="${x.id}">${x.name}</option>`).join('');S.base=a.find(x=>x.name==='خودرو')||a[0];if(S.base){$('base').value=S.base.id;loadOptions()}}
-function renderExpiry(){
-  const dates=[...new Set(S.options.map(x=>x.expiry).filter(Boolean))];
-  const days=[...new Set(S.options.map(x=>x.days).filter(x=>x!==null && Number.isFinite(x)))].sort((a,b)=>a-b);
-  let opts='<option value="">همه سررسیدها</option>';
-  if(dates.length) opts+=dates.map(x=>`<option value="${x}">${x}</option>`).join('');
-  else opts+='<option value="__days__">بر اساس روز باقی‌مانده</option>';
-  $('expiry').innerHTML=opts;
-}
-function renderChain(){
-  let a=S.options.filter(x=>{
-    const e=$('expiry').value,t=$('type').value,q=$('search').value.trim();
-    const typeOK=!t || t==='unknown' ? (t==='unknown'?x.type==='unknown':true) : x.type===t;
-    return (!e || e==='__days__' || x.expiry===e) && typeOK &&
-      (!q || x.name.includes(q)||x.company.includes(q));
-  });
-  a.sort((x,y)=>(x.strike||0)-(y.strike||0));
-  if(!a.length){
-    $('chain').innerHTML='<div class="empty">قراردادی با این فیلتر پیدا نشد.</div>';
-    return;
-  }
-  $('chain').innerHTML=`<div class="tablebox"><table class="chain"><thead>
-  <tr><th>نوع</th><th>نماد</th><th>Strike</th><th>سررسید</th><th>روز</th><th>Last</th><th>Bid</th><th>Ask</th><th>Volume</th><th>OI</th><th></th></tr>
-  </thead><tbody>${a.slice(0,300).map(x=>{
-    const typeLabel=x.type==='call'?'CALL':x.type==='put'?'PUT':'نامشخص';
-    const expiry=x.expiry || '—';
-    return `<tr>
-      <td><span class="pill ${x.type}">${typeLabel}</span></td>
-      <td>${x.name}</td>
-      <td>${priceText(x.strike)}</td>
-      <td>${expiry}</td>
-      <td>${x.days==null?'—':fa(x.days)}</td>
-      <td>${priceText(x.last)}</td>
-      <td>${priceText(x.bid,true)}</td>
-      <td>${priceText(x.ask,true)}</td>
-      <td>${fa(x.volume)}</td>
-      <td>${fa(x.oi)}</td>
-      <td><button class="add" data-id="${x.id}">افزودن</button></td>
-    </tr>`;
-  }).join('')}</tbody></table></div>`;
-  document.querySelectorAll('.add').forEach(b=>b.onclick=()=>{
-    const x=S.options.find(o=>o.id===b.dataset.id);
-    if(x){
-      S.legs.push({
-        c:x, side:'buy', qty:1,
-        premium:(Number.isFinite(x.last)&&x.last>0?x.last:
-                 Number.isFinite(x.bid)&&x.bid>0?x.bid:
-                 Number.isFinite(x.ask)&&x.ask>0?x.ask:0)
-      });
-      renderLegs(); calc();
+
+
+/* =========================================================
+   RENDER STRATEGY
+   ========================================================= */
+
+function renderLegs() {
+
+    legCount.textContent =
+        faNumber(legs.length);
+
+
+    if (!legs.length) {
+
+        legList.innerHTML = `
+            <div class="no-leg">
+
+                هنوز قراردادی به استراتژی اضافه نشده.
+
+                <br>
+
+                از جدول زنجیره،
+                «افزودن» را بزن.
+
+            </div>
+        `;
+
+        document.getElementById(
+            "maxProfit"
+        ).textContent = "—";
+
+        document.getElementById(
+            "maxLoss"
+        ).textContent = "—";
+
+        document.getElementById(
+            "breakEven"
+        ).textContent = "—";
+
+        return;
     }
-  });
+
+
+    legList.innerHTML =
+        legs.map((leg,index) => `
+
+            <div class="leg">
+
+                <div
+                    class="leg-icon ${leg.type}">
+
+                    ${
+                        leg.type === "call"
+                        ? "C"
+                        : "P"
+                    }
+
+                </div>
+
+
+                <div>
+
+                    <div class="leg-name">
+
+                        ${leg.symbol}
+
+                    </div>
+
+                    <div class="leg-meta">
+
+                        ${
+                            leg.type === "call"
+                            ? "اختیار خرید"
+                            : "اختیار فروش"
+                        }
+
+                        ·
+
+                        ${leg.strike}
+
+                        ·
+
+                        ${
+                            leg.side === "buy"
+                            ? "خرید"
+                            : "فروش"
+                        }
+
+                    </div>
+
+                </div>
+
+
+                <div class="leg-price">
+
+                    ${leg.price || "—"}
+
+                </div>
+
+
+                <button
+                    class="remove"
+                    onclick="removeLeg(${index})">
+
+                    ×
+
+                </button>
+
+            </div>
+
+        `).join("");
+
+
+    document.getElementById(
+        "maxProfit"
+    ).textContent = "محاسبه می‌شود";
+
+
+    document.getElementById(
+        "maxLoss"
+    ).textContent = "محاسبه می‌شود";
+
+
+    document.getElementById(
+        "breakEven"
+    ).textContent = "در حال تحلیل";
 }
-function renderLegs(){if(!S.legs.length){$('legs').innerHTML='<div class="empty">یک قرارداد از زنجیره انتخاب کن.</div>';return}
-$('legs').innerHTML=S.legs.map((l,i)=>`<div class="leg"><div><b>${l.c.name}</b><div style="color:var(--muted)">K=${fa(l.c.strike)} · ${l.c.type==='call'?'Call':'Put'}</div></div><select data-i="${i}" class="ls"><option value="buy" ${l.side==='buy'?'selected':''}>خرید</option><option value="sell" ${l.side==='sell'?'selected':''}>فروش</option></select><input data-i="${i}" class="lp" type="number" step=".01" value="${l.premium}"><input data-i="${i}" class="lq" type="number" min="1" value="${l.qty}"><button class="remove" data-i="${i}">×</button></div>`).join('');
-document.querySelectorAll('.ls').forEach(e=>e.onchange=()=>{S.legs[e.dataset.i].side=e.value;calc()});document.querySelectorAll('.lp').forEach(e=>e.oninput=()=>{S.legs[e.dataset.i].premium=num(e.value);calc()});document.querySelectorAll('.lq').forEach(e=>e.oninput=()=>{S.legs[e.dataset.i].qty=Math.max(1,num(e.value));calc()});document.querySelectorAll('.remove').forEach(e=>e.onclick=()=>{S.legs.splice(+e.dataset.i,1);renderLegs();calc()})}
-function payoff(l,p){
-  if(!l.c || !['call','put'].includes(l.c.type)) return 0;
-  const K=num(l.c.strike), q=num(l.qty)*(l.side==='buy'?1:-1), prem=num(l.premium);
-  return q*((l.c.type==='call'?Math.max(p-K,0):Math.max(K-p,0))-prem);
-}
-function at(p){return S.legs.reduce((a,l)=>a+payoff(l,p),0)}
-function calc(){let P=num(S.base?.last);if(!P||!S.legs.length){draw([]);return}let pts=[],lo=P*.5,hi=P*1.5;for(let i=0;i<181;i++){let x=lo+(hi-lo)*i/180;pts.push([x,at(x)])}let ys=pts.map(x=>x[1]),mx=Math.max(...ys),mn=Math.min(...ys);$('maxp').textContent=fa(mx);$('maxl').textContent=fa(mn);$('pnl').textContent=fa(at(P));let bes=[];for(let i=1;i<pts.length;i++)if(pts[i-1][1]*pts[i][1]<0)bes.push((pts[i-1][0]+pts[i][0])/2);$('be').textContent=bes.length?bes.map(fa).join(' ، '):'—';draw(pts);scenarios();greeks()}
-function draw(p){let c=$('chart'),r=c.getBoundingClientRect(),d=devicePixelRatio||1;c.width=r.width*d;c.height=r.height*d;let g=c.getContext('2d');g.scale(d,d);g.clearRect(0,0,r.width,r.height);if(!p.length)return;let pad=32,w=r.width-2*pad,h=r.height-2*pad,x0=p[0][0],x1=p[p.length-1][0],y0=Math.min(...p.map(a=>a[1])),y1=Math.max(...p.map(a=>a[1]));let X=x=>pad+(x-x0)/(x1-x0)*w,Y=y=>pad+(y1-y)/(y1-y0||1)*h;g.strokeStyle='#263a58';g.beginPath();g.moveTo(pad,Y(0));g.lineTo(pad+w,Y(0));g.stroke();g.strokeStyle='#c89b3c';g.lineWidth=2;g.beginPath();p.forEach((a,i)=>i?g.lineTo(X(a[0]),Y(a[1])):g.moveTo(X(a[0]),Y(a[1])));g.stroke()}
-function scenarios(){let p=num(S.base?.last);$('scenarios').innerHTML=[-10,-5,5,10].map(x=>{let v=at(p*(1+x/100));return `<div class="scenario"><b class="${v>=0?'up':'down'}">${x>0?'+':''}${x}٪</b><span>${fa(v)}</span></div>`}).join('')}
-function N(x){return .5*(1+erf(x/Math.sqrt(2)))}function erf(x){let s=x<0?-1:1;x=Math.abs(x);let t=1/(1+.3275911*x);return s*(1-((((1.061405429*t-1.453152027)*t+1.421413741)*t-.284496736)*t+.254829592)*t*Math.exp(-x*x))}
-function greeks(){let P=num(S.base?.last),rate=num($('rate').value)/100,g={d:0,g:0,t:0,v:0},n=0;S.legs.forEach(l=>{let c=l.c,S0=P,K=num(c.strike),T=Math.max(1,num(c.days))/365,V=num(c.last||c.bid||c.ask);if(!(S0&&K&&T&&V))return;let lo=.0001,hi=4;for(let i=0;i<50;i++){let iv=(lo+hi)/2,d1=(Math.log(S0/K)+(rate+iv*iv/2)*T)/(iv*Math.sqrt(T)),d2=d1-iv*Math.sqrt(T),pv=c.type==='call'?S0*N(d1)-K*Math.exp(-rate*T)*N(d2):K*Math.exp(-rate*T)*N(-d2)-S0*N(-d1);if(pv>V)hi=iv;else lo=iv}let iv=(lo+hi)/2,d1=(Math.log(S0/K)+(rate+iv*iv/2)*T)/(iv*Math.sqrt(T)),pdf=Math.exp(-d1*d1/2)/Math.sqrt(2*Math.PI),sg=l.side==='buy'?1:-1,q=num(l.qty),delta=c.type==='call'?N(d1):N(d1)-1;g.d+=sg*q*delta;g.g+=sg*q*pdf/(S0*iv*Math.sqrt(T));g.v+=sg*q*S0*pdf*Math.sqrt(T)/100;g.t+=sg*q*(-(S0*pdf*iv)/(2*Math.sqrt(T))-(c.type==='call'?rate*K*Math.exp(-rate*T)*N(d1-iv*Math.sqrt(T)):-rate*K*Math.exp(-rate*T)*N(-(d1-iv*Math.sqrt(T)))))/365;n++});if(n){$('delta').textContent=g.d.toFixed(4);$('gamma').textContent=g.g.toFixed(6);$('vega').textContent=g.v.toFixed(4);$('theta').textContent=g.t.toFixed(4)}}
-async function loadOptions(){if(!S.base)return;try{let d=await api('/MarketWatch/MarketWatchOption/fa');S.options=optNorm(d).filter(o=>isForBase(o,S.base));renderBase();renderExpiry();renderChain();$('count').textContent=fa(S.options.length);$('message').textContent='زنجیره زنده دریافت شد';$('live').textContent='● داده زنده';$('live').className='live up'}catch(e){$('chain').innerHTML='<div class="empty error">دریافت زنجیره انجام نشد: '+e.message+'</div>';$('message').textContent='API از این شبکه در دسترس نیست';$('message').className='error';$('live').textContent='● خطای اتصال'}}
-async function refresh(){try{$('message').textContent='در حال دریافت بازار...';let d=await api('/MarketWatch/MarketWatchCash/fa');S.cash=cashNorm(d);renderBases();$('time').textContent=new Date().toLocaleTimeString('fa-IR');}catch(e){$('message').textContent='اتصال بازار ناموفق: '+e.message;$('message').className='error';$('live').textContent='● آفلاین';$('live').className='live error'}}
-$('base').onchange=()=>{S.base=S.cash.find(x=>x.id===$('base').value);S.legs=[];renderLegs();loadOptions()};$('expiry').onchange=renderChain;$('type').onchange=renderChain;$('search').oninput=renderChain;$('refresh').onclick=refresh;$('recalc').onclick=calc;$('manual').onclick=()=>{if(!S.base)return;S.legs.push({c:{name:'دستی',type:'unknown',strike:S.base.last,last:0},side:'buy',qty:1,premium:0});renderLegs();calc()};$('save').onclick=()=>{localStorage.setItem('shamdun_options_strategy',JSON.stringify({date:new Date().toISOString(),base:S.base?.name,legs:S.legs}));$('message').textContent='استراتژی در مرورگر ذخیره شد.'};window.onresize=()=>{if(S.legs.length)calc()};setInterval(refresh,60000);refresh();
+
+
+/* =========================================================
+   REMOVE LEG
+   ========================================================= */
+
+window.removeLeg = function(index) {
+
+    legs.splice(index,1);
+
+    renderLegs();
+
+};
+
+
+/* =========================================================
+   MANUAL POSITION
+   ========================================================= */
+
+document
+    .getElementById("manualPositionBtn")
+    .addEventListener("click", () => {
+
+        const symbol =
+            prompt(
+                "نماد آپشن را وارد کن؛ مثلاً ضخود... یا طخود..."
+            );
+
+        if (!symbol) return;
+
+
+        const type =
+            symbol.startsWith("ط")
+            ? "put"
+            : "call";
+
+
+        const strike =
+            prompt("قیمت اعمال را وارد کن");
+
+        if (!strike) return;
+
+
+        legs.push({
+
+            symbol,
+            type,
+            strike,
+
+            side: "buy",
+
+            price: "—"
+
+        });
+
+
+        renderLegs();
+
+    });
+
+
+/* =========================================================
+   NEW STRATEGY
+   ========================================================= */
+
+document
+    .getElementById("newStrategyBtn")
+    .addEventListener("click", () => {
+
+        legs.length = 0;
+
+        renderLegs();
+
+        document.getElementById(
+            "dataState"
+        ).textContent = "آماده";
+
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
+
+    });
+
+
+/* =========================================================
+   REFRESH
+   ========================================================= */
+
+document
+    .getElementById("refreshBtn")
+    .addEventListener("click", () => {
+
+        const dot =
+            document.getElementById("liveDot");
+
+        const text =
+            document.getElementById("liveText");
+
+
+        dot.classList.remove("active");
+
+        text.textContent =
+            "در حال بروزرسانی...";
+
+
+        setTimeout(() => {
+
+            text.textContent =
+                "در انتظار منبع داده";
+
+        },700);
+
+    });
+
+
+/* =========================================================
+   STRUCTURE
+   ========================================================= */
+
+document
+    .getElementById("structureBtn")
+    .addEventListener("click", () => {
+
+        chainBody.innerHTML = `
+
+            <tr>
+
+                <td colspan="9">
+
+                    <div class="empty">
+
+                        <strong>
+                            ساختار صفحه آماده است
+                        </strong>
+
+                        این نسخه عمداً عدد ساختگی
+                        نمایش نمی‌دهد.
+
+                        <br>
+
+                        داده واقعی API پس از اتصال
+                        در همین جدول قرار می‌گیرد.
+
+                    </div>
+
+                </td>
+
+            </tr>
+
+        `;
+
+
+        document.getElementById(
+            "dataState"
+        ).textContent =
+            "منتظر داده واقعی";
+
+    });
+
+
+/* =========================================================
+   CLEAR FILTERS
+   ========================================================= */
+
+document
+    .getElementById("clearFiltersBtn")
+    .addEventListener("click", () => {
+
+        document.getElementById(
+            "symbolSearch"
+        ).value = "";
+
+        document.getElementById(
+            "typeFilter"
+        ).value = "all";
+
+        document.getElementById(
+            "expiryFilter"
+        ).value = "all";
+
+    });
+
+
+/* =========================================================
+   TABS
+   ========================================================= */
+
+document
+    .querySelectorAll(".tab")
+    .forEach(button => {
+
+        button.addEventListener("click", () => {
+
+            document
+                .querySelectorAll(".tab")
+                .forEach(tab => {
+
+                    tab.classList.remove(
+                        "active"
+                    );
+
+                });
+
+
+            document
+                .querySelectorAll(".tab-panel")
+                .forEach(panel => {
+
+                    panel.classList.remove(
+                        "active"
+                    );
+
+                });
+
+
+            button.classList.add(
+                "active"
+            );
+
+
+            document
+                .getElementById(
+                    button.dataset.tab
+                )
+                .classList.add(
+                    "active"
+                );
+
+        });
+
+    });
+
+
+/* =========================================================
+   RESET PAYOFF
+   ========================================================= */
+
+document
+    .getElementById("resetChartBtn")
+    .addEventListener("click", () => {
+
+        document
+            .getElementById("curvePath")
+            .setAttribute(
+                "d",
+                `
+                M55 240
+                L190 210
+                L325 178
+                L460 150
+                L595 118
+                L730 92
+                L875 70
+                `
+            );
+
+
+        document
+            .getElementById("areaPath")
+            .setAttribute(
+                "d",
+                `
+                M55 240
+                L190 210
+                L325 178
+                L460 150
+                L595 118
+                L730 92
+                L875 70
+                L875 165
+                L55 165
+                Z
+                `
+            );
+
+    });
+
+
+/* =========================================================
+   INITIAL
+   ========================================================= */
+
+renderLegs();
+
 </script>
-<div style="position:fixed;left:14px;bottom:14px;z-index:9999;background:#fff;border:1px solid #e5e7eb;border-radius:10px;padding:9px 12px;font-size:12px;color:#64748b;box-shadow:0 6px 20px rgba(15,23,42,.08)">
-منبع: TSETMC MarketWatchOption · null/صفر در مظنه به‌عنوان «بدون مظنه» نمایش داده می‌شود.
-</div>
+
 </body>
 </html>
