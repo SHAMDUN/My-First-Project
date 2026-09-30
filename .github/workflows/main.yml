@@ -1,3 +1,27 @@
+name: Test BRS Options API
+
+on:
+  workflow_dispatch:
+
+jobs:
+  test-brs-options:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Test BRS API
+        env:
+          BRS_API_KEY: ${{ secrets.BRS_API_KEY }}
+        run: |
+          echo "Testing BRS API..."
+
+          curl -sS -L --max-time 20 \
+            -o /tmp/brs.json \
+            -w "HTTP_STATUS=%{http_code}\nTIME=%{time_total}\n" \
+            "https://Api.BrsApi.ir/Tsetmc/AllSymbols.php?type=1&key=${BRS_API_KEY}"
+
+          echo "Response size:"
+          wc -c /tmp/brs.json
+
       - name: Find option symbols
         run: |
           echo "Searching for option symbols..."
