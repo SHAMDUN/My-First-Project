@@ -1348,51 +1348,266 @@ body {
 </style>
 
 <style id="shamdun-option1-design">
-/* ===== Shamdun Options Lab — clean layout / theme-safe ===== */
 :root{
-  --lab-navy:#0b1220;
-  --lab-navy-2:#152238;
-  --lab-gold:#c89b3c;
-  --lab-card:#ffffff;
-  --lab-bg:#f5f7fa;
-  --lab-border:#e3e8ef;
-  --lab-muted:#64748b;
-  --lab-soft:#f8fafc;
+  --o1-navy:#0b1220;--o1-navy2:#111a2b;--o1-bg:#f5f7fa;--o1-card:#fff;
+  --o1-text:#111827;--o1-muted:#64748b;--o1-border:#e3e8ef;
+  --o1-gold:#c89b3c;--o1-gold-soft:#f8f1df;
+  --o1-green:#16835b;--o1-red:#d64545;--o1-blue:#2563eb;
+  --o1-shadow:0 8px 28px rgba(15,23,42,.06);
+}
+html[data-o1="1"] body{
+  background:var(--o1-bg)!important;color:var(--o1-text)!important;
+  background-image:none!important;
+}
+html[data-o1="1"] .container{
+  max-width:1440px!important;padding:82px 22px 70px!important;
+}
+html[data-o1="1"] .page-header{
+  text-align:right!important;padding:28px 30px!important;margin-bottom:14px!important;
+  border-radius:18px!important;background:linear-gradient(135deg,#0b1220,#17243a)!important;
+  border:0!important;box-shadow:var(--o1-shadow)!important;
+}
+html[data-o1="1"] .page-header:before{
+  left:auto!important;right:0!important;transform:none!important;width:230px!important;
+  background:linear-gradient(90deg,var(--o1-gold),transparent)!important;opacity:.9!important;
+}
+html[data-o1="1"] .page-header h1{
+  color:#fff!important;background:none!important;-webkit-text-fill-color:#fff!important;
+  font-size:27px!important;margin-bottom:7px!important;
+}
+html[data-o1="1"] .page-header p{color:#b8c3d3!important}
+html[data-o1="1"] .status-bar{
+  background:#fff!important;border:1px solid var(--o1-border)!important;color:var(--o1-muted)!important;
+  box-shadow:var(--o1-shadow)!important;border-radius:12px!important;
+}
+html[data-o1="1"] .panel,
+html[data-o1="1"] .strategy-info,
+html[data-o1="1"] .strategy-explanation,
+html[data-o1="1"] .results-grid > .result-card,
+html[data-o1="1"] #chartContainer{
+  background:var(--o1-card)!important;border-color:var(--o1-border)!important;
+  box-shadow:var(--o1-shadow)!important;color:var(--o1-text)!important;
+}
+html[data-o1="1"] .tabs{
+  width:100%!important;background:#fff!important;border:1px solid var(--o1-border)!important;
+  box-shadow:var(--o1-shadow)!important;padding:5px!important;margin-bottom:14px!important;
+}
+html[data-o1="1"] .tab-btn{flex:0 0 auto;color:#64748b!important}
+html[data-o1="1"] .tab-btn.active{
+  color:#fff!important;background:var(--o1-navy)!important;border:0!important;
+}
+html[data-o1="1"] .panel{border-radius:16px!important;padding:22px!important}
+html[data-o1="1"] .panel-header{border-color:var(--o1-border)!important}
+html[data-o1="1"] .panel-title,
+html[data-o1="1"] .strategy-name,
+html[data-o1="1"] .result-card .label,
+html[data-o1="1"] .result-card .value{color:var(--o1-text)!important}
+html[data-o1="1"] .panel-title .badge,
+html[data-o1="1"] .strategy-tag{
+  background:var(--o1-gold-soft)!important;color:#9b7421!important;border-color:#ead9ad!important;
+}
+html[data-o1="1"] .preset-card{
+  background:#fff!important;border-color:var(--o1-border)!important;
+  box-shadow:0 2px 8px rgba(15,23,42,.025)!important;
+}
+html[data-o1="1"] .preset-card:hover{border-color:#c9d3df!important;transform:translateY(-1px)!important}
+html[data-o1="1"] .preset-card.active{
+  background:linear-gradient(135deg,#fffaf0,#fff)!important;
+  border-color:#d4b45f!important;box-shadow:0 0 0 1px #ead9ad,var(--o1-shadow)!important;
+}
+html[data-o1="1"] .preset-card .preset-name{color:var(--o1-text)!important}
+html[data-o1="1"] .preset-card.active .preset-name{color:#9b7421!important}
+html[data-o1="1"] .preset-card .preset-desc{color:var(--o1-muted)!important}
+html[data-o1="1"] .positions-table-wrapper{
+  background:#fff!important;border-color:var(--o1-border)!important;
+}
+html[data-o1="1"] .positions-table th{
+  background:#f8fafc!important;color:#64748b!important;border-color:var(--o1-border)!important;
+}
+html[data-o1="1"] .positions-table td{border-color:#edf1f5!important}
+html[data-o1="1"] .cell-input,
+html[data-o1="1"] .cell-select{
+  background:#fff!important;color:var(--o1-text)!important;border-color:#dce3eb!important;
+}
+html[data-o1="1"] .cell-input:focus,
+html[data-o1="1"] .cell-select:focus{
+  border-color:var(--o1-gold)!important;box-shadow:0 0 0 3px rgba(200,155,60,.12)!important;
+}
+html[data-o1="1"] .btn-primary{
+  background:var(--o1-navy)!important;box-shadow:none!important;
+}
+html[data-o1="1"] .btn-primary:hover{background:#17243a!important;box-shadow:0 6px 16px rgba(11,18,32,.16)!important}
+html[data-o1="1"] .btn-refresh,
+html[data-o1="1"] .btn-add{
+  background:#fff!important;color:var(--o1-text)!important;border-color:#d8e0e8!important;
+}
+html[data-o1="1"] .strategy-explanation{
+  background:#fff!important;
+}
+html[data-o1="1"] .exp-block{background:#f8fafc!important;border-color:#e6ebf1!important}
+html[data-o1="1"] .exp-block p,
+html[data-o1="1"] .exp-block ul li{color:#64748b!important}
+html[data-o1="1"] .results-grid{
+  grid-template-columns:repeat(5,minmax(0,1fr))!important;gap:10px!important;
+}
+html[data-o1="1"] .result-card{
+  min-height:102px!important;border-radius:13px!important;
+}
+html[data-o1="1"] #chartContainer{border-radius:16px!important;padding:0!important;overflow:hidden}
+html[data-o1="1"] #chartContainer .chart-header,
+html[data-o1="1"] #chartContainer .chart-toolbar{
+  background:#fff!important;color:var(--o1-text)!important;border-color:var(--o1-border)!important;
+}
+html[data-o1="1"] #chartCanvasWrap{
+  background:#fff!important;
+}
+html[data-o1="1"] .chart-hint,
+html[data-o1="1"] #chartHint{color:#64748b!important}
+html[data-o1="1"] .auto-refresh-toggle{background:#f8fafc!important;border-color:#dfe6ee!important}
+.o1-shell-nav{
+  position:fixed;top:0;left:0;right:0;height:58px;z-index:1000;
+  background:rgba(11,18,32,.97);border-bottom:1px solid rgba(255,255,255,.08);
+  display:flex;align-items:center;justify-content:center;
+}
+.o1-shell-nav .inner{
+  width:min(1440px,calc(100% - 36px));display:flex;align-items:center;gap:26px;
+}
+.o1-brand{font-weight:900;color:#fff;font-size:18px;letter-spacing:-.3px}
+.o1-brand span{color:#d4af37}
+.o1-navlinks{display:flex;gap:4px;align-items:center;flex:1}
+.o1-navlinks a{
+  color:#b9c4d4;text-decoration:none;padding:8px 12px;border-radius:8px;font-size:12px;font-weight:700
+}
+.o1-navlinks a:hover{background:rgba(255,255,255,.07);color:#fff}
+.o1-navlinks a.active{color:#fff;background:rgba(200,155,60,.15)}
+.o1-meta{font-size:11px;color:#8e9bad}
+.o1-breadcrumb{
+  max-width:1440px;margin:0 auto 12px;padding:0 22px;color:#7b8797;font-size:11px;
+}
+.o1-breadcrumb strong{color:#4b5563}
+.o1-overview{
+  display:grid;grid-template-columns:1.35fr .65fr;gap:14px;margin-bottom:14px;
+}
+.o1-overview-card{
+  background:#fff;border:1px solid var(--o1-border);border-radius:16px;padding:18px 20px;
+  box-shadow:var(--o1-shadow);
+}
+.o1-overview-card .eyebrow{font-size:10px;color:#8a96a6;font-weight:800;margin-bottom:7px}
+.o1-overview-card h2{font-size:18px;margin:0 0 7px;color:#111827}
+.o1-overview-card p{font-size:12px;line-height:1.9;color:#64748b;margin:0}
+.o1-metric-row{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:14px}
+.o1-mini-metric{background:#f8fafc;border:1px solid #e7ecf2;border-radius:10px;padding:10px 12px}
+.o1-mini-metric b{display:block;font-size:13px;color:#111827;margin-top:4px}
+.o1-mini-metric span{font-size:10px;color:#7b8797}
+.o1-side-list{display:grid;gap:8px}
+.o1-side-item{display:flex;justify-content:space-between;align-items:center;padding:9px 0;border-bottom:1px solid #edf1f5;font-size:11px}
+.o1-side-item:last-child{border-bottom:0}
+.o1-side-item span{color:#64748b}.o1-side-item b{color:#111827}
+.o1-section-label{
+  display:flex;align-items:center;gap:9px;margin:20px 2px 10px;font-size:13px;font-weight:900;color:#172033;
+}
+.o1-section-label:before{content:"";width:4px;height:18px;border-radius:5px;background:var(--o1-gold)}
+@media(max-width:900px){
+  .o1-navlinks a:nth-child(n+4),.o1-meta{display:none}
+  .o1-overview{grid-template-columns:1fr}
+  html[data-o1="1"] .results-grid{grid-template-columns:repeat(2,1fr)!important}
+}
+@media(max-width:620px){
+  .o1-navlinks{display:none}
+  .o1-shell-nav .inner{justify-content:center}
+  html[data-o1="1"] .container{padding:72px 10px 50px!important}
+  .o1-breadcrumb{padding:0 10px}
+  html[data-o1="1"] .page-header{padding:22px 18px!important}
+  html[data-o1="1"] .page-header h1{font-size:22px!important}
+  .o1-metric-row{grid-template-columns:1fr}
+  html[data-o1="1"] .results-grid{grid-template-columns:1fr 1fr!important}
+}
+</style>
+
+
+<style id="shamdun-options-clean-design">
+:root{
+  --lab-bg:#f5f7fa;--lab-card:#fff;--lab-card2:#f8fafc;--lab-text:#111827;--lab-muted:#64748b;
+  --lab-border:#dfe5ec;--lab-gold:#c89b3c;--lab-navy:#0b1220;--lab-green:#16835b;--lab-red:#d64545;
   --lab-shadow:0 8px 28px rgba(15,23,42,.06);
 }
-[data-theme="dark"]{
-  --lab-card:#11141a;
-  --lab-bg:#08090c;
-  --lab-border:rgba(255,255,255,.08);
-  --lab-muted:#8b9099;
-  --lab-soft:#171a21;
-  --lab-shadow:0 8px 28px rgba(0,0,0,.28);
+html[data-theme="dark"]{
+  --lab-bg:#08090c;--lab-card:#11141a;--lab-card2:#171a21;--lab-text:#e6e8eb;--lab-muted:#8b9099;
+  --lab-border:rgba(255,255,255,.08);--lab-gold:#d4af37;--lab-navy:#0d1422;
+  --lab-shadow:0 10px 30px rgba(0,0,0,.22);
 }
-body{background:var(--lab-bg)!important;color:var(--text-primary)!important}
-.o1-shell-nav{position:fixed;top:0;left:0;right:0;height:60px;z-index:1000;background:var(--lab-navy);border-bottom:1px solid rgba(255,255,255,.08);display:flex;align-items:center;justify-content:center}
-.o1-shell-nav .inner{width:min(1440px,calc(100% - 36px));display:flex;align-items:center;gap:20px}
-.o1-brand{font-weight:900;color:#fff;font-size:18px;white-space:nowrap}.o1-brand span{color:#d4af37}
-.o1-navlinks{display:flex;gap:3px;align-items:center;flex:1}.o1-navlinks a{color:#b9c4d4;text-decoration:none;padding:8px 11px;border-radius:8px;font-size:12px;font-weight:700}.o1-navlinks a:hover{background:rgba(255,255,255,.07);color:#fff}.o1-navlinks a.active{color:#fff;background:rgba(200,155,60,.16)}
-.o1-meta{display:flex;align-items:center;gap:8px;color:#aeb9c9;font-size:11px;white-space:nowrap}
-.theme-toggle{border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.06);color:#fff;border-radius:9px;padding:7px 10px;cursor:pointer;font-size:12px;line-height:1}.theme-toggle:hover{background:rgba(255,255,255,.11)}
-.o1-breadcrumb{max-width:1440px;margin:0 auto 12px;padding:0 22px;color:var(--lab-muted);font-size:11px}.o1-breadcrumb strong{color:var(--text-secondary)}
-.container{max-width:1440px!important;padding:84px 22px 70px!important}
-.page-header{position:relative;text-align:right!important;padding:24px 28px!important;margin-bottom:14px!important;border-radius:18px!important;background:linear-gradient(135deg,var(--lab-navy),var(--lab-navy-2))!important;border:0!important;box-shadow:var(--lab-shadow)!important;overflow:hidden}
-.page-header:before{left:auto!important;right:0!important;transform:none!important;width:260px!important;background:linear-gradient(90deg,#d4af37,transparent)!important;opacity:.8!important}.page-header h1{color:#fff!important;background:none!important;-webkit-text-fill-color:#fff!important;font-size:27px!important;margin-bottom:7px!important}.page-header p{color:#b8c3d3!important}
-.lab-header-row{display:flex;align-items:center;justify-content:space-between;gap:18px}.lab-header-copy{min-width:0}.lab-header-actions{display:flex;gap:8px;flex-wrap:wrap}.lab-action{border:1px solid rgba(255,255,255,.15);background:rgba(255,255,255,.07);color:#fff;border-radius:10px;padding:9px 13px;font-size:11px;font-weight:800;cursor:pointer}.lab-action.primary{background:#d4af37;color:#172033;border-color:#d4af37}.lab-action:hover{filter:brightness(1.06)}
-.lab-overview{display:grid;grid-template-columns:1.35fr .65fr;gap:14px;margin-bottom:14px}.lab-card{background:var(--lab-card);border:1px solid var(--lab-border);border-radius:16px;box-shadow:var(--lab-shadow)}
-.lab-overview-main{padding:18px 20px}.lab-eyebrow{font-size:10px;color:var(--lab-muted);font-weight:800;margin-bottom:6px}.lab-overview-main h2{font-size:18px;margin:0 0 6px;color:var(--text-primary)}.lab-overview-main p{font-size:12px;line-height:1.9;color:var(--lab-muted);margin:0}.lab-metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:14px}.lab-metric{background:var(--lab-soft);border:1px solid var(--lab-border);border-radius:10px;padding:10px 12px}.lab-metric span{display:block;color:var(--lab-muted);font-size:10px}.lab-metric b{display:block;margin-top:4px;color:var(--text-primary);font-size:13px}.lab-overview-side{padding:16px 18px}.lab-overview-side h3{font-size:13px;margin:0 0 10px}.lab-checks{display:grid;gap:8px}.lab-check{display:flex;gap:8px;align-items:flex-start;color:var(--lab-muted);font-size:11px;line-height:1.8}.lab-check b{color:var(--text-primary)}
-.status-bar{background:var(--lab-card)!important;border-color:var(--lab-border)!important;box-shadow:var(--lab-shadow)!important}
-.tabs{width:100%!important;background:var(--lab-card)!important;border:1px solid var(--lab-border)!important;box-shadow:var(--lab-shadow)!important;padding:5px!important;margin-bottom:14px!important}.tab-btn{color:var(--text-secondary)!important}.tab-btn.active{color:#fff!important;background:var(--lab-navy)!important;border:0!important}
-.panel,.strategy-info,.strategy-explanation,.results-grid>.result-card,.chart-container{border-color:var(--lab-border)!important;box-shadow:var(--lab-shadow)!important}
-.panel{background:var(--lab-card)!important}.preset-card{background:var(--bg-card-2)!important;border-color:var(--border)!important}.preset-card:hover{border-color:var(--border-strong)!important}.preset-card.active{border-color:var(--gold)!important}
-.strategy-info{background:var(--lab-card)!important}.strategy-explanation{background:var(--lab-card)!important}.exp-block{background:var(--lab-soft)!important;border-color:var(--lab-border)!important}.positions-table-wrapper{border-color:var(--lab-border)!important;background:var(--lab-card)!important}.positions-table th{background:var(--lab-soft)!important}.cell-input,.cell-select{background:var(--lab-card)!important;color:var(--text-primary)!important;border-color:var(--lab-border)!important}
-.chart-container{background:var(--lab-card)!important;overflow:hidden}.chart-header,.chart-toolbar{background:var(--lab-card)!important;color:var(--text-primary)!important;border-color:var(--lab-border)!important}.chart-canvas-wrap{background:var(--lab-card)!important;min-height:440px}.chart-hint{color:var(--lab-muted)!important}
-.lab-section-title{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:4px 2px 10px;color:var(--text-primary);font-size:13px;font-weight:900}.lab-section-title .count{color:var(--lab-muted);font-size:10px;font-weight:700}
-.new-strategy-btn{border:1px solid var(--lab-border);background:var(--lab-card);color:var(--text-primary);border-radius:9px;padding:8px 12px;font-size:11px;font-weight:800;cursor:pointer}.new-strategy-btn:hover{border-color:var(--gold);color:var(--gold)}
-@media(min-width:1100px){.presets-grid{grid-template-columns:repeat(4,minmax(0,1fr))}.results-grid{grid-template-columns:repeat(5,minmax(0,1fr))!important}}
-@media(max-width:900px){.lab-overview{grid-template-columns:1fr}.lab-header-row{align-items:flex-start;flex-direction:column}.o1-navlinks a:nth-child(n+4){display:none}.chart-canvas-wrap{min-height:380px}}
-@media(max-width:620px){.o1-shell-nav{height:56px}.o1-shell-nav .inner{justify-content:center}.o1-brand{font-size:16px}.o1-navlinks,.o1-meta>span{display:none}.o1-meta{margin-right:auto}.container{padding:72px 10px 50px!important}.o1-breadcrumb{padding:0 10px}.page-header{padding:20px 18px!important}.page-header h1{font-size:22px!important}.lab-metrics{grid-template-columns:1fr}.chart-canvas-wrap{min-height:330px}.results-grid{grid-template-columns:1fr 1fr!important}}
+body{background:var(--lab-bg)!important;color:var(--lab-text)!important}
+.container{max-width:1480px!important;padding:84px 24px 70px!important}
+.page-header{
+  background:linear-gradient(135deg,var(--lab-navy),#18253a)!important;
+  border:1px solid rgba(200,155,60,.18)!important;border-radius:20px!important;
+  padding:26px 30px!important;box-shadow:var(--lab-shadow)!important;text-align:right!important;
+}
+.page-header:before{display:none!important}
+.lab-hero-content{display:flex;align-items:center;justify-content:space-between;gap:24px}
+.lab-eyebrow{font-size:10px;letter-spacing:1.5px;color:#d4af37;font-weight:900;margin-bottom:6px}
+.page-header h1{margin:0!important;color:#fff!important;background:none!important;-webkit-text-fill-color:#fff!important;font-size:28px!important}
+.page-header p{margin:8px 0 0!important;color:#b9c4d4!important;line-height:1.9!important}
+.lab-hero-actions{display:flex;gap:8px;flex-wrap:wrap}
+.lab-action{border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.06);color:#fff;border-radius:10px;padding:10px 14px;font-weight:800;font-size:11px}
+.lab-action.primary{background:var(--lab-gold);border-color:var(--lab-gold);color:#fff}
+.status-bar,.tabs,.panel,.strategy-info,.strategy-explanation,.results-grid>.result-card,#chartContainer{
+  background:var(--lab-card)!important;border-color:var(--lab-border)!important;color:var(--lab-text)!important;box-shadow:var(--lab-shadow)!important;
+}
+.status-bar{border-radius:12px!important}
+.lab-summary{display:grid;grid-template-columns:1.35fr repeat(3,1fr);gap:10px;margin:0 0 14px}
+.lab-summary-card{background:var(--lab-card);border:1px solid var(--lab-border);border-radius:14px;padding:13px 15px;box-shadow:var(--lab-shadow)}
+.lab-summary-card span{display:block;color:var(--lab-muted);font-size:10px;font-weight:700}
+.lab-summary-card strong{display:block;color:var(--lab-text);font-size:14px;margin-top:5px}
+.lab-summary-card small{display:block;color:var(--lab-muted);font-size:9px;margin-top:3px}
+.lab-layout{display:grid;grid-template-columns:minmax(0,1.7fr) minmax(320px,.72fr);gap:14px;align-items:start}
+.lab-main,.lab-side{display:grid;gap:14px;min-width:0}
+.lab-side{position:sticky;top:76px}
+.tabs{border-radius:14px!important;padding:5px!important;margin:0!important}
+.tab-btn{color:var(--lab-muted)!important}
+.tab-btn.active{background:var(--lab-navy)!important;color:#fff!important}
+.tab-content{margin:0!important}
+.panel{border-radius:16px!important}
+.panel-header{border-color:var(--lab-border)!important}
+.panel-title,.strategy-name,.result-card .label,.result-card .value{color:var(--lab-text)!important}
+.badge,.strategy-tag{background:rgba(200,155,60,.12)!important;color:var(--lab-gold)!important;border-color:rgba(200,155,60,.25)!important}
+.presets-grid{grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:10px!important}
+.preset-card{background:var(--lab-card2)!important;border-color:var(--lab-border)!important;color:var(--lab-text)!important;min-height:112px}
+.preset-card:hover{transform:translateY(-2px)!important;border-color:rgba(200,155,60,.45)!important}
+.preset-card.active{background:linear-gradient(135deg,rgba(200,155,60,.14),transparent)!important;border-color:rgba(200,155,60,.55)!important}
+.preset-card .preset-name,.preset-card .preset-desc{color:var(--lab-text)!important}
+.preset-card .preset-desc{color:var(--lab-muted)!important}
+.positions-table-wrapper{background:var(--lab-card)!important;border-color:var(--lab-border)!important}
+.positions-table th{background:var(--lab-card2)!important;color:var(--lab-muted)!important;border-color:var(--lab-border)!important}
+.positions-table td{border-color:var(--lab-border)!important}
+.cell-input,.cell-select{background:var(--lab-card)!important;color:var(--lab-text)!important;border-color:var(--lab-border)!important}
+.strategy-explanation{border-radius:16px!important}
+.exp-block{background:var(--lab-card2)!important;border-color:var(--lab-border)!important}
+.exp-block p,.exp-block ul li{color:var(--lab-muted)!important}
+.results-grid{grid-template-columns:1fr 1fr!important;gap:9px!important}
+.results-grid>.result-card{min-height:96px!important;border-radius:13px!important}
+#chartContainer{border-radius:16px!important;padding:0!important;overflow:hidden}
+#chartContainer .chart-header,#chartContainer .chart-toolbar{background:var(--lab-card)!important;color:var(--lab-text)!important;border-color:var(--lab-border)!important}
+#chartCanvasWrap{background:var(--lab-card)!important;min-height:460px!important}
+#chartHint,.chart-hint{color:var(--lab-muted)!important}
+.auto-refresh-toggle{background:var(--lab-card2)!important;border-color:var(--lab-border)!important}
+.btn-refresh,.btn-add{background:var(--lab-card)!important;color:var(--lab-text)!important;border-color:var(--lab-border)!important}
+.btn-primary{background:var(--lab-navy)!important}
+@media(max-width:1050px){
+  .lab-layout{grid-template-columns:1fr}
+  .lab-side{position:static}
+  .presets-grid{grid-template-columns:repeat(3,minmax(0,1fr))!important}
+}
+@media(max-width:720px){
+  .container{padding:76px 10px 45px!important}
+  .lab-hero-content{align-items:flex-start;flex-direction:column}
+  .lab-summary{grid-template-columns:1fr 1fr}
+  .presets-grid{grid-template-columns:1fr 1fr!important}
+}
+@media(max-width:460px){
+  .lab-summary{grid-template-columns:1fr}
+  .presets-grid{grid-template-columns:1fr!important}
+}
 </style>
 
 </head>
@@ -1407,7 +1622,7 @@ body{background:var(--lab-bg)!important;color:var(--text-primary)!important}
       <a href="analysis.html">تحلیل</a><a href="options-simulator.html" class="active">Options Lab</a>
       <a href="portfolio.html">پرتفوی</a><a href="calculator.html">ابزارها</a>
     </div>
-    <div class="o1-meta"><span>Options Lab</span><button class="theme-toggle" id="pageThemeToggle" type="button" onclick="togglePageTheme()" title="تغییر تم"><span id="pageThemeIcon">☾</span></button></div>
+    <div class="o1-meta">نسخه آزمایشی Option 1</div>
   </div>
 </nav>
 <div class="o1-breadcrumb">ابزارها / <strong>آزمایشگاه استراتژی آپشن</strong></div>
@@ -1415,35 +1630,15 @@ body{background:var(--lab-bg)!important;color:var(--text-primary)!important}
 <div class="container">
 
   <div class="page-header">
-    <div class="lab-header-row">
-      <div class="lab-header-copy">
-        <h1>📊 آزمایشگاه استراتژی آپشن</h1>
-        <p>ساخت، مقایسه و تحلیل پوزیشن‌های آپشن با منطق محاسباتی همین شبیه‌ساز</p>
+    <div class="lab-hero-content">
+      <div>
+        <div class="lab-eyebrow">OPTIONS LAB</div>
+        <h1>آزمایشگاه استراتژی آپشن</h1>
+        <p>استراتژی را انتخاب کن، دارایی پایه را مشخص کن و سناریوی سود و زیان را با قیمت‌های زنده بررسی کن.</p>
       </div>
-      <div class="lab-header-actions">
-        <button class="lab-action primary" type="button" onclick="startNewStrategy()">＋ استراتژی جدید</button>
-        <button class="lab-action" type="button" onclick="switchTab('presets', document.querySelector('.tab-btn'))">🎯 استراتژی‌های آماده</button>
-      </div>
-    </div>
-  </div>
-
-  <div class="lab-overview">
-    <div class="lab-card lab-overview-main">
-      <div class="lab-eyebrow">OPTIONS LAB</div>
-      <h2>از انتخاب استراتژی تا نمودار سود و زیان</h2>
-      <p>ابتدا یکی از ساختارهای آماده را انتخاب کن، سپس دارایی پایه و قرارداد را تعیین کن. محاسبات، نقاط سربه‌سر و نمودار بر اساس همان منطق محاسباتی صفحه اصلی به‌روزرسانی می‌شوند.</p>
-      <div class="lab-metrics">
-        <div class="lab-metric"><span>استراتژی‌های فعال</span><b id="labStrategyCount">۱۵</b></div>
-        <div class="lab-metric"><span>پوزیشن‌های فعلی</span><b id="labPositionCountTop">۰</b></div>
-        <div class="lab-metric"><span>وضعیت داده</span><b id="labDataState">در انتظار</b></div>
-      </div>
-    </div>
-    <div class="lab-card lab-overview-side">
-      <h3>قبل از تحلیل این سه مورد را بررسی کن</h3>
-      <div class="lab-checks">
-        <div class="lab-check">✓ <span><b>دارایی پایه</b> و نماد اختیار درست انتخاب شده باشد.</span></div>
-        <div class="lab-check">✓ <span><b>خرید/فروش</b> و تعداد قراردادها با استراتژی سازگار باشد.</span></div>
-        <div class="lab-check">✓ <span><b>نمودار</b> را همراه با پرمیوم، قیمت اعمال و سررسید تفسیر کن.</span></div>
+      <div class="lab-hero-actions">
+        <button class="lab-action primary" onclick="startNewStrategy()">＋ استراتژی جدید</button>
+        <button class="lab-action" onclick="toggleLabTheme()" id="labThemeBtn">☀️ حالت روشن</button>
       </div>
     </div>
   </div>
@@ -1464,6 +1659,13 @@ body{background:var(--lab-bg)!important;color:var(--text-primary)!important}
     </label>
   </div>
 
+  <div class="lab-summary">
+    <div class="lab-summary-card"><span>دارایی پایه</span><strong id="labAssetSummary">انتخاب نشده</strong><small>BRS / TSETMC</small></div>
+    <div class="lab-summary-card"><span>استراتژی فعال</span><strong id="labStrategySummary">سفارشی</strong><small>سناریوی فعلی</small></div>
+    <div class="lab-summary-card"><span>تعداد پوزیشن</span><strong id="labPositionSummary">۰</strong><small>اجزای استراتژی</small></div>
+    <div class="lab-summary-card"><span>وضعیت داده</span><strong id="labDataSummary">آماده</strong><small id="labDataTime">منتظر دریافت قیمت</small></div>
+  </div>
+
   <div class="tabs">
     <button class="tab-btn active" onclick="switchTab('presets', this)">🎯 استراتژی‌های آماده</button>
     <button class="tab-btn" onclick="switchTab('custom', this)">🛠️ پوزیشن سفارشی</button>
@@ -1474,10 +1676,10 @@ body{background:var(--lab-bg)!important;color:var(--text-primary)!important}
       <div class="panel-header">
         <div class="panel-title">
           🎯 استراتژی آماده را انتخاب کن
-          <span class="badge">۱۵ استراتژی</span>
+          <span class="badge" id="presetCountBadge">۱۵ استراتژی</span>
         </div>
       </div>
-      <div class="lab-section-title"><span>استراتژی‌های قابل انتخاب</span><span class="count" id="presetCountLabel">۱۵ استراتژی</span></div><div class="presets-grid" id="presetsGrid"></div>
+      <div class="presets-grid" id="presetsGrid"></div>
       <div class="info-box" style="background: var(--blue-soft); border: 1px solid rgba(59, 130, 246, 0.25); border-radius: 12px; padding: 14px 18px; margin-top: 16px; color: var(--blue); font-size: 13px; line-height: 1.8;">
         <strong>💡 راهنما:</strong> روی هر استراتژی کلیک کن تا پوزیشن‌های آماده در جدول باز بشن. سپس <strong>دارایی پایه</strong> را از سلکت انتخاب کن.
       </div>
@@ -1502,7 +1704,6 @@ body{background:var(--lab-bg)!important;color:var(--text-primary)!important}
         <span class="badge" id="positionsCount2">۰ پوزیشن</span>
       </div>
       <div style="display:flex; gap:8px; flex-wrap:wrap;">
-        <button class="new-strategy-btn" type="button" onclick="startNewStrategy()">＋ استراتژی جدید</button>
         <button class="btn-refresh" onclick="refreshAllPrices(true)">🔄 به‌روزرسانی قیمت‌ها</button>
         <button class="btn-clear" onclick="clearAllPositions()">🗑️ پاک کردن استراتژی / پوزیشن</button>
       </div>
@@ -1645,6 +1846,7 @@ const ASSETS = [
   { key: 'trx',  name: 'ترون',     emoji: '🟢', defaultPrice: 0.25, call: '—', put: '—', group: 'کریپتو', source: 'coingecko', coingeckoId: 'tron' },
   { key: 'avax', name: 'آوالانچ',  emoji: '🔺', defaultPrice: 35, call: '—', put: '—', group: 'کریپتو', source: 'coingecko', coingeckoId: 'avalanche-2' },
 
+
   // ═══ بورس ایران (AllSymbols) — قیمت‌ها به تومان (تقسیم بر ۱۰) ═══
   { key: 'اخابر',     name: 'اخابر',     emoji: '📡', defaultPrice: 1000,  call: 'ضمخا', put: 'طمخا', group: 'بورس', source: 'stocks' },
   { key: 'اطلس',      name: 'اطلس',      emoji: '🏗️', defaultPrice: 15800, call: 'ضاطلس', put: 'طاطلس', group: 'بورس', source: 'stocks' },
@@ -1676,94 +1878,168 @@ const ASSETS = [
 // ==========================================
 // 🎯 Preset Strategies
 // ==========================================
-const RAW_PRESETS = [
-{key:'longCall',name:'Long Call',icon:'🟢',desc:'خرید اختیار خرید؛ دید صعودی',badge:'صعودی',legs:[['buy','call',0.00]],
-what:'در این ساختار، سرمایه‌گذار یک اختیار خرید را خریداری می‌کند و در مقابل پرداخت پرمیوم، حق خرید دارایی پایه را در قیمت اعمال مشخص تا سررسید به دست می‌آورد. ارزش موقعیت در صورت رشد دارایی پایه می‌تواند به‌صورت فزاینده افزایش یابد.',
-who:'برای سرمایه‌گذاری مناسب است که انتظار رشد معنادار دارایی پایه را دارد و می‌خواهد ریسک اسمی معامله را به پرمیوم پرداختی محدود کند.',pros:['حداکثر زیان از ابتدا مشخص و محدود به پرمیوم پرداختی است.','پتانسیل سود در صورت رشد شدید دارایی پایه بسیار بالا است.','نیاز سرمایه اولیه معمولاً کمتر از خرید مستقیم دارایی پایه است.'],cons:['زوال زمانی می‌تواند ارزش اختیار را کاهش دهد.','در صورت رشد ناکافی دارایی پایه، ممکن است کل پرمیوم از بین برود.','زمان‌بندی ورود و سطح نوسان ضمنی بر نتیجه معامله اثر قابل توجه دارد.']},
-{key:'shortCall',name:'Short Call',icon:'🔴',desc:'فروش اختیار خرید؛ درآمد پرمیوم',badge:'نزولی/خنثی',legs:[['sell','call',0.05]],
-what:'در این استراتژی، معامله‌گر اختیار خرید را می‌فروشد و در مقابل دریافت پرمیوم، تعهد ایفای قرارداد را می‌پذیرد. در حالت بدون پوشش، ریسک سمت صعودی می‌تواند بسیار بزرگ باشد.',
-who:'عموماً برای معامله‌گران حرفه‌ای و موقعیت‌های پوشش‌داده‌شده یا دارای مدیریت وجه تضمین مناسب در نظر گرفته می‌شود؛ برای بازار آرام یا انتظار رشد محدود کاربرد دارد.',pros:['دریافت پرمیوم در ابتدای معامله.','در صورت کاهش قیمت یا ثبات آن، زوال زمانی معمولاً به نفع فروشنده است.','می‌تواند بخشی از یک ساختار پوششی یا درآمدی باشد.'],cons:['در حالت بدون پوشش، ریسک صعودی بسیار بالا است.','نیاز به وجه تضمین و مدیریت ریسک دارد.','حرکت شدید دارایی پایه می‌تواند زیان را به‌سرعت افزایش دهد.']},
-{key:'longPut',name:'Long Put',icon:'🔴',desc:'خرید اختیار فروش؛ دید نزولی یا پوشش',badge:'نزولی',legs:[['buy','put',0.00]],
-what:'سرمایه‌گذار اختیار فروش را خریداری می‌کند و حق فروش دارایی پایه در قیمت اعمال مشخص را به دست می‌آورد. این موقعیت می‌تواند هم برای دید نزولی و هم برای پوشش ریسک کاهش قیمت استفاده شود.',
-who:'برای معامله‌گری که انتظار کاهش قیمت دارد یا می‌خواهد در برابر افت ارزش یک دارایی، پوشش ریسک ایجاد کند.',pros:['زیان محدود به پرمیوم پرداختی است.','در افت شدید دارایی پایه، پتانسیل سود افزایش می‌یابد.','برای ایجاد پوشش نزولی کاربرد دارد.'],cons:['در صورت عدم وقوع افت کافی، پرمیوم کاهش می‌یابد.','زوال زمانی به زیان خریدار اختیار است.','برای سوددهی، حرکت قیمت باید هزینه پرمیوم را نیز جبران کند.']},
-{key:'shortPut',name:'Short Put',icon:'🟢',desc:'فروش اختیار فروش؛ درآمد یا خرید در قیمت هدف',badge:'صعودی/خنثی',legs:[['sell','put',-0.05]],
-what:'در فروش اختیار فروش، معامله‌گر در برابر دریافت پرمیوم متعهد می‌شود در صورت اعمال، دارایی پایه را در قیمت اعمال خریداری کند. این ساختار عملاً تعهدی برای پذیرش ریسک نزولی دارایی ایجاد می‌کند.',
-who:'برای سرمایه‌گذاری که دید صعودی ملایم یا خنثی دارد و در صورت افت قیمت نیز آمادگی خرید دارایی در قیمت اعمال را دارد.',pros:['دریافت پرمیوم و بهره‌مندی از زوال زمانی.','امکان تعیین قیمت مؤثر خرید پایین‌تر از قیمت جاری از طریق پرمیوم.','ساختار نسبتاً ساده برای اهداف درآمدی.'],cons:['افت شدید دارایی پایه می‌تواند زیان قابل توجه ایجاد کند.','نیاز به وجه تضمین یا پشتوانه نقدی دارد.','صرف دریافت پرمیوم به معنی محدود بودن ریسک نیست.']},
-{key:'bullCallSpread',name:'Bull Call Spread',icon:'📈',desc:'خرید Call پایین‌تر و فروش Call بالاتر',badge:'صعودی محدود',legs:[['buy','call',0],['sell','call',0.06]],
-what:'یک اختیار خرید با قیمت اعمال پایین‌تر خریداری و هم‌زمان یک اختیار خرید با قیمت اعمال بالاتر در همان سررسید فروخته می‌شود. پرمیوم دریافتی از اختیار فروخته‌شده بخشی از هزینه اختیار خرید را جبران می‌کند.',
-who:'برای دید صعودی مشخص، به‌ویژه زمانی که انتظار رشد تا یک محدوده معین وجود دارد و معامله‌گر می‌خواهد هزینه و ریسک را نسبت به Long Call کنترل کند.',pros:['ریسک حداکثر محدود و از ابتدا قابل محاسبه است.','هزینه خالص معمولاً کمتر از خرید Call منفرد است.','سود و زیان هر دو سقف مشخص دارند.'],cons:['سود در سطح قیمت اعمال بالاتر محدود می‌شود.','نیازمند انتخاب مناسب فاصله دو Strike است.','در مقایسه با Long Call، از رشد بسیار شدید کمتر بهره می‌برد.']},
-{key:'bearPutSpread',name:'Bear Put Spread',icon:'📉',desc:'خرید Put بالاتر و فروش Put پایین‌تر',badge:'نزولی محدود',legs:[['buy','put',0],['sell','put',-0.06]],
-what:'اختیار فروش با قیمت اعمال بالاتر خریداری و اختیار فروش با قیمت اعمال پایین‌تر فروخته می‌شود. فروش Put بخشی از هزینه خرید Put را جبران می‌کند و در مقابل، سود بالقوه را محدود می‌سازد.',
-who:'برای دید نزولی که انتظار می‌رود کاهش قیمت در یک محدوده مشخص رخ دهد و کنترل ریسک اهمیت دارد.',pros:['ریسک اولیه محدود است.','هزینه ورود نسبت به Long Put کاهش می‌یابد.','حداکثر سود و زیان از ابتدا قابل محاسبه است.'],cons:['سود در قیمت اعمال پایین‌تر محدود می‌شود.','برای تحقق سود حداکثری، افت کافی قیمت لازم است.','ساختار نسبت به Long Put پیچیده‌تر است.']},
-{key:'bullPutSpread',name:'Bull Put Spread',icon:'🟢',desc:'فروش Put بالاتر و خرید Put پایین‌تر',badge:'صعودی/خنثی',legs:[['sell','put',-0.02],['buy','put',-0.08]],
-what:'یک Put با قیمت اعمال بالاتر فروخته و یک Put با قیمت اعمال پایین‌تر خریداری می‌شود. این ساختار یک اعتبار خالص دریافت می‌کند و ریسک سمت نزولی را با Put خریداری‌شده محدود می‌سازد.',
-who:'برای معامله‌گری که انتظار ثبات یا رشد ملایم دارد و مایل است با ریسک تعریف‌شده از دریافت پرمیوم استفاده کند.',pros:['حداکثر زیان محدود است.','در صورت حفظ قیمت بالای محدوده موردنظر، پرمیوم دریافتی می‌تواند سود ایجاد کند.','ساختار نسبت به Short Put بدون پوشش ریسک تعریف‌شده‌تری دارد.'],cons:['سود به اعتبار خالص دریافتی محدود است.','افت شدید قیمت می‌تواند زیان ایجاد کند.','وجه تضمین و مدیریت موقعیت همچنان اهمیت دارد.']},
-{key:'bearCallSpread',name:'Bear Call Spread',icon:'🔴',desc:'فروش Call پایین‌تر و خرید Call بالاتر',badge:'نزولی/خنثی',legs:[['sell','call',0.02],['buy','call',0.08]],
-what:'Call با قیمت اعمال پایین‌تر فروخته و Call با قیمت اعمال بالاتر خریداری می‌شود. اختیار خریداری‌شده ریسک صعودی موقعیت فروش را محدود می‌کند.',
-who:'برای دید نزولی یا خنثی که انتظار می‌رود قیمت تا سررسید از یک سطح مشخص بالاتر نرود.',pros:['ریسک صعودی محدود است.','دریافت اعتبار خالص در زمان ورود ممکن است.','ساختار روشن و قابل مدیریت است.'],cons:['سود محدود به اعتبار خالص است.','افزایش شدید قیمت می‌تواند به زیان منجر شود.','انتخاب فاصله Strike بر نسبت ریسک و بازده اثر مستقیم دارد.']},
-{key:'longStraddle',name:'Long Straddle',icon:'⚡',desc:'خرید هم‌زمان Call و Put با Strike یکسان',badge:'نوسان شدید',legs:[['buy','call',0],['buy','put',0]],
-what:'Call و Put با قیمت اعمال و سررسید یکسان خریداری می‌شوند. این ساختار به جهت حرکت وابسته نیست و در صورت حرکت بزرگ قیمت در هر یک از دو جهت می‌تواند سودآور شود.',
-who:'برای زمانی که انتظار افزایش محسوس نوسان یا یک حرکت قیمتی بزرگ وجود دارد، اما جهت حرکت با اطمینان قابل پیش‌بینی نیست.',pros:['پتانسیل سود در هر دو جهت بازار.','زیان حداکثر به مجموع پرمیوم‌ها محدود است.','برای سناریوهای افزایش نوسان مناسب است.'],cons:['هزینه اولیه دو پرمیوم است.','برای عبور از نقاط سربه‌سر، حرکت قابل توجه قیمت لازم است.','زوال زمانی در صورت نبود حرکت کافی می‌تواند شدید باشد.']},
-{key:'shortStraddle',name:'Short Straddle',icon:'💤',desc:'فروش هم‌زمان Call و Put با Strike یکسان',badge:'خنثی',legs:[['sell','call',0],['sell','put',0]],
-what:'Call و Put با قیمت اعمال و سررسید یکسان فروخته می‌شوند. فروشنده از دریافت دو پرمیوم بهره می‌برد، اما در برابر حرکت شدید بازار ریسک قابل توجهی می‌پذیرد.',
-who:'صرفاً برای معامله‌گران حرفه‌ای با سازوکار وجه تضمین، مدیریت ریسک و توانایی پایش مستمر موقعیت مناسب است.',pros:['دریافت هم‌زمان دو پرمیوم.','در بازار کم‌نوسان، زوال زمانی می‌تواند به نفع موقعیت باشد.','بدون نیاز به تعیین جهت بازار در محدوده نزدیک Strike.'],cons:['ریسک صعودی و نزولی بسیار بالا است.','نیازمند مدیریت فعال و وجه تضمین مناسب است.','افزایش ناگهانی نوسان ضمنی می‌تواند زیان را تشدید کند.']},
-{key:'longStrangle',name:'Long Strangle',icon:'⚡',desc:'خرید Call و Put با Strikeهای متفاوت',badge:'نوسانی',legs:[['buy','call',0.06],['buy','put',-0.06]],
-what:'Call با قیمت اعمال بالاتر و Put با قیمت اعمال پایین‌تر خریداری می‌شود. چون هر دو خارج از محدوده قیمت جاری هستند، هزینه ورود معمولاً از Straddle کمتر است اما حرکت لازم برای سوددهی نیز بزرگ‌تر می‌شود.',
-who:'برای انتظار حرکت شدید قیمت در یکی از دو جهت، همراه با ترجیح هزینه اولیه کمتر نسبت به Straddle.',pros:['ریسک محدود به مجموع پرمیوم‌ها است.','پتانسیل سود در هر دو جهت وجود دارد.','هزینه اولیه معمولاً کمتر از Straddle است.'],cons:['برای عبور از سربه‌سرها حرکت بیشتری لازم است.','زوال زمانی اثر منفی دارد.','بازار کم‌نوسان می‌تواند موجب از دست رفتن بخش زیادی از پرمیوم شود.']},
-{key:'shortStrangle',name:'Short Strangle',icon:'💤',desc:'فروش Call و Put خارج از قیمت جاری',badge:'خنثی',legs:[['sell','call',0.06],['sell','put',-0.06]],
-what:'Call و Put با Strikeهای متفاوت و معمولاً خارج از قیمت جاری فروخته می‌شوند. این ساختار محدوده سود بزرگ‌تری از Short Straddle دارد اما در ازای آن پرمیوم کمتری دریافت می‌کند و ریسک همچنان باز است.',
-who:'برای معامله‌گران حرفه‌ای با انتظار نوسان محدود و توانایی مدیریت ریسک دوطرفه.',pros:['محدوده سود بالقوه وسیع‌تر از Straddle است.','دریافت دو پرمیوم.','زوال زمانی در صورت ثبات قیمت می‌تواند مساعد باشد.'],cons:['ریسک حرکت شدید در هر دو جهت وجود دارد.','نیازمند وجه تضمین و مدیریت فعال است.','افزایش نوسان ضمنی می‌تواند موقعیت را تحت فشار قرار دهد.']},
-{key:'coveredCall',name:'Covered Call',icon:'🛡️',desc:'دارایی پایه + فروش Call',badge:'پوششی/درآمدی',legs:[['spot','spot',0],['sell','call',0.06]],
-what:'دارایی پایه نگهداری و هم‌زمان یک Call بر روی همان دارایی فروخته می‌شود. پرمیوم دریافتی می‌تواند بازده جاری را افزایش دهد، اما در مقابل بخشی از پتانسیل صعودی دارایی واگذار می‌شود.',
-who:'برای دارنده دارایی پایه که انتظار رشد محدود یا ثبات نسبی دارد و مایل است در ازای پذیرش سقف سود، درآمد پرمیوم دریافت کند.',pros:['ایجاد درآمد از دارایی موجود.','پرمیوم تا حدی زیان نزولی را جبران می‌کند.','ساختار شناخته‌شده و پرکاربرد برای مدیریت بازده دارایی.'],cons:['سود صعودی بالاتر از Strike محدود می‌شود.','ریسک نزولی خود دارایی همچنان وجود دارد.','در صورت جهش شدید قیمت، فرصت سود از دست‌رفته ایجاد می‌شود.']},
-{key:'protectivePut',name:'Protective Put',icon:'🏥',desc:'دارایی پایه + خرید Put',badge:'پوشش ریسک',legs:[['spot','spot',0],['buy','put',-0.06]],
-what:'دارایی پایه نگهداری و هم‌زمان Put خریداری می‌شود. Put نقش بیمه نزولی را ایفا می‌کند و حد زیان پرتفوی را در سطحی مشخص‌تر قرار می‌دهد.',
-who:'برای سرمایه‌گذاری که قصد حفظ دارایی پایه را دارد اما در برابر افت قابل توجه قیمت به پوشش ریسک نیاز دارد.',pros:['کاهش ریسک نزولی شدید.','پتانسیل صعودی دارایی حفظ می‌شود.','حد زیان پوشش‌داده‌شده قابل برآورد است.'],cons:['پرداخت پرمیوم هزینه پوشش است.','در صورت عدم وقوع افت، پرمیوم می‌تواند مستهلک شود.','انتخاب Strike و سررسید بر کیفیت پوشش اثر دارد.']},
-{key:'collar',name:'Collar',icon:'🛡️',desc:'دارایی پایه + خرید Put + فروش Call',badge:'پوشش محدود',legs:[['spot','spot',0],['buy','put',-0.06],['sell','call',0.06]],
-what:'سرمایه‌گذار دارایی پایه را نگهداری می‌کند، برای محدود کردن زیان Put می‌خرد و برای تأمین بخشی از هزینه آن Call می‌فروشد. نتیجه، ایجاد یک دامنه نسبتاً مشخص برای بازده است.',
-who:'برای دارنده دارایی که هم‌زمان به حفاظت نزولی و کاهش هزینه بیمه نیاز دارد و حاضر است بخشی از پتانسیل صعودی را واگذار کند.',pros:['ریسک نزولی محدودتر می‌شود.','فروش Call می‌تواند بخشی از هزینه Put را جبران کند.','ساختار ریسک و بازده از ابتدا قابل ترسیم است.'],cons:['سود صعودی بالاتر از Strike فروش Call محدود می‌شود.','نیازمند نگهداری هم‌زمان سه جزء است.','کیفیت پوشش به انتخاب دو Strike وابسته است.']},
-{key:'ironCondor',name:'Iron Condor',icon:'🦅',desc:'ترکیب Bull Put و Bear Call Spread',badge:'خنثی/محدوده‌ای',legs:[['sell','put',-0.05],['buy','put',-0.11],['sell','call',0.05],['buy','call',0.11]],
-what:'یک Bull Put Spread و یک Bear Call Spread با یک سررسید مشترک ترکیب می‌شوند. سود در محدوده‌ای پیرامون قیمت جاری شکل می‌گیرد و هر دو طرف با اختیارهای خریداری‌شده پوشش داده می‌شوند.',
-who:'برای معامله‌گران باتجربه که انتظار دارند قیمت تا سررسید در یک محدوده مشخص باقی بماند و ریسک تعریف‌شده برایشان اهمیت دارد.',pros:['حداکثر سود و زیان محدود و قابل محاسبه است.','برای بازارهای کم‌نوسان و محدوده‌ای مناسب است.','محدوده سود را می‌توان با انتخاب Strikeها تنظیم کرد.'],cons:['چهارلگی و نیازمند مدیریت دقیق است.','سود به اعتبار خالص دریافتی محدود می‌شود.','حرکت خارج از محدوده می‌تواند به زیان حداکثری منجر شود.']},
-{key:'ironButterfly',name:'Iron Butterfly',icon:'🦋',desc:'ساختار فشرده‌تر نسبت به Iron Condor',badge:'خنثی',legs:[['sell','put',0],['buy','put',-0.08],['sell','call',0],['buy','call',0.08]],
-what:'در ساختار متداول، یک Put و یک Call نزدیک یا هم‌Strike فروخته و دو اختیار در بیرون از آن محدوده برای محدود کردن ریسک خریداری می‌شوند. این ساختار برای انتظار ثبات شدیدتر قیمت طراحی می‌شود.',
-who:'برای معامله‌گر حرفه‌ای که انتظار دارد قیمت در حوالی یک Strike مشخص باقی بماند و در عین حال ریسک را تعریف‌شده نگه دارد.',pros:['ریسک از دو طرف محدود می‌شود.','در صورت باقی ماندن قیمت نزدیک Strike مرکزی، بازده بالقوه نسبت به دامنه ریسک جذاب است.','ساختار نسبت به Short Straddle ریسک تعریف‌شده‌تری دارد.'],cons:['محدوده سود نسبتاً باریک است.','حرکت شدید قیمت می‌تواند به زیان حداکثری منجر شود.','چهارلگی و مدیریت موقعیت ضروری است.']},
-{key:'callButterfly',name:'Long Call Butterfly',icon:'🦋',desc:'سه Strike؛ سود در حوالی قیمت مرکزی',badge:'خنثی محدود',legs:[['buy','call',-0.08],['sell2','call',0],['buy','call',0.08]],
-what:'یک Call با Strike پایین خریداری، دو Call با Strike میانی فروخته و یک Call با Strike بالاتر خریداری می‌شود. این ساختار زمانی بیشترین بازده را دارد که قیمت در سررسید نزدیک Strike مرکزی قرار گیرد.',
-who:'برای دید نسبتاً خنثی که در آن معامله‌گر انتظار دارد قیمت در یک محدوده باریک و نزدیک سطح مرکزی باقی بماند.',pros:['ریسک حداکثری محدود است.','ساختار برای سناریوی قیمت هدف مشخص مناسب است.','هزینه ورود می‌تواند نسبتاً پایین باشد.'],cons:['محدوده سود باریک است.','در صورت حرکت شدید از Strike مرکزی، ارزش موقعیت کاهش می‌یابد.','حساسیت به زمان و نوسان ضمنی اهمیت دارد.']},
-{key:'cashSecuredPut',name:'Cash-Secured Put',icon:'💰',desc:'فروش Put با پشتوانه نقدی',badge:'درآمد/خرید',legs:[['sell','put',-0.05]],
-what:'فروش Put در حالی انجام می‌شود که سرمایه‌گذار منابع نقدی کافی برای ایفای تعهد خرید دارایی در قیمت اعمال را کنار گذاشته است. این ساختار میان دریافت پرمیوم و آمادگی برای خرید دارایی ارتباط ایجاد می‌کند.',
-who:'برای سرمایه‌گذاری که در صورت افت قیمت نیز مایل به خرید دارایی پایه در قیمت اعمال است و توان تأمین وجه تعهد را دارد.',pros:['دریافت پرمیوم.','امکان خرید دارایی در قیمت اعمال در صورت تخصیص.','ریسک عملیاتی از فروش Put بدون پشتوانه کمتر است.'],cons:['در افت شدید دارایی، زیان می‌تواند قابل توجه باشد.','سرمایه تا زمان تعیین تکلیف موقعیت درگیر می‌شود.','پرمیوم دریافتی ریسک بازار را حذف نمی‌کند.']},
-{key:'callCalendar',name:'Long Call Calendar Spread',icon:'🗓️',desc:'فروش Call کوتاه‌مدت + خرید Call بلندمدت',badge:'زمانی',special:'calendarCall',
-what:'یک Call با سررسید نزدیک‌تر فروخته و Call دیگری با Strike مشابه و سررسید دورتر خریداری می‌شود. تفاوت سرعت زوال زمانی دو سررسید، عنصر اصلی این ساختار است.',
-who:'برای دیدی که در کوتاه‌مدت ثبات نسبی و در افق دورتر حرکت یا ارزش زمانی بیشتر انتظار می‌رود.',pros:['استفاده از تفاوت زوال زمانی سررسیدها.','ریسک اولیه در قالب اسپرد تعریف می‌شود.','برای تحلیل ساختار زمانی نوسان و پرمیوم کاربرد دارد.'],cons:['نیازمند وجود چند سررسید واقعی برای یک Strike مشابه است.','رفتار موقعیت به تغییر نوسان ضمنی حساس است.','مدیریت آن از اسپردهای عمودی پیچیده‌تر است.']},
-{key:'putCalendar',name:'Long Put Calendar Spread',icon:'🗓️',desc:'فروش Put کوتاه‌مدت + خرید Put بلندمدت',badge:'زمانی',special:'calendarPut',
-what:'یک Put نزدیک‌سررسید فروخته و Put دیگری با Strike مشابه و سررسید دورتر خریداری می‌شود. هدف، بهره‌گیری از تفاوت زمانی ارزش دو قرارداد است.',
-who:'برای معامله‌گری که نسبت به کوتاه‌مدت دید خنثی یا کنترل‌شده و نسبت به افق دورتر دید نزولی‌تر یا نوسانی دارد.',pros:['استفاده از اختلاف زوال زمانی.','ساختار هزینه‌ای نسبتاً کنترل‌شده.','قابل استفاده برای دید زمانی متفاوت نسبت به دارایی پایه.'],cons:['نیازمند چند سررسید واقعی است.','به تغییرات نوسان ضمنی حساس است.','نیاز به مدیریت سررسید کوتاه‌مدت دارد.']}
-];;
-
-// تبدیل ساختار استراتژی‌های آموزشی به مدل داخلی صفحه؛ منطق اصلی صفحه دست‌نخورده است.
-const ENABLED_PRESET_KEYS = new Set(['longCall','shortCall','longPut','shortPut','bullCallSpread','bearPutSpread','bullPutSpread','bearCallSpread','longStraddle','longStrangle','coveredCall','protectivePut','collar','ironCondor','ironButterfly']);
-const PRESETS = RAW_PRESETS.filter(s => ENABLED_PRESET_KEYS.has(s.key)).map(s => ({
-  key: s.key,
-  name: s.name,
-  icon: s.icon,
-  desc: s.desc,
-  badge: s.badge,
-  positions: (s.legs || []).map((leg, i) => ({
-    side: leg[0] === 'sell2' ? 'sell' : leg[0],
-    type: leg[1],
-    strikeOffset: leg[2] || 0,
-    premiumRatio: leg[1] === 'spot' ? 0 : 0.02,
-    ...(leg[0] === 'sell2' ? { quantity: 2 } : {})
-  })),
-  explanation: {
-    what: s.what,
-    who: s.who,
-    pros: s.pros,
-    cons: s.cons
+const PRESETS = [
+  {
+    key:'longCall', name:'Long Call', icon:'🟢', desc:'خرید Call — سود بالقوه نامحدود در صعود', badge:'صعودی',
+    positions:[{side:'buy',type:'call',strikeOffset:0.05,premiumRatio:0.025}],
+    explanation:{
+      what:'خرید Call یعنی پرداخت پرمیوم در برابر دریافت حق، بدون تعهد، برای خرید دارایی پایه در قیمت اعمال تا سررسید.',
+      who:'برای معامله‌گری که انتظار رشد قابل‌توجه قیمت پایه را دارد و می‌خواهد ریسک خود را به پرمیوم پرداختی محدود کند.',
+      pros:['سود بالقوه نامحدود در رشد شدید قیمت','حداکثر زیان محدود به پرمیوم','اهرم سرمایه‌ای بالا','ریسک مشخص از ابتدا'],
+      cons:['زوال زمانی به ضرر خریدار است','برای سوددهی باید حرکت قیمت از هزینه پرمیوم عبور کند','در بازار کم‌نوسان ممکن است کل پرمیوم از بین برود']
+    }
+  },
+  {
+    key:'shortCall', name:'Short Call', icon:'🔴', desc:'فروش Call — دریافت پرمیوم با ریسک صعودی', badge:'نزولی / خنثی',
+    positions:[{side:'sell',type:'call',strikeOffset:0.05,premiumRatio:0.025}],
+    explanation:{
+      what:'فروش Call ایجاد تعهد فروش دارایی پایه در قیمت اعمال در صورت اعمال اختیار است و فروشنده در مقابل پرمیوم دریافت می‌کند.',
+      who:'برای معامله‌گر باتجربه‌ای که انتظار ثبات یا رشد محدود قیمت را دارد و توان مدیریت وجه تضمین را دارد.',
+      pros:['دریافت فوری پرمیوم','بهره‌مندی از زوال زمانی','سود مشخص در صورت باقی ماندن قیمت زیر قیمت اعمال'],
+      cons:['ریسک صعودی بالقوه بسیار زیاد','نیاز به مدیریت وجه تضمین','نیازمند کنترل ریسک فعال']
+    }
+  },
+  {
+    key:'longPut', name:'Long Put', icon:'🔴', desc:'خرید Put — سود بالقوه از افت قیمت', badge:'نزولی',
+    positions:[{side:'buy',type:'put',strikeOffset:-0.05,premiumRatio:0.025}],
+    explanation:{
+      what:'خرید Put یعنی پرداخت پرمیوم برای دریافت حق فروش دارایی پایه در قیمت اعمال تا سررسید.',
+      who:'برای دیدگاه نزولی یا پوشش ریسک افت ارزش دارایی پایه.',
+      pros:['ریسک محدود به پرمیوم','پتانسیل سود بالا در افت شدید','قابل استفاده برای پوشش ریسک'],
+      cons:['زوال زمانی','نیاز به افت کافی قیمت برای جبران پرمیوم','ممکن است کل پرمیوم از بین برود']
+    }
+  },
+  {
+    key:'shortPut', name:'Short Put', icon:'🟢', desc:'فروش Put — درآمد پرمیومی با تعهد خرید', badge:'صعودی / خنثی',
+    positions:[{side:'sell',type:'put',strikeOffset:-0.05,premiumRatio:0.025}],
+    explanation:{
+      what:'فروش Put یعنی دریافت پرمیوم در برابر تعهد خرید دارایی پایه با قیمت اعمال در صورت اعمال اختیار.',
+      who:'برای معامله‌گری که دیدگاه صعودی ملایم یا خنثی دارد و آمادگی پذیرش دارایی پایه در قیمت اعمال را دارد.',
+      pros:['دریافت پرمیوم','بهره‌مندی از ثبات یا رشد قیمت','امکان ایجاد قیمت خرید مؤثر پایین‌تر'],
+      cons:['زیان بالقوه در افت شدید','نیاز به وجه تضمین','ریسک تخصیص دارایی']
+    }
+  },
+  {
+    key:'bullCallSpread', name:'Bull Call Spread', icon:'📈', desc:'اسپرد صعودی Call با سود و زیان محدود', badge:'صعودی',
+    positions:[{side:'buy',type:'call',strikeOffset:0,premiumRatio:0.03},{side:'sell',type:'call',strikeOffset:0.05,premiumRatio:0.015}],
+    explanation:{
+      what:'خرید Call با اعمال پایین‌تر و فروش Call با اعمال بالاتر در یک ساختار اسپرد برای کاهش هزینه ورود و محدود کردن سود.',
+      who:'برای انتظار رشد مشخص اما نه لزوماً جهش بسیار بزرگ.',
+      pros:['هزینه کمتر از Long Call','زیان محدود','ساختار ریسک و بازده روشن'],
+      cons:['سود سقف‌دار','دو پوزیشن برای مدیریت','نیاز به انتخاب مناسب فاصله اعمال']
+    }
+  },
+  {
+    key:'bearPutSpread', name:'Bear Put Spread', icon:'📉', desc:'اسپرد نزولی Put با ریسک محدود', badge:'نزولی',
+    positions:[{side:'buy',type:'put',strikeOffset:0,premiumRatio:0.03},{side:'sell',type:'put',strikeOffset:-0.05,premiumRatio:0.015}],
+    explanation:{
+      what:'خرید Put با اعمال بالاتر و فروش Put با اعمال پایین‌تر برای ایجاد دیدگاه نزولی با هزینه و سود محدود.',
+      who:'برای انتظار افت مشخص و کنترل‌شده قیمت.',
+      pros:['هزینه کمتر از Long Put','زیان محدود','ریسک از ابتدا قابل محاسبه'],
+      cons:['سود سقف‌دار','نیاز به انتخاب فاصله اعمال','پیچیدگی بیشتر از خرید ساده Put']
+    }
+  },
+  {
+    key:'bullPutSpread', name:'Bull Put Spread', icon:'🟢', desc:'اسپرد اعتباری صعودی برای دریافت پرمیوم', badge:'صعودی / خنثی',
+    positions:[{side:'sell',type:'put',strikeOffset:-0.02,premiumRatio:0.02},{side:'buy',type:'put',strikeOffset:-0.07,premiumRatio:0.01}],
+    explanation:{
+      what:'فروش Put با اعمال بالاتر و خرید Put با اعمال پایین‌تر برای دریافت اعتبار اولیه و محدود کردن زیان نزولی.',
+      who:'برای دیدگاه صعودی ملایم یا خنثی.',
+      pros:['دریافت اعتبار اولیه','زیان محدود','بهره‌مندی از کاهش ارزش زمانی'],
+      cons:['سود محدود','نیاز به مدیریت وجه تضمین','در افت شدید بازار زیان ایجاد می‌شود']
+    }
+  },
+  {
+    key:'bearCallSpread', name:'Bear Call Spread', icon:'🔴', desc:'اسپرد اعتباری نزولی برای دریافت پرمیوم', badge:'نزولی / خنثی',
+    positions:[{side:'sell',type:'call',strikeOffset:0.02,premiumRatio:0.02},{side:'buy',type:'call',strikeOffset:0.07,premiumRatio:0.01}],
+    explanation:{
+      what:'فروش Call با اعمال پایین‌تر و خرید Call با اعمال بالاتر برای دریافت اعتبار و محدود کردن ریسک صعودی.',
+      who:'برای دیدگاه نزولی ملایم یا خنثی.',
+      pros:['اعتبار اولیه','زیان محدود','عملکرد مناسب در ثبات یا افت قیمت'],
+      cons:['سود محدود','نیاز به مدیریت موقعیت','در رشد شدید قیمت زیان ایجاد می‌شود']
+    }
+  },
+  {
+    key:'longStraddle', name:'Long Straddle', icon:'⚡', desc:'خرید همزمان Call و Put در یک قیمت اعمال', badge:'نوسانی',
+    positions:[{side:'buy',type:'call',strikeOffset:0,premiumRatio:0.025},{side:'buy',type:'put',strikeOffset:0,premiumRatio:0.025}],
+    explanation:{
+      what:'خرید همزمان Call و Put با قیمت اعمال یکسان و سررسید یکسان؛ جهت حرکت مهم نیست و شدت حرکت اهمیت دارد.',
+      who:'برای زمانی که انتظار افزایش شدید نوسان را دارید اما جهت آن را نمی‌دانید.',
+      pros:['پتانسیل سود در هر دو جهت','زیان محدود به مجموع پرمیوم‌ها','مناسب برای سناریوهای جهش قیمتی'],
+      cons:['هزینه اولیه بالا','حساسیت زیاد به زوال زمانی','برای سوددهی به حرکت قابل‌توجه نیاز دارد']
+    }
+  },
+  {
+    key:'longStrangle', name:'Long Strangle', icon:'⚡', desc:'خرید Call و Put خارج از پول با هزینه کمتر', badge:'نوسانی',
+    positions:[{side:'buy',type:'call',strikeOffset:0.05,premiumRatio:0.015},{side:'buy',type:'put',strikeOffset:-0.05,premiumRatio:0.015}],
+    explanation:{
+      what:'خرید Call با اعمال بالاتر و Put با اعمال پایین‌تر. ساختار مشابه Straddle است اما با هزینه اولیه کمتر و نقاط سربه‌سر دورتر.',
+      who:'برای انتظار حرکت شدید قیمت با ترجیح هزینه ورودی کمتر.',
+      pros:['هزینه کمتر از Straddle','ریسک محدود','سود بالقوه در هر دو جهت'],
+      cons:['نیاز به حرکت بزرگ‌تر','زوال زمانی','فاصله بیشتر تا سربه‌سر']
+    }
+  },
+  {
+    key:'coveredCall', name:'Covered Call', icon:'🛡️', desc:'دارایی پایه + فروش Call برای ایجاد درآمد', badge:'پوششی',
+    positions:[{side:'buy',type:'spot',strikeOffset:0,premiumRatio:0},{side:'sell',type:'call',strikeOffset:0.05,premiumRatio:0.02}],
+    explanation:{
+      what:'نگهداری دارایی پایه و فروش Call روی آن؛ پرمیوم دریافتی می‌تواند بخشی از بازده یا هزینه نگهداری را پوشش دهد.',
+      who:'برای دارنده دارایی پایه که انتظار رشد محدود یا ثبات دارد.',
+      pros:['ایجاد درآمد از پرمیوم','کاهش هزینه مؤثر نگهداری','ساختار ساده و قابل فهم'],
+      cons:['سقف‌دار شدن سود صعودی','ریسک نزولی دارایی همچنان وجود دارد','نیاز به نگهداری دارایی پایه']
+    }
+  },
+  {
+    key:'protectivePut', name:'Protective Put', icon:'🏥', desc:'دارایی پایه + خرید Put برای پوشش افت', badge:'بیمه',
+    positions:[{side:'buy',type:'spot',strikeOffset:0,premiumRatio:0},{side:'buy',type:'put',strikeOffset:-0.05,premiumRatio:0.02}],
+    explanation:{
+      what:'خرید Put در کنار دارایی پایه برای ایجاد کف تقریبی در زیان نزولی؛ مشابه خرید بیمه برای موقعیت.',
+      who:'برای سرمایه‌گذاری که قصد نگهداری دارایی را دارد ولی می‌خواهد ریسک افت شدید را محدود کند.',
+      pros:['کاهش ریسک افت شدید','حفظ پتانسیل صعودی دارایی','ریسک قابل‌تعریف'],
+      cons:['هزینه پرمیوم','کاهش بازده خالص','زوال زمانی Put']
+    }
+  },
+  {
+    key:'collar', name:'Collar', icon:'🔒', desc:'دارایی پایه + خرید Put + فروش Call', badge:'پوششی',
+    positions:[{side:'buy',type:'spot',strikeOffset:0,premiumRatio:0},{side:'buy',type:'put',strikeOffset:-0.05,premiumRatio:0.02},{side:'sell',type:'call',strikeOffset:0.05,premiumRatio:0.02}],
+    explanation:{
+      what:'Collar از نگهداری دارایی پایه، خرید Put برای محدود کردن ریسک نزولی و فروش Call برای تأمین بخشی از هزینه Put تشکیل می‌شود.',
+      who:'برای دارنده دارایی که هم‌زمان می‌خواهد کف زیان و سقف سود خود را تا حدی مشخص کند.',
+      pros:['محدود کردن ریسک نزولی','کاهش هزینه پوشش از طریق فروش Call','ساختار ریسک قابل پیش‌بینی'],
+      cons:['سقف سود در صعود','سه جزء برای مدیریت','نتیجه به فاصله قیمت‌های اعمال وابسته است']
+    }
+  },
+  {
+    key:'ironCondor', name:'Iron Condor', icon:'🦅', desc:'چهارپایه برای بازار خنثی با ریسک محدود', badge:'خنثی',
+    positions:[
+      {side:'sell',type:'put',strikeOffset:-0.05,premiumRatio:0.015},
+      {side:'buy',type:'put',strikeOffset:-0.10,premiumRatio:0.008},
+      {side:'sell',type:'call',strikeOffset:0.05,premiumRatio:0.015},
+      {side:'buy',type:'call',strikeOffset:0.10,premiumRatio:0.008}
+    ],
+    explanation:{
+      what:'ترکیب Bull Put Spread و Bear Call Spread در چهار پایه برای ایجاد محدوده سود در بازار کم‌نوسان.',
+      who:'برای معامله‌گر باتجربه‌ای که انتظار می‌دهد قیمت تا سررسید در یک محدوده مشخص باقی بماند.',
+      pros:['ریسک محدود','سود محدود ولی قابل محاسبه','مناسب بازار خنثی','قابل تنظیم با فاصله اعمال'],
+      cons:['چهار پوزیشن برای مدیریت','سود محدود','حساسیت به جهش ناگهانی قیمت']
+    }
+  },
+  {
+    key:'ironButterfly', name:'Iron Butterfly', icon:'🦋', desc:'ساختار خنثی با فروش دو اختیار در ATM', badge:'خنثی',
+    positions:[
+      {side:'sell',type:'put',strikeOffset:0,premiumRatio:0.025},
+      {side:'buy',type:'put',strikeOffset:-0.10,premiumRatio:0.008},
+      {side:'sell',type:'call',strikeOffset:0,premiumRatio:0.025},
+      {side:'buy',type:'call',strikeOffset:0.10,premiumRatio:0.008}
+    ],
+    explanation:{
+      what:'Iron Butterfly شامل فروش هم‌زمان Call و Put در قیمت اعمال مرکزی و خرید دو اختیار محافظ در اعمال دورتر است.',
+      who:'برای معامله‌گر باتجربه‌ای که انتظار دارد قیمت تا سررسید نزدیک قیمت اعمال مرکزی باقی بماند.',
+      pros:['ریسک محدود','ساختار سود و زیان مشخص','نیاز به حرکت کم برای رسیدن به حداکثر سود'],
+      cons:['محدوده سود نسبتاً باریک','چهار پوزیشن برای مدیریت','ریسک افزایش شدید نوسان و حرکت قیمت']
+    }
   }
-}));
+];
 
 // ==========================================
 // 📊 State
@@ -1886,20 +2162,21 @@ document.getElementById('modalConfirmBtn').addEventListener('click', () => {
 // ==========================================
 function renderPresets() {
   const grid = document.getElementById('presetsGrid');
-  grid.innerHTML = PRESETS.map(p => `
-    <button class="preset-card ${currentPreset === p.key ? 'active' : ''}" onclick="applyPreset('${p.key}')">
-      <div class="preset-header">
-        <span class="preset-icon">${p.icon}</span>
-        <span class="preset-name">${p.name}</span>
-      </div>
-      <div class="preset-desc">${p.desc}</div>
-      <span class="preset-badge">${p.badge}</span>
-    </button>
-  `).join('');
-  const n=PRESETS.length;
-  const a=document.getElementById('labStrategyCount'), b=document.getElementById('presetCountLabel');
-  if(a) a.textContent=toFa(n);
-  if(b) b.textContent=toFa(n)+' استراتژی';
+  const countText = toFa(PRESETS.length) + ' استراتژی';
+  const countBadge = document.getElementById('presetCountBadge');
+  if (countBadge) countBadge.textContent = countText;
+  if (grid) {
+    grid.innerHTML = PRESETS.map(p => `
+      <button class="preset-card ${currentPreset === p.key ? 'active' : ''}" onclick="applyPreset('${p.key}')">
+        <div class="preset-header">
+          <span class="preset-icon">${p.icon}</span>
+          <span class="preset-name">${p.name}</span>
+        </div>
+        <div class="preset-desc">${p.desc}</div>
+        <span class="preset-badge">${p.badge}</span>
+      </button>
+    `).join('');
+  }
 }
 
 function renderExplanation(preset) {
@@ -2295,8 +2572,6 @@ function renderPositions() {
   const count = positions.length;
   document.getElementById('positionsCount').textContent = toFa(count) + ' پوزیشن';
   document.getElementById('positionsCount2').textContent = toFa(count) + ' پوزیشن';
-  const topCount=document.getElementById('labPositionCountTop');
-  if(topCount) topCount.textContent=toFa(count);
 
   if (count === 0) {
     body.innerHTML = `
@@ -3649,11 +3924,126 @@ window.addEventListener('scroll', () => {
   if (!isLocked) hideChartTooltip();
 }, { passive: true });
 
+
+// ==========================================
+// 🧩 چیدمان جدید Options Lab — فقط ساختار UI
+// ==========================================
+function buildLabLayout() {
+  const container = document.querySelector('.container');
+  if (!container || container.querySelector('.lab-layout')) return;
+
+  const tabPresets = document.getElementById('tab-presets');
+  const tabCustom = document.getElementById('tab-custom');
+  const panels = [...container.children];
+  const positionsPanel = panels.find(el => el.classList && el.classList.contains('panel') && el.querySelector('#positionsBody'));
+  const strategyInfo = container.querySelector('.strategy-info');
+  const explanation = document.getElementById('strategyExplanation');
+  const results = container.querySelector('.results-grid');
+  const chart = document.getElementById('chartContainer');
+  const tabs = container.querySelector('.tabs');
+
+  const layout = document.createElement('div');
+  layout.className = 'lab-layout';
+  const main = document.createElement('main');
+  main.className = 'lab-main';
+  const side = document.createElement('aside');
+  side.className = 'lab-side';
+
+  [tabs, tabPresets, tabCustom, positionsPanel, chart].forEach(el => {
+    if (el) main.appendChild(el);
+  });
+  [strategyInfo, explanation, results].forEach(el => {
+    if (el) side.appendChild(el);
+  });
+  layout.appendChild(main);
+  layout.appendChild(side);
+
+  const firstModal = container.querySelector('.modal-overlay');
+  if (firstModal) container.insertBefore(layout, firstModal);
+  else container.appendChild(layout);
+}
+
+function startNewStrategy() {
+  const tab = document.querySelector('.tab-btn[onclick*="custom"]');
+  switchTab('custom', tab);
+  const add = document.querySelector('.btn-add');
+  if (add) add.scrollIntoView({behavior:'smooth', block:'center'});
+}
+
+function updateLabSummary() {
+  const asset = positions.find(p => p.asset)?.asset;
+  const a = asset ? getAsset(asset) : null;
+  const strategy = currentPreset ? PRESETS.find(p => p.key === currentPreset) : null;
+  const set = id => document.getElementById(id);
+  if (set('labAssetSummary')) set('labAssetSummary', a ? a.name : 'انتخاب نشده');
+  if (set('labStrategySummary')) set('labStrategySummary', strategy ? strategy.name : 'سفارشی');
+  if (set('labPositionSummary')) set('labPositionSummary', toFa(positions.length));
+  if (set('labDataSummary')) set('labDataSummary', document.getElementById('liveText')?.textContent || 'آماده');
+}
+
+function syncLabSummaryAfterRender() {
+  updateLabSummary();
+}
+
+function toggleLabTheme() {
+  const root = document.documentElement;
+  const next = root.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+  root.setAttribute('data-theme', next);
+  localStorage.setItem('shamdun-theme', next);
+  updateLabThemeButton();
+  if (typeof updateChart === 'function') setTimeout(() => updateChart(), 50);
+}
+
+function updateLabThemeButton() {
+  const btn = document.getElementById('labThemeBtn');
+  if (!btn) return;
+  const light = document.documentElement.getAttribute('data-theme') === 'light';
+  btn.textContent = light ? '🌙 حالت تاریک' : '☀️ حالت روشن';
+}
+
+function initLabTheme() {
+  const saved = localStorage.getItem('shamdun-theme');
+  const theme = saved === 'light' ? 'light' : 'dark';
+  document.documentElement.setAttribute('data-theme', theme);
+  updateLabThemeButton();
+
+  // اگر navbar.js دکمه تم خودش را ساخته باشد، همان را هم به موتور این صفحه وصل می‌کنیم.
+  document.addEventListener('click', (e) => {
+    const btn = e.target.closest('[data-theme-toggle], #themeToggle, #themeBtn, .theme-toggle, .theme-btn');
+    if (!btn || btn.id === 'labThemeBtn') return;
+    e.preventDefault();
+    toggleLabTheme();
+  }, true);
+}
+
+
+// همگام‌سازی خلاصه صفحه بدون تغییر در منطق محاسبات
+(function(){
+  const originalUpdatePosition = window.updatePosition;
+  if (typeof originalUpdatePosition === 'function') {
+    window.updatePosition = function(){
+      const result = originalUpdatePosition.apply(this, arguments);
+      setTimeout(updateLabSummary, 0);
+      return result;
+    };
+  }
+  const originalRefresh = window.refreshAllPrices;
+  if (typeof originalRefresh === 'function') {
+    window.refreshAllPrices = async function(){
+      const result = await originalRefresh.apply(this, arguments);
+      updateLabSummary();
+      return result;
+    };
+  }
+})();
 // ==========================================
 // 🚀 شروع
 // ==========================================
+buildLabLayout();
+initLabTheme();
 renderPresets();
 renderPositions();
+updateLabSummary();
 updateChart();
 
 setTimeout(() => {
@@ -3662,83 +4052,9 @@ setTimeout(() => {
 }, 800);
 
 function applyTheme() {
-  const saved = localStorage.getItem('shamdun-theme') || 'dark';
-  document.documentElement.setAttribute('data-theme', saved);
+  initLabTheme();
 }
 applyTheme();
-// همگام‌سازی تم با navbar مشترک شمعدون؛ هیچ منطق داده/معامله‌ای تغییر نمی‌کند.
-function togglePageTheme(){
-  const root=document.documentElement;
-  const next=(root.getAttribute('data-theme')||'dark')==='dark'?'light':'dark';
-  root.setAttribute('data-theme',next);
-  localStorage.setItem('shamdun-theme',next);
-  const icon=document.getElementById('pageThemeIcon');
-  if(icon) icon.textContent=next==='dark'?'☾':'☀';
-  if(chartPoints.length && chartMeta) requestChartResize();
-}
-function syncPageTheme(){
-  const saved=localStorage.getItem('shamdun-theme');
-  const theme=(saved==='light'||saved==='dark')?saved:(document.documentElement.getAttribute('data-theme')||'dark');
-  document.documentElement.setAttribute('data-theme',theme);
-  const icon=document.getElementById('pageThemeIcon');
-  if(icon) icon.textContent=theme==='dark'?'☾':'☀';
-}
-function startNewStrategy(){
-  const go=()=>{
-    positions=[]; currentPreset=null; renderPresets(); renderPositions(); renderExplanation(null); updateChart();
-    const btn=document.querySelector('.tab-btn');
-    switchTab('presets',btn);
-    document.getElementById('presetsGrid')?.scrollIntoView({behavior:'smooth',block:'start'});
-    showNotification('استراتژی جدید آماده است؛ یک ساختار را انتخاب کنید.','success');
-  };
-  if(positions.length){
-    openModal({icon:'＋',title:'شروع استراتژی جدید',text:'پوزیشن‌های فعلی پاک می‌شوند و یک استراتژی جدید از ابتدا ساخته خواهد شد.',confirmText:'شروع کن',onConfirm:go});
-  }else go();
-}
-
-syncPageTheme();
-(function syncShamdunTheme(){
-  const sync = () => {
-    const saved = localStorage.getItem('shamdun-theme');
-    if (saved === 'light' || saved === 'dark') {
-      document.documentElement.setAttribute('data-theme', saved);
-      if (chartPoints.length > 0 && chartMeta) requestChartResize();
-    }
-  };
-  window.addEventListener('storage', sync);
-  setTimeout(sync, 80);
-  setTimeout(sync, 500);
-
-  // دکمه تم navbar مشترک: listener نهایی صفحه برای جلوگیری از مشکل race در GitHub Pages.
-  function ensureThemeButton(){
-    const btn = document.getElementById('snThemeBtn');
-    if(!btn || btn.dataset.shamdunThemeBound === '1') return;
-    const clone = btn.cloneNode(true);
-    clone.dataset.shamdunThemeBound = '1';
-    btn.parentNode.replaceChild(clone, btn);
-    clone.addEventListener('click', function(e){
-      e.preventDefault();
-      e.stopPropagation();
-      const current = document.documentElement.getAttribute('data-theme') || 'dark';
-      const next = current === 'dark' ? 'light' : 'dark';
-      document.documentElement.setAttribute('data-theme', next);
-      localStorage.setItem('shamdun-theme', next);
-      const icon = clone.querySelector('#snThemeIcon');
-      if(icon) icon.textContent = next === 'dark' ? '🌙' : '☀️';
-      if(chartPoints.length > 0 && chartMeta) requestChartResize();
-    });
-  }
-  setTimeout(ensureThemeButton, 150);
-  setTimeout(ensureThemeButton, 700);
-
-  if(window.MutationObserver){
-    const themeObserver = new MutationObserver(() => {
-      syncPageTheme();
-      if(chartPoints.length > 0 && chartMeta) requestChartResize();
-    });
-    themeObserver.observe(document.documentElement, {attributes:true, attributeFilter:['data-theme']});
-  }
-})();
   // ===== رسم مجدد نمودار در تغییر اندازه صفحه =====
 let resizeTimer = null;
 window.addEventListener('resize', () => {
@@ -3774,7 +4090,6 @@ window.addEventListener('orientationchange', () => {
   if(subtitle) subtitle.textContent = 'ساخت، تحلیل و آزمون سناریوهای سود و زیان با داده‌های واقعی پوزیشن';
 })();
 </script>
-
 
 </body>
 </html>
