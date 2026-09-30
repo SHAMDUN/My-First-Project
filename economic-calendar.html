@@ -1,0 +1,3081 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>تقویم اقتصادی | شمعدون</title>
+
+  <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css"
+  >
+
+  <style>
+    /* =========================================================
+       SHAMDUN ECONOMIC CALENDAR
+       Theme is controlled ONLY by navbar.js
+    ========================================================= */
+
+    :root {
+      --bg: #0B1220;
+      --bg-2: #111827;
+      --card: #151F30;
+      --card-2: #182235;
+
+      --text: #F8FAFC;
+      --muted: #94A3B8;
+
+      --border: rgba(148, 163, 184, 0.14);
+
+      --gold: #C89B3C;
+      --gold-soft: rgba(200, 155, 60, 0.12);
+
+      --blue: #3B82F6;
+      --green: #16835B;
+      --red: #D64545;
+      --orange: #D88A16;
+
+      --shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
+    }
+
+    [data-theme="light"] {
+      --bg: #F7F8FA;
+      --bg-2: #EEF2F7;
+      --card: #FFFFFF;
+      --card-2: #F8FAFC;
+
+      --text: #111827;
+      --muted: #64748B;
+
+      --border: rgba(15, 23, 42, 0.09);
+
+      --gold: #B48625;
+      --gold-soft: rgba(180, 134, 37, 0.10);
+
+      --blue: #2563EB;
+      --green: #16835B;
+      --red: #D64545;
+      --orange: #C9780D;
+
+      --shadow: 0 8px 24px rgba(15, 23, 42, 0.06);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: Vazirmatn, Tahoma, sans-serif;
+    }
+
+    button,
+    input,
+    select {
+      font-family: inherit;
+    }
+
+    button,
+    select {
+      cursor: pointer;
+    }
+
+    .page {
+      width: min(1240px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 94px 0 60px;
+    }
+
+    /* =========================================================
+       COMMON
+    ========================================================= */
+
+    .panel {
+      background: linear-gradient(
+        135deg,
+        var(--card),
+        var(--bg-2)
+      );
+
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      box-shadow: var(--shadow);
+    }
+
+    .section {
+      margin-top: 24px;
+      scroll-margin-top: 90px;
+    }
+
+    .section-head {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 11px;
+    }
+
+    .section-head h2 {
+      margin: 0;
+      font-size: 17px;
+      font-weight: 800;
+    }
+
+    .section-head p {
+      margin: 5px 0 0;
+      color: var(--muted);
+      font-size: 10px;
+      line-height: 1.9;
+    }
+
+    /* =========================================================
+       HERO
+    ========================================================= */
+
+    .hero {
+      padding: 25px;
+      border: 1px solid rgba(200, 155, 60, 0.25);
+      border-radius: 20px;
+
+      background:
+        radial-gradient(
+          circle at 10% 0%,
+          rgba(200, 155, 60, 0.10),
+          transparent 35%
+        ),
+        linear-gradient(
+          135deg,
+          var(--card),
+          var(--bg-2)
+        );
+
+      box-shadow: var(--shadow);
+    }
+
+    .hero-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 15px;
+
+      color: var(--muted);
+      font-size: 10px;
+    }
+
+    .live {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+    }
+
+    .live-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--green);
+      box-shadow: 0 0 0 4px rgba(22, 131, 91, 0.10);
+    }
+
+    .hero h1 {
+      margin: 10px 0 6px;
+      font-size: 30px;
+      line-height: 1.4;
+    }
+
+    .hero-description {
+      margin: 0;
+      max-width: 850px;
+
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 2.1;
+    }
+
+    .source-status {
+      white-space: nowrap;
+    }
+
+    /* =========================================================
+       GUIDE
+    ========================================================= */
+
+    .guide-grid {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr;
+      gap: 12px;
+    }
+
+    .guide-box {
+      padding: 18px;
+    }
+
+    .guide-box h3 {
+      margin: 0 0 8px;
+      font-size: 14px;
+    }
+
+    .guide-box p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 11px;
+      line-height: 2;
+    }
+
+    .flow {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 6px;
+
+      margin-top: 16px;
+    }
+
+    .flow-item {
+      padding: 8px 10px;
+
+      border: 1px solid var(--border);
+      border-radius: 10px;
+
+      background: rgba(255, 255, 255, 0.025);
+
+      font-size: 10px;
+      white-space: nowrap;
+    }
+
+    .flow-arrow {
+      color: var(--gold);
+      font-size: 12px;
+    }
+
+    /* =========================================================
+       TERMS
+    ========================================================= */
+
+    .terms {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+
+      margin-top: 10px;
+    }
+
+    .term {
+      padding: 13px;
+
+      border: 1px solid var(--border);
+      border-radius: 12px;
+
+      background: var(--card);
+    }
+
+    .term strong {
+      display: block;
+      margin-bottom: 5px;
+      font-size: 11px;
+    }
+
+    .term span {
+      color: var(--muted);
+      font-size: 9px;
+      line-height: 1.9;
+    }
+
+    /* =========================================================
+       FILTERS
+    ========================================================= */
+
+    .filters {
+      padding: 15px;
+    }
+
+    .filter-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 9px;
+    }
+
+    .field label {
+      display: block;
+      margin-bottom: 5px;
+
+      color: var(--muted);
+      font-size: 10px;
+    }
+
+    select {
+      width: 100%;
+      height: 41px;
+
+      padding: 0 11px;
+
+      border: 1px solid var(--border);
+      border-radius: 10px;
+
+      background: var(--bg-2);
+      color: var(--text);
+
+      outline: none;
+      font-size: 11px;
+    }
+
+    select:focus {
+      border-color: rgba(200, 155, 60, 0.55);
+    }
+
+    /* =========================================================
+       SUMMARY
+    ========================================================= */
+
+    .summary {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 9px;
+
+      margin-top: 10px;
+    }
+
+    .metric {
+      padding: 14px;
+
+      border: 1px solid var(--border);
+      border-radius: 13px;
+
+      background: var(--card);
+    }
+
+    .metric-label {
+      display: block;
+
+      color: var(--muted);
+      font-size: 9px;
+    }
+
+    .metric-value {
+      display: block;
+
+      margin-top: 5px;
+
+      font-size: 19px;
+      font-weight: 800;
+    }
+
+    /* =========================================================
+       CALENDAR LAYOUT
+    ========================================================= */
+
+    .calendar-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1.5fr) minmax(300px, 0.65fr);
+      gap: 12px;
+
+      align-items: start;
+    }
+
+    .calendar {
+      padding: 15px;
+    }
+
+    .day {
+      margin-bottom: 22px;
+    }
+
+    .day:last-child {
+      margin-bottom: 0;
+    }
+
+    .day-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      padding: 0 3px 9px;
+      margin-bottom: 8px;
+
+      border-bottom: 1px solid var(--border);
+    }
+
+    .day-title {
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .day-count {
+      color: var(--muted);
+      font-size: 9px;
+    }
+
+    /* =========================================================
+       EVENT
+    ========================================================= */
+
+    .event {
+      display: grid;
+      grid-template-columns: 70px minmax(0, 1fr) auto;
+      gap: 12px;
+
+      align-items: center;
+
+      width: 100%;
+      margin-bottom: 7px;
+      padding: 13px;
+
+      border: 1px solid var(--border);
+      border-radius: 13px;
+
+      background: var(--card);
+
+      color: var(--text);
+      text-align: right;
+
+      transition:
+        border-color 0.2s,
+        transform 0.2s,
+        background 0.2s;
+    }
+
+    .event:hover {
+      border-color: rgba(200, 155, 60, 0.45);
+      transform: translateY(-1px);
+    }
+
+    .event.active {
+      border-color: rgba(200, 155, 60, 0.60);
+      background: var(--gold-soft);
+    }
+
+    .event-time {
+      font-size: 11px;
+      font-weight: 800;
+    }
+
+    .event-name {
+      min-width: 0;
+    }
+
+    .event-name strong {
+      display: block;
+
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+
+      font-size: 12px;
+    }
+
+    .event-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+
+      margin-top: 5px;
+
+      color: var(--muted);
+      font-size: 9px;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+
+      padding: 4px 7px;
+
+      border: 1px solid var(--border);
+      border-radius: 7px;
+
+      font-size: 8px;
+      white-space: nowrap;
+    }
+
+    .badge.high {
+      color: var(--red);
+      border-color: rgba(214, 69, 69, 0.35);
+    }
+
+    .badge.medium {
+      color: var(--orange);
+      border-color: rgba(216, 138, 22, 0.35);
+    }
+
+    .badge.low {
+      color: var(--muted);
+    }
+
+    .event-values {
+      display: flex;
+      gap: 5px;
+      align-items: center;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .mini-value {
+      min-width: 58px;
+      padding: 5px 7px;
+
+      border: 1px solid var(--border);
+      border-radius: 8px;
+
+      text-align: center;
+    }
+
+    .mini-value small {
+      display: block;
+
+      color: var(--muted);
+      font-size: 7px;
+    }
+
+    .mini-value b {
+      font-size: 9px;
+    }
+
+    /* =========================================================
+       DETAIL
+    ========================================================= */
+
+    .detail {
+      position: sticky;
+      top: 85px;
+
+      padding: 18px;
+    }
+
+    .detail-empty {
+      color: var(--muted);
+      font-size: 10px;
+      line-height: 2;
+    }
+
+    .detail-header {
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .detail-header h3 {
+      margin: 0;
+
+      font-size: 17px;
+      line-height: 1.7;
+    }
+
+    .detail-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+
+      margin-top: 7px;
+    }
+
+    .detail-description {
+      margin: 13px 0 0;
+
+      color: var(--muted);
+      font-size: 10px;
+      line-height: 2;
+    }
+
+    .values {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 7px;
+
+      margin-top: 14px;
+    }
+
+    .value-card {
+      padding: 10px;
+
+      border: 1px solid var(--border);
+      border-radius: 10px;
+
+      background: var(--card-2);
+    }
+
+    .value-card span {
+      display: block;
+
+      color: var(--muted);
+      font-size: 8px;
+    }
+
+    .value-card strong {
+      display: block;
+
+      margin-top: 4px;
+
+      font-size: 12px;
+    }
+
+    .comparison {
+      margin-top: 10px;
+      padding: 11px;
+
+      border-radius: 11px;
+
+      font-size: 10px;
+      line-height: 1.9;
+    }
+
+    .comparison.better {
+      color: var(--green);
+      background: rgba(22, 131, 91, 0.08);
+      border: 1px solid rgba(22, 131, 91, 0.18);
+    }
+
+    .comparison.worse {
+      color: var(--red);
+      background: rgba(214, 69, 69, 0.08);
+      border: 1px solid rgba(214, 69, 69, 0.18);
+    }
+
+    .comparison.neutral {
+      color: var(--muted);
+      background: var(--card-2);
+      border: 1px solid var(--border);
+    }
+
+    .impact-box {
+      margin-top: 13px;
+      padding: 14px;
+
+      border: 1px solid var(--border);
+      border-radius: 13px;
+
+      background: var(--card-2);
+    }
+
+    .impact-box h4 {
+      margin: 0 0 7px;
+
+      font-size: 11px;
+    }
+
+    .impact-box p {
+      margin: 0;
+
+      color: var(--muted);
+      font-size: 9px;
+      line-height: 2;
+    }
+
+    .impact-flow {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+
+      gap: 5px;
+
+      margin-top: 10px;
+    }
+
+    .impact-flow span {
+      padding: 6px 8px;
+
+      border: 1px solid var(--border);
+      border-radius: 8px;
+
+      font-size: 8px;
+    }
+
+    .impact-arrow {
+      color: var(--gold);
+      font-size: 10px;
+    }
+
+    .source-link {
+      display: inline-flex;
+
+      margin-top: 12px;
+      padding: 7px 9px;
+
+      border: 1px solid rgba(200, 155, 60, 0.30);
+      border-radius: 8px;
+
+      color: var(--gold);
+      text-decoration: none;
+
+      font-size: 9px;
+    }
+
+    /* =========================================================
+       EMPTY / LOADING / ERROR
+    ========================================================= */
+
+    .state {
+      padding: 45px 20px;
+
+      border: 1px dashed var(--border);
+      border-radius: 14px;
+
+      color: var(--muted);
+
+      text-align: center;
+      font-size: 10px;
+      line-height: 2;
+    }
+
+    .state strong {
+      display: block;
+
+      margin-bottom: 4px;
+
+      color: var(--text);
+      font-size: 12px;
+    }
+
+    .footer {
+      margin-top: 26px;
+
+      color: var(--muted);
+
+      text-align: center;
+
+      font-size: 9px;
+      line-height: 2;
+    }
+
+    .footer a {
+      color: var(--gold);
+    }
+
+    /* =========================================================
+       MOBILE
+    ========================================================= */
+
+    @media (max-width: 920px) {
+
+      .guide-grid,
+      .calendar-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .detail {
+        position: static;
+      }
+
+      .filter-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .summary {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .terms {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 600px) {
+
+      .page {
+        width: min(100% - 20px, 1240px);
+        padding-top: 88px;
+      }
+
+      .hero {
+        padding: 19px;
+      }
+
+      .hero h1 {
+        font-size: 24px;
+      }
+
+      .hero-description {
+        font-size: 11px;
+      }
+
+      .hero-top {
+        align-items: flex-start;
+      }
+
+      .source-status {
+        white-space: normal;
+        text-align: left;
+      }
+
+      .filter-grid,
+      .summary,
+      .terms {
+        grid-template-columns: 1fr;
+      }
+
+      .event {
+        grid-template-columns: 55px minmax(0, 1fr);
+      }
+
+      .event-values {
+        grid-column: 2;
+        justify-content: flex-start;
+      }
+
+      .values {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .flow {
+        justify-content: flex-start;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Navbar مشترک شمعدون -->
+  <div id="shamdun-navbar"></div>
+
+  <main class="page">
+
+    <!-- =======================================================
+         HERO
+    ======================================================== -->
+
+    <section class="hero">
+
+      <div class="hero-top">
+
+        <div class="live">
+          <span class="live-dot"></span>
+          <span>تقویم اقتصادی</span>
+        </div>
+
+        <div
+          id="sourceStatus"
+          class="source-status"
+        >
+          در حال دریافت داده...
+        </div>
+
+      </div>
+
+      <h1>تقویم اقتصادی</h1>
+
+      <p class="hero-description">
+        رویدادهای مهم اقتصادی و تصمیمات بانک‌های مرکزی را دنبال کنید،
+        عدد واقعی را با انتظار بازار و مقدار قبلی مقایسه کنید
+        و مسیر اثرگذاری هر رویداد بر نرخ بهره، اوراق، دلار و دارایی‌ها را بهتر بشناسید.
+      </p>
+
+    </section>
+
+
+    <!-- =======================================================
+         GUIDE
+    ======================================================== -->
+
+    <section
+      id="guide"
+      class="section"
+    >
+
+      <div class="section-head">
+
+        <div>
+          <h2>راهنمای استفاده</h2>
+
+          <p>
+            تقویم اقتصادی فقط فهرست خبرها نیست؛
+            باید بدانیم داده چگونه به انتظارات بازار منتقل می‌شود.
+          </p>
+        </div>
+
+      </div>
+
+
+      <div class="guide-grid">
+
+        <div class="panel guide-box">
+
+          <h3>
+            یک رویداد اقتصادی چگونه به بازار می‌رسد؟
+          </h3>
+
+          <p>
+            عدد اقتصادی به‌تنهایی سیگنال خرید یا فروش نیست.
+            اهمیت اصلی در مقایسه عدد منتشرشده با انتظار بازار
+            و سپس بررسی واکنش نرخ‌های بهره، اوراق، ارز و سایر دارایی‌هاست.
+          </p>
+
+          <div class="flow">
+
+            <span class="flow-item">
+              رویداد
+            </span>
+
+            <span class="flow-arrow">←</span>
+
+            <span class="flow-item">
+              Forecast
+            </span>
+
+            <span class="flow-arrow">←</span>
+
+            <span class="flow-item">
+              Actual
+            </span>
+
+            <span class="flow-arrow">←</span>
+
+            <span class="flow-item">
+              انتظارات نرخ بهره
+            </span>
+
+            <span class="flow-arrow">←</span>
+
+            <span class="flow-item">
+              اوراق و دلار
+            </span>
+
+            <span class="flow-arrow">←</span>
+
+            <span class="flow-item">
+              دارایی‌ها
+            </span>
+
+          </div>
+
+        </div>
+
+
+        <div class="panel guide-box">
+
+          <h3>
+            هنگام انتشار داده به چه چیزی نگاه کنیم؟
+          </h3>
+
+          <p>
+            ابتدا عدد واقعی را ببینید، سپس آن را با Forecast و Previous
+            مقایسه کنید. بعد بررسی کنید که بازار قبل از انتشار چه چیزی
+            را قیمت‌گذاری کرده بود. واکنش واقعی بازار ممکن است با
+            تفسیر ساده «بهتر» یا «بدتر» متفاوت باشد.
+          </p>
+
+        </div>
+
+      </div>
+
+
+      <div class="terms">
+
+        <div class="term">
+          <strong>Actual</strong>
+          <span>
+            عدد واقعی که منتشر شده است.
+          </span>
+        </div>
+
+        <div class="term">
+          <strong>Forecast</strong>
+          <span>
+            پیش‌بینی یا اجماع بازار پیش از انتشار.
+          </span>
+        </div>
+
+        <div class="term">
+          <strong>Previous</strong>
+          <span>
+            آخرین مقدار قبلی؛ ممکن است بعداً اصلاح شود.
+          </span>
+        </div>
+
+        <div class="term">
+          <strong>Impact</strong>
+          <span>
+            سطح اهمیت بالقوه رویداد در تقویم.
+          </span>
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- =======================================================
+         FILTERS
+    ======================================================== -->
+
+    <section
+      id="filters"
+      class="section"
+    >
+
+      <div class="section-head">
+
+        <div>
+          <h2>فیلتر تقویم</h2>
+
+          <p>
+            بازه زمانی و نوع رویداد موردنظر را انتخاب کنید.
+          </p>
+        </div>
+
+      </div>
+
+
+      <div class="panel filters">
+
+        <div class="filter-grid">
+
+          <div class="field">
+
+            <label for="range">
+              بازه زمانی
+            </label>
+
+            <select id="range">
+
+              <option value="today">
+                امروز
+              </option>
+
+              <option value="week" selected>
+                این هفته
+              </option>
+
+              <option value="next">
+                هفته آینده
+              </option>
+
+            </select>
+
+          </div>
+
+
+          <div class="field">
+
+            <label for="country">
+              کشور / اقتصاد
+            </label>
+
+            <select id="country">
+
+              <option value="">
+                همه
+              </option>
+
+              <option value="United States">
+                🇺🇸 آمریکا
+              </option>
+
+              <option value="Euro Area">
+                🇪🇺 منطقه یورو
+              </option>
+
+              <option value="China">
+                🇨🇳 چین
+              </option>
+
+              <option value="Japan">
+                🇯🇵 ژاپن
+              </option>
+
+              <option value="United Kingdom">
+                🇬🇧 بریتانیا
+              </option>
+
+              <option value="Canada">
+                🇨🇦 کانادا
+              </option>
+
+              <option value="Germany">
+                🇩🇪 آلمان
+              </option>
+
+              <option value="France">
+                🇫🇷 فرانسه
+              </option>
+
+              <option value="Australia">
+                🇦🇺 استرالیا
+              </option>
+
+            </select>
+
+          </div>
+
+
+          <div class="field">
+
+            <label for="impact">
+              اهمیت
+            </label>
+
+            <select id="impact">
+
+              <option value="">
+                همه
+              </option>
+
+              <option value="high">
+                زیاد
+              </option>
+
+              <option value="medium">
+                متوسط
+              </option>
+
+              <option value="low">
+                کم
+              </option>
+
+            </select>
+
+          </div>
+
+
+          <div class="field">
+
+            <label for="category">
+              نوع رویداد
+            </label>
+
+            <select id="category">
+
+              <option value="">
+                همه
+              </option>
+
+              <option value="economic">
+                شاخص اقتصادی
+              </option>
+
+              <option value="central-bank">
+                بانک مرکزی
+              </option>
+
+              <option value="earnings">
+                گزارش شرکت‌ها
+              </option>
+
+            </select>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <div class="summary">
+
+        <div class="metric">
+          <span class="metric-label">
+            کل رویدادها
+          </span>
+
+          <strong
+            id="totalEvents"
+            class="metric-value"
+          >
+            —
+          </strong>
+        </div>
+
+
+        <div class="metric">
+          <span class="metric-label">
+            اهمیت بالا
+          </span>
+
+          <strong
+            id="highEvents"
+            class="metric-value"
+          >
+            —
+          </strong>
+        </div>
+
+
+        <div class="metric">
+          <span class="metric-label">
+            امروز
+          </span>
+
+          <strong
+            id="todayEvents"
+            class="metric-value"
+          >
+            —
+          </strong>
+        </div>
+
+
+        <div class="metric">
+          <span class="metric-label">
+            وضعیت داده
+          </span>
+
+          <strong
+            id="dataState"
+            class="metric-value"
+          >
+            —
+          </strong>
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- =======================================================
+         CALENDAR
+    ======================================================== -->
+
+    <section
+      id="calendar"
+      class="section"
+    >
+
+      <div class="section-head">
+
+        <div>
+          <h2>رویدادهای اقتصادی</h2>
+
+          <p>
+            روی هر رویداد کلیک کنید تا جزئیات آن نمایش داده شود.
+          </p>
+        </div>
+
+      </div>
+
+
+      <div class="calendar-layout">
+
+        <div
+          id="eventList"
+          class="panel calendar"
+        >
+
+          <div class="state">
+
+            <strong>
+              در حال دریافت داده واقعی...
+            </strong>
+
+            لطفاً چند لحظه صبر کنید.
+
+          </div>
+
+        </div>
+
+
+        <aside
+          id="detail"
+          class="panel detail"
+        >
+
+          <div class="detail-header">
+
+            <h3>
+              جزئیات رویداد
+            </h3>
+
+          </div>
+
+          <p class="detail-empty">
+            یک رویداد را انتخاب کنید تا تعریف شاخص،
+            Actual، Forecast، Previous و مسیر اثرگذاری آن
+            نمایش داده شود.
+          </p>
+
+          <div class="impact-box">
+
+            <h4>
+              Market Impact Map
+            </h4>
+
+            <p>
+              این نقشه یک چارچوب آموزشی برای فهم مکانیزم انتقال
+              داده اقتصادی است و جهت قطعی بازار را پیش‌بینی نمی‌کند.
+            </p>
+
+            <div class="impact-flow">
+
+              <span>داده</span>
+
+              <span class="impact-arrow">←</span>
+
+              <span>انتظارات</span>
+
+              <span class="impact-arrow">←</span>
+
+              <span>نرخ بهره</span>
+
+              <span class="impact-arrow">←</span>
+
+              <span>اوراق</span>
+
+              <span class="impact-arrow">←</span>
+
+              <span>دلار</span>
+
+              <span class="impact-arrow">←</span>
+
+              <span>دارایی‌ها</span>
+
+            </div>
+
+          </div>
+
+        </aside>
+
+      </div>
+
+    </section>
+
+
+    <!-- =======================================================
+         FOOTER
+    ======================================================== -->
+
+    <div class="footer">
+
+      داده‌های تقویم از
+      <a
+        href="https://www.financecalendar.com"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        Finance Calendar
+      </a>
+      دریافت می‌شوند.
+
+      <br>
+
+      داده‌ها پس از انتشار رسمی به‌روزرسانی می‌شوند؛
+      زمان انتشار و اجماع ممکن است با توجه به رویداد تغییر کند.
+
+    </div>
+
+  </main>
+
+
+  <!-- Navbar -->
+  <script src="navbar.js"></script>
+
+
+  <script>
+    /* =========================================================
+       SHAMDUN ECONOMIC CALENDAR
+       REAL DATA
+    ========================================================= */
+
+    (() => {
+
+      "use strict";
+
+
+      /* =======================================================
+         CONFIG
+      ======================================================== */
+
+      const API_BASE =
+        "https://www.financecalendar.com/wp-json/fc/v1/calendar";
+
+
+      const state = {
+
+        allEvents: [],
+
+        filteredEvents: [],
+
+        selectedEventId: null,
+
+        loading: false,
+
+        error: null
+
+      };
+
+
+      /* =======================================================
+         DOM
+      ======================================================== */
+
+      const $ = (id) =>
+        document.getElementById(id);
+
+
+      const rangeEl =
+        $("range");
+
+      const countryEl =
+        $("country");
+
+      const impactEl =
+        $("impact");
+
+      const categoryEl =
+        $("category");
+
+      const eventListEl =
+        $("eventList");
+
+      const detailEl =
+        $("detail");
+
+      const sourceStatusEl =
+        $("sourceStatus");
+
+      const totalEventsEl =
+        $("totalEvents");
+
+      const highEventsEl =
+        $("highEvents");
+
+      const todayEventsEl =
+        $("todayEvents");
+
+      const dataStateEl =
+        $("dataState");
+
+
+      /* =======================================================
+         DATE HELPERS
+      ======================================================== */
+
+      function pad(value) {
+
+        return String(value)
+          .padStart(2, "0");
+
+      }
+
+
+      function dateString(date) {
+
+        return [
+          date.getFullYear(),
+          pad(date.getMonth() + 1),
+          pad(date.getDate())
+        ].join("-");
+
+      }
+
+
+      function startOfDay(date) {
+
+        const d =
+          new Date(date);
+
+        d.setHours(0, 0, 0, 0);
+
+        return d;
+
+      }
+
+
+      function addDays(date, amount) {
+
+        const d =
+          new Date(date);
+
+        d.setDate(
+          d.getDate() + amount
+        );
+
+        return d;
+
+      }
+
+
+      function getRange() {
+
+        const now =
+          new Date();
+
+        const today =
+          startOfDay(now);
+
+
+        if (rangeEl.value === "today") {
+
+          return {
+            from: today,
+            to: today
+          };
+
+        }
+
+
+        if (rangeEl.value === "next") {
+
+          const from =
+            addDays(today, 7);
+
+          const to =
+            addDays(today, 13);
+
+          return {
+            from,
+            to
+          };
+
+        }
+
+
+        return {
+
+          from: today,
+
+          to: addDays(today, 6)
+
+        };
+
+      }
+
+
+      /* =======================================================
+         FORMATTERS
+      ======================================================== */
+
+      const faWeekdays = [
+        "یکشنبه",
+        "دوشنبه",
+        "سه‌شنبه",
+        "چهارشنبه",
+        "پنجشنبه",
+        "جمعه",
+        "شنبه"
+      ];
+
+
+      const faMonths = [
+        "ژانویه",
+        "فوریه",
+        "مارس",
+        "آوریل",
+        "مه",
+        "ژوئن",
+        "ژوئیه",
+        "اوت",
+        "سپتامبر",
+        "اکتبر",
+        "نوامبر",
+        "دسامبر"
+      ];
+
+
+      function formatDay(date) {
+
+        return `${faWeekdays[date.getDay()]}
+                ${date.getDate()}
+                ${faMonths[date.getMonth()]}`;
+
+      }
+
+
+      function formatTime(value) {
+
+        if (!value) {
+          return "—";
+        }
+
+
+        const date =
+          new Date(value);
+
+
+        if (
+          Number.isNaN(
+            date.getTime()
+          )
+        ) {
+
+          return "—";
+
+        }
+
+
+        return date.toLocaleTimeString(
+          "fa-IR",
+          {
+            hour: "2-digit",
+            minute: "2-digit"
+          }
+        );
+
+      }
+
+
+      function formatNumber(value) {
+
+        if (
+          value === null ||
+          value === undefined ||
+          value === ""
+        ) {
+
+          return "—";
+
+        }
+
+
+        return String(value);
+
+      }
+
+
+      function normalizeText(value) {
+
+        return String(
+          value ?? ""
+        )
+          .trim()
+          .toLowerCase();
+
+      }
+
+
+      /* =======================================================
+         NORMALIZE EVENT
+      ======================================================== */
+
+      function normalizeEvent(item, index) {
+
+        const category =
+          item.category ??
+          "";
+
+        const categoryText =
+          normalizeText(category);
+
+
+        let categoryType =
+          "economic";
+
+
+        if (
+          categoryText.includes(
+            "central"
+          ) ||
+          categoryText.includes(
+            "monetary"
+          ) ||
+          categoryText.includes(
+            "bank"
+          )
+        ) {
+
+          categoryType =
+            "central-bank";
+
+        }
+
+
+        if (
+          categoryText.includes(
+            "earning"
+          )
+        ) {
+
+          categoryType =
+            "earnings";
+
+        }
+
+
+        const impact =
+          normalizeText(
+            item.impact ??
+            "low"
+          );
+
+
+        return {
+
+          id:
+            item.id ??
+            item.event_id ??
+            `${item.date || "event"}-${index}`,
+
+          date:
+            item.time_utc ??
+            item.date ??
+            null,
+
+          timeUTC:
+            item.time_utc ??
+            null,
+
+          timeET:
+            item.time_et ??
+            null,
+
+          allDay:
+            Boolean(
+              item.all_day
+            ),
+
+          country:
+            item.country ??
+            "",
+
+          name:
+            item.name ??
+            item.title ??
+            item.event ??
+            "رویداد اقتصادی",
+
+          title:
+            item.title ??
+            item.name ??
+            "",
+
+          category,
+
+          categoryType,
+
+          impact:
+            impact === "high"
+              ? "high"
+              : impact === "medium"
+                ? "medium"
+                : "low",
+
+          actual:
+            item.actual ??
+            null,
+
+          forecast:
+            item.consensus ??
+            item.forecast ??
+            null,
+
+          previous:
+            item.prior ??
+            item.previous ??
+            null,
+
+          unit:
+            item.unit ??
+            "",
+
+          url:
+            item.url ??
+            "https://www.financecalendar.com",
+
+          source:
+            "Finance Calendar"
+
+        };
+
+      }
+
+
+      /* =======================================================
+         API
+      ======================================================== */
+
+      async function fetchCalendar() {
+
+        state.loading = true;
+        state.error = null;
+
+        setLoadingState();
+
+
+        const range =
+          getRange();
+
+
+        const params =
+          new URLSearchParams({
+
+            from:
+              dateString(
+                range.from
+              ),
+
+            to:
+              dateString(
+                range.to
+              ),
+
+            limit:
+              "500"
+
+          });
+
+
+        /*
+          اهمیت را عمداً در API فیلتر نمی‌کنیم.
+          چون کاربر ممکن است بعداً بخواهد
+          همه رویدادها را ببیند.
+        */
+
+
+        const url =
+          `${API_BASE}?${params.toString()}`;
+
+
+        try {
+
+          const response =
+            await fetch(url, {
+              method: "GET",
+              headers: {
+                "Accept":
+                  "application/json"
+              }
+            });
+
+
+          if (!response.ok) {
+
+            throw new Error(
+              `HTTP ${response.status}`
+            );
+
+          }
+
+
+          const raw =
+            await response.json();
+
+
+          /*
+            API مستندشده معمولاً:
+            {
+              events: [...],
+              attribution: {...}
+            }
+
+            برای مقاومت بیشتر،
+            چند ساختار احتمالی را نیز پشتیبانی می‌کنیم.
+          */
+
+          let rawEvents = [];
+
+
+          if (
+            Array.isArray(raw)
+          ) {
+
+            rawEvents =
+              raw;
+
+          } else if (
+            Array.isArray(
+              raw.events
+            )
+          ) {
+
+            rawEvents =
+              raw.events;
+
+          } else if (
+            Array.isArray(
+              raw.data
+            )
+          ) {
+
+            rawEvents =
+              raw.data;
+
+          } else if (
+            Array.isArray(
+              raw.results
+            )
+          ) {
+
+            rawEvents =
+              raw.results;
+
+          } else {
+
+            throw new Error(
+              "ساختار پاسخ API معتبر نیست."
+            );
+
+          }
+
+
+          state.allEvents =
+            rawEvents
+              .map(
+                normalizeEvent
+              )
+              .filter(
+                event =>
+                  event.date
+              );
+
+
+          state.loading = false;
+
+
+          sourceStatusEl.textContent =
+            `${state.allEvents.length.toLocaleString("fa-IR")} رویداد دریافت شد`;
+
+          dataStateEl.textContent =
+            "متصل";
+
+
+          applyFilters();
+
+
+        } catch (error) {
+
+          console.error(
+            "Economic Calendar:",
+            error
+          );
+
+
+          state.loading = false;
+
+          state.error =
+            error;
+
+
+          sourceStatusEl.textContent =
+            "خطا در دریافت داده";
+
+          dataStateEl.textContent =
+            "خطا";
+
+
+          renderError(
+            error
+          );
+
+        }
+
+      }
+
+
+      /* =======================================================
+         FILTER
+      ======================================================== */
+
+      function applyFilters() {
+
+        let events =
+          [...state.allEvents];
+
+
+        const country =
+          countryEl.value;
+
+        const impact =
+          impactEl.value;
+
+        const category =
+          categoryEl.value;
+
+
+        if (country) {
+
+          events =
+            events.filter(
+              event =>
+                normalizeText(
+                  event.country
+                ) ===
+                normalizeText(
+                  country
+                )
+            );
+
+        }
+
+
+        if (impact) {
+
+          events =
+            events.filter(
+              event =>
+                event.impact ===
+                impact
+            );
+
+        }
+
+
+        if (category) {
+
+          events =
+            events.filter(
+              event =>
+                event.categoryType ===
+                category
+            );
+
+        }
+
+
+        events.sort(
+          (a, b) =>
+            new Date(a.date) -
+            new Date(b.date)
+        );
+
+
+        state.filteredEvents =
+          events;
+
+
+        updateSummary();
+
+        renderCalendar();
+
+
+        if (
+          state.selectedEventId
+        ) {
+
+          const selected =
+            events.find(
+              event =>
+                String(event.id) ===
+                String(
+                  state.selectedEventId
+                )
+            );
+
+
+          if (selected) {
+
+            renderDetail(
+              selected
+            );
+
+          }
+
+        }
+
+      }
+
+
+      /* =======================================================
+         SUMMARY
+      ======================================================== */
+
+      function updateSummary() {
+
+        const events =
+          state.filteredEvents;
+
+
+        totalEventsEl.textContent =
+          events.length.toLocaleString(
+            "fa-IR"
+          );
+
+
+        highEventsEl.textContent =
+          events.filter(
+            event =>
+              event.impact === "high"
+          ).length.toLocaleString(
+            "fa-IR"
+          );
+
+
+        const today =
+          dateString(
+            new Date()
+          );
+
+
+        todayEventsEl.textContent =
+          events.filter(
+            event =>
+              String(
+                event.date
+              ).slice(0, 10) ===
+              today
+          ).length.toLocaleString(
+            "fa-IR"
+          );
+
+      }
+
+
+      /* =======================================================
+         RENDER CALENDAR
+      ======================================================== */
+
+      function renderCalendar() {
+
+        if (
+          !state.filteredEvents.length
+        ) {
+
+          eventListEl.innerHTML = `
+
+            <div class="state">
+
+              <strong>
+                رویدادی پیدا نشد
+              </strong>
+
+              با فیلتر فعلی،
+              رویداد اقتصادی در بازه انتخاب‌شده وجود ندارد.
+
+            </div>
+
+          `;
+
+          return;
+
+        }
+
+
+        const groups =
+          new Map();
+
+
+        state.filteredEvents.forEach(
+          event => {
+
+            const key =
+              String(
+                event.date
+              ).slice(0, 10);
+
+
+            if (
+              !groups.has(key)
+            ) {
+
+              groups.set(
+                key,
+                []
+              );
+
+            }
+
+
+            groups
+              .get(key)
+              .push(event);
+
+          }
+        );
+
+
+        let html = "";
+
+
+        groups.forEach(
+          (events, dateKey) => {
+
+            const day =
+              new Date(
+                `${dateKey}T12:00:00`
+              );
+
+
+            html += `
+
+              <div class="day">
+
+                <div class="day-header">
+
+                  <span class="day-title">
+                    ${formatDay(day)}
+                  </span>
+
+                  <span class="day-count">
+                    ${events.length.toLocaleString("fa-IR")}
+                    رویداد
+                  </span>
+
+                </div>
+
+            `;
+
+
+            events.forEach(
+              event => {
+
+                html +=
+                  renderEvent(
+                    event
+                  );
+
+              }
+            );
+
+
+            html += `
+              </div>
+            `;
+
+          }
+        );
+
+
+        eventListEl.innerHTML =
+          html;
+
+
+        eventListEl
+          .querySelectorAll(
+            "[data-event-id]"
+          )
+          .forEach(
+            button => {
+
+              button.addEventListener(
+                "click",
+                () => {
+
+                  const id =
+                    button.dataset.eventId;
+
+
+                  const event =
+                    state.filteredEvents.find(
+                      item =>
+                        String(
+                          item.id
+                        ) ===
+                        String(id)
+                    );
+
+
+                  if (!event) {
+                    return;
+                  }
+
+
+                  state.selectedEventId =
+                    id;
+
+
+                  renderCalendar();
+
+                  renderDetail(
+                    event
+                  );
+
+                }
+              );
+
+            }
+          );
+
+      }
+
+
+      /* =======================================================
+         EVENT CARD
+      ======================================================== */
+
+      function renderEvent(event) {
+
+        const isActive =
+          String(
+            state.selectedEventId
+          ) ===
+          String(event.id);
+
+
+        const activeClass =
+          isActive
+            ? "active"
+            : "";
+
+
+        const impactLabel =
+          event.impact === "high"
+            ? "زیاد"
+            : event.impact === "medium"
+              ? "متوسط"
+              : "کم";
+
+
+        const time =
+          event.allDay
+            ? "تمام‌روز"
+            : formatTime(
+                event.timeUTC
+              );
+
+
+        return `
+
+          <button
+            type="button"
+            class="event ${activeClass}"
+            data-event-id="${escapeHtml(
+              event.id
+            )}"
+          >
+
+            <div class="event-time">
+              ${escapeHtml(time)}
+            </div>
+
+
+            <div class="event-name">
+
+              <strong>
+                ${escapeHtml(
+                  event.name
+                )}
+              </strong>
+
+
+              <div class="event-meta">
+
+                <span>
+                  ${escapeHtml(
+                    event.country ||
+                    "—"
+                  )}
+                </span>
+
+                <span>•</span>
+
+                <span>
+                  ${escapeHtml(
+                    translateCategory(
+                      event.category
+                    )
+                  )}
+                </span>
+
+                <span
+                  class="badge ${event.impact}"
+                >
+                  ${impactLabel}
+                </span>
+
+              </div>
+
+            </div>
+
+
+            <div class="event-values">
+
+              <div class="mini-value">
+                <small>قبلی</small>
+                <b>
+                  ${escapeHtml(
+                    formatNumber(
+                      event.previous
+                    )
+                  )}
+                </b>
+              </div>
+
+
+              <div class="mini-value">
+                <small>پیش‌بینی</small>
+                <b>
+                  ${escapeHtml(
+                    formatNumber(
+                      event.forecast
+                    )
+                  )}
+                </b>
+              </div>
+
+
+              <div class="mini-value">
+                <small>واقعی</small>
+                <b>
+                  ${escapeHtml(
+                    formatNumber(
+                      event.actual
+                    )
+                  )}
+                </b>
+              </div>
+
+            </div>
+
+          </button>
+
+        `;
+
+      }
+
+
+      /* =======================================================
+         DETAIL
+      ======================================================== */
+
+      function renderDetail(event) {
+
+        const comparison =
+          compareActualForecast(
+            event.actual,
+            event.forecast
+          );
+
+
+        const description =
+          getEventDescription(
+            event
+          );
+
+
+        detailEl.innerHTML = `
+
+          <div class="detail-header">
+
+            <h3>
+              ${escapeHtml(
+                event.name
+              )}
+            </h3>
+
+
+            <div class="detail-meta">
+
+              <span class="badge">
+                ${escapeHtml(
+                  event.country ||
+                  "—"
+                )}
+              </span>
+
+              <span class="badge">
+                ${escapeHtml(
+                  translateCategory(
+                    event.category
+                  )
+                )}
+              </span>
+
+              <span class="badge ${event.impact}">
+                اهمیت:
+                ${
+                  event.impact === "high"
+                    ? "زیاد"
+                    : event.impact === "medium"
+                      ? "متوسط"
+                      : "کم"
+                }
+              </span>
+
+            </div>
+
+
+            <p class="detail-description">
+              ${escapeHtml(
+                description
+              )}
+            </p>
+
+          </div>
+
+
+          <div class="values">
+
+            <div class="value-card">
+              <span>Previous</span>
+              <strong>
+                ${escapeHtml(
+                  formatNumber(
+                    event.previous
+                  )
+                )}
+              </strong>
+            </div>
+
+
+            <div class="value-card">
+              <span>Forecast</span>
+              <strong>
+                ${escapeHtml(
+                  formatNumber(
+                    event.forecast
+                  )
+                )}
+              </strong>
+            </div>
+
+
+            <div class="value-card">
+              <span>Actual</span>
+              <strong>
+                ${escapeHtml(
+                  formatNumber(
+                    event.actual
+                  )
+                )}
+              </strong>
+            </div>
+
+          </div>
+
+
+          <div class="comparison ${comparison.className}">
+            ${escapeHtml(
+              comparison.text
+            )}
+          </div>
+
+
+          <div class="impact-box">
+
+            <h4>
+              Market Impact Map
+            </h4>
+
+            <p>
+              مسیر اثرگذاری به نوع شاخص بستگی دارد.
+              این نمودار آموزشی است و جهت قطعی بازار را تعیین نمی‌کند.
+            </p>
+
+
+            <div class="impact-flow">
+
+              <span>
+                ${escapeHtml(
+                  shortIndicatorName(
+                    event.name
+                  )
+                )}
+              </span>
+
+              <span class="impact-arrow">
+                ←
+              </span>
+
+              <span>
+                انتظارات
+              </span>
+
+              <span class="impact-arrow">
+                ←
+              </span>
+
+              <span>
+                نرخ بهره
+              </span>
+
+              <span class="impact-arrow">
+                ←
+              </span>
+
+              <span>
+                اوراق
+              </span>
+
+              <span class="impact-arrow">
+                ←
+              </span>
+
+              <span>
+                دلار
+              </span>
+
+              <span class="impact-arrow">
+                ←
+              </span>
+
+              <span>
+                دارایی‌ها
+              </span>
+
+            </div>
+
+          </div>
+
+
+          ${
+            event.url
+              ? `
+                <a
+                  class="source-link"
+                  href="${escapeAttribute(
+                    event.url
+                  )}"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  مشاهده منبع رویداد ↗
+                </a>
+              `
+              : ""
+          }
+
+        `;
+
+      }
+
+
+      /* =======================================================
+         EVENT DESCRIPTION
+      ======================================================== */
+
+      function getEventDescription(
+        event
+      ) {
+
+        const text =
+          normalizeText(
+            `${event.name} ${event.category}`
+          );
+
+
+        if (
+          text.includes("cpi") ||
+          text.includes("inflation")
+        ) {
+
+          return "شاخصی برای سنجش تغییرات سطح قیمت‌هاست و از مهم‌ترین داده‌های مورد توجه بازار برای ارزیابی مسیر تورم و انتظارات سیاست پولی محسوب می‌شود.";
+
+        }
+
+
+        if (
+          text.includes("pce")
+        ) {
+
+          return "شاخص مخارج مصرف شخصی یکی از معیارهای مهم تورم در آمریکا است و در ارزیابی مسیر سیاست پولی فدرال رزرو اهمیت دارد.";
+
+        }
+
+
+        if (
+          text.includes("gdp")
+        ) {
+
+          return "تولید ناخالص داخلی اندازه‌ای از فعالیت اقتصادی است و برای ارزیابی سرعت رشد یا کاهش اقتصاد مورد استفاده قرار می‌گیرد.";
+
+        }
+
+
+        if (
+          text.includes("jobs") ||
+          text.includes("employment") ||
+          text.includes("payroll") ||
+          text.includes("unemployment")
+        ) {
+
+          return "داده‌های بازار کار اطلاعاتی درباره اشتغال، بیکاری و قدرت بازار کار ارائه می‌کنند و می‌توانند روی انتظارات سیاست پولی اثر بگذارند.";
+
+        }
+
+
+        if (
+          text.includes("fomc") ||
+          text.includes("rate decision") ||
+          text.includes("central bank") ||
+          text.includes("ecb") ||
+          text.includes("boe") ||
+          text.includes("boj") ||
+          text.includes("rba")
+        ) {
+
+          return "تصمیم بانک مرکزی درباره سیاست پولی می‌تواند انتظارات نرخ بهره، بازده اوراق، ارز و شرایط مالی را تغییر دهد.";
+
+        }
+
+
+        if (
+          text.includes("pmi") ||
+          text.includes("manufacturing") ||
+          text.includes("services")
+        ) {
+
+          return "شاخص‌های فعالیت اقتصادی مانند PMI برای ارزیابی وضعیت تولید، خدمات و سرعت فعالیت اقتصادی مورد استفاده قرار می‌گیرند.";
+
+        }
+
+
+        if (
+          text.includes("retail") ||
+          text.includes("consumer") ||
+          text.includes("sales")
+        ) {
+
+          return "داده‌های مصرف و فروش اطلاعاتی درباره قدرت تقاضای خانوارها و وضعیت فعالیت اقتصادی ارائه می‌کنند.";
+
+        }
+
+
+        return "این رویداد یکی از داده‌های برنامه‌ریزی‌شده تقویم اقتصادی است. برای تفسیر آن، Actual را در کنار Forecast و Previous بررسی کنید و سپس واکنش بازار را مشاهده کنید.";
+
+      }
+
+
+      /* =======================================================
+         ACTUAL VS FORECAST
+      ======================================================== */
+
+      function compareActualForecast(
+        actual,
+        forecast
+      ) {
+
+        if (
+          actual === null ||
+          actual === undefined ||
+          actual === "" ||
+          forecast === null ||
+          forecast === undefined ||
+          forecast === ""
+        ) {
+
+          return {
+
+            className:
+              "neutral",
+
+            text:
+              "مقایسه Actual و Forecast هنوز ممکن نیست؛ یکی از اعداد منتشر نشده است."
+
+          };
+
+        }
+
+
+        const actualNumber =
+          extractNumber(actual);
+
+
+        const forecastNumber =
+          extractNumber(forecast);
+
+
+        if (
+          actualNumber === null ||
+          forecastNumber === null
+        ) {
+
+          return {
+
+            className:
+              "neutral",
+
+            text:
+              "مقادیر این رویداد به شکل متنی منتشر شده‌اند و مقایسه عددی مستقیم انجام نمی‌شود."
+
+          };
+
+        }
+
+
+        const diff =
+          actualNumber -
+          forecastNumber;
+
+
+        const rounded =
+          Number(
+            diff.toFixed(4)
+          );
+
+
+        if (rounded === 0) {
+
+          return {
+
+            className:
+              "neutral",
+
+            text:
+              "Actual با Forecast برابر است."
+
+          };
+
+        }
+
+
+        if (rounded > 0) {
+
+          return {
+
+            className:
+              "better",
+
+            text:
+              `Actual نسبت به Forecast بالاتر بوده است؛ اختلاف عددی: ${rounded}`
+
+          };
+
+        }
+
+
+        return {
+
+          className:
+            "worse",
+
+          text:
+            `Actual نسبت به Forecast پایین‌تر بوده است؛ اختلاف عددی: ${Math.abs(rounded)}`
+
+        };
+
+      }
+
+
+      function extractNumber(value) {
+
+        if (
+          typeof value === "number"
+        ) {
+
+          return Number.isFinite(value)
+            ? value
+            : null;
+
+        }
+
+
+        const normalized =
+          String(value)
+            .replace(/,/g, "")
+            .replace(/%/g, "")
+            .match(
+              /-?\d+(?:\.\d+)?/
+            );
+
+
+        if (!normalized) {
+          return null;
+        }
+
+
+        const number =
+          Number(
+            normalized[0]
+          );
+
+
+        return Number.isFinite(number)
+          ? number
+          : null;
+
+      }
+
+
+      /* =======================================================
+         CATEGORY TRANSLATION
+      ======================================================== */
+
+      function translateCategory(
+        value
+      ) {
+
+        const text =
+          normalizeText(value);
+
+
+        if (
+          text.includes("central") ||
+          text.includes("monetary")
+        ) {
+
+          return "بانک مرکزی و سیاست پولی";
+
+        }
+
+
+        if (
+          text.includes("economic")
+        ) {
+
+          return "شاخص اقتصادی";
+
+        }
+
+
+        if (
+          text.includes("earning")
+        ) {
+
+          return "گزارش شرکت‌ها";
+
+        }
+
+
+        return value ||
+          "رویداد اقتصادی";
+
+      }
+
+
+      function shortIndicatorName(
+        name
+      ) {
+
+        if (!name) {
+          return "داده";
+        }
+
+
+        return name
+          .replace(
+            /September|October|November|December|January|February|March|April|May|June|July|August/gi,
+            ""
+          )
+          .trim()
+          .slice(0, 28);
+
+      }
+
+
+      /* =======================================================
+         UI STATES
+      ======================================================== */
+
+      function setLoadingState() {
+
+        eventListEl.innerHTML = `
+
+          <div class="state">
+
+            <strong>
+              در حال دریافت داده واقعی...
+            </strong>
+
+            اطلاعات تقویم از منبع داده دریافت می‌شود.
+
+          </div>
+
+        `;
+
+        dataStateEl.textContent =
+          "در حال دریافت";
+
+      }
+
+
+      function renderError(
+        error
+      ) {
+
+        eventListEl.innerHTML = `
+
+          <div class="state">
+
+            <strong>
+              دریافت داده ناموفق بود
+            </strong>
+
+            ارتباط با منبع داده برقرار نشد.
+
+            <br>
+
+            هیچ داده ساختگی در صفحه نمایش داده نمی‌شود.
+
+          </div>
+
+        `;
+
+
+        detailEl.innerHTML = `
+
+          <div class="detail-header">
+
+            <h3>
+              خطای دریافت داده
+            </h3>
+
+          </div>
+
+          <p class="detail-empty">
+            لطفاً اتصال اینترنت یا وضعیت سرویس داده را بررسی کنید.
+          </p>
+
+        `;
+
+      }
+
+
+      /* =======================================================
+         ESCAPE
+      ======================================================== */
+
+      function escapeHtml(
+        value
+      ) {
+
+        return String(
+          value ?? ""
+        )
+          .replace(
+            /&/g,
+            "&amp;"
+          )
+          .replace(
+            /</g,
+            "&lt;"
+          )
+          .replace(
+            />/g,
+            "&gt;"
+          )
+          .replace(
+            /"/g,
+            "&quot;"
+          )
+          .replace(
+            /'/g,
+            "&#039;"
+          );
+
+      }
+
+
+      function escapeAttribute(
+        value
+      ) {
+
+        return escapeHtml(
+          value
+        );
+
+      }
+
+
+      /* =======================================================
+         EVENTS
+      ======================================================== */
+
+      rangeEl.addEventListener(
+        "change",
+        fetchCalendar
+      );
+
+
+      countryEl.addEventListener(
+        "change",
+        applyFilters
+      );
+
+
+      impactEl.addEventListener(
+        "change",
+        applyFilters
+      );
+
+
+      categoryEl.addEventListener(
+        "change",
+        applyFilters
+      );
+
+
+      /* =======================================================
+         INITIAL LOAD
+      ======================================================== */
+
+      fetchCalendar();
+
+    })();
+  </script>
+
+</body>
+</html>
