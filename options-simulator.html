@@ -2012,22 +2012,22 @@ async function fetchPrice(asset) {
   }
 
   // ═══ کالا — BrsApi Commodity ═══
-//  if (asset.source === 'commodity') {
-//    try {
-//      const data = await fetchBrsApi('https://Api.BrsApi.ir/Market/Commodity.php');
-//      const target = asset.key;
+  if (asset.source === 'commodity') {
+    try {
+      const data = await fetchBrsApi('https://Api.BrsApi.ir/Market/Commodity.php');
+      const target = asset.key;
 
-  //    if ((target === 'gold' || target === 'silver') && data.metal_precious) {
- //       const item = data.metal_precious.find(i => i.symbol === asset.symbol);
- //       if (item && item.price) return { price: parseFloat(item.price), source: 'live' };
- //     }
- //     if (target === 'oil' && data.energy) {
-/        const item = data.energy.find(i => i.symbol === 'BRENT' || i.symbol === 'BRENT_OIL');
-//        if (item && item.price) return { price: parseFloat(item.price), source: 'live' };
-/ /     }
-//    } catch (e) { console.warn('Commodity error:', asset.key, e); }
-//    return null;
-//  }
+      if ((target === 'gold' || target === 'silver') && data.metal_precious) {
+        const item = data.metal_precious.find(i => i.symbol === asset.symbol);
+        if (item && item.price) return { price: parseFloat(item.price), source: 'live' };
+      }
+      if (target === 'oil' && data.energy) {
+        const item = data.energy.find(i => i.symbol === 'BRENT' || i.symbol === 'BRENT_OIL');
+        if (item && item.price) return { price: parseFloat(item.price), source: 'live' };
+     }
+    } catch (e) { console.warn('Commodity error:', asset.key, e); }
+    return null;
+  }
 
   // ═══ بورس — BrsApi AllSymbols ═══
   if (asset.source === 'stocks') {
@@ -2102,26 +2102,26 @@ async function refreshAllPrices(showNotificationFlag = false) {
       } catch (e) { console.warn('Crypto batch error:', e); }
     }
 
-//    // ═══ کالا: یک درخواست برای همه ═══
- //   const commodityAssets = uniqueAssetKeys
-  //    .map(k => getAsset(k))
- //     .filter(a => a && a.source === 'commodity');
+    // ═══ کالا: یک درخواست برای همه ═══
+    const commodityAssets = uniqueAssetKeys
+      .map(k => getAsset(k))
+      .filter(a => a && a.source === 'commodity');
 
- //   if (commodityAssets.length > 0) {
- //     try {
-//        const data = await fetchBrsApi('https://Api.BrsApi.ir/Market/Commodity.php');
-  //      commodityAssets.forEach(a => {
-  //        if ((a.key === 'gold' || a.key === 'silver') && data.metal_precious) {
-  //          const item = data.metal_precious.find(i => i.symbol === a.symbol);
-  //          if (item && item.price) results[a.key] = { price: parseFloat(item.price), source: 'live' };
-  //        }
- //         if (a.key === 'oil' && data.energy) {
-  //          const item = data.energy.find(i => i.symbol === 'BRENT' || i.symbol === 'BRENT_OIL');
-   //         if (item && item.price) results[a.key] = { price: parseFloat(item.price), source: 'live' };
- //         }
-//        });
- //     } catch (e) { console.warn('Commodity batch error:', e); }
- //   }
+    if (commodityAssets.length > 0) {
+      try {
+        const data = await fetchBrsApi('https://Api.BrsApi.ir/Market/Commodity.php');
+        commodityAssets.forEach(a => {
+          if ((a.key === 'gold' || a.key === 'silver') && data.metal_precious) {
+            const item = data.metal_precious.find(i => i.symbol === a.symbol);
+            if (item && item.price) results[a.key] = { price: parseFloat(item.price), source: 'live' };
+          }
+          if (a.key === 'oil' && data.energy) {
+            const item = data.energy.find(i => i.symbol === 'BRENT' || i.symbol === 'BRENT_OIL');
+            if (item && item.price) results[a.key] = { price: parseFloat(item.price), source: 'live' };
+          }
+        });
+      } catch (e) { console.warn('Commodity batch error:', e); }
+    }
 
     // ═══ بورس: یک درخواست برای همه ═══
     const stockAssets = uniqueAssetKeys
