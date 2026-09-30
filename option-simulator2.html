@@ -1,638 +1,89 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="fa" dir="rtl">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Options Lab | شمعدون</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css">
 <style>
-@import url('https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css');
-
-:root{
-  --navy:#0b1220;
-  --navy-2:#111b2d;
-  --navy-3:#17243a;
-  --bg:#f5f7fa;
-  --card:#fff;
-  --text:#111827;
-  --muted:#64748b;
-  --muted-2:#94a3b8;
-  --border:#e2e8f0;
-  --gold:#c89b3c;
-  --gold-soft:#fbf5e6;
-  --green:#16835b;
-  --green-soft:#eaf7f1;
-  --red:#d64545;
-  --red-soft:#fceeee;
-  --blue:#2563eb;
-  --blue-soft:#eef4ff;
-  --shadow:0 8px 28px rgba(15,23,42,.055);
-  --radius:16px;
-}
-*{box-sizing:border-box}
-html{scroll-behavior:smooth}
-body{
-  margin:0;background:var(--bg);color:var(--text);
-  font-family:'Vazirmatn',Tahoma,sans-serif;
-  -webkit-font-smoothing:antialiased;
-}
-button,input,select{font:inherit}
-button{cursor:pointer}
-a{text-decoration:none;color:inherit}
-
-.topbar{
-  height:62px;background:var(--navy);color:#fff;
-  position:sticky;top:0;z-index:50;border-bottom:1px solid rgba(255,255,255,.07)
-}
-.topbar-inner{
-  max-width:1480px;height:100%;margin:auto;padding:0 24px;
-  display:flex;align-items:center;gap:28px
-}
-.brand{font-size:19px;font-weight:900;white-space:nowrap}
-.brand i{font-style:normal;color:var(--gold)}
-.main-nav{display:flex;gap:3px;flex:1}
-.main-nav a{
-  padding:9px 13px;border-radius:9px;color:#aeb9ca;font-size:12px;font-weight:700
-}
-.main-nav a:hover,.main-nav a.active{background:rgba(255,255,255,.07);color:#fff}
-.top-actions{display:flex;gap:8px;align-items:center}
-.icon-btn{
-  width:36px;height:36px;border:1px solid rgba(255,255,255,.1);
-  background:rgba(255,255,255,.04);color:#d8e0eb;border-radius:9px
-}
-.user-pill{
-  padding:8px 12px;border-radius:9px;background:rgba(200,155,60,.13);
-  color:#ead49a;font-size:11px;font-weight:800
-}
-
-.page{
-  max-width:1480px;margin:auto;padding:22px 24px 70px
-}
-.breadcrumb{font-size:11px;color:var(--muted);margin-bottom:16px}
-.breadcrumb strong{color:#334155}
-
-.hero{
-  background:linear-gradient(135deg,var(--navy),var(--navy-2));
-  border-radius:20px;padding:28px 30px;color:#fff;
-  display:flex;align-items:center;justify-content:space-between;gap:24px;
-  box-shadow:var(--shadow);position:relative;overflow:hidden
-}
-.hero:after{
-  content:"";position:absolute;width:360px;height:360px;border-radius:50%;
-  left:-120px;top:-180px;border:1px solid rgba(200,155,60,.15);
-  box-shadow:0 0 0 55px rgba(200,155,60,.025),0 0 0 110px rgba(200,155,60,.018)
-}
-.hero-copy{position:relative;z-index:1}
-.eyebrow{
-  color:#d8bd76;font-size:10px;font-weight:900;letter-spacing:.7px;margin-bottom:8px
-}
-.hero h1{font-size:28px;margin:0 0 7px;letter-spacing:-.7px}
-.hero p{margin:0;color:#b9c5d5;font-size:12px;line-height:2}
-.hero-actions{position:relative;z-index:1;display:flex;gap:8px;flex-wrap:wrap}
-.btn{
-  border:0;border-radius:10px;padding:10px 15px;font-weight:800;font-size:12px;
-  transition:.18s
-}
-.btn-primary{background:var(--gold);color:#fff}
-.btn-primary:hover{transform:translateY(-1px)}
-.btn-dark{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.1);color:#fff}
-
-.workspace{
-  display:grid;grid-template-columns:minmax(0,1.65fr) minmax(300px,.65fr);
-  gap:16px;margin-top:16px;align-items:start
-}
-.main-col,.side-col{display:grid;gap:16px}
-.card{
-  background:var(--card);border:1px solid var(--border);border-radius:var(--radius);
-  box-shadow:var(--shadow)
-}
-.card-head{
-  padding:17px 19px;border-bottom:1px solid var(--border);
-  display:flex;align-items:center;justify-content:space-between;gap:12px
-}
-.card-title{font-size:14px;font-weight:900}
-.card-sub{font-size:10px;color:var(--muted);margin-top:3px}
-.card-body{padding:18px}
-
-.asset-strip{
-  display:grid;grid-template-columns:1.25fr repeat(3,1fr);gap:10px
-}
-.asset-main,.metric{
-  border:1px solid var(--border);border-radius:12px;background:#fff;padding:13px
-}
-.asset-main{background:#f8fafc}
-.asset-name{font-size:11px;color:var(--muted)}
-.asset-symbol{font-size:17px;font-weight:900;margin:3px 0}
-.price{font-size:21px;font-weight:900;font-variant-numeric:tabular-nums}
-.change-up{color:var(--green)}
-.metric label{display:block;color:var(--muted);font-size:10px;margin-bottom:6px}
-.metric b{font-size:14px;font-variant-numeric:tabular-nums}
-
-.tabs{
-  display:flex;gap:3px;padding:4px;background:#f1f5f9;
-  border-radius:11px;border:1px solid var(--border);width:max-content
-}
-.tab{
-  border:0;background:transparent;padding:8px 13px;border-radius:8px;
-  color:var(--muted);font-size:11px;font-weight:800
-}
-.tab.active{background:#fff;color:var(--navy);box-shadow:0 2px 7px rgba(15,23,42,.07)}
-
-.strategy-grid{
-  display:grid;grid-template-columns:repeat(3,1fr);gap:9px
-}
-.strategy{
-  text-align:right;border:1px solid var(--border);background:#fff;border-radius:12px;
-  padding:13px;transition:.18s;position:relative
-}
-.strategy:hover{border-color:#cbd5e1;transform:translateY(-1px)}
-.strategy.active{border-color:#d5b86d;background:linear-gradient(135deg,#fffaf0,#fff)}
-.strategy .s-icon{
-  width:30px;height:30px;border-radius:8px;display:grid;place-items:center;
-  background:var(--navy);color:#fff;margin-bottom:9px;font-size:13px
-}
-.strategy.active .s-icon{background:var(--gold)}
-.strategy h3{font-size:12px;margin:0 0 5px}
-.strategy p{font-size:10px;color:var(--muted);line-height:1.8;margin:0}
-.strategy .tag{
-  display:inline-block;margin-top:8px;font-size:9px;padding:3px 7px;
-  border-radius:5px;background:#f1f5f9;color:#64748b
-}
-
-.builder{
-  display:grid;grid-template-columns:1fr 1fr;gap:12px
-}
-.field label{
-  display:block;font-size:10px;color:var(--muted);font-weight:800;margin-bottom:6px
-}
-.field input,.field select{
-  width:100%;height:40px;border:1px solid var(--border);border-radius:9px;
-  background:#fff;color:var(--text);padding:0 11px;outline:none;font-size:12px
-}
-.field input:focus,.field select:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(200,155,60,.11)}
-.side-toggle{
-  display:grid;grid-template-columns:1fr 1fr;border:1px solid var(--border);
-  border-radius:9px;padding:3px;background:#f8fafc
-}
-.side-toggle button{
-  border:0;border-radius:7px;background:transparent;padding:7px;color:var(--muted);font-size:11px;font-weight:800
-}
-.side-toggle button.active{background:#fff;color:var(--green);box-shadow:0 1px 5px rgba(15,23,42,.08)}
-
-.positions{margin-top:15px;border:1px solid var(--border);border-radius:11px;overflow:auto}
-table{border-collapse:collapse;width:100%;min-width:650px}
-th,td{padding:10px 11px;text-align:right;border-bottom:1px solid #edf1f5;font-size:10px;white-space:nowrap}
-th{background:#f8fafc;color:var(--muted);font-weight:800}
-td{font-variant-numeric:tabular-nums}
-tr:last-child td{border-bottom:0}
-.badge{
-  display:inline-flex;padding:4px 8px;border-radius:6px;font-size:9px;font-weight:900
-}
-.badge.call{background:var(--green-soft);color:var(--green)}
-.badge.put{background:var(--red-soft);color:var(--red)}
-.badge.spot{background:var(--blue-soft);color:var(--blue)}
-
-.chart-wrap{
-  height:390px;position:relative;background:#fbfcfd;border:1px solid var(--border);
-  border-radius:12px;overflow:hidden
-}
-canvas{width:100%;height:100%;display:block}
-.chart-overlay{
-  position:absolute;top:12px;right:12px;display:flex;gap:6px
-}
-.chart-chip{
-  background:rgba(255,255,255,.92);border:1px solid var(--border);
-  border-radius:7px;padding:6px 8px;font-size:9px;color:var(--muted);backdrop-filter:blur(6px)
-}
-.chart-tooltip{
-  position:absolute;display:none;pointer-events:none;background:var(--navy);color:#fff;
-  padding:9px 11px;border-radius:9px;font-size:10px;box-shadow:0 8px 20px rgba(0,0,0,.18)
-}
-.chart-tooltip b{display:block;color:#e9d49b;font-size:12px;margin-bottom:3px}
-
-.results{
-  display:grid;grid-template-columns:repeat(4,1fr);gap:9px
-}
-.result{
-  border:1px solid var(--border);border-radius:11px;padding:13px;background:#fff
-}
-.result label{display:block;font-size:9px;color:var(--muted);margin-bottom:7px}
-.result b{font-size:16px;font-variant-numeric:tabular-nums}
-.result small{display:block;margin-top:4px;font-size:9px;color:var(--muted)}
-.result.good b{color:var(--green)}
-.result.bad b{color:var(--red)}
-
-.insight{
-  border-radius:12px;padding:13px 14px;background:var(--gold-soft);
-  border:1px solid #efdfb7
-}
-.insight-head{font-size:11px;font-weight:900;color:#8b6a24;margin-bottom:7px}
-.insight p{font-size:10px;color:#6b5a34;line-height:1.9;margin:0}
-
-.checklist{display:grid;gap:9px}
-.check{
-  display:flex;align-items:flex-start;gap:9px;padding-bottom:9px;border-bottom:1px solid #edf1f5
-}
-.check:last-child{border-bottom:0;padding-bottom:0}
-.check-icon{
-  width:22px;height:22px;border-radius:6px;background:#f1f5f9;display:grid;place-items:center;
-  font-size:10px;flex:0 0 auto
-}
-.check b{font-size:10px;display:block;margin-bottom:2px}
-.check span{font-size:9px;color:var(--muted);line-height:1.7}
-
-.risk-meter{height:9px;background:#edf2f7;border-radius:99px;overflow:hidden;margin:9px 0 7px}
-.risk-meter i{display:block;width:58%;height:100%;background:linear-gradient(90deg,#55ad88,var(--gold),#d86b5e);border-radius:99px}
-.risk-labels{display:flex;justify-content:space-between;color:var(--muted);font-size:9px}
-
-.quick-actions{display:grid;grid-template-columns:1fr 1fr;gap:7px}
-.quick{
-  border:1px solid var(--border);background:#fff;border-radius:9px;padding:10px;
-  text-align:right;font-size:10px;font-weight:800;color:#334155
-}
-.quick:hover{border-color:#cbd5e1;background:#f8fafc}
-
-.footer-note{
-  margin-top:14px;text-align:center;color:#94a3b8;font-size:9px;line-height:1.8
-}
-
-@media(max-width:1050px){
-  .workspace{grid-template-columns:1fr}
-  .side-col{grid-template-columns:repeat(2,1fr)}
-}
-@media(max-width:760px){
-  .topbar-inner{padding:0 12px}.main-nav{display:none}
-  .page{padding:14px 10px 50px}
-  .hero{padding:22px 18px;align-items:flex-start;flex-direction:column}
-  .hero h1{font-size:23px}
-  .asset-strip{grid-template-columns:1fr 1fr}
-  .asset-main{grid-column:1/-1}
-  .strategy-grid{grid-template-columns:1fr 1fr}
-  .builder{grid-template-columns:1fr}
-  .results{grid-template-columns:1fr 1fr}
-  .side-col{grid-template-columns:1fr}
-  .chart-wrap{height:300px}
-}
-@media(max-width:470px){
-  .asset-strip,.strategy-grid,.results{grid-template-columns:1fr}
-  .asset-main{grid-column:auto}
-  .hero-actions{width:100%}.hero-actions .btn{flex:1}
-}
+:root{--bg:#08111f;--card:#101b2d;--card2:#15243a;--line:#263a58;--text:#eef3f8;--muted:#8fa0b8;--gold:#c89b3c;--green:#19a974;--red:#df5555;--blue:#4c8dff}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:Vazirmatn,Tahoma,sans-serif}button,input,select{font:inherit}button{cursor:pointer}a{text-decoration:none;color:inherit}
+.top{position:sticky;top:0;z-index:5;background:#091321f2;border-bottom:1px solid var(--line);backdrop-filter:blur(12px)}
+.nav{max-width:1400px;margin:auto;padding:10px 18px;display:flex;align-items:center;gap:5px}.brand{font-weight:900;color:var(--gold);font-size:19px;margin-left:15px}.nav a:not(.brand){font-size:12px;color:var(--muted);padding:9px 11px;border-radius:8px}.nav a:hover{background:var(--card2);color:var(--text)}.grow{flex:1}.live{font-size:10px;color:var(--green)}
+main{max-width:1400px;margin:auto;padding:25px 18px 60px}.hero{display:flex;justify-content:space-between;gap:20px;align-items:end;margin-bottom:16px}.eyebrow{font-size:10px;color:var(--gold);font-weight:900;letter-spacing:1px}.hero h1{font-size:28px;margin:5px 0}.hero p{margin:0;color:var(--muted);font-size:12px}.actions{display:flex;gap:7px}.btn{border:1px solid var(--line);background:var(--card2);color:var(--text);padding:9px 13px;border-radius:9px;font-size:11px;font-weight:700}.primary{background:var(--gold);color:#111b29;border-color:var(--gold)}
+.status{display:flex;gap:18px;flex-wrap:wrap;background:var(--card);border:1px solid var(--line);padding:10px 13px;border-radius:10px;margin-bottom:15px;color:var(--muted);font-size:10px}.status b{color:var(--text)}
+.layout{display:grid;grid-template-columns:minmax(0,1fr) 330px;gap:15px}.card{background:var(--card);border:1px solid var(--line);border-radius:13px;padding:15px;margin-bottom:15px}.head{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}.head h2{font-size:13px;margin:0}.muted{font-size:9px;color:var(--muted)}
+.filters{display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;gap:8px}.field label{display:block;color:var(--muted);font-size:9px;margin-bottom:4px}.field input,.field select{width:100%;background:#0b1626;border:1px solid var(--line);color:var(--text);border-radius:8px;padding:9px;outline:0}
+.stats{display:grid;grid-template-columns:1.5fr repeat(4,1fr);gap:8px}.stat{background:var(--card2);padding:10px;border-radius:9px;border:1px solid var(--line)}.stat small{display:block;color:var(--muted);font-size:9px}.stat strong{display:block;font-size:15px;margin-top:3px}.up{color:var(--green)}.down{color:var(--red)}
+.tablebox{overflow:auto;border:1px solid var(--line);border-radius:10px}.chain{width:100%;border-collapse:collapse;min-width:850px}.chain th{background:#0c1727;color:var(--muted);font-size:9px;padding:9px;text-align:right}.chain td{padding:8px;border-top:1px solid #20314a;font-size:10px;white-space:nowrap}.chain tr:hover{background:#17273f}.pill{padding:3px 6px;border-radius:5px;font-size:8px;font-weight:900}.call{color:#41d19c;background:#10362d}.put{color:#ff7777;background:#3b2025}.add{border:1px solid var(--gold);background:transparent;color:var(--gold);border-radius:6px;padding:4px 7px;font-size:9px}
+.legs{display:grid;gap:7px}.leg{display:grid;grid-template-columns:1.5fr 75px 80px 65px 25px;gap:6px;align-items:center;background:var(--card2);padding:8px;border:1px solid var(--line);border-radius:8px;font-size:10px}.leg select,.leg input{background:#0b1626;color:var(--text);border:1px solid var(--line);border-radius:6px;padding:6px;font-size:9px}.remove{background:none;border:0;color:var(--red);font-size:17px}
+canvas{display:block;width:100%;height:350px;background:#0a1423;border:1px solid var(--line);border-radius:10px}
+.results{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}.result{background:var(--card2);border:1px solid var(--line);padding:11px;border-radius:9px}.result small{display:block;color:var(--muted);font-size:8px}.result b{display:block;font-size:14px;margin-top:3px}
+.scenarios{display:grid;grid-template-columns:repeat(4,1fr);gap:7px}.scenario{text-align:center;background:var(--card2);padding:9px;border:1px solid var(--line);border-radius:8px}.scenario b{display:block;font-size:11px}.scenario span{font-size:9px;color:var(--muted)}
+.note{font-size:10px;color:var(--muted);line-height:2}.links{display:grid;gap:7px}.links a{background:var(--card2);border:1px solid var(--line);padding:9px;border-radius:8px;font-size:10px}
+.empty{text-align:center;color:var(--muted);padding:28px;font-size:11px}.error{color:var(--red)!important}
+@media(max-width:1000px){.layout{grid-template-columns:1fr}.filters{grid-template-columns:1fr 1fr}.stats{grid-template-columns:1fr 1fr 1fr}.hero{display:block}.actions{margin-top:12px}}
+@media(max-width:620px){main{padding:15px 9px}.nav a:not(.brand){display:none}.hero h1{font-size:22px}.filters,.stats{grid-template-columns:1fr}.results,.scenarios{grid-template-columns:1fr 1fr}.leg{grid-template-columns:1fr 65px 70px 55px 20px}}
 </style>
 </head>
 <body>
-
-<header class="topbar">
-  <div class="topbar-inner">
-    <a class="brand" href="#">شمعدون <i>•</i></a>
-    <nav class="main-nav">
-      <a href="#">خانه</a>
-      <a href="#" class="active">بازار</a>
-      <a href="#">تحلیل</a>
-      <a href="#">اخبار</a>
-      <a href="#">ابزارها</a>
-      <a href="#">آموزش</a>
-      <a href="#">دیده‌بان</a>
-      <a href="#">پرتفوی</a>
-    </nav>
-    <div class="top-actions">
-      <button class="icon-btn" title="جستجو">⌕</button>
-      <span class="user-pill">حساب من</span>
-    </div>
-  </div>
-</header>
-
-<main class="page">
-  <div class="breadcrumb">بازار / ابزارها / <strong>آزمایشگاه آپشن</strong></div>
-
-  <section class="hero">
-    <div class="hero-copy">
-      <div class="eyebrow">SHAMDUN OPTIONS LAB</div>
-      <h1>آزمایشگاه استراتژی آپشن</h1>
-      <p>استراتژی بساز، سناریوها را ببین و قبل از تصمیم‌گیری اثر تغییر قیمت، زمان و نوسان را بررسی کن.</p>
-    </div>
-    <div class="hero-actions">
-      <button class="btn btn-primary" onclick="newStrategy()">+ استراتژی جدید</button>
-      <button class="btn btn-dark" onclick="saveStrategy()">ذخیره استراتژی</button>
-    </div>
-  </section>
-
-  <div class="workspace">
-    <div class="main-col">
-
-      <section class="card">
-        <div class="card-head">
-          <div>
-            <div class="card-title">دارایی پایه</div>
-            <div class="card-sub">اطلاعات مرجع برای محاسبه سناریو</div>
-          </div>
-          <div class="tabs">
-            <button class="tab active">آپشن</button>
-            <button class="tab">سناریو</button>
-            <button class="tab">ذخیره‌شده</button>
-          </div>
-        </div>
-        <div class="card-body">
-          <div class="asset-strip">
-            <div class="asset-main">
-              <div class="asset-name">نماد انتخاب‌شده</div>
-              <div class="asset-symbol">خودرو</div>
-              <div class="price">۳٬۲۸۰ <span style="font-size:10px;color:#64748b">ریال</span></div>
-            </div>
-            <div class="metric"><label>قیمت اعمال مرجع</label><b>۳٬۳۰۰</b></div>
-            <div class="metric"><label>روز تا سررسید</label><b>۴۵ روز</b></div>
-            <div class="metric"><label>نوسان ضمنی</label><b>۳۸٪</b></div>
-          </div>
-        </div>
-      </section>
-
-      <section class="card">
-        <div class="card-head">
-          <div>
-            <div class="card-title">انتخاب استراتژی</div>
-            <div class="card-sub">از یک الگوی آماده شروع کن یا پوزیشن را دستی بساز.</div>
-          </div>
-          <span style="font-size:10px;color:#94a3b8">۶ الگوی پرکاربرد</span>
-        </div>
-        <div class="card-body">
-          <div class="strategy-grid">
-            <button class="strategy active" onclick="selectStrategy(this,'لانگ کال')">
-              <span class="s-icon">↗</span><h3>لانگ کال</h3>
-              <p>دید صعودی با ریسک محدود به پریمیوم.</p><span class="tag">صعودی</span>
-            </button>
-            <button class="strategy" onclick="selectStrategy(this,'لانگ پوت')">
-              <span class="s-icon">↘</span><h3>لانگ پوت</h3>
-              <p>استفاده از سناریوی نزولی یا پوشش ریسک.</p><span class="tag">نزولی</span>
-            </button>
-            <button class="strategy" onclick="selectStrategy(this,'کال اسپرد')">
-              <span class="s-icon">⇅</span><h3>کال اسپرد</h3>
-              <p>صعودی با سقف سود و هزینه کنترل‌شده.</p><span class="tag">صعودی</span>
-            </button>
-            <button class="strategy" onclick="selectStrategy(this,'پوت اسپرد')">
-              <span class="s-icon">⇵</span><h3>پوت اسپرد</h3>
-              <p>سناریوی نزولی با ساختار ریسک مشخص.</p><span class="tag">نزولی</span>
-            </button>
-            <button class="strategy" onclick="selectStrategy(this,'استرادل')">
-              <span class="s-icon">↕</span><h3>استرادل</h3>
-              <p>تمرکز بر حرکت شدید بدون جهت‌گیری مشخص.</p><span class="tag">نوسان</span>
-            </button>
-            <button class="strategy" onclick="selectStrategy(this,'کاورد کال')">
-              <span class="s-icon">◆</span><h3>کاورد کال</h3>
-              <p>ترکیب دارایی پایه و فروش کال.</p><span class="tag">درآمدی</span>
-            </button>
-          </div>
-        </div>
-      </section>
-
-      <section class="card">
-        <div class="card-head">
-          <div>
-            <div class="card-title">ساخت پوزیشن</div>
-            <div class="card-sub" id="selectedStrategy">استراتژی فعال: لانگ کال</div>
-          </div>
-          <button class="btn" style="background:#f8fafc;border:1px solid var(--border);font-size:10px" onclick="addPosition()">+ افزودن پوزیشن</button>
-        </div>
-        <div class="card-body">
-          <div class="builder">
-            <div class="field">
-              <label>نوع قرارداد</label>
-              <select id="type"><option>Call</option><option>Put</option><option>Spot</option></select>
-            </div>
-            <div class="field">
-              <label>موقعیت</label>
-              <div class="side-toggle">
-                <button class="active" onclick="setSide(this)">خرید</button>
-                <button onclick="setSide(this)">فروش</button>
-              </div>
-            </div>
-            <div class="field">
-              <label>قیمت اعمال</label>
-              <input id="strike" type="number" value="3300">
-            </div>
-            <div class="field">
-              <label>پریمیوم</label>
-              <input id="premium" type="number" value="180">
-            </div>
-            <div class="field">
-              <label>تعداد</label>
-              <input id="qty" type="number" value="1">
-            </div>
-            <div class="field">
-              <label>سررسید</label>
-              <input type="text" value="۱۴۰۵/۰۸/۱۵">
-            </div>
-          </div>
-
-          <div class="positions">
-            <table>
-              <thead>
-                <tr><th>نوع</th><th>موقعیت</th><th>اعمال</th><th>پریمیوم</th><th>تعداد</th><th>ارزش اولیه</th><th></th></tr>
-              </thead>
-              <tbody id="positions">
-                <tr>
-                  <td><span class="badge call">CALL</span></td>
-                  <td style="color:var(--green);font-weight:800">خرید</td>
-                  <td>۳٬۳۰۰</td><td>۱۸۰</td><td>۱</td><td>۱۸۰</td>
-                  <td><button onclick="removeRow(this)" style="border:0;background:none;color:#94a3b8">×</button></td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </section>
-
-      <section class="card">
-        <div class="card-head">
-          <div>
-            <div class="card-title">Payoff در سررسید</div>
-            <div class="card-sub">رابطه قیمت دارایی پایه و سود/زیان استراتژی</div>
-          </div>
-          <div class="tabs">
-            <button class="tab active">سررسید</button>
-            <button class="tab">امروز</button>
-            <button class="tab">سناریو</button>
-          </div>
-        </div>
-        <div class="card-body">
-          <div class="chart-wrap" id="chart">
-            <canvas id="payoffCanvas"></canvas>
-            <div class="chart-overlay">
-              <span class="chart-chip">محور افقی: قیمت دارایی</span>
-              <span class="chart-chip">محور عمودی: سود / زیان</span>
-            </div>
-            <div class="chart-tooltip" id="tooltip"></div>
-          </div>
-          <div style="display:flex;justify-content:space-between;margin-top:9px;color:#94a3b8;font-size:9px">
-            <span>برای مشاهده نقطه، روی نمودار حرکت کن</span><span>Payoff تقریبی · بدون درنظرگرفتن کارمزد</span>
-          </div>
-        </div>
-      </section>
-
-      <section class="results">
-        <div class="result good"><label>حداکثر سود</label><b>نامحدود</b><small>در لانگ کال</small></div>
-        <div class="result bad"><label>حداکثر زیان</label><b>۱۸۰</b><small>ریال به ازای هر واحد</small></div>
-        <div class="result"><label>نقطه سربه‌سر</label><b>۳٬۴۸۰</b><small>قیمت دارایی پایه</small></div>
-        <div class="result"><label>بازده در قیمت فعلی</label><b style="color:var(--red)">−۱۰۰٪</b><small>تا زمان سررسید</small></div>
-      </section>
-
-    </div>
-
-    <aside class="side-col">
-
-      <section class="card">
-        <div class="card-head"><div><div class="card-title">خلاصه استراتژی</div><div class="card-sub">لانگ کال</div></div></div>
-        <div class="card-body">
-          <div class="insight">
-            <div class="insight-head">برداشت سریع</div>
-            <p>این استراتژی برای سناریوی صعودی طراحی شده است. ریسک اولیه محدود است، اما برای سودده شدن باید قیمت دارایی از نقطه سربه‌سر عبور کند.</p>
-          </div>
-          <div style="height:12px"></div>
-          <div class="checklist">
-            <div class="check"><div class="check-icon">✓</div><div><b>ریسک اولیه مشخص</b><span>زیان در سررسید حداکثر به پریمیوم پرداختی محدود می‌شود.</span></div></div>
-            <div class="check"><div class="check-icon">↗</div><div><b>نیاز به حرکت صعودی</b><span>هرچه قیمت دارایی بیشتر رشد کند، ارزش موقعیت افزایش می‌یابد.</span></div></div>
-            <div class="check"><div class="check-icon">◷</div><div><b>اثر زمان</b><span>کاهش ارزش زمانی می‌تواند به موقعیت خریدار فشار وارد کند.</span></div></div>
-          </div>
-        </div>
-      </section>
-
-      <section class="card">
-        <div class="card-head"><div><div class="card-title">نمای ریسک</div><div class="card-sub">تصویر سریع از پروفایل استراتژی</div></div></div>
-        <div class="card-body">
-          <div style="display:flex;justify-content:space-between;font-size:10px"><span style="color:var(--muted)">سطح ریسک</span><b>متوسط</b></div>
-          <div class="risk-meter"><i></i></div>
-          <div class="risk-labels"><span>کم</span><span>متوسط</span><span>زیاد</span></div>
-          <div style="height:14px"></div>
-          <div class="o-row" style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
-            <div style="padding:10px;background:#f8fafc;border-radius:9px"><small style="color:var(--muted);font-size:9px">دلتا</small><b style="display:block;margin-top:4px;font-size:12px">0.54</b></div>
-            <div style="padding:10px;background:#f8fafc;border-radius:9px"><small style="color:var(--muted);font-size:9px">تتا</small><b style="display:block;margin-top:4px;font-size:12px;color:var(--red)">−0.08</b></div>
-            <div style="padding:10px;background:#f8fafc;border-radius:9px"><small style="color:var(--muted);font-size:9px">وگا</small><b style="display:block;margin-top:4px;font-size:12px">0.11</b></div>
-            <div style="padding:10px;background:#f8fafc;border-radius:9px"><small style="color:var(--muted);font-size:9px">گاما</small><b style="display:block;margin-top:4px;font-size:12px">0.003</b></div>
-          </div>
-        </div>
-      </section>
-
-      <section class="card">
-        <div class="card-head"><div><div class="card-title">سناریوهای سریع</div><div class="card-sub">اثر تغییر قیمت دارایی پایه</div></div></div>
-        <div class="card-body">
-          <div class="quick-actions">
-            <button class="quick" onclick="scenario(10)">قیمت +۱۰٪</button>
-            <button class="quick" onclick="scenario(5)">قیمت +۵٪</button>
-            <button class="quick" onclick="scenario(-5)">قیمت −۵٪</button>
-            <button class="quick" onclick="scenario(-10)">قیمت −۱۰٪</button>
-          </div>
-          <div id="scenarioBox" style="margin-top:10px;padding:11px;border-radius:9px;background:#f8fafc;font-size:10px;color:var(--muted)">
-            یک سناریو را انتخاب کن تا نتیجه تقریبی اینجا نمایش داده شود.
-          </div>
-        </div>
-      </section>
-
-      <section class="card">
-        <div class="card-head"><div><div class="card-title">ابزارهای مرتبط</div><div class="card-sub">ادامه تحلیل در شمعدون</div></div></div>
-        <div class="card-body">
-          <div class="quick-actions">
-            <button class="quick">محاسبه‌گر سود/زیان</button>
-            <button class="quick">ماشین‌حساب موقعیت</button>
-            <button class="quick">دیده‌بان آپشن</button>
-            <button class="quick">آموزش آپشن</button>
-          </div>
-        </div>
-      </section>
-
-    </aside>
-  </div>
-
-  <div class="footer-note">
-    این صفحه یک طراحی مفهومی برای Options Lab شمعدون است. داده‌های نمایشی هستند و قبل از انتشار باید به سرویس قیمت، زنجیره آپشن و موتور محاسبات متصل شوند.
-  </div>
-</main>
-
+<header class="top"><nav class="nav">
+<a class="brand" href="home.html">شمعدون</a>
+<a href="home.html">خانه</a><a href="bourse.html">بازار</a><a href="analysis.html">تحلیل</a><a href="news.html">اخبار</a><a href="calculator.html">ابزارها</a><a href="courses.html">آموزش</a><a href="portfolio.html">پرتفوی</a><a href="dashboard.html">حساب</a>
+<span class="grow"></span><span class="live" id="live">● اتصال به بازار</span>
+</nav></header>
+<main>
+<section class="hero"><div><div class="eyebrow">SHAMDUN OPTIONS LAB</div><h1>آزمایشگاه استراتژی آپشن</h1><p>داده زنده بازار، زنجیره قراردادها و محاسبه سود و زیان روی قراردادهای واقعی.</p></div><div class="actions"><button class="btn" id="refresh">↻ بروزرسانی</button><button class="btn primary" id="save">ذخیره استراتژی</button></div></section>
+<div class="status"><span>منبع: <b>TSETMC / webgw</b></span><span>بروزرسانی: <b id="time">—</b></span><span>قراردادها: <b id="count">—</b></span><span id="message">در حال دریافت داده...</span></div>
+<div class="layout"><section>
+<div class="card"><div class="head"><h2>۱. دارایی پایه و فیلتر زنجیره</h2><span class="muted">بدون اعداد ساختگی</span></div>
+<div class="filters"><div class="field"><label>دارایی پایه</label><select id="base"><option>در حال دریافت...</option></select></div><div class="field"><label>سررسید</label><select id="expiry"><option value="">همه</option></select></div><div class="field"><label>نوع قرارداد</label><select id="type"><option value="">همه</option><option value="call">Call</option><option value="put">Put</option></select></div><div class="field"><label>جستجو</label><input id="search" placeholder="نماد قرارداد"></div></div></div>
+<div class="card"><div class="stats"><div class="stat"><small>قیمت دارایی پایه</small><strong id="price">—</strong></div><div class="stat"><small>تغییر</small><strong id="change">—</strong></div><div class="stat"><small>آخرین معامله</small><strong id="last">—</strong></div><div class="stat"><small>حجم</small><strong id="volume">—</strong></div><div class="stat"><small>وضعیت</small><strong id="state">—</strong></div></div></div>
+<div class="card"><div class="head"><h2>زنجیره واقعی اختیار معامله</h2><span class="muted">روی افزودن کلیک کن</span></div><div id="chain"><div class="empty">در حال دریافت...</div></div></div>
+<div class="card"><div class="head"><h2>۲. پوزیشن‌های استراتژی</h2><button class="btn" id="manual">+ پوزیشن دستی</button></div><div id="legs" class="legs"><div class="empty">یک قرارداد از زنجیره انتخاب کن.</div></div></div>
+<div class="card"><div class="head"><h2>۳. Payoff در سررسید</h2><span class="muted">بر اساس قیمت و Strike واقعی قراردادها</span></div><canvas id="chart"></canvas></div>
+<div class="card"><div class="head"><h2>نتیجه</h2></div><div class="results"><div class="result"><small>حداکثر سود در بازه</small><b id="maxp">—</b></div><div class="result"><small>حداکثر زیان در بازه</small><b id="maxl">—</b></div><div class="result"><small>Break-even</small><b id="be">—</b></div><div class="result"><small>P/L قیمت فعلی</small><b id="pnl">—</b></div></div></div>
+<div class="card"><div class="head"><h2>سناریو</h2><span class="muted">نسبت به قیمت زنده پایه</span></div><div id="scenarios" class="scenarios"></div></div>
+</section>
+<aside>
+<div class="card"><div class="head"><h2>Greeks</h2></div><div class="results" style="grid-template-columns:1fr 1fr"><div class="result"><small>Delta</small><b id="delta">—</b></div><div class="result"><small>Gamma</small><b id="gamma">—</b></div><div class="result"><small>Theta</small><b id="theta">—</b></div><div class="result"><small>Vega</small><b id="vega">—</b></div></div></div>
+<div class="card"><div class="head"><h2>پارامتر محاسبات</h2></div><div class="field"><label>نرخ بدون ریسک سالانه %</label><input id="rate" type="number" value="25" step=".1"></div><br><button class="btn" style="width:100%" id="recalc">محاسبه مجدد</button><p class="note">Greeks با فرض Black‑Scholes اروپایی و با استفاده از قیمت بازار قرارداد محاسبه می‌شوند. برای قراردادهای ایرانی باید شرایط تسویه، اندازه قرارداد و وجه تضمین نیز در مدل نهایی لحاظ شود.</p></div>
+<div class="card"><div class="head"><h2>ناوبری شمعدون</h2></div><div class="links"><a href="bourse.html">📈 بازار و دیده‌بان</a><a href="portfolio.html">💼 پرتفوی</a><a href="calculator.html">🧮 ماشین‌حساب‌ها</a><a href="dictionary.html">📚 دانش‌نامه</a><a href="analysis.html">📊 تحلیل‌ها</a><a href="news.html">📰 اخبار</a></div></div>
+<div class="card"><div class="note">داده‌های بازار از gateway بازار سرمایه دریافت می‌شوند. این gateway و endpoint اختصاصی اختیار معامله در مستندات عمومی TSETMC/webgw ثبت شده‌اند. دسترسی ممکن است بر اساس شبکه یا IP محدود شود.</div></div>
+</aside></div></main>
 <script>
-const canvas=document.getElementById('payoffCanvas');
-const ctx=canvas.getContext('2d');
-const chart=document.getElementById('chart');
-const tooltip=document.getElementById('tooltip');
-
-function fa(n){return Number(n).toLocaleString('fa-IR')}
-function resizeCanvas(){
-  const r=chart.getBoundingClientRect(), d=window.devicePixelRatio||1;
-  canvas.width=r.width*d; canvas.height=r.height*d; canvas.style.width=r.width+'px'; canvas.style.height=r.height+'px';
-  ctx.setTransform(d,0,0,d,0,0); draw();
+const API='https://webgw.tse.ir/InstrumentProvider/api/v1';
+const S={cash:[],options:[],base:null,legs:[]};
+const $=x=>document.getElementById(x);
+const num=x=>Number(x)||0;
+const fa=x=>new Intl.NumberFormat('fa-IR',{maximumFractionDigits:2}).format(num(x));
+const str=x=>x==null?'':typeof x==='object'?(x.value??JSON.stringify(x)):String(x);
+function pick(o,a){for(const k of a)if(o&&o[k]!=null&&o[k]!=='')return o[k];return null}
+async function api(path){const r=await fetch(API+path,{cache:'no-store'});if(!r.ok)throw Error('HTTP '+r.status);return r.json()}
+function list(d){return Array.isArray(d)?d:(d?.Items||d?.items||[])}
+function cashNorm(d){return list(d).map(x=>({id:str(x.instrumentId),name:str(pick(x,['instrumentName','instrument_Name'])),last:num(pick(x,['lastPrice','lastprice'])),change:num(pick(x,['lastPriceChange','pricechange'])),pct:num(pick(x,['lastPricePercent','pricechangepercent'])),volume:num(pick(x,['tradeVolume','volume'])),state:str(pick(x,['statename','state']))})).filter(x=>x.name)}
+function optNorm(d){return list(d).map(x=>{let n=str(pick(x,['instrumentName','instrument_Name','symbol','instrumentSymbol']));let all=JSON.stringify(x);return {id:str(x.instrumentId),name:n,company:str(pick(x,['companyNamePersian','company_Name_Persian'])),strike:num(pick(x,['qeymateEmal','strikePrice','strike'])),base:num(pick(x,['qeymateMabna','underlyingPrice'])),last:num(pick(x,['lastPrice','lastprice'])),bid:num(pick(x,['buyPrice','bidPrice','bestBuyPrice'])),ask:num(pick(x,['sellPrice','askPrice','bestSellPrice'])),volume:num(pick(x,['tradeVolume','volume'])),oi:num(pick(x,['openInterest','openinterest'])),days:num(pick(x,['baghimandetasarresid','daysToExpiry'])),expiry:str(pick(x,['tarixSarresid','expiration','expiry'])),type:/ط|put/i.test(n)||/ط|put/i.test(all)?'put':'call',raw:x}}).filter(x=>x.name)}
+function isForBase(o,b){if(!b)return false;let n=b.name.trim();return o.name.includes(n)||o.company.includes(n)||o.name.includes('ض'+n)||o.name.includes('ط'+n)}
+function renderBase(){let b=S.base||{};$('price').textContent=fa(b.last);$('last').textContent=fa(b.last);$('change').textContent=(b.pct>0?'+':'')+fa(b.pct)+'٪';$('change').className='up';$('volume').textContent=fa(b.volume);$('state').textContent=b.state||'—'}
+function renderBases(){let a=S.cash.filter(x=>x.last>0);$('base').innerHTML=a.map(x=>`<option value="${x.id}">${x.name}</option>`).join('');S.base=a.find(x=>x.name==='خودرو')||a[0];if(S.base){$('base').value=S.base.id;loadOptions()}}
+function renderExpiry(){let e=[...new Set(S.options.map(x=>x.expiry).filter(Boolean))];$('expiry').innerHTML='<option value="">همه</option>'+e.map(x=>`<option>${x}</option>`).join('')}
+function renderChain(){let a=S.options.filter(x=>{let e=$('expiry').value,t=$('type').value,q=$('search').value.trim();return(!e||x.expiry===e)&&(!t||x.type===t)&&(!q||x.name.includes(q)||x.company.includes(q))});a.sort((x,y)=>(x.strike||0)-(y.strike||0));if(!a.length){$('chain').innerHTML='<div class="empty">قراردادی با این فیلتر پیدا نشد.</div>';return}
+$('chain').innerHTML=`<div class="tablebox"><table class="chain"><thead><tr><th>نوع</th><th>نماد</th><th>Strike</th><th>سررسید</th><th>روز</th><th>Last</th><th>Bid</th><th>Ask</th><th>Volume</th><th>OI</th><th></th></tr></thead><tbody>${a.slice(0,300).map((x,i)=>`<tr><td><span class="pill ${x.type}">${x.type==='call'?'CALL':'PUT'}</span></td><td>${x.name}</td><td>${fa(x.strike)}</td><td>${x.expiry}</td><td>${fa(x.days)}</td><td>${fa(x.last)}</td><td>${fa(x.bid)}</td><td>${fa(x.ask)}</td><td>${fa(x.volume)}</td><td>${fa(x.oi)}</td><td><button class="add" data-id="${x.id}">افزودن</button></td></tr>`).join('')}</tbody></table></div>`;
+document.querySelectorAll('.add').forEach(b=>b.onclick=()=>{let x=S.options.find(o=>o.id===b.dataset.id);if(x){S.legs.push({c:x,side:'buy',qty:1,premium:x.last||x.bid||x.ask||0});renderLegs();calc()}})
 }
-function draw(){
-  const r=chart.getBoundingClientRect(), w=r.width,h=r.height;
-  ctx.clearRect(0,0,w,h);
-  const pad={l:45,r:22,t:28,b:34}, cw=w-pad.l-pad.r,ch=h-pad.t-pad.b;
-  const xMin=2600,xMax=4100,yMin=-500,yMax=700;
-  const X=x=>pad.l+(x-xMin)/(xMax-xMin)*cw;
-  const Y=y=>pad.t+(yMax-y)/(yMax-yMin)*ch;
-
-  ctx.strokeStyle='#e8edf2';ctx.lineWidth=1;
-  for(let i=0;i<=6;i++){let x=pad.l+cw*i/6;ctx.beginPath();ctx.moveTo(x,pad.t);ctx.lineTo(x,pad.t+ch);ctx.stroke()}
-  for(let i=0;i<=5;i++){let y=pad.t+ch*i/5;ctx.beginPath();ctx.moveTo(pad.l,y);ctx.lineTo(pad.l+cw,y);ctx.stroke()}
-
-  ctx.strokeStyle='#94a3b8';ctx.beginPath();ctx.moveTo(pad.l,Y(0));ctx.lineTo(pad.l+cw,Y(0));ctx.stroke();
-  ctx.strokeStyle='#c89b3c';ctx.setLineDash([5,4]);ctx.beginPath();ctx.moveTo(X(3480),pad.t);ctx.lineTo(X(3480),pad.t+ch);ctx.stroke();ctx.setLineDash([]);
-
-  ctx.beginPath();
-  for(let i=0;i<=180;i++){
-    const x=xMin+(xMax-xMin)*i/180;
-    const y=Math.max(-180,(x-3480)*.92);
-    if(i===0)ctx.moveTo(X(x),Y(y));else ctx.lineTo(X(x),Y(y));
-  }
-  ctx.strokeStyle='#16835b';ctx.lineWidth=3;ctx.stroke();
-
-  ctx.fillStyle='#64748b';ctx.font='10px Vazirmatn';
-  ctx.textAlign='center';
-  for(let i=0;i<=6;i++){let x=xMin+(xMax-xMin)*i/6;ctx.fillText(fa(x),X(x),h-11)}
-  ctx.textAlign='right';
-  [-400,-200,0,200,400,600].forEach(v=>ctx.fillText(fa(v),pad.l-7,Y(v)+3));
-  ctx.fillStyle='#9b7421';ctx.font='bold 10px Vazirmatn';ctx.textAlign='left';ctx.fillText('سر به سر',X(3480)+6,pad.t+12);
-  ctx.fillStyle='#16835b';ctx.font='bold 11px Vazirmatn';ctx.fillText('سود',w-45,Y(500));
-  ctx.fillStyle='#d64545';ctx.fillText('زیان',w-45,Y(-300));
-}
-canvas.addEventListener('mousemove',e=>{
-  const r=canvas.getBoundingClientRect();
-  const x=2600+(e.clientX-r.left-45)/(r.width-67)*1500;
-  if(x<2600||x>4100){tooltip.style.display='none';return}
-  const pnl=Math.max(-180,(x-3480)*.92);
-  tooltip.innerHTML='<b>'+fa(Math.round(x))+' ریال</b>سود/زیان تقریبی: '+(pnl>=0?'+':'')+fa(Math.round(pnl))+' ریال';
-  tooltip.style.display='block';
-  tooltip.style.left=Math.min(e.clientX-r.left+12,r.width-165)+'px';
-  tooltip.style.top=Math.max(12,e.clientY-r.top-55)+'px';
-});
-canvas.addEventListener('mouseleave',()=>tooltip.style.display='none');
-
-function selectStrategy(el,name){
-  document.querySelectorAll('.strategy').forEach(x=>x.classList.remove('active'));
-  el.classList.add('active');document.getElementById('selectedStrategy').textContent='استراتژی فعال: '+name;
-}
-function setSide(el){
-  el.parentElement.querySelectorAll('button').forEach(x=>x.classList.remove('active'));el.classList.add('active');
-}
-function addPosition(){
-  const type=document.getElementById('type').value;
-  const strike=document.getElementById('strike').value;
-  const premium=document.getElementById('premium').value;
-  const qty=document.getElementById('qty').value;
-  const cls=type.toLowerCase()==='put'?'put':type.toLowerCase()==='spot'?'spot':'call';
-  const row=document.createElement('tr');
-  row.innerHTML='<td><span class="badge '+cls+'">'+type.toUpperCase()+'</span></td><td style="color:var(--green);font-weight:800">خرید</td><td>'+fa(strike)+'</td><td>'+fa(premium)+'</td><td>'+fa(qty)+'</td><td>'+fa(Number(premium)*Number(qty))+'</td><td><button onclick="removeRow(this)" style="border:0;background:none;color:#94a3b8">×</button></td>';
-  document.getElementById('positions').appendChild(row);
-}
-function removeRow(btn){btn.closest('tr').remove()}
-function scenario(p){
-  const result=p>0?'مثبت':'منفی';
-  const est=Math.round((3280*(1+p/100)-3480)*.92);
-  const box=document.getElementById('scenarioBox');
-  box.innerHTML='<b style="color:'+(p>0?'var(--green)':'var(--red)')+'">سناریوی '+(p>0?'+':'')+p+'٪</b><br><span style="display:block;margin-top:5px">قیمت فرضی دارایی: '+fa(Math.round(3280*(1+p/100)))+' · سود/زیان تقریبی: '+fa(est)+' ریال</span>';
-}
-function newStrategy(){
-  document.querySelectorAll('.strategy').forEach((x,i)=>x.classList.toggle('active',i===0));
-  document.getElementById('selectedStrategy').textContent='استراتژی فعال: لانگ کال';
-  window.scrollTo({top:0,behavior:'smooth'});
-}
-function saveStrategy(){alert('در نسخه نهایی، استراتژی در حساب کاربری شمعدون ذخیره خواهد شد.')}
-window.addEventListener('resize',resizeCanvas);
-resizeCanvas();
+function renderLegs(){if(!S.legs.length){$('legs').innerHTML='<div class="empty">یک قرارداد از زنجیره انتخاب کن.</div>';return}
+$('legs').innerHTML=S.legs.map((l,i)=>`<div class="leg"><div><b>${l.c.name}</b><div style="color:var(--muted)">K=${fa(l.c.strike)} · ${l.c.type==='call'?'Call':'Put'}</div></div><select data-i="${i}" class="ls"><option value="buy" ${l.side==='buy'?'selected':''}>خرید</option><option value="sell" ${l.side==='sell'?'selected':''}>فروش</option></select><input data-i="${i}" class="lp" type="number" step=".01" value="${l.premium}"><input data-i="${i}" class="lq" type="number" min="1" value="${l.qty}"><button class="remove" data-i="${i}">×</button></div>`).join('');
+document.querySelectorAll('.ls').forEach(e=>e.onchange=()=>{S.legs[e.dataset.i].side=e.value;calc()});document.querySelectorAll('.lp').forEach(e=>e.oninput=()=>{S.legs[e.dataset.i].premium=num(e.value);calc()});document.querySelectorAll('.lq').forEach(e=>e.oninput=()=>{S.legs[e.dataset.i].qty=Math.max(1,num(e.value));calc()});document.querySelectorAll('.remove').forEach(e=>e.onclick=()=>{S.legs.splice(+e.dataset.i,1);renderLegs();calc()})}
+function payoff(l,p){let K=num(l.c.strike),q=num(l.qty)*(l.side==='buy'?1:-1),prem=num(l.premium);return q*((l.c.type==='call'?Math.max(p-K,0):Math.max(K-p,0))-prem)}
+function at(p){return S.legs.reduce((a,l)=>a+payoff(l,p),0)}
+function calc(){let P=num(S.base?.last);if(!P||!S.legs.length){draw([]);return}let pts=[],lo=P*.5,hi=P*1.5;for(let i=0;i<181;i++){let x=lo+(hi-lo)*i/180;pts.push([x,at(x)])}let ys=pts.map(x=>x[1]),mx=Math.max(...ys),mn=Math.min(...ys);$('maxp').textContent=fa(mx);$('maxl').textContent=fa(mn);$('pnl').textContent=fa(at(P));let bes=[];for(let i=1;i<pts.length;i++)if(pts[i-1][1]*pts[i][1]<0)bes.push((pts[i-1][0]+pts[i][0])/2);$('be').textContent=bes.length?bes.map(fa).join(' ، '):'—';draw(pts);scenarios();greeks()}
+function draw(p){let c=$('chart'),r=c.getBoundingClientRect(),d=devicePixelRatio||1;c.width=r.width*d;c.height=r.height*d;let g=c.getContext('2d');g.scale(d,d);g.clearRect(0,0,r.width,r.height);if(!p.length)return;let pad=32,w=r.width-2*pad,h=r.height-2*pad,x0=p[0][0],x1=p[p.length-1][0],y0=Math.min(...p.map(a=>a[1])),y1=Math.max(...p.map(a=>a[1]));let X=x=>pad+(x-x0)/(x1-x0)*w,Y=y=>pad+(y1-y)/(y1-y0||1)*h;g.strokeStyle='#263a58';g.beginPath();g.moveTo(pad,Y(0));g.lineTo(pad+w,Y(0));g.stroke();g.strokeStyle='#c89b3c';g.lineWidth=2;g.beginPath();p.forEach((a,i)=>i?g.lineTo(X(a[0]),Y(a[1])):g.moveTo(X(a[0]),Y(a[1])));g.stroke()}
+function scenarios(){let p=num(S.base?.last);$('scenarios').innerHTML=[-10,-5,5,10].map(x=>{let v=at(p*(1+x/100));return `<div class="scenario"><b class="${v>=0?'up':'down'}">${x>0?'+':''}${x}٪</b><span>${fa(v)}</span></div>`}).join('')}
+function N(x){return .5*(1+erf(x/Math.sqrt(2)))}function erf(x){let s=x<0?-1:1;x=Math.abs(x);let t=1/(1+.3275911*x);return s*(1-((((1.061405429*t-1.453152027)*t+1.421413741)*t-.284496736)*t+.254829592)*t*Math.exp(-x*x))}
+function greeks(){let P=num(S.base?.last),rate=num($('rate').value)/100,g={d:0,g:0,t:0,v:0},n=0;S.legs.forEach(l=>{let c=l.c,S0=P,K=num(c.strike),T=Math.max(1,num(c.days))/365,V=num(c.last||c.bid||c.ask);if(!(S0&&K&&T&&V))return;let lo=.0001,hi=4;for(let i=0;i<50;i++){let iv=(lo+hi)/2,d1=(Math.log(S0/K)+(rate+iv*iv/2)*T)/(iv*Math.sqrt(T)),d2=d1-iv*Math.sqrt(T),pv=c.type==='call'?S0*N(d1)-K*Math.exp(-rate*T)*N(d2):K*Math.exp(-rate*T)*N(-d2)-S0*N(-d1);if(pv>V)hi=iv;else lo=iv}let iv=(lo+hi)/2,d1=(Math.log(S0/K)+(rate+iv*iv/2)*T)/(iv*Math.sqrt(T)),pdf=Math.exp(-d1*d1/2)/Math.sqrt(2*Math.PI),sg=l.side==='buy'?1:-1,q=num(l.qty),delta=c.type==='call'?N(d1):N(d1)-1;g.d+=sg*q*delta;g.g+=sg*q*pdf/(S0*iv*Math.sqrt(T));g.v+=sg*q*S0*pdf*Math.sqrt(T)/100;g.t+=sg*q*(-(S0*pdf*iv)/(2*Math.sqrt(T))-(c.type==='call'?rate*K*Math.exp(-rate*T)*N(d1-iv*Math.sqrt(T)):-rate*K*Math.exp(-rate*T)*N(-(d1-iv*Math.sqrt(T)))))/365;n++});if(n){$('delta').textContent=g.d.toFixed(4);$('gamma').textContent=g.g.toFixed(6);$('vega').textContent=g.v.toFixed(4);$('theta').textContent=g.t.toFixed(4)}}
+async function loadOptions(){if(!S.base)return;try{let d=await api('/MarketWatch/MarketWatchOption/fa');S.options=optNorm(d).filter(o=>isForBase(o,S.base));renderBase();renderExpiry();renderChain();$('count').textContent=fa(S.options.length);$('message').textContent='زنجیره زنده دریافت شد';$('live').textContent='● داده زنده';$('live').className='live up'}catch(e){$('chain').innerHTML='<div class="empty error">دریافت زنجیره انجام نشد: '+e.message+'</div>';$('message').textContent='API از این شبکه در دسترس نیست';$('message').className='error';$('live').textContent='● خطای اتصال'}}
+async function refresh(){try{$('message').textContent='در حال دریافت بازار...';let d=await api('/MarketWatch/MarketWatchCash/fa');S.cash=cashNorm(d);renderBases();$('time').textContent=new Date().toLocaleTimeString('fa-IR');}catch(e){$('message').textContent='اتصال بازار ناموفق: '+e.message;$('message').className='error';$('live').textContent='● آفلاین';$('live').className='live error'}}
+$('base').onchange=()=>{S.base=S.cash.find(x=>x.id===$('base').value);S.legs=[];renderLegs();loadOptions()};$('expiry').onchange=renderChain;$('type').onchange=renderChain;$('search').oninput=renderChain;$('refresh').onclick=refresh;$('recalc').onclick=calc;$('manual').onclick=()=>{if(!S.base)return;S.legs.push({c:{name:'دستی',type:'call',strike:S.base.last,last:0},side:'buy',qty:1,premium:0});renderLegs();calc()};$('save').onclick=()=>{localStorage.setItem('shamdun_options_strategy',JSON.stringify({date:new Date().toISOString(),base:S.base?.name,legs:S.legs}));$('message').textContent='استراتژی در مرورگر ذخیره شد.'};window.onresize=()=>{if(S.legs.length)calc()};setInterval(refresh,60000);refresh();
 </script>
 </body>
 </html>
