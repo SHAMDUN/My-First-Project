@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>تقویم اقتصادی | شمعدون</title>
+  <title>تقویم اقتصادی | شمعدون Financial Intelligence</title>
 
   <link
     rel="stylesheet"
@@ -14,8 +14,11 @@
 
   <style>
     /* =========================================================
-       SHAMDUN ECONOMIC CALENDAR
-       Theme is controlled ONLY by navbar.js
+       SHAMDUN — FINANCIAL INTELLIGENCE ECONOMIC CALENDAR
+       IMPORTANT:
+       - Navbar is NOT modified.
+       - Theme is controlled by navbar.js.
+       - No fake economic data is generated.
     ========================================================= */
 
     :root {
@@ -27,17 +30,24 @@
       --text: #F8FAFC;
       --muted: #94A3B8;
 
-      --border: rgba(148, 163, 184, 0.14);
+      --border: rgba(148, 163, 184, .14);
 
       --gold: #C89B3C;
-      --gold-soft: rgba(200, 155, 60, 0.12);
+      --gold-soft: rgba(200, 155, 60, .12);
 
       --blue: #3B82F6;
+      --blue-soft: rgba(59, 130, 246, .10);
+
       --green: #16835B;
+      --green-soft: rgba(22, 131, 91, .10);
+
       --red: #D64545;
+      --red-soft: rgba(214, 69, 69, .10);
+
       --orange: #D88A16;
 
-      --shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
+      --shadow:
+        0 18px 50px rgba(0, 0, 0, .15);
     }
 
     [data-theme="light"] {
@@ -49,17 +59,24 @@
       --text: #111827;
       --muted: #64748B;
 
-      --border: rgba(15, 23, 42, 0.09);
+      --border: rgba(15, 23, 42, .09);
 
       --gold: #B48625;
-      --gold-soft: rgba(180, 134, 37, 0.10);
+      --gold-soft: rgba(180, 134, 37, .10);
 
       --blue: #2563EB;
+      --blue-soft: rgba(37, 99, 235, .08);
+
       --green: #16835B;
+      --green-soft: rgba(22, 131, 91, .08);
+
       --red: #D64545;
+      --red-soft: rgba(214, 69, 69, .08);
+
       --orange: #C9780D;
 
-      --shadow: 0 8px 24px rgba(15, 23, 42, 0.06);
+      --shadow:
+        0 12px 35px rgba(15, 23, 42, .07);
     }
 
     * {
@@ -72,9 +89,23 @@
 
     body {
       margin: 0;
-      background: var(--bg);
+
+      background:
+        radial-gradient(
+          circle at 50% -20%,
+          rgba(59, 130, 246, .035),
+          transparent 40%
+        ),
+        var(--bg);
+
       color: var(--text);
-      font-family: Vazirmatn, Tahoma, sans-serif;
+
+      font-family:
+        Vazirmatn,
+        Tahoma,
+        sans-serif;
+
+      font-size: 14px;
     }
 
     button,
@@ -88,52 +119,79 @@
       cursor: pointer;
     }
 
+    a {
+      color: inherit;
+    }
+
     .page {
-      width: min(1240px, calc(100% - 32px));
+      width: min(
+        1320px,
+        calc(100% - 32px)
+      );
+
       margin: 0 auto;
-      padding: 94px 0 60px;
+
+      padding:
+        94px 0 70px;
     }
 
     /* =========================================================
        COMMON
     ========================================================= */
 
-    .panel {
-      background: linear-gradient(
-        135deg,
-        var(--card),
-        var(--bg-2)
-      );
+    .section {
+      margin-top: 30px;
 
-      border: 1px solid var(--border);
-      border-radius: 18px;
-      box-shadow: var(--shadow);
+      scroll-margin-top: 100px;
     }
 
-    .section {
-      margin-top: 24px;
-      scroll-margin-top: 90px;
+    .panel {
+      background:
+        linear-gradient(
+          135deg,
+          var(--card),
+          var(--bg-2)
+        );
+
+      border:
+        1px solid var(--border);
+
+      border-radius: 18px;
+
+      box-shadow:
+        var(--shadow);
     }
 
     .section-head {
       display: flex;
+
       align-items: flex-end;
+
       justify-content: space-between;
-      gap: 16px;
-      margin-bottom: 11px;
+
+      gap: 18px;
+
+      margin-bottom: 13px;
     }
 
     .section-head h2 {
       margin: 0;
-      font-size: 17px;
-      font-weight: 800;
+
+      font-size: 21px;
+
+      line-height: 1.5;
+
+      font-weight: 900;
     }
 
     .section-head p {
-      margin: 5px 0 0;
+      margin: 6px 0 0;
+
       color: var(--muted);
-      font-size: 10px;
-      line-height: 1.9;
+
+      font-size: 12px;
+
+      line-height: 2;
     }
 
     /* =========================================================
@@ -141,15 +199,34 @@
     ========================================================= */
 
     .hero {
-      padding: 25px;
-      border: 1px solid rgba(200, 155, 60, 0.25);
-      border-radius: 20px;
+      position: relative;
+
+      min-height: 490px;
+
+      padding: 34px;
+
+      overflow: hidden;
+
+      border:
+        1px solid rgba(
+          200,
+          155,
+          60,
+          .27
+        );
+
+      border-radius: 26px;
 
       background:
         radial-gradient(
-          circle at 10% 0%,
-          rgba(200, 155, 60, 0.10),
-          transparent 35%
+          circle at 88% 45%,
+          rgba(59, 130, 246, .12),
+          transparent 31%
+        ),
+        radial-gradient(
+          circle at 18% 0%,
+          rgba(200, 155, 60, .11),
+          transparent 32%
         ),
         linear-gradient(
           135deg,
@@ -157,50 +234,791 @@
           var(--bg-2)
         );
 
-      box-shadow: var(--shadow);
+      box-shadow:
+        0 30px 90px rgba(0, 0, 0, .16);
     }
 
-    .hero-top {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 15px;
+    .hero::before {
+      content: "";
 
-      color: var(--muted);
-      font-size: 10px;
+      position: absolute;
+
+      inset: 0;
+
+      background-image:
+        linear-gradient(
+          rgba(148, 163, 184, .045) 1px,
+          transparent 1px
+        ),
+        linear-gradient(
+          90deg,
+          rgba(148, 163, 184, .045) 1px,
+          transparent 1px
+        );
+
+      background-size: 32px 32px;
+
+      mask-image:
+        linear-gradient(
+          to left,
+          black,
+          transparent 78%
+        );
+
+      pointer-events: none;
     }
 
-    .live {
-      display: flex;
-      align-items: center;
-      gap: 7px;
-    }
+    .hero::after {
+      content: "";
 
-    .live-dot {
-      width: 8px;
-      height: 8px;
+      position: absolute;
+
+      width: 480px;
+      height: 480px;
+
+      left: 45%;
+      top: -260px;
+
       border-radius: 50%;
+
+      background:
+        radial-gradient(
+          circle,
+          rgba(200, 155, 60, .09),
+          transparent 68%
+        );
+
+      filter: blur(10px);
+
+      pointer-events: none;
+    }
+
+    .hero-content {
+      position: relative;
+
+      z-index: 3;
+
+      display: grid;
+
+      grid-template-columns:
+        minmax(0, .95fr)
+        minmax(430px, 1.05fr);
+
+      gap: 35px;
+
+      align-items: center;
+    }
+
+    .hero-copy {
+      max-width: 610px;
+    }
+
+    .hero-eyebrow {
+      display: inline-flex;
+
+      align-items: center;
+
+      gap: 10px;
+
+      margin-bottom: 15px;
+
+      color: var(--gold);
+
+      font-size: 12px;
+
+      font-weight: 900;
+
+      letter-spacing: .08em;
+    }
+
+    .hero-eyebrow::before {
+      content: "";
+
+      width: 9px;
+      height: 9px;
+
+      border-radius: 50%;
+
       background: var(--green);
-      box-shadow: 0 0 0 4px rgba(22, 131, 91, 0.10);
+
+      box-shadow:
+        0 0 0 5px
+        rgba(22, 131, 91, .10),
+
+        0 0 20px
+        rgba(22, 131, 91, .45);
+
+      animation:
+        intelligencePulse
+        2s infinite;
     }
 
     .hero h1 {
-      margin: 10px 0 6px;
-      font-size: 30px;
-      line-height: 1.4;
+      margin: 0;
+
+      max-width: 650px;
+
+      font-size:
+        clamp(
+          36px,
+          4.4vw,
+          58px
+        );
+
+      line-height: 1.3;
+
+      font-weight: 950;
+
+      letter-spacing: -.035em;
+    }
+
+    .hero h1 span {
+      display: block;
+
+      margin-top: 5px;
+
+      color: var(--gold);
     }
 
     .hero-description {
-      margin: 0;
-      max-width: 850px;
+      margin: 18px 0 0;
+
+      max-width: 620px;
 
       color: var(--muted);
-      font-size: 12px;
-      line-height: 2.1;
+
+      font-size: 15px;
+
+      line-height: 2.2;
     }
 
-    .source-status {
+    .hero-actions {
+      display: flex;
+
+      flex-wrap: wrap;
+
+      gap: 10px;
+
+      margin-top: 25px;
+    }
+
+    .hero-action {
+      display: inline-flex;
+
+      align-items: center;
+
+      justify-content: center;
+
+      min-height: 46px;
+
+      padding:
+        0 18px;
+
+      border:
+        1px solid var(--border);
+
+      border-radius: 12px;
+
+      background:
+        rgba(255, 255, 255, .025);
+
+      color: var(--text);
+
+      text-decoration: none;
+
+      font-size: 12px;
+
+      font-weight: 800;
+
+      transition:
+        .2s ease;
+    }
+
+    .hero-action:hover {
+      transform:
+        translateY(-2px);
+
+      border-color:
+        rgba(200, 155, 60, .5);
+
+      background:
+        var(--gold-soft);
+    }
+
+    .hero-action.primary {
+      background:
+        var(--gold);
+
+      border-color:
+        var(--gold);
+
+      color:
+        #111827;
+    }
+
+    .hero-status {
+      display: flex;
+
+      align-items: center;
+
+      gap: 9px;
+
+      margin-top: 20px;
+
+      color: var(--muted);
+
+      font-size: 11px;
+    }
+
+    .hero-status strong {
+      color: var(--text);
+    }
+
+    /* =========================================================
+       INTELLIGENCE ENGINE
+    ========================================================= */
+
+    .intelligence-engine {
+      position: relative;
+
+      min-height: 360px;
+
+      overflow: hidden;
+
+      border:
+        1px solid
+        rgba(148, 163, 184, .13);
+
+      border-radius: 22px;
+
+      background:
+        radial-gradient(
+          circle at 50% 50%,
+          rgba(59, 130, 246, .075),
+          transparent 48%
+        ),
+        rgba(2, 8, 23, .16);
+    }
+
+    .engine-grid {
+      position: absolute;
+
+      inset: 0;
+
+      background-image:
+        linear-gradient(
+          rgba(148, 163, 184, .055) 1px,
+          transparent 1px
+        ),
+        linear-gradient(
+          90deg,
+          rgba(148, 163, 184, .055) 1px,
+          transparent 1px
+        );
+
+      background-size:
+        28px 28px;
+    }
+
+    .engine-radar {
+      position: absolute;
+
+      width: 260px;
+      height: 260px;
+
+      left: 50%;
+      top: 50%;
+
+      transform:
+        translate(-50%, -50%);
+
+      border-radius: 50%;
+
+      border:
+        1px solid
+        rgba(59, 130, 246, .12);
+
+      box-shadow:
+        0 0 0 35px
+        rgba(59, 130, 246, .018),
+
+        0 0 0 70px
+        rgba(59, 130, 246, .014),
+
+        0 0 0 105px
+        rgba(59, 130, 246, .01);
+    }
+
+    .engine-scan {
+      position: absolute;
+
+      width: 190px;
+      height: 190px;
+
+      left: 50%;
+      top: 50%;
+
+      transform:
+        translate(-50%, -50%);
+
+      transform-origin: center;
+
+      background:
+        conic-gradient(
+          from 0deg,
+          transparent 0deg,
+          rgba(59, 130, 246, .18) 22deg,
+          transparent 46deg
+        );
+
+      border-radius: 50%;
+
+      animation:
+        intelligenceRotate
+        7s linear infinite;
+    }
+
+    .engine-core {
+      position: absolute;
+
+      left: 50%;
+      top: 50%;
+
+      width: 88px;
+      height: 88px;
+
+      transform:
+        translate(-50%, -50%);
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: center;
+
+      border:
+        1px solid
+        rgba(200, 155, 60, .58);
+
+      border-radius: 50%;
+
+      background:
+        radial-gradient(
+          circle,
+          rgba(200, 155, 60, .18),
+          rgba(15, 23, 42, .95) 68%
+        );
+
+      box-shadow:
+        0 0 40px
+        rgba(200, 155, 60, .17),
+
+        inset 0 0 20px
+        rgba(200, 155, 60, .08);
+
+      z-index: 5;
+    }
+
+    .engine-core::before {
+      content: "";
+
+      position: absolute;
+
+      width: 15px;
+      height: 15px;
+
+      border-radius: 50%;
+
+      background:
+        var(--gold);
+
+      box-shadow:
+        0 0 20px
+        rgba(200, 155, 60, .85);
+
+      animation:
+        intelligencePulse
+        2.2s infinite;
+    }
+
+    .engine-core-label {
+      position: absolute;
+
+      bottom: -30px;
+
       white-space: nowrap;
+
+      color: var(--muted);
+
+      font-family:
+        monospace;
+
+      font-size: 8px;
+
+      font-weight: 700;
+    }
+
+    .engine-node {
+      position: absolute;
+
+      display: flex;
+
+      align-items: center;
+
+      gap: 7px;
+
+      padding:
+        8px 11px;
+
+      border:
+        1px solid var(--border);
+
+      border-radius: 10px;
+
+      background:
+        rgba(15, 23, 42, .68);
+
+      backdrop-filter:
+        blur(8px);
+
+      color: var(--text);
+
+      font-size: 9px;
+
+      font-weight: 800;
+
+      z-index: 6;
+
+      box-shadow:
+        0 8px 20px
+        rgba(0, 0, 0, .12);
+
+      animation:
+        intelligenceFloat
+        4s ease-in-out infinite;
+    }
+
+    .engine-node::before {
+      content: "";
+
+      width: 6px;
+      height: 6px;
+
+      flex: 0 0 auto;
+
+      border-radius: 50%;
+
+      background:
+        var(--blue);
+
+      box-shadow:
+        0 0 10px
+        rgba(59, 130, 246, .65);
+    }
+
+    .engine-node.gold::before {
+      background: var(--gold);
+
+      box-shadow:
+        0 0 10px
+        rgba(200, 155, 60, .65);
+    }
+
+    .engine-node.green::before {
+      background: var(--green);
+
+      box-shadow:
+        0 0 10px
+        rgba(22, 131, 91, .65);
+    }
+
+    .engine-node.red::before {
+      background: var(--red);
+
+      box-shadow:
+        0 0 10px
+        rgba(214, 69, 69, .65);
+    }
+
+    .node-data {
+      right: 8%;
+      top: 17%;
+    }
+
+    .node-rates {
+      right: 4%;
+      bottom: 18%;
+
+      animation-delay: .6s;
+    }
+
+    .node-bonds {
+      left: 8%;
+      bottom: 15%;
+
+      animation-delay: 1.2s;
+    }
+
+    .node-dollar {
+      left: 6%;
+      top: 21%;
+
+      animation-delay: 1.8s;
+    }
+
+    .engine-path {
+      position: absolute;
+
+      inset: 0;
+
+      width: 100%;
+      height: 100%;
+
+      z-index: 3;
+
+      pointer-events: none;
+    }
+
+    .engine-path path {
+      fill: none;
+
+      stroke:
+        rgba(59, 130, 246, .23);
+
+      stroke-width: 1;
+
+      stroke-dasharray:
+        4 8;
+
+      animation:
+        dataFlow
+        5s linear infinite;
+    }
+
+    .engine-path path.gold-path {
+      stroke:
+        rgba(200, 155, 60, .28);
+
+      animation-duration:
+        7s;
+    }
+
+    .engine-micro {
+      position: absolute;
+
+      color: var(--muted);
+
+      font-family:
+        monospace;
+
+      font-size: 8px;
+
+      opacity: .65;
+
+      z-index: 4;
+    }
+
+    .micro-1 {
+      top: 9%;
+      left: 44%;
+    }
+
+    .micro-2 {
+      right: 16%;
+      top: 47%;
+    }
+
+    .micro-3 {
+      left: 17%;
+      top: 48%;
+    }
+
+    .micro-4 {
+      bottom: 8%;
+      right: 41%;
+    }
+
+    /* =========================================================
+       HERO INTELLIGENCE METRICS
+    ========================================================= */
+
+    .intelligence-strip {
+      position: relative;
+
+      z-index: 8;
+
+      display: grid;
+
+      grid-template-columns:
+        repeat(4, minmax(0, 1fr));
+
+      gap: 9px;
+
+      margin-top: -30px;
+
+      padding:
+        0 18px;
+    }
+
+    .intelligence-metric {
+      min-height: 82px;
+
+      padding:
+        13px 15px;
+
+      border:
+        1px solid var(--border);
+
+      border-radius: 13px;
+
+      background:
+        linear-gradient(
+          135deg,
+          var(--card),
+          var(--card-2)
+        );
+
+      box-shadow:
+        0 10px 28px
+        rgba(0, 0, 0, .12);
+    }
+
+    .intelligence-metric small {
+      display: block;
+
+      color: var(--muted);
+
+      font-size: 10px;
+    }
+
+    .intelligence-metric strong {
+      display: block;
+
+      margin-top: 5px;
+
+      font-size: 20px;
+
+      font-weight: 950;
+    }
+
+    .metric-sub {
+      display: block;
+
+      margin-top: 2px;
+
+      color: var(--muted);
+
+      font-size: 8px;
+    }
+
+    /* =========================================================
+       MARKET TRANSMISSION
+    ========================================================= */
+
+    .market-transmission {
+      position: relative;
+
+      z-index: 3;
+
+      margin-top: 24px;
+
+      padding: 17px 18px;
+
+      border:
+        1px solid var(--border);
+
+      border-radius: 16px;
+
+      background:
+        linear-gradient(
+          135deg,
+          var(--card),
+          var(--bg-2)
+        );
+    }
+
+    .market-transmission-head {
+      display: flex;
+
+      align-items: center;
+
+      justify-content: space-between;
+
+      gap: 15px;
+
+      margin-bottom: 14px;
+    }
+
+    .market-transmission-head strong {
+      font-size: 14px;
+
+      font-weight: 900;
+    }
+
+    .market-transmission-head span {
+      color: var(--muted);
+
+      font-size: 10px;
+    }
+
+    .transmission-flow {
+      display: flex;
+
+      align-items: center;
+
+      justify-content: space-between;
+
+      gap: 7px;
+
+      overflow-x: auto;
+
+      padding-bottom: 3px;
+    }
+
+    .transmission-node {
+      flex: 1;
+
+      min-width: 108px;
+
+      padding: 11px 9px;
+
+      border:
+        1px solid var(--border);
+
+      border-radius: 10px;
+
+      background:
+        rgba(255,255,255,.018);
+
+      text-align: center;
+
+      font-size: 10px;
+
+      font-weight: 900;
+
+      white-space: nowrap;
+    }
+
+    .transmission-node small {
+      display: block;
+
+      margin-bottom: 4px;
+
+      color: var(--muted);
+
+      font-size: 7px;
+
+      font-weight: 500;
+    }
+
+    .transmission-arrow {
+      flex: 0 0 auto;
+
+      color: var(--gold);
+
+      font-size: 15px;
+
+      opacity: .75;
     }
 
     /* =========================================================
@@ -209,84 +1027,112 @@
 
     .guide-grid {
       display: grid;
-      grid-template-columns: 1.4fr 1fr;
-      gap: 12px;
+
+      grid-template-columns:
+        1.4fr 1fr;
+
+      gap: 13px;
     }
 
     .guide-box {
-      padding: 18px;
+      padding: 21px;
     }
 
     .guide-box h3 {
-      margin: 0 0 8px;
-      font-size: 14px;
+      margin:
+        0 0 9px;
+
+      font-size: 17px;
+
+      font-weight: 900;
     }
 
     .guide-box p {
       margin: 0;
+
       color: var(--muted);
-      font-size: 11px;
-      line-height: 2;
+
+      font-size: 13px;
+
+      line-height: 2.1;
     }
 
     .flow {
       display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 6px;
 
-      margin-top: 16px;
+      align-items: center;
+
+      justify-content: center;
+
+      flex-wrap: wrap;
+
+      gap: 7px;
+
+      margin-top: 18px;
     }
 
     .flow-item {
-      padding: 8px 10px;
+      padding:
+        9px 12px;
 
-      border: 1px solid var(--border);
+      border:
+        1px solid var(--border);
+
       border-radius: 10px;
 
-      background: rgba(255, 255, 255, 0.025);
+      background:
+        rgba(255,255,255,.025);
 
-      font-size: 10px;
+      font-size: 11px;
+
       white-space: nowrap;
     }
 
     .flow-arrow {
       color: var(--gold);
-      font-size: 12px;
-    }
 
-    /* =========================================================
-       TERMS
-    ========================================================= */
+      font-size: 14px;
+    }
 
     .terms {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 8px;
+
+      grid-template-columns:
+        repeat(4, 1fr);
+
+      gap: 9px;
 
       margin-top: 10px;
     }
 
     .term {
-      padding: 13px;
+      padding: 15px;
 
-      border: 1px solid var(--border);
+      border:
+        1px solid var(--border);
+
       border-radius: 12px;
 
-      background: var(--card);
+      background:
+        var(--card);
     }
 
     .term strong {
       display: block;
-      margin-bottom: 5px;
-      font-size: 11px;
+
+      margin-bottom: 6px;
+
+      font-size: 13px;
+
+      font-weight: 900;
     }
 
     .term span {
       color: var(--muted);
-      font-size: 9px;
-      line-height: 1.9;
+
+      font-size: 10px;
+
+      line-height: 2;
     }
 
     /* =========================================================
@@ -294,41 +1140,57 @@
     ========================================================= */
 
     .filters {
-      padding: 15px;
+      padding: 18px;
     }
 
     .filter-grid {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 9px;
+
+      grid-template-columns:
+        repeat(4, 1fr);
+
+      gap: 11px;
     }
 
     .field label {
       display: block;
-      margin-bottom: 5px;
+
+      margin-bottom: 7px;
 
       color: var(--muted);
-      font-size: 10px;
+
+      font-size: 11px;
+
+      font-weight: 700;
     }
 
     select {
       width: 100%;
-      height: 41px;
 
-      padding: 0 11px;
+      min-height: 44px;
 
-      border: 1px solid var(--border);
+      padding:
+        0 12px;
+
+      border:
+        1px solid var(--border);
+
       border-radius: 10px;
 
-      background: var(--bg-2);
-      color: var(--text);
-
       outline: none;
-      font-size: 11px;
+
+      background:
+        var(--card-2);
+
+      color:
+        var(--text);
+
+      font-size: 12px;
     }
 
     select:focus {
-      border-color: rgba(200, 155, 60, 0.55);
+      border-color:
+        rgba(200,155,60,.55);
     }
 
     /* =========================================================
@@ -337,124 +1199,167 @@
 
     .summary {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
+
+      grid-template-columns:
+        repeat(4, 1fr);
+
       gap: 9px;
 
-      margin-top: 10px;
+      margin-top: 12px;
     }
 
     .metric {
-      padding: 14px;
+      padding: 17px;
 
-      border: 1px solid var(--border);
-      border-radius: 13px;
+      border:
+        1px solid var(--border);
 
-      background: var(--card);
+      border-radius: 14px;
+
+      background:
+        linear-gradient(
+          135deg,
+          var(--card),
+          var(--card-2)
+        );
     }
 
     .metric-label {
       display: block;
 
       color: var(--muted);
-      font-size: 9px;
+
+      font-size: 11px;
     }
 
     .metric-value {
       display: block;
 
-      margin-top: 5px;
+      margin-top: 7px;
 
-      font-size: 19px;
-      font-weight: 800;
+      font-size: 24px;
+
+      font-weight: 950;
     }
 
     /* =========================================================
-       CALENDAR LAYOUT
+       CALENDAR
     ========================================================= */
 
     .calendar-layout {
       display: grid;
-      grid-template-columns: minmax(0, 1.5fr) minmax(300px, 0.65fr);
-      gap: 12px;
+
+      grid-template-columns:
+        minmax(0, 1.45fr)
+        minmax(330px, .8fr);
+
+      gap: 15px;
 
       align-items: start;
     }
 
     .calendar {
       padding: 15px;
+
+      min-height: 400px;
     }
 
-    .day {
-      margin-bottom: 22px;
-    }
+    .day + .day {
+      margin-top: 17px;
 
-    .day:last-child {
-      margin-bottom: 0;
+      padding-top: 17px;
+
+      border-top:
+        1px solid var(--border);
     }
 
     .day-header {
       display: flex;
-      justify-content: space-between;
+
       align-items: center;
 
-      padding: 0 3px 9px;
-      margin-bottom: 8px;
+      justify-content: space-between;
 
-      border-bottom: 1px solid var(--border);
+      gap: 12px;
+
+      margin-bottom: 9px;
+
+      padding:
+        0 3px;
     }
 
     .day-title {
-      font-size: 13px;
-      font-weight: 800;
+      font-size: 15px;
+
+      font-weight: 900;
     }
 
     .day-count {
       color: var(--muted);
-      font-size: 9px;
+
+      font-size: 10px;
     }
 
-    /* =========================================================
-       EVENT
-    ========================================================= */
-
     .event {
+      width: 100%;
+
       display: grid;
-      grid-template-columns: 70px minmax(0, 1fr) auto;
-      gap: 12px;
+
+      grid-template-columns:
+        75px
+        minmax(0, 1fr)
+        260px;
+
+      gap: 13px;
 
       align-items: center;
 
-      width: 100%;
-      margin-bottom: 7px;
-      padding: 13px;
+      padding:
+        14px 12px;
 
-      border: 1px solid var(--border);
+      margin-top: 7px;
+
+      border:
+        1px solid var(--border);
+
       border-radius: 13px;
 
-      background: var(--card);
+      background:
+        rgba(255,255,255,.012);
 
       color: var(--text);
+
       text-align: right;
 
       transition:
-        border-color 0.2s,
-        transform 0.2s,
-        background 0.2s;
+        .18s ease;
     }
 
     .event:hover {
-      border-color: rgba(200, 155, 60, 0.45);
-      transform: translateY(-1px);
+      transform:
+        translateY(-1px);
+
+      border-color:
+        rgba(200,155,60,.35);
+
+      background:
+        var(--gold-soft);
     }
 
     .event.active {
-      border-color: rgba(200, 155, 60, 0.60);
-      background: var(--gold-soft);
+      border-color:
+        rgba(200,155,60,.65);
+
+      background:
+        var(--gold-soft);
     }
 
     .event-time {
-      font-size: 11px;
-      font-weight: 800;
+      font-size: 13px;
+
+      font-weight: 900;
+
+      color: var(--gold);
     }
 
     .event-name {
@@ -465,64 +1370,98 @@
       display: block;
 
       overflow: hidden;
+
       text-overflow: ellipsis;
+
       white-space: nowrap;
 
-      font-size: 12px;
+      font-size: 14px;
+
+      font-weight: 900;
     }
 
     .event-meta {
       display: flex;
+
+      align-items: center;
+
       flex-wrap: wrap;
+
       gap: 5px;
 
-      margin-top: 5px;
+      margin-top: 6px;
 
       color: var(--muted);
-      font-size: 9px;
+
+      font-size: 10px;
     }
 
     .badge {
       display: inline-flex;
+
       align-items: center;
 
-      padding: 4px 7px;
+      min-height: 23px;
 
-      border: 1px solid var(--border);
+      padding:
+        0 8px;
+
       border-radius: 7px;
 
-      font-size: 8px;
-      white-space: nowrap;
+      background:
+        rgba(148,163,184,.08);
+
+      color: var(--muted);
+
+      font-size: 9px;
+
+      font-weight: 800;
     }
 
     .badge.high {
-      color: var(--red);
-      border-color: rgba(214, 69, 69, 0.35);
+      background:
+        var(--red-soft);
+
+      color:
+        var(--red);
     }
 
     .badge.medium {
-      color: var(--orange);
-      border-color: rgba(216, 138, 22, 0.35);
+      background:
+        rgba(216,138,22,.10);
+
+      color:
+        var(--orange);
     }
 
     .badge.low {
-      color: var(--muted);
+      background:
+        var(--green-soft);
+
+      color:
+        var(--green);
     }
 
     .event-values {
-      display: flex;
+      display: grid;
+
+      grid-template-columns:
+        repeat(3, 1fr);
+
       gap: 5px;
-      align-items: center;
-      flex-wrap: wrap;
-      justify-content: flex-end;
     }
 
     .mini-value {
-      min-width: 58px;
-      padding: 5px 7px;
+      padding:
+        8px 7px;
 
-      border: 1px solid var(--border);
+      border:
+        1px solid var(--border);
+
       border-radius: 8px;
+
+      background:
+        rgba(255,255,255,.015);
 
       text-align: center;
     }
@@ -531,11 +1470,16 @@
       display: block;
 
       color: var(--muted);
-      font-size: 7px;
+
+      font-size: 8px;
     }
 
     .mini-value b {
-      font-size: 9px;
+      display: block;
+
+      margin-top: 4px;
+
+      font-size: 11px;
     }
 
     /* =========================================================
@@ -544,327 +1488,981 @@
 
     .detail {
       position: sticky;
-      top: 85px;
 
-      padding: 18px;
-    }
+      top: 92px;
 
-    .detail-empty {
-      color: var(--muted);
-      font-size: 10px;
-      line-height: 2;
-    }
+      padding: 19px;
 
-    .detail-header {
-      padding-bottom: 12px;
-      border-bottom: 1px solid var(--border);
+      min-height: 380px;
     }
 
     .detail-header h3 {
       margin: 0;
 
-      font-size: 17px;
+      font-size: 19px;
+
       line-height: 1.7;
+
+      font-weight: 950;
     }
 
     .detail-meta {
       display: flex;
-      flex-wrap: wrap;
-      gap: 5px;
 
-      margin-top: 7px;
+      flex-wrap: wrap;
+
+      gap: 6px;
+
+      margin-top: 9px;
     }
 
     .detail-description {
-      margin: 13px 0 0;
+      margin:
+        14px 0 0;
 
       color: var(--muted);
-      font-size: 10px;
-      line-height: 2;
+
+      font-size: 12px;
+
+      line-height: 2.1;
+    }
+
+    .detail-empty {
+      color: var(--muted);
+
+      font-size: 12px;
+
+      line-height: 2.1;
     }
 
     .values {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+
+      grid-template-columns:
+        repeat(3, 1fr);
+
       gap: 7px;
 
-      margin-top: 14px;
+      margin-top: 17px;
     }
 
     .value-card {
-      padding: 10px;
+      padding: 13px 9px;
 
-      border: 1px solid var(--border);
-      border-radius: 10px;
+      border:
+        1px solid var(--border);
 
-      background: var(--card-2);
+      border-radius: 11px;
+
+      background:
+        rgba(255,255,255,.018);
+
+      text-align: center;
     }
 
     .value-card span {
       display: block;
 
       color: var(--muted);
-      font-size: 8px;
+
+      font-size: 9px;
     }
 
     .value-card strong {
       display: block;
 
-      margin-top: 4px;
+      margin-top: 5px;
 
-      font-size: 12px;
+      font-size: 15px;
+
+      font-weight: 950;
     }
 
     .comparison {
-      margin-top: 10px;
-      padding: 11px;
+      margin-top: 11px;
 
-      border-radius: 11px;
+      padding: 11px 12px;
 
-      font-size: 10px;
+      border-radius: 10px;
+
+      font-size: 11px;
+
       line-height: 1.9;
     }
 
     .comparison.better {
-      color: var(--green);
-      background: rgba(22, 131, 91, 0.08);
-      border: 1px solid rgba(22, 131, 91, 0.18);
+      background:
+        var(--green-soft);
+
+      color:
+        var(--green);
     }
 
     .comparison.worse {
-      color: var(--red);
-      background: rgba(214, 69, 69, 0.08);
-      border: 1px solid rgba(214, 69, 69, 0.18);
+      background:
+        var(--red-soft);
+
+      color:
+        var(--red);
     }
 
     .comparison.neutral {
-      color: var(--muted);
-      background: var(--card-2);
-      border: 1px solid var(--border);
+      background:
+        rgba(148,163,184,.08);
+
+      color:
+        var(--muted);
     }
 
     .impact-box {
-      margin-top: 13px;
+      margin-top: 14px;
+
       padding: 14px;
 
-      border: 1px solid var(--border);
-      border-radius: 13px;
+      border:
+        1px solid var(--border);
 
-      background: var(--card-2);
+      border-radius: 12px;
+
+      background:
+        rgba(255,255,255,.015);
     }
 
     .impact-box h4 {
-      margin: 0 0 7px;
+      margin: 0;
 
-      font-size: 11px;
+      font-size: 13px;
+
+      font-weight: 900;
     }
 
     .impact-box p {
-      margin: 0;
+      margin: 7px 0 0;
 
       color: var(--muted);
-      font-size: 9px;
+
+      font-size: 10px;
+
       line-height: 2;
     }
 
     .impact-flow {
       display: flex;
-      flex-wrap: wrap;
+
       align-items: center;
+
+      flex-wrap: wrap;
 
       gap: 5px;
 
-      margin-top: 10px;
+      margin-top: 11px;
     }
 
     .impact-flow span {
-      padding: 6px 8px;
+      padding:
+        7px 8px;
 
-      border: 1px solid var(--border);
-      border-radius: 8px;
+      border:
+        1px solid var(--border);
+
+      border-radius: 7px;
+
+      background:
+        var(--card);
 
       font-size: 8px;
+
+      font-weight: 800;
     }
 
-    .impact-arrow {
+    .impact-flow .impact-arrow {
+      border: 0;
+
+      padding: 0;
+
       color: var(--gold);
-      font-size: 10px;
+
+      background: transparent;
+
+      font-size: 12px;
     }
 
     .source-link {
       display: inline-flex;
 
-      margin-top: 12px;
-      padding: 7px 9px;
-
-      border: 1px solid rgba(200, 155, 60, 0.30);
-      border-radius: 8px;
+      margin-top: 14px;
 
       color: var(--gold);
-      text-decoration: none;
 
-      font-size: 9px;
+      font-size: 10px;
+
+      font-weight: 800;
+
+      text-decoration: none;
     }
 
     /* =========================================================
-       EMPTY / LOADING / ERROR
+       STATES
     ========================================================= */
 
     .state {
-      padding: 45px 20px;
-
-      border: 1px dashed var(--border);
-      border-radius: 14px;
+      padding:
+        55px 20px;
 
       color: var(--muted);
 
       text-align: center;
-      font-size: 10px;
-      line-height: 2;
+
+      font-size: 12px;
+
+      line-height: 2.2;
     }
 
     .state strong {
       display: block;
 
-      margin-bottom: 4px;
+      margin-bottom: 6px;
 
       color: var(--text);
-      font-size: 12px;
+
+      font-size: 15px;
     }
 
+    /* =========================================================
+       FOOTER
+    ========================================================= */
+
     .footer {
-      margin-top: 26px;
+      margin-top: 30px;
+
+      padding:
+        20px;
+
+      border-top:
+        1px solid var(--border);
 
       color: var(--muted);
 
       text-align: center;
 
-      font-size: 9px;
+      font-size: 10px;
+
       line-height: 2;
     }
 
     .footer a {
       color: var(--gold);
+
+      text-decoration: none;
     }
 
     /* =========================================================
-       MOBILE
+       ANIMATIONS
     ========================================================= */
 
-    @media (max-width: 920px) {
+    @keyframes intelligencePulse {
+      0%, 100% {
+        opacity: .65;
 
-      .guide-grid,
-      .calendar-layout {
-        grid-template-columns: 1fr;
+        transform:
+          scale(.92);
       }
 
-      .detail {
-        position: static;
-      }
+      50% {
+        opacity: 1;
 
-      .filter-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-
-      .summary {
-        grid-template-columns: repeat(2, 1fr);
-      }
-
-      .terms {
-        grid-template-columns: repeat(2, 1fr);
+        transform:
+          scale(1.08);
       }
     }
 
-    @media (max-width: 600px) {
+    @keyframes intelligenceRotate {
+      to {
+        transform:
+          translate(-50%, -50%)
+          rotate(360deg);
+      }
+    }
+
+    @keyframes intelligenceFloat {
+      0%, 100% {
+        transform:
+          translateY(0);
+      }
+
+      50% {
+        transform:
+          translateY(-5px);
+      }
+    }
+
+    @keyframes dataFlow {
+      to {
+        stroke-dashoffset:
+          -80;
+      }
+    }
+
+    /* =========================================================
+       RESPONSIVE
+    ========================================================= */
+
+    @media (max-width: 1050px) {
+
+      .hero-content {
+        grid-template-columns:
+          1fr;
+      }
+
+      .hero-copy {
+        max-width: 100%;
+      }
+
+      .intelligence-engine {
+        min-height: 330px;
+      }
+
+      .calendar-layout {
+        grid-template-columns:
+          1fr;
+      }
+
+      .detail {
+        position: relative;
+
+        top: auto;
+      }
+
+    }
+
+    @media (max-width: 850px) {
 
       .page {
-        width: min(100% - 20px, 1240px);
-        padding-top: 88px;
+        width:
+          min(
+            100% - 22px,
+            720px
+          );
+
+        padding-top: 86px;
       }
 
       .hero {
-        padding: 19px;
+        padding: 22px;
+
+        border-radius: 20px;
       }
 
       .hero h1 {
-        font-size: 24px;
+        font-size: 38px;
       }
 
-      .hero-description {
-        font-size: 11px;
+      .intelligence-strip {
+        grid-template-columns:
+          repeat(2, 1fr);
+
+        margin-top: 15px;
+
+        padding: 0;
       }
 
-      .hero-top {
-        align-items: flex-start;
+      .market-transmission {
+        margin-top: 15px;
       }
 
-      .source-status {
-        white-space: normal;
-        text-align: left;
+      .guide-grid {
+        grid-template-columns:
+          1fr;
       }
 
-      .filter-grid,
-      .summary,
       .terms {
-        grid-template-columns: 1fr;
+        grid-template-columns:
+          repeat(2, 1fr);
+      }
+
+      .filter-grid {
+        grid-template-columns:
+          repeat(2, 1fr);
+      }
+
+      .summary {
+        grid-template-columns:
+          repeat(2, 1fr);
       }
 
       .event {
-        grid-template-columns: 55px minmax(0, 1fr);
+        grid-template-columns:
+          65px
+          minmax(0, 1fr);
       }
 
       .event-values {
-        grid-column: 2;
-        justify-content: flex-start;
+        grid-column:
+          1 / -1;
+      }
+
+    }
+
+    @media (max-width: 560px) {
+
+      body {
+        font-size: 13px;
+      }
+
+      .page {
+        width:
+          calc(100% - 16px);
+
+        padding:
+          78px 0 40px;
+      }
+
+      .hero {
+        padding: 18px;
+
+        min-height: auto;
+      }
+
+      .hero h1 {
+        font-size: 31px;
+
+        line-height: 1.45;
+      }
+
+      .hero-description {
+        font-size: 13px;
+
+        line-height: 2;
+      }
+
+      .hero-actions {
+        flex-direction:
+          column;
+      }
+
+      .hero-action {
+        width: 100%;
+      }
+
+      .intelligence-engine {
+        min-height: 285px;
+      }
+
+      .engine-radar {
+        width: 190px;
+        height: 190px;
+      }
+
+      .engine-scan {
+        width: 145px;
+        height: 145px;
+      }
+
+      .engine-core {
+        width: 68px;
+        height: 68px;
+      }
+
+      .engine-node {
+        padding:
+          6px 8px;
+
+        font-size: 7px;
+      }
+
+      .node-data {
+        right: 4%;
+      }
+
+      .node-rates {
+        right: 2%;
+      }
+
+      .node-bonds {
+        left: 3%;
+      }
+
+      .node-dollar {
+        left: 2%;
+      }
+
+      .engine-micro {
+        font-size: 6px;
+      }
+
+      .intelligence-strip {
+        grid-template-columns:
+          1fr 1fr;
+
+        gap: 7px;
+      }
+
+      .intelligence-metric {
+        min-height: 70px;
+
+        padding: 11px;
+      }
+
+      .intelligence-metric strong {
+        font-size: 17px;
+      }
+
+      .market-transmission-head {
+        align-items:
+          flex-start;
+
+        flex-direction:
+          column;
+      }
+
+      .transmission-flow {
+        justify-content:
+          flex-start;
+      }
+
+      .guide-box {
+        padding: 16px;
+      }
+
+      .terms {
+        grid-template-columns:
+          1fr 1fr;
+      }
+
+      .term {
+        padding: 12px;
+      }
+
+      .filter-grid {
+        grid-template-columns:
+          1fr;
+      }
+
+      .summary {
+        grid-template-columns:
+          1fr 1fr;
+      }
+
+      .metric {
+        padding: 13px;
+      }
+
+      .metric-value {
+        font-size: 20px;
+      }
+
+      .event {
+        grid-template-columns:
+          1fr;
+
+        gap: 8px;
+
+        padding: 13px;
+      }
+
+      .event-time {
+        font-size: 11px;
+      }
+
+      .event-name strong {
+        font-size: 13px;
+
+        white-space:
+          normal;
+      }
+
+      .event-values {
+        grid-template-columns:
+          repeat(3, 1fr);
       }
 
       .values {
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns:
+          repeat(3, 1fr);
       }
 
-      .flow {
-        justify-content: flex-start;
+      .impact-flow {
+        justify-content:
+          center;
       }
+
     }
   </style>
 </head>
 
+
 <body>
 
-  <!-- Navbar مشترک شمعدون -->
+  <!-- =======================================================
+       SHARED NAVBAR
+       DO NOT MODIFY
+  ======================================================== -->
+
   <div id="shamdun-navbar"></div>
+
 
   <main class="page">
 
+
     <!-- =======================================================
-         HERO
+         FINANCIAL INTELLIGENCE HERO
     ======================================================== -->
 
     <section class="hero">
 
-      <div class="hero-top">
+      <div class="hero-content">
 
-        <div class="live">
-          <span class="live-dot"></span>
-          <span>تقویم اقتصادی</span>
+
+        <!-- ===================================================
+             HERO COPY
+        ==================================================== -->
+
+        <div class="hero-copy">
+
+          <div class="hero-eyebrow">
+            SHAMDUN · FINANCIAL INTELLIGENCE
+          </div>
+
+
+          <h1>
+            نبض اقتصاد،
+            <span>قبل از حرکت بازار</span>
+          </h1>
+
+
+          <p class="hero-description">
+            داده‌های کلیدی اقتصاد را در یک نمای تحلیلی دنبال کنید؛
+            Actual را با Forecast و Previous مقایسه کنید،
+            Surprise را بسنجید و مسیر انتقال اثر داده‌ها
+            از انتظارات نرخ بهره تا اوراق، دلار و دارایی‌ها را بررسی کنید.
+          </p>
+
+
+          <div class="hero-actions">
+
+            <a
+              href="#calendar"
+              class="hero-action primary"
+            >
+              مشاهده رویدادهای اقتصادی
+              ↓
+            </a>
+
+
+            <a
+              href="#guide"
+              class="hero-action"
+            >
+              چارچوب تحلیل
+            </a>
+
+          </div>
+
+
+          <div class="hero-status">
+
+            <span class="live-dot"></span>
+
+            <span>
+              وضعیت موتور داده:
+            </span>
+
+            <strong id="sourceStatus">
+              در حال دریافت...
+            </strong>
+
+          </div>
+
         </div>
 
+
+        <!-- ===================================================
+             FINANCIAL INTELLIGENCE ENGINE
+        ==================================================== -->
+
         <div
-          id="sourceStatus"
-          class="source-status"
+          class="intelligence-engine"
+          aria-label="Financial Intelligence Engine"
         >
-          در حال دریافت داده...
+
+          <div class="engine-grid"></div>
+
+          <div class="engine-radar"></div>
+
+          <div class="engine-scan"></div>
+
+
+          <svg
+            class="engine-path"
+            viewBox="0 0 600 330"
+            preserveAspectRatio="none"
+            aria-hidden="true"
+          >
+
+            <path
+              d="M85 82 C190 85 190 150 300 165"
+            />
+
+            <path
+              d="M515 70 C420 80 410 140 300 165"
+              class="gold-path"
+            />
+
+            <path
+              d="M70 270 C170 255 210 200 300 165"
+            />
+
+            <path
+              d="M530 255 C430 245 390 195 300 165"
+              class="gold-path"
+            />
+
+          </svg>
+
+
+          <div class="engine-core">
+
+            <div class="engine-core-label">
+              INTELLIGENCE ENGINE
+            </div>
+
+          </div>
+
+
+          <div class="engine-node gold node-data">
+            MACRO DATA
+          </div>
+
+
+          <div class="engine-node red node-rates">
+            RATE EXPECTATIONS
+          </div>
+
+
+          <div class="engine-node green node-bonds">
+            BONDS
+          </div>
+
+
+          <div class="engine-node node-dollar">
+            USD / FX
+          </div>
+
+
+          <span class="engine-micro micro-1">
+            CPI · GDP · PMI
+          </span>
+
+
+          <span class="engine-micro micro-2">
+            Δ EXPECTATION
+          </span>
+
+
+          <span class="engine-micro micro-3">
+            YIELD CURVE
+          </span>
+
+
+          <span class="engine-micro micro-4">
+            MARKET TRANSMISSION
+          </span>
+
         </div>
 
       </div>
 
-      <h1>تقویم اقتصادی</h1>
 
-      <p class="hero-description">
-        رویدادهای مهم اقتصادی و تصمیمات بانک‌های مرکزی را دنبال کنید،
-        عدد واقعی را با انتظار بازار و مقدار قبلی مقایسه کنید
-        و مسیر اثرگذاری هر رویداد بر نرخ بهره، اوراق، دلار و دارایی‌ها را بهتر بشناسید.
-      </p>
+      <!-- =====================================================
+           REAL DATA METRICS
+      ====================================================== -->
+
+      <div class="intelligence-strip">
+
+        <div class="intelligence-metric">
+
+          <small>
+            رویدادهای بازه
+          </small>
+
+          <strong id="heroTotalEvents">
+            —
+          </strong>
+
+          <span class="metric-sub">
+            بر اساس داده واقعی
+          </span>
+
+        </div>
+
+
+        <div class="intelligence-metric">
+
+          <small>
+            رویدادهای پراثر
+          </small>
+
+          <strong id="heroHighEvents">
+            —
+          </strong>
+
+          <span class="metric-sub">
+            High Impact
+          </span>
+
+        </div>
+
+
+        <div class="intelligence-metric">
+
+          <small>
+            رویدادهای امروز
+          </small>
+
+          <strong id="heroTodayEvents">
+            —
+          </strong>
+
+          <span class="metric-sub">
+            Today's Events
+          </span>
+
+        </div>
+
+
+        <div class="intelligence-metric">
+
+          <small>
+            وضعیت داده
+          </small>
+
+          <strong id="heroDataState">
+            —
+          </strong>
+
+          <span class="metric-sub">
+            Data Engine
+          </span>
+
+        </div>
+
+      </div>
+
+
+      <!-- =====================================================
+           MARKET TRANSMISSION
+      ====================================================== -->
+
+      <div class="market-transmission">
+
+        <div class="market-transmission-head">
+
+          <strong>
+            Market Transmission Framework
+          </strong>
+
+          <span>
+            چارچوب آموزشی انتقال اثر داده‌های اقتصادی
+          </span>
+
+        </div>
+
+
+        <div class="transmission-flow">
+
+          <div class="transmission-node">
+
+            <small>
+              01 · INPUT
+            </small>
+
+            داده اقتصادی
+
+          </div>
+
+
+          <span class="transmission-arrow">
+            ←
+          </span>
+
+
+          <div class="transmission-node">
+
+            <small>
+              02 · EXPECTATION
+            </small>
+
+            انتظارات بازار
+
+          </div>
+
+
+          <span class="transmission-arrow">
+            ←
+          </span>
+
+
+          <div class="transmission-node">
+
+            <small>
+              03 · POLICY
+            </small>
+
+            نرخ بهره
+
+          </div>
+
+
+          <span class="transmission-arrow">
+            ←
+          </span>
+
+
+          <div class="transmission-node">
+
+            <small>
+              04 · RATES
+            </small>
+
+            اوراق
+
+          </div>
+
+
+          <span class="transmission-arrow">
+            ←
+          </span>
+
+
+          <div class="transmission-node">
+
+            <small>
+              05 · FX
+            </small>
+
+            دلار
+
+          </div>
+
+
+          <span class="transmission-arrow">
+            ←
+          </span>
+
+
+          <div class="transmission-node">
+
+            <small>
+              06 · ASSETS
+            </small>
+
+            دارایی‌ها
+
+          </div>
+
+        </div>
+
+      </div>
 
     </section>
 
@@ -881,12 +2479,16 @@
       <div class="section-head">
 
         <div>
-          <h2>راهنمای استفاده</h2>
+
+          <h2>
+            چگونه این صفحه را تحلیل کنیم؟
+          </h2>
 
           <p>
-            تقویم اقتصادی فقط فهرست خبرها نیست؛
-            باید بدانیم داده چگونه به انتظارات بازار منتقل می‌شود.
+            تقویم اقتصادی فقط فهرست رویدادها نیست؛
+            هدف، درک ارتباط داده با انتظارات و بازار است.
           </p>
+
         </div>
 
       </div>
@@ -894,52 +2496,57 @@
 
       <div class="guide-grid">
 
+
         <div class="panel guide-box">
 
           <h3>
-            یک رویداد اقتصادی چگونه به بازار می‌رسد؟
+            از داده تا بازار
           </h3>
 
           <p>
-            عدد اقتصادی به‌تنهایی سیگنال خرید یا فروش نیست.
-            اهمیت اصلی در مقایسه عدد منتشرشده با انتظار بازار
-            و سپس بررسی واکنش نرخ‌های بهره، اوراق، ارز و سایر دارایی‌هاست.
+            ابتدا مقدار Actual، Forecast و Previous را بررسی کنید.
+            سپس اختلاف داده منتشرشده با انتظار بازار را بسنجید.
+            در مرحله بعد، مسیر احتمالی انتقال اثر از سیاست پولی،
+            بازده اوراق و ارز تا دارایی‌های مالی را دنبال کنید.
           </p>
+
 
           <div class="flow">
 
             <span class="flow-item">
-              رویداد
+              داده
             </span>
 
-            <span class="flow-arrow">←</span>
+            <span class="flow-arrow">
+              ←
+            </span>
 
             <span class="flow-item">
               Forecast
             </span>
 
-            <span class="flow-arrow">←</span>
-
-            <span class="flow-item">
-              Actual
+            <span class="flow-arrow">
+              ←
             </span>
 
-            <span class="flow-arrow">←</span>
-
             <span class="flow-item">
-              انتظارات نرخ بهره
+              Surprise
             </span>
 
-            <span class="flow-arrow">←</span>
-
-            <span class="flow-item">
-              اوراق و دلار
+            <span class="flow-arrow">
+              ←
             </span>
 
-            <span class="flow-arrow">←</span>
+            <span class="flow-item">
+              نرخ بهره
+            </span>
+
+            <span class="flow-arrow">
+              ←
+            </span>
 
             <span class="flow-item">
-              دارایی‌ها
+              بازار
             </span>
 
           </div>
@@ -950,49 +2557,65 @@
         <div class="panel guide-box">
 
           <h3>
-            هنگام انتشار داده به چه چیزی نگاه کنیم؟
+            اصطلاحات کلیدی
           </h3>
 
-          <p>
-            ابتدا عدد واقعی را ببینید، سپس آن را با Forecast و Previous
-            مقایسه کنید. بعد بررسی کنید که بازار قبل از انتشار چه چیزی
-            را قیمت‌گذاری کرده بود. واکنش واقعی بازار ممکن است با
-            تفسیر ساده «بهتر» یا «بدتر» متفاوت باشد.
-          </p>
 
-        </div>
+          <div class="terms">
 
-      </div>
+            <div class="term">
+
+              <strong>
+                Actual
+              </strong>
+
+              <span>
+                مقدار واقعی و منتشرشده شاخص.
+              </span>
+
+            </div>
 
 
-      <div class="terms">
+            <div class="term">
 
-        <div class="term">
-          <strong>Actual</strong>
-          <span>
-            عدد واقعی که منتشر شده است.
-          </span>
-        </div>
+              <strong>
+                Forecast
+              </strong>
 
-        <div class="term">
-          <strong>Forecast</strong>
-          <span>
-            پیش‌بینی یا اجماع بازار پیش از انتشار.
-          </span>
-        </div>
+              <span>
+                مقدار مورد انتظار یا اجماع بازار.
+              </span>
 
-        <div class="term">
-          <strong>Previous</strong>
-          <span>
-            آخرین مقدار قبلی؛ ممکن است بعداً اصلاح شود.
-          </span>
-        </div>
+            </div>
 
-        <div class="term">
-          <strong>Impact</strong>
-          <span>
-            سطح اهمیت بالقوه رویداد در تقویم.
-          </span>
+
+            <div class="term">
+
+              <strong>
+                Previous
+              </strong>
+
+              <span>
+                مقدار ثبت‌شده در انتشار قبلی.
+              </span>
+
+            </div>
+
+
+            <div class="term">
+
+              <strong>
+                Surprise
+              </strong>
+
+              <span>
+                فاصله Actual با Forecast.
+              </span>
+
+            </div>
+
+          </div>
+
         </div>
 
       </div>
@@ -1004,19 +2627,20 @@
          FILTERS
     ======================================================== -->
 
-    <section
-      id="filters"
-      class="section"
-    >
+    <section class="section">
 
       <div class="section-head">
 
         <div>
-          <h2>فیلتر تقویم</h2>
+
+          <h2>
+            فیلتر و تمرکز
+          </h2>
 
           <p>
-            بازه زمانی و نوع رویداد موردنظر را انتخاب کنید.
+            بازه، کشور، اهمیت و نوع رویداد را انتخاب کنید.
           </p>
+
         </div>
 
       </div>
@@ -1025,6 +2649,7 @@
       <div class="panel filters">
 
         <div class="filter-grid">
+
 
           <div class="field">
 
@@ -1039,11 +2664,11 @@
               </option>
 
               <option value="week" selected>
-                این هفته
+                ۷ روز آینده
               </option>
 
               <option value="next">
-                هفته آینده
+                هفته بعد
               </option>
 
             </select>
@@ -1166,9 +2791,12 @@
       </div>
 
 
+      <!-- SUMMARY -->
+
       <div class="summary">
 
         <div class="metric">
+
           <span class="metric-label">
             کل رویدادها
           </span>
@@ -1179,10 +2807,12 @@
           >
             —
           </strong>
+
         </div>
 
 
         <div class="metric">
+
           <span class="metric-label">
             اهمیت بالا
           </span>
@@ -1193,10 +2823,12 @@
           >
             —
           </strong>
+
         </div>
 
 
         <div class="metric">
+
           <span class="metric-label">
             امروز
           </span>
@@ -1207,10 +2839,12 @@
           >
             —
           </strong>
+
         </div>
 
 
         <div class="metric">
+
           <span class="metric-label">
             وضعیت داده
           </span>
@@ -1221,6 +2855,7 @@
           >
             —
           </strong>
+
         </div>
 
       </div>
@@ -1240,17 +2875,22 @@
       <div class="section-head">
 
         <div>
-          <h2>رویدادهای اقتصادی</h2>
+
+          <h2>
+            Intelligence Calendar
+          </h2>
 
           <p>
-            روی هر رویداد کلیک کنید تا جزئیات آن نمایش داده شود.
+            رویداد را انتخاب کنید تا داده‌ها، Surprise و مسیر اثرگذاری آن بررسی شود.
           </p>
+
         </div>
 
       </div>
 
 
       <div class="calendar-layout">
+
 
         <div
           id="eventList"
@@ -1278,16 +2918,20 @@
           <div class="detail-header">
 
             <h3>
-              جزئیات رویداد
+              Event Intelligence
             </h3>
 
           </div>
 
+
           <p class="detail-empty">
+
             یک رویداد را انتخاب کنید تا تعریف شاخص،
-            Actual، Forecast، Previous و مسیر اثرگذاری آن
-            نمایش داده شود.
+            Previous، Forecast، Actual، Surprise و
+            مسیر انتقال اثرگذاری آن نمایش داده شود.
+
           </p>
+
 
           <div class="impact-box">
 
@@ -1300,29 +2944,52 @@
               داده اقتصادی است و جهت قطعی بازار را پیش‌بینی نمی‌کند.
             </p>
 
+
             <div class="impact-flow">
 
-              <span>داده</span>
+              <span>
+                داده
+              </span>
 
-              <span class="impact-arrow">←</span>
+              <span class="impact-arrow">
+                ←
+              </span>
 
-              <span>انتظارات</span>
+              <span>
+                انتظارات
+              </span>
 
-              <span class="impact-arrow">←</span>
+              <span class="impact-arrow">
+                ←
+              </span>
 
-              <span>نرخ بهره</span>
+              <span>
+                نرخ بهره
+              </span>
 
-              <span class="impact-arrow">←</span>
+              <span class="impact-arrow">
+                ←
+              </span>
 
-              <span>اوراق</span>
+              <span>
+                اوراق
+              </span>
 
-              <span class="impact-arrow">←</span>
+              <span class="impact-arrow">
+                ←
+              </span>
 
-              <span>دلار</span>
+              <span>
+                دلار
+              </span>
 
-              <span class="impact-arrow">←</span>
+              <span class="impact-arrow">
+                ←
+              </span>
 
-              <span>دارایی‌ها</span>
+              <span>
+                دارایی‌ها
+              </span>
 
             </div>
 
@@ -1342,6 +3009,7 @@
     <div class="footer">
 
       داده‌های تقویم از
+
       <a
         href="https://www.financecalendar.com"
         target="_blank"
@@ -1349,6 +3017,7 @@
       >
         Finance Calendar
       </a>
+
       دریافت می‌شوند.
 
       <br>
@@ -1361,14 +3030,18 @@
   </main>
 
 
-  <!-- Navbar -->
+  <!-- =======================================================
+       SHARED NAVBAR
+       UNCHANGED
+  ======================================================== -->
+
   <script src="navbar.js"></script>
 
 
   <script>
     /* =========================================================
-       SHAMDUN ECONOMIC CALENDAR
-       REAL DATA
+       SHAMDUN FINANCIAL INTELLIGENCE CALENDAR
+       REAL DATA ONLY
     ========================================================= */
 
     (() => {
@@ -1403,7 +3076,7 @@
          DOM
       ======================================================== */
 
-      const $ = (id) =>
+      const $ = id =>
         document.getElementById(id);
 
 
@@ -1441,6 +3114,19 @@
         $("dataState");
 
 
+      const heroTotalEvents =
+        $("heroTotalEvents");
+
+      const heroHighEvents =
+        $("heroHighEvents");
+
+      const heroTodayEvents =
+        $("heroTodayEvents");
+
+      const heroDataState =
+        $("heroDataState");
+
+
       /* =======================================================
          DATE HELPERS
       ======================================================== */
@@ -1469,14 +3155,22 @@
         const d =
           new Date(date);
 
-        d.setHours(0, 0, 0, 0);
+        d.setHours(
+          0,
+          0,
+          0,
+          0
+        );
 
         return d;
 
       }
 
 
-      function addDays(date, amount) {
+      function addDays(
+        date,
+        amount
+      ) {
 
         const d =
           new Date(date);
@@ -1499,7 +3193,9 @@
           startOfDay(now);
 
 
-        if (rangeEl.value === "today") {
+        if (
+          rangeEl.value === "today"
+        ) {
 
           return {
             from: today,
@@ -1509,17 +3205,24 @@
         }
 
 
-        if (rangeEl.value === "next") {
-
-          const from =
-            addDays(today, 7);
-
-          const to =
-            addDays(today, 13);
+        if (
+          rangeEl.value === "next"
+        ) {
 
           return {
-            from,
-            to
+
+            from:
+              addDays(
+                today,
+                7
+              ),
+
+            to:
+              addDays(
+                today,
+                13
+              )
+
           };
 
         }
@@ -1527,9 +3230,14 @@
 
         return {
 
-          from: today,
+          from:
+            today,
 
-          to: addDays(today, 6)
+          to:
+            addDays(
+              today,
+              6
+            )
 
         };
 
@@ -1569,9 +3277,11 @@
 
       function formatDay(date) {
 
-        return `${faWeekdays[date.getDay()]}
-                ${date.getDate()}
-                ${faMonths[date.getMonth()]}`;
+        return `
+          ${faWeekdays[date.getDay()]}
+          ${date.getDate()}
+          ${faMonths[date.getMonth()]}
+        `;
 
       }
 
@@ -1579,7 +3289,9 @@
       function formatTime(value) {
 
         if (!value) {
+
           return "—";
+
         }
 
 
@@ -1642,7 +3354,10 @@
          NORMALIZE EVENT
       ======================================================== */
 
-      function normalizeEvent(item, index) {
+      function normalizeEvent(
+        item,
+        index
+      ) {
 
         const category =
           item.category ??
@@ -1781,6 +3496,7 @@
       async function fetchCalendar() {
 
         state.loading = true;
+
         state.error = null;
 
         setLoadingState();
@@ -1809,13 +3525,6 @@
           });
 
 
-        /*
-          اهمیت را عمداً در API فیلتر نمی‌کنیم.
-          چون کاربر ممکن است بعداً بخواهد
-          همه رویدادها را ببیند.
-        */
-
-
         const url =
           `${API_BASE}?${params.toString()}`;
 
@@ -1823,13 +3532,17 @@
         try {
 
           const response =
-            await fetch(url, {
-              method: "GET",
-              headers: {
-                "Accept":
-                  "application/json"
+            await fetch(
+              url,
+              {
+                method: "GET",
+
+                headers: {
+                  "Accept":
+                    "application/json"
+                }
               }
-            });
+            );
 
 
           if (!response.ok) {
@@ -1844,17 +3557,6 @@
           const raw =
             await response.json();
 
-
-          /*
-            API مستندشده معمولاً:
-            {
-              events: [...],
-              attribution: {...}
-            }
-
-            برای مقاومت بیشتر،
-            چند ساختار احتمالی را نیز پشتیبانی می‌کنیم.
-          */
 
           let rawEvents = [];
 
@@ -1913,13 +3615,19 @@
               );
 
 
-          state.loading = false;
+          state.loading =
+            false;
 
 
           sourceStatusEl.textContent =
             `${state.allEvents.length.toLocaleString("fa-IR")} رویداد دریافت شد`;
 
+
           dataStateEl.textContent =
+            "متصل";
+
+
+          heroDataState.textContent =
             "متصل";
 
 
@@ -1934,7 +3642,8 @@
           );
 
 
-          state.loading = false;
+          state.loading =
+            false;
 
           state.error =
             error;
@@ -1944,6 +3653,9 @@
             "خطا در دریافت داده";
 
           dataStateEl.textContent =
+            "خطا";
+
+          heroDataState.textContent =
             "خطا";
 
 
@@ -1963,7 +3675,9 @@
       function applyFilters() {
 
         let events =
-          [...state.allEvents];
+          [
+            ...state.allEvents
+          ];
 
 
         const country =
@@ -2069,19 +3783,16 @@
           state.filteredEvents;
 
 
-        totalEventsEl.textContent =
-          events.length.toLocaleString(
-            "fa-IR"
-          );
+        const total =
+          events.length;
 
 
-        highEventsEl.textContent =
+        const high =
           events.filter(
             event =>
-              event.impact === "high"
-          ).length.toLocaleString(
-            "fa-IR"
-          );
+              event.impact ===
+              "high"
+          ).length;
 
 
         const today =
@@ -2090,22 +3801,67 @@
           );
 
 
-        todayEventsEl.textContent =
+        const todayCount =
           events.filter(
             event =>
               String(
                 event.date
               ).slice(0, 10) ===
               today
-          ).length.toLocaleString(
+          ).length;
+
+
+        totalEventsEl.textContent =
+          total.toLocaleString(
             "fa-IR"
           );
+
+
+        highEventsEl.textContent =
+          high.toLocaleString(
+            "fa-IR"
+          );
+
+
+        todayEventsEl.textContent =
+          todayCount.toLocaleString(
+            "fa-IR"
+          );
+
+
+        heroTotalEvents.textContent =
+          total.toLocaleString(
+            "fa-IR"
+          );
+
+
+        heroHighEvents.textContent =
+          high.toLocaleString(
+            "fa-IR"
+          );
+
+
+        heroTodayEvents.textContent =
+          todayCount.toLocaleString(
+            "fa-IR"
+          );
+
+
+        if (!state.loading) {
+
+          dataStateEl.textContent =
+            "متصل";
+
+          heroDataState.textContent =
+            "LIVE";
+
+        }
 
       }
 
 
       /* =======================================================
-         RENDER CALENDAR
+         CALENDAR
       ======================================================== */
 
       function renderCalendar() {
@@ -2144,7 +3900,10 @@
             const key =
               String(
                 event.date
-              ).slice(0, 10);
+              ).slice(
+                0,
+                10
+              );
 
 
             if (
@@ -2171,7 +3930,10 @@
 
 
         groups.forEach(
-          (events, dateKey) => {
+          (
+            events,
+            dateKey
+          ) => {
 
             const day =
               new Date(
@@ -2235,7 +3997,8 @@
                 () => {
 
                   const id =
-                    button.dataset.eventId;
+                    button.dataset
+                      .eventId;
 
 
                   const event =
@@ -2249,7 +4012,9 @@
 
 
                   if (!event) {
+
                     return;
+
                   }
 
 
@@ -2282,7 +4047,9 @@
           String(
             state.selectedEventId
           ) ===
-          String(event.id);
+          String(
+            event.id
+          );
 
 
         const activeClass =
@@ -2311,7 +4078,10 @@
 
           <button
             type="button"
-            class="event ${activeClass}"
+            class="
+              event
+              ${activeClass}
+            "
             data-event-id="${escapeHtml(
               event.id
             )}"
@@ -2340,7 +4110,9 @@
                   )}
                 </span>
 
-                <span>•</span>
+                <span>
+                  •
+                </span>
 
                 <span>
                   ${escapeHtml(
@@ -2351,7 +4123,10 @@
                 </span>
 
                 <span
-                  class="badge ${event.impact}"
+                  class="
+                    badge
+                    ${event.impact}
+                  "
                 >
                   ${impactLabel}
                 </span>
@@ -2363,8 +4138,13 @@
 
             <div class="event-values">
 
+
               <div class="mini-value">
-                <small>قبلی</small>
+
+                <small>
+                  قبلی
+                </small>
+
                 <b>
                   ${escapeHtml(
                     formatNumber(
@@ -2372,11 +4152,16 @@
                     )
                   )}
                 </b>
+
               </div>
 
 
               <div class="mini-value">
-                <small>پیش‌بینی</small>
+
+                <small>
+                  پیش‌بینی
+                </small>
+
                 <b>
                   ${escapeHtml(
                     formatNumber(
@@ -2384,11 +4169,16 @@
                     )
                   )}
                 </b>
+
               </div>
 
 
               <div class="mini-value">
-                <small>واقعی</small>
+
+                <small>
+                  واقعی
+                </small>
+
                 <b>
                   ${escapeHtml(
                     formatNumber(
@@ -2396,7 +4186,9 @@
                     )
                   )}
                 </b>
+
               </div>
+
 
             </div>
 
@@ -2446,6 +4238,7 @@
                 )}
               </span>
 
+
               <span class="badge">
                 ${escapeHtml(
                   translateCategory(
@@ -2454,7 +4247,13 @@
                 )}
               </span>
 
-              <span class="badge ${event.impact}">
+
+              <span
+                class="
+                  badge
+                  ${event.impact}
+                "
+              >
                 اهمیت:
                 ${
                   event.impact === "high"
@@ -2479,8 +4278,13 @@
 
           <div class="values">
 
+
             <div class="value-card">
-              <span>Previous</span>
+
+              <span>
+                Previous
+              </span>
+
               <strong>
                 ${escapeHtml(
                   formatNumber(
@@ -2488,11 +4292,16 @@
                   )
                 )}
               </strong>
+
             </div>
 
 
             <div class="value-card">
-              <span>Forecast</span>
+
+              <span>
+                Forecast
+              </span>
+
               <strong>
                 ${escapeHtml(
                   formatNumber(
@@ -2500,11 +4309,16 @@
                   )
                 )}
               </strong>
+
             </div>
 
 
             <div class="value-card">
-              <span>Actual</span>
+
+              <span>
+                Actual
+              </span>
+
               <strong>
                 ${escapeHtml(
                   formatNumber(
@@ -2512,12 +4326,19 @@
                   )
                 )}
               </strong>
+
             </div>
+
 
           </div>
 
 
-          <div class="comparison ${comparison.className}">
+          <div
+            class="
+              comparison
+              ${comparison.className}
+            "
+          >
             ${escapeHtml(
               comparison.text
             )}
@@ -2530,9 +4351,11 @@
               Market Impact Map
             </h4>
 
+
             <p>
               مسیر اثرگذاری به نوع شاخص بستگی دارد.
-              این نمودار آموزشی است و جهت قطعی بازار را تعیین نمی‌کند.
+              این نمودار یک چارچوب آموزشی است و
+              جهت قطعی بازار را تعیین نمی‌کند.
             </p>
 
 
@@ -2546,41 +4369,51 @@
                 )}
               </span>
 
+
               <span class="impact-arrow">
                 ←
               </span>
+
 
               <span>
                 انتظارات
               </span>
 
+
               <span class="impact-arrow">
                 ←
               </span>
+
 
               <span>
                 نرخ بهره
               </span>
 
+
               <span class="impact-arrow">
                 ←
               </span>
+
 
               <span>
                 اوراق
               </span>
 
+
               <span class="impact-arrow">
                 ←
               </span>
+
 
               <span>
                 دلار
               </span>
 
+
               <span class="impact-arrow">
                 ←
               </span>
+
 
               <span>
                 دارایی‌ها
@@ -2741,11 +4574,15 @@
 
 
         const actualNumber =
-          extractNumber(actual);
+          extractNumber(
+            actual
+          );
 
 
         const forecastNumber =
-          extractNumber(forecast);
+          extractNumber(
+            forecast
+          );
 
 
         if (
@@ -2759,7 +4596,7 @@
               "neutral",
 
             text:
-              "مقادیر این رویداد به شکل متنی منتشر شده‌اند و مقایسه عددی مستقیم انجام نمی‌شود."
+              "مقادیر این رویداد متنی هستند و مقایسه عددی مستقیم انجام نمی‌شود."
 
           };
 
@@ -2777,7 +4614,9 @@
           );
 
 
-        if (rounded === 0) {
+        if (
+          rounded === 0
+        ) {
 
           return {
 
@@ -2785,14 +4624,16 @@
               "neutral",
 
             text:
-              "Actual با Forecast برابر است."
+              "Actual مطابق Forecast منتشر شده است."
 
           };
 
         }
 
 
-        if (rounded > 0) {
+        if (
+          rounded > 0
+        ) {
 
           return {
 
@@ -2820,13 +4661,18 @@
       }
 
 
-      function extractNumber(value) {
+      function extractNumber(
+        value
+      ) {
 
         if (
-          typeof value === "number"
+          typeof value ===
+          "number"
         ) {
 
-          return Number.isFinite(value)
+          return Number.isFinite(
+            value
+          )
             ? value
             : null;
 
@@ -2843,7 +4689,9 @@
 
 
         if (!normalized) {
+
           return null;
+
         }
 
 
@@ -2853,7 +4701,9 @@
           );
 
 
-        return Number.isFinite(number)
+        return Number.isFinite(
+          number
+        )
           ? number
           : null;
 
@@ -2861,7 +4711,7 @@
 
 
       /* =======================================================
-         CATEGORY TRANSLATION
+         CATEGORY
       ======================================================== */
 
       function translateCategory(
@@ -2869,12 +4719,18 @@
       ) {
 
         const text =
-          normalizeText(value);
+          normalizeText(
+            value
+          );
 
 
         if (
-          text.includes("central") ||
-          text.includes("monetary")
+          text.includes(
+            "central"
+          ) ||
+          text.includes(
+            "monetary"
+          )
         ) {
 
           return "بانک مرکزی و سیاست پولی";
@@ -2883,7 +4739,9 @@
 
 
         if (
-          text.includes("economic")
+          text.includes(
+            "economic"
+          )
         ) {
 
           return "شاخص اقتصادی";
@@ -2892,7 +4750,9 @@
 
 
         if (
-          text.includes("earning")
+          text.includes(
+            "earning"
+          )
         ) {
 
           return "گزارش شرکت‌ها";
@@ -2911,7 +4771,9 @@
       ) {
 
         if (!name) {
+
           return "داده";
+
         }
 
 
@@ -2921,7 +4783,10 @@
             ""
           )
           .trim()
-          .slice(0, 28);
+          .slice(
+            0,
+            28
+          );
 
       }
 
@@ -2946,8 +4811,13 @@
 
         `;
 
+
         dataStateEl.textContent =
           "در حال دریافت";
+
+
+        heroDataState.textContent =
+          "LOADING";
 
       }
 
@@ -2985,8 +4855,11 @@
 
           </div>
 
+
           <p class="detail-empty">
+
             لطفاً اتصال اینترنت یا وضعیت سرویس داده را بررسی کنید.
+
           </p>
 
         `;
@@ -3078,4 +4951,5 @@
   </script>
 
 </body>
+
 </html>
