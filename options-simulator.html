@@ -2,1530 +2,157 @@
 <html lang="fa" dir="rtl" data-theme="dark">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>شبیه‌ساز استراتژی آپشن | آکادمی شمعدون</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#0B1220">
+<title>آزمایشگاه معاملات آپشن | شمعدون</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css">
-<meta name="theme-color" content="#d4af37">
 <style>
-:root {
-  --bg-primary: #08090c;
-  --bg-elevated: #0d0f14;
-  --bg-card: #11141a;
-  --bg-card-2: #171a21;
-  --bg-input: #0a0c10;
-  --border: rgba(255, 255, 255, 0.06);
-  --border-strong: rgba(255, 255, 255, 0.1);
-  --border-soft: rgba(255, 255, 255, 0.04);
-  --text-primary: #e6e8eb;
-  --text-secondary: #8b9099;
-  --text-muted: #5c6169;
-
-  --gold: #d4af37;
-  --gold-light: #f4d47c;
-  --gold-dark: #a8862a;
-  --gold-glow: rgba(212, 175, 55, 0.15);
-
-  --green: #22c55e;
-  --green-soft: rgba(34, 197, 94, 0.12);
-  --red: #ef4444;
-  --red-soft: rgba(239, 68, 68, 0.12);
-  --blue: #3b82f6;
-  --blue-soft: rgba(59, 130, 246, 0.12);
-  --purple: #8b5cf6;
-  --purple-soft: rgba(139, 92, 246, 0.12);
-
-  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
-  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.35);
-  --shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.45);
-
-  --sans: 'Vazirmatn', Tahoma, sans-serif;
-}
-[data-theme="light"] {
-  --bg-primary: #fafbfc;
-  --bg-elevated: #ffffff;
-  --bg-card: #ffffff;
-  --bg-card-2: #f7f8fa;
-  --bg-input: #ffffff;
-  --border: rgba(0, 0, 0, 0.06);
-  --border-strong: rgba(0, 0, 0, 0.1);
-  --border-soft: rgba(0, 0, 0, 0.04);
-  --text-primary: #0a0c10;
-  --text-secondary: #5b6471;
-  --text-muted: #8a919c;
-
-  --gold: #a87800;
-  --gold-light: #c8991f;
-  --gold-dark: #7a5700;
-  --gold-glow: rgba(168, 120, 0, 0.1);
-
-  --green: #16a34a;
-  --green-soft: rgba(22, 163, 74, 0.1);
-  --red: #dc2626;
-  --red-soft: rgba(220, 38, 38, 0.1);
-  --blue: #2563eb;
-  --blue-soft: rgba(37, 99, 235, 0.1);
-  --purple: #7c3aed;
-  --purple-soft: rgba(124, 58, 237, 0.1);
-
-  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.04);
-  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.06);
-  --shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.08);
-}
-* { margin: 0; padding: 0; box-sizing: border-box; }
-html { scroll-behavior: smooth; }
-body {
-  font-family: var(--sans);
-  background-color: var(--bg-primary);
-  color: var(--text-primary);
-  min-height: 100vh;
-  direction: rtl;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  background-image:
-    radial-gradient(ellipse 80% 50% at 50% -20%, rgba(139, 92, 246, 0.08), transparent),
-    radial-gradient(ellipse 60% 50% at 100% 100%, rgba(212, 175, 55, 0.05), transparent);
-  background-attachment: fixed;
-}
-[data-theme="light"] body {
-  background-image:
-    radial-gradient(ellipse 80% 50% at 50% -20%, rgba(124, 58, 237, 0.04), transparent),
-    radial-gradient(ellipse 60% 50% at 100% 100%, rgba(168, 120, 0, 0.03), transparent);
-}
-.container { max-width: 1500px; margin: 0 auto; padding: 100px 24px 80px; }
-
-.num, .mono, input[type="number"], .value, .zoom-info {
-  font-family: var(--sans);
-  font-feature-settings: 'tnum' 1;
-  font-variant-numeric: tabular-nums;
-}
-
-/* ===== HEADER ===== */
-.page-header {
-  position: relative;
-  text-align: center;
-  margin-bottom: 32px;
-  padding: 32px 24px;
-  background: linear-gradient(135deg, var(--bg-card) 0%, var(--bg-elevated) 100%);
-  border: 1px solid var(--border);
-  border-radius: 20px;
-  overflow: hidden;
-}
-.page-header::before {
-  content: '';
-  position: absolute;
-  top: 0; left: 50%;
-  transform: translateX(-50%);
-  width: 60%;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, var(--gold), transparent);
-  opacity: 0.5;
-}
-.page-header h1 {
-  font-size: 28px;
-  font-weight: 900;
-  margin-bottom: 8px;
-  letter-spacing: -0.5px;
-  background: linear-gradient(135deg, var(--text-primary) 30%, var(--gold) 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-.page-header p {
-  color: var(--text-secondary);
-  font-size: 14px;
-  font-weight: 500;
-}
-
-/* ===== STATUS BAR ===== */
-.status-bar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 12px;
-  padding: 12px 18px;
-  margin-bottom: 20px;
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  font-size: 12px;
-  font-weight: 600;
-}
-.status-bar .left {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  flex-wrap: wrap;
-}
-.status-bar .indicator {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  color: var(--text-secondary);
-}
-.status-bar .indicator .dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: var(--text-muted);
-}
-.status-bar .indicator.live .dot {
-  background: var(--green);
-  box-shadow: 0 0 8px var(--green);
-  animation: pulse 1.6s infinite;
-}
-.status-bar .indicator.loading .dot {
-  background: var(--blue);
-  box-shadow: 0 0 8px var(--blue);
-  animation: pulse 1s infinite;
-}
-.status-bar .indicator.error .dot {
-  background: var(--red);
-  box-shadow: 0 0 8px var(--red);
-}
-@keyframes pulse {
-  0%, 100% { opacity: 1; transform: scale(1); }
-  50% { opacity: 0.5; transform: scale(1.3); }
-}
-.status-bar .time-info {
-  color: var(--text-muted);
-  font-size: 11px;
-}
-
-.auto-refresh-toggle {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 6px 12px;
-  background: var(--bg-card-2);
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  cursor: pointer;
-  font-size: 11px;
-  font-weight: 700;
-  color: var(--text-secondary);
-  transition: all 0.15s;
-  user-select: none;
-}
-.auto-refresh-toggle:hover { color: var(--text-primary); border-color: var(--border-strong); }
-.auto-refresh-toggle input { display: none; }
-.auto-refresh-toggle .switch {
-  width: 30px;
-  height: 16px;
-  border-radius: 999px;
-  background: var(--border-strong);
-  position: relative;
-  transition: background 0.2s;
-}
-.auto-refresh-toggle .switch::after {
-  content: '';
-  position: absolute;
-  top: 2px;
-  left: 2px;
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  background: #fff;
-  transition: transform 0.2s;
-}
-.auto-refresh-toggle input:checked ~ .switch {
-  background: var(--green);
-}
-.auto-refresh-toggle input:checked ~ .switch::after {
-  transform: translateX(14px);
-}
-
-/* ===== PANEL ===== */
-.panel {
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: 16px;
-  padding: 24px;
-  margin-bottom: 20px;
-  box-shadow: var(--shadow-sm);
-  transition: border-color 0.2s;
-}
-.panel:hover { border-color: var(--border-strong); }
-.panel-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 20px;
-  padding-bottom: 16px;
-  border-bottom: 1px solid var(--border);
-  flex-wrap: wrap;
-  gap: 12px;
-}
-.panel-title {
-  color: var(--text-primary);
-  font-size: 15px;
-  font-weight: 800;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  letter-spacing: -0.2px;
-}
-.panel-title .badge {
-  background: var(--gold-glow);
-  color: var(--gold);
-  padding: 3px 10px;
-  border-radius: 6px;
-  font-size: 11px;
-  font-weight: 800;
-  border: 1px solid rgba(212, 175, 55, 0.25);
-}
-
-/* ===== Tabs ===== */
-.tabs {
-  display: flex;
-  gap: 4px;
-  margin-bottom: 20px;
-  padding: 4px;
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  width: fit-content;
-}
-.tab-btn {
-  padding: 10px 20px;
-  background: transparent;
-  color: var(--text-secondary);
-  border: none;
-  border-radius: 8px;
-  font-family: var(--sans);
-  font-size: 13px;
-  font-weight: 700;
-  cursor: pointer;
-  transition: all 0.2s;
-  white-space: nowrap;
-}
-.tab-btn:hover { color: var(--text-primary); background: var(--bg-card-2); }
-.tab-btn.active {
-  color: var(--text-primary);
-  background: var(--bg-elevated);
-  box-shadow: var(--shadow-sm);
-  border: 1px solid var(--border);
-}
-.tab-content { display: none; }
-.tab-content.active { display: block; animation: fadeIn 0.3s ease; }
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(4px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-/* ===== PRESETS ===== */
-.presets-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 10px;
-}
-.preset-card {
-  background: var(--bg-card-2);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 14px 16px;
-  cursor: pointer;
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-  text-align: right;
-  font-family: var(--sans);
-  color: var(--text-primary);
-  position: relative;
-  overflow: hidden;
-}
-.preset-card:hover {
-  border-color: var(--border-strong);
-  background: var(--bg-elevated);
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-md);
-}
-.preset-card.active {
-  background: linear-gradient(135deg, var(--gold-glow), transparent);
-  border-color: rgba(212, 175, 55, 0.5);
-  box-shadow: 0 0 0 1px rgba(212, 175, 55, 0.2), var(--shadow-md);
-}
-.preset-card .preset-header {
-  display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;
-}
-.preset-card .preset-icon { font-size: 20px; }
-.preset-card .preset-name {
-  color: var(--text-primary); font-size: 13px; font-weight: 800; letter-spacing: -0.2px;
-}
-.preset-card.active .preset-name { color: var(--gold); }
-.preset-card .preset-desc { color: var(--text-secondary); font-size: 11px; line-height: 1.6; }
-.preset-card .preset-badge {
-  display: inline-block;
-  background: var(--blue-soft);
-  color: var(--blue);
-  padding: 2px 8px;
-  border-radius: 5px;
-  font-size: 9px;
-  font-weight: 800;
-  margin-top: 8px;
-  border: 1px solid rgba(59, 130, 246, 0.2);
-}
-
-/* ===== TABLE ===== */
-.positions-table-wrapper {
-  overflow-x: auto;
-  border-radius: 12px;
-  margin-bottom: 16px;
-  border: 1px solid var(--border);
-  background: var(--bg-card-2);
-}
-.positions-table { width: 100%; border-collapse: collapse; min-width: 1560px; }
-.positions-table th {
-  background: var(--bg-elevated);
-  color: var(--text-secondary);
-  padding: 12px 10px;
-  text-align: right;
-  font-size: 11px;
-  font-weight: 700;
-  border-bottom: 1px solid var(--border);
-  white-space: nowrap;
-  letter-spacing: 0.3px;
-}
-.positions-table td {
-  padding: 10px;
-  border-bottom: 1px solid var(--border-soft);
-  vertical-align: middle;
-}
-.positions-table tbody tr { transition: background 0.15s; }
-.positions-table tbody tr:hover { background: rgba(212, 175, 55, 0.02); }
-.positions-table tbody tr:last-child td { border-bottom: none; }
-
-.cell-input, .cell-select {
-  width: 100%;
-  padding: 9px 11px;
-  background: var(--bg-input);
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  color: var(--text-primary);
-  font-family: var(--sans);
-  font-size: 12px;
-  font-weight: 600;
-  outline: none;
-  transition: all 0.15s;
-  direction: ltr;
-  text-align: right;
-}
-.cell-input {
-  min-width: 95px;
-  font-feature-settings: 'tnum' 1;
-  letter-spacing: -0.2px;
-}
-.cell-select {
-  min-width: 130px;
-  cursor: pointer;
-}
-.cell-input:hover, .cell-select:hover { border-color: var(--border-strong); }
-.cell-input:focus, .cell-select:focus {
-  border-color: var(--gold);
-  box-shadow: 0 0 0 3px var(--gold-glow);
-}
-.cell-input.highlight {
-  border-color: rgba(212, 175, 55, 0.4);
-  background: var(--gold-glow);
-  color: var(--gold);
-  font-weight: 800;
-}
-.cell-input:disabled { opacity: 0.4; cursor: not-allowed; }
-.cell-input.locked-cell {
-  background: var(--bg-card-2) !important;
-  border-color: var(--border-soft) !important;
-  color: var(--text-muted) !important;
-  cursor: not-allowed !important;
-  opacity: 0.5 !important;
-}
-.cell-select.placeholder-active {
-  color: var(--text-muted);
-  font-weight: 500;
-}
-
-.side-toggle {
-  display: inline-flex;
-  background: var(--bg-input);
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  overflow: hidden;
-  width: 100%;
-  min-width: 110px;
-  padding: 2px;
-  gap: 2px;
-}
-.side-btn {
-  flex: 1;
-  padding: 7px 6px;
-  background: transparent;
-  color: var(--text-secondary);
-  border: none;
-  border-radius: 6px;
-  font-family: var(--sans);
-  font-size: 11px;
-  font-weight: 700;
-  cursor: pointer;
-  transition: all 0.15s;
-  white-space: nowrap;
-}
-.side-btn:hover { color: var(--text-primary); }
-.side-btn.active-buy {
-  background: var(--green);
-  color: #fff;
-  box-shadow: 0 2px 8px rgba(34, 197, 94, 0.35);
-}
-.side-btn.active-sell {
-  background: var(--red);
-  color: #fff;
-  box-shadow: 0 2px 8px rgba(239, 68, 68, 0.35);
-}
-
-.symbol-badge {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 6px 12px;
-  border-radius: 8px;
-  font-size: 13px;
-  font-weight: 800;
-  font-family: var(--sans);
-  white-space: nowrap;
-  transition: all 0.15s;
-  width: 100%;
-  min-width: 80px;
-  border: 1px solid;
-  letter-spacing: -0.2px;
-}
-.symbol-badge.call {
-  background: var(--green-soft);
-  border-color: rgba(34, 197, 94, 0.3);
-  color: #4ade80;
-}
-.symbol-badge.put {
-  background: var(--red-soft);
-  border-color: rgba(239, 68, 68, 0.3);
-  color: #f87171;
-}
-.symbol-badge.spot {
-  background: var(--blue-soft);
-  border-color: rgba(59, 130, 246, 0.3);
-  color: #60a5fa;
-}
-.symbol-badge.empty {
-  background: var(--bg-card-2);
-  border-color: var(--border);
-  border-style: dashed;
-  color: var(--text-muted);
-  font-size: 11px;
-  font-weight: 600;
-}
-[data-theme="light"] .symbol-badge.call { color: #16a34a; }
-[data-theme="light"] .symbol-badge.put { color: #dc2626; }
-[data-theme="light"] .symbol-badge.spot { color: #2563eb; }
-
-.btn-remove {
-  width: 32px; height: 32px;
-  border-radius: 8px;
-  background: transparent;
-  border: 1px solid var(--border);
-  color: var(--text-secondary);
-  cursor: pointer;
-  font-size: 13px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.15s;
-  font-family: var(--sans);
-}
-.btn-remove:hover {
-  background: var(--red-soft);
-  border-color: rgba(239, 68, 68, 0.3);
-  color: var(--red);
-}
-
-.btn-add {
-  padding: 11px 20px;
-  background: transparent;
-  color: var(--text-primary);
-  border: 1px dashed var(--border-strong);
-  border-radius: 10px;
-  font-family: var(--sans);
-  font-size: 13px;
-  font-weight: 700;
-  cursor: pointer;
-  transition: all 0.2s;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-}
-.btn-add:hover {
-  border-color: var(--gold);
-  color: var(--gold);
-  background: var(--gold-glow);
-  border-style: solid;
-}
-
-.btn-primary {
-  padding: 11px 20px;
-  background: linear-gradient(135deg, var(--gold), var(--gold-dark));
-  color: #fff;
-  border: none;
-  border-radius: 10px;
-  font-family: var(--sans);
-  font-size: 13px;
-  font-weight: 800;
-  cursor: pointer;
-  transition: all 0.2s;
-  box-shadow: 0 2px 8px rgba(212, 175, 55, 0.25);
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-}
-.btn-primary:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 4px 16px rgba(212, 175, 55, 0.4);
-}
-
-.btn-refresh {
-  padding: 11px 18px;
-  background: var(--bg-card-2);
-  color: var(--text-primary);
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  font-family: var(--sans);
-  font-size: 13px;
-  font-weight: 700;
-  cursor: pointer;
-  transition: all 0.2s;
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-}
-.btn-refresh:hover {
-  background: var(--bg-elevated);
-  border-color: var(--border-strong);
-}
-.btn-refresh:disabled { opacity: 0.5; cursor: wait; }
-
-.btn-clear {
-  padding: 11px 18px;
-  background: transparent;
-  color: var(--red);
-  border: 1px solid rgba(239, 68, 68, 0.25);
-  border-radius: 10px;
-  font-family: var(--sans);
-  font-size: 13px;
-  font-weight: 700;
-  cursor: pointer;
-  transition: all 0.2s;
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-}
-.btn-clear:hover {
-  background: var(--red-soft);
-  border-color: rgba(239, 68, 68, 0.5);
-}
-
-.strategy-info {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
-  padding: 16px 20px;
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: 14px;
-  margin-bottom: 20px;
-  align-items: center;
-  box-shadow: var(--shadow-sm);
-}
-.strategy-name {
-  color: var(--text-primary);
-  font-size: 15px;
-  font-weight: 800;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-.strategy-tag {
-  background: var(--gold-glow);
-  color: var(--gold);
-  padding: 4px 12px;
-  border-radius: 6px;
-  font-size: 11px;
-  border: 1px solid rgba(212, 175, 55, 0.25);
-  font-weight: 700;
-}
-
-.strategy-explanation {
-  position: relative;
-  margin-bottom: 20px;
-  padding: 22px 24px;
-  border-radius: 16px;
-  background: linear-gradient(135deg, var(--bg-card) 0%, var(--bg-card-2) 100%);
-  border: 1px solid var(--border);
-  animation: fadeSlideIn 0.4s ease;
-  box-shadow: var(--shadow-sm);
-}
-.strategy-explanation::before {
-  content: '';
-  position: absolute;
-  top: 0; right: 0; left: 0;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, var(--purple), var(--blue), transparent);
-  opacity: 0.6;
-}
-@keyframes fadeSlideIn {
-  from { opacity: 0; transform: translateY(-6px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-.exp-header {
-  display: flex; align-items: center; gap: 12px;
-  margin-bottom: 16px; padding-bottom: 14px;
-  border-bottom: 1px solid var(--border);
-}
-.exp-header .exp-icon {
-  display: inline-flex; width: 40px; height: 40px;
-  align-items: center; justify-content: center; border-radius: 10px;
-  background: linear-gradient(135deg, var(--purple-soft), var(--blue-soft));
-  font-size: 18px;
-  border: 1px solid var(--border);
-}
-.exp-header .exp-title { font-size: 14px; font-weight: 800; color: var(--text-primary); letter-spacing: -0.2px; }
-.exp-header .exp-sub { font-size: 11px; color: var(--text-secondary); margin-top: 3px; font-weight: 500; }
-.exp-body { display: grid; gap: 12px; grid-template-columns: 1fr; }
-@media (min-width: 900px) { .exp-body { grid-template-columns: 1.4fr 1fr 1fr; gap: 14px; } }
-.exp-block {
-  background: var(--bg-elevated);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 14px 16px;
-}
-.exp-block .blk-title {
-  display: flex; align-items: center; gap: 6px;
-  font-size: 12px; font-weight: 800; margin-bottom: 10px; color: var(--text-primary);
-}
-.exp-block .blk-title.pros { color: var(--green); }
-.exp-block .blk-title.cons { color: var(--red); }
-.exp-block p { font-size: 12.5px; line-height: 1.9; color: var(--text-secondary); }
-.exp-block ul { list-style: none; display: grid; gap: 6px; }
-.exp-block ul li {
-  font-size: 12.5px; line-height: 1.8; color: var(--text-secondary);
-  padding-right: 18px; position: relative;
-}
-.exp-block ul li::before {
-  content: ''; position: absolute; right: 4px; top: 8px;
-  width: 5px; height: 5px; border-radius: 50%; background: currentColor; opacity: 0.4;
-}
-.exp-block.pros ul li::before { background: var(--green); opacity: 1; }
-.exp-block.cons ul li::before { background: var(--red); opacity: 1; }
-.exp-highlight {
-  display: inline-block; padding: 2px 8px; border-radius: 5px;
-  background: var(--gold-glow); color: var(--gold);
-  font-weight: 700; font-size: 11px;
-}
-
-.results-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-  gap: 12px;
-  margin-bottom: 20px;
-}
-.result-card {
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 16px 18px;
-  position: relative;
-  overflow: hidden;
-  transition: all 0.2s;
-}
-.result-card::before {
-  content: '';
-  position: absolute;
-  top: 0; right: 0; bottom: 0;
-  width: 3px;
-  background: var(--gold);
-}
-.result-card.profit::before { background: var(--green); }
-.result-card.loss::before { background: var(--red); }
-.result-card.blue::before { background: var(--blue); }
-.result-card:hover {
-  border-color: var(--border-strong);
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-md);
-}
-.result-card .label {
-  color: var(--text-secondary);
-  font-size: 11px;
-  margin-bottom: 8px;
-  font-weight: 600;
-}
-.result-card .value {
-  color: var(--text-primary);
-  font-size: 18px;
-  font-weight: 800;
-  letter-spacing: -0.5px;
-}
-.result-card.profit .value { color: var(--green); }
-.result-card.loss .value { color: var(--red); }
-.result-card.blue .value { color: var(--blue); }
-
-/* ============================================================
-   نمودار
-   ============================================================ */
-.chart-container {
-  position: relative;
-  overflow: hidden;
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: 20px;
-  padding: 24px;
-  margin-bottom: 20px;
-  box-shadow: var(--shadow-md);
-}
-.chart-container::before {
-  content: '';
-  position: absolute;
-  top: 0; left: 0; right: 0;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, var(--gold), transparent);
-  opacity: 0.4;
-}
-.chart-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin-bottom: 18px;
-  padding-bottom: 16px;
-  border-bottom: 1px solid var(--border);
-}
-.chart-header .title {
-  display: flex; align-items: center; gap: 10px;
-  color: var(--text-primary);
-  font-size: 15px;
-  font-weight: 800;
-}
-.chart-header .live-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 4px 12px;
-  border-radius: 999px;
-  background: var(--green-soft);
-  color: var(--green);
-  font-size: 10px;
-  font-weight: 800;
-  border: 1px solid rgba(34, 197, 94, 0.25);
-}
-.chart-header .live-badge::before {
-  content: '';
-  width: 6px; height: 6px; border-radius: 50%;
-  background: var(--green);
-  box-shadow: 0 0 10px var(--green);
-  animation: pulse 1.6s infinite;
-}
-
-.chart-canvas-wrap {
-  position: relative;
-  width: 100%;
-  border-radius: 12px;
-  overflow: hidden;
-  background: var(--bg-input);
-  border: 1px solid var(--border);
-}
-#payoffChart {
-  width: 100%;
-  height: auto;
-  display: block;
-  cursor: crosshair;
-  user-select: none;
-  touch-action: pan-y;
-}
-.chart-canvas-wrap.panning #payoffChart { cursor: grabbing !important; }
-
-#chartTooltip {
-  position: absolute;
-  pointer-events: none;
-  background: rgba(8, 9, 12, 0.96);
-  backdrop-filter: blur(16px) saturate(180%);
-  -webkit-backdrop-filter: blur(16px) saturate(180%);
-  border: 1px solid rgba(212, 175, 55, 0.4);
-  border-radius: 10px;
-  padding: 11px 14px;
-  font-family: var(--sans);
-  font-size: 12px;
-  font-weight: 700;
-  color: #e6e8eb;
-  z-index: 50;
-  opacity: 0;
-  transition: opacity 0.12s ease;
-  direction: rtl;
-  white-space: nowrap;
-  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.04), 0 12px 32px rgba(0, 0, 0, 0.6);
-  line-height: 1.9;
-  min-width: 200px;
-  max-width: 92%;
-}
-[data-theme="light"] #chartTooltip {
-  background: rgba(255, 255, 255, 0.97);
-  color: #0a0c10;
-  border-color: rgba(168, 120, 0, 0.35);
-  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.04), 0 12px 32px rgba(0, 0, 0, 0.12);
-}
-#chartTooltip.visible { opacity: 1; }
-#chartTooltip.locked {
-  border-color: var(--gold);
-  box-shadow: 0 0 0 3px var(--gold-glow), 0 12px 32px rgba(0, 0, 0, 0.6);
-}
-#chartTooltip .tt-row {
-  display: flex;
-  justify-content: space-between;
-  gap: 1rem;
-  padding: 2px 0;
-}
-#chartTooltip .tt-row .k { color: #8b9099; font-weight: 600; font-size: 11px; }
-[data-theme="light"] #chartTooltip .tt-row .k { color: #5b6471; }
-#chartTooltip .tt-row .v {
-  font-weight: 800;
-  font-family: var(--sans);
-  font-feature-settings: 'tnum' 1;
-  direction: ltr;
-  letter-spacing: -0.3px;
-}
-#chartTooltip .tt-price .v { color: var(--gold); font-size: 13px; }
-#chartTooltip .tt-pnl-profit .v { color: var(--green); }
-#chartTooltip .tt-pnl-loss .v { color: var(--red); }
-#chartTooltip .tt-pct-profit .v { color: var(--green); }
-#chartTooltip .tt-pct-loss .v { color: var(--red); }
-#chartTooltip .tt-divider {
-  height: 1px;
-  background: rgba(255, 255, 255, 0.06);
-  margin: 6px 0;
-}
-[data-theme="light"] #chartTooltip .tt-divider { background: rgba(0, 0, 0, 0.06); }
-
-.chart-toolbar {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 6px;
-  margin-top: 14px;
-  padding: 10px 12px;
-  background: var(--bg-card-2);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  font-size: 12px;
-}
-.chart-toolbar-label {
-  color: var(--text-secondary);
-  font-weight: 700;
-  margin-inline-end: 6px;
-  font-size: 11px;
-}
-.zoom-btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-width: 34px;
-  height: 32px;
-  padding: 0 10px;
-  background: var(--bg-card);
-  color: var(--text-secondary);
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  font-family: var(--sans);
-  font-size: 12px;
-  font-weight: 700;
-  cursor: pointer;
-  transition: all 0.15s;
-}
-.zoom-btn:hover {
-  color: var(--text-primary);
-  border-color: var(--border-strong);
-  background: var(--bg-elevated);
-  transform: translateY(-1px);
-}
-.zoom-btn:active { transform: translateY(0); }
-.zoom-btn.active {
-  background: var(--gold);
-  color: #fff;
-  border-color: var(--gold);
-  box-shadow: 0 2px 8px rgba(212, 175, 55, 0.4);
-}
-.zoom-btn.reset {
-  color: var(--red);
-  border-color: rgba(239, 68, 68, 0.25);
-}
-.zoom-btn.reset:hover {
-  background: var(--red-soft);
-  border-color: rgba(239, 68, 68, 0.5);
-}
-.zoom-info {
-  margin-inline-start: auto;
-  color: var(--text-secondary);
-  font-size: 11px;
-  font-weight: 700;
-  direction: ltr;
-  padding: 5px 12px;
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: 8px;
-}
-
-.chart-hint {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  margin-top: 12px;
-  padding: 10px 14px;
-  background: var(--blue-soft);
-  border: 1px solid rgba(59, 130, 246, 0.2);
-  border-radius: 10px;
-  color: var(--blue);
-  font-size: 12px;
-  font-weight: 600;
-  text-align: center;
-  line-height: 1.7;
-  flex-wrap: wrap;
-}
-.chart-hint.locked {
-  background: var(--gold-glow);
-  border-color: rgba(212, 175, 55, 0.35);
-  color: var(--gold);
-}
-.chart-hint .lock-icon { font-size: 14px; }
-
-.legend {
-  display: flex;
-  gap: 20px;
-  flex-wrap: wrap;
-  margin-top: 16px;
-  padding-top: 16px;
-  border-top: 1px solid var(--border);
-  font-size: 12px;
-}
-.legend-item {
-  display: flex; align-items: center; gap: 8px;
-  color: var(--text-secondary); font-weight: 600;
-}
-.legend-dot { width: 10px; height: 10px; border-radius: 3px; }
-
-.loading-indicator {
-  display: inline-block;
-  width: 12px; height: 12px;
-  border: 2px solid rgba(59, 130, 246, 0.2);
-  border-top-color: var(--blue);
-  border-radius: 50%;
-  animation: spin 0.8s infinite;
-  margin-inline-end: 6px;
-}
-@keyframes spin { to { transform: rotate(360deg); } }
-
-.price-status {
-  font-size: 10px;
-  color: var(--text-muted);
-  display: block;
-  margin-top: 5px;
-  text-align: center;
-  font-weight: 600;
-  letter-spacing: 0.3px;
-}
-.price-status.live { color: var(--green); }
-.price-status.manual { color: var(--gold); }
-.price-status.error { color: var(--red); }
-
-.modal-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.7);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  z-index: 99999;
-  display: none;
-  align-items: center;
-  justify-content: center;
-  padding: 20px;
-  animation: fadeIn 0.2s ease;
-}
-.modal-overlay.active { display: flex; }
-.modal-box {
-  background: var(--bg-card);
-  border: 1px solid var(--border-strong);
-  border-radius: 16px;
-  padding: 28px;
-  max-width: 440px;
-  width: 100%;
-  box-shadow: var(--shadow-lg);
-  animation: modalIn 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  position: relative;
-  overflow: hidden;
-}
-.modal-box::before {
-  content: '';
-  position: absolute;
-  top: 0; right: 0; left: 0;
-  height: 2px;
-  background: linear-gradient(90deg, transparent, var(--gold), transparent);
-}
-@keyframes modalIn {
-  from { opacity: 0; transform: scale(0.95) translateY(10px); }
-  to { opacity: 1; transform: scale(1) translateY(0); }
-}
-.modal-icon {
-  width: 52px; height: 52px;
-  border-radius: 14px;
-  background: linear-gradient(135deg, var(--gold-glow), var(--purple-soft));
-  display: grid; place-items: center;
-  font-size: 24px;
-  margin-bottom: 16px;
-  border: 1px solid var(--border);
-}
-.modal-title {
-  font-size: 17px;
-  font-weight: 800;
-  margin-bottom: 10px;
-  color: var(--text-primary);
-  letter-spacing: -0.3px;
-}
-.modal-text {
-  font-size: 13.5px;
-  line-height: 1.9;
-  color: var(--text-secondary);
-  margin-bottom: 22px;
-}
-.modal-actions {
-  display: flex;
-  gap: 10px;
-  justify-content: flex-start;
-  flex-wrap: wrap;
-}
-.modal-btn {
-  padding: 11px 20px;
-  border-radius: 10px;
-  font-family: var(--sans);
-  font-size: 13px;
-  font-weight: 700;
-  cursor: pointer;
-  transition: all 0.15s;
-  border: 1px solid var(--border);
-  background: var(--bg-card-2);
-  color: var(--text-primary);
-}
-.modal-btn:hover { background: var(--bg-elevated); border-color: var(--border-strong); }
-.modal-btn.danger {
-  background: var(--red);
-  color: #fff;
-  border-color: transparent;
-  box-shadow: 0 2px 8px rgba(239, 68, 68, 0.3);
-}
-.modal-btn.danger:hover { transform: translateY(-1px); box-shadow: 0 4px 16px rgba(239, 68, 68, 0.5); }
-
- /* ===== حالت تمام‌صفحه حرفه‌ای نمودار ===== */
-.chart-container.fullscreen {
-  position: fixed;
-  inset: 0;
-  z-index: 99999;
-  width: 100vw;
-  height: 100dvh;
-  max-width: none;
-  margin: 0;
-  border: 0;
-  border-radius: 0;
-  padding: 12px;
-  background: var(--bg-primary);
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  box-shadow: none;
-}
-
-.chart-container.fullscreen .chart-header {
-  flex: 0 0 auto;
-  padding-bottom: 10px;
-  margin-bottom: 10px;
-}
-
-.chart-container.fullscreen .chart-canvas-wrap {
-  flex: 1 1 auto;
-  min-height: 0;
-  height: auto;
-  width: 100%;
-  display: block;
-  overflow: hidden;
-}
-
-.chart-container.fullscreen #payoffChart {
-  width: 100%;
-  height: 100%;
-  max-width: none;
-  max-height: none;
-  display: block;
-}
-
-.chart-container.fullscreen .chart-toolbar,
-.chart-container.fullscreen .chart-hint,
-.chart-container.fullscreen .legend {
-  flex: 0 0 auto;
-}
-
-/* فضای استاندارد نمودار در حالت عادی */
-.chart-canvas-wrap {
-  height: clamp(320px, 48vw, 560px);
-  min-height: 320px;
-  max-height: 560px;
-  touch-action: none;
-  overscroll-behavior: contain;
-  -webkit-user-select: none;
-  user-select: none;
-}
-
-#payoffChart {
-  width: 100%;
-  height: 100%;
-  max-width: 100%;
-  max-height: 100%;
-  display: block;
-  touch-action: none;
-  -webkit-user-select: none;
-  user-select: none;
-}
-
-.chart-container.fullscreen .chart-canvas-wrap {
-  height: auto;
-}
-
-@media (max-width: 900px) {
-  .chart-container {
-    padding: 16px;
-  }
-
-  .chart-canvas-wrap {
-    height: clamp(300px, 56vw, 460px);
-    min-height: 300px;
-    max-height: 460px;
-  }
-}
-
-@media (max-width: 600px) {
-  .chart-container {
-    padding: 12px;
-    border-radius: 14px;
-  }
-
-  .chart-canvas-wrap {
-    height: clamp(300px, 76vw, 430px);
-    min-height: 300px;
-    max-height: 430px;
-    border-radius: 10px;
-  }
-
-  .chart-toolbar {
-    overflow-x: auto;
-    flex-wrap: nowrap;
-    scrollbar-width: thin;
-  }
-
-  .chart-toolbar-label {
-    flex: 0 0 auto;
-  }
-
-  .zoom-btn {
-    flex: 0 0 auto;
-  }
-
-  .zoom-info {
-    flex: 0 0 auto;
-  }
-
-  .chart-hint {
-    font-size: 11px;
-    padding: 8px 10px;
-  }
-
-  .chart-container.fullscreen {
-    height: 100dvh;
-    min-height: 100dvh;
-    padding: max(8px, env(safe-area-inset-top))
-             max(8px, env(safe-area-inset-right))
-             max(8px, env(safe-area-inset-bottom))
-             max(8px, env(safe-area-inset-left));
-  }
-
-  .chart-container.fullscreen .chart-header .title {
-    font-size: 13px;
-  }
-
-  .chart-container.fullscreen .chart-canvas-wrap {
-    min-height: 0;
-    height: auto;
-  }
-
-  .chart-container.fullscreen .chart-toolbar {
-    margin-top: 8px;
-  }
-}
-
-@media (max-width: 600px) and (orientation: portrait) {
-  .chart-canvas-wrap {
-    height: min(74vw, 410px);
-    min-height: 300px;
-  }
-}
-
-@media (max-width: 900px) and (orientation: landscape) {
-  .chart-canvas-wrap {
-    height: min(64vh, 430px);
-    min-height: 260px;
-    max-height: 430px;
-  }
-
-  .chart-container.fullscreen .chart-canvas-wrap {
-    height: auto;
-    min-height: 0;
-  }
-}
-
-@media (min-width: 901px) {
-  .chart-container.fullscreen {
-    padding: 14px 18px;
-  }
-
-  .chart-container.fullscreen .chart-canvas-wrap {
-    min-height: 0;
-  }
-}
-
-/* Fullscreen واقعی مرورگر */
-.chart-container:fullscreen {
-  width: 100vw;
-  height: 100vh;
-  height: 100dvh;
-  max-width: none;
-  border: 0;
-  border-radius: 0;
-}
-
-.chart-container:-webkit-full-screen {
-  width: 100vw;
-  height: 100vh;
-  max-width: none;
-  border: 0;
-  border-radius: 0;
-}
-
-/* ===== Responsive rules خارج از نمودار — حفظ رفتار قبلی صفحه ===== */
-@media (max-width: 900px) {
-  .container { padding: 90px 14px 60px; }
-  .positions-table th { padding: 8px 5px; font-size: 10px; }
-  .positions-table td { padding: 7px 5px; }
-  .cell-input { min-width: 75px; padding: 7px 8px; font-size: 11px; }
-  .cell-select { min-width: 105px; padding: 7px 8px; font-size: 11px; }
-  .side-btn { font-size: 10px; padding: 6px 4px; }
-  .btn-remove { width: 28px; height: 28px; font-size: 12px; }
-  .presets-grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); }
-  .symbol-badge { font-size: 11px; padding: 5px 9px; min-width: 66px; }
-  .page-header h1 { font-size: 22px; }
-}
-@media (max-width: 600px) {
-  .container { padding: 86px 10px 40px; }
-  .page-header h1 { font-size: 19px; }
-  .page-header p { font-size: 12px; }
-  .panel { padding: 16px; border-radius: 14px; }
-  .tabs { flex-wrap: wrap; width: 100%; }
-  .tab-btn { font-size: 12px; padding: 9px 14px; }
-  .modal-box { padding: 22px; }
-  .modal-actions { flex-direction: column-reverse; }
-  .modal-btn { width: 100%; justify-content: center; }
-  .zoom-btn#fullscreenBtn {
-    background: var(--gold-glow);
-    border-color: rgba(212, 175, 55, 0.4);
-    color: var(--gold);
-  }
-}
-
-</style>
+:root{
+  --bg:#f4f6f9; --surface:#fff; --surface-2:#f8fafc; --surface-3:#eef2f7;
+  --text:#111827; --muted:#64748b; --faint:#94a3b8; --border:#dfe5ec;
+  --gold:#a87800; --gold-soft:#fff7df; --green:#16835b; --green-soft:#eaf8f2;
+  --red:#d64545; --red-soft:#fff0f0; --blue:#2563eb; --blue-soft:#eef4ff;
+  --purple:#7c3aed; --shadow:0 10px 30px rgba(15,23,42,.06); --radius:16px;
+}
+html[data-theme="dark"]{
+  --bg:#080b11; --surface:#111722; --surface-2:#171e2a; --surface-3:#1c2533;
+  --text:#e8edf5; --muted:#96a3b5; --faint:#697587; --border:rgba(255,255,255,.08);
+  --gold:#d4af37; --gold-soft:rgba(212,175,55,.11); --green:#22c55e; --green-soft:rgba(34,197,94,.12);
+  --red:#ef4444; --red-soft:rgba(239,68,68,.12); --blue:#60a5fa; --blue-soft:rgba(96,165,250,.12);
+  --purple:#a78bfa; --shadow:0 14px 36px rgba(0,0,0,.24);
+}
+*{box-sizing:border-box} html{scroll-behavior:smooth} body{margin:0;background:var(--bg);color:var(--text);font-family:Vazirmatn,Tahoma,sans-serif;min-width:0;overflow-x:hidden;transition:background .2s,color .2s}
+button,input,select{font:inherit} button{cursor:pointer} .num,input[type=number]{font-variant-numeric:tabular-nums}
+.page{max-width:1480px;margin:auto;padding:88px 22px 60px}
+.hero{display:grid;grid-template-columns:minmax(0,1fr) 360px;gap:18px;margin-bottom:18px}
+.hero-main,.hero-side,.panel,.chart-panel,.explanation,.summary-panel{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow)}
+.hero-main{padding:26px 28px;background:linear-gradient(135deg,var(--surface),var(--surface-2))}
+.eyebrow{display:flex;align-items:center;gap:8px;color:var(--gold);font-size:12px;font-weight:800;margin-bottom:10px}.eyebrow i{width:7px;height:7px;border-radius:50%;background:var(--gold);display:inline-block;box-shadow:0 0 0 5px var(--gold-soft)}
+.hero h1{margin:0 0 8px;font-size:clamp(24px,3vw,36px);letter-spacing:-.7px}.hero p{margin:0;color:var(--muted);line-height:1.9;font-size:14px;max-width:780px}
+.hero-actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:20px}.btn{border:1px solid var(--border);background:var(--surface-2);color:var(--text);border-radius:11px;padding:10px 15px;font-weight:750;font-size:13px}.btn:hover{border-color:var(--gold);transform:translateY(-1px)}.btn.primary{background:var(--gold);border-color:var(--gold);color:#fff}.btn.danger{color:var(--red)}
+.hero-side{padding:20px}.live-row{display:flex;justify-content:space-between;align-items:center;gap:12px;padding-bottom:14px;border-bottom:1px solid var(--border)}.live{display:flex;align-items:center;gap:8px;font-size:12px;font-weight:800}.indicator{width:9px;height:9px;border-radius:50%;background:#94a3b8}.indicator.live{background:var(--green);box-shadow:0 0 0 5px var(--green-soft)}.indicator.error{background:var(--red)}.live-time{font-size:11px;color:var(--muted)}
+.hero-metrics{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}.metric{padding:12px;border:1px solid var(--border);border-radius:12px;background:var(--surface-2)}.metric .k{font-size:11px;color:var(--muted);display:block;margin-bottom:5px}.metric .v{font-size:15px;font-weight:850}
+.section-head{display:flex;align-items:flex-end;justify-content:space-between;gap:14px;margin:22px 0 11px}
+#strategySection{position:relative;display:block;clear:both;width:100%;margin-bottom:24px;isolation:isolate;z-index:1}
+#strategySection .presets{position:relative;display:grid;width:100%;z-index:1;clear:both}
+#strategySection .preset-card{position:relative;display:block;float:none;inset:auto;z-index:1}
+.workspace{position:relative;clear:both;z-index:2;width:100%;margin-top:0}
+.workspace .main-col,.workspace .side-col{position:relative;float:none;inset:auto;transform:none}
+.workspace .side-col{align-self:start}.section-title{font-size:17px;font-weight:900}.section-sub{font-size:11px;color:var(--muted);margin-top:4px}.count{font-size:11px;color:var(--muted);background:var(--surface-3);padding:6px 10px;border-radius:999px;white-space:nowrap}
+.presets{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px}.preset-card{min-width:0;text-align:right;border:1px solid var(--border);background:var(--surface);border-radius:14px;padding:14px;color:var(--text);transition:.18s;box-shadow:0 2px 8px rgba(15,23,42,.025)}.preset-card:hover{border-color:var(--gold);transform:translateY(-2px)}.preset-card.active{border-color:var(--gold);box-shadow:0 0 0 2px var(--gold-soft),var(--shadow);background:linear-gradient(180deg,var(--surface),var(--gold-soft))}.preset-header{display:flex;align-items:center;gap:8px;margin-bottom:8px}.preset-icon{font-size:17px}.preset-name{font-size:12px;font-weight:900;direction:ltr;text-align:right}.preset-desc{font-size:11px;line-height:1.75;color:var(--muted);min-height:39px}.preset-badge{display:inline-block;margin-top:9px;font-size:10px;color:var(--gold);background:var(--gold-soft);border-radius:999px;padding:4px 8px}
+.workspace{display:grid;grid-template-columns:minmax(0,1fr) minmax(250px,280px);gap:16px;align-items:start;margin-top:18px;width:100%;min-width:0}.main-col,.side-col{min-width:0;width:100%;display:grid;gap:16px;align-content:start}.main-col{overflow:hidden}.side-col{position:static!important;top:auto!important;overflow:hidden}.main-col>.panel,.main-col>.chart-panel,.main-col>.explanation,.side-col>.panel{width:100%;min-width:0}
+.panel{padding:18px}.panel-head{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:14px}.panel-title{font-weight:900;font-size:15px}.panel-sub{font-size:11px;color:var(--muted);margin-top:3px}.actions{display:flex;gap:7px;flex-wrap:wrap}.mini-btn{border:1px solid var(--border);background:var(--surface-2);color:var(--text);border-radius:9px;padding:8px 10px;font-size:11px;font-weight:800}.mini-btn:hover{border-color:var(--gold)}
+.positions-wrap{width:100%;max-width:100%;overflow-x:auto;overflow-y:hidden;border:1px solid var(--border);border-radius:13px;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain}.positions-table{width:1120px;min-width:1120px;max-width:none;border-collapse:collapse}.positions-table th{background:var(--surface-2);color:var(--muted);font-size:10px;font-weight:800;padding:10px 8px;border-bottom:1px solid var(--border);white-space:nowrap}.positions-table td{padding:8px;border-bottom:1px solid var(--border);vertical-align:middle;font-size:11px}.positions-table tr:last-child td{border-bottom:0}.cell-select,.cell-input{width:100%;min-width:74px;background:var(--surface-2);border:1px solid var(--border);color:var(--text);border-radius:8px;padding:7px 8px;outline:none}.cell-select:focus,.cell-input:focus{border-color:var(--gold);box-shadow:0 0 0 3px var(--gold-soft)}.cell-input:disabled,.cell-select:disabled{opacity:.55}.side-toggle{display:flex;gap:4px}.side-btn{border:1px solid var(--border);background:var(--surface-2);color:var(--muted);border-radius:7px;padding:7px 9px;font-size:10px;font-weight:800}.side-btn.active-buy{background:var(--green-soft);border-color:var(--green);color:var(--green)}.side-btn.active-sell{background:var(--red-soft);border-color:var(--red);color:var(--red)}.symbol-badge{display:inline-flex;align-items:center;justify-content:center;min-width:72px;padding:7px 9px;border-radius:8px;font-weight:900;direction:ltr;background:var(--surface-3)}.symbol-badge.call{color:var(--green);background:var(--green-soft)}.symbol-badge.put{color:var(--red);background:var(--red-soft)}.symbol-badge.spot{color:var(--blue);background:var(--blue-soft)}.btn-remove{border:0;background:var(--red-soft);color:var(--red);width:30px;height:30px;border-radius:8px}.price-status{display:block;font-size:9px;color:var(--muted);margin-top:3px;white-space:nowrap}.price-status.live{color:var(--green)}.price-status.manual{color:var(--gold)}
+.summary-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px}.sum-card{padding:12px;border:1px solid var(--border);border-radius:12px;background:var(--surface-2);min-width:0}.sum-card .label{font-size:10px;color:var(--muted);margin-bottom:6px}.sum-card .value{font-size:14px;font-weight:900;overflow-wrap:anywhere}.sum-card.wide{grid-column:1/-1}.positive{color:var(--green)}.negative{color:var(--red)}
+.strategy-info{padding:16px;border-radius:14px;border:1px solid var(--border);background:linear-gradient(135deg,var(--surface-2),var(--surface))}.strategy-info .name{font-size:16px;font-weight:900}.strategy-info .tags{display:inline-block;margin-top:8px;color:var(--gold);background:var(--gold-soft);border-radius:999px;padding:4px 9px;font-size:10px;font-weight:800}
+.explanation{padding:18px}.exp-header{display:flex;align-items:center;gap:12px;padding-bottom:14px;border-bottom:1px solid var(--border)}.exp-icon{font-size:25px}.exp-title{font-weight:900;font-size:15px}.exp-sub{font-size:10px;color:var(--muted);margin-top:3px}.exp-body{display:grid;gap:12px;margin-top:14px}.exp-block{padding:13px;border:1px solid var(--border);border-radius:12px;background:var(--surface-2)}.blk-title{font-size:11px;font-weight:900;margin-bottom:7px}.exp-block p{margin:0;color:var(--muted);font-size:11px;line-height:1.9}.exp-block ul{margin:6px 0 0;padding-right:18px;color:var(--muted);font-size:11px;line-height:2}.exp-block.pros .blk-title{color:var(--green)}.exp-block.cons .blk-title{color:var(--red)}.exp-highlight{color:var(--gold);font-weight:800}.exp-pros-cons{display:grid;grid-template-columns:1fr 1fr;gap:0;padding:0;overflow:hidden}.exp-pros-cons .pros-col,.exp-pros-cons .cons-col{padding:13px;min-width:0}.exp-pros-cons .cons-col{border-right:1px solid var(--border)}
+.chart-panel{padding:18px}.chart-head{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;margin-bottom:12px}.chart-tools{display:flex;gap:5px;flex-wrap:wrap;justify-content:flex-end}.chart-btn{width:34px;height:32px;border:1px solid var(--border);background:var(--surface-2);color:var(--text);border-radius:8px;font-weight:900}.chart-btn.active{border-color:var(--gold);color:var(--gold);background:var(--gold-soft)}.zoom-info{font-size:10px;color:var(--muted);align-self:center;white-space:nowrap}.chart-canvas-wrap{position:relative;display:block;width:100%;max-width:100%;height:500px;min-height:0;overflow:hidden;border:1px solid var(--border);border-radius:13px;background:var(--surface-2);touch-action:none}.chart-canvas-wrap.panning{cursor:grab}.chart-canvas-wrap svg{display:block;width:100%;height:100%}.chart-tooltip{position:absolute;z-index:5;pointer-events:none;display:none;min-width:150px;padding:10px 12px;border-radius:10px;background:rgba(15,23,42,.96);color:#fff;box-shadow:0 10px 25px rgba(0,0,0,.22);font-size:11px}.chart-tooltip.visible{display:block}.chart-tooltip .tt-row{display:flex;justify-content:space-between;gap:12px}.chart-tooltip .tt-pnl-profit,.chart-tooltip .tt-pct-profit{color:#4ade80}.chart-tooltip .tt-pnl-loss,.chart-tooltip .tt-pct-loss{color:#fb7185}.chart-tooltip .tt-price{color:#fff}.chart-tooltip .tt-divider{height:1px;background:rgba(255,255,255,.12);margin:6px 0}.chart-hint{display:flex;justify-content:center;align-items:center;gap:6px;color:var(--muted);font-size:10px;padding-top:9px;text-align:center}.chart-hint.locked{color:var(--gold)}
+.status-bar{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:10px 13px;background:var(--surface-2);border:1px solid var(--border);border-radius:12px;margin-bottom:16px;color:var(--muted);font-size:10px}.status-left{display:flex;align-items:center;gap:8px}.status-bar .indicator{width:7px;height:7px}
+.tabs{display:flex;gap:5px;border-bottom:1px solid var(--border);margin-bottom:14px}.tab-btn{border:0;background:transparent;color:var(--muted);padding:9px 12px;border-bottom:2px solid transparent;font-weight:800;font-size:11px}.tab-btn.active{color:var(--gold);border-bottom-color:var(--gold)}.tab-content{display:none}.tab-content.active{display:block}
+.modal{position:fixed;inset:0;background:rgba(2,6,23,.58);backdrop-filter:blur(4px);display:none;align-items:center;justify-content:center;padding:20px;z-index:10000}.modal.active{display:flex}.modal-card{width:min(440px,100%);background:var(--surface);border:1px solid var(--border);border-radius:18px;padding:22px;box-shadow:0 25px 80px rgba(0,0,0,.3)}.modal-icon{font-size:30px}.modal-title{font-weight:900;font-size:17px;margin-top:8px}.modal-text{font-size:12px;color:var(--muted);line-height:1.9;margin:8px 0 18px}.modal-actions{display:flex;gap:8px;justify-content:flex-start}.notification{position:fixed;left:20px;bottom:20px;z-index:11000;background:var(--surface);border:1px solid var(--border);border-right:4px solid var(--gold);border-radius:12px;padding:12px 15px;box-shadow:var(--shadow);font-size:12px;max-width:min(420px,calc(100vw - 40px))}.chart-panel:fullscreen{background:var(--surface);padding:22px}.chart-panel:fullscreen .chart-canvas-wrap{height:calc(100vh - 100px)}
+@media(max-width:1180px){.presets{grid-template-columns:repeat(4,minmax(0,1fr))}.workspace{grid-template-columns:minmax(0,1fr) 260px}.hero{grid-template-columns:minmax(0,1fr) 300px}.chart-canvas-wrap{height:430px}}
+@media(max-width:1020px){.workspace{grid-template-columns:1fr}.side-col{order:2}.main-col{order:1}.presets{grid-template-columns:repeat(3,minmax(0,1fr))}.chart-canvas-wrap{height:400px}}
+@media(max-width:720px){.exp-pros-cons{grid-template-columns:1fr}.exp-pros-cons .cons-col{border-right:0;border-top:1px solid var(--border)}.page{padding:78px 10px 35px}.hero{grid-template-columns:1fr}.hero-main,.hero-side,.panel,.chart-panel,.explanation{padding:14px}.hero h1{font-size:23px}.hero-actions .btn{flex:1;min-width:130px}.presets{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.preset-card{padding:11px}.preset-desc{min-height:auto}.section-head{align-items:flex-start}.chart-head{flex-direction:column;gap:9px}.chart-tools{width:100%;justify-content:flex-start}.chart-canvas-wrap{height:350px;min-height:0}.summary-grid{grid-template-columns:1fr 1fr}.status-bar{align-items:flex-start;flex-direction:column}.panel-head{align-items:flex-start;flex-direction:column}.actions{width:100%}.mini-btn{flex:1}.positions-wrap{width:100%;max-width:100%;overflow-x:auto}.positions-table{min-width:1120px}.main-col,.side-col{width:100%;min-width:0}}
+@media(max-width:480px){.page{padding-left:8px;padding-right:8px}.presets{grid-template-columns:1fr}.hero-metrics{grid-template-columns:1fr 1fr}.summary-grid{grid-template-columns:1fr}.sum-card.wide{grid-column:auto}.hero-actions .btn{min-width:100%}.chart-canvas-wrap{height:310px}.chart-btn{width:32px}.chart-tools .chart-btn{flex:0 0 32px}.zoom-info{margin-right:auto}.section-title{font-size:15px}.panel-title{font-size:14px}.panel-sub{line-height:1.7}}</style>
 </head>
 <body>
-
-<div class="container">
-
-  <div class="page-header">
-    <h1>📊 شبیه‌ساز معاملات آپشن</h1>
-    <p>استراتژی آماده را انتخاب کن یا پوزیشن سفارشی خودت را بساز</p>
-  </div>
-
-  <!-- Status Bar -->
+<div class="page">
   <div class="status-bar">
-    <div class="left">
-      <span class="indicator" id="liveIndicator">
-        <span class="dot"></span>
-        <span id="liveText">آماده به‌روزرسانی</span>
-      </span>
-      <span class="time-info" id="lastUpdateTime"></span>
+    <div class="status-left"><span id="liveIndicator" class="indicator"></span><span id="liveText">در حال آماده‌سازی داده‌ها...</span></div>
+    <span id="lastUpdateTime">آخرین به‌روزرسانی: —</span>
+  </div>
+
+  <section class="hero">
+    <div class="hero-main">
+      <div class="eyebrow"><i></i> OPTIONS LAB · شمعدون</div>
+      <h1>آزمایشگاه معاملات آپشن</h1>
+      <p>استراتژی را انتخاب کن، دارایی پایه را تعیین کن و اثر تغییر قیمت را روی سود و زیان ببین. این صفحه موتور محاسبات و قیمت‌گذاری زنده نسخه اصلی شمعدون را حفظ می‌کند.</p>
+      <div class="hero-actions">
+        <button class="btn primary" onclick="document.getElementById('strategySection').scrollIntoView({behavior:'smooth'})">انتخاب استراتژی</button>
+        <button class="btn" onclick="addPosition()">＋ پوزیشن دستی</button>
+        <button class="btn danger" onclick="clearAllPositions()">پاک کردن سناریو</button>
+      </div>
     </div>
-    <label class="auto-refresh-toggle">
-      <input type="checkbox" id="autoRefreshToggle" onchange="toggleAutoRefresh(this.checked)">
-      <span class="switch"></span>
-      <span>به‌روزرسانی خودکار (۶۰ ثانیه)</span>
-    </label>
-  </div>
+    <aside class="hero-side">
+      <div class="live-row"><div class="live"><span class="indicator live"></span><span>داده بازار</span></div><</div>
+      <div class="hero-metrics">
+        <div class="metric"><span class="k">استراتژی فعال</span><span class="v" id="strategyName">استراتژی سفارشی</span></div>
+        <div class="metric"><span class="k">وضعیت</span><span class="v" id="strategyTags">در انتظار...</span></div>
+      </div>
+    </aside>
+  </section>
 
-  <div class="tabs">
-    <button class="tab-btn active" onclick="switchTab('presets', this)">🎯 استراتژی‌های آماده</button>
-    <button class="tab-btn" onclick="switchTab('custom', this)">🛠️ پوزیشن سفارشی</button>
-  </div>
+  <section id="strategySection">
+    <div class="section-head"><div><div class="section-title">استراتژی‌های آماده</div><div class="section-sub">۱۵ ساختار استاندارد برای شروع سریع</div></div><div class="count"><span id="positionsCount">۰ پوزیشن</span></div></div>
+    <div id="presetsGrid" class="presets"></div>
+  </section>
 
-  <div class="tab-content active" id="tab-presets">
-    <div class="panel">
-      <div class="panel-header">
-        <div class="panel-title">
-          🎯 استراتژی آماده را انتخاب کن
-          <span class="badge">۱۵ استراتژی</span>
+  <div class="workspace">
+    <main class="main-col">
+      <section class="panel">
+        <div class="panel-head">
+          <div><div class="panel-title">Position Builder</div><div class="panel-sub">دارایی، سمت معامله، نوع قرارداد، حجم و پارامترهای پوزیشن را تنظیم کن.</div></div>
+          <div class="actions"><button class="mini-btn" onclick="addPosition()">＋ پوزیشن</button><button class="mini-btn" onclick="clearAllPositions()">پاک کردن</button></div>
         </div>
-      </div>
-      <div class="presets-grid" id="presetsGrid"></div>
-      <div class="info-box" style="background: var(--blue-soft); border: 1px solid rgba(59, 130, 246, 0.25); border-radius: 12px; padding: 14px 18px; margin-top: 16px; color: var(--blue); font-size: 13px; line-height: 1.8;">
-        <strong>💡 راهنما:</strong> روی هر استراتژی کلیک کن تا پوزیشن‌های آماده در جدول باز بشن. سپس <strong>دارایی پایه</strong> را از سلکت انتخاب کن.
-      </div>
-    </div>
-  </div>
-
-  <div class="tab-content" id="tab-custom">
-    <div class="panel">
-      <div class="panel-header">
-        <div class="panel-title">
-          🛠️ پوزیشن سفارشی
-          <span class="badge" id="positionsCount">۰ پوزیشن</span>
+        <div class="positions-wrap">
+          <table class="positions-table">
+            <thead><tr><th>دارایی پایه</th><th>سمت</th><th>نوع</th><th>نماد</th><th>تعداد</th><th>قیمت فعلی</th><th>Strike</th><th>Premium</th><th>Delta</th><th>Margin</th><th>ارزش</th><th>حذف</th></tr></thead>
+            <tbody id="positionsBody"></tbody>
+          </table>
         </div>
-      </div>
-    </div>
+        <div style="display:flex;justify-content:space-between;gap:10px;margin-top:10px;color:var(--muted);font-size:10px"><span>برای موبایل، جدول را افقی اسکرول کن.</span><span id="positionsCount2">۰ پوزیشن</span></div>
+      </section>
+
+      <section id="chartContainer" class="chart-panel">
+        <div class="chart-head">
+          <div><div class="panel-title">Payoff Profile</div><div class="panel-sub">نمودار سود و زیان در قیمت‌های مختلف دارایی پایه</div></div>
+          <div class="chart-tools">
+            <span id="zoomInfo" class="zoom-info">1.0× | 1.0×</span>
+            <button id="panBtn" class="chart-btn" onclick="togglePan()" title="Pan">✋</button>
+            <button class="chart-btn" onclick="zoomOut()" title="Zoom out">−</button>
+            <button class="chart-btn" onclick="zoomIn()" title="Zoom in">＋</button>
+            <button class="chart-btn" onclick="resetZoom()" title="Reset">↺</button>
+            <button id="fullscreenBtn" class="chart-btn" onclick="toggleFullscreen()" title="تمام صفحه">⛶</button>
+          </div>
+        </div>
+        <div id="chartCanvasWrap" class="chart-canvas-wrap">
+          <svg id="payoffChart" viewBox="0 0 1000 500" preserveAspectRatio="none" aria-label="نمودار سود و زیان"></svg>
+          <div id="chartTooltip" class="chart-tooltip"></div>
+        </div>
+        <div id="chartHint" class="chart-hint"><span class="lock-icon">🖱️</span><span>اسکرول = زوم روی موس | درگ (Pan) = جابجایی | کلیک = قفل نقطه</span></div>
+      </section>
+
+      <section id="strategyExplanation" class="explanation" style="display:none"></section>
+    </main>
+
+    <aside class="side-col">
+      <section class="panel">
+        <div class="panel-head"><div><div class="panel-title">خلاصه ریسک و بازده</div><div class="panel-sub">خروجی لحظه‌ای سناریوی فعلی</div></div></div>
+        <div class="strategy-info"><div class="name" id="strategyNameSide">استراتژی سفارشی</div><span class="tags" id="strategyTagsSide">در انتظار...</span></div>
+        <div class="summary-grid" style="margin-top:10px">
+          <div class="sum-card"><div class="label">سرمایه / جریان اولیه</div><div class="value" id="totalInvestment">۰</div></div>
+          <div class="sum-card"><div class="label">P/L فعلی</div><div class="value" id="currentPnL">--</div></div>
+          <div class="sum-card"><div class="label">Max Profit</div><div class="value positive" id="maxProfit">--</div></div>
+          <div class="sum-card"><div class="label">Max Loss</div><div class="value negative" id="maxLoss">--</div></div>
+          <div class="sum-card wide"><div class="label">Break-even</div><div class="value" id="breakeven">--</div></div>
+          <div class="sum-card wide"><div class="label">Risk / Reward</div><div class="value" id="rrRatio">--</div></div>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="panel-head"><div><div class="panel-title">چطور استفاده کنیم؟</div><div class="panel-sub">سه قدم برای ساخت سناریو</div></div></div>
+        <div style="display:grid;gap:9px">
+          <div class="sum-card"><b>۱. استراتژی</b><div style="font-size:10px;color:var(--muted);line-height:1.8;margin-top:4px">یکی از ساختارهای آماده را انتخاب کن.</div></div>
+          <div class="sum-card"><b>۲. دارایی</b><div style="font-size:10px;color:var(--muted);line-height:1.8;margin-top:4px">در جدول، دارایی پایه را انتخاب کن؛ قیمت زنده برای بورس و کریپتو به‌روزرسانی می‌شود.</div></div>
+          <div class="sum-card"><b>۳. تحلیل</b><div style="font-size:10px;color:var(--muted);line-height:1.8;margin-top:4px">Payoff، Break-even، Max Profit و Max Loss را بررسی کن.</div></div>
+        </div>
+      </section>
+    </aside>
   </div>
-
-  <div class="panel">
-    <div class="panel-header">
-      <div class="panel-title">
-        📋 پوزیشن‌های شما
-        <span class="badge" id="positionsCount2">۰ پوزیشن</span>
-      </div>
-      <div style="display:flex; gap:8px; flex-wrap:wrap;">
-        <button class="btn-refresh" onclick="refreshAllPrices(true)">🔄 به‌روزرسانی قیمت‌ها</button>
-        <button class="btn-clear" onclick="clearAllPositions()">🗑️ پاک کردن استراتژی / پوزیشن</button>
-      </div>
-    </div>
-
-    <div class="positions-table-wrapper">
-      <table class="positions-table">
-        <thead>
-          <tr>
-            <th>دارایی پایه</th>
-            <th>خرید/فروش</th>
-            <th>نوع</th>
-            <th>نام نماد</th>
-            <th>مقدار</th>
-            <th>💵 قیمت فعلی</th>
-            <th>🎯 قیمت اعمال</th>
-            <th>پرمیوم</th>
-            <th>دلتا</th>
-            <th>وجه تضمین</th>
-            <th>مجموع</th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody id="positionsBody"></tbody>
-      </table>
-    </div>
-
-    <button class="btn-add" onclick="addPosition()">
-      <span style="font-size:16px;">➕</span>
-      افزودن پوزیشن دستی
-    </button>
-  </div>
-
-  <div class="strategy-info">
-    <div class="strategy-name">🎯 <span id="strategyName">استراتژی سفارشی</span></div>
-    <div class="strategy-tag" id="strategyTags">در انتظار پوزیشن...</div>
-    <div style="margin-right: auto;">
-      <span style="color: var(--text-secondary); font-size: 12px; font-weight: 600;">💰 مجموع سرمایه:</span>
-      <span class="num" style="color: var(--gold); font-weight: 800; font-size: 15px; margin-right: 8px;" id="totalInvestment">۰</span>
-    </div>
-  </div>
-
-  <div class="strategy-explanation" id="strategyExplanation" style="display: none;"></div>
-
-  <div class="results-grid">
-    <div class="result-card profit">
-      <div class="label">📈 حداکثر سود</div>
-      <div class="value" id="maxProfit">--</div>
-    </div>
-    <div class="result-card loss">
-      <div class="label">📉 حداکثر ضرر</div>
-      <div class="value" id="maxLoss">--</div>
-    </div>
-    <div class="result-card blue">
-      <div class="label">⚖️ نقطه(های) سربه‌سر</div>
-      <div class="value" id="breakeven">--</div>
-    </div>
-    <div class="result-card">
-      <div class="label">🎯 نسبت R/R</div>
-      <div class="value" id="rrRatio">--</div>
-    </div>
-    <div class="result-card">
-      <div class="label">📊 سود/زیان فعلی</div>
-      <div class="value" id="currentPnL">--</div>
-    </div>
-  </div>
-
-  <div class="chart-container" id="chartContainer">
-    <div class="chart-header">
-      <div class="title">📈 نمودار سود و زیان (در سررسید)</div>
-      <div class="live-badge">LIVE</div>
-    </div>
-
-    <div class="chart-canvas-wrap" id="chartCanvasWrap">
-      <svg id="payoffChart" preserveAspectRatio="none"></svg>
-      <div id="chartTooltip"></div>
-    </div>
-
-    <div class="chart-toolbar">
-      <span class="chart-toolbar-label">Zoom</span>
-      <button class="zoom-btn" onclick="zoomIn('both')" title="زوم افقی و عمودی">➕➕</button>
-      <button class="zoom-btn" onclick="zoomIn('x')" title="زوم افقی">↔</button>
-      <button class="zoom-btn" onclick="zoomIn('y')" title="زوم عمودی">↕</button>
-      <button class="zoom-btn" onclick="zoomOut()" title="زوم اوت">➖</button>
-      <button class="zoom-btn reset" onclick="resetZoom()" title="ریست">🔄 ریست</button>
-      <button class="zoom-btn" id="panBtn" onclick="togglePan()" title="جابجایی">✋ Pan</button>
-      <button class="zoom-btn" id="fullscreenBtn" onclick="toggleFullscreen()" title="تمام صفحه">⛶</button>
-      <span class="zoom-info" id="zoomInfo">1.0× | 1.0×</span>
-    </div>
-
-    <div class="chart-hint" id="chartHint">
-      <span class="lock-icon">🖱️</span>
-      <span>اسکرول = زوم روی موس | درگ (Pan) = جابجایی | کلیک = قفل نقطه</span>
-    </div>
-
-    <div class="legend">
-      <div class="legend-item"><div class="legend-dot" style="background:#22c55e;"></div> ناحیه سود</div>
-      <div class="legend-item"><div class="legend-dot" style="background:#ef4444;"></div> ناحیه ضرر</div>
-      <div class="legend-item"><div class="legend-dot" style="background:#d4af37;"></div> نقطه سربه‌سر</div>
-      <div class="legend-item"><div class="legend-dot" style="background:#3b82f6;"></div> قیمت فعلی</div>
-    </div>
-  </div>
-
 </div>
 
-<div class="modal-overlay" id="customModal">
-  <div class="modal-box">
-    <div class="modal-icon" id="modalIcon">⚠️</div>
-    <div class="modal-title" id="modalTitle">عنوان</div>
-    <div class="modal-text" id="modalText">متن</div>
-    <div class="modal-actions">
-      <button class="modal-btn" onclick="closeModal()">انصراف</button>
-      <button class="modal-btn danger" id="modalConfirmBtn">تأیید</button>
-    </div>
-  </div>
-</div>
+<div id="customModal" class="modal"><div class="modal-card"><div id="modalIcon" class="modal-icon">⚠️</div><div id="modalTitle" class="modal-title">تأیید</div><div id="modalText" class="modal-text"></div><div class="modal-actions"><button class="btn primary" id="modalConfirmBtn">تأیید</button><button class="btn" onclick="closeModal()">انصراف</button></div></div></div>
+<div id="customNotification"></div>
 
 <script>
 // ==========================================
@@ -1552,10 +179,10 @@ const ASSETS = [
   { key: 'trx',  name: 'ترون',     emoji: '🟢', defaultPrice: 0.25, call: '—', put: '—', group: 'کریپتو', source: 'coingecko', coingeckoId: 'tron' },
   { key: 'avax', name: 'آوالانچ',  emoji: '🔺', defaultPrice: 35, call: '—', put: '—', group: 'کریپتو', source: 'coingecko', coingeckoId: 'avalanche-2' },
 
- // // ═══ کالا (BrsApi Commodity) ═══
-//  { key: 'gold',   name: 'انس طلا',  emoji: '🥇', defaultPrice: 4306, call: '—', put: '—', group: 'کالا', source: 'commodity', symbol: 'XAUUSD' },
-//  { key: 'silver', name: 'انس نقره', emoji: '🥈', defaultPrice: 64.8, call: '—', put: '—', group: 'کالا', source: 'commodity', symbol: 'XAGUSD' },
- // { key: 'oil',    name: 'نفت برنت', emoji: '🛢️', defaultPrice: 105, call: '—', put: '—', group: 'کالا', source: 'commodity', symbol: 'BRENT' },
+  // ═══ کالا (BrsApi Commodity) ═══
+  { key: 'gold',   name: 'انس طلا',  emoji: '🥇', defaultPrice: 4306, call: '—', put: '—', group: 'کالا', source: 'commodity', symbol: 'XAUUSD' },
+  { key: 'silver', name: 'انس نقره', emoji: '🥈', defaultPrice: 64.8, call: '—', put: '—', group: 'کالا', source: 'commodity', symbol: 'XAGUSD' },
+  { key: 'oil',    name: 'نفت برنت', emoji: '🛢️', defaultPrice: 105, call: '—', put: '—', group: 'کالا', source: 'commodity', symbol: 'BRENT' },
 
   // ═══ بورس ایران (AllSymbols) — قیمت‌ها به تومان (تقسیم بر ۱۰) ═══
   { key: 'اخابر',     name: 'اخابر',     emoji: '📡', defaultPrice: 1000,  call: 'ضمخا', put: 'طمخا', group: 'بورس', source: 'stocks' },
@@ -1883,17 +510,19 @@ function renderExplanation(preset) {
     </div>
     <div class="exp-body">
       <div class="exp-block">
-        <div class="blk-title">📖 توضیح این استراتژی </div>
+        <div class="blk-title">📖 توضیح استراتژی</div>
         <p>${e.what}</p>
         <p style="margin-top:10px;"><span class="exp-highlight">مناسب برای:</span> ${e.who}</p>
       </div>
-      <div class="exp-block pros">
-        <div class="blk-title pros">✅ مزایا</div>
-        <ul>${e.pros.map(x => `<li>${x}</li>`).join('')}</ul>
-      </div>
-      <div class="exp-block cons">
-        <div class="blk-title cons">⚠️ معایب</div>
-        <ul>${e.cons.map(x => `<li>${x}</li>`).join('')}</ul>
+      <div class="exp-block exp-pros-cons">
+        <div class="pros-col">
+          <div class="blk-title pros">✅ مزایا</div>
+          <ul>${e.pros.map(x => `<li>${x}</li>`).join('')}</ul>
+        </div>
+        <div class="cons-col">
+          <div class="blk-title cons">⚠️ معایب</div>
+          <ul>${e.cons.map(x => `<li>${x}</li>`).join('')}</ul>
+        </div>
       </div>
     </div>
   `;
@@ -1928,7 +557,7 @@ function applyPresetInternal(presetKey) {
     asset: '',
     side: posDef.side,
     type: posDef.type,
-    quantity: 1,
+    quantity: posDef.quantity || 1,
     currentPrice: 0,
     strike: 0,
     premium: 0,
@@ -2024,7 +653,7 @@ async function fetchPrice(asset) {
       if (target === 'oil' && data.energy) {
         const item = data.energy.find(i => i.symbol === 'BRENT' || i.symbol === 'BRENT_OIL');
         if (item && item.price) return { price: parseFloat(item.price), source: 'live' };
-     }
+      }
     } catch (e) { console.warn('Commodity error:', asset.key, e); }
     return null;
   }
@@ -2269,8 +898,7 @@ function renderPositions() {
     return;
   }
 
- // const groups = ['کریپتو', 'کالا', 'بورس'];
-  const groups = ['کریپتو','بورس'];
+  const groups = ['کریپتو', 'بورس'];
   const isEmptyStrategy = currentPreset && positions.some(p => !p.asset);
 
   body.innerHTML = positions.map((p) => {
@@ -3648,7 +2276,19 @@ window.addEventListener('orientationchange', () => {
 });
 </script>
 
-<script src="navbar.js" defer></script>
 
+<script src="navbar.js" defer></script>
+<script>
+(function(){
+  function syncSide(){
+    const a=document.getElementById('strategyName'); const b=document.getElementById('strategyTags');
+    const c=document.getElementById('strategyNameSide'); const d=document.getElementById('strategyTagsSide');
+    if(a&&c)c.textContent=a.textContent; if(b&&d)d.textContent=b.textContent;
+  }
+  const obs=new MutationObserver(syncSide);
+  ['strategyName','strategyTags'].forEach(id=>{const el=document.getElementById(id); if(el)obs.observe(el,{childList:true,subtree:true,characterData:true});});
+  syncSide();
+})();
+</script>
 </body>
 </html>
