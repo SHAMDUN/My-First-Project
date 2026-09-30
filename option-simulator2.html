@@ -1,155 +1,3930 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl" data-theme="dark">
 <head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>آپشن | شبیه‌ساز و تحلیل استراتژی — شمعدون</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>شبیه‌ساز استراتژی آپشن | آکادمی شمعدون</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css">
+<meta name="theme-color" content="#d4af37">
 <style>
-:root{--bg:#08090c;--card:#11141a;--card2:#171a21;--input:#0a0c10;--b:#ffffff12;--t:#e6e8eb;--m:#8b9099;--d:#5c6169;--g:#d4af37;--green:#22c55e;--red:#ef4444;--blue:#3b82f6;font-family:'Vazirmatn',Tahoma,sans-serif}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--t);font-family:inherit}button,input,select{font:inherit}button{cursor:pointer}a{color:inherit;text-decoration:none}.page{max-width:1540px;margin:auto;padding:94px 22px 60px}.top,.heroGrid,.head,.live,.actions{display:flex;align-items:center}.top{justify-content:space-between;margin-bottom:15px;color:var(--d);font-size:12px}.crumb b{color:var(--g)}.live{gap:7px;font-size:11px}.dot{width:7px;height:7px;border-radius:50%;background:var(--d)}.dot.on{background:var(--green);box-shadow:0 0 8px var(--green)}.hero,.card{background:var(--card);border:1px solid var(--b);border-radius:16px}.hero{padding:25px 27px;margin-bottom:15px}.heroGrid{justify-content:space-between;gap:20px}.hero h1{margin:0;font-size:26px}.hero h1 span{color:var(--g)}.hero p{color:var(--m);font-size:12px;line-height:2;margin:7px 0 0}.actions{gap:8px;flex-wrap:wrap}.btn{border:1px solid var(--b);background:var(--card2);color:var(--t);border-radius:9px;padding:10px 14px;font-size:11px;font-weight:700}.btn.gold{background:linear-gradient(135deg,var(--g),#a8862a);border:0;color:#fff}.strip{display:grid;grid-template-columns:1.25fr repeat(4,1fr);gap:1px;background:var(--b);border:1px solid var(--b);border-radius:13px;overflow:hidden;margin-bottom:15px}.cell{background:var(--card);padding:12px 14px}.cell small{display:block;color:var(--d);font-size:10px;margin-bottom:5px}.cell strong{font-size:14px}.sub{display:block;color:var(--d);font-size:10px;margin-top:3px}.layout{display:grid;grid-template-columns:minmax(0,1.72fr) minmax(320px,.68fr);gap:15px}.card{overflow:hidden}.head{justify-content:space-between;gap:10px;padding:15px 17px;border-bottom:1px solid var(--b)}.title{font-size:14px;font-weight:850}.badge{font-size:9px;padding:3px 8px;border-radius:5px;background:#d4af3718;color:var(--g);border:1px solid #d4af3730}.body{padding:16px 17px}.controls{display:grid;grid-template-columns:1.1fr 1.1fr 1fr 1fr auto;gap:8px;margin-bottom:11px}.input,.select{width:100%;padding:10px;background:var(--input);border:1px solid var(--b);border-radius:8px;color:var(--t);font-size:11px;outline:0}.select{appearance:auto}.chainWrap{overflow:auto;border:1px solid var(--b);border-radius:11px}.chain{width:100%;min-width:980px;border-collapse:collapse}.chain th{background:var(--card2);color:var(--d);font-size:10px;padding:10px 8px;border-bottom:1px solid var(--b)}.chain td{font-size:11px;padding:9px 8px;border-bottom:1px solid #ffffff09;white-space:nowrap}.type{display:inline-flex;min-width:42px;justify-content:center;padding:4px 6px;border-radius:5px;font-size:9px;font-weight:900}.call{background:#22c55e18;color:#4ade80}.put{background:#ef444418;color:#f87171}.add{border:1px solid var(--b);background:transparent;color:var(--m);border-radius:7px;padding:6px 9px;font-size:10px}.empty{text-align:center;padding:40px 15px;color:var(--d);font-size:11px;line-height:2}.empty strong{display:block;color:var(--m);font-size:13px}.presets{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.preset{border:1px solid var(--b);background:var(--card2);border-radius:10px;padding:11px;text-align:right;color:var(--t);min-height:95px}.preset:hover,.preset.active{border-color:#d4af3755;background:#d4af3708}.preset b{display:block;font-size:11px;margin-bottom:5px}.preset span{display:block;color:var(--m);font-size:9.5px;line-height:1.8}.preset small{display:block;margin-top:6px;color:var(--g);font-size:8px}.explain{margin-top:12px;border:1px solid #d4af3728;background:#d4af3709;border-radius:11px;padding:14px}.explain h3{margin:0 0 8px;color:var(--g);font-size:13px}.explainGrid{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:12px}.explain h4{font-size:10px;margin:0 0 5px}.explain p,.explain li{font-size:10.5px;line-height:1.95;color:var(--m)}.tabs{display:flex;gap:4px;background:var(--card2);padding:4px;border:1px solid var(--b);border-radius:10px;margin-bottom:12px}.tab{flex:1;border:0;background:transparent;color:var(--m);padding:8px;border-radius:7px;font-size:10px;font-weight:700}.tab.active{background:var(--card);color:var(--g)}.panel{display:none}.panel.active{display:block}.legs{display:grid;gap:7px}.leg{display:grid;grid-template-columns:auto 1fr auto auto;align-items:center;gap:9px;background:var(--card2);border:1px solid var(--b);border-radius:10px;padding:9px}.legIcon{width:32px;height:32px;border-radius:8px;display:grid;place-items:center;font-size:10px;font-weight:900}.legName{font-size:11px;font-weight:800}.legMeta{font-size:9px;color:var(--d);margin-top:3px}.legPrice{font-size:11px;font-weight:800}.remove{border:0;background:none;color:var(--d);font-size:17px}.metrics{display:grid;grid-template-columns:1fr 1fr;gap:7px}.metric{background:var(--card2);border:1px solid var(--b);border-radius:9px;padding:11px}.metric small{display:block;color:var(--d);font-size:9px;margin-bottom:5px}.metric strong{font-size:13px}.baseBox{display:grid;gap:8px;margin-bottom:12px}.baseBox label{font-size:10px;color:var(--d)}.newStrategy{display:flex;gap:7px}.newStrategy .btn{flex:1}.modal{position:fixed;inset:0;background:#0009;display:none;align-items:center;justify-content:center;z-index:1000;padding:20px}.modal.show{display:flex}.modalBox{width:min(560px,100%);background:var(--card);border:1px solid var(--b);border-radius:16px;box-shadow:0 20px 70px #0008}.modalHead{display:flex;align-items:center;justify-content:space-between;padding:15px 18px;border-bottom:1px solid var(--b)}.modalHead h3{margin:0;font-size:14px}.modalBody{padding:18px}.modalGrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.modalField{display:grid;gap:6px}.modalField label{font-size:10px;color:var(--d)}.modalFoot{display:flex;gap:8px;justify-content:flex-start;margin-top:15px}.close{border:0;background:transparent;color:var(--m);font-size:20px}.chartCard{margin-top:15px}.chart{position:relative;height:390px;border:1px solid var(--b);border-radius:10px;overflow:hidden;background:var(--input)}.chart svg{width:100%;height:100%;display:block;touch-action:none;user-select:none}.chartHint{display:flex;justify-content:space-between;gap:10px;align-items:center;color:var(--d);font-size:9px;margin-top:7px;line-height:1.8}.chartTools{display:flex;gap:6px;align-items:center}.chartTools .btn{padding:6px 9px;font-size:10px}.chartTools .btn.active{color:var(--g);border-color:#d4af3755;background:#d4af370b}.chartTooltip{position:absolute;pointer-events:none;display:none;min-width:210px;max-width:90%;padding:10px 12px;border:1px solid #d4af3766;border-radius:10px;background:#08090cf5;box-shadow:0 14px 35px #0009;z-index:20;font-size:10px;line-height:1.9}.chartTooltip.show{display:block}.chartTooltip .row{display:flex;justify-content:space-between;gap:16px}.chartTooltip .k{color:var(--m)}.chartTooltip .v{font-weight:800;direction:ltr}.chartTooltip .price{color:var(--g)}.chartTooltip .profit{color:var(--green)}.chartTooltip .loss{color:var(--red)}.axisLabel{fill:#69717d;font-size:10px;font-family:Vazirmatn,Tahoma,sans-serif}.manualGrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.manualField{display:grid;gap:6px}.manualField label{font-size:10px;color:var(--d)}.manualField.full{grid-column:1/-1}.help{color:var(--d);font-size:9px;line-height:1.8;margin-top:10px}.emptyChart{fill:#5c6169;font-family:Vazirmatn,Tahoma,sans-serif}.note{display:flex;justify-content:space-between;color:var(--d);font-size:9px;margin-top:7px}@media(max-width:1050px){.layout{grid-template-columns:1fr}.strip{grid-template-columns:repeat(3,1fr)}}@media(max-width:700px){.page{padding:78px 11px 40px}.heroGrid{display:block}.actions{margin-top:15px}.hero h1{font-size:21px}.strip{grid-template-columns:repeat(2,1fr)}.controls{grid-template-columns:1fr 1fr}.controls .baseSelect{grid-column:1/-1}.presets{grid-template-columns:1fr 1fr}.explainGrid,.modalGrid{grid-template-columns:1fr}.leg{grid-template-columns:auto 1fr auto}.newStrategy{display:grid;grid-template-columns:1fr 1fr}}
+:root {
+  --bg-primary: #08090c;
+  --bg-elevated: #0d0f14;
+  --bg-card: #11141a;
+  --bg-card-2: #171a21;
+  --bg-input: #0a0c10;
+  --border: rgba(255, 255, 255, 0.06);
+  --border-strong: rgba(255, 255, 255, 0.1);
+  --border-soft: rgba(255, 255, 255, 0.04);
+  --text-primary: #e6e8eb;
+  --text-secondary: #8b9099;
+  --text-muted: #5c6169;
+
+  --gold: #d4af37;
+  --gold-light: #f4d47c;
+  --gold-dark: #a8862a;
+  --gold-glow: rgba(212, 175, 55, 0.15);
+
+  --green: #22c55e;
+  --green-soft: rgba(34, 197, 94, 0.12);
+  --red: #ef4444;
+  --red-soft: rgba(239, 68, 68, 0.12);
+  --blue: #3b82f6;
+  --blue-soft: rgba(59, 130, 246, 0.12);
+  --purple: #8b5cf6;
+  --purple-soft: rgba(139, 92, 246, 0.12);
+
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.35);
+  --shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.45);
+
+  --sans: 'Vazirmatn', Tahoma, sans-serif;
+}
+[data-theme="light"] {
+  --bg-primary: #fafbfc;
+  --bg-elevated: #ffffff;
+  --bg-card: #ffffff;
+  --bg-card-2: #f7f8fa;
+  --bg-input: #ffffff;
+  --border: rgba(0, 0, 0, 0.06);
+  --border-strong: rgba(0, 0, 0, 0.1);
+  --border-soft: rgba(0, 0, 0, 0.04);
+  --text-primary: #0a0c10;
+  --text-secondary: #5b6471;
+  --text-muted: #8a919c;
+
+  --gold: #a87800;
+  --gold-light: #c8991f;
+  --gold-dark: #7a5700;
+  --gold-glow: rgba(168, 120, 0, 0.1);
+
+  --green: #16a34a;
+  --green-soft: rgba(22, 163, 74, 0.1);
+  --red: #dc2626;
+  --red-soft: rgba(220, 38, 38, 0.1);
+  --blue: #2563eb;
+  --blue-soft: rgba(37, 99, 235, 0.1);
+  --purple: #7c3aed;
+  --purple-soft: rgba(124, 58, 237, 0.1);
+
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.04);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.08);
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--sans);
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  min-height: 100vh;
+  direction: rtl;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-image:
+    radial-gradient(ellipse 80% 50% at 50% -20%, rgba(139, 92, 246, 0.08), transparent),
+    radial-gradient(ellipse 60% 50% at 100% 100%, rgba(212, 175, 55, 0.05), transparent);
+  background-attachment: fixed;
+}
+[data-theme="light"] body {
+  background-image:
+    radial-gradient(ellipse 80% 50% at 50% -20%, rgba(124, 58, 237, 0.04), transparent),
+    radial-gradient(ellipse 60% 50% at 100% 100%, rgba(168, 120, 0, 0.03), transparent);
+}
+.container { max-width: 1500px; margin: 0 auto; padding: 100px 24px 80px; }
+
+.num, .mono, input[type="number"], .value, .zoom-info {
+  font-family: var(--sans);
+  font-feature-settings: 'tnum' 1;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ===== HEADER ===== */
+.page-header {
+  position: relative;
+  text-align: center;
+  margin-bottom: 32px;
+  padding: 32px 24px;
+  background: linear-gradient(135deg, var(--bg-card) 0%, var(--bg-elevated) 100%);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  overflow: hidden;
+}
+.page-header::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 50%;
+  transform: translateX(-50%);
+  width: 60%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  opacity: 0.5;
+}
+.page-header h1 {
+  font-size: 28px;
+  font-weight: 900;
+  margin-bottom: 8px;
+  letter-spacing: -0.5px;
+  background: linear-gradient(135deg, var(--text-primary) 30%, var(--gold) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.page-header p {
+  color: var(--text-secondary);
+  font-size: 14px;
+  font-weight: 500;
+}
+
+/* ===== STATUS BAR ===== */
+.status-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding: 12px 18px;
+  margin-bottom: 20px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 600;
+}
+.status-bar .left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.status-bar .indicator {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--text-secondary);
+}
+.status-bar .indicator .dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--text-muted);
+}
+.status-bar .indicator.live .dot {
+  background: var(--green);
+  box-shadow: 0 0 8px var(--green);
+  animation: pulse 1.6s infinite;
+}
+.status-bar .indicator.loading .dot {
+  background: var(--blue);
+  box-shadow: 0 0 8px var(--blue);
+  animation: pulse 1s infinite;
+}
+.status-bar .indicator.error .dot {
+  background: var(--red);
+  box-shadow: 0 0 8px var(--red);
+}
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(1.3); }
+}
+.status-bar .time-info {
+  color: var(--text-muted);
+  font-size: 11px;
+}
+
+.auto-refresh-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px;
+  background: var(--bg-card-2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text-secondary);
+  transition: all 0.15s;
+  user-select: none;
+}
+.auto-refresh-toggle:hover { color: var(--text-primary); border-color: var(--border-strong); }
+.auto-refresh-toggle input { display: none; }
+.auto-refresh-toggle .switch {
+  width: 30px;
+  height: 16px;
+  border-radius: 999px;
+  background: var(--border-strong);
+  position: relative;
+  transition: background 0.2s;
+}
+.auto-refresh-toggle .switch::after {
+  content: '';
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #fff;
+  transition: transform 0.2s;
+}
+.auto-refresh-toggle input:checked ~ .switch {
+  background: var(--green);
+}
+.auto-refresh-toggle input:checked ~ .switch::after {
+  transform: translateX(14px);
+}
+
+/* ===== PANEL ===== */
+.panel {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 24px;
+  margin-bottom: 20px;
+  box-shadow: var(--shadow-sm);
+  transition: border-color 0.2s;
+}
+.panel:hover { border-color: var(--border-strong); }
+.panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--border);
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.panel-title {
+  color: var(--text-primary);
+  font-size: 15px;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  letter-spacing: -0.2px;
+}
+.panel-title .badge {
+  background: var(--gold-glow);
+  color: var(--gold);
+  padding: 3px 10px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 800;
+  border: 1px solid rgba(212, 175, 55, 0.25);
+}
+
+/* ===== Tabs ===== */
+.tabs {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 20px;
+  padding: 4px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  width: fit-content;
+}
+.tab-btn {
+  padding: 10px 20px;
+  background: transparent;
+  color: var(--text-secondary);
+  border: none;
+  border-radius: 8px;
+  font-family: var(--sans);
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+.tab-btn:hover { color: var(--text-primary); background: var(--bg-card-2); }
+.tab-btn.active {
+  color: var(--text-primary);
+  background: var(--bg-elevated);
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--border);
+}
+.tab-content { display: none; }
+.tab-content.active { display: block; animation: fadeIn 0.3s ease; }
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ===== PRESETS ===== */
+.presets-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 10px;
+}
+.preset-card {
+  background: var(--bg-card-2);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 14px 16px;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  text-align: right;
+  font-family: var(--sans);
+  color: var(--text-primary);
+  position: relative;
+  overflow: hidden;
+}
+.preset-card:hover {
+  border-color: var(--border-strong);
+  background: var(--bg-elevated);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+.preset-card.active {
+  background: linear-gradient(135deg, var(--gold-glow), transparent);
+  border-color: rgba(212, 175, 55, 0.5);
+  box-shadow: 0 0 0 1px rgba(212, 175, 55, 0.2), var(--shadow-md);
+}
+.preset-card .preset-header {
+  display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;
+}
+.preset-card .preset-icon { font-size: 20px; }
+.preset-card .preset-name {
+  color: var(--text-primary); font-size: 13px; font-weight: 800; letter-spacing: -0.2px;
+}
+.preset-card.active .preset-name { color: var(--gold); }
+.preset-card .preset-desc { color: var(--text-secondary); font-size: 11px; line-height: 1.6; }
+.preset-card .preset-badge {
+  display: inline-block;
+  background: var(--blue-soft);
+  color: var(--blue);
+  padding: 2px 8px;
+  border-radius: 5px;
+  font-size: 9px;
+  font-weight: 800;
+  margin-top: 8px;
+  border: 1px solid rgba(59, 130, 246, 0.2);
+}
+
+/* ===== TABLE ===== */
+.positions-table-wrapper {
+  overflow-x: auto;
+  border-radius: 12px;
+  margin-bottom: 16px;
+  border: 1px solid var(--border);
+  background: var(--bg-card-2);
+}
+.positions-table { width: 100%; border-collapse: collapse; min-width: 1560px; }
+.positions-table th {
+  background: var(--bg-elevated);
+  color: var(--text-secondary);
+  padding: 12px 10px;
+  text-align: right;
+  font-size: 11px;
+  font-weight: 700;
+  border-bottom: 1px solid var(--border);
+  white-space: nowrap;
+  letter-spacing: 0.3px;
+}
+.positions-table td {
+  padding: 10px;
+  border-bottom: 1px solid var(--border-soft);
+  vertical-align: middle;
+}
+.positions-table tbody tr { transition: background 0.15s; }
+.positions-table tbody tr:hover { background: rgba(212, 175, 55, 0.02); }
+.positions-table tbody tr:last-child td { border-bottom: none; }
+
+.cell-input, .cell-select {
+  width: 100%;
+  padding: 9px 11px;
+  background: var(--bg-input);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--text-primary);
+  font-family: var(--sans);
+  font-size: 12px;
+  font-weight: 600;
+  outline: none;
+  transition: all 0.15s;
+  direction: ltr;
+  text-align: right;
+}
+.cell-input {
+  min-width: 95px;
+  font-feature-settings: 'tnum' 1;
+  letter-spacing: -0.2px;
+}
+.cell-select {
+  min-width: 130px;
+  cursor: pointer;
+}
+.cell-input:hover, .cell-select:hover { border-color: var(--border-strong); }
+.cell-input:focus, .cell-select:focus {
+  border-color: var(--gold);
+  box-shadow: 0 0 0 3px var(--gold-glow);
+}
+.cell-input.highlight {
+  border-color: rgba(212, 175, 55, 0.4);
+  background: var(--gold-glow);
+  color: var(--gold);
+  font-weight: 800;
+}
+.cell-input:disabled { opacity: 0.4; cursor: not-allowed; }
+.cell-input.locked-cell {
+  background: var(--bg-card-2) !important;
+  border-color: var(--border-soft) !important;
+  color: var(--text-muted) !important;
+  cursor: not-allowed !important;
+  opacity: 0.5 !important;
+}
+.cell-select.placeholder-active {
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.side-toggle {
+  display: inline-flex;
+  background: var(--bg-input);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+  width: 100%;
+  min-width: 110px;
+  padding: 2px;
+  gap: 2px;
+}
+.side-btn {
+  flex: 1;
+  padding: 7px 6px;
+  background: transparent;
+  color: var(--text-secondary);
+  border: none;
+  border-radius: 6px;
+  font-family: var(--sans);
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.15s;
+  white-space: nowrap;
+}
+.side-btn:hover { color: var(--text-primary); }
+.side-btn.active-buy {
+  background: var(--green);
+  color: #fff;
+  box-shadow: 0 2px 8px rgba(34, 197, 94, 0.35);
+}
+.side-btn.active-sell {
+  background: var(--red);
+  color: #fff;
+  box-shadow: 0 2px 8px rgba(239, 68, 68, 0.35);
+}
+
+.symbol-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 800;
+  font-family: var(--sans);
+  white-space: nowrap;
+  transition: all 0.15s;
+  width: 100%;
+  min-width: 80px;
+  border: 1px solid;
+  letter-spacing: -0.2px;
+}
+.symbol-badge.call {
+  background: var(--green-soft);
+  border-color: rgba(34, 197, 94, 0.3);
+  color: #4ade80;
+}
+.symbol-badge.put {
+  background: var(--red-soft);
+  border-color: rgba(239, 68, 68, 0.3);
+  color: #f87171;
+}
+.symbol-badge.spot {
+  background: var(--blue-soft);
+  border-color: rgba(59, 130, 246, 0.3);
+  color: #60a5fa;
+}
+.symbol-badge.empty {
+  background: var(--bg-card-2);
+  border-color: var(--border);
+  border-style: dashed;
+  color: var(--text-muted);
+  font-size: 11px;
+  font-weight: 600;
+}
+[data-theme="light"] .symbol-badge.call { color: #16a34a; }
+[data-theme="light"] .symbol-badge.put { color: #dc2626; }
+[data-theme="light"] .symbol-badge.spot { color: #2563eb; }
+
+.btn-remove {
+  width: 32px; height: 32px;
+  border-radius: 8px;
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text-secondary);
+  cursor: pointer;
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s;
+  font-family: var(--sans);
+}
+.btn-remove:hover {
+  background: var(--red-soft);
+  border-color: rgba(239, 68, 68, 0.3);
+  color: var(--red);
+}
+
+.btn-add {
+  padding: 11px 20px;
+  background: transparent;
+  color: var(--text-primary);
+  border: 1px dashed var(--border-strong);
+  border-radius: 10px;
+  font-family: var(--sans);
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.btn-add:hover {
+  border-color: var(--gold);
+  color: var(--gold);
+  background: var(--gold-glow);
+  border-style: solid;
+}
+
+.btn-primary {
+  padding: 11px 20px;
+  background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  font-family: var(--sans);
+  font-size: 13px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: 0 2px 8px rgba(212, 175, 55, 0.25);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.btn-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 16px rgba(212, 175, 55, 0.4);
+}
+
+.btn-refresh {
+  padding: 11px 18px;
+  background: var(--bg-card-2);
+  color: var(--text-primary);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  font-family: var(--sans);
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.btn-refresh:hover {
+  background: var(--bg-elevated);
+  border-color: var(--border-strong);
+}
+.btn-refresh:disabled { opacity: 0.5; cursor: wait; }
+
+.btn-clear {
+  padding: 11px 18px;
+  background: transparent;
+  color: var(--red);
+  border: 1px solid rgba(239, 68, 68, 0.25);
+  border-radius: 10px;
+  font-family: var(--sans);
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.btn-clear:hover {
+  background: var(--red-soft);
+  border-color: rgba(239, 68, 68, 0.5);
+}
+
+.strategy-info {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding: 16px 20px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  margin-bottom: 20px;
+  align-items: center;
+  box-shadow: var(--shadow-sm);
+}
+.strategy-name {
+  color: var(--text-primary);
+  font-size: 15px;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.strategy-tag {
+  background: var(--gold-glow);
+  color: var(--gold);
+  padding: 4px 12px;
+  border-radius: 6px;
+  font-size: 11px;
+  border: 1px solid rgba(212, 175, 55, 0.25);
+  font-weight: 700;
+}
+
+.strategy-explanation {
+  position: relative;
+  margin-bottom: 20px;
+  padding: 22px 24px;
+  border-radius: 16px;
+  background: linear-gradient(135deg, var(--bg-card) 0%, var(--bg-card-2) 100%);
+  border: 1px solid var(--border);
+  animation: fadeSlideIn 0.4s ease;
+  box-shadow: var(--shadow-sm);
+}
+.strategy-explanation::before {
+  content: '';
+  position: absolute;
+  top: 0; right: 0; left: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--purple), var(--blue), transparent);
+  opacity: 0.6;
+}
+@keyframes fadeSlideIn {
+  from { opacity: 0; transform: translateY(-6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.exp-header {
+  display: flex; align-items: center; gap: 12px;
+  margin-bottom: 16px; padding-bottom: 14px;
+  border-bottom: 1px solid var(--border);
+}
+.exp-header .exp-icon {
+  display: inline-flex; width: 40px; height: 40px;
+  align-items: center; justify-content: center; border-radius: 10px;
+  background: linear-gradient(135deg, var(--purple-soft), var(--blue-soft));
+  font-size: 18px;
+  border: 1px solid var(--border);
+}
+.exp-header .exp-title { font-size: 14px; font-weight: 800; color: var(--text-primary); letter-spacing: -0.2px; }
+.exp-header .exp-sub { font-size: 11px; color: var(--text-secondary); margin-top: 3px; font-weight: 500; }
+.exp-body { display: grid; gap: 12px; grid-template-columns: 1fr; }
+@media (min-width: 900px) { .exp-body { grid-template-columns: 1.4fr 1fr 1fr; gap: 14px; } }
+.exp-block {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 14px 16px;
+}
+.exp-block .blk-title {
+  display: flex; align-items: center; gap: 6px;
+  font-size: 12px; font-weight: 800; margin-bottom: 10px; color: var(--text-primary);
+}
+.exp-block .blk-title.pros { color: var(--green); }
+.exp-block .blk-title.cons { color: var(--red); }
+.exp-block p { font-size: 12.5px; line-height: 1.9; color: var(--text-secondary); }
+.exp-block ul { list-style: none; display: grid; gap: 6px; }
+.exp-block ul li {
+  font-size: 12.5px; line-height: 1.8; color: var(--text-secondary);
+  padding-right: 18px; position: relative;
+}
+.exp-block ul li::before {
+  content: ''; position: absolute; right: 4px; top: 8px;
+  width: 5px; height: 5px; border-radius: 50%; background: currentColor; opacity: 0.4;
+}
+.exp-block.pros ul li::before { background: var(--green); opacity: 1; }
+.exp-block.cons ul li::before { background: var(--red); opacity: 1; }
+.exp-highlight {
+  display: inline-block; padding: 2px 8px; border-radius: 5px;
+  background: var(--gold-glow); color: var(--gold);
+  font-weight: 700; font-size: 11px;
+}
+
+.results-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 12px;
+  margin-bottom: 20px;
+}
+.result-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 16px 18px;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.2s;
+}
+.result-card::before {
+  content: '';
+  position: absolute;
+  top: 0; right: 0; bottom: 0;
+  width: 3px;
+  background: var(--gold);
+}
+.result-card.profit::before { background: var(--green); }
+.result-card.loss::before { background: var(--red); }
+.result-card.blue::before { background: var(--blue); }
+.result-card:hover {
+  border-color: var(--border-strong);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+.result-card .label {
+  color: var(--text-secondary);
+  font-size: 11px;
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+.result-card .value {
+  color: var(--text-primary);
+  font-size: 18px;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+}
+.result-card.profit .value { color: var(--green); }
+.result-card.loss .value { color: var(--red); }
+.result-card.blue .value { color: var(--blue); }
+
+/* ============================================================
+   نمودار
+   ============================================================ */
+.chart-container {
+  position: relative;
+  overflow: hidden;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 24px;
+  margin-bottom: 20px;
+  box-shadow: var(--shadow-md);
+}
+.chart-container::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  opacity: 0.4;
+}
+.chart-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 18px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--border);
+}
+.chart-header .title {
+  display: flex; align-items: center; gap: 10px;
+  color: var(--text-primary);
+  font-size: 15px;
+  font-weight: 800;
+}
+.chart-header .live-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 12px;
+  border-radius: 999px;
+  background: var(--green-soft);
+  color: var(--green);
+  font-size: 10px;
+  font-weight: 800;
+  border: 1px solid rgba(34, 197, 94, 0.25);
+}
+.chart-header .live-badge::before {
+  content: '';
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--green);
+  box-shadow: 0 0 10px var(--green);
+  animation: pulse 1.6s infinite;
+}
+
+.chart-canvas-wrap {
+  position: relative;
+  width: 100%;
+  border-radius: 12px;
+  overflow: hidden;
+  background: var(--bg-input);
+  border: 1px solid var(--border);
+}
+#payoffChart {
+  width: 100%;
+  height: auto;
+  display: block;
+  cursor: crosshair;
+  user-select: none;
+  touch-action: pan-y;
+}
+.chart-canvas-wrap.panning #payoffChart { cursor: grabbing !important; }
+
+#chartTooltip {
+  position: absolute;
+  pointer-events: none;
+  background: rgba(8, 9, 12, 0.96);
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  border: 1px solid rgba(212, 175, 55, 0.4);
+  border-radius: 10px;
+  padding: 11px 14px;
+  font-family: var(--sans);
+  font-size: 12px;
+  font-weight: 700;
+  color: #e6e8eb;
+  z-index: 50;
+  opacity: 0;
+  transition: opacity 0.12s ease;
+  direction: rtl;
+  white-space: nowrap;
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.04), 0 12px 32px rgba(0, 0, 0, 0.6);
+  line-height: 1.9;
+  min-width: 200px;
+  max-width: 92%;
+}
+[data-theme="light"] #chartTooltip {
+  background: rgba(255, 255, 255, 0.97);
+  color: #0a0c10;
+  border-color: rgba(168, 120, 0, 0.35);
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.04), 0 12px 32px rgba(0, 0, 0, 0.12);
+}
+#chartTooltip.visible { opacity: 1; }
+#chartTooltip.locked {
+  border-color: var(--gold);
+  box-shadow: 0 0 0 3px var(--gold-glow), 0 12px 32px rgba(0, 0, 0, 0.6);
+}
+#chartTooltip .tt-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 2px 0;
+}
+#chartTooltip .tt-row .k { color: #8b9099; font-weight: 600; font-size: 11px; }
+[data-theme="light"] #chartTooltip .tt-row .k { color: #5b6471; }
+#chartTooltip .tt-row .v {
+  font-weight: 800;
+  font-family: var(--sans);
+  font-feature-settings: 'tnum' 1;
+  direction: ltr;
+  letter-spacing: -0.3px;
+}
+#chartTooltip .tt-price .v { color: var(--gold); font-size: 13px; }
+#chartTooltip .tt-pnl-profit .v { color: var(--green); }
+#chartTooltip .tt-pnl-loss .v { color: var(--red); }
+#chartTooltip .tt-pct-profit .v { color: var(--green); }
+#chartTooltip .tt-pct-loss .v { color: var(--red); }
+#chartTooltip .tt-divider {
+  height: 1px;
+  background: rgba(255, 255, 255, 0.06);
+  margin: 6px 0;
+}
+[data-theme="light"] #chartTooltip .tt-divider { background: rgba(0, 0, 0, 0.06); }
+
+.chart-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  margin-top: 14px;
+  padding: 10px 12px;
+  background: var(--bg-card-2);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  font-size: 12px;
+}
+.chart-toolbar-label {
+  color: var(--text-secondary);
+  font-weight: 700;
+  margin-inline-end: 6px;
+  font-size: 11px;
+}
+.zoom-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 34px;
+  height: 32px;
+  padding: 0 10px;
+  background: var(--bg-card);
+  color: var(--text-secondary);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-family: var(--sans);
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.zoom-btn:hover {
+  color: var(--text-primary);
+  border-color: var(--border-strong);
+  background: var(--bg-elevated);
+  transform: translateY(-1px);
+}
+.zoom-btn:active { transform: translateY(0); }
+.zoom-btn.active {
+  background: var(--gold);
+  color: #fff;
+  border-color: var(--gold);
+  box-shadow: 0 2px 8px rgba(212, 175, 55, 0.4);
+}
+.zoom-btn.reset {
+  color: var(--red);
+  border-color: rgba(239, 68, 68, 0.25);
+}
+.zoom-btn.reset:hover {
+  background: var(--red-soft);
+  border-color: rgba(239, 68, 68, 0.5);
+}
+.zoom-info {
+  margin-inline-start: auto;
+  color: var(--text-secondary);
+  font-size: 11px;
+  font-weight: 700;
+  direction: ltr;
+  padding: 5px 12px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+
+.chart-hint {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 12px;
+  padding: 10px 14px;
+  background: var(--blue-soft);
+  border: 1px solid rgba(59, 130, 246, 0.2);
+  border-radius: 10px;
+  color: var(--blue);
+  font-size: 12px;
+  font-weight: 600;
+  text-align: center;
+  line-height: 1.7;
+  flex-wrap: wrap;
+}
+.chart-hint.locked {
+  background: var(--gold-glow);
+  border-color: rgba(212, 175, 55, 0.35);
+  color: var(--gold);
+}
+.chart-hint .lock-icon { font-size: 14px; }
+
+.legend {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid var(--border);
+  font-size: 12px;
+}
+.legend-item {
+  display: flex; align-items: center; gap: 8px;
+  color: var(--text-secondary); font-weight: 600;
+}
+.legend-dot { width: 10px; height: 10px; border-radius: 3px; }
+
+.loading-indicator {
+  display: inline-block;
+  width: 12px; height: 12px;
+  border: 2px solid rgba(59, 130, 246, 0.2);
+  border-top-color: var(--blue);
+  border-radius: 50%;
+  animation: spin 0.8s infinite;
+  margin-inline-end: 6px;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.price-status {
+  font-size: 10px;
+  color: var(--text-muted);
+  display: block;
+  margin-top: 5px;
+  text-align: center;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+}
+.price-status.live { color: var(--green); }
+.price-status.manual { color: var(--gold); }
+.price-status.error { color: var(--red); }
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  z-index: 99999;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  animation: fadeIn 0.2s ease;
+}
+.modal-overlay.active { display: flex; }
+.modal-box {
+  background: var(--bg-card);
+  border: 1px solid var(--border-strong);
+  border-radius: 16px;
+  padding: 28px;
+  max-width: 440px;
+  width: 100%;
+  box-shadow: var(--shadow-lg);
+  animation: modalIn 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+.modal-box::before {
+  content: '';
+  position: absolute;
+  top: 0; right: 0; left: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+}
+@keyframes modalIn {
+  from { opacity: 0; transform: scale(0.95) translateY(10px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
+}
+.modal-icon {
+  width: 52px; height: 52px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, var(--gold-glow), var(--purple-soft));
+  display: grid; place-items: center;
+  font-size: 24px;
+  margin-bottom: 16px;
+  border: 1px solid var(--border);
+}
+.modal-title {
+  font-size: 17px;
+  font-weight: 800;
+  margin-bottom: 10px;
+  color: var(--text-primary);
+  letter-spacing: -0.3px;
+}
+.modal-text {
+  font-size: 13.5px;
+  line-height: 1.9;
+  color: var(--text-secondary);
+  margin-bottom: 22px;
+}
+.modal-actions {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+}
+.modal-btn {
+  padding: 11px 20px;
+  border-radius: 10px;
+  font-family: var(--sans);
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.15s;
+  border: 1px solid var(--border);
+  background: var(--bg-card-2);
+  color: var(--text-primary);
+}
+.modal-btn:hover { background: var(--bg-elevated); border-color: var(--border-strong); }
+.modal-btn.danger {
+  background: var(--red);
+  color: #fff;
+  border-color: transparent;
+  box-shadow: 0 2px 8px rgba(239, 68, 68, 0.3);
+}
+.modal-btn.danger:hover { transform: translateY(-1px); box-shadow: 0 4px 16px rgba(239, 68, 68, 0.5); }
+
+ /* ===== حالت تمام‌صفحه حرفه‌ای نمودار ===== */
+.chart-container.fullscreen {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  width: 100vw;
+  height: 100dvh;
+  max-width: none;
+  margin: 0;
+  border: 0;
+  border-radius: 0;
+  padding: 12px;
+  background: var(--bg-primary);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-shadow: none;
+}
+
+.chart-container.fullscreen .chart-header {
+  flex: 0 0 auto;
+  padding-bottom: 10px;
+  margin-bottom: 10px;
+}
+
+.chart-container.fullscreen .chart-canvas-wrap {
+  flex: 1 1 auto;
+  min-height: 0;
+  height: auto;
+  width: 100%;
+  display: block;
+  overflow: hidden;
+}
+
+.chart-container.fullscreen #payoffChart {
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  max-height: none;
+  display: block;
+}
+
+.chart-container.fullscreen .chart-toolbar,
+.chart-container.fullscreen .chart-hint,
+.chart-container.fullscreen .legend {
+  flex: 0 0 auto;
+}
+
+/* فضای استاندارد نمودار در حالت عادی */
+.chart-canvas-wrap {
+  height: clamp(320px, 48vw, 560px);
+  min-height: 320px;
+  max-height: 560px;
+  touch-action: none;
+  overscroll-behavior: contain;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+#payoffChart {
+  width: 100%;
+  height: 100%;
+  max-width: 100%;
+  max-height: 100%;
+  display: block;
+  touch-action: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.chart-container.fullscreen .chart-canvas-wrap {
+  height: auto;
+}
+
+@media (max-width: 900px) {
+  .chart-container {
+    padding: 16px;
+  }
+
+  .chart-canvas-wrap {
+    height: clamp(300px, 56vw, 460px);
+    min-height: 300px;
+    max-height: 460px;
+  }
+}
+
+@media (max-width: 600px) {
+  .chart-container {
+    padding: 12px;
+    border-radius: 14px;
+  }
+
+  .chart-canvas-wrap {
+    height: clamp(300px, 76vw, 430px);
+    min-height: 300px;
+    max-height: 430px;
+    border-radius: 10px;
+  }
+
+  .chart-toolbar {
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    scrollbar-width: thin;
+  }
+
+  .chart-toolbar-label {
+    flex: 0 0 auto;
+  }
+
+  .zoom-btn {
+    flex: 0 0 auto;
+  }
+
+  .zoom-info {
+    flex: 0 0 auto;
+  }
+
+  .chart-hint {
+    font-size: 11px;
+    padding: 8px 10px;
+  }
+
+  .chart-container.fullscreen {
+    height: 100dvh;
+    min-height: 100dvh;
+    padding: max(8px, env(safe-area-inset-top))
+             max(8px, env(safe-area-inset-right))
+             max(8px, env(safe-area-inset-bottom))
+             max(8px, env(safe-area-inset-left));
+  }
+
+  .chart-container.fullscreen .chart-header .title {
+    font-size: 13px;
+  }
+
+  .chart-container.fullscreen .chart-canvas-wrap {
+    min-height: 0;
+    height: auto;
+  }
+
+  .chart-container.fullscreen .chart-toolbar {
+    margin-top: 8px;
+  }
+}
+
+@media (max-width: 600px) and (orientation: portrait) {
+  .chart-canvas-wrap {
+    height: min(74vw, 410px);
+    min-height: 300px;
+  }
+}
+
+@media (max-width: 900px) and (orientation: landscape) {
+  .chart-canvas-wrap {
+    height: min(64vh, 430px);
+    min-height: 260px;
+    max-height: 430px;
+  }
+
+  .chart-container.fullscreen .chart-canvas-wrap {
+    height: auto;
+    min-height: 0;
+  }
+}
+
+@media (min-width: 901px) {
+  .chart-container.fullscreen {
+    padding: 14px 18px;
+  }
+
+  .chart-container.fullscreen .chart-canvas-wrap {
+    min-height: 0;
+  }
+}
+
+/* Fullscreen واقعی مرورگر */
+.chart-container:fullscreen {
+  width: 100vw;
+  height: 100vh;
+  height: 100dvh;
+  max-width: none;
+  border: 0;
+  border-radius: 0;
+}
+
+.chart-container:-webkit-full-screen {
+  width: 100vw;
+  height: 100vh;
+  max-width: none;
+  border: 0;
+  border-radius: 0;
+}
+
+/* ===== Responsive rules خارج از نمودار — حفظ رفتار قبلی صفحه ===== */
+@media (max-width: 900px) {
+  .container { padding: 90px 14px 60px; }
+  .positions-table th { padding: 8px 5px; font-size: 10px; }
+  .positions-table td { padding: 7px 5px; }
+  .cell-input { min-width: 75px; padding: 7px 8px; font-size: 11px; }
+  .cell-select { min-width: 105px; padding: 7px 8px; font-size: 11px; }
+  .side-btn { font-size: 10px; padding: 6px 4px; }
+  .btn-remove { width: 28px; height: 28px; font-size: 12px; }
+  .presets-grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); }
+  .symbol-badge { font-size: 11px; padding: 5px 9px; min-width: 66px; }
+  .page-header h1 { font-size: 22px; }
+}
+@media (max-width: 600px) {
+  .container { padding: 86px 10px 40px; }
+  .page-header h1 { font-size: 19px; }
+  .page-header p { font-size: 12px; }
+  .panel { padding: 16px; border-radius: 14px; }
+  .tabs { flex-wrap: wrap; width: 100%; }
+  .tab-btn { font-size: 12px; padding: 9px 14px; }
+  .modal-box { padding: 22px; }
+  .modal-actions { flex-direction: column-reverse; }
+  .modal-btn { width: 100%; justify-content: center; }
+  .zoom-btn#fullscreenBtn {
+    background: var(--gold-glow);
+    border-color: rgba(212, 175, 55, 0.4);
+    color: var(--gold);
+  }
+}
+
 </style>
+
+<style id="shamdun-option1-design">
+:root{
+  --o1-navy:#0b1220;--o1-navy2:#111a2b;--o1-bg:#f5f7fa;--o1-card:#fff;
+  --o1-text:#111827;--o1-muted:#64748b;--o1-border:#e3e8ef;
+  --o1-gold:#c89b3c;--o1-gold-soft:#f8f1df;
+  --o1-green:#16835b;--o1-red:#d64545;--o1-blue:#2563eb;
+  --o1-shadow:0 8px 28px rgba(15,23,42,.06);
+}
+html[data-o1="1"] body{
+  background:var(--o1-bg)!important;color:var(--o1-text)!important;
+  background-image:none!important;
+}
+html[data-o1="1"] .container{
+  max-width:1440px!important;padding:82px 22px 70px!important;
+}
+html[data-o1="1"] .page-header{
+  text-align:right!important;padding:28px 30px!important;margin-bottom:14px!important;
+  border-radius:18px!important;background:linear-gradient(135deg,#0b1220,#17243a)!important;
+  border:0!important;box-shadow:var(--o1-shadow)!important;
+}
+html[data-o1="1"] .page-header:before{
+  left:auto!important;right:0!important;transform:none!important;width:230px!important;
+  background:linear-gradient(90deg,var(--o1-gold),transparent)!important;opacity:.9!important;
+}
+html[data-o1="1"] .page-header h1{
+  color:#fff!important;background:none!important;-webkit-text-fill-color:#fff!important;
+  font-size:27px!important;margin-bottom:7px!important;
+}
+html[data-o1="1"] .page-header p{color:#b8c3d3!important}
+html[data-o1="1"] .status-bar{
+  background:#fff!important;border:1px solid var(--o1-border)!important;color:var(--o1-muted)!important;
+  box-shadow:var(--o1-shadow)!important;border-radius:12px!important;
+}
+html[data-o1="1"] .panel,
+html[data-o1="1"] .strategy-info,
+html[data-o1="1"] .strategy-explanation,
+html[data-o1="1"] .results-grid > .result-card,
+html[data-o1="1"] #chartContainer{
+  background:var(--o1-card)!important;border-color:var(--o1-border)!important;
+  box-shadow:var(--o1-shadow)!important;color:var(--o1-text)!important;
+}
+html[data-o1="1"] .tabs{
+  width:100%!important;background:#fff!important;border:1px solid var(--o1-border)!important;
+  box-shadow:var(--o1-shadow)!important;padding:5px!important;margin-bottom:14px!important;
+}
+html[data-o1="1"] .tab-btn{flex:0 0 auto;color:#64748b!important}
+html[data-o1="1"] .tab-btn.active{
+  color:#fff!important;background:var(--o1-navy)!important;border:0!important;
+}
+html[data-o1="1"] .panel{border-radius:16px!important;padding:22px!important}
+html[data-o1="1"] .panel-header{border-color:var(--o1-border)!important}
+html[data-o1="1"] .panel-title,
+html[data-o1="1"] .strategy-name,
+html[data-o1="1"] .result-card .label,
+html[data-o1="1"] .result-card .value{color:var(--o1-text)!important}
+html[data-o1="1"] .panel-title .badge,
+html[data-o1="1"] .strategy-tag{
+  background:var(--o1-gold-soft)!important;color:#9b7421!important;border-color:#ead9ad!important;
+}
+html[data-o1="1"] .preset-card{
+  background:#fff!important;border-color:var(--o1-border)!important;
+  box-shadow:0 2px 8px rgba(15,23,42,.025)!important;
+}
+html[data-o1="1"] .preset-card:hover{border-color:#c9d3df!important;transform:translateY(-1px)!important}
+html[data-o1="1"] .preset-card.active{
+  background:linear-gradient(135deg,#fffaf0,#fff)!important;
+  border-color:#d4b45f!important;box-shadow:0 0 0 1px #ead9ad,var(--o1-shadow)!important;
+}
+html[data-o1="1"] .preset-card .preset-name{color:var(--o1-text)!important}
+html[data-o1="1"] .preset-card.active .preset-name{color:#9b7421!important}
+html[data-o1="1"] .preset-card .preset-desc{color:var(--o1-muted)!important}
+html[data-o1="1"] .positions-table-wrapper{
+  background:#fff!important;border-color:var(--o1-border)!important;
+}
+html[data-o1="1"] .positions-table th{
+  background:#f8fafc!important;color:#64748b!important;border-color:var(--o1-border)!important;
+}
+html[data-o1="1"] .positions-table td{border-color:#edf1f5!important}
+html[data-o1="1"] .cell-input,
+html[data-o1="1"] .cell-select{
+  background:#fff!important;color:var(--o1-text)!important;border-color:#dce3eb!important;
+}
+html[data-o1="1"] .cell-input:focus,
+html[data-o1="1"] .cell-select:focus{
+  border-color:var(--o1-gold)!important;box-shadow:0 0 0 3px rgba(200,155,60,.12)!important;
+}
+html[data-o1="1"] .btn-primary{
+  background:var(--o1-navy)!important;box-shadow:none!important;
+}
+html[data-o1="1"] .btn-primary:hover{background:#17243a!important;box-shadow:0 6px 16px rgba(11,18,32,.16)!important}
+html[data-o1="1"] .btn-refresh,
+html[data-o1="1"] .btn-add{
+  background:#fff!important;color:var(--o1-text)!important;border-color:#d8e0e8!important;
+}
+html[data-o1="1"] .strategy-explanation{
+  background:#fff!important;
+}
+html[data-o1="1"] .exp-block{background:#f8fafc!important;border-color:#e6ebf1!important}
+html[data-o1="1"] .exp-block p,
+html[data-o1="1"] .exp-block ul li{color:#64748b!important}
+html[data-o1="1"] .results-grid{
+  grid-template-columns:repeat(5,minmax(0,1fr))!important;gap:10px!important;
+}
+html[data-o1="1"] .result-card{
+  min-height:102px!important;border-radius:13px!important;
+}
+html[data-o1="1"] #chartContainer{border-radius:16px!important;padding:0!important;overflow:hidden}
+html[data-o1="1"] #chartContainer .chart-header,
+html[data-o1="1"] #chartContainer .chart-toolbar{
+  background:#fff!important;color:var(--o1-text)!important;border-color:var(--o1-border)!important;
+}
+html[data-o1="1"] #chartCanvasWrap{
+  background:#fff!important;
+}
+html[data-o1="1"] .chart-hint,
+html[data-o1="1"] #chartHint{color:#64748b!important}
+html[data-o1="1"] .auto-refresh-toggle{background:#f8fafc!important;border-color:#dfe6ee!important}
+.o1-shell-nav{
+  position:fixed;top:0;left:0;right:0;height:58px;z-index:1000;
+  background:rgba(11,18,32,.97);border-bottom:1px solid rgba(255,255,255,.08);
+  display:flex;align-items:center;justify-content:center;
+}
+.o1-shell-nav .inner{
+  width:min(1440px,calc(100% - 36px));display:flex;align-items:center;gap:26px;
+}
+.o1-brand{font-weight:900;color:#fff;font-size:18px;letter-spacing:-.3px}
+.o1-brand span{color:#d4af37}
+.o1-navlinks{display:flex;gap:4px;align-items:center;flex:1}
+.o1-navlinks a{
+  color:#b9c4d4;text-decoration:none;padding:8px 12px;border-radius:8px;font-size:12px;font-weight:700
+}
+.o1-navlinks a:hover{background:rgba(255,255,255,.07);color:#fff}
+.o1-navlinks a.active{color:#fff;background:rgba(200,155,60,.15)}
+.o1-meta{font-size:11px;color:#8e9bad}
+.o1-breadcrumb{
+  max-width:1440px;margin:0 auto 12px;padding:0 22px;color:#7b8797;font-size:11px;
+}
+.o1-breadcrumb strong{color:#4b5563}
+.o1-overview{
+  display:grid;grid-template-columns:1.35fr .65fr;gap:14px;margin-bottom:14px;
+}
+.o1-overview-card{
+  background:#fff;border:1px solid var(--o1-border);border-radius:16px;padding:18px 20px;
+  box-shadow:var(--o1-shadow);
+}
+.o1-overview-card .eyebrow{font-size:10px;color:#8a96a6;font-weight:800;margin-bottom:7px}
+.o1-overview-card h2{font-size:18px;margin:0 0 7px;color:#111827}
+.o1-overview-card p{font-size:12px;line-height:1.9;color:#64748b;margin:0}
+.o1-metric-row{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:14px}
+.o1-mini-metric{background:#f8fafc;border:1px solid #e7ecf2;border-radius:10px;padding:10px 12px}
+.o1-mini-metric b{display:block;font-size:13px;color:#111827;margin-top:4px}
+.o1-mini-metric span{font-size:10px;color:#7b8797}
+.o1-side-list{display:grid;gap:8px}
+.o1-side-item{display:flex;justify-content:space-between;align-items:center;padding:9px 0;border-bottom:1px solid #edf1f5;font-size:11px}
+.o1-side-item:last-child{border-bottom:0}
+.o1-side-item span{color:#64748b}.o1-side-item b{color:#111827}
+.o1-section-label{
+  display:flex;align-items:center;gap:9px;margin:20px 2px 10px;font-size:13px;font-weight:900;color:#172033;
+}
+.o1-section-label:before{content:"";width:4px;height:18px;border-radius:5px;background:var(--o1-gold)}
+@media(max-width:900px){
+  .o1-navlinks a:nth-child(n+4),.o1-meta{display:none}
+  .o1-overview{grid-template-columns:1fr}
+  html[data-o1="1"] .results-grid{grid-template-columns:repeat(2,1fr)!important}
+}
+@media(max-width:620px){
+  .o1-navlinks{display:none}
+  .o1-shell-nav .inner{justify-content:center}
+  html[data-o1="1"] .container{padding:72px 10px 50px!important}
+  .o1-breadcrumb{padding:0 10px}
+  html[data-o1="1"] .page-header{padding:22px 18px!important}
+  html[data-o1="1"] .page-header h1{font-size:22px!important}
+  .o1-metric-row{grid-template-columns:1fr}
+  html[data-o1="1"] .results-grid{grid-template-columns:1fr 1fr!important}
+}
+</style>
+
+
+<style id="chart-layout-polish">
+/* ===== فقط اصلاح چیدمان و نمودار؛ منطق داده/استراتژی دست‌نخورده ===== */
+#chartContainer {
+  margin-top: 18px;
+}
+#chartContainer .chart-header {
+  align-items: center;
+  margin-bottom: 14px;
+}
+#chartContainer .chart-canvas-wrap {
+  height: 500px;
+  min-height: 500px;
+  max-height: 500px;
+  border-radius: 14px;
+  background: #0b0e13;
+}
+#chartContainer #payoffChart {
+  width: 100% !important;
+  height: 100% !important;
+  display: block;
+}
+#chartContainer .chart-toolbar {
+  margin-top: 10px;
+  padding: 9px 11px;
+}
+#chartContainer .chart-hint {
+  margin-top: 9px;
+  font-size: 11px;
+}
+#chartContainer .legend {
+  margin-top: 12px;
+  padding-top: 12px;
+}
+#chartTooltip {
+  min-width: 230px;
+  padding: 12px 14px;
+  font-size: 12px;
+  z-index: 100;
+}
+@media (max-width: 900px) {
+  #chartContainer .chart-canvas-wrap {
+    height: 420px;
+    min-height: 420px;
+    max-height: 420px;
+  }
+}
+@media (max-width: 600px) {
+  #chartContainer .chart-canvas-wrap {
+    height: 360px;
+    min-height: 360px;
+    max-height: 360px;
+  }
+  #chartContainer .chart-toolbar {
+    justify-content: center;
+  }
+  #chartContainer .zoom-info {
+    margin-inline-start: 0;
+  }
+}
+</style>
+
 </head>
 <body>
-<script src="navbar.js" defer></script>
-<main class="page">
-<div class="top"><div class="crumb">ابزارها ‹ <b>آپشن</b></div><div class="live"><i id="dot" class="dot"></i><span id="liveText">در انتظار داده زنده</span></div></div>
-<section class="hero"><div class="heroGrid"><div><h1>شبیه‌ساز <span>آپشن</span> شمعدون</h1><p>زنجیره واقعی اختیار خرید و فروش، استراتژی‌های معتبر و تحلیل سود و زیان بر اساس قرارداد انتخاب‌شده.</p></div><div class="actions"><button class="btn" id="refreshBtn">↻ بروزرسانی داده</button></div></div></section>
-<section class="strip"><div class="cell"><small>دارایی پایه</small><strong id="underlying">—</strong><span class="sub" id="underlyingSub">نمادی انتخاب نشده</span></div><div class="cell"><small>قیمت پایه</small><strong id="basePrice">—</strong></div><div class="cell"><small>تغییر</small><strong id="change">—</strong></div><div class="cell"><small>سررسید انتخابی</small><strong id="expiry">—</strong></div><div class="cell"><small>وضعیت</small><strong id="state" style="color:var(--g)">در انتظار</strong></div></section>
-<div class="layout"><section>
-<div class="card"><div class="head"><div class="title">زنجیره اختیارها <span class="badge">CALL / PUT</span></div><span id="count" class="badge">۰ قرارداد</span></div><div class="body"><div class="controls"><select class="select baseSelect" id="underlyingSelect"><option value="">انتخاب دارایی پایه</option></select><input class="input" id="search" placeholder="جستجوی نماد؛ مثال ضخود یا طخود"><select class="select" id="type"><option value="all">همه انواع</option><option value="call">اختیار خرید</option><option value="put">اختیار فروش</option></select><select class="select" id="expiryFilter"><option value="all">همه سررسیدها</option></select><button class="btn" id="clear">پاک کردن</button></div><div class="chainWrap"><table class="chain"><thead><tr><th>نوع</th><th>نماد</th><th>دارایی پایه</th><th>قیمت اعمال</th><th>آخرین</th><th>خرید</th><th>فروش</th><th>حجم</th><th>روز تا سررسید</th><th></th></tr></thead><tbody id="chainBody"><tr><td colspan="10"><div class="empty"><strong>در حال دریافت داده</strong>زنجیره واقعی اختیارها بارگذاری می‌شود.</div></td></tr></tbody></table></div></div></div>
-<div class="card" style="margin-top:15px"><div class="head"><div class="title">استراتژی‌های معتبر و پرکاربرد</div><span class="badge">PRESETS</span></div><div class="body"><div id="presets" class="presets"></div><div id="explain" class="explain" style="display:none"></div></div></div>
-<div class="card chartCard" id="chartContainer"><div class="head"><div class="title">نمودار سود و زیان <span class="badge">PAYOFF</span></div><div class="chartTools"><button class="btn" id="panBtn">✋ جابجایی</button><button class="btn" id="zoomOutBtn">−</button><button class="btn" id="zoomInBtn">+</button><button class="btn" id="resetChart">↺ بازنشانی</button></div></div><div class="body"><div class="chart" id="chartCanvasWrap"><div class="chartTooltip" id="chartTooltip"></div><svg id="payoffChart" viewBox="0 0 900 390" preserveAspectRatio="none"></svg></div><div class="chartHint"><span id="chartHintText">حرکت موس روی نمودار: قیمت و سود/زیان همان نقطه نمایش داده می‌شود. کلیک روی نقطه، اطلاعات را ثابت می‌کند.</span><span>قیمت دارایی پایه ←</span></div><div class="note"><span>نمودار بر اساس موقعیت‌های انتخاب‌شده و سود/زیان در سررسید محاسبه می‌شود.</span><span>Expiration payoff</span></div></div></div>
-</section><aside>
-<div class="card"><div class="head"><div class="title">استراتژی من</div><span class="badge">LIVE MODEL</span></div><div class="body"><div class="baseBox"><label for="strategyBase">دارایی پایه استراتژی</label><select class="select" id="strategyBase"><option value="">انتخاب دارایی پایه</option></select><div class="newStrategy"><button class="btn gold" id="newBtn">＋ استراتژی جدید</button><button class="btn" id="manual">＋ موقعیت دستی</button></div></div><div class="tabs"><button class="tab active" data-panel="positionsPanel">موقعیت‌ها</button><button class="tab" data-panel="resultsPanel">خروجی</button></div><div id="positionsPanel" class="panel active"><div id="legs" class="legs"><div class="empty">هنوز قراردادی اضافه نشده.<br>یک دارایی پایه انتخاب کنید یا از زنجیره قرارداد اضافه کنید.</div></div></div><div id="resultsPanel" class="panel"><div class="metrics"><div class="metric"><small>حداکثر سود</small><strong id="maxProfit">—</strong></div><div class="metric"><small>حداکثر زیان</small><strong id="maxLoss">—</strong></div><div class="metric"><small>نقطه سربه‌سر</small><strong id="breakeven">—</strong></div><div class="metric"><small>تعداد موقعیت</small><strong id="legCount">۰</strong></div></div></div></div></div>
-</aside></div></main>
-<div class="modal" id="newModal"><div class="modalBox"><div class="modalHead"><h3>ایجاد استراتژی جدید</h3><button class="close" id="closeModal">×</button></div><div class="modalBody"><div class="modalGrid"><div class="modalField"><label>دارایی پایه</label><select class="select" id="modalBase"></select></div><div class="modalField"><label>نوع قرارداد</label><select class="select" id="modalType"><option value="all">همه</option><option value="call">اختیار خرید</option><option value="put">اختیار فروش</option></select></div><div class="modalField"><label>سررسید</label><select class="select" id="modalExpiry"><option value="all">همه سررسیدها</option></select></div><div class="modalField"><label>انتخاب قرارداد</label><select class="select" id="modalContract"><option value="">انتخاب قرارداد</option></select></div></div><div class="modalFoot"><button class="btn gold" id="createStrategy">ایجاد و افزودن قرارداد</button><button class="btn" id="cancelModal">انصراف</button></div></div></div></div>
-<div class="modal" id="manualModal"><div class="modalBox"><div class="modalHead"><h3>افزودن موقعیت دستی</h3><button class="close" id="closeManual">×</button></div><div class="modalBody"><div class="manualGrid"><div class="manualField full"><label>دارایی پایه</label><select class="select" id="manualBase"></select></div><div class="manualField"><label>سمت موقعیت</label><select class="select" id="manualSide"><option value="buy">خرید</option><option value="sell">فروش</option></select></div><div class="manualField"><label>نوع موقعیت</label><select class="select" id="manualType"><option value="call">اختیار خرید (Call)</option><option value="put">اختیار فروش (Put)</option><option value="spot">دارایی پایه</option></select></div><div class="manualField"><label>تعداد قرارداد</label><input class="input" id="manualQty" type="number" min="1" step="1" value="1"></div><div class="manualField"><label>قیمت فعلی / پرمیوم</label><input class="input" id="manualPrice" type="number" min="0" step="0.01" placeholder="مثلاً 120"></div><div class="manualField"><label>قیمت اعمال</label><input class="input" id="manualStrike" type="number" min="0" step="0.01" placeholder="برای Spot خالی بماند"></div></div><div class="help">برای اختیارها «قیمت فعلی / پرمیوم» همان مبلغی است که در محاسبه سود و زیان پرداخت یا دریافت می‌شود. برای فروش، سود/زیان با علامت موقعیت محاسبه خواهد شد.</div><div class="modalFoot"><button class="btn gold" id="addManualPosition">افزودن به استراتژی</button><button class="btn" id="cancelManual">انصراف</button></div></div></div></div>
+
+
+<nav class="o1-shell-nav">
+  <div class="inner">
+    <div class="o1-brand">شمعدون <span>•</span> ابزارهای مالی</div>
+    <div class="o1-navlinks">
+      <a href="home.html">خانه</a><a href="bourse.html">بازار</a>
+      <a href="analysis.html">تحلیل</a><a href="options-simulator.html" class="active">Options Lab</a>
+      <a href="portfolio.html">پرتفوی</a><a href="calculator.html">ابزارها</a>
+    </div>
+    <div class="o1-meta">نسخه آزمایشی Option 1</div>
+  </div>
+</nav>
+<div class="o1-breadcrumb">ابزارها / <strong>آزمایشگاه استراتژی آپشن</strong></div>
+
+<div class="container">
+
+  <div class="page-header">
+    <h1>📊 شبیه‌ساز حرفه‌ای استراتژی آپشن</h1>
+    <p>استراتژی آماده را انتخاب کن یا پوزیشن سفارشی خودت را بساز</p>
+  </div>
+
+  <!-- Status Bar -->
+  <div class="status-bar">
+    <div class="left">
+      <span class="indicator" id="liveIndicator">
+        <span class="dot"></span>
+        <span id="liveText">آماده به‌روزرسانی</span>
+      </span>
+      <span class="time-info" id="lastUpdateTime"></span>
+    </div>
+    <label class="auto-refresh-toggle">
+      <input type="checkbox" id="autoRefreshToggle" onchange="toggleAutoRefresh(this.checked)">
+      <span class="switch"></span>
+      <span>به‌روزرسانی خودکار (۶۰ ثانیه)</span>
+    </label>
+  </div>
+
+  <div class="tabs">
+    <button class="tab-btn active" onclick="switchTab('presets', this)">🎯 استراتژی‌های آماده</button>
+    <button class="tab-btn" onclick="switchTab('custom', this)">🛠️ پوزیشن سفارشی</button>
+  </div>
+
+  <div class="tab-content active" id="tab-presets">
+    <div class="panel">
+      <div class="panel-header">
+        <div class="panel-title">
+          🎯 استراتژی آماده را انتخاب کن
+          <span class="badge">۱۵ استراتژی</span>
+        </div>
+      </div>
+      <div class="presets-grid" id="presetsGrid"></div>
+      <div class="info-box" style="background: var(--blue-soft); border: 1px solid rgba(59, 130, 246, 0.25); border-radius: 12px; padding: 14px 18px; margin-top: 16px; color: var(--blue); font-size: 13px; line-height: 1.8;">
+        <strong>💡 راهنما:</strong> روی هر استراتژی کلیک کن تا پوزیشن‌های آماده در جدول باز بشن. سپس <strong>دارایی پایه</strong> را از سلکت انتخاب کن.
+      </div>
+    </div>
+  </div>
+
+  <div class="tab-content" id="tab-custom">
+    <div class="panel">
+      <div class="panel-header">
+        <div class="panel-title">
+          🛠️ پوزیشن سفارشی
+          <span class="badge" id="positionsCount">۰ پوزیشن</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="panel">
+    <div class="panel-header">
+      <div class="panel-title">
+        📋 پوزیشن‌های شما
+        <span class="badge" id="positionsCount2">۰ پوزیشن</span>
+      </div>
+      <div style="display:flex; gap:8px; flex-wrap:wrap;">
+        <button class="btn-refresh" onclick="refreshAllPrices(true)">🔄 به‌روزرسانی قیمت‌ها</button>
+        <button class="btn-clear" onclick="clearAllPositions()">🗑️ پاک کردن استراتژی / پوزیشن</button>
+      </div>
+    </div>
+
+    <div class="positions-table-wrapper">
+      <table class="positions-table">
+        <thead>
+          <tr>
+            <th>دارایی پایه</th>
+            <th>خرید/فروش</th>
+            <th>نوع</th>
+            <th>نام نماد</th>
+            <th>مقدار</th>
+            <th>💵 قیمت فعلی</th>
+            <th>🎯 قیمت اعمال</th>
+            <th>پرمیوم</th>
+            <th>دلتا</th>
+            <th>وجه تضمین</th>
+            <th>مجموع</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody id="positionsBody"></tbody>
+      </table>
+    </div>
+
+    <button class="btn-add" onclick="addPosition()">
+      <span style="font-size:16px;">➕</span>
+      افزودن پوزیشن دستی
+    </button>
+  </div>
+
+  <div class="strategy-info">
+    <div class="strategy-name">🎯 <span id="strategyName">استراتژی سفارشی</span></div>
+    <div class="strategy-tag" id="strategyTags">در انتظار پوزیشن...</div>
+    <div style="margin-right: auto;">
+      <span style="color: var(--text-secondary); font-size: 12px; font-weight: 600;">💰 مجموع سرمایه:</span>
+      <span class="num" style="color: var(--gold); font-weight: 800; font-size: 15px; margin-right: 8px;" id="totalInvestment">۰</span>
+    </div>
+  </div>
+
+  <div class="strategy-explanation" id="strategyExplanation" style="display: none;"></div>
+
+  <div class="results-grid">
+    <div class="result-card profit">
+      <div class="label">📈 حداکثر سود</div>
+      <div class="value" id="maxProfit">--</div>
+    </div>
+    <div class="result-card loss">
+      <div class="label">📉 حداکثر ضرر</div>
+      <div class="value" id="maxLoss">--</div>
+    </div>
+    <div class="result-card blue">
+      <div class="label">⚖️ نقطه(های) سربه‌سر</div>
+      <div class="value" id="breakeven">--</div>
+    </div>
+    <div class="result-card">
+      <div class="label">🎯 نسبت R/R</div>
+      <div class="value" id="rrRatio">--</div>
+    </div>
+    <div class="result-card">
+      <div class="label">📊 سود/زیان فعلی</div>
+      <div class="value" id="currentPnL">--</div>
+    </div>
+  </div>
+
+  <div class="chart-container" id="chartContainer">
+    <div class="chart-header">
+      <div class="title">📈 نمودار سود و زیان (در سررسید)</div>
+      <div class="live-badge">LIVE</div>
+    </div>
+
+    <div class="chart-canvas-wrap" id="chartCanvasWrap">
+      <svg id="payoffChart" preserveAspectRatio="none"></svg>
+      <div id="chartTooltip"></div>
+    </div>
+
+    <div class="chart-toolbar">
+      <span class="chart-toolbar-label">Zoom</span>
+      <button class="zoom-btn" onclick="zoomIn('both')" title="زوم افقی و عمودی">➕➕</button>
+      <button class="zoom-btn" onclick="zoomIn('x')" title="زوم افقی">↔</button>
+      <button class="zoom-btn" onclick="zoomIn('y')" title="زوم عمودی">↕</button>
+      <button class="zoom-btn" onclick="zoomOut()" title="زوم اوت">➖</button>
+      <button class="zoom-btn reset" onclick="resetZoom()" title="ریست">🔄 ریست</button>
+      <button class="zoom-btn" id="panBtn" onclick="togglePan()" title="جابجایی">✋ Pan</button>
+      <button class="zoom-btn" id="fullscreenBtn" onclick="toggleFullscreen()" title="تمام صفحه">⛶</button>
+      <span class="zoom-info" id="zoomInfo">1.0× | 1.0×</span>
+    </div>
+
+    <div class="chart-hint" id="chartHint">
+      <span class="lock-icon">🖱️</span>
+      <span>اسکرول = زوم روی موس | درگ (Pan) = جابجایی | کلیک = قفل نقطه</span>
+    </div>
+
+    <div class="legend">
+      <div class="legend-item"><div class="legend-dot" style="background:#22c55e;"></div> ناحیه سود</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#ef4444;"></div> ناحیه ضرر</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#d4af37;"></div> نقطه سربه‌سر</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#3b82f6;"></div> قیمت فعلی</div>
+    </div>
+  </div>
+
+</div>
+
+<div class="modal-overlay" id="customModal">
+  <div class="modal-box">
+    <div class="modal-icon" id="modalIcon">⚠️</div>
+    <div class="modal-title" id="modalTitle">عنوان</div>
+    <div class="modal-text" id="modalText">متن</div>
+    <div class="modal-actions">
+      <button class="modal-btn" onclick="closeModal()">انصراف</button>
+      <button class="modal-btn danger" id="modalConfirmBtn">تأیید</button>
+    </div>
+  </div>
+</div>
+
 <script>
-const BRS_API_KEYS=[window.SHAMDUN_BRS_API_KEY||'YOUR_BRS_API_KEY'];let brsKeyIndex=0;
-const BRS_ALL='https://Api.BrsApi.ir/Tsetmc/AllSymbols.php?type=1';
-const COINGECKO='https://api.coingecko.com/api/v3/simple/price';
-const CRYPTO=[['BTC','bitcoin'],['ETH','ethereum'],['BNB','binancecoin'],['SOL','solana'],['XRP','ripple'],['DOGE','dogecoin'],['ADA','cardano'],['TRX','tron'],['AVAX','avalanche-2']];
-const BASE_MAP={
-'اخابر':['ضمخا','طمخا'],'اطلس':['ضاطلس','طاطلس'],'اهرم':['ضهرم','طهرم'],'بساما':['ضبساما','طبساما'],'تاصیکو':['ضتاس','طتاس'],'توان':['ضتوان','طتوان'],'جوانه کوچک':['ضجوا','طجوا'],'خبهمن':['ضهمن','طهمن'],'خساپا':['ضسپا','طسپا'],'خودرو':['ضخود','طخود'],'دارونو':['ضدروا','طدروا'],'دزاگرس':['ضدزاگرس','طدزاگرس'],'ذوب':['ضذوب','طذوب'],'شپنا':['ضشنا','طشنا'],'شستا':['ضستا','طستا'],'طعام':['ضطعام','ططعام'],'فرابورس':['ضفرابورس','طفرابورس'],'فزر':['ضفزر','طفزر'],'فملی':['ضملی','طملی'],'موج':['ضموج','طموج'],'هم تراز':['ضراز','طراز'],'وبصادر':['ضصاد','طصاد'],'وبملت':['ضملت','طملت'],'وتجارت':['ضجار','طجار'],'کاریس':['ضکاریس','طکاریس'],'وپارس':['ضپاس','طپاس'],'شتران':['ضترا','طترا'],'تاپیکو':['ضپیک','طپیک'],'شبندر':['ضبدر','طبدر'],'فولاد':['ضفلا','طفلا'],'وغدیر':['ضغدر','طغدر'],'فخوز':['ضخوز','طخوز']};
-const BASE_NAMES={'اخابر':'مخابرات ایران','اطلس':'اطلس','اهرم':'اهرم','بساما':'بیمه سامان','تاصیکو':'سرمایه‌گذاری صدر تأمین','توان':'توان','جوانه کوچک':'جوانه کوچک','خبهمن':'بهمن','خساپا':'سایپا','خودرو':'ایران خودرو','دارونو':'دارویی برکت','دزاگرس':'زاگرس','ذوب':'ذوب آهن','شپنا':'پالایش نفت اصفهان','شستا':'سرمایه‌گذاری تأمین اجتماعی','فرابورس':'فرابورس ایران','فزر':'پویا زرکان آق‌دره','فملی':'ملی صنایع مس ایران','وبصادر':'بانک صادرات','وبملت':'بانک ملت','وتجارت':'بانک تجارت','وپارس':'بانک پارسیان','شتران':'پالایش نفت تهران','تاپیکو':'تاپیکو','شبندر':'پالایش نفت بندرعباس','فولاد':'فولاد مبارکه','وغدیر':'سرمایه‌گذاری غدیر','فخوز':'فولاد خوزستان'};
-let contracts=[],legs=[],selectedPreset=null,selectedUnderlying='',selectedMarket='stock',cryptoPrices={};
-const $=id=>document.getElementById(id),fa=n=>String(n??'—').replace(/\d/g,d=>'۰۱۲۳۴۵۶۷۸۹'[d]),fmt=n=>n==null||n===''||Number.isNaN(Number(n))?'—':Number(n).toLocaleString('fa-IR',{maximumFractionDigits:2});
-function setStatus(t,on){$('liveText').textContent=t;$('dot').classList.toggle('on',on)}
-const strategies=[
-{key:'longCall',name:'Long Call',icon:'🟢',desc:'خرید اختیار خرید؛ دید صعودی',badge:'صعودی',legs:[['buy','call',0.00]],
-what:'در این ساختار، سرمایه‌گذار یک اختیار خرید را خریداری می‌کند و در مقابل پرداخت پرمیوم، حق خرید دارایی پایه را در قیمت اعمال مشخص تا سررسید به دست می‌آورد. ارزش موقعیت در صورت رشد دارایی پایه می‌تواند به‌صورت فزاینده افزایش یابد.',
-who:'برای سرمایه‌گذاری مناسب است که انتظار رشد معنادار دارایی پایه را دارد و می‌خواهد ریسک اسمی معامله را به پرمیوم پرداختی محدود کند.',pros:['حداکثر زیان از ابتدا مشخص و محدود به پرمیوم پرداختی است.','پتانسیل سود در صورت رشد شدید دارایی پایه بسیار بالا است.','نیاز سرمایه اولیه معمولاً کمتر از خرید مستقیم دارایی پایه است.'],cons:['زوال زمانی می‌تواند ارزش اختیار را کاهش دهد.','در صورت رشد ناکافی دارایی پایه، ممکن است کل پرمیوم از بین برود.','زمان‌بندی ورود و سطح نوسان ضمنی بر نتیجه معامله اثر قابل توجه دارد.']},
-{key:'shortCall',name:'Short Call',icon:'🔴',desc:'فروش اختیار خرید؛ درآمد پرمیوم',badge:'نزولی/خنثی',legs:[['sell','call',0.05]],
-what:'در این استراتژی، معامله‌گر اختیار خرید را می‌فروشد و در مقابل دریافت پرمیوم، تعهد ایفای قرارداد را می‌پذیرد. در حالت بدون پوشش، ریسک سمت صعودی می‌تواند بسیار بزرگ باشد.',
-who:'عموماً برای معامله‌گران حرفه‌ای و موقعیت‌های پوشش‌داده‌شده یا دارای مدیریت وجه تضمین مناسب در نظر گرفته می‌شود؛ برای بازار آرام یا انتظار رشد محدود کاربرد دارد.',pros:['دریافت پرمیوم در ابتدای معامله.','در صورت کاهش قیمت یا ثبات آن، زوال زمانی معمولاً به نفع فروشنده است.','می‌تواند بخشی از یک ساختار پوششی یا درآمدی باشد.'],cons:['در حالت بدون پوشش، ریسک صعودی بسیار بالا است.','نیاز به وجه تضمین و مدیریت ریسک دارد.','حرکت شدید دارایی پایه می‌تواند زیان را به‌سرعت افزایش دهد.']},
-{key:'longPut',name:'Long Put',icon:'🔴',desc:'خرید اختیار فروش؛ دید نزولی یا پوشش',badge:'نزولی',legs:[['buy','put',0.00]],
-what:'سرمایه‌گذار اختیار فروش را خریداری می‌کند و حق فروش دارایی پایه در قیمت اعمال مشخص را به دست می‌آورد. این موقعیت می‌تواند هم برای دید نزولی و هم برای پوشش ریسک کاهش قیمت استفاده شود.',
-who:'برای معامله‌گری که انتظار کاهش قیمت دارد یا می‌خواهد در برابر افت ارزش یک دارایی، پوشش ریسک ایجاد کند.',pros:['زیان محدود به پرمیوم پرداختی است.','در افت شدید دارایی پایه، پتانسیل سود افزایش می‌یابد.','برای ایجاد پوشش نزولی کاربرد دارد.'],cons:['در صورت عدم وقوع افت کافی، پرمیوم کاهش می‌یابد.','زوال زمانی به زیان خریدار اختیار است.','برای سوددهی، حرکت قیمت باید هزینه پرمیوم را نیز جبران کند.']},
-{key:'shortPut',name:'Short Put',icon:'🟢',desc:'فروش اختیار فروش؛ درآمد یا خرید در قیمت هدف',badge:'صعودی/خنثی',legs:[['sell','put',-0.05]],
-what:'در فروش اختیار فروش، معامله‌گر در برابر دریافت پرمیوم متعهد می‌شود در صورت اعمال، دارایی پایه را در قیمت اعمال خریداری کند. این ساختار عملاً تعهدی برای پذیرش ریسک نزولی دارایی ایجاد می‌کند.',
-who:'برای سرمایه‌گذاری که دید صعودی ملایم یا خنثی دارد و در صورت افت قیمت نیز آمادگی خرید دارایی در قیمت اعمال را دارد.',pros:['دریافت پرمیوم و بهره‌مندی از زوال زمانی.','امکان تعیین قیمت مؤثر خرید پایین‌تر از قیمت جاری از طریق پرمیوم.','ساختار نسبتاً ساده برای اهداف درآمدی.'],cons:['افت شدید دارایی پایه می‌تواند زیان قابل توجه ایجاد کند.','نیاز به وجه تضمین یا پشتوانه نقدی دارد.','صرف دریافت پرمیوم به معنی محدود بودن ریسک نیست.']},
-{key:'bullCallSpread',name:'Bull Call Spread',icon:'📈',desc:'خرید Call پایین‌تر و فروش Call بالاتر',badge:'صعودی محدود',legs:[['buy','call',0],['sell','call',0.06]],
-what:'یک اختیار خرید با قیمت اعمال پایین‌تر خریداری و هم‌زمان یک اختیار خرید با قیمت اعمال بالاتر در همان سررسید فروخته می‌شود. پرمیوم دریافتی از اختیار فروخته‌شده بخشی از هزینه اختیار خرید را جبران می‌کند.',
-who:'برای دید صعودی مشخص، به‌ویژه زمانی که انتظار رشد تا یک محدوده معین وجود دارد و معامله‌گر می‌خواهد هزینه و ریسک را نسبت به Long Call کنترل کند.',pros:['ریسک حداکثر محدود و از ابتدا قابل محاسبه است.','هزینه خالص معمولاً کمتر از خرید Call منفرد است.','سود و زیان هر دو سقف مشخص دارند.'],cons:['سود در سطح قیمت اعمال بالاتر محدود می‌شود.','نیازمند انتخاب مناسب فاصله دو Strike است.','در مقایسه با Long Call، از رشد بسیار شدید کمتر بهره می‌برد.']},
-{key:'bearPutSpread',name:'Bear Put Spread',icon:'📉',desc:'خرید Put بالاتر و فروش Put پایین‌تر',badge:'نزولی محدود',legs:[['buy','put',0],['sell','put',-0.06]],
-what:'اختیار فروش با قیمت اعمال بالاتر خریداری و اختیار فروش با قیمت اعمال پایین‌تر فروخته می‌شود. فروش Put بخشی از هزینه خرید Put را جبران می‌کند و در مقابل، سود بالقوه را محدود می‌سازد.',
-who:'برای دید نزولی که انتظار می‌رود کاهش قیمت در یک محدوده مشخص رخ دهد و کنترل ریسک اهمیت دارد.',pros:['ریسک اولیه محدود است.','هزینه ورود نسبت به Long Put کاهش می‌یابد.','حداکثر سود و زیان از ابتدا قابل محاسبه است.'],cons:['سود در قیمت اعمال پایین‌تر محدود می‌شود.','برای تحقق سود حداکثری، افت کافی قیمت لازم است.','ساختار نسبت به Long Put پیچیده‌تر است.']},
-{key:'bullPutSpread',name:'Bull Put Spread',icon:'🟢',desc:'فروش Put بالاتر و خرید Put پایین‌تر',badge:'صعودی/خنثی',legs:[['sell','put',-0.02],['buy','put',-0.08]],
-what:'یک Put با قیمت اعمال بالاتر فروخته و یک Put با قیمت اعمال پایین‌تر خریداری می‌شود. این ساختار یک اعتبار خالص دریافت می‌کند و ریسک سمت نزولی را با Put خریداری‌شده محدود می‌سازد.',
-who:'برای معامله‌گری که انتظار ثبات یا رشد ملایم دارد و مایل است با ریسک تعریف‌شده از دریافت پرمیوم استفاده کند.',pros:['حداکثر زیان محدود است.','در صورت حفظ قیمت بالای محدوده موردنظر، پرمیوم دریافتی می‌تواند سود ایجاد کند.','ساختار نسبت به Short Put بدون پوشش ریسک تعریف‌شده‌تری دارد.'],cons:['سود به اعتبار خالص دریافتی محدود است.','افت شدید قیمت می‌تواند زیان ایجاد کند.','وجه تضمین و مدیریت موقعیت همچنان اهمیت دارد.']},
-{key:'bearCallSpread',name:'Bear Call Spread',icon:'🔴',desc:'فروش Call پایین‌تر و خرید Call بالاتر',badge:'نزولی/خنثی',legs:[['sell','call',0.02],['buy','call',0.08]],
-what:'Call با قیمت اعمال پایین‌تر فروخته و Call با قیمت اعمال بالاتر خریداری می‌شود. اختیار خریداری‌شده ریسک صعودی موقعیت فروش را محدود می‌کند.',
-who:'برای دید نزولی یا خنثی که انتظار می‌رود قیمت تا سررسید از یک سطح مشخص بالاتر نرود.',pros:['ریسک صعودی محدود است.','دریافت اعتبار خالص در زمان ورود ممکن است.','ساختار روشن و قابل مدیریت است.'],cons:['سود محدود به اعتبار خالص است.','افزایش شدید قیمت می‌تواند به زیان منجر شود.','انتخاب فاصله Strike بر نسبت ریسک و بازده اثر مستقیم دارد.']},
-{key:'longStraddle',name:'Long Straddle',icon:'⚡',desc:'خرید هم‌زمان Call و Put با Strike یکسان',badge:'نوسان شدید',legs:[['buy','call',0],['buy','put',0]],
-what:'Call و Put با قیمت اعمال و سررسید یکسان خریداری می‌شوند. این ساختار به جهت حرکت وابسته نیست و در صورت حرکت بزرگ قیمت در هر یک از دو جهت می‌تواند سودآور شود.',
-who:'برای زمانی که انتظار افزایش محسوس نوسان یا یک حرکت قیمتی بزرگ وجود دارد، اما جهت حرکت با اطمینان قابل پیش‌بینی نیست.',pros:['پتانسیل سود در هر دو جهت بازار.','زیان حداکثر به مجموع پرمیوم‌ها محدود است.','برای سناریوهای افزایش نوسان مناسب است.'],cons:['هزینه اولیه دو پرمیوم است.','برای عبور از نقاط سربه‌سر، حرکت قابل توجه قیمت لازم است.','زوال زمانی در صورت نبود حرکت کافی می‌تواند شدید باشد.']},
-{key:'shortStraddle',name:'Short Straddle',icon:'💤',desc:'فروش هم‌زمان Call و Put با Strike یکسان',badge:'خنثی',legs:[['sell','call',0],['sell','put',0]],
-what:'Call و Put با قیمت اعمال و سررسید یکسان فروخته می‌شوند. فروشنده از دریافت دو پرمیوم بهره می‌برد، اما در برابر حرکت شدید بازار ریسک قابل توجهی می‌پذیرد.',
-who:'صرفاً برای معامله‌گران حرفه‌ای با سازوکار وجه تضمین، مدیریت ریسک و توانایی پایش مستمر موقعیت مناسب است.',pros:['دریافت هم‌زمان دو پرمیوم.','در بازار کم‌نوسان، زوال زمانی می‌تواند به نفع موقعیت باشد.','بدون نیاز به تعیین جهت بازار در محدوده نزدیک Strike.'],cons:['ریسک صعودی و نزولی بسیار بالا است.','نیازمند مدیریت فعال و وجه تضمین مناسب است.','افزایش ناگهانی نوسان ضمنی می‌تواند زیان را تشدید کند.']},
-{key:'longStrangle',name:'Long Strangle',icon:'⚡',desc:'خرید Call و Put با Strikeهای متفاوت',badge:'نوسانی',legs:[['buy','call',0.06],['buy','put',-0.06]],
-what:'Call با قیمت اعمال بالاتر و Put با قیمت اعمال پایین‌تر خریداری می‌شود. چون هر دو خارج از محدوده قیمت جاری هستند، هزینه ورود معمولاً از Straddle کمتر است اما حرکت لازم برای سوددهی نیز بزرگ‌تر می‌شود.',
-who:'برای انتظار حرکت شدید قیمت در یکی از دو جهت، همراه با ترجیح هزینه اولیه کمتر نسبت به Straddle.',pros:['ریسک محدود به مجموع پرمیوم‌ها است.','پتانسیل سود در هر دو جهت وجود دارد.','هزینه اولیه معمولاً کمتر از Straddle است.'],cons:['برای عبور از سربه‌سرها حرکت بیشتری لازم است.','زوال زمانی اثر منفی دارد.','بازار کم‌نوسان می‌تواند موجب از دست رفتن بخش زیادی از پرمیوم شود.']},
-{key:'shortStrangle',name:'Short Strangle',icon:'💤',desc:'فروش Call و Put خارج از قیمت جاری',badge:'خنثی',legs:[['sell','call',0.06],['sell','put',-0.06]],
-what:'Call و Put با Strikeهای متفاوت و معمولاً خارج از قیمت جاری فروخته می‌شوند. این ساختار محدوده سود بزرگ‌تری از Short Straddle دارد اما در ازای آن پرمیوم کمتری دریافت می‌کند و ریسک همچنان باز است.',
-who:'برای معامله‌گران حرفه‌ای با انتظار نوسان محدود و توانایی مدیریت ریسک دوطرفه.',pros:['محدوده سود بالقوه وسیع‌تر از Straddle است.','دریافت دو پرمیوم.','زوال زمانی در صورت ثبات قیمت می‌تواند مساعد باشد.'],cons:['ریسک حرکت شدید در هر دو جهت وجود دارد.','نیازمند وجه تضمین و مدیریت فعال است.','افزایش نوسان ضمنی می‌تواند موقعیت را تحت فشار قرار دهد.']},
-{key:'coveredCall',name:'Covered Call',icon:'🛡️',desc:'دارایی پایه + فروش Call',badge:'پوششی/درآمدی',legs:[['spot','spot',0],['sell','call',0.06]],
-what:'دارایی پایه نگهداری و هم‌زمان یک Call بر روی همان دارایی فروخته می‌شود. پرمیوم دریافتی می‌تواند بازده جاری را افزایش دهد، اما در مقابل بخشی از پتانسیل صعودی دارایی واگذار می‌شود.',
-who:'برای دارنده دارایی پایه که انتظار رشد محدود یا ثبات نسبی دارد و مایل است در ازای پذیرش سقف سود، درآمد پرمیوم دریافت کند.',pros:['ایجاد درآمد از دارایی موجود.','پرمیوم تا حدی زیان نزولی را جبران می‌کند.','ساختار شناخته‌شده و پرکاربرد برای مدیریت بازده دارایی.'],cons:['سود صعودی بالاتر از Strike محدود می‌شود.','ریسک نزولی خود دارایی همچنان وجود دارد.','در صورت جهش شدید قیمت، فرصت سود از دست‌رفته ایجاد می‌شود.']},
-{key:'protectivePut',name:'Protective Put',icon:'🏥',desc:'دارایی پایه + خرید Put',badge:'پوشش ریسک',legs:[['spot','spot',0],['buy','put',-0.06]],
-what:'دارایی پایه نگهداری و هم‌زمان Put خریداری می‌شود. Put نقش بیمه نزولی را ایفا می‌کند و حد زیان پرتفوی را در سطحی مشخص‌تر قرار می‌دهد.',
-who:'برای سرمایه‌گذاری که قصد حفظ دارایی پایه را دارد اما در برابر افت قابل توجه قیمت به پوشش ریسک نیاز دارد.',pros:['کاهش ریسک نزولی شدید.','پتانسیل صعودی دارایی حفظ می‌شود.','حد زیان پوشش‌داده‌شده قابل برآورد است.'],cons:['پرداخت پرمیوم هزینه پوشش است.','در صورت عدم وقوع افت، پرمیوم می‌تواند مستهلک شود.','انتخاب Strike و سررسید بر کیفیت پوشش اثر دارد.']},
-{key:'collar',name:'Collar',icon:'🛡️',desc:'دارایی پایه + خرید Put + فروش Call',badge:'پوشش محدود',legs:[['spot','spot',0],['buy','put',-0.06],['sell','call',0.06]],
-what:'سرمایه‌گذار دارایی پایه را نگهداری می‌کند، برای محدود کردن زیان Put می‌خرد و برای تأمین بخشی از هزینه آن Call می‌فروشد. نتیجه، ایجاد یک دامنه نسبتاً مشخص برای بازده است.',
-who:'برای دارنده دارایی که هم‌زمان به حفاظت نزولی و کاهش هزینه بیمه نیاز دارد و حاضر است بخشی از پتانسیل صعودی را واگذار کند.',pros:['ریسک نزولی محدودتر می‌شود.','فروش Call می‌تواند بخشی از هزینه Put را جبران کند.','ساختار ریسک و بازده از ابتدا قابل ترسیم است.'],cons:['سود صعودی بالاتر از Strike فروش Call محدود می‌شود.','نیازمند نگهداری هم‌زمان سه جزء است.','کیفیت پوشش به انتخاب دو Strike وابسته است.']},
-{key:'ironCondor',name:'Iron Condor',icon:'🦅',desc:'ترکیب Bull Put و Bear Call Spread',badge:'خنثی/محدوده‌ای',legs:[['sell','put',-0.05],['buy','put',-0.11],['sell','call',0.05],['buy','call',0.11]],
-what:'یک Bull Put Spread و یک Bear Call Spread با یک سررسید مشترک ترکیب می‌شوند. سود در محدوده‌ای پیرامون قیمت جاری شکل می‌گیرد و هر دو طرف با اختیارهای خریداری‌شده پوشش داده می‌شوند.',
-who:'برای معامله‌گران باتجربه که انتظار دارند قیمت تا سررسید در یک محدوده مشخص باقی بماند و ریسک تعریف‌شده برایشان اهمیت دارد.',pros:['حداکثر سود و زیان محدود و قابل محاسبه است.','برای بازارهای کم‌نوسان و محدوده‌ای مناسب است.','محدوده سود را می‌توان با انتخاب Strikeها تنظیم کرد.'],cons:['چهارلگی و نیازمند مدیریت دقیق است.','سود به اعتبار خالص دریافتی محدود می‌شود.','حرکت خارج از محدوده می‌تواند به زیان حداکثری منجر شود.']},
-{key:'ironButterfly',name:'Iron Butterfly',icon:'🦋',desc:'ساختار فشرده‌تر نسبت به Iron Condor',badge:'خنثی',legs:[['sell','put',0],['buy','put',-0.08],['sell','call',0],['buy','call',0.08]],
-what:'در ساختار متداول، یک Put و یک Call نزدیک یا هم‌Strike فروخته و دو اختیار در بیرون از آن محدوده برای محدود کردن ریسک خریداری می‌شوند. این ساختار برای انتظار ثبات شدیدتر قیمت طراحی می‌شود.',
-who:'برای معامله‌گر حرفه‌ای که انتظار دارد قیمت در حوالی یک Strike مشخص باقی بماند و در عین حال ریسک را تعریف‌شده نگه دارد.',pros:['ریسک از دو طرف محدود می‌شود.','در صورت باقی ماندن قیمت نزدیک Strike مرکزی، بازده بالقوه نسبت به دامنه ریسک جذاب است.','ساختار نسبت به Short Straddle ریسک تعریف‌شده‌تری دارد.'],cons:['محدوده سود نسبتاً باریک است.','حرکت شدید قیمت می‌تواند به زیان حداکثری منجر شود.','چهارلگی و مدیریت موقعیت ضروری است.']},
-{key:'callButterfly',name:'Long Call Butterfly',icon:'🦋',desc:'سه Strike؛ سود در حوالی قیمت مرکزی',badge:'خنثی محدود',legs:[['buy','call',-0.08],['sell2','call',0],['buy','call',0.08]],
-what:'یک Call با Strike پایین خریداری، دو Call با Strike میانی فروخته و یک Call با Strike بالاتر خریداری می‌شود. این ساختار زمانی بیشترین بازده را دارد که قیمت در سررسید نزدیک Strike مرکزی قرار گیرد.',
-who:'برای دید نسبتاً خنثی که در آن معامله‌گر انتظار دارد قیمت در یک محدوده باریک و نزدیک سطح مرکزی باقی بماند.',pros:['ریسک حداکثری محدود است.','ساختار برای سناریوی قیمت هدف مشخص مناسب است.','هزینه ورود می‌تواند نسبتاً پایین باشد.'],cons:['محدوده سود باریک است.','در صورت حرکت شدید از Strike مرکزی، ارزش موقعیت کاهش می‌یابد.','حساسیت به زمان و نوسان ضمنی اهمیت دارد.']},
-{key:'cashSecuredPut',name:'Cash-Secured Put',icon:'💰',desc:'فروش Put با پشتوانه نقدی',badge:'درآمد/خرید',legs:[['sell','put',-0.05]],
-what:'فروش Put در حالی انجام می‌شود که سرمایه‌گذار منابع نقدی کافی برای ایفای تعهد خرید دارایی در قیمت اعمال را کنار گذاشته است. این ساختار میان دریافت پرمیوم و آمادگی برای خرید دارایی ارتباط ایجاد می‌کند.',
-who:'برای سرمایه‌گذاری که در صورت افت قیمت نیز مایل به خرید دارایی پایه در قیمت اعمال است و توان تأمین وجه تعهد را دارد.',pros:['دریافت پرمیوم.','امکان خرید دارایی در قیمت اعمال در صورت تخصیص.','ریسک عملیاتی از فروش Put بدون پشتوانه کمتر است.'],cons:['در افت شدید دارایی، زیان می‌تواند قابل توجه باشد.','سرمایه تا زمان تعیین تکلیف موقعیت درگیر می‌شود.','پرمیوم دریافتی ریسک بازار را حذف نمی‌کند.']},
-{key:'callCalendar',name:'Long Call Calendar Spread',icon:'🗓️',desc:'فروش Call کوتاه‌مدت + خرید Call بلندمدت',badge:'زمانی',special:'calendarCall',
-what:'یک Call با سررسید نزدیک‌تر فروخته و Call دیگری با Strike مشابه و سررسید دورتر خریداری می‌شود. تفاوت سرعت زوال زمانی دو سررسید، عنصر اصلی این ساختار است.',
-who:'برای دیدی که در کوتاه‌مدت ثبات نسبی و در افق دورتر حرکت یا ارزش زمانی بیشتر انتظار می‌رود.',pros:['استفاده از تفاوت زوال زمانی سررسیدها.','ریسک اولیه در قالب اسپرد تعریف می‌شود.','برای تحلیل ساختار زمانی نوسان و پرمیوم کاربرد دارد.'],cons:['نیازمند وجود چند سررسید واقعی برای یک Strike مشابه است.','رفتار موقعیت به تغییر نوسان ضمنی حساس است.','مدیریت آن از اسپردهای عمودی پیچیده‌تر است.']},
-{key:'putCalendar',name:'Long Put Calendar Spread',icon:'🗓️',desc:'فروش Put کوتاه‌مدت + خرید Put بلندمدت',badge:'زمانی',special:'calendarPut',
-what:'یک Put نزدیک‌سررسید فروخته و Put دیگری با Strike مشابه و سررسید دورتر خریداری می‌شود. هدف، بهره‌گیری از تفاوت زمانی ارزش دو قرارداد است.',
-who:'برای معامله‌گری که نسبت به کوتاه‌مدت دید خنثی یا کنترل‌شده و نسبت به افق دورتر دید نزولی‌تر یا نوسانی دارد.',pros:['استفاده از اختلاف زوال زمانی.','ساختار هزینه‌ای نسبتاً کنترل‌شده.','قابل استفاده برای دید زمانی متفاوت نسبت به دارایی پایه.'],cons:['نیازمند چند سررسید واقعی است.','به تغییرات نوسان ضمنی حساس است.','نیاز به مدیریت سررسید کوتاه‌مدت دارد.']}
+// ==========================================
+// 🔑 API Keys
+// ==========================================
+const BRS_API_KEYS = [
+  'B4xp2gWXASUmB3n6WPHtJxhjyJkgcBJz',
+  'BvUj3cMKWNBK87KW9xhNccCThmfVbd8u'
+];
+let brsKeyIndex = 0;
+
+// ==========================================
+// 🎯 دارایی‌ها — با اطلاعات منبع زنده
+// ==========================================
+const ASSETS = [
+  // ═══ کریپتو (CoinGecko) ═══
+  { key: 'btc',  name: 'بیت‌کوین', emoji: '₿', defaultPrice: 84855, call: '—', put: '—', group: 'کریپتو', source: 'coingecko', coingeckoId: 'bitcoin' },
+  { key: 'eth',  name: 'اتریوم',   emoji: '⟠', defaultPrice: 2726, call: '—', put: '—', group: 'کریپتو', source: 'coingecko', coingeckoId: 'ethereum' },
+  { key: 'bnb',  name: 'BNB',      emoji: '🔶', defaultPrice: 620, call: '—', put: '—', group: 'کریپتو', source: 'coingecko', coingeckoId: 'binancecoin' },
+  { key: 'sol',  name: 'سولانا',   emoji: '◎', defaultPrice: 145, call: '—', put: '—', group: 'کریپتو', source: 'coingecko', coingeckoId: 'solana' },
+  { key: 'xrp',  name: 'ریپل',     emoji: '🔷', defaultPrice: 2.3, call: '—', put: '—', group: 'کریپتو', source: 'coingecko', coingeckoId: 'ripple' },
+  { key: 'doge', name: 'دوج‌کوین', emoji: '🐕', defaultPrice: 0.32, call: '—', put: '—', group: 'کریپتو', source: 'coingecko', coingeckoId: 'dogecoin' },
+  { key: 'ada',  name: 'کاردانو',  emoji: '🟣', defaultPrice: 0.9, call: '—', put: '—', group: 'کریپتو', source: 'coingecko', coingeckoId: 'cardano' },
+  { key: 'trx',  name: 'ترون',     emoji: '🟢', defaultPrice: 0.25, call: '—', put: '—', group: 'کریپتو', source: 'coingecko', coingeckoId: 'tron' },
+  { key: 'avax', name: 'آوالانچ',  emoji: '🔺', defaultPrice: 35, call: '—', put: '—', group: 'کریپتو', source: 'coingecko', coingeckoId: 'avalanche-2' },
+
+  // ═══ کالا (BrsApi Commodity) ═══
+  { key: 'gold',   name: 'انس طلا',  emoji: '🥇', defaultPrice: 4306, call: '—', put: '—', group: 'کالا', source: 'commodity', symbol: 'XAUUSD' },
+  { key: 'silver', name: 'انس نقره', emoji: '🥈', defaultPrice: 64.8, call: '—', put: '—', group: 'کالا', source: 'commodity', symbol: 'XAGUSD' },
+  { key: 'oil',    name: 'نفت برنت', emoji: '🛢️', defaultPrice: 105, call: '—', put: '—', group: 'کالا', source: 'commodity', symbol: 'BRENT' },
+
+  // ═══ بورس ایران (AllSymbols) — قیمت‌ها به تومان (تقسیم بر ۱۰) ═══
+  { key: 'اخابر',     name: 'اخابر',     emoji: '📡', defaultPrice: 1000,  call: 'ضمخا', put: 'طمخا', group: 'بورس', source: 'stocks' },
+  { key: 'اطلس',      name: 'اطلس',      emoji: '🏗️', defaultPrice: 15800, call: 'ضاطلس', put: 'طاطلس', group: 'بورس', source: 'stocks' },
+  { key: 'اهرم',      name: 'اهرم',      emoji: '⚡', defaultPrice: 6765,  call: 'ضهرم', put: 'طهرم', group: 'بورس', source: 'stocks' },
+  { key: 'بساما',     name: 'بساما',     emoji: '🛡️', defaultPrice: 1527,  call: 'ضبساما', put: 'طبساما', group: 'بورس', source: 'stocks' },
+  { key: 'تاصیکو',    name: 'تاصیکو',    emoji: '💎', defaultPrice: 3083,  call: 'ضتاس', put: 'طتاس', group: 'بورس', source: 'stocks' },
+  { key: 'توان',      name: 'توان',      emoji: '🔋', defaultPrice: 6473,  call: 'ضتوان', put: 'طتوان', group: 'بورس', source: 'stocks' },
+  { key: 'جوانه کوچک', name: 'جوانه کوچک', emoji: '🌱', defaultPrice: 3180, call: 'ضجوا', put: 'طجوا', group: 'بورس', source: 'stocks' },
+  { key: 'خبهمن',     name: 'خبهمن',     emoji: '🚗', defaultPrice: 258,   call: 'ضهمن', put: 'طهمن', group: 'بورس', source: 'stocks' },
+  { key: 'خساپا',     name: 'خساپا',     emoji: '🚙', defaultPrice: 68.5,  call: 'ضسپا', put: 'طسپا', group: 'بورس', source: 'stocks' },
+  { key: 'خودرو',     name: 'خودرو',     emoji: '🚘', defaultPrice: 66.2,  call: 'ضخود', put: 'طخود', group: 'بورس', source: 'stocks' },
+  { key: 'دارونو',    name: 'دارونو',    emoji: '💊', defaultPrice: 3763,  call: 'ضدروا', put: 'طدروا', group: 'بورس', source: 'stocks' },
+  { key: 'دزاگرس',    name: 'دزاگرس',    emoji: '🏭', defaultPrice: 2408,  call: 'ضدزاگرس', put: 'طدزاگرس', group: 'بورس', source: 'stocks' },
+  { key: 'ذوب',       name: 'ذوب',       emoji: '🔩', defaultPrice: 68,    call: 'ضذوب', put: 'طذوب', group: 'بورس', source: 'stocks' },
+  { key: 'شپنا',      name: 'شپنا',      emoji: '🛢️', defaultPrice: 1277,  call: 'ضشنا', put: 'طشنا', group: 'بورس', source: 'stocks' },
+  { key: 'شستا',      name: 'شستا',      emoji: '🏢', defaultPrice: 346,   call: 'ضستا', put: 'طستا', group: 'بورس', source: 'stocks' },
+  { key: 'طعام',      name: 'طعام',      emoji: '🍞', defaultPrice: 2937,  call: 'ضطعام', put: 'ططعام', group: 'بورس', source: 'stocks' },
+  { key: 'فرابورس',   name: 'فرابورس',   emoji: '🏦', defaultPrice: 729,   call: 'ضفرابورس', put: 'طفرابورس', group: 'بورس', source: 'stocks' },
+  { key: 'فزر',       name: 'فزر',       emoji: '🥇', defaultPrice: 30230, call: 'ضفزر', put: 'طفزر', group: 'بورس', source: 'stocks' },
+  { key: 'فملی',      name: 'فملی',      emoji: '🏅', defaultPrice: 2503,  call: 'ضملی', put: 'طملی', group: 'بورس', source: 'stocks' },
+  { key: 'کاریس',     name: 'کاریس',     emoji: '⚙️', defaultPrice: 8178,  call: 'ضکاریس', put: 'طکاریس', group: 'بورس', source: 'stocks' },
+  { key: 'موج',       name: 'موج',       emoji: '🌊', defaultPrice: 8581,  call: 'ضموج', put: 'طموج', group: 'بورس', source: 'stocks' },
+  { key: 'وبصادر',    name: 'وبصادر',    emoji: '🏛️', defaultPrice: 96.9,  call: 'ضصاد', put: 'طصاد', group: 'بورس', source: 'stocks' },
+  { key: 'وبملت',     name: 'وبملت',     emoji: '🏦', defaultPrice: 147.7, call: 'ضملت', put: 'طملت', group: 'بورس', source: 'stocks' },
+  { key: 'وتجارت',    name: 'وتجارت',    emoji: '💳', defaultPrice: 89.3,  call: 'ضجار', put: 'طجار', group: 'بورس', source: 'stocks' },
+  { key: 'هم تراز',   name: 'هم تراز',   emoji: '⚖️', defaultPrice: 2710,  call: 'ضراز', put: 'طراز', group: 'بورس', source: 'stocks' }
 ];
 
-function renderPresets(){const box=$('presets');box.innerHTML=strategies.map(s=>`<button class="preset ${selectedPreset===s.key?'active':''}" data-key="${s.key}"><b>${s.icon} ${s.name}</b><span>${s.desc}</span><small>${s.badge}</small></button>`).join('');box.querySelectorAll('.preset').forEach(x=>x.onclick=()=>applyStrategy(x.dataset.key))}
-function num(v){if(v&&typeof v==='object')v=v.value;const n=Number(v);return Number.isFinite(n)?n:0}
-function isOptionRecord(r,s){const sec=String(r.securitiesname||r.securityName||r.groupName||'');return (/^[ضط][^0-9\s]{2,}[0-9]{2,}$/.test(s))||(sec.includes('اختیار')&&/^[ضط]/.test(s))}
-function findBase(symbol,name,rows){for(const [base,pair] of Object.entries(BASE_MAP))if(pair.includes(symbol))return base;const text=`${symbol} ${name||''}`;for(const base of Object.keys(BASE_MAP))if(text.includes(base))return base;return ''}
-function parseStrike(r){return num(r.qeymateEmal||r.strike||r.exercisePrice)||Number((String(r.l30||r.name||'').match(/(?:-|_|\s)(\d{3,7})(?:-|_|\s|$)/)||[])[1]||0)}
-function parseExpiry(r){return r.tarixSarresid||r.expiry||((String(r.l30||r.name||'').match(/(14\d{2}\/\d{2}\/\d{2})/)||[])[1]||'')}
-function parseLast(r){return num(r.pl??r.pc??r.pClosing??r.lastPrice??r.last)}
-function parseBid(r){return num(r.buyPrice??r.buy??r.bid)}
-function parseAsk(r){return num(r.sellPrice??r.sell??r.ask)}
-function normalizeOptions(data){const rows=Array.isArray(data)?data:(data.items||data.Items||data.data||[]);const baseRows=new Map(rows.map(r=>[String(r.l18??r.symbol??'').trim(),r]));return rows.map(r=>{const symbol=String(r.l18??r.symbol??'').trim();if(!isOptionRecord(r,symbol))return null;const name=String(r.l30??r.name??'');const type=symbol.startsWith('ض')?'call':'put';const base=findBase(symbol,name,rows);const br=baseRows.get(base);const underlyingPrice=br?num(br.pl??br.pc??br.pClosing)/10:num(r.qeymateMabna)/10;return {symbol,name,type,underlying:base,strike:parseStrike(r),last:parseLast(r)/10,bid:parseBid(r)/10,ask:parseAsk(r)/10,volume:num(r.qTotTran5J??r.volume??r.qTotCap),expiry:parseExpiry(r),days:r.baghimandetasarresid??r.days??null,underlyingPrice,change:num(br?.pd??br?.change??0)/10};}).filter(Boolean).filter(x=>x.strike>0&&x.underlying)}
-function stockBases(){return [...new Set(contracts.map(x=>x.underlying).filter(Boolean))].sort((a,b)=>a.localeCompare(b,'fa'))}
-function fillBaseSelectors(){const bases=stockBases();const opts=['<option value="">انتخاب دارایی پایه</option>','<optgroup label="سهام و دارایی‌های بورسی">'+bases.map(b=>`<option value="${b}">${b}${BASE_NAMES[b]?' — '+BASE_NAMES[b]:''}</option>`).join('')+'</optgroup>','<optgroup label="رمزارزها">'+CRYPTO.map(([sym,id])=>`<option value="crypto:${id}">${sym} — رمزارز</option>`).join('')+'</optgroup>'].join('');['underlyingSelect','strategyBase','modalBase'].forEach(id=>$(id).innerHTML=opts)}
-function selectedContracts(){return contracts.filter(x=>!selectedUnderlying||x.underlying===selectedUnderlying)}
-function fillExpiry(){const list=[...new Set(selectedContracts().map(x=>x.expiry).filter(Boolean))];$('expiryFilter').innerHTML='<option value="all">همه سررسیدها</option>'+list.map(x=>`<option value="${x}">${x}</option>`).join('');$('modalExpiry').innerHTML='<option value="all">همه سررسیدها</option>'+list.map(x=>`<option value="${x}">${x}</option>`).join('')}
-function setUnderlying(v){selectedUnderlying=v||'';if(selectedUnderlying.startsWith('crypto:')){selectedMarket='crypto';const id=selectedUnderlying.slice(7);const sym=CRYPTO.find(x=>x[1]===id)?.[0]||id;$('underlying').textContent=sym;$('underlyingSub').textContent='CoinGecko / قیمت لحظه‌ای';$('basePrice').textContent=fmt(cryptoPrices[id]?.usd);$('change').textContent='—';$('expiry').textContent='—';$('state').textContent='رمزارز';fillExpiry();renderChain();return}selectedMarket='stock';const f=contracts.find(x=>x.underlying===selectedUnderlying);$('underlying').textContent=selectedUnderlying||'—';$('underlyingSub').textContent=f?'BRS / TSETMC':'نمادی انتخاب نشده';$('basePrice').textContent=f?fmt(f.underlyingPrice):'—';$('change').textContent=f?fmt(f.change):'—';$('expiry').textContent=f?f.expiry||'—':'—';fillExpiry();renderChain()}
-function renderChain(){const q=$('search').value.trim().toLowerCase(),t=$('type').value,e=$('expiryFilter').value;let r=selectedContracts();if(selectedMarket==='crypto'){r=[]}$('count').textContent=fa(r.length)+' قرارداد';$('chainBody').innerHTML=r.filter(x=>(!q||`${x.symbol} ${x.underlying} ${x.name}`.toLowerCase().includes(q))&&(t==='all'||x.type===t)&&(e==='all'||String(x.expiry)===e)).map(x=>{const i=contracts.indexOf(x);return `<tr><td><span class="type ${x.type}">${x.type==='call'?'Call':'Put'}</span></td><td><b>${x.symbol}</b></td><td>${x.underlying}</td><td>${fmt(x.strike)}</td><td>${fmt(x.last)}</td><td>${fmt(x.bid)}</td><td>${fmt(x.ask)}</td><td>${fmt(x.volume)}</td><td>${x.days==null?'—':fa(x.days)}</td><td><button class="add" onclick="addContract(${i})">افزودن</button></td></tr>`}).join('')||`<tr><td colspan="10"><div class="empty"><strong>${selectedMarket==='crypto'?'زنجیره اختیار رمزارز در این منبع موجود نیست':'قراردادی پیدا نشد'}</strong>${selectedMarket==='crypto'?'CoinGecko فقط قیمت پایه رمزارز را تأمین می‌کند؛ زنجیره اختیار باید از یک منبع اختصاصی آپشن دریافت شود.':'دارایی پایه، نوع قرارداد، سررسید یا عبارت جستجو را تغییر دهید.'}</div></td></tr>`}
-function chooseContract(type,target,expiry){let a=contracts.filter(x=>x.underlying===selectedUnderlying&&x.type===type&&x.strike>0);if(expiry&&expiry!=='all')a=a.filter(x=>String(x.expiry)===String(expiry));a.sort((x,y)=>Math.abs(x.strike-target)-Math.abs(y.strike-target));return a[0]||null}
-function basePrice(){if(selectedMarket==='crypto'){const id=selectedUnderlying.slice(7);return cryptoPrices[id]?.usd||0}return contracts.find(x=>x.underlying===selectedUnderlying)?.underlyingPrice||0}
-function showExplain(s){$('explain').style.display='block';$('explain').innerHTML=`<h3>${s.name} — شرح حرفه‌ای استراتژی</h3><div class="explainGrid"><div><h4>تعریف و ساختار</h4><p>${s.what}</p><h4>کاربرد و مخاطب</h4><p>${s.who}</p></div><div><h4>مزایا</h4><ul>${s.pros.map(x=>`<li>${x}</li>`).join('')}</ul></div><div><h4>محدودیت‌ها و ریسک‌ها</h4><ul>${s.cons.map(x=>`<li>${x}</li>`).join('')}</ul></div></div>`}
-function applyStrategy(key){const s=strategies.find(x=>x.key===key);if(!s)return;if(selectedMarket==='crypto'){showExplain(s);selectedPreset=key;renderPresets();legs=[];renderLegs();updateChart();return}if(!selectedUnderlying){const first=stockBases()[0];if(first){setUnderlying(first)}else{showExplain(s);return}}selectedPreset=key;legs=[];showExplain(s);renderPresets();const base=basePrice();if(!base){renderLegs();updateChart();return}const expiry=$('expiryFilter').value==='all'?'':$('expiryFilter').value;if(s.special&&s.special.startsWith('calendar')){const type=s.special==='calendarCall'?'call':'put';const exps=[...new Set(contracts.filter(x=>x.underlying===selectedUnderlying&&x.type===type&&x.expiry).map(x=>String(x.expiry)))];if(exps.length>=2){const near=chooseContract(type,base,exps[0]);const far=chooseContract(type,base,exps[exps.length-1]);if(near&&far){legs.push(makeLeg(near,'sell'));legs.push(makeLeg(far,'buy'))}}}else{s.legs.forEach(p=>{const side=p[0]==='sell2'?'sell':p[0],mult=p[0]==='sell2'?2:1,type=p[1];if(type==='spot'){legs.push({symbol:selectedUnderlying,type:'spot',side:'buy',strike:0,price:base,qty:1,underlying:base});return}const target=base*(1+p[2]);const c=chooseContract(type,target,expiry);if(c)legs.push(makeLeg(c,side,mult))})}renderLegs();updateChart()}
-function makeLeg(c,side='buy',qty=1){return {symbol:c.symbol,type:c.type,side,strike:c.strike,price:c.last||c.ask||c.bid||0,qty,underlying:c.underlyingPrice||basePrice(),expiry:c.expiry}}
-function renderLegs(){$('legCount').textContent=fa(legs.length);$('legs').innerHTML=legs.length?legs.map((l,i)=>`<div class="leg"><div class="legIcon ${l.type==='put'?'put':'call'}">${l.type==='put'?'P':l.type==='spot'?'S':'C'}</div><div><div class="legName">${l.symbol}</div><div class="legMeta">${l.type==='call'?'اختیار خرید':l.type==='put'?'اختیار فروش':'دارایی پایه'} · ${l.type==='spot'?'—':fmt(l.strike)} · ${l.side==='buy'?'خرید':'فروش'} · ${fa(l.qty)} قرارداد</div></div><div class="legPrice">${fmt(l.price)}</div><button class="remove" onclick="removeLeg(${i})">×</button></div>`).join(''):'<div class="empty">هنوز قراردادی اضافه نشده.<br>یک دارایی پایه انتخاب کنید یا از زنجیره قرارداد اضافه کنید.</div>'}
-window.removeLeg=i=>{legs.splice(i,1);renderLegs();updateChart()};window.addContract=i=>{const x=contracts[i];if(!x)return;selectedUnderlying=x.underlying;syncBaseSelectors();legs.push(makeLeg(x,'buy'));renderLegs();updateChart();showExplain({name:'موقعیت دستی',what:'قرارداد انتخاب‌شده از زنجیره واقعی به استراتژی اضافه شد.',who:'برای ساخت ترکیب چندلگی می‌توانید قراردادهای دیگر را نیز اضافه کنید.',pros:['داده قرارداد از زنجیره واقعی خوانده شده است.'],cons:['نتیجه به قیمت، پرمیوم، سررسید و سایر مشخصات قرارداد وابسته است.']})};
-function syncBaseSelectors(){['underlyingSelect','strategyBase'].forEach(id=>$(id).value=selectedUnderlying);$('modalBase').value=selectedUnderlying;}
-// ===== مدل سود و زیان و نمودار تعاملی =====
-let chartPoints=[], chartMeta=null, svgGeometry=null, chartLocked=false, lockedPoint=null, panMode=false;
-const view={xMin:0,xMax:1,yMin:-1,yMax:1,fullXMin:0,fullXMax:1,fullYMin:-1,fullYMax:1};
-function payoff(s,l){if(l.type==='spot')return (s-Number(l.price||0))*(l.side==='buy'?1:-1)*l.qty;const p=Number(l.price)||0,k=Number(l.strike)||0,m=l.side==='buy'?1:-1;return ((l.type==='call'?Math.max(s-k,0):Math.max(k-s,0))-p)*m*l.qty}
-function totalInvestmentValue(){return Math.max(1,legs.reduce((t,l)=>t+Math.abs((Number(l.qty)||0)*(Number(l.price)||0)),0))}
-function findBreakevens(points){const out=[];for(let i=1;i<points.length;i++){const a=points[i-1].pnl,b=points[i].pnl;if((a<0&&b>=0)||(a>0&&b<=0)){const t=Math.abs(a)/(Math.abs(a)+Math.abs(b)||1);out.push(points[i-1].price+t*(points[i].price-points[i-1].price))}}return out}
-function resetView(x1,x2,y1,y2){view.fullXMin=x1;view.fullXMax=x2;view.fullYMin=y1;view.fullYMax=y2;view.xMin=x1;view.xMax=x2;view.yMin=y1;view.yMax=y2}
-function updateChart(){const valid=legs.filter(l=>l&&((l.type==='spot'&&l.price>0)||(l.type!=='spot'&&l.strike>0)));const svg=$('payoffChart');if(!valid.length){chartPoints=[];chartMeta=null;svg.innerHTML='<text x="450" y="190" text-anchor="middle" class="emptyChart" font-size="14">برای مشاهده نمودار، حداقل یک موقعیت معتبر اضافه کنید</text>';['maxProfit','maxLoss','breakeven'].forEach(id=>$(id).textContent='—');return}const ks=valid.map(l=>l.type==='spot'?Number(l.price):Number(l.strike)).filter(x=>x>0);let minK=Math.min(...ks),maxK=Math.max(...ks),range=maxK-minK||maxK*.3||100;const x1=Math.max(0,minK-range*.6),x2=maxK+range*.6,steps=360,points=[];for(let i=0;i<=steps;i++){const x=x1+(x2-x1)*i/steps;points.push({price:x,pnl:valid.reduce((a,l)=>a+payoff(x,l),0)})}const ys=points.map(p=>p.pnl),hi=Math.max(...ys,0),lo=Math.min(...ys,0),abs=Math.max(Math.abs(hi),Math.abs(lo),1)*1.28;if(view.fullXMin!==x1||view.fullXMax!==x2||view.fullYMin!==-abs||view.fullYMax!==abs)resetView(x1,x2,-abs,abs);chartPoints=points;const be=findBreakevens(points),current=valid[0].underlying||basePrice();chartMeta={currentPrice:current};$('maxProfit').textContent=fmt(hi);$('maxLoss').textContent=fmt(lo);$('breakeven').textContent=be.length?be.map(fmt).join(' ، '):'—';drawChart(points,be,current)}
-function drawChart(points,breakevens,currentPrice){const svg=$('payoffChart'),wrap=$('chartCanvasWrap');const W=Math.max(600,wrap.clientWidth||900),H=Math.max(300,wrap.clientHeight||390);svg.setAttribute('viewBox',`0 0 ${W} ${H}`);const pad={top:28,right:22,bottom:48,left:72},cw=W-pad.left-pad.right,ch=H-pad.top-pad.bottom;const xMin=view.xMin,xMax=view.xMax,yMin=view.yMin,yMax=view.yMax,xs=x=>pad.left+(x-xMin)/(xMax-xMin||1)*cw,ys=y=>pad.top+(yMax-y)/(yMax-yMin||1)*ch,zero=ys(0);svgGeometry={W,H,pad,cw,ch,xMin,xMax,yMin,yMax,xs,ys};let h=`<defs><linearGradient id="goldLine" x1="0" x2="1"><stop offset="0" stop-color="#d4af37"/><stop offset=".5" stop-color="#f4d47c"/><stop offset="1" stop-color="#d4af37"/></linearGradient></defs>`;const py=Math.max(pad.top,Math.min(H-pad.bottom,zero));h+=`<rect x="${pad.left}" y="${pad.top}" width="${cw}" height="${Math.max(0,py-pad.top)}" fill="#22c55e0d"/><rect x="${pad.left}" y="${py}" width="${cw}" height="${Math.max(0,H-pad.bottom-py)}" fill="#ef44440d"/>`;for(let i=0;i<=10;i++){const x=pad.left+cw*i/10;const p=xMin+(xMax-xMin)*i/10;h+=`<line x1="${x}" y1="${pad.top}" x2="${x}" y2="${H-pad.bottom}" stroke="#ffffff08"/><text x="${x}" y="${H-pad.bottom+20}" text-anchor="middle" class="axisLabel">${fa(fmt(p))}</text>`}for(let i=0;i<=8;i++){const y=pad.top+ch*i/8;const p=yMax-(yMax-yMin)*i/8;h+=`<line x1="${pad.left}" y1="${y}" x2="${W-pad.right}" y2="${y}" stroke="#ffffff08"/><text x="${pad.left-10}" y="${y+4}" text-anchor="end" class="axisLabel">${fa(fmt(p))}</text>`}h+=`<line x1="${pad.left}" y1="${zero}" x2="${W-pad.right}" y2="${zero}" stroke="#ffffff2b"/><line x1="${pad.left}" y1="${pad.top}" x2="${pad.left}" y2="${H-pad.bottom}" stroke="#ffffff22"/>`;let d='';points.forEach((p,i)=>d+=(i?'L':'M')+xs(p.price)+' '+ys(p.pnl)+' ');h+=`<path d="${d}" fill="none" stroke="#d4af3766" stroke-width="5"/><path d="${d}" fill="none" stroke="url(#goldLine)" stroke-width="2.4"/>`;breakevens.forEach(b=>{if(b>=xMin&&b<=xMax){const x=xs(b);h+=`<line x1="${x}" y1="${pad.top}" x2="${x}" y2="${H-pad.bottom}" stroke="#d4af37" stroke-dasharray="4 4" opacity=".55"/><circle cx="${x}" cy="${zero}" r="4" fill="#d4af37"/><text x="${x}" y="${zero-10}" text-anchor="middle" class="axisLabel">BE ${fa(fmt(b))}</text>`}});if(currentPrice>=xMin&&currentPrice<=xMax){const x=xs(currentPrice);h+=`<line x1="${x}" y1="${pad.top}" x2="${x}" y2="${H-pad.bottom}" stroke="#3b82f6" stroke-dasharray="5 4"/><text x="${x}" y="${pad.top-8}" text-anchor="middle" class="axisLabel">قیمت فعلی</text>`}h+=`<line id="crosshairX" x1="0" y1="${pad.top}" x2="0" y2="${H-pad.bottom}" stroke="#d4af37" stroke-dasharray="3 3" opacity="0"/><circle id="crosshairDot" cx="0" cy="0" r="5" fill="#d4af37" stroke="#08090c" stroke-width="2" opacity="0"/><rect id="hoverZone" x="${pad.left}" y="${pad.top}" width="${cw}" height="${ch}" fill="transparent"/>`;svg.innerHTML=h;if(chartLocked&&lockedPoint)showPoint(lockedPoint,true)}
-function nearestPoint(clientX){if(!svgGeometry||!chartPoints.length)return null;const r=$('payoffChart').getBoundingClientRect(),sx=svgGeometry.W/r.width,x=(clientX-r.left)*sx;if(x<svgGeometry.pad.left||x>svgGeometry.pad.left+svgGeometry.cw)return null;const price=svgGeometry.xMin+(x-svgGeometry.pad.left)/svgGeometry.cw*(svgGeometry.xMax-svgGeometry.xMin);let best=chartPoints[0],d=Infinity;for(const p of chartPoints){const dd=Math.abs(p.price-price);if(dd<d){d=dd;best=p}}return best}
-function showPoint(pt,locked=false,clientX=null,clientY=null){const r=$('payoffChart').getBoundingClientRect(),x=svgGeometry.xs(pt.price),y=svgGeometry.ys(pt.pnl),cx=r.left+x*r.width/svgGeometry.W,cy=r.top+y*r.height/svgGeometry.H;$('crosshairX').setAttribute('x1',x);$('crosshairX').setAttribute('x2',x);$('crosshairX').setAttribute('opacity','1');$('crosshairDot').setAttribute('cx',x);$('crosshairDot').setAttribute('cy',y);$('crosshairDot').setAttribute('opacity','1');const total=totalInvestmentValue(),pct=pt.pnl/total*100,tt=$('chartTooltip');tt.innerHTML=`<div class="row"><span class="k">قیمت دارایی پایه</span><span class="v price">${fa(fmt(pt.price))}</span></div><div class="row"><span class="k">سود/زیان</span><span class="v ${pt.pnl>=0?'profit':'loss'}">${pt.pnl>=0?'+':''}${fa(fmt(pt.pnl))}</span></div><div class="row"><span class="k">بازده</span><span class="v ${pct>=0?'profit':'loss'}">${pct>=0?'+':''}${fa(pct.toFixed(2))}٪</span></div>`;tt.classList.add('show');const wr=$('chartCanvasWrap').getBoundingClientRect(),left=(clientX??cx)-wr.left+14,top=(clientY??cy)-wr.top-tt.offsetHeight-12;tt.style.left=Math.max(8,Math.min(wr.width-tt.offsetWidth-8,left))+'px';tt.style.top=Math.max(8,Math.min(wr.height-tt.offsetHeight-8,top))+'px'}
-function hidePoint(){if(chartLocked)return;$('chartTooltip').classList.remove('show');if($('crosshairX'))$('crosshairX').setAttribute('opacity','0');if($('crosshairDot'))$('crosshairDot').setAttribute('opacity','0')}
-function resetChart(){chartLocked=false;lockedPoint=null;if($('chartTooltip'))$('chartTooltip').classList.remove('show');if(chartMeta){resetView(view.fullXMin,view.fullXMax,view.fullYMin,view.fullYMax);drawChart(chartPoints,findBreakevens(chartPoints),chartMeta.currentPrice)}}
-function zoomChart(f){if(!chartPoints.length)return;const cx=(view.xMin+view.xMax)/2,cy=(view.yMin+view.yMax)/2;const xr=(view.xMax-view.xMin)/f,yr=(view.yMax-view.yMin)/f;view.xMin=Math.max(view.fullXMin,cx-xr/2);view.xMax=Math.min(view.fullXMax,cx+xr/2);view.yMin=Math.max(view.fullYMin,cy-yr/2);view.yMax=Math.min(view.fullYMax,cy+yr/2);drawChart(chartPoints,findBreakevens(chartPoints),chartMeta.currentPrice)}
-async function fetchBrsApi(){let last=null;for(let i=0;i<BRS_API_KEYS.length;i++){const key=BRS_API_KEYS[brsKeyIndex];if(!key||key==='YOUR_BRS_API_KEY')throw new Error('BRS_API_KEY_NOT_SET');try{const res=await fetch(`${BRS_ALL}&key=${encodeURIComponent(key)}`,{cache:'no-store'});const text=await res.text();if(!res.ok){last=new Error(`BRS HTTP ${res.status}`);brsKeyIndex=(brsKeyIndex+1)%BRS_API_KEYS.length;continue}if(text.trim().startsWith('<'))throw new Error('BRS returned HTML');return JSON.parse(text)}catch(e){last=e;brsKeyIndex=(brsKeyIndex+1)%BRS_API_KEYS.length}}throw last||new Error('BRS unavailable')}
-async function loadCrypto(){try{const ids=CRYPTO.map(x=>x[1]).join(',');const r=await fetch(`${COINGECKO}?ids=${encodeURIComponent(ids)}&vs_currencies=usd`,{cache:'no-store'});if(r.ok)cryptoPrices=await r.json()}catch(e){console.warn('CoinGecko unavailable',e)}}
-function fillModalContracts(){const type=$('modalType').value,e=$('modalExpiry').value,b=$('modalBase').value;let a=contracts.filter(x=>x.underlying===b);if(type!=='all')a=a.filter(x=>x.type===type);if(e!=='all')a=a.filter(x=>String(x.expiry)===e);$('modalContract').innerHTML='<option value="">انتخاب قرارداد</option>'+a.map(x=>`<option value="${contracts.indexOf(x)}">${x.symbol} — ${x.type==='call'?'Call':'Put'} — ${fmt(x.strike)} — ${x.expiry||'بدون تاریخ'}</option>`).join('')}
-function openModal(){fillBaseSelectors();syncBaseSelectors();fillExpiry();$('modalType').value='all';$('modalExpiry').value=$('expiryFilter').value||'all';fillModalContracts();$('newModal').classList.add('show')}
-function closeModal(){$('newModal').classList.remove('show')}
-async function load(){setStatus('در حال دریافت داده زنده...',false);$('state').textContent='در حال دریافت';try{const [data]=await Promise.all([fetchBrsApi(),loadCrypto()]);contracts=normalizeOptions(data);fillBaseSelectors();if(!selectedUnderlying||!stockBases().includes(selectedUnderlying))selectedUnderlying=stockBases()[0]||'';syncBaseSelectors();setUnderlying(selectedUnderlying);renderPresets();renderChain();setStatus(`داده زنده · ${fa(contracts.length)} قرارداد`,true);$('state').textContent='زنده'}catch(e){console.error(e);setStatus(e.message==='BRS_API_KEY_NOT_SET'?'کلید BRS تنظیم نشده':'خطا در دریافت BRS',false);$('state').textContent='خطا';$('chainBody').innerHTML='<tr><td colspan="10"><div class="empty"><strong>داده زنده در دسترس نیست</strong>'+((e.message==='BRS_API_KEY_NOT_SET')?'کلید BRS را در کد تنظیم کنید.':'اتصال به BRS API یا اعتبار کلید را بررسی کنید.')+'</div></td></tr>'}}
-$('underlyingSelect').onchange=e=>{setUnderlying(e.target.value);syncBaseSelectors();legs=[];renderLegs();updateChart()};$('strategyBase').onchange=e=>{setUnderlying(e.target.value);syncBaseSelectors();legs=[];renderLegs();updateChart()};$('search').oninput=renderChain;$('type').onchange=renderChain;$('expiryFilter').onchange=()=>{renderChain();$('modalExpiry').value=$('expiryFilter').value;fillModalContracts()};$('clear').onclick=()=>{$('search').value='';$('type').value='all';$('expiryFilter').value='all';renderChain()};$('refreshBtn').onclick=load;$('newBtn').onclick=openModal;$('closeModal').onclick=closeModal;$('cancelModal').onclick=closeModal;$('newModal').onclick=e=>{if(e.target.id==='newModal')closeModal()};$('modalBase').onchange=e=>{setUnderlying(e.target.value);syncBaseSelectors();fillExpiry();$('modalExpiry').value='all';fillModalContracts()};$('modalType').onchange=fillModalContracts;$('modalExpiry').onchange=fillModalContracts;$('createStrategy').onclick=()=>{const idx=Number($('modalContract').value);if(!Number.isInteger(idx)||!contracts[idx])return;selectedUnderlying=contracts[idx].underlying;syncBaseSelectors();legs=[makeLeg(contracts[idx],'buy')];selectedPreset=null;renderPresets();renderLegs();updateChart();closeModal()};
-function openManual(){fillBaseSelectors();$('manualBase').value=selectedUnderlying||stockBases()[0]||'';$('manualSide').value='buy';$('manualType').value='call';$('manualQty').value='1';$('manualPrice').value='';$('manualStrike').value='';$('manualModal').classList.add('show');syncManualFromBase()}
-function syncManualFromBase(){const b=$('manualBase').value;if(!b||b.startsWith('crypto:'))return;const c=contracts.find(x=>x.underlying===b);if(c){$('manualPrice').value=c.last||c.ask||c.bid||'';$('manualStrike').value=c.strike||''}}
-$('manual').onclick=openManual;$('closeManual').onclick=()=>$('manualModal').classList.remove('show');$('cancelManual').onclick=()=>$('manualModal').classList.remove('show');$('manualModal').onclick=e=>{if(e.target.id==='manualModal')$('manualModal').classList.remove('show')};$('manualBase').onchange=syncManualFromBase;$('manualType').onchange=()=>{const spot=$('manualType').value==='spot';$('manualStrike').disabled=spot;if(spot)$('manualStrike').value=''};
-$('addManualPosition').onclick=()=>{const asset=$('manualBase').value,type=$('manualType').value,side=$('manualSide').value,qty=Math.max(1,Number($('manualQty').value)||1),price=Number($('manualPrice').value)||0,strike=Number($('manualStrike').value)||0;if(!asset){alert('دارایی پایه را انتخاب کنید.');return}if(type!=='spot'&&!strike){alert('قیمت اعمال را وارد کنید.');return}if(!price&&type!=='spot'){alert('قیمت فعلی / پرمیوم را وارد کنید.');return}selectedUnderlying=asset;syncBaseSelectors();legs.push({symbol:type==='spot'?asset:'موقعیت دستی',type,side,strike,price,qty,underlying:basePrice()||0,expiry:''});renderLegs();updateChart();$('manualModal').classList.remove('show')};
-$('resetChart').onclick=resetChart;$('zoomInBtn').onclick=()=>zoomChart(1.3);$('zoomOutBtn').onclick=()=>zoomChart(1/1.3);$('panBtn').onclick=()=>{panMode=!panMode;$('panBtn').classList.toggle('active',panMode)};document.querySelectorAll('.tab').forEach(b=>b.onclick=()=>{document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));document.querySelectorAll('.panel').forEach(x=>x.classList.remove('active'));b.classList.add('active');$(b.dataset.panel).classList.add('active')});
-$('payoffChart').addEventListener('mousemove',e=>{if(panMode||chartLocked)return;const p=nearestPoint(e.clientX);if(p)showPoint(p,false,e.clientX,e.clientY);else hidePoint()});$('payoffChart').addEventListener('mouseleave',hidePoint);$('payoffChart').addEventListener('click',e=>{const p=nearestPoint(e.clientX);if(!p)return;if(chartLocked){chartLocked=false;lockedPoint=null;hidePoint()}else{chartLocked=true;lockedPoint=p;showPoint(p,true,e.clientX,e.clientY)}});$('payoffChart').addEventListener('wheel',e=>{if(!chartPoints.length)return;e.preventDefault();zoomChart(e.deltaY<0?1.18:1/1.18)},{passive:false});window.addEventListener('resize',()=>{if(chartPoints.length&&chartMeta)drawChart(chartPoints,findBreakevens(chartPoints),chartMeta.currentPrice)});
-renderPresets();renderLegs();load();setInterval(load,60000);
-</script></body></html>
+// ==========================================
+// 🎯 Preset Strategies
+// ==========================================
+const PRESETS = [
+  { key: 'longCall', name: 'Long Call', icon: '🟢', desc: 'خرید Call — سود نامحدود در صعود', badge: 'صعودی',
+    positions: [{ side: 'buy', type: 'call', strikeOffset: 0.05, premiumRatio: 0.025 }],
+    explanation: {
+      what: 'خرید یک قرارداد اختیار خرید به این معنی است که شما حق (نه تعهد) خرید دارایی پایه را در قیمت اعمال مشخص تا سررسید دارید. برای این حق، پرمیوم پرداخت می‌کنید.',
+      who: 'مناسب برای کسانی که انتظار رشد قابل توجه قیمت دارایی پایه را دارند و می‌خواهند با سرمایه کم، از رشد قیمت سود ببرند.',
+      pros: ['سود بالقوه نامحدود در صورت رشد شدید قیمت', 'حداکثر ضرر محدود به پرمیوم پرداختی', 'اهرم بالا با سرمایه کم', 'بدون نیاز به وجه تضمین'],
+      cons: ['احتمال از دست دادن کل پرمیوم در صورت عدم رشد', 'اثر زوال زمانی (Theta) روی قیمت آپشن', 'نیاز به رشد سریع و قابل توجه قیمت برای سوددهی']
+    }
+  },
+  { key: 'shortCall', name: 'Short Call', icon: '🔴', desc: 'فروش Call — درآمد از پرمیوم', badge: 'نزولی/خنثی',
+    positions: [{ side: 'sell', type: 'call', strikeOffset: 0.05, premiumRatio: 0.025 }],
+    explanation: {
+      what: 'فروش یک قرارداد اختیار خرید به این معنی است که در ازای دریافت پرمیوم، متعهد می‌شوید در صورت اعمال، دارایی پایه را به قیمت اعمال بفروشید.',
+      who: 'مناسب برای کسانی که معتقدند قیمت دارایی پایه به قیمت اعمال نمی‌رسد یا رشد آن محدود خواهد بود.',
+      pros: ['درآمد فوری از پرمیوم دریافتی', 'سود از زوال زمانی (Theta) و ثبات قیمت', 'استفاده در استراتژی‌های درآمدزایی'],
+      cons: ['ضرر بالقوه نامحدود در صورت رشد شدید قیمت', 'نیاز به وجه تضمین قابل توجه', 'ریسک اعمال زودهنگام در برخی شرایط']
+    }
+  },
+  { key: 'longPut', name: 'Long Put', icon: '🔴', desc: 'خرید Put — سود در نزول', badge: 'نزولی',
+    positions: [{ side: 'buy', type: 'put', strikeOffset: -0.05, premiumRatio: 0.025 }],
+    explanation: {
+      what: 'خرید یک قرارداد اختیار فروش به این معنی است که شما حق (نه تعهد) فروش دارایی پایه را در قیمت اعمال مشخص تا سررسید دارید.',
+      who: 'مناسب برای کسانی که انتظار افت قیمت دارایی پایه را دارند یا می‌خواهند پورتفوی خود را بیمه کنند.',
+      pros: ['سود بالقوه بالا در صورت افت شدید قیمت', 'حداکثر ضرر محدود به پرمیوم پرداختی', 'ابزار عالی برای پوشش ریسک (Hedge)', 'سود در بازارهای نزولی یا پرنوسان'],
+      cons: ['احتمال از دست دادن کل پرمیوم در صورت عدم افت', 'اثر زوال زمانی روی قیمت آپشن', 'نیاز به افت سریع و قابل توجه قیمت برای سوددهی']
+    }
+  },
+  { key: 'shortPut', name: 'Short Put', icon: '🟢', desc: 'فروش Put — درآمد از پرمیوم', badge: 'صعودی/خنثی',
+    positions: [{ side: 'sell', type: 'put', strikeOffset: -0.05, premiumRatio: 0.025 }],
+    explanation: {
+      what: 'فروش یک قرارداد اختیار فروش به این معنی است که در ازای دریافت پرمیوم، متعهد می‌شوید در صورت اعمال، دارایی پایه را به قیمت اعمال بخرید.',
+      who: 'مناسب برای کسانی که معتقدند قیمت دارایی پایه به قیمت اعمال نمی‌رسد و مایل به خرید در قیمت پایین‌تر هستند.',
+      pros: ['درآمد فوری از پرمیوم دریافتی', 'سود از ثبات یا رشد ملایم قیمت', 'امکان خرید دارایی در قیمت پایین‌تر از بازار'],
+      cons: ['ضرر بالقوه بالا در صورت افت شدید قیمت', 'نیاز به وجه تضمین قابل توجه', 'ریسک تخصیص دارایی در قیمت نامناسب']
+    }
+  },
+  { key: 'bullCallSpread', name: 'Bull Call Spread', icon: '📈', desc: 'صعودی محدود', badge: 'صعودی',
+    positions: [{ side: 'buy', type: 'call', strikeOffset: 0, premiumRatio: 0.03 }, { side: 'sell', type: 'call', strikeOffset: 0.05, premiumRatio: 0.015 }],
+    explanation: {
+      what: 'ترکیب خرید یک Call با قیمت اعمال پایین‌تر و فروش یک Call با قیمت اعمال بالاتر. هر دو در یک سررسید.',
+      who: 'مناسب برای کسانی که انتظار رشد محدود قیمت را دارند و می‌خواهند هزینه ورود را کاهش دهند.',
+      pros: ['هزینه اولیه کمتر از Long Call ساده', 'ریسک محدود و مشخص', 'سود در صورت رشد ملایم قیمت', 'نسبت ریسک به پاداش قابل قبول'],
+      cons: ['سود بالقوه سقف‌دار (محدود به فاصله دو قیمت اعمال)', 'نیاز به پرداخت وجه تضمین برای سمت فروش', 'پیچیدگی بیشتر از استراتژی‌های تک‌پایه']
+    }
+  },
+  { key: 'bearPutSpread', name: 'Bear Put Spread', icon: '📉', desc: 'نزولی محدود', badge: 'نزولی',
+    positions: [{ side: 'buy', type: 'put', strikeOffset: 0, premiumRatio: 0.03 }, { side: 'sell', type: 'put', strikeOffset: -0.05, premiumRatio: 0.015 }],
+    explanation: {
+      what: 'ترکیب خرید یک Put با قیمت اعمال بالاتر و فروش یک Put با قیمت اعمال پایین‌تر.',
+      who: 'مناسب برای کسانی که انتظار افت محدود قیمت را دارند و می‌خواهند هزینه ورود را کاهش دهند.',
+      pros: ['هزینه کمتر از Long Put ساده', 'ریسک محدود و مشخص', 'سود در صورت افت ملایم قیمت', 'ساختار سود و زیان قابل پیش‌بینی'],
+      cons: ['سود بالقوه سقف‌دار', 'نیاز به وجه تضمین برای سمت فروش', 'کاهش پتانسیل سود نسبت به Put ساده']
+    }
+  },
+  { key: 'bullPutSpread', name: 'Bull Put Spread', icon: '🟢', desc: 'درآمد از پرمیوم در صعودی', badge: 'صعودی',
+    positions: [{ side: 'sell', type: 'put', strikeOffset: -0.02, premiumRatio: 0.02 }, { side: 'buy', type: 'put', strikeOffset: -0.07, premiumRatio: 0.01 }],
+    explanation: {
+      what: 'ترکیب فروش یک Put با قیمت اعمال بالاتر و خرید یک Put با قیمت اعمال پایین‌تر برای محدود کردن ریسک.',
+      who: 'مناسب برای کسانی که انتظار رشد ملایم یا ثبات قیمت را دارند و می‌خواهند از پرمیوم درآمد کسب کنند.',
+      pros: ['درآمد خالص از پرمیوم', 'ریسک محدود و مشخص', 'برد بالا (سود در بیش‌تر سناریوها)', 'استفاده بهینه از زوال زمانی'],
+      cons: ['سود سقف‌دار', 'نیاز به وجه تضمین', 'ضرر در صورت افت شدید قیمت']
+    }
+  },
+  { key: 'bearCallSpread', name: 'Bear Call Spread', icon: '🔴', desc: 'درآمد از پرمیوم در نزولی', badge: 'نزولی',
+    positions: [{ side: 'sell', type: 'call', strikeOffset: 0.02, premiumRatio: 0.02 }, { side: 'buy', type: 'call', strikeOffset: 0.07, premiumRatio: 0.01 }],
+    explanation: {
+      what: 'ترکیب فروش یک Call با قیمت اعمال پایین‌تر و خرید یک Call با قیمت اعمال بالاتر.',
+      who: 'مناسب برای کسانی که انتظار افت ملایم یا ثبات قیمت را دارند و می‌خواهند درآمد کسب کنند.',
+      pros: ['درآمد خالص از پرمیوم', 'ریسک محدود', 'برد بالا در بازارهای نزولی یا خنثی', 'بهترین عملکرد در بازار آرام'],
+      cons: ['سود سقف‌دار', 'نیاز به وجه تضمین', 'ضرر در صورت رشد شدید قیمت']
+    }
+  },
+  { key: 'longStraddle', name: 'Long Straddle', icon: '⚡', desc: 'سود از نوسان شدید', badge: 'نوسانی',
+    positions: [{ side: 'buy', type: 'call', strikeOffset: 0, premiumRatio: 0.025 }, { side: 'buy', type: 'put', strikeOffset: 0, premiumRatio: 0.025 }],
+    explanation: {
+      what: 'خرید همزمان یک Call و یک Put با قیمت اعمال یکسان. سود در صورت حرکت شدید قیمت در هر جهت.',
+      who: 'مناسب برای کسانی که انتظار نوسان شدید قیمت را دارند ولی جهت آن را نمی‌دانند.',
+      pros: ['سود بالقوه نامحدود در هر دو جهت', 'عدم نیاز به پیش‌بینی جهت بازار', 'مناسب برای رویدادهای خبری', 'ریسک محدود به مجموع پرمیوم‌ها'],
+      cons: ['هزینه اولیه بالا (دو پرمیوم)', 'نیاز به نوسان شدید برای سربه‌سر شدن', 'اثر شدید زوال زمانی', 'احتمال ضرر در بازار آرام']
+    }
+  },
+  { key: 'shortStraddle', name: 'Short Straddle', icon: '💤', desc: 'سود از بازار آرام', badge: 'خنثی',
+    positions: [{ side: 'sell', type: 'call', strikeOffset: 0, premiumRatio: 0.025 }, { side: 'sell', type: 'put', strikeOffset: 0, premiumRatio: 0.025 }],
+    explanation: {
+      what: 'فروش همزمان یک Call و یک Put با قیمت اعمال یکسان. سود در صورت باقی ماندن قیمت نزدیک قیمت اعمال.',
+      who: 'مناسب برای کسانی که انتظار بازار آرام و بدون نوسان را دارند. حرفه‌ای‌ترین استراتژی درآمدزایی از پرمیوم.',
+      pros: ['درآمد بالا از دو پرمیوم', 'سود از زوال زمانی (Theta)', 'حداکثر سود در حالت ثبات قیمت', 'بدون نیاز به پیش‌بینی جهت'],
+      cons: ['ضرر بالقوه نامحدود در هر دو جهت', 'نیاز به وجه تضمین بالا', 'پرریسک‌ترین استراتژی برای تازه‌کارها', 'نیاز به مدیریت فعال موقعیت']
+    }
+  },
+  { key: 'longStrangle', name: 'Long Strangle', icon: '⚡', desc: 'نوسانی با هزینه کمتر', badge: 'نوسانی',
+    positions: [{ side: 'buy', type: 'call', strikeOffset: 0.05, premiumRatio: 0.015 }, { side: 'buy', type: 'put', strikeOffset: -0.05, premiumRatio: 0.015 }],
+    explanation: {
+      what: 'خرید یک Call با قیمت اعمال بالاتر و یک Put با قیمت اعمال پایین‌تر. شبیه Long Straddle ولی ارزان‌تر.',
+      who: 'مناسب برای کسانی که انتظار نوسان شدید دارند ولی می‌خواهند هزینه کمتری بپردازند.',
+      pros: ['هزینه اولیه کمتر از Straddle', 'سود بالقوه بالا در هر دو جهت', 'ریسک محدود', 'مناسب برای رویدادهای پرنوسان'],
+      cons: ['نیاز به نوسان شدیدتر برای سوددهی', 'زوال زمانی سریع', 'فاصله بیشتر تا نقاط سربه‌سر']
+    }
+  },
+  { key: 'shortStrangle', name: 'Short Strangle', icon: '💤', desc: 'خنثی با ریسک بیشتر', badge: 'خنثی',
+    positions: [{ side: 'sell', type: 'call', strikeOffset: 0.05, premiumRatio: 0.015 }, { side: 'sell', type: 'put', strikeOffset: -0.05, premiumRatio: 0.015 }],
+    explanation: {
+      what: 'فروش یک Call با قیمت اعمال بالاتر و یک Put با قیمت اعمال پایین‌تر. سود در صورت باقی ماندن قیمت در محدوده.',
+      who: 'مناسب برای معامله‌گران با تجربه که انتظار بازار آرام با نوسان محدود را دارند.',
+      pros: ['درآمد خالص از دو پرمیوم', 'محدوده سود بزرگ‌تر از Straddle', 'سود از زوال زمانی', 'برد بالا در بازارهای آرام'],
+      cons: ['ضرر بالقوه نامحدود در دو جهت', 'نیاز به وجه تضمین بالا', 'پرریسک و مناسب حرفه‌ای‌ها', 'نیاز به مدیریت فعال']
+    }
+  },
+  { key: 'coveredCall', name: 'Covered Call', icon: '🛡️', desc: 'درآمد از سهام موجود', badge: 'پوششی',
+    positions: [{ side: 'buy', type: 'spot', strikeOffset: 0, premiumRatio: 0 }, { side: 'sell', type: 'call', strikeOffset: 0.05, premiumRatio: 0.02 }],
+    explanation: {
+      what: 'خرید دارایی پایه + فروش یک Call روی همان دارایی. فروش Call درآمد پرمیوم ایجاد می‌کند.',
+      who: 'مناسب برای کسانی که دارایی پایه را در اختیار دارند و انتظار رشد محدود قیمت را دارند.',
+      pros: ['درآمد اضافی از پرمیوم', 'کاهش هزینه نگهداری دارایی', 'مناسب برای بازارهای خنثی یا صعودی ملایم', 'ریسک کمتر از فروش Call ساده'],
+      cons: ['سود سقف‌دار (اگر قیمت بالا برود)', 'ریسک نزولی روی دارایی پایه باقی می‌ماند', 'نیاز به سرمایه اولیه برای خرید دارایی']
+    }
+  },
+  { key: 'protectivePut', name: 'Protective Put', icon: '🏥', desc: 'بیمه کردن پورتفوی', badge: 'بیمه',
+    positions: [{ side: 'buy', type: 'spot', strikeOffset: 0, premiumRatio: 0 }, { side: 'buy', type: 'put', strikeOffset: -0.05, premiumRatio: 0.02 }],
+    explanation: {
+      what: 'خرید دارایی پایه + خرید یک Put برای بیمه کردن در برابر افت قیمت. مثل بیمه‌نامه پورتفوی.',
+      who: 'مناسب برای سرمایه‌گذارانی که دارایی پایه را در اختیار دارند و نگران ریزش هستند ولی نمی‌خواهند بفروشند.',
+      pros: ['محافظت کامل در برابر افت شدید', 'حفظ پتانسیل صعودی دارایی', 'آرامش روانی در بازارهای پرنوسان', 'ریسک محدود و مشخص'],
+      cons: ['هزینه بیمه (پرمیوم Put)', 'کاهش بازده کل در صورت رشد', 'زوال زمانی روی Put']
+    }
+  },
+  { key: 'ironCondor', name: 'Iron Condor', icon: '🦅', desc: 'سود در بازار خنثی', badge: 'خنثی',
+    positions: [
+      { side: 'sell', type: 'put', strikeOffset: -0.05, premiumRatio: 0.015 },
+      { side: 'buy', type: 'put', strikeOffset: -0.10, premiumRatio: 0.008 },
+      { side: 'sell', type: 'call', strikeOffset: 0.05, premiumRatio: 0.015 },
+      { side: 'buy', type: 'call', strikeOffset: 0.10, premiumRatio: 0.008 }
+    ],
+    explanation: {
+      what: 'ترکیب دو استراتژی اسپرد: Bull Put Spread + Bear Call Spread. چهار پوزیشن با قیمت‌های اعمال متفاوت.',
+      who: 'مناسب برای معامله‌گران حرفه‌ای که انتظار بازار آرام با نوسان محدود در محدوده قیمتی مشخص را دارند.',
+      pros: ['ریسک و پاداش محدود و مشخص', 'برد بالا در بازارهای آرام', 'درآمد از چهار پرمیوم', 'محدوده سود قابل تنظیم'],
+      cons: ['نیاز به سرمایه و وجه تضمین بالا', 'پیچیدگی مدیریت چهار پوزیشن', 'سود محدود به پرمیوم خالص', 'نیاز به تجربه در آپشن‌نویسی']
+    }
+  }
+];
+
+// ==========================================
+// 📊 State
+// ==========================================
+let positions = [];
+let currentPreset = null;
+let chartPoints = [];
+let chartMeta = null;
+let svgGeometry = null;
+let isLocked = false;
+let lockedPoint = null;
+let panMode = false;
+let pendingAction = null;
+let autoRefreshInterval = null;
+let allStocksCache = null;
+let allStocksCacheTime = 0;
+let stocksSymbolsMap = null;
+
+const view = {
+  xMin: 0, xMax: 1,
+  yMin: -1, yMax: 1,
+  fullXMin: 0, fullXMax: 1,
+  fullYMin: -1, fullYMax: 1
+};
+
+// ==========================================
+// 🔧 Helpers
+// ==========================================
+function formatNum(num, decimals = 0) {
+  if (num === null || num === undefined || isNaN(num)) return '0';
+  const n = Number(num);
+  if (!isFinite(n)) return '∞';
+  let str = decimals > 0 ? n.toFixed(decimals) : Math.round(n).toString();
+  const parts = str.split('.');
+  parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+  return parts.join('.');
+}
+
+function toFa(num) {
+  if (num === null || num === undefined) return '۰';
+  const d = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
+  return String(num).replace(/\d/g, x => d[x]);
+}
+
+function getAsset(key) {
+  if (!key) return null;
+  return ASSETS.find(a => a.key === key) || null;
+}
+
+function getCurrency(assetKey) {
+  const asset = getAsset(assetKey);
+  if (!asset) return { label: 'دلار', short: '$' };
+  return asset.group === 'بورس'
+    ? { label: 'تومان', short: 'تومان' }
+    : { label: 'دلار', short: '$' };
+}
+
+function currencyOfPosition(p) { return getCurrency(p.asset); }
+
+function getPortfolioCurrency() {
+  if (positions.length === 0) return { label: 'دلار', short: '$' };
+  const groups = new Set(positions.filter(p => p.asset).map(p => getAsset(p.asset).group));
+  if (groups.size === 1 && groups.has('بورس')) return { label: 'تومان', short: 'تومان' };
+  if (groups.size === 1) return { label: 'دلار', short: '$' };
+  return getCurrency(positions[0].asset);
+}
+
+function getSymbolInfo(pos) {
+  const asset = getAsset(pos.asset);
+  if (!asset) return { sym: 'انتخاب کنید...', typeClass: 'empty', typeLabel: 'بدون دارایی' };
+  if (asset.group !== 'بورس') {
+    if (pos.type === 'spot') return { sym: asset.name, typeClass: 'spot', typeLabel: 'دارایی پایه' };
+    return { sym: asset.name, typeClass: pos.type, typeLabel: pos.type === 'call' ? 'Call' : 'Put' };
+  }
+  if (pos.type === 'spot') return { sym: asset.key, typeClass: 'spot', typeLabel: 'دارایی پایه' };
+  if (pos.type === 'call') return { sym: asset.call, typeClass: 'call', typeLabel: 'اختیار خرید' };
+  if (pos.type === 'put')  return { sym: asset.put,  typeClass: 'put',  typeLabel: 'اختیار فروش' };
+  return { sym: asset.key, typeClass: 'spot', typeLabel: 'دارایی پایه' };
+}
+
+// ==========================================
+// 📡 وضعیت زنده
+// ==========================================
+function setLiveStatus(status, text) {
+  const indicator = document.getElementById('liveIndicator');
+  const textEl = document.getElementById('liveText');
+  indicator.className = 'indicator ' + status;
+  textEl.textContent = text;
+}
+function updateLastUpdateTime() {
+  const el = document.getElementById('lastUpdateTime');
+  const now = new Date();
+  const time = now.toLocaleTimeString('fa-IR');
+  el.textContent = `آخرین به‌روزرسانی: ${time}`;
+}
+
+// ==========================================
+// 🎯 Modal
+// ==========================================
+function openModal({ icon = '⚠️', title, text, confirmText = 'تأیید', onConfirm }) {
+  document.getElementById('modalIcon').textContent = icon;
+  document.getElementById('modalTitle').textContent = title;
+  document.getElementById('modalText').innerHTML = text;
+  const btn = document.getElementById('modalConfirmBtn');
+  btn.textContent = confirmText;
+  pendingAction = onConfirm;
+  document.getElementById('customModal').classList.add('active');
+}
+function closeModal() {
+  document.getElementById('customModal').classList.remove('active');
+  pendingAction = null;
+}
+document.getElementById('modalConfirmBtn').addEventListener('click', () => {
+  if (pendingAction) pendingAction();
+  closeModal();
+});
+
+// ==========================================
+// 🎯 رندر Presets
+// ==========================================
+function renderPresets() {
+  const grid = document.getElementById('presetsGrid');
+  grid.innerHTML = PRESETS.map(p => `
+    <button class="preset-card ${currentPreset === p.key ? 'active' : ''}" onclick="applyPreset('${p.key}')">
+      <div class="preset-header">
+        <span class="preset-icon">${p.icon}</span>
+        <span class="preset-name">${p.name}</span>
+      </div>
+      <div class="preset-desc">${p.desc}</div>
+      <span class="preset-badge">${p.badge}</span>
+    </button>
+  `).join('');
+}
+
+function renderExplanation(preset) {
+  const box = document.getElementById('strategyExplanation');
+  if (!preset || !preset.explanation) {
+    box.style.display = 'none';
+    box.innerHTML = '';
+    return;
+  }
+  const e = preset.explanation;
+  box.style.display = 'block';
+  box.innerHTML = `
+    <div class="exp-header">
+      <span class="exp-icon">${preset.icon}</span>
+      <div>
+        <div class="exp-title">آموزش استراتژی ${preset.name}</div>
+        <div class="exp-sub">راهنمای کامل — چه زمانی، برای چه کسی، و با چه مزایا و معایبی</div>
+      </div>
+    </div>
+    <div class="exp-body">
+      <div class="exp-block">
+        <div class="blk-title">📖 این استراتژی چیه؟</div>
+        <p>${e.what}</p>
+        <p style="margin-top:10px;"><span class="exp-highlight">مناسب برای:</span> ${e.who}</p>
+      </div>
+      <div class="exp-block pros">
+        <div class="blk-title pros">✅ مزایا</div>
+        <ul>${e.pros.map(x => `<li>${x}</li>`).join('')}</ul>
+      </div>
+      <div class="exp-block cons">
+        <div class="blk-title cons">⚠️ معایب</div>
+        <ul>${e.cons.map(x => `<li>${x}</li>`).join('')}</ul>
+      </div>
+    </div>
+  `;
+}
+
+function applyPreset(presetKey) {
+  const preset = PRESETS.find(p => p.key === presetKey);
+  if (!preset) return;
+
+  if (currentPreset && currentPreset !== presetKey) {
+    openModal({
+      icon: '🔄',
+      title: 'استراتژی قبلی فعال است',
+      text: 'قبل از انتخاب استراتژی جدید، باید استراتژی قبلی پاک شود. آیا می‌خواهید استراتژی جدید اعمال شود؟',
+      confirmText: 'بله، پاک کن و ادامه',
+      onConfirm: () => applyPresetInternal(presetKey)
+    });
+    return;
+  }
+
+  applyPresetInternal(presetKey);
+}
+
+function applyPresetInternal(presetKey) {
+  const preset = PRESETS.find(p => p.key === presetKey);
+  if (!preset) return;
+
+  currentPreset = presetKey;
+
+  positions = preset.positions.map((posDef, idx) => ({
+    id: Date.now() + idx + Math.random(),
+    asset: '',
+    side: posDef.side,
+    type: posDef.type,
+    quantity: 1,
+    currentPrice: 0,
+    strike: 0,
+    premium: 0,
+    delta: posDef.type === 'call' ? 0.5 : (posDef.type === 'put' ? -0.5 : 1),
+    margin: 0,
+    priceSource: 'default',
+    _strikeOffset: posDef.strikeOffset,
+    _premiumRatio: posDef.premiumRatio
+  }));
+
+  renderPresets();
+  renderExplanation(preset);
+  renderPositions();
+  updateChart();
+  showNotification(`✅ استراتژی «${preset.name}» اعمال شد — دارایی پایه را انتخاب کنید`, 'success');
+}
+
+function clearAllPositions() {
+  if (positions.length === 0) {
+    showNotification('⚠️ پوزیشنی برای پاک کردن وجود ندارد', 'error');
+    return;
+  }
+  openModal({
+    icon: '🗑️',
+    title: 'پاک کردن استراتژی / پوزیشن',
+    text: 'آیا مطمئن هستید که می‌خواهید تمام پوزیشن‌ها و استراتژی فعلی را پاک کنید؟ این عمل قابل بازگشت نیست.',
+    confirmText: 'بله، همه را پاک کن',
+    onConfirm: () => {
+      positions = [];
+      currentPreset = null;
+      renderPresets();
+      renderExplanation(null);
+      renderPositions();
+      updateChart();
+      showNotification('🗑️ همه‌ی پوزیشن‌ها پاک شد', 'success');
+    }
+  });
+}
+
+function switchTab(tabName, btn) {
+  document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + tabName).classList.add('active');
+  if (btn) btn.classList.add('active');
+}
+
+// ==========================================
+// 🌐 BrsApi
+// ==========================================
+async function fetchBrsApi(baseUrl) {
+  for (let i = 0; i < BRS_API_KEYS.length; i++) {
+    const key = BRS_API_KEYS[brsKeyIndex];
+    try {
+      const sep = baseUrl.includes('?') ? '&' : '?';
+      const res = await fetch(`${baseUrl}${sep}key=${key}`);
+      if (!res.ok) { brsKeyIndex = (brsKeyIndex + 1) % BRS_API_KEYS.length; continue; }
+      const text = await res.text();
+      if (text.trim().startsWith('<')) { brsKeyIndex = (brsKeyIndex + 1) % BRS_API_KEYS.length; continue; }
+      return JSON.parse(text);
+    } catch (e) { brsKeyIndex = (brsKeyIndex + 1) % BRS_API_KEYS.length; }
+  }
+  throw new Error('همه کلیدها fail');
+}
+
+// ==========================================
+// 💰 واکشی قیمت زنده برای یک دارایی
+// ==========================================
+async function fetchPrice(asset) {
+  if (!asset) return null;
+
+  // ═══ کریپتو — CoinGecko ═══
+  if (asset.source === 'coingecko') {
+    try {
+      const res = await fetch(`https://api.coingecko.com/api/v3/simple/price?ids=${asset.coingeckoId}&vs_currencies=usd`);
+      const data = await res.json();
+      if (data[asset.coingeckoId] && data[asset.coingeckoId].usd) {
+        return { price: data[asset.coingeckoId].usd, source: 'live' };
+      }
+    } catch (e) { console.warn('CoinGecko error:', asset.key, e); }
+    return null;
+  }
+
+  // ═══ کالا — BrsApi Commodity ═══
+  if (asset.source === 'commodity') {
+    try {
+      const data = await fetchBrsApi('https://Api.BrsApi.ir/Market/Commodity.php');
+      const target = asset.key;
+
+      if ((target === 'gold' || target === 'silver') && data.metal_precious) {
+        const item = data.metal_precious.find(i => i.symbol === asset.symbol);
+        if (item && item.price) return { price: parseFloat(item.price), source: 'live' };
+      }
+      if (target === 'oil' && data.energy) {
+        const item = data.energy.find(i => i.symbol === 'BRENT' || i.symbol === 'BRENT_OIL');
+        if (item && item.price) return { price: parseFloat(item.price), source: 'live' };
+      }
+    } catch (e) { console.warn('Commodity error:', asset.key, e); }
+    return null;
+  }
+
+  // ═══ بورس — BrsApi AllSymbols ═══
+  if (asset.source === 'stocks') {
+    // کش ۹۰ ثانیه‌ای
+    const now = Date.now();
+    if (!allStocksCache || (now - allStocksCacheTime) > 90000) {
+      try {
+        const data = await fetchBrsApi('https://Api.BrsApi.ir/Tsetmc/AllSymbols.php?type=1');
+        if (Array.isArray(data)) {
+          allStocksCache = data;
+          allStocksCacheTime = now;
+          // ساخت مپ سریع
+          stocksSymbolsMap = {};
+          data.forEach(s => {
+            if (s.l18) stocksSymbolsMap[String(s.l18).trim()] = s;
+          });
+        }
+      } catch (e) {
+        console.warn('AllSymbols error:', e);
+        return null;
+      }
+    }
+
+    const found = stocksSymbolsMap && stocksSymbolsMap[asset.key];
+    if (found) {
+      // قیمت‌ها به ریال هستن → تقسیم بر ۱۰ برای تومان
+      const rawPrice = found.pl || found.pc || 0;
+      const price = rawPrice / 10;
+      if (price > 0) return { price: price, source: 'live' };
+    }
+    return null;
+  }
+
+  return null;
+}
+
+// ==========================================
+// 🔄 به‌روزرسانی همه قیمت‌ها
+// ==========================================
+async function refreshAllPrices(showNotificationFlag = false) {
+  const assetsWithPositions = positions.filter(p => p.asset);
+  if (assetsWithPositions.length === 0) {
+    if (showNotificationFlag) showNotification('⚠️ ابتدا دارایی پایه را انتخاب کنید', 'error');
+    return;
+  }
+
+  setLiveStatus('loading', 'در حال دریافت قیمت‌ها...');
+
+  const btns = document.querySelectorAll('.btn-refresh');
+  btns.forEach(b => { b.disabled = true; });
+
+  try {
+    // گروه‌بندی بر اساس asset
+    const uniqueAssetKeys = [...new Set(assetsWithPositions.map(p => p.asset))];
+    const results = {};
+
+    // ═══ کریپتو: یک درخواست برای همه ═══
+    const cryptoAssets = uniqueAssetKeys
+      .map(k => getAsset(k))
+      .filter(a => a && a.source === 'coingecko');
+
+    if (cryptoAssets.length > 0) {
+      try {
+        const ids = cryptoAssets.map(a => a.coingeckoId).join(',');
+        const res = await fetch(`https://api.coingecko.com/api/v3/simple/price?ids=${ids}&vs_currencies=usd`);
+        const data = await res.json();
+        cryptoAssets.forEach(a => {
+          if (data[a.coingeckoId] && data[a.coingeckoId].usd) {
+            results[a.key] = { price: data[a.coingeckoId].usd, source: 'live' };
+          }
+        });
+      } catch (e) { console.warn('Crypto batch error:', e); }
+    }
+
+    // ═══ کالا: یک درخواست برای همه ═══
+    const commodityAssets = uniqueAssetKeys
+      .map(k => getAsset(k))
+      .filter(a => a && a.source === 'commodity');
+
+    if (commodityAssets.length > 0) {
+      try {
+        const data = await fetchBrsApi('https://Api.BrsApi.ir/Market/Commodity.php');
+        commodityAssets.forEach(a => {
+          if ((a.key === 'gold' || a.key === 'silver') && data.metal_precious) {
+            const item = data.metal_precious.find(i => i.symbol === a.symbol);
+            if (item && item.price) results[a.key] = { price: parseFloat(item.price), source: 'live' };
+          }
+          if (a.key === 'oil' && data.energy) {
+            const item = data.energy.find(i => i.symbol === 'BRENT' || i.symbol === 'BRENT_OIL');
+            if (item && item.price) results[a.key] = { price: parseFloat(item.price), source: 'live' };
+          }
+        });
+      } catch (e) { console.warn('Commodity batch error:', e); }
+    }
+
+    // ═══ بورس: یک درخواست برای همه ═══
+    const stockAssets = uniqueAssetKeys
+      .map(k => getAsset(k))
+      .filter(a => a && a.source === 'stocks');
+
+    if (stockAssets.length > 0) {
+      try {
+        const data = await fetchBrsApi('https://Api.BrsApi.ir/Tsetmc/AllSymbols.php?type=1');
+        if (Array.isArray(data)) {
+          allStocksCache = data;
+          allStocksCacheTime = Date.now();
+          stocksSymbolsMap = {};
+          data.forEach(s => {
+            if (s.l18) stocksSymbolsMap[String(s.l18).trim()] = s;
+          });
+
+          stockAssets.forEach(a => {
+            const found = stocksSymbolsMap[a.key];
+            if (found) {
+              const rawPrice = found.pl || found.pc || 0;
+              const price = rawPrice / 10;
+              if (price > 0) results[a.key] = { price: price, source: 'live' };
+            }
+          });
+        }
+      } catch (e) { console.warn('AllSymbols batch error:', e); }
+    }
+
+    // ═══ اعمال به پوزیشن‌ها ═══
+    let successCount = 0;
+    Object.keys(results).forEach(assetKey => {
+      const { price } = results[assetKey];
+      positions.forEach(p => {
+        if (p.asset === assetKey && p.priceSource !== 'manual') {
+          p.currentPrice = price;
+          p.priceSource = 'live';
+          // محاسبه مجدد strike و premium اگر استراتژی از preset اومده
+          if (p._strikeOffset !== undefined && p.type !== 'spot') {
+            p.strike = Math.round(price * (1 + p._strikeOffset));
+          }
+          if (p._premiumRatio !== undefined && p.type !== 'spot') {
+            p.premium = Math.round(price * p._premiumRatio * 100) / 100;
+          }
+        }
+      });
+      successCount++;
+    });
+
+    const totalRequested = uniqueAssetKeys.length;
+    if (successCount > 0) {
+      setLiveStatus('live', `🟢 ${successCount} از ${totalRequested} قیمت دریافت شد`);
+      updateLastUpdateTime();
+      if (showNotificationFlag) {
+        showNotification(`✅ ${toFa(successCount)} قیمت به‌روز شد`, 'success');
+      }
+    } else {
+      setLiveStatus('error', '❌ قیمت زنده دریافت نشد');
+      if (showNotificationFlag) {
+        showNotification('⚠️ قیمت زنده دریافت نشد — می‌توانید دستی وارد کنید', 'error');
+      }
+    }
+
+    renderPositions();
+    updateChart();
+  } catch (e) {
+    console.error(e);
+    setLiveStatus('error', '❌ خطا در دریافت');
+    showNotification('❌ خطا در دریافت قیمت‌ها', 'error');
+  }
+
+  btns.forEach(b => { b.disabled = false; });
+}
+
+// ==========================================
+// 🔁 Auto refresh
+// ==========================================
+function toggleAutoRefresh(enabled) {
+  if (enabled) {
+    if (autoRefreshInterval) clearInterval(autoRefreshInterval);
+    autoRefreshInterval = setInterval(() => {
+      if (positions.some(p => p.asset)) {
+        refreshAllPrices(false);
+      }
+    }, 60000);
+    showNotification('✅ به‌روزرسانی خودکار فعال شد (هر ۶۰ ثانیه)', 'success');
+  } else {
+    if (autoRefreshInterval) {
+      clearInterval(autoRefreshInterval);
+      autoRefreshInterval = null;
+    }
+    showNotification('⏸️ به‌روزرسانی خودکار غیرفعال شد', 'error');
+  }
+}
+
+// ==========================================
+// 📢 Notification
+// ==========================================
+function showNotification(message, type = 'success') {
+  const existing = document.getElementById('customNotification');
+  if (existing) existing.remove();
+
+  const notification = document.createElement('div');
+  notification.id = 'customNotification';
+  notification.textContent = message;
+  notification.style.cssText = `
+    position: fixed; bottom: 30px; left: 50%;
+    transform: translateX(-50%) translateY(100px);
+    background: var(--bg-card); color: var(--text-primary);
+    padding: 14px 24px; border-radius: 12px;
+    border: 1px solid ${type === 'success' ? 'rgba(34, 197, 94, 0.3)' : 'rgba(239, 68, 68, 0.3)'};
+    border-right: 4px solid ${type === 'success' ? 'var(--green)' : 'var(--red)'};
+    box-shadow: var(--shadow-lg);
+    z-index: 999999; transition: 0.4s;
+    font-size: 13.5px; font-weight: 700;
+    font-family: var(--sans);
+    direction: rtl; max-width: 90vw; text-align: center;
+  `;
+
+  document.body.appendChild(notification);
+  setTimeout(() => notification.style.transform = 'translateX(-50%) translateY(0)', 10);
+  setTimeout(() => {
+    notification.style.transform = 'translateX(-50%) translateY(100px)';
+    setTimeout(() => notification.remove(), 400);
+  }, 3000);
+}
+
+// ==========================================
+// 📋 رندر جدول
+// ==========================================
+function renderPositions() {
+  const body = document.getElementById('positionsBody');
+  const count = positions.length;
+  document.getElementById('positionsCount').textContent = toFa(count) + ' پوزیشن';
+  document.getElementById('positionsCount2').textContent = toFa(count) + ' پوزیشن';
+
+  if (count === 0) {
+    body.innerHTML = `
+      <tr>
+        <td colspan="12" style="text-align:center; padding: 36px 20px; color: var(--text-muted); font-size: 13px;">
+          📭 هنوز پوزیشنی اضافه نشده. از تب «استراتژی‌های آماده» استفاده کن یا دستی اضافه کن.
+        </td>
+      </tr>
+    `;
+    return;
+  }
+
+  const groups = ['کریپتو', 'کالا', 'بورس'];
+  const isEmptyStrategy = currentPreset && positions.some(p => !p.asset);
+
+  body.innerHTML = positions.map((p) => {
+    const sourceClass = p.priceSource === 'live' ? 'live' : (p.priceSource === 'manual' ? 'manual' : '');
+    const sourceText = p.priceSource === 'live' ? '🟢 زنده' : (p.priceSource === 'manual' ? '🟡 دستی' : '⚪ پیش‌فرض');
+    const symInfo = getSymbolInfo(p);
+    const isSpot = p.type === 'spot';
+    const hasAsset = !!p.asset;
+    const locked = isEmptyStrategy && hasAsset;
+
+    let assetOptions = '';
+    if (!hasAsset) {
+      assetOptions += `<option value="" disabled selected hidden>یک دارایی را انتخاب کنید</option>`;
+    }
+    groups.forEach(g => {
+      const opts = ASSETS.filter(a => a.group === g).map(a => {
+        const selected = a.key === p.asset ? 'selected' : '';
+        const disabled = locked && a.key !== p.asset ? 'disabled' : '';
+        return `<option value="${a.key}" ${selected} ${disabled}>${a.emoji} ${a.name}</option>`;
+      }).join('');
+      assetOptions += `<optgroup label="${g}">${opts}</optgroup>`;
+    });
+
+    return `
+      <tr data-id="${p.id}">
+        <td>
+          <select class="cell-select ${!hasAsset ? 'placeholder-active' : ''}"
+                  onchange="updatePosition(${p.id}, 'asset', this.value)"
+                  ${locked ? 'disabled' : ''}>
+            ${assetOptions}
+          </select>
+        </td>
+
+        <td>
+          <div class="side-toggle">
+            <button class="side-btn ${p.side === 'buy' ? 'active-buy' : ''}" onclick="updatePosition(${p.id}, 'side', 'buy')">خرید</button>
+            <button class="side-btn ${p.side === 'sell' ? 'active-sell' : ''}" onclick="updatePosition(${p.id}, 'side', 'sell')">فروش</button>
+          </div>
+        </td>
+
+        <td>
+          <select class="cell-select" onchange="updatePosition(${p.id}, 'type', this.value)">
+            <option value="call" ${p.type === 'call' ? 'selected' : ''}>اختیار خرید</option>
+            <option value="put" ${p.type === 'put' ? 'selected' : ''}>اختیار فروش</option>
+            <option value="spot" ${p.type === 'spot' ? 'selected' : ''}>دارایی پایه</option>
+          </select>
+        </td>
+
+        <td>
+          <div class="symbol-badge ${symInfo.typeClass}" title="${symInfo.typeLabel}">
+            ${symInfo.sym}
+          </div>
+        </td>
+
+        <td>
+          <input type="number" class="cell-input" value="${p.quantity}" min="0" step="1"
+                 ${!hasAsset ? 'disabled' : ''}
+                 onchange="updatePosition(${p.id}, 'quantity', this.value)">
+        </td>
+
+        <td>
+          <input type="number" class="cell-input highlight" value="${p.currentPrice}" min="0" step="0.01"
+                 ${!hasAsset ? 'disabled' : ''}
+                 onchange="updatePosition(${p.id}, 'currentPrice', this.value)">
+          <span class="price-status ${sourceClass}">${hasAsset ? sourceText : ''}</span>
+        </td>
+
+        <td>
+          <input type="number" class="cell-input ${isSpot || !hasAsset ? 'locked-cell' : ''}"
+                 value="${isSpot || !hasAsset ? 0 : p.strike}" min="0" step="0.01"
+                 ${isSpot || !hasAsset ? 'disabled' : ''}
+                 onchange="updatePosition(${p.id}, 'strike', this.value)">
+        </td>
+
+        <td>
+          <input type="number" class="cell-input ${isSpot || !hasAsset ? 'locked-cell' : ''}"
+                 value="${isSpot || !hasAsset ? 0 : p.premium}" min="0" step="0.01"
+                 ${isSpot || !hasAsset ? 'disabled' : ''}
+                 onchange="updatePosition(${p.id}, 'premium', this.value)">
+        </td>
+
+        <td>
+          <input type="number" class="cell-input ${isSpot || !hasAsset ? 'locked-cell' : ''}"
+                 value="${isSpot || !hasAsset ? (isSpot ? 1 : 0) : p.delta}" min="-1" max="1" step="0.01"
+                 ${isSpot || !hasAsset ? 'disabled' : ''}
+                 onchange="updatePosition(${p.id}, 'delta', this.value)">
+        </td>
+
+        <td>
+          <input type="number" class="cell-input ${p.side === 'buy' || !hasAsset ? 'locked-cell' : ''}"
+                 value="${p.margin}" min="0" step="0.01"
+                 ${p.side === 'buy' || !hasAsset ? 'disabled' : ''}
+                 onchange="updatePosition(${p.id}, 'margin', this.value)">
+        </td>
+
+        <td style="text-align: center;">
+          <span class="num" style="color: var(--gold); font-weight: 800; font-size: 13px;">
+            ${hasAsset ? calculatePositionValue(p) : '—'}
+          </span>
+        </td>
+
+        <td>
+          <button class="btn-remove" onclick="removePosition(${p.id})" title="حذف">✕</button>
+        </td>
+      </tr>
+    `;
+  }).join('');
+}
+
+function calculatePositionValue(p) {
+  const cur = currencyOfPosition(p);
+  if (p.type === 'spot') {
+    const total = p.quantity * p.currentPrice * (p.side === 'buy' ? 1 : -1);
+    return toFa(formatNum(total)) + ' ' + cur.short;
+  } else {
+    const total = p.quantity * p.premium * (p.side === 'buy' ? -1 : 1);
+    return (total >= 0 ? '+' : '') + toFa(formatNum(total)) + ' ' + cur.short;
+  }
+}
+
+function updatePosition(id, field, value) {
+  const pos = positions.find(p => p.id === id);
+  if (!pos) return;
+
+  if (field === 'asset') {
+    pos.asset = value;
+    const asset = getAsset(value);
+
+    positions.forEach(p => {
+      if (p.id !== id) {
+        p.asset = value;
+        if (p.type === 'spot') {
+          p.currentPrice = asset.defaultPrice;
+          p.strike = 0;
+          p.premium = 0;
+          p.delta = 1;
+          p.margin = 0;
+        } else {
+          p.currentPrice = asset.defaultPrice;
+          p.strike = p._strikeOffset !== undefined
+            ? Math.round(asset.defaultPrice * (1 + p._strikeOffset))
+            : Math.round(asset.defaultPrice * 1.05);
+          p.premium = p._premiumRatio !== undefined
+            ? Math.round(asset.defaultPrice * p._premiumRatio * 100) / 100
+            : Math.round(asset.defaultPrice * 0.025 * 100) / 100;
+          p.delta = p.type === 'call' ? 0.5 : -0.5;
+          p.margin = p.side === 'sell' ? Math.round(asset.defaultPrice * 0.1) : 0;
+        }
+        p.priceSource = 'default';
+      }
+    });
+
+    if (pos.type === 'spot') {
+      pos.currentPrice = asset.defaultPrice;
+      pos.strike = 0;
+      pos.premium = 0;
+      pos.delta = 1;
+      pos.margin = 0;
+    } else {
+      pos.currentPrice = asset.defaultPrice;
+      pos.strike = pos._strikeOffset !== undefined
+        ? Math.round(asset.defaultPrice * (1 + pos._strikeOffset))
+        : Math.round(asset.defaultPrice * 1.05);
+      pos.premium = pos._premiumRatio !== undefined
+        ? Math.round(asset.defaultPrice * pos._premiumRatio * 100) / 100
+        : Math.round(asset.defaultPrice * 0.025 * 100) / 100;
+      pos.delta = pos.type === 'call' ? 0.5 : -0.5;
+      pos.margin = pos.side === 'sell' ? Math.round(asset.defaultPrice * 0.1) : 0;
+    }
+    pos.priceSource = 'default';
+
+    showNotification(`✅ دارایی پایه به «${asset.name}» تغییر کرد`, 'success');
+    renderPositions();
+    updateChart();
+
+    // قیمت زنده رو فوری بگیر
+    setTimeout(() => refreshAllPrices(false), 100);
+    return;
+  }
+
+  if (field === 'side') {
+    pos.side = value;
+    if (value === 'buy') pos.margin = 0;
+  }
+  else if (field === 'type') {
+    pos.type = value;
+    const asset = getAsset(pos.asset);
+    if (value === 'spot') {
+      pos.strike = 0;
+      pos.premium = 0;
+      pos.delta = 1;
+      pos.margin = 0;
+    } else if (asset) {
+      pos.strike = Math.round(asset.defaultPrice * 1.05);
+      pos.premium = Math.round(asset.defaultPrice * 0.025 * 100) / 100;
+      pos.delta = value === 'call' ? 0.5 : -0.5;
+    }
+  }
+  else if (field === 'quantity') pos.quantity = parseFloat(value) || 0;
+  else if (field === 'currentPrice') { pos.currentPrice = parseFloat(value) || 0; pos.priceSource = 'manual'; }
+  else if (field === 'strike') pos.strike = parseFloat(value) || 0;
+  else if (field === 'premium') pos.premium = parseFloat(value) || 0;
+  else if (field === 'delta') pos.delta = parseFloat(value) || 0;
+  else if (field === 'margin') pos.margin = parseFloat(value) || 0;
+
+  renderPositions();
+  updateChart();
+}
+
+function addPosition() {
+  if (currentPreset && positions.length > 0) {
+    openModal({
+      icon: '⚠️',
+      title: 'استراتژی فعال است',
+      text: 'شما در حال حاضر یک استراتژی فعال دارید. برای افزودن پوزیشن دستی جدید، ابتدا باید استراتژی فعلی را پاک کنید. آیا می‌خواهید استراتژی فعلی پاک شود و پوزیشن دستی اضافه شود؟',
+      confirmText: 'بله، پاک کن و ادامه',
+      onConfirm: () => {
+        currentPreset = null;
+        renderPresets();
+        renderExplanation(null);
+        positions = [];
+        renderPositions();
+        updateChart();
+        addPositionInternal();
+      }
+    });
+    return;
+  }
+
+  addPositionInternal();
+}
+
+function addPositionInternal() {
+  positions.push({
+    id: Date.now() + Math.random(),
+    asset: '',
+    side: 'buy',
+    type: 'call',
+    quantity: 1,
+    currentPrice: 0,
+    strike: 0,
+    premium: 0,
+    delta: 0.45,
+    margin: 0,
+    priceSource: 'default'
+  });
+
+  renderPositions();
+  updateChart();
+}
+
+function removePosition(id) {
+  positions = positions.filter(p => p.id !== id);
+  if (positions.length === 0) {
+    currentPreset = null;
+    renderPresets();
+    renderExplanation(null);
+  }
+  renderPositions();
+  updateChart();
+}
+
+// ==========================================
+// 📊 محاسبات
+// ==========================================
+function calculatePayoff(price, pos) {
+  if (!pos.asset) return 0;
+  const multiplier = pos.quantity * (pos.side === 'buy' ? 1 : -1);
+  if (pos.type === 'call') return (Math.max(price - pos.strike, 0) - pos.premium) * multiplier;
+  if (pos.type === 'put') return (Math.max(pos.strike - price, 0) - pos.premium) * multiplier;
+  if (pos.type === 'spot') return (price - pos.currentPrice) * multiplier;
+  return 0;
+}
+
+function totalInvestmentValue() {
+  let total = 0;
+  positions.forEach(p => {
+    if (!p.asset) return;
+    if (p.type === 'spot') total += Math.abs(p.quantity * p.currentPrice);
+    else total += Math.abs(p.quantity * p.premium);
+  });
+  return total || 1;
+}
+
+function updateChart() {
+  const validPositions = positions.filter(p => p.asset && (p.type === 'spot' || p.strike > 0));
+
+  if (validPositions.length === 0) {
+    document.getElementById('payoffChart').innerHTML = `
+      <text x="500" y="230" text-anchor="middle" fill="#5c6169" font-size="14" font-family="Vazirmatn, sans-serif" font-weight="600">
+        📭 در انتظار انتخاب دارایی پایه
+      </text>
+      <text x="500" y="258" text-anchor="middle" fill="#5c6169" font-size="11" font-family="Vazirmatn, sans-serif">
+        برای دیدن نمودار، دارایی پایه را از جدول بالا انتخاب کنید
+      </text>
+    `;
+    ['maxProfit','maxLoss','breakeven','rrRatio','currentPnL'].forEach(id => document.getElementById(id).textContent = '--');
+    document.getElementById('totalInvestment').textContent = '۰';
+    document.getElementById('strategyName').textContent = currentPreset
+      ? PRESETS.find(p => p.key === currentPreset)?.icon + ' ' + PRESETS.find(p => p.key === currentPreset)?.name
+      : 'استراتژی سفارشی';
+    document.getElementById('strategyTags').textContent = currentPreset
+      ? PRESETS.find(p => p.key === currentPreset)?.badge
+      : 'در انتظار...';
+    chartPoints = [];
+    chartMeta = null;
+    isLocked = false;
+    lockedPoint = null;
+    resetLockUI();
+    hideChartTooltip();
+    return;
+  }
+
+  const cur = getPortfolioCurrency();
+
+  const allPrices = validPositions.map(p => p.type === 'spot' ? p.currentPrice : p.strike).filter(p => p > 0);
+  if (allPrices.length === 0) allPrices.push(100);
+
+  const minK = Math.min(...allPrices);
+  const maxK = Math.max(...allPrices);
+  const range = maxK - minK || maxK * 0.3;
+  const fullPriceMin = Math.max(0, minK - range * 0.5);
+  const fullPriceMax = maxK + range * 0.5;
+
+  const steps = 300;
+  const points = [];
+  for (let i = 0; i <= steps; i++) {
+    const price = fullPriceMin + ((fullPriceMax - fullPriceMin) / steps) * i;
+    let totalPnL = 0;
+    validPositions.forEach(pos => totalPnL += calculatePayoff(price, pos));
+    points.push({ price, pnl: totalPnL });
+  }
+
+  const pnls = points.map(p => p.pnl);
+  const maxPnL = Math.max(...pnls);
+  const minPnL = Math.min(...pnls);
+  // ۴۰٪ حاشیه بالا و پایین تا خطوط صاف داخل کادر بمونن
+  const fullAbsMax = Math.max(Math.abs(maxPnL), Math.abs(minPnL)) * 1.4 || 1;
+  if (view.fullXMin !== fullPriceMin || view.fullXMax !== fullPriceMax) {
+    resetViewInternal(fullPriceMin, fullPriceMax, -fullAbsMax, fullAbsMax);
+  }
+  chartMeta = {
+    fullPriceMin, fullPriceMax,
+    fullAbsMax,
+    currentPrice: validPositions[0].currentPrice,
+    currency: cur
+  };
+
+  let strategyInfo;
+  if (currentPreset) {
+    const preset = PRESETS.find(p => p.key === currentPreset);
+    strategyInfo = { name: preset.icon + ' ' + preset.name, tags: preset.badge };
+  } else {
+    strategyInfo = detectStrategy();
+  }
+  document.getElementById('strategyName').textContent = strategyInfo.name;
+  document.getElementById('strategyTags').textContent = strategyInfo.tags;
+
+  let totalInvestment = 0;
+  validPositions.forEach(p => {
+    if (p.type === 'spot') totalInvestment += p.quantity * p.currentPrice * (p.side === 'buy' ? 1 : -1);
+    else totalInvestment += p.quantity * p.premium * (p.side === 'buy' ? -1 : 1);
+  });
+  document.getElementById('totalInvestment').textContent = (totalInvestment >= 0 ? '+' : '') + toFa(formatNum(totalInvestment)) + ' ' + cur.short;
+
+  const breakevens = findBreakevens(points);
+  const currentPrice = validPositions[0].currentPrice;
+  let currentPnL = 0;
+  validPositions.forEach(pos => currentPnL += calculatePayoff(currentPrice, pos));
+  document.getElementById('currentPnL').textContent = (currentPnL >= 0 ? '+' : '') + toFa(formatNum(currentPnL)) + ' ' + cur.short;
+  document.getElementById('currentPnL').style.color = currentPnL >= 0 ? 'var(--green)' : 'var(--red)';
+
+  document.getElementById('maxProfit').textContent = maxPnL === Infinity ? 'نامحدود' : (maxPnL >= 0 ? '+' : '') + toFa(formatNum(maxPnL)) + ' ' + cur.short;
+  document.getElementById('maxLoss').textContent = minPnL === -Infinity ? 'نامحدود' : toFa(formatNum(minPnL)) + ' ' + cur.short;
+  document.getElementById('breakeven').textContent = breakevens.length > 0 ? breakevens.map(b => toFa(formatNum(b, 1))).join(' | ') : '--';
+
+  if (maxPnL > 0 && minPnL < 0 && maxPnL !== Infinity && minPnL !== -Infinity) {
+    document.getElementById('rrRatio').textContent = '1 : ' + toFa(Math.abs(maxPnL / minPnL).toFixed(2));
+  } else if (maxPnL === Infinity) {
+    document.getElementById('rrRatio').textContent = 'بی‌نهایت';
+  } else {
+    document.getElementById('rrRatio').textContent = '--';
+  }
+
+  chartPoints = points;
+  drawChart(points, breakevens, currentPrice);
+}
+
+function resetViewInternal(fullPriceMin, fullPriceMax, fullYMin, fullYMax) {
+  view.fullXMin = fullPriceMin;
+  view.fullXMax = fullPriceMax;
+  view.fullYMin = fullYMin;
+  view.fullYMax = fullYMax;
+  view.xMin = fullPriceMin;
+  view.xMax = fullPriceMax;
+  view.yMin = fullYMin;
+  view.yMax = fullYMax;
+}
+
+function detectStrategy() {
+  const n = positions.length;
+  if (n === 0) return { name: 'استراتژی سفارشی', tags: 'در انتظار...' };
+  const types = positions.map(p => `${p.side}-${p.type}`);
+  const count = (t) => types.filter(x => x === t).length;
+
+  if (n === 1) {
+    const p = positions[0];
+    const names = {
+      'buy-call': '🟢 Long Call', 'sell-call': '🔴 Short Call',
+      'buy-put': '🔴 Long Put', 'sell-put': '🟢 Short Put',
+      'buy-spot': '📈 خرید دارایی پایه', 'sell-spot': '📉 فروش دارایی پایه'
+    };
+    return { name: names[`${p.side}-${p.type}`] || 'تک‌پایه', tags: p.asset ? getAsset(p.asset).name : 'در انتظار دارایی' };
+  }
+  if (n === 2) {
+    const hasBC = count('buy-call') === 1, hasSC = count('sell-call') === 1;
+    const hasBP = count('buy-put') === 1, hasSP = count('sell-put') === 1;
+    if (hasBC && hasSC) {
+      const calls = positions.filter(p => p.type === 'call');
+      const longCall = calls.find(p => p.side === 'buy');
+      const shortCall = calls.find(p => p.side === 'sell');
+      return longCall.strike < shortCall.strike
+        ? { name: '📈 Bull Call Spread', tags: 'صعودی محدود' }
+        : { name: '📉 Bear Call Spread', tags: 'نزولی محدود' };
+    }
+    if (hasBP && hasSP) {
+      const puts = positions.filter(p => p.type === 'put');
+      const longPut = puts.find(p => p.side === 'buy');
+      const shortPut = puts.find(p => p.side === 'sell');
+      return longPut.strike > shortPut.strike
+        ? { name: '📉 Bear Put Spread', tags: 'نزولی محدود' }
+        : { name: '📈 Bull Put Spread', tags: 'صعودی محدود' };
+    }
+    if (hasBC && hasBP) return { name: '⚡ Long Straddle', tags: 'نوسانی' };
+    if (hasSC && hasSP) return { name: '💤 Short Straddle', tags: 'خنثی' };
+    if (count('buy-spot') === 1 && hasSC) return { name: '🛡️ Covered Call', tags: 'پوششی' };
+    if (count('buy-spot') === 1 && hasBP) return { name: '🏥 Protective Put', tags: 'بیمه' };
+  }
+  if (n === 4 && count('buy-call') === 1 && count('sell-call') === 1 && count('buy-put') === 1 && count('sell-put') === 1) {
+    return { name: '🦅 Iron Condor', tags: 'خنثی' };
+  }
+  return { name: '🎯 استراتژی سفارشی', tags: toFa(n) + ' پوزیشن' };
+}
+
+function findBreakevens(points) {
+  const be = [];
+  for (let i = 1; i < points.length; i++) {
+    const prev = points[i - 1].pnl, curr = points[i].pnl;
+    if ((prev < 0 && curr >= 0) || (prev > 0 && curr <= 0)) {
+      const t = Math.abs(prev) / (Math.abs(prev) + Math.abs(curr));
+      const price = points[i - 1].price + t * (points[i].price - points[i - 1].price);
+      be.push(Math.round(price * 100) / 100);
+    }
+  }
+  return be;
+}
+
+// ==========================================
+// 📈 رسم نمودار
+// ==========================================
+let currentBreakevens = [];
+
+function drawChart(points, breakevens, currentPrice) {
+  currentBreakevens = breakevens;
+  const svg = document.getElementById('payoffChart');
+
+  // ===== اندازه‌گیری حرفه‌ای بر اساس خود کادر نمودار =====
+  // مهم: ارتفاع دیگر از window محاسبه نمی‌شود؛ خود chart wrapper مرجع است.
+  const wrap = document.getElementById('chartCanvasWrap');
+  const container = document.getElementById('chartContainer');
+  const isFullscreen = !!(container && container.classList.contains('fullscreen'));
+  const wrapW = Math.max(280, Math.round(wrap.clientWidth || 1000));
+
+  // ارتفاع توسط CSS تعیین می‌شود تا در موبایل عمودی/افقی و دسکتاپ پایدار باشد.
+  // در fullscreen، wrapper فضای باقیمانده را می‌گیرد.
+  const measuredH = wrap.getBoundingClientRect().height;
+  const fallbackRatio = isFullscreen ? 0.72 : 0.52;
+  const wrapH = Math.max(
+    isFullscreen ? 260 : 260,
+    Math.round(measuredH || (wrapW * fallbackRatio))
+  );
+
+  const W = wrapW;
+  const H = wrapH;
+
+  svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
+  svg.setAttribute('width', W);
+  svg.setAttribute('height', H);
+  svg.style.width = '100%';
+  svg.style.height = '100%';
+  svg.style.display = 'block';
+
+  const padding = { top: 28, right: 20, bottom: 40, left: 54 };
+  const chartW = W - padding.left - padding.right;
+  const chartH = H - padding.top - padding.bottom;
+
+  const xMin = view.xMin;
+  const xMax = view.xMax;
+  const yMin = view.yMin;
+  const yMax = view.yMax;
+
+  const xScale = (price) => padding.left + ((price - xMin) / (xMax - xMin)) * chartW;
+  const yScale = (pnl) => padding.top + chartH / 2 - ((pnl - (yMin + yMax) / 2) / ((yMax - yMin) / 2)) * (chartH / 2);
+  const zeroY = yScale(0);
+
+  svgGeometry = {
+    W, H, padding, chartW, chartH,
+    priceMin: xMin, priceMax: xMax,
+    absMax: (yMax - yMin) / 2,
+    zeroY, xScale, yScale
+  };
+
+  const isDark = document.documentElement.getAttribute('data-theme') !== 'light';
+
+  const cGrid = isDark ? 'rgba(255, 255, 255, 0.035)' : 'rgba(0, 0, 0, 0.04)';
+  const cAxis = isDark ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.08)';
+  const cText = isDark ? '#5c6169' : '#8a919c';
+  const cTextStrong = isDark ? '#8b9099' : '#5b6471';
+  const cGreen = isDark ? 'rgba(34, 197, 94, 0.08)' : 'rgba(22, 163, 74, 0.06)';
+  const cRed = isDark ? 'rgba(239, 68, 68, 0.08)' : 'rgba(220, 38, 38, 0.06)';
+  const cSpot = isDark ? '#60a5fa' : '#2563eb';
+  const cGold = isDark ? '#d4af37' : '#a87800';
+  const cGoldLight = isDark ? '#f4d47c' : '#c8991f';
+  const cBg = isDark ? '#0a0c10' : '#ffffff';
+
+  let svgContent = `<defs>
+    <linearGradient id="lineGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="${cGold}"/>
+      <stop offset="50%" stop-color="${cGoldLight}"/>
+      <stop offset="100%" stop-color="${cGold}"/>
+    </linearGradient>
+    <filter id="lineGlow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <clipPath id="chartClip">
+      <rect x="${padding.left}" y="${padding.top}" width="${chartW}" height="${chartH}"/>
+    </clipPath>
+  </defs>`;
+
+  const profitBottomY = Math.max(padding.top, Math.min(H - padding.bottom, zeroY));
+  if (profitBottomY > padding.top) {
+    svgContent += `<rect x="${padding.left}" y="${padding.top}" width="${chartW}" height="${profitBottomY - padding.top}" fill="${cGreen}" clip-path="url(#chartClip)"/>`;
+  }
+  const lossTopY = Math.max(padding.top, Math.min(H - padding.bottom, zeroY));
+  if (H - padding.bottom > lossTopY) {
+    svgContent += `<rect x="${padding.left}" y="${lossTopY}" width="${chartW}" height="${H - padding.bottom - lossTopY}" fill="${cRed}" clip-path="url(#chartClip)"/>`;
+  }
+
+  for (let i = 0; i <= 12; i++) {
+    const price = xMin + ((xMax - xMin) / 12) * i;
+    const x = xScale(price);
+    svgContent += `<line x1="${x}" y1="${padding.top}" x2="${x}" y2="${H - padding.bottom}" stroke="${cGrid}" stroke-width="1"/>`;
+  }
+  for (let i = 0; i <= 8; i++) {
+    const pnl = yMin + ((yMax - yMin) / 8) * i;
+    const y = yScale(pnl);
+    svgContent += `<line x1="${padding.left}" y1="${y}" x2="${W - padding.right}" y2="${y}" stroke="${cGrid}" stroke-width="1"/>`;
+  }
+
+  svgContent += `<line x1="${padding.left}" y1="${zeroY}" x2="${W - padding.right}" y2="${zeroY}" stroke="${cAxis}" stroke-width="1"/>`;
+  svgContent += `<line x1="${padding.left}" y1="${padding.top}" x2="${padding.left}" y2="${H - padding.bottom}" stroke="${cAxis}" stroke-width="1"/>`;
+
+  for (let i = 0; i <= 8; i++) {
+    const pnl = yMin + ((yMax - yMin) / 8) * i;
+    const y = yScale(pnl);
+    svgContent += `<text x="${padding.left - 12}" y="${y + 4}" text-anchor="end" fill="${cText}" font-size="10" font-family="Vazirmatn, sans-serif" font-weight="500">${toFa(formatNum(pnl))}</text>`;
+  }
+
+  for (let i = 0; i <= 6; i++) {
+    const price = xMin + ((xMax - xMin) / 6) * i;
+    const x = xScale(price);
+    svgContent += `<text x="${x}" y="${H - padding.bottom + 22}" text-anchor="middle" fill="${cText}" font-size="10" font-family="Vazirmatn, sans-serif" font-weight="500">${toFa(formatNum(price))}</text>`;
+  }
+  svgContent += `<text x="${W / 2}" y="${H - 12}" text-anchor="middle" fill="${cTextStrong}" font-size="10" font-family="Vazirmatn, sans-serif" font-weight="600">قیمت دارایی پایه در سررسید</text>`;
+
+  let pathD = '';
+  points.forEach((p, i) => {
+    const x = xScale(p.price);
+    const y = yScale(p.pnl);
+    pathD += (i === 0 ? 'M' : ' L') + x + ',' + y;
+  });
+
+  svgContent += `<path d="${pathD}" stroke="${cGoldLight}" stroke-width="5" fill="none" stroke-linejoin="round" opacity="0.12" filter="url(#lineGlow)" clip-path="url(#chartClip)"/>`;
+  svgContent += `<path d="${pathD}" stroke="url(#lineGrad)" stroke-width="2.2" fill="none" stroke-linejoin="round" clip-path="url(#chartClip)"/>`;
+
+  breakevens.forEach(be => {
+    if (be > xMin && be < xMax) {
+      const x = xScale(be);
+      svgContent += `<line x1="${x}" y1="${padding.top}" x2="${x}" y2="${H - padding.bottom}" stroke="${cGold}" stroke-width="1" stroke-dasharray="3,4" opacity="0.45"/>`;
+      svgContent += `<circle cx="${x}" cy="${zeroY}" r="4.5" fill="${cGold}" stroke="${cBg}" stroke-width="1.5"/>`;
+      svgContent += `<text x="${x}" y="${zeroY - 12}" text-anchor="middle" fill="${cGold}" font-size="10" font-family="Vazirmatn, sans-serif" font-weight="700">BE ${toFa(formatNum(be, 0))}</text>`;
+    }
+  });
+
+  const spotX = xScale(currentPrice);
+  if (spotX >= padding.left && spotX <= W - padding.right) {
+    svgContent += `<line x1="${spotX}" y1="${padding.top}" x2="${spotX}" y2="${H - padding.bottom}" stroke="${cSpot}" stroke-width="1.3" stroke-dasharray="4,4" opacity="0.85"/>`;
+    svgContent += `<rect x="${spotX - 38}" y="${padding.top - 20}" width="76" height="16" rx="4" fill="${cSpot}"/>`;
+    svgContent += `<text x="${spotX}" y="${padding.top - 9}" text-anchor="middle" fill="#fff" font-size="9" font-family="Vazirmatn, sans-serif" font-weight="800">قیمت فعلی</text>`;
+  }
+
+  svgContent += `<line id="crosshairX" x1="0" y1="${padding.top}" x2="0" y2="${H - padding.bottom}" stroke="${cGold}" stroke-width="1" stroke-dasharray="3,3" opacity="0" style="pointer-events:none"/>`;
+  svgContent += `<line id="crosshairY" x1="${padding.left}" y1="0" x2="${W - padding.right}" y2="0" stroke="${cGold}" stroke-width="1" stroke-dasharray="3,3" opacity="0" style="pointer-events:none"/>`;
+  svgContent += `<circle id="crosshairDot" cx="0" cy="0" r="5" fill="${cGold}" stroke="${cBg}" stroke-width="2" opacity="0" style="pointer-events:none"/>`;
+
+  svgContent += `<rect id="hoverZone" x="${padding.left}" y="${padding.top}" width="${chartW}" height="${chartH}" fill="transparent" style="cursor:${panMode ? 'grab' : 'crosshair'}"/>`;
+
+  svg.innerHTML = svgContent;
+
+  if (isLocked && lockedPoint) applyLockedPoint(lockedPoint);
+}
+
+// ==========================================
+// 🔍 زوم / پن
+// ==========================================
+function getSVGCoords(clientX, clientY) {
+  const svg = document.getElementById('payoffChart');
+  const rect = svg.getBoundingClientRect();
+const scaleX = svgGeometry ? svgGeometry.W / rect.width : 1;
+const scaleY = svgGeometry ? svgGeometry.H / rect.height : 1;
+  return {
+    x: (clientX - rect.left) * scaleX,
+    y: (clientY - rect.top) * scaleY,
+    rect
+  };
+}
+
+function zoomAt(centerX, centerY, factorX, factorY) {
+  const xRange = view.xMax - view.xMin;
+  const yRange = view.yMax - view.yMin;
+
+  const newXRange = Math.max((view.fullXMax - view.fullXMin) / 40, Math.min((view.fullXMax - view.fullXMin), xRange / factorX));
+  const newYRange = Math.max((view.fullYMax - view.fullYMin) / 40, Math.min((view.fullYMax - view.fullYMin), yRange / factorY));
+
+  const relX = (centerX - view.xMin) / xRange;
+  const relY = (centerY - view.yMin) / yRange;
+
+  let newXMin = centerX - relX * newXRange;
+  let newXMax = newXMin + newXRange;
+  let newYMin = centerY - relY * newYRange;
+  let newYMax = newYMin + newYRange;
+
+  if (newXMin < view.fullXMin) { newXMin = view.fullXMin; newXMax = newXMin + newXRange; }
+  if (newXMax > view.fullXMax) { newXMax = view.fullXMax; newXMin = newXMax - newXRange; }
+  if (newYMin < view.fullYMin) { newYMin = view.fullYMin; newYMax = newYMin + newYRange; }
+  if (newYMax > view.fullYMax) { newYMax = view.fullYMax; newYMin = newYMax - newYRange; }
+
+  view.xMin = newXMin;
+  view.xMax = newXMax;
+  view.yMin = newYMin;
+  view.yMax = newYMax;
+}
+
+function zoomIn(axis = 'both') {
+  const cx = (view.xMin + view.xMax) / 2;
+  const cy = (view.yMin + view.yMax) / 2;
+  const fx = (axis === 'both' || axis === 'x') ? 1.3 : 1;
+  const fy = (axis === 'both' || axis === 'y') ? 1.3 : 1;
+  zoomAt(cx, cy, fx, fy);
+  applyZoom();
+}
+
+function zoomOut() {
+  const cx = (view.xMin + view.xMax) / 2;
+  const cy = (view.yMin + view.yMax) / 2;
+  zoomAt(cx, cy, 1/1.3, 1/1.3);
+  applyZoom();
+}
+
+function resetZoom() {
+  view.xMin = view.fullXMin;
+  view.xMax = view.fullXMax;
+  view.yMin = view.fullYMin;
+  view.yMax = view.fullYMax;
+  applyZoom();
+}
+
+function applyZoom() {
+  const zx = (view.fullXMax - view.fullXMin) / (view.xMax - view.xMin);
+  const zy = (view.fullYMax - view.fullYMin) / (view.yMax - view.yMin);
+  document.getElementById('zoomInfo').textContent = `${zx.toFixed(1)}× | ${zy.toFixed(1)}×`;
+  if (positions.length === 0) return;
+  if (!chartMeta) return;
+  updateChart();
+}
+
+function togglePan() {
+  panMode = !panMode;
+  document.getElementById('panBtn').classList.toggle('active', panMode);
+  document.getElementById('chartCanvasWrap').classList.toggle('panning', panMode);
+}
+// ==========================================
+// ⛶ حالت تمام‌صفحه
+// ==========================================
+async function toggleFullscreen() {
+  const container = document.getElementById('chartContainer');
+  const btn = document.getElementById('fullscreenBtn');
+  if (!container) return;
+
+  const nativeFullscreen = document.fullscreenElement === container ||
+                           document.webkitFullscreenElement === container;
+
+  try {
+    if (!nativeFullscreen && !container.classList.contains('fullscreen')) {
+      // اول Fullscreen API؛ اگر مرورگر اجازه نداد، fallback CSS فعال می‌شود.
+      if (container.requestFullscreen) {
+        await container.requestFullscreen({ navigationUI: 'hide' });
+      } else if (container.webkitRequestFullscreen) {
+        container.webkitRequestFullscreen();
+      } else {
+        container.classList.add('fullscreen');
+      }
+    } else {
+      if (document.exitFullscreen && nativeFullscreen) {
+        await document.exitFullscreen();
+      } else if (document.webkitExitFullscreen && nativeFullscreen) {
+        document.webkitExitFullscreen();
+      } else {
+        container.classList.remove('fullscreen');
+      }
+    }
+  } catch (err) {
+    // بعضی موبایل‌ها Fullscreen API را محدود می‌کنند؛ حالت CSS همچنان قابل استفاده است.
+    container.classList.toggle('fullscreen', !container.classList.contains('fullscreen'));
+  }
+
+  updateFullscreenUI();
+}
+
+function updateFullscreenUI() {
+  const container = document.getElementById('chartContainer');
+  const btn = document.getElementById('fullscreenBtn');
+  if (!container || !btn) return;
+
+  const active = document.fullscreenElement === container ||
+                 document.webkitFullscreenElement === container ||
+                 container.classList.contains('fullscreen');
+
+  btn.classList.toggle('active', active);
+  btn.textContent = active ? '✕' : '⛶';
+  btn.title = active ? 'خروج از تمام صفحه' : 'تمام صفحه';
+  btn.setAttribute('aria-label', active ? 'خروج از تمام صفحه' : 'تمام صفحه');
+
+  document.body.style.overflow = active ? 'hidden' : '';
+
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      if (chartPoints.length > 0 && chartMeta) {
+        drawChart(chartPoints, currentBreakevens, chartMeta.currentPrice);
+      }
+    });
+  });
+}
+
+document.addEventListener('fullscreenchange', updateFullscreenUI);
+document.addEventListener('webkitfullscreenchange', updateFullscreenUI);
+
+// خروج با کلید Escape
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') {
+    const container = document.getElementById('chartContainer');
+    if (container && container.classList.contains('fullscreen')) {
+      toggleFullscreen();
+    }
+  }
+});
+
+// رندر دقیق هنگام تغییر اندازه/چرخش؛ با requestAnimationFrame از رندرهای اضافه جلوگیری می‌شود.
+let chartResizeRAF = 0;
+function requestChartResize() {
+  cancelAnimationFrame(chartResizeRAF);
+  chartResizeRAF = requestAnimationFrame(() => {
+    if (chartPoints.length > 0 && chartMeta) {
+      drawChart(chartPoints, currentBreakevens, chartMeta.currentPrice);
+    }
+  });
+}
+window.addEventListener('resize', requestChartResize, { passive: true });
+window.addEventListener('load', () => {
+  requestChartResize();
+}, { once: true, passive: true });
+window.addEventListener('orientationchange', () => setTimeout(requestChartResize, 120), { passive: true });
+
+if (window.ResizeObserver) {
+  const chartResizeObserver = new ResizeObserver(() => requestChartResize());
+  const wrapForObserver = document.getElementById('chartCanvasWrap');
+  if (wrapForObserver) chartResizeObserver.observe(wrapForObserver);
+}
+  
+// ==========================================
+// 🖱️ Tooltip
+// ==========================================
+const tooltipEl = document.getElementById('chartTooltip');
+const payoffSvg = document.getElementById('payoffChart');
+const chartCanvasWrap = document.getElementById('chartCanvasWrap');
+const chartHint = document.getElementById('chartHint');
+
+let isDragging = false;
+let dragStartX = 0;
+let dragStartY = 0;
+let dragStartView = null;
+let mouseDownX = 0;
+let mouseDownY = 0;
+
+function showChartTooltip(price, pnl, percent, clientX, clientY) {
+  const cur = chartMeta ? chartMeta.currency : { short: '$' };
+  const profitClass = pnl >= 0 ? 'tt-pnl-profit' : 'tt-pnl-loss';
+  const pctClass = pnl >= 0 ? 'tt-pct-profit' : 'tt-pct-loss';
+  const sign = pnl >= 0 ? '+' : '';
+  const pctSign = percent >= 0 ? '+' : '';
+
+  tooltipEl.innerHTML = `
+    <div class="tt-row tt-price">
+      <span class="k">قیمت:</span>
+      <span class="v">${toFa(formatNum(price, 1))}</span>
+    </div>
+    <div class="tt-divider"></div>
+    <div class="tt-row ${pctClass}">
+      <span class="k">سود/زیان:</span>
+      <span class="v">${pctSign}${toFa(percent.toFixed(1))}٪</span>
+    </div>
+    <div class="tt-row ${profitClass}">
+      <span class="k">مبلغ:</span>
+      <span class="v">${sign}${toFa(formatNum(pnl))} ${cur.short}</span>
+    </div>
+  `;
+  tooltipEl.classList.add('visible');
+  tooltipEl.classList.toggle('locked', isLocked);
+
+  const wrapRect = chartCanvasWrap.getBoundingClientRect();
+  const tipRect = tooltipEl.getBoundingClientRect();
+
+  let left = clientX - wrapRect.left + 16;
+  let top = clientY - wrapRect.top - tipRect.height - 12;
+
+  if (left + tipRect.width > wrapRect.width - 8) {
+    left = clientX - wrapRect.left - tipRect.width - 16;
+  }
+  if (left < 8) left = 8;
+  if (top < 8) top = clientY - wrapRect.top + 20;
+  if (top + tipRect.height > wrapRect.height - 8) {
+    top = wrapRect.height - tipRect.height - 8;
+  }
+
+  tooltipEl.style.left = Math.round(left) + 'px';
+  tooltipEl.style.top = Math.round(top) + 'px';
+}
+
+function hideChartTooltip() {
+  tooltipEl.classList.remove('visible');
+  tooltipEl.classList.remove('locked');
+}
+
+function updateCrosshair(price, pnl) {
+  const cx = document.getElementById('crosshairX');
+  const cy = document.getElementById('crosshairY');
+  const cd = document.getElementById('crosshairDot');
+  if (!cx || !cy || !cd || !svgGeometry) return;
+  const px = svgGeometry.xScale(price);
+  const py = svgGeometry.yScale(pnl);
+  cx.setAttribute('x1', px);
+  cx.setAttribute('x2', px);
+  cx.setAttribute('opacity', '0.7');
+  cy.setAttribute('y1', py);
+  cy.setAttribute('y2', py);
+  cy.setAttribute('opacity', '0.7');
+  cd.setAttribute('cx', px);
+  cd.setAttribute('cy', py);
+  cd.setAttribute('opacity', '1');
+}
+
+function clearCrosshair() {
+  const cx = document.getElementById('crosshairX');
+  const cy = document.getElementById('crosshairY');
+  const cd = document.getElementById('crosshairDot');
+  if (cx) cx.setAttribute('opacity', '0');
+  if (cy) cy.setAttribute('opacity', '0');
+  if (cd) cd.setAttribute('opacity', '0');
+}
+
+function resetLockUI() {
+  chartHint.classList.remove('locked');
+  chartHint.innerHTML = `
+    <span class="lock-icon">🖱️</span>
+    <span>اسکرول = زوم روی موس | درگ (Pan) = جابجایی | کلیک = قفل نقطه</span>
+  `;
+}
+
+function applyLockedPoint(point) {
+  chartHint.classList.add('locked');
+  chartHint.innerHTML = `
+    <span class="lock-icon">🔒</span>
+    <span>نقطه قفل شد — قیمت <strong>${toFa(formatNum(point.price, 1))}</strong> | برای <strong>آزادسازی</strong> کلیک کن</span>
+  `;
+  updateCrosshair(point.price, point.pnl);
+
+  const svgRect = payoffSvg.getBoundingClientRect();
+  const scaleX = svgRect.width / svgGeometry.W;
+  const scaleY = svgRect.height / svgGeometry.H;
+  const clientX = svgGeometry.xScale(point.price) * scaleX + svgRect.left;
+  const clientY = svgGeometry.yScale(point.pnl) * scaleY + svgRect.top;
+
+  const totalInv = totalInvestmentValue();
+  const percent = (point.pnl / totalInv) * 100;
+
+  showChartTooltip(point.price, point.pnl, percent, clientX, clientY);
+}
+
+payoffSvg.addEventListener('wheel', (e) => {
+  if (positions.length === 0) return;
+  e.preventDefault();
+
+  const { x: svgX, y: svgY } = getSVGCoords(e.clientX, e.clientY);
+
+  const cx = view.xMin + ((svgX - svgGeometry.padding.left) / svgGeometry.chartW) * (view.xMax - view.xMin);
+  const cy = view.yMax - ((svgY - svgGeometry.padding.top) / svgGeometry.chartH) * (view.yMax - view.yMin);
+
+  const factor = e.deltaY < 0 ? 1.15 : 1/1.15;
+
+  if (e.shiftKey) zoomAt(cx, cy, factor, 1);
+  else if (e.ctrlKey || e.altKey) zoomAt(cx, cy, 1, factor);
+  else zoomAt(cx, cy, factor, factor);
+
+  applyZoom();
+}, { passive: false });
+
+payoffSvg.addEventListener('mousemove', (e) => {
+  if (!svgGeometry || chartPoints.length === 0) return;
+
+  if (isDragging && panMode && dragStartView) {
+    const rect = payoffSvg.getBoundingClientRect();
+    const dx = (e.clientX - dragStartX) / rect.width * (dragStartView.xMax - dragStartView.xMin);
+    const dy = (e.clientY - dragStartY) / rect.height * (dragStartView.yMax - dragStartView.yMin);
+
+    let newXMin = dragStartView.xMin - dx;
+    let newXMax = dragStartView.xMax - dx;
+    let newYMin = dragStartView.yMin + dy;
+    let newYMax = dragStartView.yMax + dy;
+
+    const xRange = dragStartView.xMax - dragStartView.xMin;
+    const yRange = dragStartView.yMax - dragStartView.yMin;
+
+    if (newXMin < view.fullXMin) { newXMin = view.fullXMin; newXMax = newXMin + xRange; }
+    if (newXMax > view.fullXMax) { newXMax = view.fullXMax; newXMin = newXMax - xRange; }
+    if (newYMin < view.fullYMin) { newYMin = view.fullYMin; newYMax = newYMin + yRange; }
+    if (newYMax > view.fullYMax) { newYMax = view.fullYMax; newYMin = newYMax - yRange; }
+
+    view.xMin = newXMin;
+    view.xMax = newXMax;
+    view.yMin = newYMin;
+    view.yMax = newYMax;
+
+    drawChart(chartPoints, currentBreakevens, chartMeta.currentPrice);
+    return;
+  }
+
+  if (isLocked) return;
+  if (panMode) return;
+
+  const rect = payoffSvg.getBoundingClientRect();
+  const scaleX = svgGeometry.W / rect.width;
+  const svgX = (e.clientX - rect.left) * scaleX;
+
+  if (svgX < svgGeometry.padding.left || svgX > svgGeometry.padding.left + svgGeometry.chartW) {
+    hideChartTooltip();
+    clearCrosshair();
+    return;
+  }
+
+  const ratio = (svgX - svgGeometry.padding.left) / svgGeometry.chartW;
+  const price = svgGeometry.priceMin + ratio * (svgGeometry.priceMax - svgGeometry.priceMin);
+
+  let nearest = chartPoints[0];
+  let minDist = Infinity;
+  chartPoints.forEach(pt => {
+    const d = Math.abs(pt.price - price);
+    if (d < minDist) { minDist = d; nearest = pt; }
+  });
+
+  const totalInv = totalInvestmentValue();
+  const percent = (nearest.pnl / totalInv) * 100;
+
+  updateCrosshair(nearest.price, nearest.pnl);
+  showChartTooltip(nearest.price, nearest.pnl, percent, e.clientX, e.clientY);
+});
+
+payoffSvg.addEventListener('mouseleave', () => {
+  if (isLocked) return;
+  if (isDragging) return;
+  hideChartTooltip();
+  clearCrosshair();
+});
+
+payoffSvg.addEventListener('mousedown', (e) => {
+  if (positions.length === 0) return;
+  mouseDownX = e.clientX;
+  mouseDownY = e.clientY;
+  if (panMode) {
+    isDragging = true;
+    dragStartX = e.clientX;
+    dragStartY = e.clientY;
+    dragStartView = { xMin: view.xMin, xMax: view.xMax, yMin: view.yMin, yMax: view.yMax };
+    payoffSvg.style.cursor = 'grabbing';
+  }
+});
+
+document.addEventListener('mouseup', (e) => {
+  // لمس موبایل نباید رویداد mouseup مصنوعی مرورگر را فعال کند؛
+  // در غیر این صورت اولین تپ ممکن است ناخواسته نقطه را قفل کند.
+  if (window.__lastTouchEventTime && performance.now() - window.__lastTouchEventTime < 700) return;
+
+  if (isDragging) {
+    isDragging = false;
+    payoffSvg.style.cursor = panMode ? 'grab' : 'crosshair';
+    return;
+  }
+
+  const dx = Math.abs(e.clientX - mouseDownX);
+  const dy = Math.abs(e.clientY - mouseDownY);
+  if (dx > 5 || dy > 5) return;
+
+  if (e.target !== payoffSvg && !payoffSvg.contains(e.target)) return;
+  if (!svgGeometry || chartPoints.length === 0) return;
+  if (panMode) return;
+
+  if (isLocked) {
+    isLocked = false;
+    lockedPoint = null;
+    resetLockUI();
+    hideChartTooltip();
+    clearCrosshair();
+    return;
+  }
+
+  const rect = payoffSvg.getBoundingClientRect();
+  const scaleX = svgGeometry.W / rect.width;
+  const svgX = (e.clientX - rect.left) * scaleX;
+  const padding = svgGeometry.padding;
+  const chartW = svgGeometry.chartW;
+
+  if (svgX < padding.left || svgX > padding.left + chartW) return;
+
+  const ratio = (svgX - padding.left) / chartW;
+  const price = svgGeometry.priceMin + ratio * (svgGeometry.priceMax - svgGeometry.priceMin);
+
+  let nearest = chartPoints[0];
+  let minDist = Infinity;
+  chartPoints.forEach(pt => {
+    const d = Math.abs(pt.price - price);
+    if (d < minDist) { minDist = d; nearest = pt; }
+  });
+
+  isLocked = true;
+  lockedPoint = nearest;
+  applyLockedPoint(nearest);
+});
+
+
+// ==========================================
+// 📱 Touch / Pinch / Drag — رفتار موبایلی
+//    یک ضربه = نمایش و دنبال‌کردن نقطه
+//    دو ضربه سریع = قفل نقطه
+//    ضربه بعدی = باز کردن قفل
+// ==========================================
+let touchMode = null;
+let touchStart = null;
+let pinchStartDistance = 0;
+let pinchStartView = null;
+let pinchCenter = null;
+let touchInspectActive = false;
+let lastTapTime = 0;
+let lastTapPoint = null;
+const DOUBLE_TAP_DELAY = 330;
+const DOUBLE_TAP_DISTANCE = 42;
+
+function getTouchDistance(a, b) {
+  return Math.hypot(a.clientX - b.clientX, a.clientY - b.clientY);
+}
+
+function getTouchCenter(a, b) {
+  return {
+    x: (a.clientX + b.clientX) / 2,
+    y: (a.clientY + b.clientY) / 2
+  };
+}
+
+function clientToData(clientX, clientY) {
+  if (!svgGeometry) return null;
+  const rect = payoffSvg.getBoundingClientRect();
+  const sx = svgGeometry.W / rect.width;
+  const sy = svgGeometry.H / rect.height;
+  const x = (clientX - rect.left) * sx;
+  const y = (clientY - rect.top) * sy;
+
+  const xRatio = (x - svgGeometry.padding.left) / svgGeometry.chartW;
+  const yRatio = (y - svgGeometry.padding.top) / svgGeometry.chartH;
+
+  return {
+    svgX: x,
+    svgY: y,
+    price: svgGeometry.priceMin + xRatio * (svgGeometry.priceMax - svgGeometry.priceMin),
+    pnl: view.yMax - yRatio * (view.yMax - view.yMin)
+  };
+}
+
+function getNearestChartPoint(clientX, clientY) {
+  const data = clientToData(clientX, clientY);
+  if (!data || !svgGeometry || !chartPoints.length) return null;
+
+  const p = svgGeometry.padding;
+  if (data.svgX < p.left || data.svgX > p.left + svgGeometry.chartW ||
+      data.svgY < p.top || data.svgY > p.top + svgGeometry.chartH) {
+    return null;
+  }
+
+  let nearest = chartPoints[0];
+  let minDist = Infinity;
+  chartPoints.forEach(pt => {
+    const d = Math.abs(pt.price - data.price);
+    if (d < minDist) {
+      minDist = d;
+      nearest = pt;
+    }
+  });
+  return nearest;
+}
+
+function inspectAtTouch(clientX, clientY) {
+  const nearest = getNearestChartPoint(clientX, clientY);
+  if (!nearest) return false;
+
+  const totalInv = totalInvestmentValue();
+  const percent = totalInv ? (nearest.pnl / totalInv) * 100 : 0;
+  updateCrosshair(nearest.price, nearest.pnl);
+  showChartTooltip(nearest.price, nearest.pnl, percent, clientX, clientY);
+  touchInspectActive = true;
+  return true;
+}
+
+payoffSvg.addEventListener('touchstart', (e) => {
+  if (positions.length === 0 || !svgGeometry) return;
+
+  if (e.touches.length === 2) {
+    e.preventDefault();
+    touchMode = 'pinch';
+    pinchStartDistance = getTouchDistance(e.touches[0], e.touches[1]);
+    pinchCenter = getTouchCenter(e.touches[0], e.touches[1]);
+    pinchStartView = {
+      xMin: view.xMin, xMax: view.xMax,
+      yMin: view.yMin, yMax: view.yMax
+    };
+    touchStart = null;
+    isDragging = false;
+    return;
+  }
+
+  if (e.touches.length !== 1) return;
+
+  // از ایجاد mouse event مصنوعی جلوگیری می‌کنیم تا تپ اول ناخواسته قفل نشود.
+  e.preventDefault();
+  window.__lastTouchEventTime = performance.now();
+
+  const t = e.touches[0];
+  touchStart = {
+    x: t.clientX,
+    y: t.clientY,
+    time: performance.now()
+  };
+  touchMode = 'inspect';
+  isDragging = false;
+
+  // اولین لمس بلافاصله مثل حرکت موس عمل می‌کند؛ نیازی به نگه‌داشتن انگشت نیست.
+  if (!isLocked) {
+    inspectAtTouch(t.clientX, t.clientY);
+  }
+}, { passive: false });
+
+payoffSvg.addEventListener('touchmove', (e) => {
+  window.__lastTouchEventTime = performance.now();
+  if (positions.length === 0 || !svgGeometry) return;
+
+  if (e.touches.length === 2 && pinchStartView) {
+    e.preventDefault();
+
+    const distance = getTouchDistance(e.touches[0], e.touches[1]);
+    if (!distance || !pinchStartDistance) return;
+
+    const center = getTouchCenter(e.touches[0], e.touches[1]);
+    const scale = distance / pinchStartDistance;
+
+    const startXRange = pinchStartView.xMax - pinchStartView.xMin;
+    const startYRange = pinchStartView.yMax - pinchStartView.yMin;
+    const dataCenter = clientToData(pinchCenter.x, pinchCenter.y);
+    if (!dataCenter) return;
+
+    const newXRange = Math.max(
+      (view.fullXMax - view.fullXMin) / 40,
+      Math.min(view.fullXMax - view.fullXMin, startXRange / scale)
+    );
+    const newYRange = Math.max(
+      (view.fullYMax - view.fullYMin) / 40,
+      Math.min(view.fullYMax - view.fullYMin, startYRange / scale)
+    );
+
+    const relX = (dataCenter.price - pinchStartView.xMin) / startXRange;
+    const relY = (dataCenter.pnl - pinchStartView.yMin) / startYRange;
+
+    let newXMin = dataCenter.price - relX * newXRange;
+    let newYMin = dataCenter.pnl - relY * newYRange;
+
+    newXMin = Math.max(view.fullXMin, Math.min(view.fullXMax - newXRange, newXMin));
+    newYMin = Math.max(view.fullYMin, Math.min(view.fullYMax - newYRange, newYMin));
+
+    view.xMin = newXMin;
+    view.xMax = newXMin + newXRange;
+    view.yMin = newYMin;
+    view.yMax = newYMin + newYRange;
+
+    applyZoom();
+    return;
+  }
+
+  if (e.touches.length !== 1 || !touchStart) return;
+
+  const t = e.touches[0];
+  const dxPx = t.clientX - touchStart.x;
+  const dyPx = t.clientY - touchStart.y;
+
+  // در حالت تک‌انگشتی، رفتار اصلی مثل موس است: انگشت را حرکت بده و Tooltip دنبال کند.
+  if (!isLocked && touchMode === 'inspect') {
+    e.preventDefault();
+    inspectAtTouch(t.clientX, t.clientY);
+    return;
+  }
+
+  // اگر نقطه قفل شده باشد، حرکت انگشت آن را جابه‌جا نمی‌کند.
+  if (isLocked) return;
+
+  // Pan تک‌انگشتی فقط در صورت فعال بودن Pan Mode انجام می‌شود.
+  if (panMode) {
+    if (Math.abs(dxPx) > 6 || Math.abs(dyPx) > 6) e.preventDefault();
+    if (Math.abs(dxPx) < 6 && Math.abs(dyPx) < 6) return;
+
+    if (!isDragging) {
+      touchMode = 'pan';
+      dragStartX = touchStart.x;
+      dragStartY = touchStart.y;
+      dragStartView = {
+        xMin: view.xMin, xMax: view.xMax,
+        yMin: view.yMin, yMax: view.yMax
+      };
+      isDragging = true;
+    }
+
+    const rect = payoffSvg.getBoundingClientRect();
+    const xRange = dragStartView.xMax - dragStartView.xMin;
+    const yRange = dragStartView.yMax - dragStartView.yMin;
+    const dx = dxPx / rect.width * xRange;
+    const dy = dyPx / rect.height * yRange;
+
+    let newXMin = dragStartView.xMin - dx;
+    let newXMax = dragStartView.xMax - dx;
+    let newYMin = dragStartView.yMin + dy;
+    let newYMax = dragStartView.yMax + dy;
+
+    if (newXMin < view.fullXMin) { newXMin = view.fullXMin; newXMax = newXMin + xRange; }
+    if (newXMax > view.fullXMax) { newXMax = view.fullXMax; newXMin = newXMax - xRange; }
+    if (newYMin < view.fullYMin) { newYMin = view.fullYMin; newYMax = newYMin + yRange; }
+    if (newYMax > view.fullYMax) { newYMax = view.fullYMax; newYMin = newYMax - yRange; }
+
+    view.xMin = newXMin;
+    view.xMax = newXMax;
+    view.yMin = newYMin;
+    view.yMax = newYMax;
+    applyZoom();
+  }
+}, { passive: false });
+
+payoffSvg.addEventListener('touchend', (e) => {
+  window.__lastTouchEventTime = performance.now();
+  if (!touchStart) return;
+  if (e.touches.length > 0) return;
+
+  const changed = e.changedTouches && e.changedTouches[0];
+  const endX = changed ? changed.clientX : touchStart.x;
+  const endY = changed ? changed.clientY : touchStart.y;
+  const moved = Math.hypot(endX - touchStart.x, endY - touchStart.y) > 10;
+  const duration = performance.now() - touchStart.time;
+
+  if (!moved && duration < 500 && !panMode && chartPoints.length > 0) {
+    const now = performance.now();
+    const point = getNearestChartPoint(endX, endY);
+
+    if (isLocked) {
+      // بعد از قفل، یک ضربه = باز کردن قفل.
+      isLocked = false;
+      lockedPoint = null;
+      resetLockUI();
+      touchInspectActive = false;
+      hideChartTooltip();
+      clearCrosshair();
+      lastTapTime = 0;
+      lastTapPoint = null;
+    } else if (point) {
+      const isDoubleTap =
+        lastTapTime > 0 &&
+        now - lastTapTime <= DOUBLE_TAP_DELAY &&
+        lastTapPoint &&
+        Math.hypot(endX - lastTapPoint.x, endY - lastTapPoint.y) <= DOUBLE_TAP_DISTANCE;
+
+      // ضربه دوم سریع روی همان ناحیه = قفل.
+      if (isDoubleTap) {
+        isLocked = true;
+        lockedPoint = point;
+        applyLockedPoint(point);
+        lastTapTime = 0;
+        lastTapPoint = null;
+      } else {
+        // ضربه اول/تک‌ضربه فقط نقطه را نشان می‌دهد و دنبال می‌کند.
+        inspectAtTouch(endX, endY);
+        lastTapTime = now;
+        lastTapPoint = { x: endX, y: endY };
+      }
+    }
+  }
+
+  touchStart = null;
+  touchMode = null;
+  pinchStartView = null;
+  pinchStartDistance = 0;
+  isDragging = false;
+}, { passive: false });
+
+payoffSvg.addEventListener('touchcancel', () => {
+  touchStart = null;
+  touchMode = null;
+  pinchStartView = null;
+  pinchStartDistance = 0;
+  isDragging = false;
+});
+
+window.addEventListener('scroll', () => {
+  if (!isLocked) hideChartTooltip();
+}, { passive: true });
+
+// ==========================================
+// 🚀 شروع
+// ==========================================
+renderPresets();
+renderPositions();
+updateChart();
+
+setTimeout(() => {
+  const hasAssets = positions.some(p => p.asset);
+  if (hasAssets) refreshAllPrices(false);
+}, 800);
+
+function applyTheme() {
+  const saved = localStorage.getItem('shamdun-theme') || 'dark';
+  document.documentElement.setAttribute('data-theme', saved);
+}
+applyTheme();
+  // ===== رسم مجدد نمودار در تغییر اندازه صفحه =====
+let resizeTimer = null;
+window.addEventListener('resize', () => {
+  clearTimeout(resizeTimer);
+  resizeTimer = setTimeout(() => {
+    if (chartPoints.length > 0) {
+      updateChart();
+    }
+  }, 250);
+});
+
+// ===== رسم مجدد در تغییر جهت صفحه =====
+window.addEventListener('orientationchange', () => {
+  setTimeout(() => {
+    if (chartPoints.length > 0) {
+      updateChart();
+    }
+  }, 400);
+});
+</script>
+
+<script src="navbar.js" defer></script>
+
+
+<script>
+(function(){
+  document.documentElement.setAttribute('data-o1','1');
+  // Keep the page in the new light financial-intelligence visual system.
+  // Existing functional scripts remain untouched.
+  const title = document.querySelector('.page-header h1');
+  if(title) title.textContent = 'آزمایشگاه استراتژی آپشن';
+  const subtitle = document.querySelector('.page-header p');
+  if(subtitle) subtitle.textContent = 'ساخت، تحلیل و آزمون سناریوهای سود و زیان با داده‌های واقعی پوزیشن';
+})();
+</script>
+
+</body>
+</html>
