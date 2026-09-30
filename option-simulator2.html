@@ -2,1893 +2,152 @@
 <html lang="fa" dir="rtl" data-theme="dark">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#0B1220">
 <title>آزمایشگاه استراتژی آپشن | شمعدون</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css">
-<meta name="theme-color" content="#d4af37">
 <style>
-:root {
-  --bg-primary: #08090c;
-  --bg-elevated: #0d0f14;
-  --bg-card: #11141a;
-  --bg-card-2: #171a21;
-  --bg-input: #0a0c10;
-  --border: rgba(255, 255, 255, 0.06);
-  --border-strong: rgba(255, 255, 255, 0.1);
-  --border-soft: rgba(255, 255, 255, 0.04);
-  --text-primary: #e6e8eb;
-  --text-secondary: #8b9099;
-  --text-muted: #5c6169;
-
-  --gold: #d4af37;
-  --gold-light: #f4d47c;
-  --gold-dark: #a8862a;
-  --gold-glow: rgba(212, 175, 55, 0.15);
-
-  --green: #22c55e;
-  --green-soft: rgba(34, 197, 94, 0.12);
-  --red: #ef4444;
-  --red-soft: rgba(239, 68, 68, 0.12);
-  --blue: #3b82f6;
-  --blue-soft: rgba(59, 130, 246, 0.12);
-  --purple: #8b5cf6;
-  --purple-soft: rgba(139, 92, 246, 0.12);
-
-  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
-  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.35);
-  --shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.45);
-
-  --sans: 'Vazirmatn', Tahoma, sans-serif;
-}
-[data-theme="light"] {
-  --bg-primary: #fafbfc;
-  --bg-elevated: #ffffff;
-  --bg-card: #ffffff;
-  --bg-card-2: #f7f8fa;
-  --bg-input: #ffffff;
-  --border: rgba(0, 0, 0, 0.06);
-  --border-strong: rgba(0, 0, 0, 0.1);
-  --border-soft: rgba(0, 0, 0, 0.04);
-  --text-primary: #0a0c10;
-  --text-secondary: #5b6471;
-  --text-muted: #8a919c;
-
-  --gold: #a87800;
-  --gold-light: #c8991f;
-  --gold-dark: #7a5700;
-  --gold-glow: rgba(168, 120, 0, 0.1);
-
-  --green: #16a34a;
-  --green-soft: rgba(22, 163, 74, 0.1);
-  --red: #dc2626;
-  --red-soft: rgba(220, 38, 38, 0.1);
-  --blue: #2563eb;
-  --blue-soft: rgba(37, 99, 235, 0.1);
-  --purple: #7c3aed;
-  --purple-soft: rgba(124, 58, 237, 0.1);
-
-  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.04);
-  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.06);
-  --shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.08);
-}
-* { margin: 0; padding: 0; box-sizing: border-box; }
-html { scroll-behavior: smooth; }
-body {
-  font-family: var(--sans);
-  background-color: var(--bg-primary);
-  color: var(--text-primary);
-  min-height: 100vh;
-  direction: rtl;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  background-image:
-    radial-gradient(ellipse 80% 50% at 50% -20%, rgba(139, 92, 246, 0.08), transparent),
-    radial-gradient(ellipse 60% 50% at 100% 100%, rgba(212, 175, 55, 0.05), transparent);
-  background-attachment: fixed;
-}
-[data-theme="light"] body {
-  background-image:
-    radial-gradient(ellipse 80% 50% at 50% -20%, rgba(124, 58, 237, 0.04), transparent),
-    radial-gradient(ellipse 60% 50% at 100% 100%, rgba(168, 120, 0, 0.03), transparent);
-}
-.container { max-width: 1500px; margin: 0 auto; padding: 100px 24px 80px; }
-
-.num, .mono, input[type="number"], .value, .zoom-info {
-  font-family: var(--sans);
-  font-feature-settings: 'tnum' 1;
-  font-variant-numeric: tabular-nums;
-}
-
-/* ===== HEADER ===== */
-.page-header {
-  position: relative;
-  text-align: center;
-  margin-bottom: 32px;
-  padding: 32px 24px;
-  background: linear-gradient(135deg, var(--bg-card) 0%, var(--bg-elevated) 100%);
-  border: 1px solid var(--border);
-  border-radius: 20px;
-  overflow: hidden;
-}
-.page-header::before {
-  content: '';
-  position: absolute;
-  top: 0; left: 50%;
-  transform: translateX(-50%);
-  width: 60%;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, var(--gold), transparent);
-  opacity: 0.5;
-}
-.page-header h1 {
-  font-size: 28px;
-  font-weight: 900;
-  margin-bottom: 8px;
-  letter-spacing: -0.5px;
-  background: linear-gradient(135deg, var(--text-primary) 30%, var(--gold) 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-.page-header p {
-  color: var(--text-secondary);
-  font-size: 14px;
-  font-weight: 500;
-}
-
-/* ===== STATUS BAR ===== */
-.status-bar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 12px;
-  padding: 12px 18px;
-  margin-bottom: 20px;
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  font-size: 12px;
-  font-weight: 600;
-}
-.status-bar .left {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  flex-wrap: wrap;
-}
-.status-bar .indicator {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  color: var(--text-secondary);
-}
-.status-bar .indicator .dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: var(--text-muted);
-}
-.status-bar .indicator.live .dot {
-  background: var(--green);
-  box-shadow: 0 0 8px var(--green);
-  animation: pulse 1.6s infinite;
-}
-.status-bar .indicator.loading .dot {
-  background: var(--blue);
-  box-shadow: 0 0 8px var(--blue);
-  animation: pulse 1s infinite;
-}
-.status-bar .indicator.error .dot {
-  background: var(--red);
-  box-shadow: 0 0 8px var(--red);
-}
-@keyframes pulse {
-  0%, 100% { opacity: 1; transform: scale(1); }
-  50% { opacity: 0.5; transform: scale(1.3); }
-}
-.status-bar .time-info {
-  color: var(--text-muted);
-  font-size: 11px;
-}
-
-.auto-refresh-toggle {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 6px 12px;
-  background: var(--bg-card-2);
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  cursor: pointer;
-  font-size: 11px;
-  font-weight: 700;
-  color: var(--text-secondary);
-  transition: all 0.15s;
-  user-select: none;
-}
-.auto-refresh-toggle:hover { color: var(--text-primary); border-color: var(--border-strong); }
-.auto-refresh-toggle input { display: none; }
-.auto-refresh-toggle .switch {
-  width: 30px;
-  height: 16px;
-  border-radius: 999px;
-  background: var(--border-strong);
-  position: relative;
-  transition: background 0.2s;
-}
-.auto-refresh-toggle .switch::after {
-  content: '';
-  position: absolute;
-  top: 2px;
-  left: 2px;
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  background: #fff;
-  transition: transform 0.2s;
-}
-.auto-refresh-toggle input:checked ~ .switch {
-  background: var(--green);
-}
-.auto-refresh-toggle input:checked ~ .switch::after {
-  transform: translateX(14px);
-}
-
-/* ===== PANEL ===== */
-.panel {
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: 16px;
-  padding: 24px;
-  margin-bottom: 20px;
-  box-shadow: var(--shadow-sm);
-  transition: border-color 0.2s;
-}
-.panel:hover { border-color: var(--border-strong); }
-.panel-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 20px;
-  padding-bottom: 16px;
-  border-bottom: 1px solid var(--border);
-  flex-wrap: wrap;
-  gap: 12px;
-}
-.panel-title {
-  color: var(--text-primary);
-  font-size: 15px;
-  font-weight: 800;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  letter-spacing: -0.2px;
-}
-.panel-title .badge {
-  background: var(--gold-glow);
-  color: var(--gold);
-  padding: 3px 10px;
-  border-radius: 6px;
-  font-size: 11px;
-  font-weight: 800;
-  border: 1px solid rgba(212, 175, 55, 0.25);
-}
-
-/* ===== Tabs ===== */
-.tabs {
-  display: flex;
-  gap: 4px;
-  margin-bottom: 20px;
-  padding: 4px;
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  width: fit-content;
-}
-.tab-btn {
-  padding: 10px 20px;
-  background: transparent;
-  color: var(--text-secondary);
-  border: none;
-  border-radius: 8px;
-  font-family: var(--sans);
-  font-size: 13px;
-  font-weight: 700;
-  cursor: pointer;
-  transition: all 0.2s;
-  white-space: nowrap;
-}
-.tab-btn:hover { color: var(--text-primary); background: var(--bg-card-2); }
-.tab-btn.active {
-  color: var(--text-primary);
-  background: var(--bg-elevated);
-  box-shadow: var(--shadow-sm);
-  border: 1px solid var(--border);
-}
-.tab-content { display: none; }
-.tab-content.active { display: block; animation: fadeIn 0.3s ease; }
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(4px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-/* ===== PRESETS ===== */
-.presets-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 10px;
-}
-.preset-card {
-  background: var(--bg-card-2);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 14px 16px;
-  cursor: pointer;
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-  text-align: right;
-  font-family: var(--sans);
-  color: var(--text-primary);
-  position: relative;
-  overflow: hidden;
-}
-.preset-card:hover {
-  border-color: var(--border-strong);
-  background: var(--bg-elevated);
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-md);
-}
-.preset-card.active {
-  background: linear-gradient(135deg, var(--gold-glow), transparent);
-  border-color: rgba(212, 175, 55, 0.5);
-  box-shadow: 0 0 0 1px rgba(212, 175, 55, 0.2), var(--shadow-md);
-}
-.preset-card .preset-header {
-  display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;
-}
-.preset-card .preset-icon { font-size: 20px; }
-.preset-card .preset-name {
-  color: var(--text-primary); font-size: 13px; font-weight: 800; letter-spacing: -0.2px;
-}
-.preset-card.active .preset-name { color: var(--gold); }
-.preset-card .preset-desc { color: var(--text-secondary); font-size: 11px; line-height: 1.6; }
-.preset-card .preset-badge {
-  display: inline-block;
-  background: var(--blue-soft);
-  color: var(--blue);
-  padding: 2px 8px;
-  border-radius: 5px;
-  font-size: 9px;
-  font-weight: 800;
-  margin-top: 8px;
-  border: 1px solid rgba(59, 130, 246, 0.2);
-}
-
-/* ===== TABLE ===== */
-.positions-table-wrapper {
-  overflow-x: auto;
-  border-radius: 12px;
-  margin-bottom: 16px;
-  border: 1px solid var(--border);
-  background: var(--bg-card-2);
-}
-.positions-table { width: 100%; border-collapse: collapse; min-width: 1560px; }
-.positions-table th {
-  background: var(--bg-elevated);
-  color: var(--text-secondary);
-  padding: 12px 10px;
-  text-align: right;
-  font-size: 11px;
-  font-weight: 700;
-  border-bottom: 1px solid var(--border);
-  white-space: nowrap;
-  letter-spacing: 0.3px;
-}
-.positions-table td {
-  padding: 10px;
-  border-bottom: 1px solid var(--border-soft);
-  vertical-align: middle;
-}
-.positions-table tbody tr { transition: background 0.15s; }
-.positions-table tbody tr:hover { background: rgba(212, 175, 55, 0.02); }
-.positions-table tbody tr:last-child td { border-bottom: none; }
-
-.cell-input, .cell-select {
-  width: 100%;
-  padding: 9px 11px;
-  background: var(--bg-input);
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  color: var(--text-primary);
-  font-family: var(--sans);
-  font-size: 12px;
-  font-weight: 600;
-  outline: none;
-  transition: all 0.15s;
-  direction: ltr;
-  text-align: right;
-}
-.cell-input {
-  min-width: 95px;
-  font-feature-settings: 'tnum' 1;
-  letter-spacing: -0.2px;
-}
-.cell-select {
-  min-width: 130px;
-  cursor: pointer;
-}
-.cell-input:hover, .cell-select:hover { border-color: var(--border-strong); }
-.cell-input:focus, .cell-select:focus {
-  border-color: var(--gold);
-  box-shadow: 0 0 0 3px var(--gold-glow);
-}
-.cell-input.highlight {
-  border-color: rgba(212, 175, 55, 0.4);
-  background: var(--gold-glow);
-  color: var(--gold);
-  font-weight: 800;
-}
-.cell-input:disabled { opacity: 0.4; cursor: not-allowed; }
-.cell-input.locked-cell {
-  background: var(--bg-card-2) !important;
-  border-color: var(--border-soft) !important;
-  color: var(--text-muted) !important;
-  cursor: not-allowed !important;
-  opacity: 0.5 !important;
-}
-.cell-select.placeholder-active {
-  color: var(--text-muted);
-  font-weight: 500;
-}
-
-.side-toggle {
-  display: inline-flex;
-  background: var(--bg-input);
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  overflow: hidden;
-  width: 100%;
-  min-width: 110px;
-  padding: 2px;
-  gap: 2px;
-}
-.side-btn {
-  flex: 1;
-  padding: 7px 6px;
-  background: transparent;
-  color: var(--text-secondary);
-  border: none;
-  border-radius: 6px;
-  font-family: var(--sans);
-  font-size: 11px;
-  font-weight: 700;
-  cursor: pointer;
-  transition: all 0.15s;
-  white-space: nowrap;
-}
-.side-btn:hover { color: var(--text-primary); }
-.side-btn.active-buy {
-  background: var(--green);
-  color: #fff;
-  box-shadow: 0 2px 8px rgba(34, 197, 94, 0.35);
-}
-.side-btn.active-sell {
-  background: var(--red);
-  color: #fff;
-  box-shadow: 0 2px 8px rgba(239, 68, 68, 0.35);
-}
-
-.symbol-badge {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 6px 12px;
-  border-radius: 8px;
-  font-size: 13px;
-  font-weight: 800;
-  font-family: var(--sans);
-  white-space: nowrap;
-  transition: all 0.15s;
-  width: 100%;
-  min-width: 80px;
-  border: 1px solid;
-  letter-spacing: -0.2px;
-}
-.symbol-badge.call {
-  background: var(--green-soft);
-  border-color: rgba(34, 197, 94, 0.3);
-  color: #4ade80;
-}
-.symbol-badge.put {
-  background: var(--red-soft);
-  border-color: rgba(239, 68, 68, 0.3);
-  color: #f87171;
-}
-.symbol-badge.spot {
-  background: var(--blue-soft);
-  border-color: rgba(59, 130, 246, 0.3);
-  color: #60a5fa;
-}
-.symbol-badge.empty {
-  background: var(--bg-card-2);
-  border-color: var(--border);
-  border-style: dashed;
-  color: var(--text-muted);
-  font-size: 11px;
-  font-weight: 600;
-}
-[data-theme="light"] .symbol-badge.call { color: #16a34a; }
-[data-theme="light"] .symbol-badge.put { color: #dc2626; }
-[data-theme="light"] .symbol-badge.spot { color: #2563eb; }
-
-.btn-remove {
-  width: 32px; height: 32px;
-  border-radius: 8px;
-  background: transparent;
-  border: 1px solid var(--border);
-  color: var(--text-secondary);
-  cursor: pointer;
-  font-size: 13px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.15s;
-  font-family: var(--sans);
-}
-.btn-remove:hover {
-  background: var(--red-soft);
-  border-color: rgba(239, 68, 68, 0.3);
-  color: var(--red);
-}
-
-.btn-add {
-  padding: 11px 20px;
-  background: transparent;
-  color: var(--text-primary);
-  border: 1px dashed var(--border-strong);
-  border-radius: 10px;
-  font-family: var(--sans);
-  font-size: 13px;
-  font-weight: 700;
-  cursor: pointer;
-  transition: all 0.2s;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-}
-.btn-add:hover {
-  border-color: var(--gold);
-  color: var(--gold);
-  background: var(--gold-glow);
-  border-style: solid;
-}
-
-.btn-primary {
-  padding: 11px 20px;
-  background: linear-gradient(135deg, var(--gold), var(--gold-dark));
-  color: #fff;
-  border: none;
-  border-radius: 10px;
-  font-family: var(--sans);
-  font-size: 13px;
-  font-weight: 800;
-  cursor: pointer;
-  transition: all 0.2s;
-  box-shadow: 0 2px 8px rgba(212, 175, 55, 0.25);
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-}
-.btn-primary:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 4px 16px rgba(212, 175, 55, 0.4);
-}
-
-.btn-refresh {
-  padding: 11px 18px;
-  background: var(--bg-card-2);
-  color: var(--text-primary);
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  font-family: var(--sans);
-  font-size: 13px;
-  font-weight: 700;
-  cursor: pointer;
-  transition: all 0.2s;
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-}
-.btn-refresh:hover {
-  background: var(--bg-elevated);
-  border-color: var(--border-strong);
-}
-.btn-refresh:disabled { opacity: 0.5; cursor: wait; }
-
-.btn-clear {
-  padding: 11px 18px;
-  background: transparent;
-  color: var(--red);
-  border: 1px solid rgba(239, 68, 68, 0.25);
-  border-radius: 10px;
-  font-family: var(--sans);
-  font-size: 13px;
-  font-weight: 700;
-  cursor: pointer;
-  transition: all 0.2s;
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-}
-.btn-clear:hover {
-  background: var(--red-soft);
-  border-color: rgba(239, 68, 68, 0.5);
-}
-
-.strategy-info {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
-  padding: 16px 20px;
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: 14px;
-  margin-bottom: 20px;
-  align-items: center;
-  box-shadow: var(--shadow-sm);
-}
-.strategy-name {
-  color: var(--text-primary);
-  font-size: 15px;
-  font-weight: 800;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-.strategy-tag {
-  background: var(--gold-glow);
-  color: var(--gold);
-  padding: 4px 12px;
-  border-radius: 6px;
-  font-size: 11px;
-  border: 1px solid rgba(212, 175, 55, 0.25);
-  font-weight: 700;
-}
-
-.strategy-explanation {
-  position: relative;
-  margin-bottom: 20px;
-  padding: 22px 24px;
-  border-radius: 16px;
-  background: linear-gradient(135deg, var(--bg-card) 0%, var(--bg-card-2) 100%);
-  border: 1px solid var(--border);
-  animation: fadeSlideIn 0.4s ease;
-  box-shadow: var(--shadow-sm);
-}
-.strategy-explanation::before {
-  content: '';
-  position: absolute;
-  top: 0; right: 0; left: 0;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, var(--purple), var(--blue), transparent);
-  opacity: 0.6;
-}
-@keyframes fadeSlideIn {
-  from { opacity: 0; transform: translateY(-6px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-.exp-header {
-  display: flex; align-items: center; gap: 12px;
-  margin-bottom: 16px; padding-bottom: 14px;
-  border-bottom: 1px solid var(--border);
-}
-.exp-header .exp-icon {
-  display: inline-flex; width: 40px; height: 40px;
-  align-items: center; justify-content: center; border-radius: 10px;
-  background: linear-gradient(135deg, var(--purple-soft), var(--blue-soft));
-  font-size: 18px;
-  border: 1px solid var(--border);
-}
-.exp-header .exp-title { font-size: 14px; font-weight: 800; color: var(--text-primary); letter-spacing: -0.2px; }
-.exp-header .exp-sub { font-size: 11px; color: var(--text-secondary); margin-top: 3px; font-weight: 500; }
-.exp-body { display: grid; gap: 12px; grid-template-columns: 1fr; }
-@media (min-width: 900px) { .exp-body { grid-template-columns: 1.4fr 1fr 1fr; gap: 14px; } }
-.exp-block {
-  background: var(--bg-elevated);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 14px 16px;
-}
-.exp-block .blk-title {
-  display: flex; align-items: center; gap: 6px;
-  font-size: 12px; font-weight: 800; margin-bottom: 10px; color: var(--text-primary);
-}
-.exp-block .blk-title.pros { color: var(--green); }
-.exp-block .blk-title.cons { color: var(--red); }
-.exp-block p { font-size: 12.5px; line-height: 1.9; color: var(--text-secondary); }
-.exp-block ul { list-style: none; display: grid; gap: 6px; }
-.exp-block ul li {
-  font-size: 12.5px; line-height: 1.8; color: var(--text-secondary);
-  padding-right: 18px; position: relative;
-}
-.exp-block ul li::before {
-  content: ''; position: absolute; right: 4px; top: 8px;
-  width: 5px; height: 5px; border-radius: 50%; background: currentColor; opacity: 0.4;
-}
-.exp-block.pros ul li::before { background: var(--green); opacity: 1; }
-.exp-block.cons ul li::before { background: var(--red); opacity: 1; }
-.exp-highlight {
-  display: inline-block; padding: 2px 8px; border-radius: 5px;
-  background: var(--gold-glow); color: var(--gold);
-  font-weight: 700; font-size: 11px;
-}
-
-.results-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-  gap: 12px;
-  margin-bottom: 20px;
-}
-.result-card {
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 16px 18px;
-  position: relative;
-  overflow: hidden;
-  transition: all 0.2s;
-}
-.result-card::before {
-  content: '';
-  position: absolute;
-  top: 0; right: 0; bottom: 0;
-  width: 3px;
-  background: var(--gold);
-}
-.result-card.profit::before { background: var(--green); }
-.result-card.loss::before { background: var(--red); }
-.result-card.blue::before { background: var(--blue); }
-.result-card:hover {
-  border-color: var(--border-strong);
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-md);
-}
-.result-card .label {
-  color: var(--text-secondary);
-  font-size: 11px;
-  margin-bottom: 8px;
-  font-weight: 600;
-}
-.result-card .value {
-  color: var(--text-primary);
-  font-size: 18px;
-  font-weight: 800;
-  letter-spacing: -0.5px;
-}
-.result-card.profit .value { color: var(--green); }
-.result-card.loss .value { color: var(--red); }
-.result-card.blue .value { color: var(--blue); }
-
-/* ============================================================
-   نمودار
-   ============================================================ */
-.chart-container {
-  position: relative;
-  overflow: hidden;
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: 20px;
-  padding: 24px;
-  margin-bottom: 20px;
-  box-shadow: var(--shadow-md);
-}
-.chart-container::before {
-  content: '';
-  position: absolute;
-  top: 0; left: 0; right: 0;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, var(--gold), transparent);
-  opacity: 0.4;
-}
-.chart-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin-bottom: 18px;
-  padding-bottom: 16px;
-  border-bottom: 1px solid var(--border);
-}
-.chart-header .title {
-  display: flex; align-items: center; gap: 10px;
-  color: var(--text-primary);
-  font-size: 15px;
-  font-weight: 800;
-}
-.chart-header .live-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 4px 12px;
-  border-radius: 999px;
-  background: var(--green-soft);
-  color: var(--green);
-  font-size: 10px;
-  font-weight: 800;
-  border: 1px solid rgba(34, 197, 94, 0.25);
-}
-.chart-header .live-badge::before {
-  content: '';
-  width: 6px; height: 6px; border-radius: 50%;
-  background: var(--green);
-  box-shadow: 0 0 10px var(--green);
-  animation: pulse 1.6s infinite;
-}
-
-.chart-canvas-wrap {
-  position: relative;
-  width: 100%;
-  border-radius: 12px;
-  overflow: hidden;
-  background: var(--bg-input);
-  border: 1px solid var(--border);
-}
-#payoffChart {
-  width: 100%;
-  height: auto;
-  display: block;
-  cursor: crosshair;
-  user-select: none;
-  touch-action: pan-y;
-}
-.chart-canvas-wrap.panning #payoffChart { cursor: grabbing !important; }
-
-#chartTooltip {
-  position: absolute;
-  pointer-events: none;
-  background: rgba(8, 9, 12, 0.96);
-  backdrop-filter: blur(16px) saturate(180%);
-  -webkit-backdrop-filter: blur(16px) saturate(180%);
-  border: 1px solid rgba(212, 175, 55, 0.4);
-  border-radius: 10px;
-  padding: 11px 14px;
-  font-family: var(--sans);
-  font-size: 12px;
-  font-weight: 700;
-  color: #e6e8eb;
-  z-index: 50;
-  opacity: 0;
-  transition: opacity 0.12s ease;
-  direction: rtl;
-  white-space: nowrap;
-  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.04), 0 12px 32px rgba(0, 0, 0, 0.6);
-  line-height: 1.9;
-  min-width: 200px;
-  max-width: 92%;
-}
-[data-theme="light"] #chartTooltip {
-  background: rgba(255, 255, 255, 0.97);
-  color: #0a0c10;
-  border-color: rgba(168, 120, 0, 0.35);
-  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.04), 0 12px 32px rgba(0, 0, 0, 0.12);
-}
-#chartTooltip.visible { opacity: 1; }
-#chartTooltip.locked {
-  border-color: var(--gold);
-  box-shadow: 0 0 0 3px var(--gold-glow), 0 12px 32px rgba(0, 0, 0, 0.6);
-}
-#chartTooltip .tt-row {
-  display: flex;
-  justify-content: space-between;
-  gap: 1rem;
-  padding: 2px 0;
-}
-#chartTooltip .tt-row .k { color: #8b9099; font-weight: 600; font-size: 11px; }
-[data-theme="light"] #chartTooltip .tt-row .k { color: #5b6471; }
-#chartTooltip .tt-row .v {
-  font-weight: 800;
-  font-family: var(--sans);
-  font-feature-settings: 'tnum' 1;
-  direction: ltr;
-  letter-spacing: -0.3px;
-}
-#chartTooltip .tt-price .v { color: var(--gold); font-size: 13px; }
-#chartTooltip .tt-pnl-profit .v { color: var(--green); }
-#chartTooltip .tt-pnl-loss .v { color: var(--red); }
-#chartTooltip .tt-pct-profit .v { color: var(--green); }
-#chartTooltip .tt-pct-loss .v { color: var(--red); }
-#chartTooltip .tt-divider {
-  height: 1px;
-  background: rgba(255, 255, 255, 0.06);
-  margin: 6px 0;
-}
-[data-theme="light"] #chartTooltip .tt-divider { background: rgba(0, 0, 0, 0.06); }
-
-.chart-toolbar {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 6px;
-  margin-top: 14px;
-  padding: 10px 12px;
-  background: var(--bg-card-2);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  font-size: 12px;
-}
-.chart-toolbar-label {
-  color: var(--text-secondary);
-  font-weight: 700;
-  margin-inline-end: 6px;
-  font-size: 11px;
-}
-.zoom-btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-width: 34px;
-  height: 32px;
-  padding: 0 10px;
-  background: var(--bg-card);
-  color: var(--text-secondary);
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  font-family: var(--sans);
-  font-size: 12px;
-  font-weight: 700;
-  cursor: pointer;
-  transition: all 0.15s;
-}
-.zoom-btn:hover {
-  color: var(--text-primary);
-  border-color: var(--border-strong);
-  background: var(--bg-elevated);
-  transform: translateY(-1px);
-}
-.zoom-btn:active { transform: translateY(0); }
-.zoom-btn.active {
-  background: var(--gold);
-  color: #fff;
-  border-color: var(--gold);
-  box-shadow: 0 2px 8px rgba(212, 175, 55, 0.4);
-}
-.zoom-btn.reset {
-  color: var(--red);
-  border-color: rgba(239, 68, 68, 0.25);
-}
-.zoom-btn.reset:hover {
-  background: var(--red-soft);
-  border-color: rgba(239, 68, 68, 0.5);
-}
-.zoom-info {
-  margin-inline-start: auto;
-  color: var(--text-secondary);
-  font-size: 11px;
-  font-weight: 700;
-  direction: ltr;
-  padding: 5px 12px;
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: 8px;
-}
-
-.chart-hint {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  margin-top: 12px;
-  padding: 10px 14px;
-  background: var(--blue-soft);
-  border: 1px solid rgba(59, 130, 246, 0.2);
-  border-radius: 10px;
-  color: var(--blue);
-  font-size: 12px;
-  font-weight: 600;
-  text-align: center;
-  line-height: 1.7;
-  flex-wrap: wrap;
-}
-.chart-hint.locked {
-  background: var(--gold-glow);
-  border-color: rgba(212, 175, 55, 0.35);
-  color: var(--gold);
-}
-.chart-hint .lock-icon { font-size: 14px; }
-
-.legend {
-  display: flex;
-  gap: 20px;
-  flex-wrap: wrap;
-  margin-top: 16px;
-  padding-top: 16px;
-  border-top: 1px solid var(--border);
-  font-size: 12px;
-}
-.legend-item {
-  display: flex; align-items: center; gap: 8px;
-  color: var(--text-secondary); font-weight: 600;
-}
-.legend-dot { width: 10px; height: 10px; border-radius: 3px; }
-
-.loading-indicator {
-  display: inline-block;
-  width: 12px; height: 12px;
-  border: 2px solid rgba(59, 130, 246, 0.2);
-  border-top-color: var(--blue);
-  border-radius: 50%;
-  animation: spin 0.8s infinite;
-  margin-inline-end: 6px;
-}
-@keyframes spin { to { transform: rotate(360deg); } }
-
-.price-status {
-  font-size: 10px;
-  color: var(--text-muted);
-  display: block;
-  margin-top: 5px;
-  text-align: center;
-  font-weight: 600;
-  letter-spacing: 0.3px;
-}
-.price-status.live { color: var(--green); }
-.price-status.manual { color: var(--gold); }
-.price-status.error { color: var(--red); }
-
-.modal-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.7);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  z-index: 99999;
-  display: none;
-  align-items: center;
-  justify-content: center;
-  padding: 20px;
-  animation: fadeIn 0.2s ease;
-}
-.modal-overlay.active { display: flex; }
-.modal-box {
-  background: var(--bg-card);
-  border: 1px solid var(--border-strong);
-  border-radius: 16px;
-  padding: 28px;
-  max-width: 440px;
-  width: 100%;
-  box-shadow: var(--shadow-lg);
-  animation: modalIn 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  position: relative;
-  overflow: hidden;
-}
-.modal-box::before {
-  content: '';
-  position: absolute;
-  top: 0; right: 0; left: 0;
-  height: 2px;
-  background: linear-gradient(90deg, transparent, var(--gold), transparent);
-}
-@keyframes modalIn {
-  from { opacity: 0; transform: scale(0.95) translateY(10px); }
-  to { opacity: 1; transform: scale(1) translateY(0); }
-}
-.modal-icon {
-  width: 52px; height: 52px;
-  border-radius: 14px;
-  background: linear-gradient(135deg, var(--gold-glow), var(--purple-soft));
-  display: grid; place-items: center;
-  font-size: 24px;
-  margin-bottom: 16px;
-  border: 1px solid var(--border);
-}
-.modal-title {
-  font-size: 17px;
-  font-weight: 800;
-  margin-bottom: 10px;
-  color: var(--text-primary);
-  letter-spacing: -0.3px;
-}
-.modal-text {
-  font-size: 13.5px;
-  line-height: 1.9;
-  color: var(--text-secondary);
-  margin-bottom: 22px;
-}
-.modal-actions {
-  display: flex;
-  gap: 10px;
-  justify-content: flex-start;
-  flex-wrap: wrap;
-}
-.modal-btn {
-  padding: 11px 20px;
-  border-radius: 10px;
-  font-family: var(--sans);
-  font-size: 13px;
-  font-weight: 700;
-  cursor: pointer;
-  transition: all 0.15s;
-  border: 1px solid var(--border);
-  background: var(--bg-card-2);
-  color: var(--text-primary);
-}
-.modal-btn:hover { background: var(--bg-elevated); border-color: var(--border-strong); }
-.modal-btn.danger {
-  background: var(--red);
-  color: #fff;
-  border-color: transparent;
-  box-shadow: 0 2px 8px rgba(239, 68, 68, 0.3);
-}
-.modal-btn.danger:hover { transform: translateY(-1px); box-shadow: 0 4px 16px rgba(239, 68, 68, 0.5); }
-
- /* ===== حالت تمام‌صفحه حرفه‌ای نمودار ===== */
-.chart-container.fullscreen {
-  position: fixed;
-  inset: 0;
-  z-index: 99999;
-  width: 100vw;
-  height: 100dvh;
-  max-width: none;
-  margin: 0;
-  border: 0;
-  border-radius: 0;
-  padding: 12px;
-  background: var(--bg-primary);
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  box-shadow: none;
-}
-
-.chart-container.fullscreen .chart-header {
-  flex: 0 0 auto;
-  padding-bottom: 10px;
-  margin-bottom: 10px;
-}
-
-.chart-container.fullscreen .chart-canvas-wrap {
-  flex: 1 1 auto;
-  min-height: 0;
-  height: auto;
-  width: 100%;
-  display: block;
-  overflow: hidden;
-}
-
-.chart-container.fullscreen #payoffChart {
-  width: 100%;
-  height: 100%;
-  max-width: none;
-  max-height: none;
-  display: block;
-}
-
-.chart-container.fullscreen .chart-toolbar,
-.chart-container.fullscreen .chart-hint,
-.chart-container.fullscreen .legend {
-  flex: 0 0 auto;
-}
-
-/* فضای استاندارد نمودار در حالت عادی */
-.chart-canvas-wrap {
-  height: clamp(320px, 48vw, 560px);
-  min-height: 320px;
-  max-height: 560px;
-  touch-action: none;
-  overscroll-behavior: contain;
-  -webkit-user-select: none;
-  user-select: none;
-}
-
-#payoffChart {
-  width: 100%;
-  height: 100%;
-  max-width: 100%;
-  max-height: 100%;
-  display: block;
-  touch-action: none;
-  -webkit-user-select: none;
-  user-select: none;
-}
-
-.chart-container.fullscreen .chart-canvas-wrap {
-  height: auto;
-}
-
-@media (max-width: 900px) {
-  .chart-container {
-    padding: 16px;
-  }
-
-  .chart-canvas-wrap {
-    height: clamp(300px, 56vw, 460px);
-    min-height: 300px;
-    max-height: 460px;
-  }
-}
-
-@media (max-width: 600px) {
-  .chart-container {
-    padding: 12px;
-    border-radius: 14px;
-  }
-
-  .chart-canvas-wrap {
-    height: clamp(300px, 76vw, 430px);
-    min-height: 300px;
-    max-height: 430px;
-    border-radius: 10px;
-  }
-
-  .chart-toolbar {
-    overflow-x: auto;
-    flex-wrap: nowrap;
-    scrollbar-width: thin;
-  }
-
-  .chart-toolbar-label {
-    flex: 0 0 auto;
-  }
-
-  .zoom-btn {
-    flex: 0 0 auto;
-  }
-
-  .zoom-info {
-    flex: 0 0 auto;
-  }
-
-  .chart-hint {
-    font-size: 11px;
-    padding: 8px 10px;
-  }
-
-  .chart-container.fullscreen {
-    height: 100dvh;
-    min-height: 100dvh;
-    padding: max(8px, env(safe-area-inset-top))
-             max(8px, env(safe-area-inset-right))
-             max(8px, env(safe-area-inset-bottom))
-             max(8px, env(safe-area-inset-left));
-  }
-
-  .chart-container.fullscreen .chart-header .title {
-    font-size: 13px;
-  }
-
-  .chart-container.fullscreen .chart-canvas-wrap {
-    min-height: 0;
-    height: auto;
-  }
-
-  .chart-container.fullscreen .chart-toolbar {
-    margin-top: 8px;
-  }
-}
-
-@media (max-width: 600px) and (orientation: portrait) {
-  .chart-canvas-wrap {
-    height: min(74vw, 410px);
-    min-height: 300px;
-  }
-}
-
-@media (max-width: 900px) and (orientation: landscape) {
-  .chart-canvas-wrap {
-    height: min(64vh, 430px);
-    min-height: 260px;
-    max-height: 430px;
-  }
-
-  .chart-container.fullscreen .chart-canvas-wrap {
-    height: auto;
-    min-height: 0;
-  }
-}
-
-@media (min-width: 901px) {
-  .chart-container.fullscreen {
-    padding: 14px 18px;
-  }
-
-  .chart-container.fullscreen .chart-canvas-wrap {
-    min-height: 0;
-  }
-}
-
-/* Fullscreen واقعی مرورگر */
-.chart-container:fullscreen {
-  width: 100vw;
-  height: 100vh;
-  height: 100dvh;
-  max-width: none;
-  border: 0;
-  border-radius: 0;
-}
-
-.chart-container:-webkit-full-screen {
-  width: 100vw;
-  height: 100vh;
-  max-width: none;
-  border: 0;
-  border-radius: 0;
-}
-
-/* ===== Responsive rules خارج از نمودار — حفظ رفتار قبلی صفحه ===== */
-@media (max-width: 900px) {
-  .container { padding: 90px 14px 60px; }
-  .positions-table th { padding: 8px 5px; font-size: 10px; }
-  .positions-table td { padding: 7px 5px; }
-  .cell-input { min-width: 75px; padding: 7px 8px; font-size: 11px; }
-  .cell-select { min-width: 105px; padding: 7px 8px; font-size: 11px; }
-  .side-btn { font-size: 10px; padding: 6px 4px; }
-  .btn-remove { width: 28px; height: 28px; font-size: 12px; }
-  .presets-grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); }
-  .symbol-badge { font-size: 11px; padding: 5px 9px; min-width: 66px; }
-  .page-header h1 { font-size: 22px; }
-}
-@media (max-width: 600px) {
-  .container { padding: 86px 10px 40px; }
-  .page-header h1 { font-size: 19px; }
-  .page-header p { font-size: 12px; }
-  .panel { padding: 16px; border-radius: 14px; }
-  .tabs { flex-wrap: wrap; width: 100%; }
-  .tab-btn { font-size: 12px; padding: 9px 14px; }
-  .modal-box { padding: 22px; }
-  .modal-actions { flex-direction: column-reverse; }
-  .modal-btn { width: 100%; justify-content: center; }
-  .zoom-btn#fullscreenBtn {
-    background: var(--gold-glow);
-    border-color: rgba(212, 175, 55, 0.4);
-    color: var(--gold);
-  }
-}
-
-</style>
-
-<style id="shamdun-option1-design">
 :root{
-  --o1-navy:#0b1220;--o1-navy2:#111a2b;--o1-bg:#f5f7fa;--o1-card:#fff;
-  --o1-text:#111827;--o1-muted:#64748b;--o1-border:#e3e8ef;
-  --o1-gold:#c89b3c;--o1-gold-soft:#f8f1df;
-  --o1-green:#16835b;--o1-red:#d64545;--o1-blue:#2563eb;
-  --o1-shadow:0 8px 28px rgba(15,23,42,.06);
-}
-html[data-o1="1"] body{
-  background:var(--o1-bg)!important;color:var(--o1-text)!important;
-  background-image:none!important;
-}
-html[data-o1="1"] .container{
-  max-width:1440px!important;padding:82px 22px 70px!important;
-}
-html[data-o1="1"] .page-header{
-  text-align:right!important;padding:28px 30px!important;margin-bottom:14px!important;
-  border-radius:18px!important;background:linear-gradient(135deg,#0b1220,#17243a)!important;
-  border:0!important;box-shadow:var(--o1-shadow)!important;
-}
-html[data-o1="1"] .page-header:before{
-  left:auto!important;right:0!important;transform:none!important;width:230px!important;
-  background:linear-gradient(90deg,var(--o1-gold),transparent)!important;opacity:.9!important;
-}
-html[data-o1="1"] .page-header h1{
-  color:#fff!important;background:none!important;-webkit-text-fill-color:#fff!important;
-  font-size:27px!important;margin-bottom:7px!important;
-}
-html[data-o1="1"] .page-header p{color:#b8c3d3!important}
-html[data-o1="1"] .status-bar{
-  background:#fff!important;border:1px solid var(--o1-border)!important;color:var(--o1-muted)!important;
-  box-shadow:var(--o1-shadow)!important;border-radius:12px!important;
-}
-html[data-o1="1"] .panel,
-html[data-o1="1"] .strategy-info,
-html[data-o1="1"] .strategy-explanation,
-html[data-o1="1"] .results-grid > .result-card,
-html[data-o1="1"] #chartContainer{
-  background:var(--o1-card)!important;border-color:var(--o1-border)!important;
-  box-shadow:var(--o1-shadow)!important;color:var(--o1-text)!important;
-}
-html[data-o1="1"] .tabs{
-  width:100%!important;background:#fff!important;border:1px solid var(--o1-border)!important;
-  box-shadow:var(--o1-shadow)!important;padding:5px!important;margin-bottom:14px!important;
-}
-html[data-o1="1"] .tab-btn{flex:0 0 auto;color:#64748b!important}
-html[data-o1="1"] .tab-btn.active{
-  color:#fff!important;background:var(--o1-navy)!important;border:0!important;
-}
-html[data-o1="1"] .panel{border-radius:16px!important;padding:22px!important}
-html[data-o1="1"] .panel-header{border-color:var(--o1-border)!important}
-html[data-o1="1"] .panel-title,
-html[data-o1="1"] .strategy-name,
-html[data-o1="1"] .result-card .label,
-html[data-o1="1"] .result-card .value{color:var(--o1-text)!important}
-html[data-o1="1"] .panel-title .badge,
-html[data-o1="1"] .strategy-tag{
-  background:var(--o1-gold-soft)!important;color:#9b7421!important;border-color:#ead9ad!important;
-}
-html[data-o1="1"] .preset-card{
-  background:#fff!important;border-color:var(--o1-border)!important;
-  box-shadow:0 2px 8px rgba(15,23,42,.025)!important;
-}
-html[data-o1="1"] .preset-card:hover{border-color:#c9d3df!important;transform:translateY(-1px)!important}
-html[data-o1="1"] .preset-card.active{
-  background:linear-gradient(135deg,#fffaf0,#fff)!important;
-  border-color:#d4b45f!important;box-shadow:0 0 0 1px #ead9ad,var(--o1-shadow)!important;
-}
-html[data-o1="1"] .preset-card .preset-name{color:var(--o1-text)!important}
-html[data-o1="1"] .preset-card.active .preset-name{color:#9b7421!important}
-html[data-o1="1"] .preset-card .preset-desc{color:var(--o1-muted)!important}
-html[data-o1="1"] .positions-table-wrapper{
-  background:#fff!important;border-color:var(--o1-border)!important;
-}
-html[data-o1="1"] .positions-table th{
-  background:#f8fafc!important;color:#64748b!important;border-color:var(--o1-border)!important;
-}
-html[data-o1="1"] .positions-table td{border-color:#edf1f5!important}
-html[data-o1="1"] .cell-input,
-html[data-o1="1"] .cell-select{
-  background:#fff!important;color:var(--o1-text)!important;border-color:#dce3eb!important;
-}
-html[data-o1="1"] .cell-input:focus,
-html[data-o1="1"] .cell-select:focus{
-  border-color:var(--o1-gold)!important;box-shadow:0 0 0 3px rgba(200,155,60,.12)!important;
-}
-html[data-o1="1"] .btn-primary{
-  background:var(--o1-navy)!important;box-shadow:none!important;
-}
-html[data-o1="1"] .btn-primary:hover{background:#17243a!important;box-shadow:0 6px 16px rgba(11,18,32,.16)!important}
-html[data-o1="1"] .btn-refresh,
-html[data-o1="1"] .btn-add{
-  background:#fff!important;color:var(--o1-text)!important;border-color:#d8e0e8!important;
-}
-html[data-o1="1"] .strategy-explanation{
-  background:#fff!important;
-}
-html[data-o1="1"] .exp-block{background:#f8fafc!important;border-color:#e6ebf1!important}
-html[data-o1="1"] .exp-block p,
-html[data-o1="1"] .exp-block ul li{color:#64748b!important}
-html[data-o1="1"] .results-grid{
-  grid-template-columns:repeat(5,minmax(0,1fr))!important;gap:10px!important;
-}
-html[data-o1="1"] .result-card{
-  min-height:102px!important;border-radius:13px!important;
-}
-html[data-o1="1"] #chartContainer{border-radius:16px!important;padding:0!important;overflow:hidden}
-html[data-o1="1"] #chartContainer .chart-header,
-html[data-o1="1"] #chartContainer .chart-toolbar{
-  background:#fff!important;color:var(--o1-text)!important;border-color:var(--o1-border)!important;
-}
-html[data-o1="1"] #chartCanvasWrap{
-  background:#fff!important;
-}
-html[data-o1="1"] .chart-hint,
-html[data-o1="1"] #chartHint{color:#64748b!important}
-html[data-o1="1"] .auto-refresh-toggle{background:#f8fafc!important;border-color:#dfe6ee!important}
-.o1-shell-nav{
-  position:fixed;top:0;left:0;right:0;height:58px;z-index:1000;
-  background:rgba(11,18,32,.97);border-bottom:1px solid rgba(255,255,255,.08);
-  display:flex;align-items:center;justify-content:center;
-}
-.o1-shell-nav .inner{
-  width:min(1440px,calc(100% - 36px));display:flex;align-items:center;gap:26px;
-}
-.o1-brand{font-weight:900;color:#fff;font-size:18px;letter-spacing:-.3px}
-.o1-brand span{color:#d4af37}
-.o1-navlinks{display:flex;gap:4px;align-items:center;flex:1}
-.o1-navlinks a{
-  color:#b9c4d4;text-decoration:none;padding:8px 12px;border-radius:8px;font-size:12px;font-weight:700
-}
-.o1-navlinks a:hover{background:rgba(255,255,255,.07);color:#fff}
-.o1-navlinks a.active{color:#fff;background:rgba(200,155,60,.15)}
-.o1-meta{font-size:11px;color:#8e9bad}
-.o1-breadcrumb{
-  max-width:1440px;margin:0 auto 12px;padding:0 22px;color:#7b8797;font-size:11px;
-}
-.o1-breadcrumb strong{color:#4b5563}
-.o1-overview{
-  display:grid;grid-template-columns:1.35fr .65fr;gap:14px;margin-bottom:14px;
-}
-.o1-overview-card{
-  background:#fff;border:1px solid var(--o1-border);border-radius:16px;padding:18px 20px;
-  box-shadow:var(--o1-shadow);
-}
-.o1-overview-card .eyebrow{font-size:10px;color:#8a96a6;font-weight:800;margin-bottom:7px}
-.o1-overview-card h2{font-size:18px;margin:0 0 7px;color:#111827}
-.o1-overview-card p{font-size:12px;line-height:1.9;color:#64748b;margin:0}
-.o1-metric-row{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:14px}
-.o1-mini-metric{background:#f8fafc;border:1px solid #e7ecf2;border-radius:10px;padding:10px 12px}
-.o1-mini-metric b{display:block;font-size:13px;color:#111827;margin-top:4px}
-.o1-mini-metric span{font-size:10px;color:#7b8797}
-.o1-side-list{display:grid;gap:8px}
-.o1-side-item{display:flex;justify-content:space-between;align-items:center;padding:9px 0;border-bottom:1px solid #edf1f5;font-size:11px}
-.o1-side-item:last-child{border-bottom:0}
-.o1-side-item span{color:#64748b}.o1-side-item b{color:#111827}
-.o1-section-label{
-  display:flex;align-items:center;gap:9px;margin:20px 2px 10px;font-size:13px;font-weight:900;color:#172033;
-}
-.o1-section-label:before{content:"";width:4px;height:18px;border-radius:5px;background:var(--o1-gold)}
-@media(max-width:900px){
-  .o1-navlinks a:nth-child(n+4),.o1-meta{display:none}
-  .o1-overview{grid-template-columns:1fr}
-  html[data-o1="1"] .results-grid{grid-template-columns:repeat(2,1fr)!important}
-}
-@media(max-width:620px){
-  .o1-navlinks{display:none}
-  .o1-shell-nav .inner{justify-content:center}
-  html[data-o1="1"] .container{padding:72px 10px 50px!important}
-  .o1-breadcrumb{padding:0 10px}
-  html[data-o1="1"] .page-header{padding:22px 18px!important}
-  html[data-o1="1"] .page-header h1{font-size:22px!important}
-  .o1-metric-row{grid-template-columns:1fr}
-  html[data-o1="1"] .results-grid{grid-template-columns:1fr 1fr!important}
-}
-</style>
-
-
-<style id="shamdun-options-clean-design">
-:root{
-  --lab-bg:#f5f7fa;--lab-card:#fff;--lab-card2:#f8fafc;--lab-text:#111827;--lab-muted:#64748b;
-  --lab-border:#dfe5ec;--lab-gold:#c89b3c;--lab-navy:#0b1220;--lab-green:#16835b;--lab-red:#d64545;
-  --lab-shadow:0 8px 28px rgba(15,23,42,.06);
+  --bg:#f4f6f9; --surface:#fff; --surface-2:#f8fafc; --surface-3:#eef2f7;
+  --text:#111827; --muted:#64748b; --faint:#94a3b8; --border:#dfe5ec;
+  --gold:#a87800; --gold-soft:#fff7df; --green:#16835b; --green-soft:#eaf8f2;
+  --red:#d64545; --red-soft:#fff0f0; --blue:#2563eb; --blue-soft:#eef4ff;
+  --purple:#7c3aed; --shadow:0 10px 30px rgba(15,23,42,.06); --radius:16px;
 }
 html[data-theme="dark"]{
-  --lab-bg:#08090c;--lab-card:#11141a;--lab-card2:#171a21;--lab-text:#e6e8eb;--lab-muted:#8b9099;
-  --lab-border:rgba(255,255,255,.08);--lab-gold:#d4af37;--lab-navy:#0d1422;
-  --lab-shadow:0 10px 30px rgba(0,0,0,.22);
+  --bg:#080b11; --surface:#111722; --surface-2:#171e2a; --surface-3:#1c2533;
+  --text:#e8edf5; --muted:#96a3b5; --faint:#697587; --border:rgba(255,255,255,.08);
+  --gold:#d4af37; --gold-soft:rgba(212,175,55,.11); --green:#22c55e; --green-soft:rgba(34,197,94,.12);
+  --red:#ef4444; --red-soft:rgba(239,68,68,.12); --blue:#60a5fa; --blue-soft:rgba(96,165,250,.12);
+  --purple:#a78bfa; --shadow:0 14px 36px rgba(0,0,0,.24);
 }
-body{background:var(--lab-bg)!important;color:var(--lab-text)!important}
-.container{max-width:1480px!important;padding:84px 24px 70px!important}
-.page-header{
-  background:linear-gradient(135deg,var(--lab-navy),#18253a)!important;
-  border:1px solid rgba(200,155,60,.18)!important;border-radius:20px!important;
-  padding:26px 30px!important;box-shadow:var(--lab-shadow)!important;text-align:right!important;
-}
-.page-header:before{display:none!important}
-.lab-hero-content{display:flex;align-items:center;justify-content:space-between;gap:24px}
-.lab-eyebrow{font-size:10px;letter-spacing:1.5px;color:#d4af37;font-weight:900;margin-bottom:6px}
-.page-header h1{margin:0!important;color:#fff!important;background:none!important;-webkit-text-fill-color:#fff!important;font-size:28px!important}
-.page-header p{margin:8px 0 0!important;color:#b9c4d4!important;line-height:1.9!important}
-.lab-hero-actions{display:flex;gap:8px;flex-wrap:wrap}
-.lab-action{border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.06);color:#fff;border-radius:10px;padding:10px 14px;font-weight:800;font-size:11px}
-.lab-action.primary{background:var(--lab-gold);border-color:var(--lab-gold);color:#fff}
-.status-bar,.tabs,.panel,.strategy-info,.strategy-explanation,.results-grid>.result-card,#chartContainer{
-  background:var(--lab-card)!important;border-color:var(--lab-border)!important;color:var(--lab-text)!important;box-shadow:var(--lab-shadow)!important;
-}
-.status-bar{border-radius:12px!important}
-.lab-summary{display:grid;grid-template-columns:1.35fr repeat(3,1fr);gap:10px;margin:0 0 14px}
-.lab-summary-card{background:var(--lab-card);border:1px solid var(--lab-border);border-radius:14px;padding:13px 15px;box-shadow:var(--lab-shadow)}
-.lab-summary-card span{display:block;color:var(--lab-muted);font-size:10px;font-weight:700}
-.lab-summary-card strong{display:block;color:var(--lab-text);font-size:14px;margin-top:5px}
-.lab-summary-card small{display:block;color:var(--lab-muted);font-size:9px;margin-top:3px}
-.lab-layout{display:grid;grid-template-columns:minmax(0,1.7fr) minmax(320px,.72fr);gap:14px;align-items:start}
-.lab-main,.lab-side{display:grid;gap:14px;min-width:0}
-.lab-side{position:static;align-self:start}
-.tabs{border-radius:14px!important;padding:5px!important;margin:0!important}
-.tab-btn{color:var(--lab-muted)!important}
-.tab-btn.active{background:var(--lab-navy)!important;color:#fff!important}
-.tab-content{margin:0!important}
-.panel{border-radius:16px!important}
-.panel-header{border-color:var(--lab-border)!important}
-.panel-title,.strategy-name,.result-card .label,.result-card .value{color:var(--lab-text)!important}
-.badge,.strategy-tag{background:rgba(200,155,60,.12)!important;color:var(--lab-gold)!important;border-color:rgba(200,155,60,.25)!important}
-.presets-grid{grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:10px!important}
-.preset-card{background:var(--lab-card2)!important;border-color:var(--lab-border)!important;color:var(--lab-text)!important;min-height:112px}
-.preset-card:hover{transform:translateY(-2px)!important;border-color:rgba(200,155,60,.45)!important}
-.preset-card.active{background:linear-gradient(135deg,rgba(200,155,60,.14),transparent)!important;border-color:rgba(200,155,60,.55)!important}
-.preset-card .preset-name,.preset-card .preset-desc{color:var(--lab-text)!important}
-.preset-card .preset-desc{color:var(--lab-muted)!important}
-.positions-table-wrapper{background:var(--lab-card)!important;border-color:var(--lab-border)!important}
-.positions-table th{background:var(--lab-card2)!important;color:var(--lab-muted)!important;border-color:var(--lab-border)!important}
-.positions-table td{border-color:var(--lab-border)!important}
-.cell-input,.cell-select{background:var(--lab-card)!important;color:var(--lab-text)!important;border-color:var(--lab-border)!important}
-.strategy-explanation{border-radius:16px!important}
-.exp-block{background:var(--lab-card2)!important;border-color:var(--lab-border)!important}
-.exp-block p,.exp-block ul li{color:var(--lab-muted)!important}
-.results-grid{grid-template-columns:1fr 1fr!important;gap:9px!important}
-.results-grid>.result-card{min-height:96px!important;border-radius:13px!important}
-#chartContainer{border-radius:16px!important;padding:0!important;overflow:hidden}
-#chartContainer .chart-header,#chartContainer .chart-toolbar{background:var(--lab-card)!important;color:var(--lab-text)!important;border-color:var(--lab-border)!important}
-#chartCanvasWrap{background:var(--lab-card)!important;min-height:460px!important}
-#chartHint,.chart-hint{color:var(--lab-muted)!important}
-.auto-refresh-toggle{background:var(--lab-card2)!important;border-color:var(--lab-border)!important}
-.btn-refresh,.btn-add{background:var(--lab-card)!important;color:var(--lab-text)!important;border-color:var(--lab-border)!important}
-.btn-primary{background:var(--lab-navy)!important}
-@media(max-width:1050px){
-  .lab-layout{grid-template-columns:1fr}
-  .lab-side{position:static}
-  .presets-grid{grid-template-columns:repeat(3,minmax(0,1fr))!important}
-}
-@media(max-width:720px){
-  .container{padding:76px 10px 45px!important}
-  .lab-hero-content{align-items:flex-start;flex-direction:column}
-  .lab-summary{grid-template-columns:1fr 1fr}
-  .presets-grid{grid-template-columns:1fr 1fr!important}
-}
-@media(max-width:460px){
-  .lab-summary{grid-template-columns:1fr}
-  .presets-grid{grid-template-columns:1fr!important}
-}
-</style>
-
-<style id="shamdun-options-final-fix">
-/* Final theme + layout corrections */
-html, body { min-height:100%; }
-body { transition:background-color .2s ease, color .2s ease; }
-
-/* The page theme follows the shared navbar's data-theme attribute. */
-html[data-theme="light"] body { background:#f5f7fa !important; color:#111827 !important; }
-html[data-theme="dark"] body { background:#08090c !important; color:#e6e8eb !important; }
-
-html[data-theme="light"] .page-header {
-  background:linear-gradient(135deg,#ffffff,#f8fafc) !important;
-  border:1px solid #dfe5ec !important;
-}
-html[data-theme="light"] .page-header h1 { color:#111827 !important; -webkit-text-fill-color:#111827 !important; }
-html[data-theme="light"] .page-header p { color:#64748b !important; }
-html[data-theme="dark"] .page-header {
-  background:linear-gradient(135deg,#0d1422,#18253a) !important;
-  border:1px solid rgba(200,155,60,.18) !important;
-}
-html[data-theme="dark"] .page-header h1 { color:#fff !important; -webkit-text-fill-color:#fff !important; }
-html[data-theme="dark"] .page-header p { color:#b9c4d4 !important; }
-
-html[data-theme="light"] .status-bar,
-html[data-theme="light"] .tabs,
-html[data-theme="light"] .panel,
-html[data-theme="light"] .strategy-info,
-html[data-theme="light"] .strategy-explanation,
-html[data-theme="light"] .result-card,
-html[data-theme="light"] #chartContainer,
-html[data-theme="light"] .lab-summary-card {
-  background:#fff !important; color:#111827 !important; border-color:#dfe5ec !important;
-  box-shadow:0 8px 28px rgba(15,23,42,.06) !important;
-}
-html[data-theme="dark"] .status-bar,
-html[data-theme="dark"] .tabs,
-html[data-theme="dark"] .panel,
-html[data-theme="dark"] .strategy-info,
-html[data-theme="dark"] .strategy-explanation,
-html[data-theme="dark"] .result-card,
-html[data-theme="dark"] #chartContainer,
-html[data-theme="dark"] .lab-summary-card {
-  background:#11141a !important; color:#e6e8eb !important; border-color:rgba(255,255,255,.08) !important;
-  box-shadow:0 10px 30px rgba(0,0,0,.22) !important;
-}
-
-html[data-theme="light"] .preset-card { background:#f8fafc !important; color:#111827 !important; border-color:#dfe5ec !important; }
-html[data-theme="dark"] .preset-card { background:#171a21 !important; color:#e6e8eb !important; border-color:rgba(255,255,255,.08) !important; }
-html[data-theme="light"] .preset-card .preset-name { color:#111827 !important; }
-html[data-theme="dark"] .preset-card .preset-name { color:#e6e8eb !important; }
-html[data-theme="light"] .preset-card .preset-desc { color:#64748b !important; }
-html[data-theme="dark"] .preset-card .preset-desc { color:#8b9099 !important; }
-
-html[data-theme="light"] .positions-table-wrapper { background:#fff !important; border-color:#dfe5ec !important; }
-html[data-theme="dark"] .positions-table-wrapper { background:#11141a !important; border-color:rgba(255,255,255,.08) !important; }
-html[data-theme="light"] .positions-table th { background:#f8fafc !important; color:#64748b !important; border-color:#dfe5ec !important; }
-html[data-theme="dark"] .positions-table th { background:#171a21 !important; color:#8b9099 !important; border-color:rgba(255,255,255,.08) !important; }
-html[data-theme="light"] .cell-input, html[data-theme="light"] .cell-select { background:#fff !important; color:#111827 !important; border-color:#dfe5ec !important; }
-html[data-theme="dark"] .cell-input, html[data-theme="dark"] .cell-select { background:#171a21 !important; color:#e6e8eb !important; border-color:rgba(255,255,255,.08) !important; }
-
-/* Two-column lab: the side column is part of normal flow, never floating over cards. */
-.lab-layout { display:grid !important; grid-template-columns:minmax(0,1fr) 330px !important; gap:16px !important; align-items:start !important; }
-.lab-main, .lab-side { min-width:0 !important; position:static !important; display:grid !important; gap:16px !important; align-self:start !important; }
-.lab-side > * { min-width:0 !important; position:static !important; }
-@media (max-width:1050px){ .lab-layout{grid-template-columns:1fr !important;} }
-@media (max-width:720px){ .lab-layout{grid-template-columns:1fr !important;} }
-
-/* Hide the legacy duplicate nav markup; navbar.js is the single source of truth. */
-.o1-shell-nav, .o1-breadcrumb { display:none !important; }
+*{box-sizing:border-box} html{scroll-behavior:smooth} body{margin:0;background:var(--bg);color:var(--text);font-family:Vazirmatn,Tahoma,sans-serif;min-width:0;overflow-x:hidden;transition:background .2s,color .2s}
+button,input,select{font:inherit} button{cursor:pointer} .num,input[type=number]{font-variant-numeric:tabular-nums}
+.page{max-width:1480px;margin:auto;padding:88px 22px 60px}
+.hero{display:grid;grid-template-columns:minmax(0,1fr) 360px;gap:18px;margin-bottom:18px}
+.hero-main,.hero-side,.panel,.chart-panel,.explanation,.summary-panel{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow)}
+.hero-main{padding:26px 28px;background:linear-gradient(135deg,var(--surface),var(--surface-2))}
+.eyebrow{display:flex;align-items:center;gap:8px;color:var(--gold);font-size:12px;font-weight:800;margin-bottom:10px}.eyebrow i{width:7px;height:7px;border-radius:50%;background:var(--gold);display:inline-block;box-shadow:0 0 0 5px var(--gold-soft)}
+.hero h1{margin:0 0 8px;font-size:clamp(24px,3vw,36px);letter-spacing:-.7px}.hero p{margin:0;color:var(--muted);line-height:1.9;font-size:14px;max-width:780px}
+.hero-actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:20px}.btn{border:1px solid var(--border);background:var(--surface-2);color:var(--text);border-radius:11px;padding:10px 15px;font-weight:750;font-size:13px}.btn:hover{border-color:var(--gold);transform:translateY(-1px)}.btn.primary{background:var(--gold);border-color:var(--gold);color:#fff}.btn.danger{color:var(--red)}
+.hero-side{padding:20px}.live-row{display:flex;justify-content:space-between;align-items:center;gap:12px;padding-bottom:14px;border-bottom:1px solid var(--border)}.live{display:flex;align-items:center;gap:8px;font-size:12px;font-weight:800}.indicator{width:9px;height:9px;border-radius:50%;background:#94a3b8}.indicator.live{background:var(--green);box-shadow:0 0 0 5px var(--green-soft)}.indicator.error{background:var(--red)}.live-time{font-size:11px;color:var(--muted)}
+.hero-metrics{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}.metric{padding:12px;border:1px solid var(--border);border-radius:12px;background:var(--surface-2)}.metric .k{font-size:11px;color:var(--muted);display:block;margin-bottom:5px}.metric .v{font-size:15px;font-weight:850}
+.section-head{display:flex;align-items:flex-end;justify-content:space-between;gap:14px;margin:22px 0 11px}.section-title{font-size:17px;font-weight:900}.section-sub{font-size:11px;color:var(--muted);margin-top:4px}.count{font-size:11px;color:var(--muted);background:var(--surface-3);padding:6px 10px;border-radius:999px;white-space:nowrap}
+.presets{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px}.preset-card{min-width:0;text-align:right;border:1px solid var(--border);background:var(--surface);border-radius:14px;padding:14px;color:var(--text);transition:.18s;box-shadow:0 2px 8px rgba(15,23,42,.025)}.preset-card:hover{border-color:var(--gold);transform:translateY(-2px)}.preset-card.active{border-color:var(--gold);box-shadow:0 0 0 2px var(--gold-soft),var(--shadow);background:linear-gradient(180deg,var(--surface),var(--gold-soft))}.preset-header{display:flex;align-items:center;gap:8px;margin-bottom:8px}.preset-icon{font-size:17px}.preset-name{font-size:12px;font-weight:900;direction:ltr;text-align:right}.preset-desc{font-size:11px;line-height:1.75;color:var(--muted);min-height:39px}.preset-badge{display:inline-block;margin-top:9px;font-size:10px;color:var(--gold);background:var(--gold-soft);border-radius:999px;padding:4px 8px}
+.workspace{display:grid;grid-template-columns:minmax(0,1fr) 350px;gap:16px;align-items:start;margin-top:18px}.main-col,.side-col{min-width:0;display:grid;gap:16px;align-content:start}.side-col{position:static!important;top:auto!important}
+.panel{padding:18px}.panel-head{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:14px}.panel-title{font-weight:900;font-size:15px}.panel-sub{font-size:11px;color:var(--muted);margin-top:3px}.actions{display:flex;gap:7px;flex-wrap:wrap}.mini-btn{border:1px solid var(--border);background:var(--surface-2);color:var(--text);border-radius:9px;padding:8px 10px;font-size:11px;font-weight:800}.mini-btn:hover{border-color:var(--gold)}
+.positions-wrap{width:100%;overflow-x:auto;border:1px solid var(--border);border-radius:13px;-webkit-overflow-scrolling:touch}.positions-table{width:1120px;min-width:1120px;border-collapse:collapse}.positions-table th{background:var(--surface-2);color:var(--muted);font-size:10px;font-weight:800;padding:10px 8px;border-bottom:1px solid var(--border);white-space:nowrap}.positions-table td{padding:8px;border-bottom:1px solid var(--border);vertical-align:middle;font-size:11px}.positions-table tr:last-child td{border-bottom:0}.cell-select,.cell-input{width:100%;min-width:74px;background:var(--surface-2);border:1px solid var(--border);color:var(--text);border-radius:8px;padding:7px 8px;outline:none}.cell-select:focus,.cell-input:focus{border-color:var(--gold);box-shadow:0 0 0 3px var(--gold-soft)}.cell-input:disabled,.cell-select:disabled{opacity:.55}.side-toggle{display:flex;gap:4px}.side-btn{border:1px solid var(--border);background:var(--surface-2);color:var(--muted);border-radius:7px;padding:7px 9px;font-size:10px;font-weight:800}.side-btn.active-buy{background:var(--green-soft);border-color:var(--green);color:var(--green)}.side-btn.active-sell{background:var(--red-soft);border-color:var(--red);color:var(--red)}.symbol-badge{display:inline-flex;align-items:center;justify-content:center;min-width:72px;padding:7px 9px;border-radius:8px;font-weight:900;direction:ltr;background:var(--surface-3)}.symbol-badge.call{color:var(--green);background:var(--green-soft)}.symbol-badge.put{color:var(--red);background:var(--red-soft)}.symbol-badge.spot{color:var(--blue);background:var(--blue-soft)}.btn-remove{border:0;background:var(--red-soft);color:var(--red);width:30px;height:30px;border-radius:8px}.price-status{display:block;font-size:9px;color:var(--muted);margin-top:3px;white-space:nowrap}.price-status.live{color:var(--green)}.price-status.manual{color:var(--gold)}
+.summary-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px}.sum-card{padding:12px;border:1px solid var(--border);border-radius:12px;background:var(--surface-2);min-width:0}.sum-card .label{font-size:10px;color:var(--muted);margin-bottom:6px}.sum-card .value{font-size:14px;font-weight:900;overflow-wrap:anywhere}.sum-card.wide{grid-column:1/-1}.positive{color:var(--green)}.negative{color:var(--red)}
+.strategy-info{padding:16px;border-radius:14px;border:1px solid var(--border);background:linear-gradient(135deg,var(--surface-2),var(--surface))}.strategy-info .name{font-size:16px;font-weight:900}.strategy-info .tags{display:inline-block;margin-top:8px;color:var(--gold);background:var(--gold-soft);border-radius:999px;padding:4px 9px;font-size:10px;font-weight:800}
+.explanation{padding:18px}.exp-header{display:flex;align-items:center;gap:12px;padding-bottom:14px;border-bottom:1px solid var(--border)}.exp-icon{font-size:25px}.exp-title{font-weight:900;font-size:15px}.exp-sub{font-size:10px;color:var(--muted);margin-top:3px}.exp-body{display:grid;gap:12px;margin-top:14px}.exp-block{padding:13px;border:1px solid var(--border);border-radius:12px;background:var(--surface-2)}.blk-title{font-size:11px;font-weight:900;margin-bottom:7px}.exp-block p{margin:0;color:var(--muted);font-size:11px;line-height:1.9}.exp-block ul{margin:6px 0 0;padding-right:18px;color:var(--muted);font-size:11px;line-height:2}.exp-block.pros .blk-title{color:var(--green)}.exp-block.cons .blk-title{color:var(--red)}.exp-highlight{color:var(--gold);font-weight:800}
+.chart-panel{padding:18px}.chart-head{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;margin-bottom:12px}.chart-tools{display:flex;gap:5px;flex-wrap:wrap;justify-content:flex-end}.chart-btn{width:34px;height:32px;border:1px solid var(--border);background:var(--surface-2);color:var(--text);border-radius:8px;font-weight:900}.chart-btn.active{border-color:var(--gold);color:var(--gold);background:var(--gold-soft)}.zoom-info{font-size:10px;color:var(--muted);align-self:center;white-space:nowrap}.chart-canvas-wrap{position:relative;width:100%;height:500px;min-height:360px;overflow:hidden;border:1px solid var(--border);border-radius:13px;background:var(--surface-2);touch-action:none}.chart-canvas-wrap.panning{cursor:grab}.chart-canvas-wrap svg{display:block;width:100%;height:100%}.chart-tooltip{position:absolute;z-index:5;pointer-events:none;display:none;min-width:150px;padding:10px 12px;border-radius:10px;background:rgba(15,23,42,.96);color:#fff;box-shadow:0 10px 25px rgba(0,0,0,.22);font-size:11px}.chart-tooltip.visible{display:block}.chart-tooltip .tt-row{display:flex;justify-content:space-between;gap:12px}.chart-tooltip .tt-pnl-profit,.chart-tooltip .tt-pct-profit{color:#4ade80}.chart-tooltip .tt-pnl-loss,.chart-tooltip .tt-pct-loss{color:#fb7185}.chart-tooltip .tt-price{color:#fff}.chart-tooltip .tt-divider{height:1px;background:rgba(255,255,255,.12);margin:6px 0}.chart-hint{display:flex;justify-content:center;align-items:center;gap:6px;color:var(--muted);font-size:10px;padding-top:9px;text-align:center}.chart-hint.locked{color:var(--gold)}
+.status-bar{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:10px 13px;background:var(--surface-2);border:1px solid var(--border);border-radius:12px;margin-bottom:16px;color:var(--muted);font-size:10px}.status-left{display:flex;align-items:center;gap:8px}.status-bar .indicator{width:7px;height:7px}
+.tabs{display:flex;gap:5px;border-bottom:1px solid var(--border);margin-bottom:14px}.tab-btn{border:0;background:transparent;color:var(--muted);padding:9px 12px;border-bottom:2px solid transparent;font-weight:800;font-size:11px}.tab-btn.active{color:var(--gold);border-bottom-color:var(--gold)}.tab-content{display:none}.tab-content.active{display:block}
+.modal{position:fixed;inset:0;background:rgba(2,6,23,.58);backdrop-filter:blur(4px);display:none;align-items:center;justify-content:center;padding:20px;z-index:10000}.modal.active{display:flex}.modal-card{width:min(440px,100%);background:var(--surface);border:1px solid var(--border);border-radius:18px;padding:22px;box-shadow:0 25px 80px rgba(0,0,0,.3)}.modal-icon{font-size:30px}.modal-title{font-weight:900;font-size:17px;margin-top:8px}.modal-text{font-size:12px;color:var(--muted);line-height:1.9;margin:8px 0 18px}.modal-actions{display:flex;gap:8px;justify-content:flex-start}.notification{position:fixed;left:20px;bottom:20px;z-index:11000;background:var(--surface);border:1px solid var(--border);border-right:4px solid var(--gold);border-radius:12px;padding:12px 15px;box-shadow:var(--shadow);font-size:12px;max-width:min(420px,calc(100vw - 40px))}.chart-panel:fullscreen{background:var(--surface);padding:22px}.chart-panel:fullscreen .chart-canvas-wrap{height:calc(100vh - 100px)}
+@media(max-width:1250px){.presets{grid-template-columns:repeat(4,minmax(0,1fr))}.workspace{grid-template-columns:minmax(0,1fr) 320px}.hero{grid-template-columns:minmax(0,1fr) 320px}}
+@media(max-width:1050px){.hero,.workspace{grid-template-columns:1fr}.side-col{order:2}.main-col{order:1}.presets{grid-template-columns:repeat(3,minmax(0,1fr))}.chart-canvas-wrap{height:440px}}
+@media(max-width:720px){.page{padding:78px 10px 35px}.hero-main,.hero-side,.panel,.chart-panel,.explanation{padding:14px}.hero h1{font-size:23px}.hero-actions .btn{flex:1;min-width:130px}.presets{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.preset-card{padding:11px}.preset-desc{min-height:auto}.section-head{align-items:flex-start}.chart-head{flex-direction:column}.chart-tools{justify-content:flex-start}.chart-canvas-wrap{height:370px;min-height:320px}.summary-grid{grid-template-columns:1fr 1fr}.status-bar{align-items:flex-start;flex-direction:column}.positions-table{min-width:1120px}.panel-head{align-items:flex-start;flex-direction:column}.actions{width:100%}.mini-btn{flex:1}}
+@media(max-width:430px){.presets{grid-template-columns:1fr}.hero-metrics{grid-template-columns:1fr 1fr}.summary-grid{grid-template-columns:1fr}.sum-card.wide{grid-column:auto}.hero-actions .btn{min-width:100%;}.chart-canvas-wrap{height:330px}.chart-btn{width:32px}.chart-tools{width:100%}.chart-tools .chart-btn{flex:0 0 32px}.zoom-info{margin-right:auto}.section-title{font-size:15px}}
 </style>
 </head>
 <body>
-
-
-<nav class="o1-shell-nav">
-  <div class="inner">
-    <div class="o1-brand">شمعدون <span>•</span> ابزارهای مالی</div>
-    <div class="o1-navlinks">
-      <a href="home.html">خانه</a><a href="bourse.html">بازار</a>
-      <a href="analysis.html">تحلیل</a><a href="options-simulator.html" class="active">Options Lab</a>
-      <a href="portfolio.html">پرتفوی</a><a href="calculator.html">ابزارها</a>
-    </div>
-    <div class="o1-meta">نسخه آزمایشی Option 1</div>
-  </div>
-</nav>
-<div class="o1-breadcrumb">ابزارها / <strong>آزمایشگاه استراتژی آپشن</strong></div>
-
-<div class="container">
-
-  <div class="page-header">
-    <div class="lab-hero-content">
-      <div>
-        <div class="lab-eyebrow">OPTIONS LAB</div>
-        <h1>آزمایشگاه استراتژی آپشن</h1>
-        <p>استراتژی را انتخاب کن، دارایی پایه را مشخص کن و سناریوی سود و زیان را با قیمت‌های زنده بررسی کن.</p>
-      </div>
-      <div class="lab-hero-actions">
-        <button class="lab-action primary" onclick="startNewStrategy()">＋ استراتژی جدید</button>
-        <button class="lab-action" onclick="toggleLabTheme()" id="labThemeBtn">☀️ حالت روشن</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- Status Bar -->
+<div class="page">
   <div class="status-bar">
-    <div class="left">
-      <span class="indicator" id="liveIndicator">
-        <span class="dot"></span>
-        <span id="liveText">آماده به‌روزرسانی</span>
-      </span>
-      <span class="time-info" id="lastUpdateTime"></span>
+    <div class="status-left"><span id="liveIndicator" class="indicator"></span><span id="liveText">در حال آماده‌سازی داده‌ها...</span></div>
+    <span id="lastUpdateTime">آخرین به‌روزرسانی: —</span>
+  </div>
+
+  <section class="hero">
+    <div class="hero-main">
+      <div class="eyebrow"><i></i> OPTIONS LAB · شمعدون</div>
+      <h1>آزمایشگاه استراتژی آپشن</h1>
+      <p>استراتژی را انتخاب کن، دارایی پایه را تعیین کن و اثر تغییر قیمت را روی سود و زیان ببین. این صفحه موتور محاسبات و قیمت‌گذاری زنده نسخه اصلی شمعدون را حفظ می‌کند.</p>
+      <div class="hero-actions">
+        <button class="btn primary" onclick="document.getElementById('strategySection').scrollIntoView({behavior:'smooth'})">انتخاب استراتژی</button>
+        <button class="btn" onclick="addPosition()">＋ پوزیشن دستی</button>
+        <button class="btn danger" onclick="clearAllPositions()">پاک کردن سناریو</button>
+      </div>
     </div>
-    <label class="auto-refresh-toggle">
-      <input type="checkbox" id="autoRefreshToggle" onchange="toggleAutoRefresh(this.checked)">
-      <span class="switch"></span>
-      <span>به‌روزرسانی خودکار (۶۰ ثانیه)</span>
-    </label>
-  </div>
+    <aside class="hero-side">
+      <div class="live-row"><div class="live"><span class="indicator live"></span><span>داده بازار</span></div><div class="live-time">BRS API / CoinGecko</div></div>
+      <div class="hero-metrics">
+        <div class="metric"><span class="k">استراتژی فعال</span><span class="v" id="strategyName">استراتژی سفارشی</span></div>
+        <div class="metric"><span class="k">وضعیت</span><span class="v" id="strategyTags">در انتظار...</span></div>
+      </div>
+    </aside>
+  </section>
 
-  <div class="lab-summary">
-    <div class="lab-summary-card"><span>دارایی پایه</span><strong id="labAssetSummary">انتخاب نشده</strong><small>BRS / TSETMC</small></div>
-    <div class="lab-summary-card"><span>استراتژی فعال</span><strong id="labStrategySummary">سفارشی</strong><small>سناریوی فعلی</small></div>
-    <div class="lab-summary-card"><span>تعداد پوزیشن</span><strong id="labPositionSummary">۰</strong><small>اجزای استراتژی</small></div>
-    <div class="lab-summary-card"><span>وضعیت داده</span><strong id="labDataSummary">آماده</strong><small id="labDataTime">منتظر دریافت قیمت</small></div>
-  </div>
+  <section id="strategySection">
+    <div class="section-head"><div><div class="section-title">استراتژی‌های آماده</div><div class="section-sub">۱۵ ساختار استاندارد برای شروع سریع</div></div><div class="count"><span id="positionsCount">۰ پوزیشن</span></div></div>
+    <div id="presetsGrid" class="presets"></div>
+  </section>
 
-  <div class="tabs">
-    <button class="tab-btn active" onclick="switchTab('presets', this)">🎯 استراتژی‌های آماده</button>
-    <button class="tab-btn" onclick="switchTab('custom', this)">🛠️ پوزیشن سفارشی</button>
-  </div>
-
-  <div class="tab-content active" id="tab-presets">
-    <div class="panel">
-      <div class="panel-header">
-        <div class="panel-title">
-          🎯 استراتژی آماده را انتخاب کن
-          <span class="badge" id="presetCountBadge">۱۵ استراتژی</span>
+  <div class="workspace">
+    <main class="main-col">
+      <section class="panel">
+        <div class="panel-head">
+          <div><div class="panel-title">Position Builder</div><div class="panel-sub">دارایی، سمت معامله، نوع قرارداد، حجم و پارامترهای پوزیشن را تنظیم کن.</div></div>
+          <div class="actions"><button class="mini-btn" onclick="addPosition()">＋ پوزیشن</button><button class="mini-btn" onclick="clearAllPositions()">پاک کردن</button></div>
         </div>
-      </div>
-      <div class="presets-grid" id="presetsGrid"></div>
-      <div class="info-box" style="background: var(--blue-soft); border: 1px solid rgba(59, 130, 246, 0.25); border-radius: 12px; padding: 14px 18px; margin-top: 16px; color: var(--blue); font-size: 13px; line-height: 1.8;">
-        <strong>💡 راهنما:</strong> روی هر استراتژی کلیک کن تا پوزیشن‌های آماده در جدول باز بشن. سپس <strong>دارایی پایه</strong> را از سلکت انتخاب کن.
-      </div>
-    </div>
-  </div>
-
-  <div class="tab-content" id="tab-custom">
-    <div class="panel">
-      <div class="panel-header">
-        <div class="panel-title">
-          🛠️ پوزیشن سفارشی
-          <span class="badge" id="positionsCount">۰ پوزیشن</span>
+        <div class="positions-wrap">
+          <table class="positions-table">
+            <thead><tr><th>دارایی پایه</th><th>سمت</th><th>نوع</th><th>نماد</th><th>تعداد</th><th>قیمت فعلی</th><th>Strike</th><th>Premium</th><th>Delta</th><th>Margin</th><th>ارزش</th><th>حذف</th></tr></thead>
+            <tbody id="positionsBody"></tbody>
+          </table>
         </div>
-      </div>
-    </div>
+        <div style="display:flex;justify-content:space-between;gap:10px;margin-top:10px;color:var(--muted);font-size:10px"><span>برای موبایل، جدول را افقی اسکرول کن.</span><span id="positionsCount2">۰ پوزیشن</span></div>
+      </section>
+
+      <section id="chartContainer" class="chart-panel">
+        <div class="chart-head">
+          <div><div class="panel-title">Payoff Profile</div><div class="panel-sub">نمودار سود و زیان در قیمت‌های مختلف دارایی پایه</div></div>
+          <div class="chart-tools">
+            <span id="zoomInfo" class="zoom-info">1.0× | 1.0×</span>
+            <button id="panBtn" class="chart-btn" onclick="togglePan()" title="Pan">✋</button>
+            <button class="chart-btn" onclick="zoomOut()" title="Zoom out">−</button>
+            <button class="chart-btn" onclick="zoomIn()" title="Zoom in">＋</button>
+            <button class="chart-btn" onclick="resetZoom()" title="Reset">↺</button>
+            <button id="fullscreenBtn" class="chart-btn" onclick="toggleFullscreen()" title="تمام صفحه">⛶</button>
+          </div>
+        </div>
+        <div id="chartCanvasWrap" class="chart-canvas-wrap">
+          <svg id="payoffChart" viewBox="0 0 1000 500" preserveAspectRatio="none" aria-label="نمودار سود و زیان"></svg>
+          <div id="chartTooltip" class="chart-tooltip"></div>
+        </div>
+        <div id="chartHint" class="chart-hint"><span class="lock-icon">🖱️</span><span>اسکرول = زوم روی موس | درگ (Pan) = جابجایی | کلیک = قفل نقطه</span></div>
+      </section>
+
+      <section id="strategyExplanation" class="explanation" style="display:none"></section>
+    </main>
+
+    <aside class="side-col">
+      <section class="panel">
+        <div class="panel-head"><div><div class="panel-title">خلاصه ریسک و بازده</div><div class="panel-sub">خروجی لحظه‌ای سناریوی فعلی</div></div></div>
+        <div class="strategy-info"><div class="name" id="strategyNameSide">استراتژی سفارشی</div><span class="tags" id="strategyTagsSide">در انتظار...</span></div>
+        <div class="summary-grid" style="margin-top:10px">
+          <div class="sum-card"><div class="label">سرمایه / جریان اولیه</div><div class="value" id="totalInvestment">۰</div></div>
+          <div class="sum-card"><div class="label">P/L فعلی</div><div class="value" id="currentPnL">--</div></div>
+          <div class="sum-card"><div class="label">Max Profit</div><div class="value positive" id="maxProfit">--</div></div>
+          <div class="sum-card"><div class="label">Max Loss</div><div class="value negative" id="maxLoss">--</div></div>
+          <div class="sum-card wide"><div class="label">Break-even</div><div class="value" id="breakeven">--</div></div>
+          <div class="sum-card wide"><div class="label">Risk / Reward</div><div class="value" id="rrRatio">--</div></div>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="panel-head"><div><div class="panel-title">چطور استفاده کنیم؟</div><div class="panel-sub">سه قدم برای ساخت سناریو</div></div></div>
+        <div style="display:grid;gap:9px">
+          <div class="sum-card"><b>۱. استراتژی</b><div style="font-size:10px;color:var(--muted);line-height:1.8;margin-top:4px">یکی از ساختارهای آماده را انتخاب کن.</div></div>
+          <div class="sum-card"><b>۲. دارایی</b><div style="font-size:10px;color:var(--muted);line-height:1.8;margin-top:4px">در جدول، دارایی پایه را انتخاب کن؛ قیمت زنده برای بورس و کریپتو به‌روزرسانی می‌شود.</div></div>
+          <div class="sum-card"><b>۳. تحلیل</b><div style="font-size:10px;color:var(--muted);line-height:1.8;margin-top:4px">Payoff، Break-even، Max Profit و Max Loss را بررسی کن.</div></div>
+        </div>
+      </section>
+    </aside>
   </div>
-
-  <div class="panel">
-    <div class="panel-header">
-      <div class="panel-title">
-        📋 پوزیشن‌های شما
-        <span class="badge" id="positionsCount2">۰ پوزیشن</span>
-      </div>
-      <div style="display:flex; gap:8px; flex-wrap:wrap;">
-        <button class="btn-refresh" onclick="refreshAllPrices(true)">🔄 به‌روزرسانی قیمت‌ها</button>
-        <button class="btn-clear" onclick="clearAllPositions()">🗑️ پاک کردن استراتژی / پوزیشن</button>
-      </div>
-    </div>
-
-    <div class="positions-table-wrapper">
-      <table class="positions-table">
-        <thead>
-          <tr>
-            <th>دارایی پایه</th>
-            <th>خرید/فروش</th>
-            <th>نوع</th>
-            <th>نام نماد</th>
-            <th>مقدار</th>
-            <th>💵 قیمت فعلی</th>
-            <th>🎯 قیمت اعمال</th>
-            <th>پرمیوم</th>
-            <th>دلتا</th>
-            <th>وجه تضمین</th>
-            <th>مجموع</th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody id="positionsBody"></tbody>
-      </table>
-    </div>
-
-    <button class="btn-add" onclick="addPosition()">
-      <span style="font-size:16px;">➕</span>
-      افزودن پوزیشن دستی
-    </button>
-  </div>
-
-  <div class="strategy-info">
-    <div class="strategy-name">🎯 <span id="strategyName">استراتژی سفارشی</span></div>
-    <div class="strategy-tag" id="strategyTags">در انتظار پوزیشن...</div>
-    <div style="margin-right: auto;">
-      <span style="color: var(--text-secondary); font-size: 12px; font-weight: 600;">💰 مجموع سرمایه:</span>
-      <span class="num" style="color: var(--gold); font-weight: 800; font-size: 15px; margin-right: 8px;" id="totalInvestment">۰</span>
-    </div>
-  </div>
-
-  <div class="strategy-explanation" id="strategyExplanation" style="display: none;"></div>
-
-  <div class="results-grid">
-    <div class="result-card profit">
-      <div class="label">📈 حداکثر سود</div>
-      <div class="value" id="maxProfit">--</div>
-    </div>
-    <div class="result-card loss">
-      <div class="label">📉 حداکثر ضرر</div>
-      <div class="value" id="maxLoss">--</div>
-    </div>
-    <div class="result-card blue">
-      <div class="label">⚖️ نقطه(های) سربه‌سر</div>
-      <div class="value" id="breakeven">--</div>
-    </div>
-    <div class="result-card">
-      <div class="label">🎯 نسبت R/R</div>
-      <div class="value" id="rrRatio">--</div>
-    </div>
-    <div class="result-card">
-      <div class="label">📊 سود/زیان فعلی</div>
-      <div class="value" id="currentPnL">--</div>
-    </div>
-  </div>
-
-  <div class="chart-container" id="chartContainer">
-    <div class="chart-header">
-      <div class="title">📈 نمودار سود و زیان (در سررسید)</div>
-      <div class="live-badge">LIVE</div>
-    </div>
-
-    <div class="chart-canvas-wrap" id="chartCanvasWrap">
-      <svg id="payoffChart" preserveAspectRatio="none"></svg>
-      <div id="chartTooltip"></div>
-    </div>
-
-    <div class="chart-toolbar">
-      <span class="chart-toolbar-label">Zoom</span>
-      <button class="zoom-btn" onclick="zoomIn('both')" title="زوم افقی و عمودی">➕➕</button>
-      <button class="zoom-btn" onclick="zoomIn('x')" title="زوم افقی">↔</button>
-      <button class="zoom-btn" onclick="zoomIn('y')" title="زوم عمودی">↕</button>
-      <button class="zoom-btn" onclick="zoomOut()" title="زوم اوت">➖</button>
-      <button class="zoom-btn reset" onclick="resetZoom()" title="ریست">🔄 ریست</button>
-      <button class="zoom-btn" id="panBtn" onclick="togglePan()" title="جابجایی">✋ Pan</button>
-      <button class="zoom-btn" id="fullscreenBtn" onclick="toggleFullscreen()" title="تمام صفحه">⛶</button>
-      <span class="zoom-info" id="zoomInfo">1.0× | 1.0×</span>
-    </div>
-
-    <div class="chart-hint" id="chartHint">
-      <span class="lock-icon">🖱️</span>
-      <span>اسکرول = زوم روی موس | درگ (Pan) = جابجایی | کلیک = قفل نقطه</span>
-    </div>
-
-    <div class="legend">
-      <div class="legend-item"><div class="legend-dot" style="background:#22c55e;"></div> ناحیه سود</div>
-      <div class="legend-item"><div class="legend-dot" style="background:#ef4444;"></div> ناحیه ضرر</div>
-      <div class="legend-item"><div class="legend-dot" style="background:#d4af37;"></div> نقطه سربه‌سر</div>
-      <div class="legend-item"><div class="legend-dot" style="background:#3b82f6;"></div> قیمت فعلی</div>
-    </div>
-  </div>
-
 </div>
 
-<div class="modal-overlay" id="customModal">
-  <div class="modal-box">
-    <div class="modal-icon" id="modalIcon">⚠️</div>
-    <div class="modal-title" id="modalTitle">عنوان</div>
-    <div class="modal-text" id="modalText">متن</div>
-    <div class="modal-actions">
-      <button class="modal-btn" onclick="closeModal()">انصراف</button>
-      <button class="modal-btn danger" id="modalConfirmBtn">تأیید</button>
-    </div>
-  </div>
-</div>
+<div id="customModal" class="modal"><div class="modal-card"><div id="modalIcon" class="modal-icon">⚠️</div><div id="modalTitle" class="modal-title">تأیید</div><div id="modalText" class="modal-text"></div><div class="modal-actions"><button class="btn primary" id="modalConfirmBtn">تأیید</button><button class="btn" onclick="closeModal()">انصراف</button></div></div></div>
+<div id="customNotification"></div>
 
 <script>
 // ==========================================
@@ -1915,6 +174,10 @@ const ASSETS = [
   { key: 'trx',  name: 'ترون',     emoji: '🟢', defaultPrice: 0.25, call: '—', put: '—', group: 'کریپتو', source: 'coingecko', coingeckoId: 'tron' },
   { key: 'avax', name: 'آوالانچ',  emoji: '🔺', defaultPrice: 35, call: '—', put: '—', group: 'کریپتو', source: 'coingecko', coingeckoId: 'avalanche-2' },
 
+  // ═══ کالا (BrsApi Commodity) ═══
+  { key: 'gold',   name: 'انس طلا',  emoji: '🥇', defaultPrice: 4306, call: '—', put: '—', group: 'کالا', source: 'commodity', symbol: 'XAUUSD' },
+  { key: 'silver', name: 'انس نقره', emoji: '🥈', defaultPrice: 64.8, call: '—', put: '—', group: 'کالا', source: 'commodity', symbol: 'XAGUSD' },
+  { key: 'oil',    name: 'نفت برنت', emoji: '🛢️', defaultPrice: 105, call: '—', put: '—', group: 'کالا', source: 'commodity', symbol: 'BRENT' },
 
   // ═══ بورس ایران (AllSymbols) — قیمت‌ها به تومان (تقسیم بر ۱۰) ═══
   { key: 'اخابر',     name: 'اخابر',     emoji: '📡', defaultPrice: 1000,  call: 'ضمخا', put: 'طمخا', group: 'بورس', source: 'stocks' },
@@ -1948,164 +211,144 @@ const ASSETS = [
 // 🎯 Preset Strategies
 // ==========================================
 const PRESETS = [
-  {
-    key:'longCall', name:'Long Call', icon:'🟢', desc:'خرید Call — سود بالقوه نامحدود در صعود', badge:'صعودی',
-    positions:[{side:'buy',type:'call',strikeOffset:0.05,premiumRatio:0.025}],
-    explanation:{
-      what:'خرید Call یعنی پرداخت پرمیوم در برابر دریافت حق، بدون تعهد، برای خرید دارایی پایه در قیمت اعمال تا سررسید.',
-      who:'برای معامله‌گری که انتظار رشد قابل‌توجه قیمت پایه را دارد و می‌خواهد ریسک خود را به پرمیوم پرداختی محدود کند.',
-      pros:['سود بالقوه نامحدود در رشد شدید قیمت','حداکثر زیان محدود به پرمیوم','اهرم سرمایه‌ای بالا','ریسک مشخص از ابتدا'],
-      cons:['زوال زمانی به ضرر خریدار است','برای سوددهی باید حرکت قیمت از هزینه پرمیوم عبور کند','در بازار کم‌نوسان ممکن است کل پرمیوم از بین برود']
+  { key: 'longCall', name: 'Long Call', icon: '🟢', desc: 'خرید Call — سود نامحدود در صعود', badge: 'صعودی',
+    positions: [{ side: 'buy', type: 'call', strikeOffset: 0.05, premiumRatio: 0.025 }],
+    explanation: {
+      what: 'خرید یک قرارداد اختیار خرید به این معنی است که شما حق (نه تعهد) خرید دارایی پایه را در قیمت اعمال مشخص تا سررسید دارید. برای این حق، پرمیوم پرداخت می‌کنید.',
+      who: 'مناسب برای کسانی که انتظار رشد قابل توجه قیمت دارایی پایه را دارند و می‌خواهند با سرمایه کم، از رشد قیمت سود ببرند.',
+      pros: ['سود بالقوه نامحدود در صورت رشد شدید قیمت', 'حداکثر ضرر محدود به پرمیوم پرداختی', 'اهرم بالا با سرمایه کم', 'بدون نیاز به وجه تضمین'],
+      cons: ['احتمال از دست دادن کل پرمیوم در صورت عدم رشد', 'اثر زوال زمانی (Theta) روی قیمت آپشن', 'نیاز به رشد سریع و قابل توجه قیمت برای سوددهی']
     }
   },
-  {
-    key:'shortCall', name:'Short Call', icon:'🔴', desc:'فروش Call — دریافت پرمیوم با ریسک صعودی', badge:'نزولی / خنثی',
-    positions:[{side:'sell',type:'call',strikeOffset:0.05,premiumRatio:0.025}],
-    explanation:{
-      what:'فروش Call ایجاد تعهد فروش دارایی پایه در قیمت اعمال در صورت اعمال اختیار است و فروشنده در مقابل پرمیوم دریافت می‌کند.',
-      who:'برای معامله‌گر باتجربه‌ای که انتظار ثبات یا رشد محدود قیمت را دارد و توان مدیریت وجه تضمین را دارد.',
-      pros:['دریافت فوری پرمیوم','بهره‌مندی از زوال زمانی','سود مشخص در صورت باقی ماندن قیمت زیر قیمت اعمال'],
-      cons:['ریسک صعودی بالقوه بسیار زیاد','نیاز به مدیریت وجه تضمین','نیازمند کنترل ریسک فعال']
+  { key: 'shortCall', name: 'Short Call', icon: '🔴', desc: 'فروش Call — درآمد از پرمیوم', badge: 'نزولی/خنثی',
+    positions: [{ side: 'sell', type: 'call', strikeOffset: 0.05, premiumRatio: 0.025 }],
+    explanation: {
+      what: 'فروش یک قرارداد اختیار خرید به این معنی است که در ازای دریافت پرمیوم، متعهد می‌شوید در صورت اعمال، دارایی پایه را به قیمت اعمال بفروشید.',
+      who: 'مناسب برای کسانی که معتقدند قیمت دارایی پایه به قیمت اعمال نمی‌رسد یا رشد آن محدود خواهد بود.',
+      pros: ['درآمد فوری از پرمیوم دریافتی', 'سود از زوال زمانی (Theta) و ثبات قیمت', 'استفاده در استراتژی‌های درآمدزایی'],
+      cons: ['ضرر بالقوه نامحدود در صورت رشد شدید قیمت', 'نیاز به وجه تضمین قابل توجه', 'ریسک اعمال زودهنگام در برخی شرایط']
     }
   },
-  {
-    key:'longPut', name:'Long Put', icon:'🔴', desc:'خرید Put — سود بالقوه از افت قیمت', badge:'نزولی',
-    positions:[{side:'buy',type:'put',strikeOffset:-0.05,premiumRatio:0.025}],
-    explanation:{
-      what:'خرید Put یعنی پرداخت پرمیوم برای دریافت حق فروش دارایی پایه در قیمت اعمال تا سررسید.',
-      who:'برای دیدگاه نزولی یا پوشش ریسک افت ارزش دارایی پایه.',
-      pros:['ریسک محدود به پرمیوم','پتانسیل سود بالا در افت شدید','قابل استفاده برای پوشش ریسک'],
-      cons:['زوال زمانی','نیاز به افت کافی قیمت برای جبران پرمیوم','ممکن است کل پرمیوم از بین برود']
+  { key: 'longPut', name: 'Long Put', icon: '🔴', desc: 'خرید Put — سود در نزول', badge: 'نزولی',
+    positions: [{ side: 'buy', type: 'put', strikeOffset: -0.05, premiumRatio: 0.025 }],
+    explanation: {
+      what: 'خرید یک قرارداد اختیار فروش به این معنی است که شما حق (نه تعهد) فروش دارایی پایه را در قیمت اعمال مشخص تا سررسید دارید.',
+      who: 'مناسب برای کسانی که انتظار افت قیمت دارایی پایه را دارند یا می‌خواهند پورتفوی خود را بیمه کنند.',
+      pros: ['سود بالقوه بالا در صورت افت شدید قیمت', 'حداکثر ضرر محدود به پرمیوم پرداختی', 'ابزار عالی برای پوشش ریسک (Hedge)', 'سود در بازارهای نزولی یا پرنوسان'],
+      cons: ['احتمال از دست دادن کل پرمیوم در صورت عدم افت', 'اثر زوال زمانی روی قیمت آپشن', 'نیاز به افت سریع و قابل توجه قیمت برای سوددهی']
     }
   },
-  {
-    key:'shortPut', name:'Short Put', icon:'🟢', desc:'فروش Put — درآمد پرمیومی با تعهد خرید', badge:'صعودی / خنثی',
-    positions:[{side:'sell',type:'put',strikeOffset:-0.05,premiumRatio:0.025}],
-    explanation:{
-      what:'فروش Put یعنی دریافت پرمیوم در برابر تعهد خرید دارایی پایه با قیمت اعمال در صورت اعمال اختیار.',
-      who:'برای معامله‌گری که دیدگاه صعودی ملایم یا خنثی دارد و آمادگی پذیرش دارایی پایه در قیمت اعمال را دارد.',
-      pros:['دریافت پرمیوم','بهره‌مندی از ثبات یا رشد قیمت','امکان ایجاد قیمت خرید مؤثر پایین‌تر'],
-      cons:['زیان بالقوه در افت شدید','نیاز به وجه تضمین','ریسک تخصیص دارایی']
+  { key: 'shortPut', name: 'Short Put', icon: '🟢', desc: 'فروش Put — درآمد از پرمیوم', badge: 'صعودی/خنثی',
+    positions: [{ side: 'sell', type: 'put', strikeOffset: -0.05, premiumRatio: 0.025 }],
+    explanation: {
+      what: 'فروش یک قرارداد اختیار فروش به این معنی است که در ازای دریافت پرمیوم، متعهد می‌شوید در صورت اعمال، دارایی پایه را به قیمت اعمال بخرید.',
+      who: 'مناسب برای کسانی که معتقدند قیمت دارایی پایه به قیمت اعمال نمی‌رسد و مایل به خرید در قیمت پایین‌تر هستند.',
+      pros: ['درآمد فوری از پرمیوم دریافتی', 'سود از ثبات یا رشد ملایم قیمت', 'امکان خرید دارایی در قیمت پایین‌تر از بازار'],
+      cons: ['ضرر بالقوه بالا در صورت افت شدید قیمت', 'نیاز به وجه تضمین قابل توجه', 'ریسک تخصیص دارایی در قیمت نامناسب']
     }
   },
-  {
-    key:'bullCallSpread', name:'Bull Call Spread', icon:'📈', desc:'اسپرد صعودی Call با سود و زیان محدود', badge:'صعودی',
-    positions:[{side:'buy',type:'call',strikeOffset:0,premiumRatio:0.03},{side:'sell',type:'call',strikeOffset:0.05,premiumRatio:0.015}],
-    explanation:{
-      what:'خرید Call با اعمال پایین‌تر و فروش Call با اعمال بالاتر در یک ساختار اسپرد برای کاهش هزینه ورود و محدود کردن سود.',
-      who:'برای انتظار رشد مشخص اما نه لزوماً جهش بسیار بزرگ.',
-      pros:['هزینه کمتر از Long Call','زیان محدود','ساختار ریسک و بازده روشن'],
-      cons:['سود سقف‌دار','دو پوزیشن برای مدیریت','نیاز به انتخاب مناسب فاصله اعمال']
+  { key: 'bullCallSpread', name: 'Bull Call Spread', icon: '📈', desc: 'صعودی محدود', badge: 'صعودی',
+    positions: [{ side: 'buy', type: 'call', strikeOffset: 0, premiumRatio: 0.03 }, { side: 'sell', type: 'call', strikeOffset: 0.05, premiumRatio: 0.015 }],
+    explanation: {
+      what: 'ترکیب خرید یک Call با قیمت اعمال پایین‌تر و فروش یک Call با قیمت اعمال بالاتر. هر دو در یک سررسید.',
+      who: 'مناسب برای کسانی که انتظار رشد محدود قیمت را دارند و می‌خواهند هزینه ورود را کاهش دهند.',
+      pros: ['هزینه اولیه کمتر از Long Call ساده', 'ریسک محدود و مشخص', 'سود در صورت رشد ملایم قیمت', 'نسبت ریسک به پاداش قابل قبول'],
+      cons: ['سود بالقوه سقف‌دار (محدود به فاصله دو قیمت اعمال)', 'نیاز به پرداخت وجه تضمین برای سمت فروش', 'پیچیدگی بیشتر از استراتژی‌های تک‌پایه']
     }
   },
-  {
-    key:'bearPutSpread', name:'Bear Put Spread', icon:'📉', desc:'اسپرد نزولی Put با ریسک محدود', badge:'نزولی',
-    positions:[{side:'buy',type:'put',strikeOffset:0,premiumRatio:0.03},{side:'sell',type:'put',strikeOffset:-0.05,premiumRatio:0.015}],
-    explanation:{
-      what:'خرید Put با اعمال بالاتر و فروش Put با اعمال پایین‌تر برای ایجاد دیدگاه نزولی با هزینه و سود محدود.',
-      who:'برای انتظار افت مشخص و کنترل‌شده قیمت.',
-      pros:['هزینه کمتر از Long Put','زیان محدود','ریسک از ابتدا قابل محاسبه'],
-      cons:['سود سقف‌دار','نیاز به انتخاب فاصله اعمال','پیچیدگی بیشتر از خرید ساده Put']
+  { key: 'bearPutSpread', name: 'Bear Put Spread', icon: '📉', desc: 'نزولی محدود', badge: 'نزولی',
+    positions: [{ side: 'buy', type: 'put', strikeOffset: 0, premiumRatio: 0.03 }, { side: 'sell', type: 'put', strikeOffset: -0.05, premiumRatio: 0.015 }],
+    explanation: {
+      what: 'ترکیب خرید یک Put با قیمت اعمال بالاتر و فروش یک Put با قیمت اعمال پایین‌تر.',
+      who: 'مناسب برای کسانی که انتظار افت محدود قیمت را دارند و می‌خواهند هزینه ورود را کاهش دهند.',
+      pros: ['هزینه کمتر از Long Put ساده', 'ریسک محدود و مشخص', 'سود در صورت افت ملایم قیمت', 'ساختار سود و زیان قابل پیش‌بینی'],
+      cons: ['سود بالقوه سقف‌دار', 'نیاز به وجه تضمین برای سمت فروش', 'کاهش پتانسیل سود نسبت به Put ساده']
     }
   },
-  {
-    key:'bullPutSpread', name:'Bull Put Spread', icon:'🟢', desc:'اسپرد اعتباری صعودی برای دریافت پرمیوم', badge:'صعودی / خنثی',
-    positions:[{side:'sell',type:'put',strikeOffset:-0.02,premiumRatio:0.02},{side:'buy',type:'put',strikeOffset:-0.07,premiumRatio:0.01}],
-    explanation:{
-      what:'فروش Put با اعمال بالاتر و خرید Put با اعمال پایین‌تر برای دریافت اعتبار اولیه و محدود کردن زیان نزولی.',
-      who:'برای دیدگاه صعودی ملایم یا خنثی.',
-      pros:['دریافت اعتبار اولیه','زیان محدود','بهره‌مندی از کاهش ارزش زمانی'],
-      cons:['سود محدود','نیاز به مدیریت وجه تضمین','در افت شدید بازار زیان ایجاد می‌شود']
+  { key: 'bullPutSpread', name: 'Bull Put Spread', icon: '🟢', desc: 'درآمد از پرمیوم در صعودی', badge: 'صعودی',
+    positions: [{ side: 'sell', type: 'put', strikeOffset: -0.02, premiumRatio: 0.02 }, { side: 'buy', type: 'put', strikeOffset: -0.07, premiumRatio: 0.01 }],
+    explanation: {
+      what: 'ترکیب فروش یک Put با قیمت اعمال بالاتر و خرید یک Put با قیمت اعمال پایین‌تر برای محدود کردن ریسک.',
+      who: 'مناسب برای کسانی که انتظار رشد ملایم یا ثبات قیمت را دارند و می‌خواهند از پرمیوم درآمد کسب کنند.',
+      pros: ['درآمد خالص از پرمیوم', 'ریسک محدود و مشخص', 'برد بالا (سود در بیش‌تر سناریوها)', 'استفاده بهینه از زوال زمانی'],
+      cons: ['سود سقف‌دار', 'نیاز به وجه تضمین', 'ضرر در صورت افت شدید قیمت']
     }
   },
-  {
-    key:'bearCallSpread', name:'Bear Call Spread', icon:'🔴', desc:'اسپرد اعتباری نزولی برای دریافت پرمیوم', badge:'نزولی / خنثی',
-    positions:[{side:'sell',type:'call',strikeOffset:0.02,premiumRatio:0.02},{side:'buy',type:'call',strikeOffset:0.07,premiumRatio:0.01}],
-    explanation:{
-      what:'فروش Call با اعمال پایین‌تر و خرید Call با اعمال بالاتر برای دریافت اعتبار و محدود کردن ریسک صعودی.',
-      who:'برای دیدگاه نزولی ملایم یا خنثی.',
-      pros:['اعتبار اولیه','زیان محدود','عملکرد مناسب در ثبات یا افت قیمت'],
-      cons:['سود محدود','نیاز به مدیریت موقعیت','در رشد شدید قیمت زیان ایجاد می‌شود']
+  { key: 'bearCallSpread', name: 'Bear Call Spread', icon: '🔴', desc: 'درآمد از پرمیوم در نزولی', badge: 'نزولی',
+    positions: [{ side: 'sell', type: 'call', strikeOffset: 0.02, premiumRatio: 0.02 }, { side: 'buy', type: 'call', strikeOffset: 0.07, premiumRatio: 0.01 }],
+    explanation: {
+      what: 'ترکیب فروش یک Call با قیمت اعمال پایین‌تر و خرید یک Call با قیمت اعمال بالاتر.',
+      who: 'مناسب برای کسانی که انتظار افت ملایم یا ثبات قیمت را دارند و می‌خواهند درآمد کسب کنند.',
+      pros: ['درآمد خالص از پرمیوم', 'ریسک محدود', 'برد بالا در بازارهای نزولی یا خنثی', 'بهترین عملکرد در بازار آرام'],
+      cons: ['سود سقف‌دار', 'نیاز به وجه تضمین', 'ضرر در صورت رشد شدید قیمت']
     }
   },
-  {
-    key:'longStraddle', name:'Long Straddle', icon:'⚡', desc:'خرید همزمان Call و Put در یک قیمت اعمال', badge:'نوسانی',
-    positions:[{side:'buy',type:'call',strikeOffset:0,premiumRatio:0.025},{side:'buy',type:'put',strikeOffset:0,premiumRatio:0.025}],
-    explanation:{
-      what:'خرید همزمان Call و Put با قیمت اعمال یکسان و سررسید یکسان؛ جهت حرکت مهم نیست و شدت حرکت اهمیت دارد.',
-      who:'برای زمانی که انتظار افزایش شدید نوسان را دارید اما جهت آن را نمی‌دانید.',
-      pros:['پتانسیل سود در هر دو جهت','زیان محدود به مجموع پرمیوم‌ها','مناسب برای سناریوهای جهش قیمتی'],
-      cons:['هزینه اولیه بالا','حساسیت زیاد به زوال زمانی','برای سوددهی به حرکت قابل‌توجه نیاز دارد']
+  { key: 'longStraddle', name: 'Long Straddle', icon: '⚡', desc: 'سود از نوسان شدید', badge: 'نوسانی',
+    positions: [{ side: 'buy', type: 'call', strikeOffset: 0, premiumRatio: 0.025 }, { side: 'buy', type: 'put', strikeOffset: 0, premiumRatio: 0.025 }],
+    explanation: {
+      what: 'خرید همزمان یک Call و یک Put با قیمت اعمال یکسان. سود در صورت حرکت شدید قیمت در هر جهت.',
+      who: 'مناسب برای کسانی که انتظار نوسان شدید قیمت را دارند ولی جهت آن را نمی‌دانند.',
+      pros: ['سود بالقوه نامحدود در هر دو جهت', 'عدم نیاز به پیش‌بینی جهت بازار', 'مناسب برای رویدادهای خبری', 'ریسک محدود به مجموع پرمیوم‌ها'],
+      cons: ['هزینه اولیه بالا (دو پرمیوم)', 'نیاز به نوسان شدید برای سربه‌سر شدن', 'اثر شدید زوال زمانی', 'احتمال ضرر در بازار آرام']
     }
   },
-  {
-    key:'longStrangle', name:'Long Strangle', icon:'⚡', desc:'خرید Call و Put خارج از پول با هزینه کمتر', badge:'نوسانی',
-    positions:[{side:'buy',type:'call',strikeOffset:0.05,premiumRatio:0.015},{side:'buy',type:'put',strikeOffset:-0.05,premiumRatio:0.015}],
-    explanation:{
-      what:'خرید Call با اعمال بالاتر و Put با اعمال پایین‌تر. ساختار مشابه Straddle است اما با هزینه اولیه کمتر و نقاط سربه‌سر دورتر.',
-      who:'برای انتظار حرکت شدید قیمت با ترجیح هزینه ورودی کمتر.',
-      pros:['هزینه کمتر از Straddle','ریسک محدود','سود بالقوه در هر دو جهت'],
-      cons:['نیاز به حرکت بزرگ‌تر','زوال زمانی','فاصله بیشتر تا سربه‌سر']
+  { key: 'shortStraddle', name: 'Short Straddle', icon: '💤', desc: 'سود از بازار آرام', badge: 'خنثی',
+    positions: [{ side: 'sell', type: 'call', strikeOffset: 0, premiumRatio: 0.025 }, { side: 'sell', type: 'put', strikeOffset: 0, premiumRatio: 0.025 }],
+    explanation: {
+      what: 'فروش همزمان یک Call و یک Put با قیمت اعمال یکسان. سود در صورت باقی ماندن قیمت نزدیک قیمت اعمال.',
+      who: 'مناسب برای کسانی که انتظار بازار آرام و بدون نوسان را دارند. حرفه‌ای‌ترین استراتژی درآمدزایی از پرمیوم.',
+      pros: ['درآمد بالا از دو پرمیوم', 'سود از زوال زمانی (Theta)', 'حداکثر سود در حالت ثبات قیمت', 'بدون نیاز به پیش‌بینی جهت'],
+      cons: ['ضرر بالقوه نامحدود در هر دو جهت', 'نیاز به وجه تضمین بالا', 'پرریسک‌ترین استراتژی برای تازه‌کارها', 'نیاز به مدیریت فعال موقعیت']
     }
   },
-  {
-    key:'coveredCall', name:'Covered Call', icon:'🛡️', desc:'دارایی پایه + فروش Call برای ایجاد درآمد', badge:'پوششی',
-    positions:[{side:'buy',type:'spot',strikeOffset:0,premiumRatio:0},{side:'sell',type:'call',strikeOffset:0.05,premiumRatio:0.02}],
-    explanation:{
-      what:'نگهداری دارایی پایه و فروش Call روی آن؛ پرمیوم دریافتی می‌تواند بخشی از بازده یا هزینه نگهداری را پوشش دهد.',
-      who:'برای دارنده دارایی پایه که انتظار رشد محدود یا ثبات دارد.',
-      pros:['ایجاد درآمد از پرمیوم','کاهش هزینه مؤثر نگهداری','ساختار ساده و قابل فهم'],
-      cons:['سقف‌دار شدن سود صعودی','ریسک نزولی دارایی همچنان وجود دارد','نیاز به نگهداری دارایی پایه']
+  { key: 'longStrangle', name: 'Long Strangle', icon: '⚡', desc: 'نوسانی با هزینه کمتر', badge: 'نوسانی',
+    positions: [{ side: 'buy', type: 'call', strikeOffset: 0.05, premiumRatio: 0.015 }, { side: 'buy', type: 'put', strikeOffset: -0.05, premiumRatio: 0.015 }],
+    explanation: {
+      what: 'خرید یک Call با قیمت اعمال بالاتر و یک Put با قیمت اعمال پایین‌تر. شبیه Long Straddle ولی ارزان‌تر.',
+      who: 'مناسب برای کسانی که انتظار نوسان شدید دارند ولی می‌خواهند هزینه کمتری بپردازند.',
+      pros: ['هزینه اولیه کمتر از Straddle', 'سود بالقوه بالا در هر دو جهت', 'ریسک محدود', 'مناسب برای رویدادهای پرنوسان'],
+      cons: ['نیاز به نوسان شدیدتر برای سوددهی', 'زوال زمانی سریع', 'فاصله بیشتر تا نقاط سربه‌سر']
     }
   },
-  {
-    key:'protectivePut', name:'Protective Put', icon:'🏥', desc:'دارایی پایه + خرید Put برای پوشش افت', badge:'بیمه',
-    positions:[{side:'buy',type:'spot',strikeOffset:0,premiumRatio:0},{side:'buy',type:'put',strikeOffset:-0.05,premiumRatio:0.02}],
-    explanation:{
-      what:'خرید Put در کنار دارایی پایه برای ایجاد کف تقریبی در زیان نزولی؛ مشابه خرید بیمه برای موقعیت.',
-      who:'برای سرمایه‌گذاری که قصد نگهداری دارایی را دارد ولی می‌خواهد ریسک افت شدید را محدود کند.',
-      pros:['کاهش ریسک افت شدید','حفظ پتانسیل صعودی دارایی','ریسک قابل‌تعریف'],
-      cons:['هزینه پرمیوم','کاهش بازده خالص','زوال زمانی Put']
+  { key: 'shortStrangle', name: 'Short Strangle', icon: '💤', desc: 'خنثی با ریسک بیشتر', badge: 'خنثی',
+    positions: [{ side: 'sell', type: 'call', strikeOffset: 0.05, premiumRatio: 0.015 }, { side: 'sell', type: 'put', strikeOffset: -0.05, premiumRatio: 0.015 }],
+    explanation: {
+      what: 'فروش یک Call با قیمت اعمال بالاتر و یک Put با قیمت اعمال پایین‌تر. سود در صورت باقی ماندن قیمت در محدوده.',
+      who: 'مناسب برای معامله‌گران با تجربه که انتظار بازار آرام با نوسان محدود را دارند.',
+      pros: ['درآمد خالص از دو پرمیوم', 'محدوده سود بزرگ‌تر از Straddle', 'سود از زوال زمانی', 'برد بالا در بازارهای آرام'],
+      cons: ['ضرر بالقوه نامحدود در دو جهت', 'نیاز به وجه تضمین بالا', 'پرریسک و مناسب حرفه‌ای‌ها', 'نیاز به مدیریت فعال']
     }
   },
-  {
-    key:'collar', name:'Collar', icon:'🔒', desc:'دارایی پایه + خرید Put + فروش Call', badge:'پوششی',
-    positions:[{side:'buy',type:'spot',strikeOffset:0,premiumRatio:0},{side:'buy',type:'put',strikeOffset:-0.05,premiumRatio:0.02},{side:'sell',type:'call',strikeOffset:0.05,premiumRatio:0.02}],
-    explanation:{
-      what:'Collar از نگهداری دارایی پایه، خرید Put برای محدود کردن ریسک نزولی و فروش Call برای تأمین بخشی از هزینه Put تشکیل می‌شود.',
-      who:'برای دارنده دارایی که هم‌زمان می‌خواهد کف زیان و سقف سود خود را تا حدی مشخص کند.',
-      pros:['محدود کردن ریسک نزولی','کاهش هزینه پوشش از طریق فروش Call','ساختار ریسک قابل پیش‌بینی'],
-      cons:['سقف سود در صعود','سه جزء برای مدیریت','نتیجه به فاصله قیمت‌های اعمال وابسته است']
+  { key: 'coveredCall', name: 'Covered Call', icon: '🛡️', desc: 'درآمد از سهام موجود', badge: 'پوششی',
+    positions: [{ side: 'buy', type: 'spot', strikeOffset: 0, premiumRatio: 0 }, { side: 'sell', type: 'call', strikeOffset: 0.05, premiumRatio: 0.02 }],
+    explanation: {
+      what: 'خرید دارایی پایه + فروش یک Call روی همان دارایی. فروش Call درآمد پرمیوم ایجاد می‌کند.',
+      who: 'مناسب برای کسانی که دارایی پایه را در اختیار دارند و انتظار رشد محدود قیمت را دارند.',
+      pros: ['درآمد اضافی از پرمیوم', 'کاهش هزینه نگهداری دارایی', 'مناسب برای بازارهای خنثی یا صعودی ملایم', 'ریسک کمتر از فروش Call ساده'],
+      cons: ['سود سقف‌دار (اگر قیمت بالا برود)', 'ریسک نزولی روی دارایی پایه باقی می‌ماند', 'نیاز به سرمایه اولیه برای خرید دارایی']
     }
   },
-  {
-    key:'ironCondor', name:'Iron Condor', icon:'🦅', desc:'چهارپایه برای بازار خنثی با ریسک محدود', badge:'خنثی',
-    positions:[
-      {side:'sell',type:'put',strikeOffset:-0.05,premiumRatio:0.015},
-      {side:'buy',type:'put',strikeOffset:-0.10,premiumRatio:0.008},
-      {side:'sell',type:'call',strikeOffset:0.05,premiumRatio:0.015},
-      {side:'buy',type:'call',strikeOffset:0.10,premiumRatio:0.008}
+  { key: 'protectivePut', name: 'Protective Put', icon: '🏥', desc: 'بیمه کردن پورتفوی', badge: 'بیمه',
+    positions: [{ side: 'buy', type: 'spot', strikeOffset: 0, premiumRatio: 0 }, { side: 'buy', type: 'put', strikeOffset: -0.05, premiumRatio: 0.02 }],
+    explanation: {
+      what: 'خرید دارایی پایه + خرید یک Put برای بیمه کردن در برابر افت قیمت. مثل بیمه‌نامه پورتفوی.',
+      who: 'مناسب برای سرمایه‌گذارانی که دارایی پایه را در اختیار دارند و نگران ریزش هستند ولی نمی‌خواهند بفروشند.',
+      pros: ['محافظت کامل در برابر افت شدید', 'حفظ پتانسیل صعودی دارایی', 'آرامش روانی در بازارهای پرنوسان', 'ریسک محدود و مشخص'],
+      cons: ['هزینه بیمه (پرمیوم Put)', 'کاهش بازده کل در صورت رشد', 'زوال زمانی روی Put']
+    }
+  },
+  { key: 'ironCondor', name: 'Iron Condor', icon: '🦅', desc: 'سود در بازار خنثی', badge: 'خنثی',
+    positions: [
+      { side: 'sell', type: 'put', strikeOffset: -0.05, premiumRatio: 0.015 },
+      { side: 'buy', type: 'put', strikeOffset: -0.10, premiumRatio: 0.008 },
+      { side: 'sell', type: 'call', strikeOffset: 0.05, premiumRatio: 0.015 },
+      { side: 'buy', type: 'call', strikeOffset: 0.10, premiumRatio: 0.008 }
     ],
-    explanation:{
-      what:'ترکیب Bull Put Spread و Bear Call Spread در چهار پایه برای ایجاد محدوده سود در بازار کم‌نوسان.',
-      who:'برای معامله‌گر باتجربه‌ای که انتظار می‌دهد قیمت تا سررسید در یک محدوده مشخص باقی بماند.',
-      pros:['ریسک محدود','سود محدود ولی قابل محاسبه','مناسب بازار خنثی','قابل تنظیم با فاصله اعمال'],
-      cons:['چهار پوزیشن برای مدیریت','سود محدود','حساسیت به جهش ناگهانی قیمت']
-    }
-  },
-  {
-    key:'ironButterfly', name:'Iron Butterfly', icon:'🦋', desc:'ساختار خنثی با فروش دو اختیار در ATM', badge:'خنثی',
-    positions:[
-      {side:'sell',type:'put',strikeOffset:0,premiumRatio:0.025},
-      {side:'buy',type:'put',strikeOffset:-0.10,premiumRatio:0.008},
-      {side:'sell',type:'call',strikeOffset:0,premiumRatio:0.025},
-      {side:'buy',type:'call',strikeOffset:0.10,premiumRatio:0.008}
-    ],
-    explanation:{
-      what:'Iron Butterfly شامل فروش هم‌زمان Call و Put در قیمت اعمال مرکزی و خرید دو اختیار محافظ در اعمال دورتر است.',
-      who:'برای معامله‌گر باتجربه‌ای که انتظار دارد قیمت تا سررسید نزدیک قیمت اعمال مرکزی باقی بماند.',
-      pros:['ریسک محدود','ساختار سود و زیان مشخص','نیاز به حرکت کم برای رسیدن به حداکثر سود'],
-      cons:['محدوده سود نسبتاً باریک','چهار پوزیشن برای مدیریت','ریسک افزایش شدید نوسان و حرکت قیمت']
+    explanation: {
+      what: 'ترکیب دو استراتژی اسپرد: Bull Put Spread + Bear Call Spread. چهار پوزیشن با قیمت‌های اعمال متفاوت.',
+      who: 'مناسب برای معامله‌گران حرفه‌ای که انتظار بازار آرام با نوسان محدود در محدوده قیمتی مشخص را دارند.',
+      pros: ['ریسک و پاداش محدود و مشخص', 'برد بالا در بازارهای آرام', 'درآمد از چهار پرمیوم', 'محدوده سود قابل تنظیم'],
+      cons: ['نیاز به سرمایه و وجه تضمین بالا', 'پیچیدگی مدیریت چهار پوزیشن', 'سود محدود به پرمیوم خالص', 'نیاز به تجربه در آپشن‌نویسی']
     }
   }
 ];
@@ -2231,21 +474,16 @@ document.getElementById('modalConfirmBtn').addEventListener('click', () => {
 // ==========================================
 function renderPresets() {
   const grid = document.getElementById('presetsGrid');
-  const countText = toFa(PRESETS.length) + ' استراتژی';
-  const countBadge = document.getElementById('presetCountBadge');
-  if (countBadge) countBadge.textContent = countText;
-  if (grid) {
-    grid.innerHTML = PRESETS.map(p => `
-      <button class="preset-card ${currentPreset === p.key ? 'active' : ''}" onclick="applyPreset('${p.key}')">
-        <div class="preset-header">
-          <span class="preset-icon">${p.icon}</span>
-          <span class="preset-name">${p.name}</span>
-        </div>
-        <div class="preset-desc">${p.desc}</div>
-        <span class="preset-badge">${p.badge}</span>
-      </button>
-    `).join('');
-  }
+  grid.innerHTML = PRESETS.map(p => `
+    <button class="preset-card ${currentPreset === p.key ? 'active' : ''}" onclick="applyPreset('${p.key}')">
+      <div class="preset-header">
+        <span class="preset-icon">${p.icon}</span>
+        <span class="preset-name">${p.name}</span>
+      </div>
+      <div class="preset-desc">${p.desc}</div>
+      <span class="preset-badge">${p.badge}</span>
+    </button>
+  `).join('');
 }
 
 function renderExplanation(preset) {
@@ -2892,7 +1130,7 @@ function addPositionInternal() {
     asset: '',
     side: 'buy',
     type: 'call',
-    quantity: 1,
+    quantity: posDef.quantity || 1,
     currentPrice: 0,
     strike: 0,
     premium: 0,
@@ -3993,119 +2231,11 @@ window.addEventListener('scroll', () => {
   if (!isLocked) hideChartTooltip();
 }, { passive: true });
 
-
-// ==========================================
-// 🧩 چیدمان جدید Options Lab — فقط ساختار UI
-// ==========================================
-function buildLabLayout() {
-  const container = document.querySelector('.container');
-  if (!container || container.querySelector('.lab-layout')) return;
-
-  const tabPresets = document.getElementById('tab-presets');
-  const tabCustom = document.getElementById('tab-custom');
-  const panels = [...container.children];
-  const positionsPanel = panels.find(el => el.classList && el.classList.contains('panel') && el.querySelector('#positionsBody'));
-  const strategyInfo = container.querySelector('.strategy-info');
-  const explanation = document.getElementById('strategyExplanation');
-  const results = container.querySelector('.results-grid');
-  const chart = document.getElementById('chartContainer');
-  const tabs = container.querySelector('.tabs');
-
-  const layout = document.createElement('div');
-  layout.className = 'lab-layout';
-  const main = document.createElement('main');
-  main.className = 'lab-main';
-  const side = document.createElement('aside');
-  side.className = 'lab-side';
-
-  [tabs, tabPresets, tabCustom, positionsPanel, chart].forEach(el => {
-    if (el) main.appendChild(el);
-  });
-  [strategyInfo, explanation, results].forEach(el => {
-    if (el) side.appendChild(el);
-  });
-  layout.appendChild(main);
-  layout.appendChild(side);
-
-  const firstModal = container.querySelector('.modal-overlay');
-  if (firstModal) container.insertBefore(layout, firstModal);
-  else container.appendChild(layout);
-}
-
-function startNewStrategy() {
-  const tab = document.querySelector('.tab-btn[onclick*="custom"]');
-  switchTab('custom', tab);
-  const add = document.querySelector('.btn-add');
-  if (add) add.scrollIntoView({behavior:'smooth', block:'center'});
-}
-
-function updateLabSummary() {
-  const asset = positions.find(p => p.asset)?.asset;
-  const a = asset ? getAsset(asset) : null;
-  const strategy = currentPreset ? PRESETS.find(p => p.key === currentPreset) : null;
-  const set = id => document.getElementById(id);
-  if (set('labAssetSummary')) set('labAssetSummary', a ? a.name : 'انتخاب نشده');
-  if (set('labStrategySummary')) set('labStrategySummary', strategy ? strategy.name : 'سفارشی');
-  if (set('labPositionSummary')) set('labPositionSummary', toFa(positions.length));
-  if (set('labDataSummary')) set('labDataSummary', document.getElementById('liveText')?.textContent || 'آماده');
-}
-
-function syncLabSummaryAfterRender() {
-  updateLabSummary();
-}
-
-function toggleLabTheme() {
-  const root = document.documentElement;
-  const next = root.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
-  root.setAttribute('data-theme', next);
-  localStorage.setItem('shamdun-theme', next);
-  updateLabThemeButton();
-  if (typeof updateChart === 'function') setTimeout(() => updateChart(), 50);
-}
-
-function updateLabThemeButton() {
-  const btn = document.getElementById('labThemeBtn');
-  if (!btn) return;
-  const light = document.documentElement.getAttribute('data-theme') === 'light';
-  btn.textContent = light ? '🌙 حالت تاریک' : '☀️ حالت روشن';
-}
-
-function initLabTheme() {
-  const saved = localStorage.getItem('shamdun-theme');
-  const theme = saved === 'light' ? 'light' : 'dark';
-  document.documentElement.setAttribute('data-theme', theme);
-  updateLabThemeButton();
-
-}
-
-
-// همگام‌سازی خلاصه صفحه بدون تغییر در منطق محاسبات
-(function(){
-  const originalUpdatePosition = window.updatePosition;
-  if (typeof originalUpdatePosition === 'function') {
-    window.updatePosition = function(){
-      const result = originalUpdatePosition.apply(this, arguments);
-      setTimeout(updateLabSummary, 0);
-      return result;
-    };
-  }
-  const originalRefresh = window.refreshAllPrices;
-  if (typeof originalRefresh === 'function') {
-    window.refreshAllPrices = async function(){
-      const result = await originalRefresh.apply(this, arguments);
-      updateLabSummary();
-      return result;
-    };
-  }
-})();
 // ==========================================
 // 🚀 شروع
 // ==========================================
-buildLabLayout();
-initLabTheme();
 renderPresets();
 renderPositions();
-updateLabSummary();
 updateChart();
 
 setTimeout(() => {
@@ -4114,7 +2244,8 @@ setTimeout(() => {
 }, 800);
 
 function applyTheme() {
-  initLabTheme();
+  const saved = localStorage.getItem('shamdun-theme') || 'dark';
+  document.documentElement.setAttribute('data-theme', saved);
 }
 applyTheme();
   // ===== رسم مجدد نمودار در تغییر اندازه صفحه =====
@@ -4138,20 +2269,19 @@ window.addEventListener('orientationchange', () => {
 });
 </script>
 
+
 <script src="navbar.js" defer></script>
-
-
 <script>
 (function(){
-  // The old o1 visual override conflicts with the page's unified theme system.
-  // Keep the functional markup, but disable that legacy styling layer.
-  document.documentElement.removeAttribute('data-o1');
-  const title = document.querySelector('.page-header h1');
-  if(title) title.textContent = 'آزمایشگاه استراتژی آپشن';
-  const subtitle = document.querySelector('.page-header p');
-  if(subtitle) subtitle.textContent = 'ساخت، تحلیل و آزمون سناریوهای سود و زیان با داده‌های واقعی پوزیشن';
+  function syncSide(){
+    const a=document.getElementById('strategyName'); const b=document.getElementById('strategyTags');
+    const c=document.getElementById('strategyNameSide'); const d=document.getElementById('strategyTagsSide');
+    if(a&&c)c.textContent=a.textContent; if(b&&d)d.textContent=b.textContent;
+  }
+  const obs=new MutationObserver(syncSide);
+  ['strategyName','strategyTags'].forEach(id=>{const el=document.getElementById(id); if(el)obs.observe(el,{childList:true,subtree:true,characterData:true});});
+  syncSide();
 })();
 </script>
-
 </body>
 </html>
