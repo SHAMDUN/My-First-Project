@@ -1,37 +1,26 @@
-name: Test TSETMC Access
+name: Test BRS API
 
 on:
   workflow_dispatch:
 
 jobs:
-  test-tsetmc:
+  test-brs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Test TSETMC CDN
+      - name: Test BRS API
+        env:
+          BRS_API_KEY: ${{ secrets.BRS_API_KEY }}
         run: |
-          echo "Testing TSETMC CDN..."
+          echo "Testing BRS API..."
+
           curl -sS -L --max-time 20 \
-            -o /tmp/tsetmc-cdn.json \
+            -o /tmp/brs.json \
             -w "HTTP_STATUS=%{http_code}\nTIME=%{time_total}\n" \
-            "https://cdn.tsetmc.com/api/Instrument/GetInstrumentOptionMarketWatch/1"
+            "https://Api.BrsApi.ir/Tsetmc/AllSymbols.php?type=1&key=${BRS_API_KEY}"
 
           echo "Response size:"
-          wc -c /tmp/tsetmc-cdn.json
+          wc -c /tmp/brs.json
 
-          echo "First 500 characters:"
-          head -c 500 /tmp/tsetmc-cdn.json
-
-      - name: Test TSETMC WebGW
-        run: |
-          echo "Testing TSETMC WebGW..."
-          curl -sS -L --max-time 20 \
-            -o /tmp/tsetmc-webgw.json \
-            -w "HTTP_STATUS=%{http_code}\nTIME=%{time_total}\n" \
-            "https://webgw.tse.ir/InstrumentProvider/api/v1/MarketWatch/MarketWatchOption/fa"
-
-          echo "Response size:"
-          wc -c /tmp/tsetmc-webgw.json
-
-          echo "First 500 characters:"
-          head -c 500 /tmp/tsetmc-webgw.json
+          echo "First 1000 characters:"
+          head -c 1000 /tmp/brs.json
