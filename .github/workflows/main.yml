@@ -1,27 +1,39 @@
-name: Test BRS Options API
-
-on:
-  workflow_dispatch:
-
-jobs:
-  test-brs-options:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Test BRS Options API
-        env:
-          BRS_API_KEY: ${{ secrets.BRS_API_KEY }}
+      - name: Find option symbols
         run: |
-          echo "Testing BRS API - Options..."
+          echo "Searching for option symbols..."
 
-          curl -sS -L --max-time 20 \
-            -o /tmp/brs-options.json \
-            -w "HTTP_STATUS=%{http_code}\nTIME=%{time_total}\n" \
-            "https://Api.BrsApi.ir/Tsetmc/AllSymbols.php?type=1&key=${BRS_API_KEY}"
+          python3 - <<'PY'
+          import json
 
-          echo "Response size:"
-          wc -c /tmp/brs-options.json
+          with open("/tmp/brs.json", "r", encoding="utf-8") as f:
+              data = json.load(f)
 
-          echo ""
-          echo "Option-related records:"
-          grep -o '"name":"[^"]*"' /tmp/brs-options.json | grep -E 'اختیار|هخ|هف' | head -30
+          print("Total records:", len(data))
+
+          matches = []
+
+          for row in data:
+              text = " ".join(
+                  str(row.get(k, ""))
+                  for k in ["l18", "l30", "cs", "isin"]
+              )
+
+              if (
+                  "اختیار" in text
+                  or "هخ" in text
+                  or "هف" in text
+              ):
+                  matches.append(row)
+
+          print("Option-like records:", len(matches))
+          print("")
+
+          for row in matches[:30]:
+              print({
+                  "l18": row.get("l18"),
+                  "l30": row.get("l30"),
+                  "cs": row.get("cs"),
+                  "isin": row.get("isin"),
+                  "id": row.get("id")
+              })
+          PY
