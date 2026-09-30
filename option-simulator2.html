@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>شبیه‌ساز استراتژی آپشن | آکادمی شمعدون</title>
+<title>آزمایشگاه استراتژی آپشن | شمعدون</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css">
 <meta name="theme-color" content="#d4af37">
 <style>
@@ -1348,187 +1348,51 @@ body {
 </style>
 
 <style id="shamdun-option1-design">
+/* ===== Shamdun Options Lab — clean layout / theme-safe ===== */
 :root{
-  --o1-navy:#0b1220;--o1-navy2:#111a2b;--o1-bg:#f5f7fa;--o1-card:#fff;
-  --o1-text:#111827;--o1-muted:#64748b;--o1-border:#e3e8ef;
-  --o1-gold:#c89b3c;--o1-gold-soft:#f8f1df;
-  --o1-green:#16835b;--o1-red:#d64545;--o1-blue:#2563eb;
-  --o1-shadow:0 8px 28px rgba(15,23,42,.06);
+  --lab-navy:#0b1220;
+  --lab-navy-2:#152238;
+  --lab-gold:#c89b3c;
+  --lab-card:#ffffff;
+  --lab-bg:#f5f7fa;
+  --lab-border:#e3e8ef;
+  --lab-muted:#64748b;
+  --lab-soft:#f8fafc;
+  --lab-shadow:0 8px 28px rgba(15,23,42,.06);
 }
-html[data-o1="1"] body{
-  background:var(--o1-bg)!important;color:var(--o1-text)!important;
-  background-image:none!important;
+[data-theme="dark"]{
+  --lab-card:#11141a;
+  --lab-bg:#08090c;
+  --lab-border:rgba(255,255,255,.08);
+  --lab-muted:#8b9099;
+  --lab-soft:#171a21;
+  --lab-shadow:0 8px 28px rgba(0,0,0,.28);
 }
-html[data-o1="1"] .container{
-  max-width:1440px!important;padding:82px 22px 70px!important;
-}
-html[data-o1="1"] .page-header{
-  text-align:right!important;padding:28px 30px!important;margin-bottom:14px!important;
-  border-radius:18px!important;background:linear-gradient(135deg,#0b1220,#17243a)!important;
-  border:0!important;box-shadow:var(--o1-shadow)!important;
-}
-html[data-o1="1"] .page-header:before{
-  left:auto!important;right:0!important;transform:none!important;width:230px!important;
-  background:linear-gradient(90deg,var(--o1-gold),transparent)!important;opacity:.9!important;
-}
-html[data-o1="1"] .page-header h1{
-  color:#fff!important;background:none!important;-webkit-text-fill-color:#fff!important;
-  font-size:27px!important;margin-bottom:7px!important;
-}
-html[data-o1="1"] .page-header p{color:#b8c3d3!important}
-html[data-o1="1"] .status-bar{
-  background:#fff!important;border:1px solid var(--o1-border)!important;color:var(--o1-muted)!important;
-  box-shadow:var(--o1-shadow)!important;border-radius:12px!important;
-}
-html[data-o1="1"] .panel,
-html[data-o1="1"] .strategy-info,
-html[data-o1="1"] .strategy-explanation,
-html[data-o1="1"] .results-grid > .result-card,
-html[data-o1="1"] #chartContainer{
-  background:var(--o1-card)!important;border-color:var(--o1-border)!important;
-  box-shadow:var(--o1-shadow)!important;color:var(--o1-text)!important;
-}
-html[data-o1="1"] .tabs{
-  width:100%!important;background:#fff!important;border:1px solid var(--o1-border)!important;
-  box-shadow:var(--o1-shadow)!important;padding:5px!important;margin-bottom:14px!important;
-}
-html[data-o1="1"] .tab-btn{flex:0 0 auto;color:#64748b!important}
-html[data-o1="1"] .tab-btn.active{
-  color:#fff!important;background:var(--o1-navy)!important;border:0!important;
-}
-html[data-o1="1"] .panel{border-radius:16px!important;padding:22px!important}
-html[data-o1="1"] .panel-header{border-color:var(--o1-border)!important}
-html[data-o1="1"] .panel-title,
-html[data-o1="1"] .strategy-name,
-html[data-o1="1"] .result-card .label,
-html[data-o1="1"] .result-card .value{color:var(--o1-text)!important}
-html[data-o1="1"] .panel-title .badge,
-html[data-o1="1"] .strategy-tag{
-  background:var(--o1-gold-soft)!important;color:#9b7421!important;border-color:#ead9ad!important;
-}
-html[data-o1="1"] .preset-card{
-  background:#fff!important;border-color:var(--o1-border)!important;
-  box-shadow:0 2px 8px rgba(15,23,42,.025)!important;
-}
-html[data-o1="1"] .preset-card:hover{border-color:#c9d3df!important;transform:translateY(-1px)!important}
-html[data-o1="1"] .preset-card.active{
-  background:linear-gradient(135deg,#fffaf0,#fff)!important;
-  border-color:#d4b45f!important;box-shadow:0 0 0 1px #ead9ad,var(--o1-shadow)!important;
-}
-html[data-o1="1"] .preset-card .preset-name{color:var(--o1-text)!important}
-html[data-o1="1"] .preset-card.active .preset-name{color:#9b7421!important}
-html[data-o1="1"] .preset-card .preset-desc{color:var(--o1-muted)!important}
-html[data-o1="1"] .positions-table-wrapper{
-  background:#fff!important;border-color:var(--o1-border)!important;
-}
-html[data-o1="1"] .positions-table th{
-  background:#f8fafc!important;color:#64748b!important;border-color:var(--o1-border)!important;
-}
-html[data-o1="1"] .positions-table td{border-color:#edf1f5!important}
-html[data-o1="1"] .cell-input,
-html[data-o1="1"] .cell-select{
-  background:#fff!important;color:var(--o1-text)!important;border-color:#dce3eb!important;
-}
-html[data-o1="1"] .cell-input:focus,
-html[data-o1="1"] .cell-select:focus{
-  border-color:var(--o1-gold)!important;box-shadow:0 0 0 3px rgba(200,155,60,.12)!important;
-}
-html[data-o1="1"] .btn-primary{
-  background:var(--o1-navy)!important;box-shadow:none!important;
-}
-html[data-o1="1"] .btn-primary:hover{background:#17243a!important;box-shadow:0 6px 16px rgba(11,18,32,.16)!important}
-html[data-o1="1"] .btn-refresh,
-html[data-o1="1"] .btn-add{
-  background:#fff!important;color:var(--o1-text)!important;border-color:#d8e0e8!important;
-}
-html[data-o1="1"] .strategy-explanation{
-  background:#fff!important;
-}
-html[data-o1="1"] .exp-block{background:#f8fafc!important;border-color:#e6ebf1!important}
-html[data-o1="1"] .exp-block p,
-html[data-o1="1"] .exp-block ul li{color:#64748b!important}
-html[data-o1="1"] .results-grid{
-  grid-template-columns:repeat(5,minmax(0,1fr))!important;gap:10px!important;
-}
-html[data-o1="1"] .result-card{
-  min-height:102px!important;border-radius:13px!important;
-}
-html[data-o1="1"] #chartContainer{border-radius:16px!important;padding:0!important;overflow:hidden}
-html[data-o1="1"] #chartContainer .chart-header,
-html[data-o1="1"] #chartContainer .chart-toolbar{
-  background:#fff!important;color:var(--o1-text)!important;border-color:var(--o1-border)!important;
-}
-html[data-o1="1"] #chartCanvasWrap{
-  background:#fff!important;
-}
-html[data-o1="1"] .chart-hint,
-html[data-o1="1"] #chartHint{color:#64748b!important}
-html[data-o1="1"] .auto-refresh-toggle{background:#f8fafc!important;border-color:#dfe6ee!important}
-.o1-shell-nav{
-  position:fixed;top:0;left:0;right:0;height:58px;z-index:1000;
-  background:rgba(11,18,32,.97);border-bottom:1px solid rgba(255,255,255,.08);
-  display:flex;align-items:center;justify-content:center;
-}
-.o1-shell-nav .inner{
-  width:min(1440px,calc(100% - 36px));display:flex;align-items:center;gap:26px;
-}
-.o1-brand{font-weight:900;color:#fff;font-size:18px;letter-spacing:-.3px}
-.o1-brand span{color:#d4af37}
-.o1-navlinks{display:flex;gap:4px;align-items:center;flex:1}
-.o1-navlinks a{
-  color:#b9c4d4;text-decoration:none;padding:8px 12px;border-radius:8px;font-size:12px;font-weight:700
-}
-.o1-navlinks a:hover{background:rgba(255,255,255,.07);color:#fff}
-.o1-navlinks a.active{color:#fff;background:rgba(200,155,60,.15)}
-.o1-meta{font-size:11px;color:#8e9bad}
-.o1-breadcrumb{
-  max-width:1440px;margin:0 auto 12px;padding:0 22px;color:#7b8797;font-size:11px;
-}
-.o1-breadcrumb strong{color:#4b5563}
-.o1-overview{
-  display:grid;grid-template-columns:1.35fr .65fr;gap:14px;margin-bottom:14px;
-}
-.o1-overview-card{
-  background:#fff;border:1px solid var(--o1-border);border-radius:16px;padding:18px 20px;
-  box-shadow:var(--o1-shadow);
-}
-.o1-overview-card .eyebrow{font-size:10px;color:#8a96a6;font-weight:800;margin-bottom:7px}
-.o1-overview-card h2{font-size:18px;margin:0 0 7px;color:#111827}
-.o1-overview-card p{font-size:12px;line-height:1.9;color:#64748b;margin:0}
-.o1-metric-row{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:14px}
-.o1-mini-metric{background:#f8fafc;border:1px solid #e7ecf2;border-radius:10px;padding:10px 12px}
-.o1-mini-metric b{display:block;font-size:13px;color:#111827;margin-top:4px}
-.o1-mini-metric span{font-size:10px;color:#7b8797}
-.o1-side-list{display:grid;gap:8px}
-.o1-side-item{display:flex;justify-content:space-between;align-items:center;padding:9px 0;border-bottom:1px solid #edf1f5;font-size:11px}
-.o1-side-item:last-child{border-bottom:0}
-.o1-side-item span{color:#64748b}.o1-side-item b{color:#111827}
-.o1-section-label{
-  display:flex;align-items:center;gap:9px;margin:20px 2px 10px;font-size:13px;font-weight:900;color:#172033;
-}
-.o1-section-label:before{content:"";width:4px;height:18px;border-radius:5px;background:var(--o1-gold)}
-@media(max-width:900px){
-  .o1-navlinks a:nth-child(n+4),.o1-meta{display:none}
-  .o1-overview{grid-template-columns:1fr}
-  html[data-o1="1"] .results-grid{grid-template-columns:repeat(2,1fr)!important}
-}
-@media(max-width:620px){
-  .o1-navlinks{display:none}
-  .o1-shell-nav .inner{justify-content:center}
-  html[data-o1="1"] .container{padding:72px 10px 50px!important}
-  .o1-breadcrumb{padding:0 10px}
-  html[data-o1="1"] .page-header{padding:22px 18px!important}
-  html[data-o1="1"] .page-header h1{font-size:22px!important}
-  .o1-metric-row{grid-template-columns:1fr}
-  html[data-o1="1"] .results-grid{grid-template-columns:1fr 1fr!important}
-}
-/* ===== UI refinement: فقط چیدمان نمودار و کارت‌های استراتژی ===== */
-@media (min-width: 1100px) {
-  .presets-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
-}
-.chart-canvas-wrap { min-height: 430px; }
-@media (max-width: 900px) { .chart-canvas-wrap { min-height: 360px; } }
-@media (max-width: 600px) { .chart-canvas-wrap { min-height: 320px; } }
+body{background:var(--lab-bg)!important;color:var(--text-primary)!important}
+.o1-shell-nav{position:fixed;top:0;left:0;right:0;height:60px;z-index:1000;background:var(--lab-navy);border-bottom:1px solid rgba(255,255,255,.08);display:flex;align-items:center;justify-content:center}
+.o1-shell-nav .inner{width:min(1440px,calc(100% - 36px));display:flex;align-items:center;gap:20px}
+.o1-brand{font-weight:900;color:#fff;font-size:18px;white-space:nowrap}.o1-brand span{color:#d4af37}
+.o1-navlinks{display:flex;gap:3px;align-items:center;flex:1}.o1-navlinks a{color:#b9c4d4;text-decoration:none;padding:8px 11px;border-radius:8px;font-size:12px;font-weight:700}.o1-navlinks a:hover{background:rgba(255,255,255,.07);color:#fff}.o1-navlinks a.active{color:#fff;background:rgba(200,155,60,.16)}
+.o1-meta{display:flex;align-items:center;gap:8px;color:#aeb9c9;font-size:11px;white-space:nowrap}
+.theme-toggle{border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.06);color:#fff;border-radius:9px;padding:7px 10px;cursor:pointer;font-size:12px;line-height:1}.theme-toggle:hover{background:rgba(255,255,255,.11)}
+.o1-breadcrumb{max-width:1440px;margin:0 auto 12px;padding:0 22px;color:var(--lab-muted);font-size:11px}.o1-breadcrumb strong{color:var(--text-secondary)}
+.container{max-width:1440px!important;padding:84px 22px 70px!important}
+.page-header{position:relative;text-align:right!important;padding:24px 28px!important;margin-bottom:14px!important;border-radius:18px!important;background:linear-gradient(135deg,var(--lab-navy),var(--lab-navy-2))!important;border:0!important;box-shadow:var(--lab-shadow)!important;overflow:hidden}
+.page-header:before{left:auto!important;right:0!important;transform:none!important;width:260px!important;background:linear-gradient(90deg,#d4af37,transparent)!important;opacity:.8!important}.page-header h1{color:#fff!important;background:none!important;-webkit-text-fill-color:#fff!important;font-size:27px!important;margin-bottom:7px!important}.page-header p{color:#b8c3d3!important}
+.lab-header-row{display:flex;align-items:center;justify-content:space-between;gap:18px}.lab-header-copy{min-width:0}.lab-header-actions{display:flex;gap:8px;flex-wrap:wrap}.lab-action{border:1px solid rgba(255,255,255,.15);background:rgba(255,255,255,.07);color:#fff;border-radius:10px;padding:9px 13px;font-size:11px;font-weight:800;cursor:pointer}.lab-action.primary{background:#d4af37;color:#172033;border-color:#d4af37}.lab-action:hover{filter:brightness(1.06)}
+.lab-overview{display:grid;grid-template-columns:1.35fr .65fr;gap:14px;margin-bottom:14px}.lab-card{background:var(--lab-card);border:1px solid var(--lab-border);border-radius:16px;box-shadow:var(--lab-shadow)}
+.lab-overview-main{padding:18px 20px}.lab-eyebrow{font-size:10px;color:var(--lab-muted);font-weight:800;margin-bottom:6px}.lab-overview-main h2{font-size:18px;margin:0 0 6px;color:var(--text-primary)}.lab-overview-main p{font-size:12px;line-height:1.9;color:var(--lab-muted);margin:0}.lab-metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:14px}.lab-metric{background:var(--lab-soft);border:1px solid var(--lab-border);border-radius:10px;padding:10px 12px}.lab-metric span{display:block;color:var(--lab-muted);font-size:10px}.lab-metric b{display:block;margin-top:4px;color:var(--text-primary);font-size:13px}.lab-overview-side{padding:16px 18px}.lab-overview-side h3{font-size:13px;margin:0 0 10px}.lab-checks{display:grid;gap:8px}.lab-check{display:flex;gap:8px;align-items:flex-start;color:var(--lab-muted);font-size:11px;line-height:1.8}.lab-check b{color:var(--text-primary)}
+.status-bar{background:var(--lab-card)!important;border-color:var(--lab-border)!important;box-shadow:var(--lab-shadow)!important}
+.tabs{width:100%!important;background:var(--lab-card)!important;border:1px solid var(--lab-border)!important;box-shadow:var(--lab-shadow)!important;padding:5px!important;margin-bottom:14px!important}.tab-btn{color:var(--text-secondary)!important}.tab-btn.active{color:#fff!important;background:var(--lab-navy)!important;border:0!important}
+.panel,.strategy-info,.strategy-explanation,.results-grid>.result-card,.chart-container{border-color:var(--lab-border)!important;box-shadow:var(--lab-shadow)!important}
+.panel{background:var(--lab-card)!important}.preset-card{background:var(--bg-card-2)!important;border-color:var(--border)!important}.preset-card:hover{border-color:var(--border-strong)!important}.preset-card.active{border-color:var(--gold)!important}
+.strategy-info{background:var(--lab-card)!important}.strategy-explanation{background:var(--lab-card)!important}.exp-block{background:var(--lab-soft)!important;border-color:var(--lab-border)!important}.positions-table-wrapper{border-color:var(--lab-border)!important;background:var(--lab-card)!important}.positions-table th{background:var(--lab-soft)!important}.cell-input,.cell-select{background:var(--lab-card)!important;color:var(--text-primary)!important;border-color:var(--lab-border)!important}
+.chart-container{background:var(--lab-card)!important;overflow:hidden}.chart-header,.chart-toolbar{background:var(--lab-card)!important;color:var(--text-primary)!important;border-color:var(--lab-border)!important}.chart-canvas-wrap{background:var(--lab-card)!important;min-height:440px}.chart-hint{color:var(--lab-muted)!important}
+.lab-section-title{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:4px 2px 10px;color:var(--text-primary);font-size:13px;font-weight:900}.lab-section-title .count{color:var(--lab-muted);font-size:10px;font-weight:700}
+.new-strategy-btn{border:1px solid var(--lab-border);background:var(--lab-card);color:var(--text-primary);border-radius:9px;padding:8px 12px;font-size:11px;font-weight:800;cursor:pointer}.new-strategy-btn:hover{border-color:var(--gold);color:var(--gold)}
+@media(min-width:1100px){.presets-grid{grid-template-columns:repeat(4,minmax(0,1fr))}.results-grid{grid-template-columns:repeat(5,minmax(0,1fr))!important}}
+@media(max-width:900px){.lab-overview{grid-template-columns:1fr}.lab-header-row{align-items:flex-start;flex-direction:column}.o1-navlinks a:nth-child(n+4){display:none}.chart-canvas-wrap{min-height:380px}}
+@media(max-width:620px){.o1-shell-nav{height:56px}.o1-shell-nav .inner{justify-content:center}.o1-brand{font-size:16px}.o1-navlinks,.o1-meta>span{display:none}.o1-meta{margin-right:auto}.container{padding:72px 10px 50px!important}.o1-breadcrumb{padding:0 10px}.page-header{padding:20px 18px!important}.page-header h1{font-size:22px!important}.lab-metrics{grid-template-columns:1fr}.chart-canvas-wrap{min-height:330px}.results-grid{grid-template-columns:1fr 1fr!important}}
 </style>
 
 </head>
@@ -1543,7 +1407,7 @@ html[data-o1="1"] .auto-refresh-toggle{background:#f8fafc!important;border-color
       <a href="analysis.html">تحلیل</a><a href="options-simulator.html" class="active">Options Lab</a>
       <a href="portfolio.html">پرتفوی</a><a href="calculator.html">ابزارها</a>
     </div>
-    <div class="o1-meta">نسخه آزمایشی Option 1</div>
+    <div class="o1-meta"><span>Options Lab</span><button class="theme-toggle" id="pageThemeToggle" type="button" onclick="togglePageTheme()" title="تغییر تم"><span id="pageThemeIcon">☾</span></button></div>
   </div>
 </nav>
 <div class="o1-breadcrumb">ابزارها / <strong>آزمایشگاه استراتژی آپشن</strong></div>
@@ -1551,8 +1415,37 @@ html[data-o1="1"] .auto-refresh-toggle{background:#f8fafc!important;border-color
 <div class="container">
 
   <div class="page-header">
-    <h1>📊 شبیه‌ساز حرفه‌ای استراتژی آپشن</h1>
-    <p>استراتژی آماده را انتخاب کن یا پوزیشن سفارشی خودت را بساز</p>
+    <div class="lab-header-row">
+      <div class="lab-header-copy">
+        <h1>📊 آزمایشگاه استراتژی آپشن</h1>
+        <p>ساخت، مقایسه و تحلیل پوزیشن‌های آپشن با منطق محاسباتی همین شبیه‌ساز</p>
+      </div>
+      <div class="lab-header-actions">
+        <button class="lab-action primary" type="button" onclick="startNewStrategy()">＋ استراتژی جدید</button>
+        <button class="lab-action" type="button" onclick="switchTab('presets', document.querySelector('.tab-btn'))">🎯 استراتژی‌های آماده</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="lab-overview">
+    <div class="lab-card lab-overview-main">
+      <div class="lab-eyebrow">OPTIONS LAB</div>
+      <h2>از انتخاب استراتژی تا نمودار سود و زیان</h2>
+      <p>ابتدا یکی از ساختارهای آماده را انتخاب کن، سپس دارایی پایه و قرارداد را تعیین کن. محاسبات، نقاط سربه‌سر و نمودار بر اساس همان منطق محاسباتی صفحه اصلی به‌روزرسانی می‌شوند.</p>
+      <div class="lab-metrics">
+        <div class="lab-metric"><span>استراتژی‌های فعال</span><b id="labStrategyCount">۱۵</b></div>
+        <div class="lab-metric"><span>پوزیشن‌های فعلی</span><b id="labPositionCountTop">۰</b></div>
+        <div class="lab-metric"><span>وضعیت داده</span><b id="labDataState">در انتظار</b></div>
+      </div>
+    </div>
+    <div class="lab-card lab-overview-side">
+      <h3>قبل از تحلیل این سه مورد را بررسی کن</h3>
+      <div class="lab-checks">
+        <div class="lab-check">✓ <span><b>دارایی پایه</b> و نماد اختیار درست انتخاب شده باشد.</span></div>
+        <div class="lab-check">✓ <span><b>خرید/فروش</b> و تعداد قراردادها با استراتژی سازگار باشد.</span></div>
+        <div class="lab-check">✓ <span><b>نمودار</b> را همراه با پرمیوم، قیمت اعمال و سررسید تفسیر کن.</span></div>
+      </div>
+    </div>
   </div>
 
   <!-- Status Bar -->
@@ -1584,7 +1477,7 @@ html[data-o1="1"] .auto-refresh-toggle{background:#f8fafc!important;border-color
           <span class="badge">۱۵ استراتژی</span>
         </div>
       </div>
-      <div class="presets-grid" id="presetsGrid"></div>
+      <div class="lab-section-title"><span>استراتژی‌های قابل انتخاب</span><span class="count" id="presetCountLabel">۱۵ استراتژی</span></div><div class="presets-grid" id="presetsGrid"></div>
       <div class="info-box" style="background: var(--blue-soft); border: 1px solid rgba(59, 130, 246, 0.25); border-radius: 12px; padding: 14px 18px; margin-top: 16px; color: var(--blue); font-size: 13px; line-height: 1.8;">
         <strong>💡 راهنما:</strong> روی هر استراتژی کلیک کن تا پوزیشن‌های آماده در جدول باز بشن. سپس <strong>دارایی پایه</strong> را از سلکت انتخاب کن.
       </div>
@@ -1609,6 +1502,7 @@ html[data-o1="1"] .auto-refresh-toggle{background:#f8fafc!important;border-color
         <span class="badge" id="positionsCount2">۰ پوزیشن</span>
       </div>
       <div style="display:flex; gap:8px; flex-wrap:wrap;">
+        <button class="new-strategy-btn" type="button" onclick="startNewStrategy()">＋ استراتژی جدید</button>
         <button class="btn-refresh" onclick="refreshAllPrices(true)">🔄 به‌روزرسانی قیمت‌ها</button>
         <button class="btn-clear" onclick="clearAllPositions()">🗑️ پاک کردن استراتژی / پوزیشن</button>
       </div>
@@ -1751,11 +1645,6 @@ const ASSETS = [
   { key: 'trx',  name: 'ترون',     emoji: '🟢', defaultPrice: 0.25, call: '—', put: '—', group: 'کریپتو', source: 'coingecko', coingeckoId: 'tron' },
   { key: 'avax', name: 'آوالانچ',  emoji: '🔺', defaultPrice: 35, call: '—', put: '—', group: 'کریپتو', source: 'coingecko', coingeckoId: 'avalanche-2' },
 
-  // ═══ کالا (BrsApi Commodity) ═══
-  { key: 'gold',   name: 'انس طلا',  emoji: '🥇', defaultPrice: 4306, call: '—', put: '—', group: 'کالا', source: 'commodity', symbol: 'XAUUSD' },
-  { key: 'silver', name: 'انس نقره', emoji: '🥈', defaultPrice: 64.8, call: '—', put: '—', group: 'کالا', source: 'commodity', symbol: 'XAGUSD' },
-  { key: 'oil',    name: 'نفت برنت', emoji: '🛢️', defaultPrice: 105, call: '—', put: '—', group: 'کالا', source: 'commodity', symbol: 'BRENT' },
-
   // ═══ بورس ایران (AllSymbols) — قیمت‌ها به تومان (تقسیم بر ۱۰) ═══
   { key: 'اخابر',     name: 'اخابر',     emoji: '📡', defaultPrice: 1000,  call: 'ضمخا', put: 'طمخا', group: 'بورس', source: 'stocks' },
   { key: 'اطلس',      name: 'اطلس',      emoji: '🏗️', defaultPrice: 15800, call: 'ضاطلس', put: 'طاطلس', group: 'بورس', source: 'stocks' },
@@ -1854,7 +1743,8 @@ who:'برای معامله‌گری که نسبت به کوتاه‌مدت دی�
 ];;
 
 // تبدیل ساختار استراتژی‌های آموزشی به مدل داخلی صفحه؛ منطق اصلی صفحه دست‌نخورده است.
-const PRESETS = RAW_PRESETS.map(s => ({
+const ENABLED_PRESET_KEYS = new Set(['longCall','shortCall','longPut','shortPut','bullCallSpread','bearPutSpread','bullPutSpread','bearCallSpread','longStraddle','longStrangle','coveredCall','protectivePut','collar','ironCondor','ironButterfly']);
+const PRESETS = RAW_PRESETS.filter(s => ENABLED_PRESET_KEYS.has(s.key)).map(s => ({
   key: s.key,
   name: s.name,
   icon: s.icon,
@@ -2006,6 +1896,10 @@ function renderPresets() {
       <span class="preset-badge">${p.badge}</span>
     </button>
   `).join('');
+  const n=PRESETS.length;
+  const a=document.getElementById('labStrategyCount'), b=document.getElementById('presetCountLabel');
+  if(a) a.textContent=toFa(n);
+  if(b) b.textContent=toFa(n)+' استراتژی';
 }
 
 function renderExplanation(preset) {
@@ -2401,6 +2295,8 @@ function renderPositions() {
   const count = positions.length;
   document.getElementById('positionsCount').textContent = toFa(count) + ' پوزیشن';
   document.getElementById('positionsCount2').textContent = toFa(count) + ' پوزیشن';
+  const topCount=document.getElementById('labPositionCountTop');
+  if(topCount) topCount.textContent=toFa(count);
 
   if (count === 0) {
     body.innerHTML = `
@@ -2413,7 +2309,7 @@ function renderPositions() {
     return;
   }
 
-  const groups = ['کریپتو', 'کالا', 'بورس'];
+  const groups = ['کریپتو', 'بورس'];
   const isEmptyStrategy = currentPreset && positions.some(p => !p.asset);
 
   body.innerHTML = positions.map((p) => {
@@ -3771,6 +3667,36 @@ function applyTheme() {
 }
 applyTheme();
 // همگام‌سازی تم با navbar مشترک شمعدون؛ هیچ منطق داده/معامله‌ای تغییر نمی‌کند.
+function togglePageTheme(){
+  const root=document.documentElement;
+  const next=(root.getAttribute('data-theme')||'dark')==='dark'?'light':'dark';
+  root.setAttribute('data-theme',next);
+  localStorage.setItem('shamdun-theme',next);
+  const icon=document.getElementById('pageThemeIcon');
+  if(icon) icon.textContent=next==='dark'?'☾':'☀';
+  if(chartPoints.length && chartMeta) requestChartResize();
+}
+function syncPageTheme(){
+  const saved=localStorage.getItem('shamdun-theme');
+  const theme=(saved==='light'||saved==='dark')?saved:(document.documentElement.getAttribute('data-theme')||'dark');
+  document.documentElement.setAttribute('data-theme',theme);
+  const icon=document.getElementById('pageThemeIcon');
+  if(icon) icon.textContent=theme==='dark'?'☾':'☀';
+}
+function startNewStrategy(){
+  const go=()=>{
+    positions=[]; currentPreset=null; renderPresets(); renderPositions(); renderExplanation(null); updateChart();
+    const btn=document.querySelector('.tab-btn');
+    switchTab('presets',btn);
+    document.getElementById('presetsGrid')?.scrollIntoView({behavior:'smooth',block:'start'});
+    showNotification('استراتژی جدید آماده است؛ یک ساختار را انتخاب کنید.','success');
+  };
+  if(positions.length){
+    openModal({icon:'＋',title:'شروع استراتژی جدید',text:'پوزیشن‌های فعلی پاک می‌شوند و یک استراتژی جدید از ابتدا ساخته خواهد شد.',confirmText:'شروع کن',onConfirm:go});
+  }else go();
+}
+
+syncPageTheme();
 (function syncShamdunTheme(){
   const sync = () => {
     const saved = localStorage.getItem('shamdun-theme');
@@ -3807,6 +3733,7 @@ applyTheme();
 
   if(window.MutationObserver){
     const themeObserver = new MutationObserver(() => {
+      syncPageTheme();
       if(chartPoints.length > 0 && chartMeta) requestChartResize();
     });
     themeObserver.observe(document.documentElement, {attributes:true, attributeFilter:['data-theme']});
@@ -3847,6 +3774,7 @@ window.addEventListener('orientationchange', () => {
   if(subtitle) subtitle.textContent = 'ساخت، تحلیل و آزمون سناریوهای سود و زیان با داده‌های واقعی پوزیشن';
 })();
 </script>
+
 
 </body>
 </html>
