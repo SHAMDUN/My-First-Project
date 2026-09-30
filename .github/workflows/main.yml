@@ -1,26 +1,27 @@
-name: Test BRS API
+name: Test BRS Options API
 
 on:
   workflow_dispatch:
 
 jobs:
-  test-brs:
+  test-brs-options:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Test BRS API
+      - name: Test BRS Options API
         env:
           BRS_API_KEY: ${{ secrets.BRS_API_KEY }}
         run: |
-          echo "Testing BRS API..."
+          echo "Testing BRS API - Options..."
 
           curl -sS -L --max-time 20 \
-            -o /tmp/brs.json \
+            -o /tmp/brs-options.json \
             -w "HTTP_STATUS=%{http_code}\nTIME=%{time_total}\n" \
             "https://Api.BrsApi.ir/Tsetmc/AllSymbols.php?type=1&key=${BRS_API_KEY}"
 
           echo "Response size:"
-          wc -c /tmp/brs.json
+          wc -c /tmp/brs-options.json
 
-          echo "First 1000 characters:"
-          head -c 1000 /tmp/brs.json
+          echo ""
+          echo "Option-related records:"
+          grep -o '"name":"[^"]*"' /tmp/brs-options.json | grep -E 'اختیار|هخ|هف' | head -30
