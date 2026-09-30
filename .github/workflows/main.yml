@@ -43,9 +43,8 @@ jobs:
               )
 
               if (
-                  "اختیار" in text
-                  or "هخ" in text
-                  or "هف" in text
+                  str(row.get("l18", "")).startswith("ض")
+                  or str(row.get("l18", "")).startswith("ط")                  
               ):
                   matches.append(row)
 
