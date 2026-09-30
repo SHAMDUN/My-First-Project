@@ -57,24 +57,118 @@ const S={cash:[],options:[],base:null,legs:[]};
 const $=x=>document.getElementById(x);
 const num=x=>Number(x)||0;
 const fa=x=>new Intl.NumberFormat('fa-IR',{maximumFractionDigits:2}).format(num(x));
+const priceText=(x,quote=false)=>{
+  if(x===null || x===undefined || x==='' || !Number.isFinite(Number(x)) || (quote && Number(x)===0))
+    return quote?'بدون مظنه':'بدون معامله';
+  return fa(x);
+};
 const str=x=>x==null?'':typeof x==='object'?(x.value??JSON.stringify(x)):String(x);
 function pick(o,a){for(const k of a)if(o&&o[k]!=null&&o[k]!=='')return o[k];return null}
 async function api(path){const r=await fetch(API+path,{cache:'no-store'});if(!r.ok)throw Error('HTTP '+r.status);return r.json()}
 function list(d){return Array.isArray(d)?d:(d?.Items||d?.items||[])}
 function cashNorm(d){return list(d).map(x=>({id:str(x.instrumentId),name:str(pick(x,['instrumentName','instrument_Name'])),last:num(pick(x,['lastPrice','lastprice'])),change:num(pick(x,['lastPriceChange','pricechange'])),pct:num(pick(x,['lastPricePercent','pricechangepercent'])),volume:num(pick(x,['tradeVolume','volume'])),state:str(pick(x,['statename','state']))})).filter(x=>x.name)}
-function optNorm(d){return list(d).map(x=>{let n=str(pick(x,['instrumentName','instrument_Name','symbol','instrumentSymbol']));let all=JSON.stringify(x);return {id:str(x.instrumentId),name:n,company:str(pick(x,['companyNamePersian','company_Name_Persian'])),strike:num(pick(x,['qeymateEmal','strikePrice','strike'])),base:num(pick(x,['qeymateMabna','underlyingPrice'])),last:num(pick(x,['lastPrice','lastprice'])),bid:num(pick(x,['buyPrice','bidPrice','bestBuyPrice'])),ask:num(pick(x,['sellPrice','askPrice','bestSellPrice'])),volume:num(pick(x,['tradeVolume','volume'])),oi:num(pick(x,['openInterest','openinterest'])),days:num(pick(x,['baghimandetasarresid','daysToExpiry'])),expiry:str(pick(x,['tarixSarresid','expiration','expiry'])),type:/ط|put/i.test(n)||/ط|put/i.test(all)?'put':'call',raw:x}}).filter(x=>x.name)}
-function isForBase(o,b){if(!b)return false;let n=b.name.trim();return o.name.includes(n)||o.company.includes(n)||o.name.includes('ض'+n)||o.name.includes('ط'+n)}
+function optNorm(d){
+  return list(d).map(x=>{
+    const n=str(pick(x,['instrumentName','instrument_Name','symbol','instrumentSymbol']));
+    const company=str(pick(x,['companyNamePersian','company_Name_Persian']));
+    const v=k=>{
+      const z=x?.[k];
+      return z && typeof z==='object' && 'value' in z ? z.value : z;
+    };
+    const strike=Number(v('qeymateEmal'));
+    const base=Number(v('qeymateMabna'));
+    const days=Number(v('baghimandetasarresid'));
+    const last=v('lastPrice'), bid=v('buyPrice'), ask=v('sellPrice');
+    return {
+      id:str(x.instrumentId),
+      name:n,
+      company,
+      strike:Number.isFinite(strike)?strike:null,
+      base:Number.isFinite(base)?base:null,
+      last:last==null?null:Number(last),
+      bid:bid==null?null:Number(bid),
+      ask:ask==null?null:Number(ask),
+      volume:Number(v('tradeVolume') ?? v('volume'))||0,
+      oi:Number(v('openInterest') ?? v('openinterest'))||0,
+      days:Number.isFinite(days)?days:null,
+      expiry:v('tarixSarresid') ?? null,
+      state:str(pick(x,['statename','state'])),
+      market:str(pick(x,['marketname','marketName'])),
+      // The supplied MarketWatchOption payload does not expose a guaranteed
+      // semantic Call/Put field. Do not silently invent one.
+      type:'unknown',
+      raw:x
+    };
+  }).filter(x=>x.name);
+}
+function isForBase(o,b){
+  if(!b) return false;
+  const baseName=(b.name||'').trim();
+  if(!baseName) return false;
+  return o.name.includes(baseName) || o.company.includes(baseName);
+}
 function renderBase(){let b=S.base||{};$('price').textContent=fa(b.last);$('last').textContent=fa(b.last);$('change').textContent=(b.pct>0?'+':'')+fa(b.pct)+'٪';$('change').className='up';$('volume').textContent=fa(b.volume);$('state').textContent=b.state||'—'}
 function renderBases(){let a=S.cash.filter(x=>x.last>0);$('base').innerHTML=a.map(x=>`<option value="${x.id}">${x.name}</option>`).join('');S.base=a.find(x=>x.name==='خودرو')||a[0];if(S.base){$('base').value=S.base.id;loadOptions()}}
-function renderExpiry(){let e=[...new Set(S.options.map(x=>x.expiry).filter(Boolean))];$('expiry').innerHTML='<option value="">همه</option>'+e.map(x=>`<option>${x}</option>`).join('')}
-function renderChain(){let a=S.options.filter(x=>{let e=$('expiry').value,t=$('type').value,q=$('search').value.trim();return(!e||x.expiry===e)&&(!t||x.type===t)&&(!q||x.name.includes(q)||x.company.includes(q))});a.sort((x,y)=>(x.strike||0)-(y.strike||0));if(!a.length){$('chain').innerHTML='<div class="empty">قراردادی با این فیلتر پیدا نشد.</div>';return}
-$('chain').innerHTML=`<div class="tablebox"><table class="chain"><thead><tr><th>نوع</th><th>نماد</th><th>Strike</th><th>سررسید</th><th>روز</th><th>Last</th><th>Bid</th><th>Ask</th><th>Volume</th><th>OI</th><th></th></tr></thead><tbody>${a.slice(0,300).map((x,i)=>`<tr><td><span class="pill ${x.type}">${x.type==='call'?'CALL':'PUT'}</span></td><td>${x.name}</td><td>${fa(x.strike)}</td><td>${x.expiry}</td><td>${fa(x.days)}</td><td>${fa(x.last)}</td><td>${fa(x.bid)}</td><td>${fa(x.ask)}</td><td>${fa(x.volume)}</td><td>${fa(x.oi)}</td><td><button class="add" data-id="${x.id}">افزودن</button></td></tr>`).join('')}</tbody></table></div>`;
-document.querySelectorAll('.add').forEach(b=>b.onclick=()=>{let x=S.options.find(o=>o.id===b.dataset.id);if(x){S.legs.push({c:x,side:'buy',qty:1,premium:x.last||x.bid||x.ask||0});renderLegs();calc()}})
+function renderExpiry(){
+  const dates=[...new Set(S.options.map(x=>x.expiry).filter(Boolean))];
+  const days=[...new Set(S.options.map(x=>x.days).filter(x=>x!==null && Number.isFinite(x)))].sort((a,b)=>a-b);
+  let opts='<option value="">همه سررسیدها</option>';
+  if(dates.length) opts+=dates.map(x=>`<option value="${x}">${x}</option>`).join('');
+  else opts+='<option value="__days__">بر اساس روز باقی‌مانده</option>';
+  $('expiry').innerHTML=opts;
+}
+function renderChain(){
+  let a=S.options.filter(x=>{
+    const e=$('expiry').value,t=$('type').value,q=$('search').value.trim();
+    const typeOK=!t || t==='unknown' ? (t==='unknown'?x.type==='unknown':true) : x.type===t;
+    return (!e || e==='__days__' || x.expiry===e) && typeOK &&
+      (!q || x.name.includes(q)||x.company.includes(q));
+  });
+  a.sort((x,y)=>(x.strike||0)-(y.strike||0));
+  if(!a.length){
+    $('chain').innerHTML='<div class="empty">قراردادی با این فیلتر پیدا نشد.</div>';
+    return;
+  }
+  $('chain').innerHTML=`<div class="tablebox"><table class="chain"><thead>
+  <tr><th>نوع</th><th>نماد</th><th>Strike</th><th>سررسید</th><th>روز</th><th>Last</th><th>Bid</th><th>Ask</th><th>Volume</th><th>OI</th><th></th></tr>
+  </thead><tbody>${a.slice(0,300).map(x=>{
+    const typeLabel=x.type==='call'?'CALL':x.type==='put'?'PUT':'نامشخص';
+    const expiry=x.expiry || '—';
+    return `<tr>
+      <td><span class="pill ${x.type}">${typeLabel}</span></td>
+      <td>${x.name}</td>
+      <td>${priceText(x.strike)}</td>
+      <td>${expiry}</td>
+      <td>${x.days==null?'—':fa(x.days)}</td>
+      <td>${priceText(x.last)}</td>
+      <td>${priceText(x.bid,true)}</td>
+      <td>${priceText(x.ask,true)}</td>
+      <td>${fa(x.volume)}</td>
+      <td>${fa(x.oi)}</td>
+      <td><button class="add" data-id="${x.id}">افزودن</button></td>
+    </tr>`;
+  }).join('')}</tbody></table></div>`;
+  document.querySelectorAll('.add').forEach(b=>b.onclick=()=>{
+    const x=S.options.find(o=>o.id===b.dataset.id);
+    if(x){
+      S.legs.push({
+        c:x, side:'buy', qty:1,
+        premium:(Number.isFinite(x.last)&&x.last>0?x.last:
+                 Number.isFinite(x.bid)&&x.bid>0?x.bid:
+                 Number.isFinite(x.ask)&&x.ask>0?x.ask:0)
+      });
+      renderLegs(); calc();
+    }
+  });
 }
 function renderLegs(){if(!S.legs.length){$('legs').innerHTML='<div class="empty">یک قرارداد از زنجیره انتخاب کن.</div>';return}
 $('legs').innerHTML=S.legs.map((l,i)=>`<div class="leg"><div><b>${l.c.name}</b><div style="color:var(--muted)">K=${fa(l.c.strike)} · ${l.c.type==='call'?'Call':'Put'}</div></div><select data-i="${i}" class="ls"><option value="buy" ${l.side==='buy'?'selected':''}>خرید</option><option value="sell" ${l.side==='sell'?'selected':''}>فروش</option></select><input data-i="${i}" class="lp" type="number" step=".01" value="${l.premium}"><input data-i="${i}" class="lq" type="number" min="1" value="${l.qty}"><button class="remove" data-i="${i}">×</button></div>`).join('');
 document.querySelectorAll('.ls').forEach(e=>e.onchange=()=>{S.legs[e.dataset.i].side=e.value;calc()});document.querySelectorAll('.lp').forEach(e=>e.oninput=()=>{S.legs[e.dataset.i].premium=num(e.value);calc()});document.querySelectorAll('.lq').forEach(e=>e.oninput=()=>{S.legs[e.dataset.i].qty=Math.max(1,num(e.value));calc()});document.querySelectorAll('.remove').forEach(e=>e.onclick=()=>{S.legs.splice(+e.dataset.i,1);renderLegs();calc()})}
-function payoff(l,p){let K=num(l.c.strike),q=num(l.qty)*(l.side==='buy'?1:-1),prem=num(l.premium);return q*((l.c.type==='call'?Math.max(p-K,0):Math.max(K-p,0))-prem)}
+function payoff(l,p){
+  if(!l.c || !['call','put'].includes(l.c.type)) return 0;
+  const K=num(l.c.strike), q=num(l.qty)*(l.side==='buy'?1:-1), prem=num(l.premium);
+  return q*((l.c.type==='call'?Math.max(p-K,0):Math.max(K-p,0))-prem);
+}
 function at(p){return S.legs.reduce((a,l)=>a+payoff(l,p),0)}
 function calc(){let P=num(S.base?.last);if(!P||!S.legs.length){draw([]);return}let pts=[],lo=P*.5,hi=P*1.5;for(let i=0;i<181;i++){let x=lo+(hi-lo)*i/180;pts.push([x,at(x)])}let ys=pts.map(x=>x[1]),mx=Math.max(...ys),mn=Math.min(...ys);$('maxp').textContent=fa(mx);$('maxl').textContent=fa(mn);$('pnl').textContent=fa(at(P));let bes=[];for(let i=1;i<pts.length;i++)if(pts[i-1][1]*pts[i][1]<0)bes.push((pts[i-1][0]+pts[i][0])/2);$('be').textContent=bes.length?bes.map(fa).join(' ، '):'—';draw(pts);scenarios();greeks()}
 function draw(p){let c=$('chart'),r=c.getBoundingClientRect(),d=devicePixelRatio||1;c.width=r.width*d;c.height=r.height*d;let g=c.getContext('2d');g.scale(d,d);g.clearRect(0,0,r.width,r.height);if(!p.length)return;let pad=32,w=r.width-2*pad,h=r.height-2*pad,x0=p[0][0],x1=p[p.length-1][0],y0=Math.min(...p.map(a=>a[1])),y1=Math.max(...p.map(a=>a[1]));let X=x=>pad+(x-x0)/(x1-x0)*w,Y=y=>pad+(y1-y)/(y1-y0||1)*h;g.strokeStyle='#263a58';g.beginPath();g.moveTo(pad,Y(0));g.lineTo(pad+w,Y(0));g.stroke();g.strokeStyle='#c89b3c';g.lineWidth=2;g.beginPath();p.forEach((a,i)=>i?g.lineTo(X(a[0]),Y(a[1])):g.moveTo(X(a[0]),Y(a[1])));g.stroke()}
@@ -83,7 +177,10 @@ function N(x){return .5*(1+erf(x/Math.sqrt(2)))}function erf(x){let s=x<0?-1:1;x
 function greeks(){let P=num(S.base?.last),rate=num($('rate').value)/100,g={d:0,g:0,t:0,v:0},n=0;S.legs.forEach(l=>{let c=l.c,S0=P,K=num(c.strike),T=Math.max(1,num(c.days))/365,V=num(c.last||c.bid||c.ask);if(!(S0&&K&&T&&V))return;let lo=.0001,hi=4;for(let i=0;i<50;i++){let iv=(lo+hi)/2,d1=(Math.log(S0/K)+(rate+iv*iv/2)*T)/(iv*Math.sqrt(T)),d2=d1-iv*Math.sqrt(T),pv=c.type==='call'?S0*N(d1)-K*Math.exp(-rate*T)*N(d2):K*Math.exp(-rate*T)*N(-d2)-S0*N(-d1);if(pv>V)hi=iv;else lo=iv}let iv=(lo+hi)/2,d1=(Math.log(S0/K)+(rate+iv*iv/2)*T)/(iv*Math.sqrt(T)),pdf=Math.exp(-d1*d1/2)/Math.sqrt(2*Math.PI),sg=l.side==='buy'?1:-1,q=num(l.qty),delta=c.type==='call'?N(d1):N(d1)-1;g.d+=sg*q*delta;g.g+=sg*q*pdf/(S0*iv*Math.sqrt(T));g.v+=sg*q*S0*pdf*Math.sqrt(T)/100;g.t+=sg*q*(-(S0*pdf*iv)/(2*Math.sqrt(T))-(c.type==='call'?rate*K*Math.exp(-rate*T)*N(d1-iv*Math.sqrt(T)):-rate*K*Math.exp(-rate*T)*N(-(d1-iv*Math.sqrt(T)))))/365;n++});if(n){$('delta').textContent=g.d.toFixed(4);$('gamma').textContent=g.g.toFixed(6);$('vega').textContent=g.v.toFixed(4);$('theta').textContent=g.t.toFixed(4)}}
 async function loadOptions(){if(!S.base)return;try{let d=await api('/MarketWatch/MarketWatchOption/fa');S.options=optNorm(d).filter(o=>isForBase(o,S.base));renderBase();renderExpiry();renderChain();$('count').textContent=fa(S.options.length);$('message').textContent='زنجیره زنده دریافت شد';$('live').textContent='● داده زنده';$('live').className='live up'}catch(e){$('chain').innerHTML='<div class="empty error">دریافت زنجیره انجام نشد: '+e.message+'</div>';$('message').textContent='API از این شبکه در دسترس نیست';$('message').className='error';$('live').textContent='● خطای اتصال'}}
 async function refresh(){try{$('message').textContent='در حال دریافت بازار...';let d=await api('/MarketWatch/MarketWatchCash/fa');S.cash=cashNorm(d);renderBases();$('time').textContent=new Date().toLocaleTimeString('fa-IR');}catch(e){$('message').textContent='اتصال بازار ناموفق: '+e.message;$('message').className='error';$('live').textContent='● آفلاین';$('live').className='live error'}}
-$('base').onchange=()=>{S.base=S.cash.find(x=>x.id===$('base').value);S.legs=[];renderLegs();loadOptions()};$('expiry').onchange=renderChain;$('type').onchange=renderChain;$('search').oninput=renderChain;$('refresh').onclick=refresh;$('recalc').onclick=calc;$('manual').onclick=()=>{if(!S.base)return;S.legs.push({c:{name:'دستی',type:'call',strike:S.base.last,last:0},side:'buy',qty:1,premium:0});renderLegs();calc()};$('save').onclick=()=>{localStorage.setItem('shamdun_options_strategy',JSON.stringify({date:new Date().toISOString(),base:S.base?.name,legs:S.legs}));$('message').textContent='استراتژی در مرورگر ذخیره شد.'};window.onresize=()=>{if(S.legs.length)calc()};setInterval(refresh,60000);refresh();
+$('base').onchange=()=>{S.base=S.cash.find(x=>x.id===$('base').value);S.legs=[];renderLegs();loadOptions()};$('expiry').onchange=renderChain;$('type').onchange=renderChain;$('search').oninput=renderChain;$('refresh').onclick=refresh;$('recalc').onclick=calc;$('manual').onclick=()=>{if(!S.base)return;S.legs.push({c:{name:'دستی',type:'unknown',strike:S.base.last,last:0},side:'buy',qty:1,premium:0});renderLegs();calc()};$('save').onclick=()=>{localStorage.setItem('shamdun_options_strategy',JSON.stringify({date:new Date().toISOString(),base:S.base?.name,legs:S.legs}));$('message').textContent='استراتژی در مرورگر ذخیره شد.'};window.onresize=()=>{if(S.legs.length)calc()};setInterval(refresh,60000);refresh();
 </script>
+<div style="position:fixed;left:14px;bottom:14px;z-index:9999;background:#fff;border:1px solid #e5e7eb;border-radius:10px;padding:9px 12px;font-size:12px;color:#64748b;box-shadow:0 6px 20px rgba(15,23,42,.08)">
+منبع: TSETMC MarketWatchOption · null/صفر در مظنه به‌عنوان «بدون مظنه» نمایش داده می‌شود.
+</div>
 </body>
 </html>
