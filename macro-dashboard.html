@@ -57,7 +57,48 @@ body{
 .mini{display:grid;gap:9px}
 .mini div{display:flex;justify-content:space-between;color:var(--muted);font-size:11px}
 .mini strong{color:var(--text)}
+
+/* ---------- نمودارها ---------- */
+.chart-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:14px;
+}
+.chart-card{
+  background:linear-gradient(135deg,var(--card),var(--bg2));
+  border:1px solid var(--border);
+  border-radius:18px;
+  padding:18px;
+  min-width:0;
+}
+.chart-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  gap:12px;
+  margin-bottom:10px;
+}
+.chart-value{font-size:20px;font-weight:900}
+.chart-wrap{
+  position:relative;
+  width:100%;
+  height:220px;
+}
+.chart-wrap canvas{
+  display:block;
+  width:100% !important;
+  height:100% !important;
+}
+.chart-note{
+  color:var(--muted);
+  font-size:10px;
+  line-height:1.8;
+  margin-top:8px;
+}
+
+/* ---------- ریسپانسیو ---------- */
 @media(max-width:900px){
+  .chart-grid{grid-template-columns:1fr}
   .g4{grid-template-columns:repeat(2,1fr)}
   .g3{grid-template-columns:repeat(2,1fr)}
 }
@@ -141,6 +182,57 @@ body{
 
   <div class="title">
     <div>
+      <h2>نمودارهای تاریخی</h2>
+      <span class="sub">روند واقعی شاخص‌ها · ۵ سال اخیر</span>
+    </div>
+  </div>
+
+  <section class="chart-grid" id="macro-charts">
+    <article class="chart-card">
+      <div class="chart-head">
+        <div>
+          <div class="label">تورم CPI · YoY</div>
+          <div class="chart-value" id="chart-cpi-value">—</div>
+        </div>
+        <div class="sub" id="chart-cpi-date">—</div>
+      </div>
+      <div class="chart-wrap">
+        <canvas id="chart-cpi" aria-label="نمودار تاریخی تورم CPI"></canvas>
+      </div>
+      <div class="chart-note">محاسبه‌شده از CPIAUCSL نسبت به ۱۲ ماه قبل.</div>
+    </article>
+
+    <article class="chart-card">
+      <div class="chart-head">
+        <div>
+          <div class="label">نرخ Federal Funds</div>
+          <div class="chart-value" id="chart-fed-value">—</div>
+        </div>
+        <div class="sub" id="chart-fed-date">—</div>
+      </div>
+      <div class="chart-wrap">
+        <canvas id="chart-fed" aria-label="نمودار تاریخی نرخ فدرال فاندز"></canvas>
+      </div>
+      <div class="chart-note">FEDFUNDS · نرخ مؤثر ماهانه.</div>
+    </article>
+
+    <article class="chart-card">
+      <div class="chart-head">
+        <div>
+          <div class="label">بازده اوراق ۱۰ ساله</div>
+          <div class="chart-value" id="chart-10y-value">—</div>
+        </div>
+        <div class="sub" id="chart-10y-date">—</div>
+      </div>
+      <div class="chart-wrap">
+        <canvas id="chart-10y" aria-label="نمودار تاریخی بازده اوراق خزانه ۱۰ ساله"></canvas>
+      </div>
+      <div class="chart-note">DGS10 · بازده روزانه خزانه‌داری آمریکا.</div>
+    </article>
+  </section>
+
+  <div class="title">
+    <div>
       <h2>مکانیزم انتقال</h2>
       <span class="sub">برای تحلیل، متغیرها را به‌صورت زنجیره‌ای بخوان</span>
     </div>
@@ -195,7 +287,12 @@ body{
 </main>
 
 <script src="navbar.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 <script>
+/* =========================================================
+   تنظیمات
+   ========================================================= */
+
 const MACRO_API =
   'https://jcwwilatvstjrohvhtss.supabase.co/functions/v1/macro-data';
 
@@ -206,7 +303,11 @@ const SERIES_LIST = [
   'NFCI','GDP'
 ].join(',');
 
-/* ---------- اتصال به API ---------- */
+const CHART_YEARS = 5; // بازه نمودارها: ۵ سال اخیر
+
+/* =========================================================
+   اتصال به API
+   ========================================================= */
 
 async function loadMacroData() {
   const controller = new AbortController();
@@ -236,7 +337,9 @@ async function loadMacroData() {
   }
 }
 
-/* ---------- کمک‌تابع‌های داده ---------- */
+/* =========================================================
+   کمک‌تابع‌های داده
+   ========================================================= */
 
 function latest(data, id) {
   return data?.[id]?.latest || null;
@@ -254,7 +357,9 @@ function value(data, id) {
   return Number.isFinite(n) ? n : null;
 }
 
-/* ---------- کمک‌تابع‌های قالب‌بندی ---------- */
+/* =========================================================
+   کمک‌تابع‌های قالب‌بندی
+   ========================================================= */
 
 function formatPercent(v) {
   return Number.isFinite(v) ? v.toFixed(2) + '%' : '—';
@@ -270,7 +375,9 @@ function formatNumber(v) {
     : '—';
 }
 
-/* ---------- محاسبه YoY ---------- */
+/* =========================================================
+   محاسبه YoY
+   ========================================================= */
 
 function yoy(data, id) {
   const rows = history(data, id).filter(
@@ -284,14 +391,12 @@ function yoy(data, id) {
 
   if (isNaN(currentDate)) return null;
 
-  // همان تاریخ، ۱۲ ماه قبل (با Date.UTC برای پایداری)
   const targetDate = new Date(Date.UTC(
     currentDate.getUTCFullYear() - 1,
     currentDate.getUTCMonth(),
     currentDate.getUTCDate()
   ));
 
-  // نزدیک‌ترین مشاهده ≤ targetDate
   let previous = null;
   for (let i = rows.length - 1; i >= 0; i--) {
     const d = new Date(rows[i].date + 'T00:00:00Z');
@@ -311,7 +416,88 @@ function yoy(data, id) {
   return (curVal / prevVal - 1) * 100;
 }
 
-/* ---------- به‌روزرسانی کارت‌ها ---------- */
+/* =========================================================
+   سری YoY تاریخی برای نمودار CPI
+   ========================================================= */
+
+function yoySeries(data, id, years = CHART_YEARS) {
+  const rows = history(data, id).filter(
+    r => r && r.date && Number.isFinite(Number(r.value))
+  );
+
+  if (rows.length < 13) return [];
+
+  const lastDate = new Date(rows[rows.length - 1].date + 'T00:00:00Z');
+  const startDate = new Date(Date.UTC(
+    lastDate.getUTCFullYear() - years,
+    lastDate.getUTCMonth(),
+    lastDate.getUTCDate()
+  ));
+
+  const out = [];
+
+  for (let i = 0; i < rows.length; i++) {
+    const cur = rows[i];
+    const curDate = new Date(cur.date + 'T00:00:00Z');
+    if (isNaN(curDate) || curDate < startDate) continue;
+
+    const targetDate = new Date(Date.UTC(
+      curDate.getUTCFullYear() - 1,
+      curDate.getUTCMonth(),
+      curDate.getUTCDate()
+    ));
+
+    let prev = null;
+    for (let j = i - 1; j >= 0; j--) {
+      const d = new Date(rows[j].date + 'T00:00:00Z');
+      if (!isNaN(d) && d <= targetDate) {
+        prev = rows[j];
+        break;
+      }
+    }
+    if (!prev) continue;
+
+    const pv = Number(prev.value);
+    const cv = Number(cur.value);
+    if (!Number.isFinite(pv) || pv === 0) continue;
+
+    out.push({
+      date: cur.date,
+      value: (cv / pv - 1) * 100
+    });
+  }
+
+  return out;
+}
+
+/* =========================================================
+   برش سری تاریخی به N سال اخیر
+   ========================================================= */
+
+function recentSeries(data, id, years = CHART_YEARS) {
+  const rows = history(data, id).filter(
+    r => r && r.date && Number.isFinite(Number(r.value))
+  );
+  if (!rows.length) return [];
+
+  const lastDate = new Date(rows[rows.length - 1].date + 'T00:00:00Z');
+  const startDate = new Date(Date.UTC(
+    lastDate.getUTCFullYear() - years,
+    lastDate.getUTCMonth(),
+    lastDate.getUTCDate()
+  ));
+
+  return rows
+    .filter(r => {
+      const d = new Date(r.date + 'T00:00:00Z');
+      return !isNaN(d) && d >= startDate;
+    })
+    .map(r => ({ date: r.date, value: Number(r.value) }));
+}
+
+/* =========================================================
+   بروزرسانی کارت‌ها
+   ========================================================= */
 
 function setCard(index, valueText, subText) {
   const cards = document.querySelectorAll('#cards .card');
@@ -324,6 +510,11 @@ function setCard(index, valueText, subText) {
   if (sEl) sEl.textContent = subText;
 }
 
+function setText(id, text) {
+  const el = document.getElementById(id);
+  if (el) el.textContent = text;
+}
+
 function showStatus(message) {
   const el = document.getElementById('data-status');
   if (el) el.textContent = message;
@@ -334,7 +525,9 @@ function setUpdated(text) {
   if (el) el.textContent = text;
 }
 
-/* ---------- ساخت سکشن‌های تکمیلی ---------- */
+/* =========================================================
+   سکشن‌های تکمیلی
+   ========================================================= */
 
 function buildExtraSection(data, coreCpi, pce, corePce, realYield) {
   const sec = document.createElement('section');
@@ -392,7 +585,94 @@ function buildMarketSection(data, curve, dollar, vix, nfci) {
   return sec;
 }
 
-/* ---------- اجرای اصلی ---------- */
+/* =========================================================
+   نمودارها (Chart.js)
+   ========================================================= */
+
+function cssVar(name, fallback) {
+  const v = getComputedStyle(document.documentElement)
+    .getPropertyValue(name)
+    .trim();
+  return v || fallback;
+}
+
+function makeChart(canvasId, points, { color, fill, label }) {
+  const canvas = document.getElementById(canvasId);
+  if (!canvas || !points.length) return null;
+
+  const ctx = canvas.getContext('2d');
+  const gold = color || cssVar('--gold', '#d4af37');
+  const grid = 'rgba(148,163,184,.12)';
+  const muted = cssVar('--muted', '#94a3b8');
+
+  // گرادیان زیر نمودار
+  const gradient = ctx.createLinearGradient(0, 0, 0, canvas.clientHeight || 220);
+  gradient.addColorStop(0, fill || 'rgba(212,175,55,.28)');
+  gradient.addColorStop(1, 'rgba(212,175,55,0)');
+
+  return new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: points.map(p => p.date),
+      datasets: [{
+        label,
+        data: points.map(p => p.value),
+        borderColor: gold,
+        backgroundColor: gradient,
+        borderWidth: 2,
+        tension: 0.28,
+        pointRadius: 0,
+        pointHoverRadius: 4,
+        fill: true
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      animation: { duration: 600 },
+      interaction: { mode: 'index', intersect: false },
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          rtl: true,
+          titleFont: { family: 'Vazirmatn' },
+          bodyFont: { family: 'Vazirmatn' },
+          callbacks: {
+            label: (item) =>
+              Number(item.parsed.y).toFixed(2) + '%'
+          }
+        }
+      },
+      scales: {
+        x: {
+          grid: { color: grid, drawTicks: false },
+          ticks: {
+            color: muted,
+            font: { family: 'Vazirmatn', size: 10 },
+            maxTicksLimit: 6,
+            callback: function(val) {
+              const d = this.getLabelForValue(val);
+              // فقط سال/ماه
+              return d ? String(d).slice(0, 7) : '';
+            }
+          }
+        },
+        y: {
+          grid: { color: grid, drawTicks: false },
+          ticks: {
+            color: muted,
+            font: { family: 'Vazirmatn', size: 10 },
+            callback: (v) => Number(v).toFixed(1) + '%'
+          }
+        }
+      }
+    }
+  });
+}
+
+/* =========================================================
+   اجرای اصلی
+   ========================================================= */
 
 (async () => {
   try {
@@ -415,7 +695,7 @@ function buildMarketSection(data, curve, dollar, vix, nfci) {
     const nfci         = value(data, 'NFCI');
     const gdp          = value(data, 'GDP');
 
-    /* کارت‌های اصلی */
+    /* ---------- کارت‌های اصلی ---------- */
     setCard(0, formatPercent(cpi),
       'YoY · آخرین مشاهده: ' + (latest(data, 'CPIAUCSL')?.date || '—'));
 
@@ -428,23 +708,21 @@ function buildMarketSection(data, curve, dollar, vix, nfci) {
     setCard(3, formatPercent(tenYear),
       'آخرین مشاهده: ' + (latest(data, 'DGS10')?.date || '—'));
 
-    /* کارت‌های اوراق و GDP */
-    const dgs2El  = document.getElementById('dgs2');
-    const dgs10El = document.getElementById('dgs10');
-    const gdpEl   = document.getElementById('gdp');
+    /* ---------- کارت‌های اوراق و GDP ---------- */
+    setText('dgs2',  formatPercent(twoYear));
+    setText('dgs10', formatPercent(tenYear));
+    setText('gdp',   formatNumber(gdp));
 
-    if (dgs2El)  dgs2El.textContent  = formatPercent(twoYear);
-    if (dgs10El) dgs10El.textContent = formatPercent(tenYear);
-    if (gdpEl)   gdpEl.textContent   = formatNumber(gdp);
+    /* ---------- درج سکشن تورم تکمیلی ---------- */
+    const inflationTitle = [...document.querySelectorAll('.title')]
+      .find(el => el.textContent.includes('شاخص‌های کلیدی'));
 
-    /* درج سکشن تورم تکمیلی بعد از تایتل «شاخص‌های کلیدی» */
-    const titles = document.querySelectorAll('.title');
-    if (titles[1]) {
+    if (inflationTitle) {
       const extra = buildExtraSection(data, coreCpi, pce, corePce, realYield);
-      titles[1].insertAdjacentElement('afterend', extra);
+      inflationTitle.insertAdjacentElement('afterend', extra);
     }
 
-    /* درج سکشن بازار قبل از تایتل «مکانیزم انتقال» */
+    /* ---------- درج سکشن بازار ---------- */
     const macroTitle = [...document.querySelectorAll('.title')]
       .find(el => el.textContent.includes('مکانیزم انتقال'));
 
@@ -453,7 +731,39 @@ function buildMarketSection(data, curve, dollar, vix, nfci) {
       macroTitle.insertAdjacentElement('beforebegin', marketExtra);
     }
 
-    /* زمان به‌روزرسانی */
+    /* ---------- نمودارها ---------- */
+
+    // 1) CPI YoY
+    const cpiSeries = yoySeries(data, 'CPIAUCSL', CHART_YEARS);
+    makeChart('chart-cpi', cpiSeries, {
+      color: cssVar('--gold', '#d4af37'),
+      fill: 'rgba(212,175,55,.28)',
+      label: 'CPI YoY'
+    });
+    setText('chart-cpi-value', formatPercent(cpi));
+    setText('chart-cpi-date',  latest(data, 'CPIAUCSL')?.date || '—');
+
+    // 2) Fed Funds
+    const fedSeries = recentSeries(data, 'FEDFUNDS', CHART_YEARS);
+    makeChart('chart-fed', fedSeries, {
+      color: cssVar('--blue', '#3b82f6'),
+      fill: 'rgba(59,130,246,.28)',
+      label: 'Fed Funds'
+    });
+    setText('chart-fed-value', formatPercent(fed));
+    setText('chart-fed-date',  latest(data, 'FEDFUNDS')?.date || '—');
+
+    // 3) DGS10
+    const tenYearSeries = recentSeries(data, 'DGS10', CHART_YEARS);
+    makeChart('chart-10y', tenYearSeries, {
+      color: cssVar('--green', '#10b981'),
+      fill: 'rgba(16,185,129,.28)',
+      label: 'DGS10'
+    });
+    setText('chart-10y-value', formatPercent(tenYear));
+    setText('chart-10y-date',  latest(data, 'DGS10')?.date || '—');
+
+    /* ---------- زمان بروزرسانی ---------- */
     const fetchedAt = json.fetched_at ? new Date(json.fetched_at) : new Date();
     setUpdated(
       'به‌روزرسانی: ' +
