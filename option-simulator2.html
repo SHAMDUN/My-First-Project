@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="theme-color" content="#0B1220">
-<title>آزمایشگاه استراتژی آپشن | شمعدون</title>
+<title>آزمایشگاه معاملات آپشن | شمعدون</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css">
 <style>
 :root{
@@ -45,14 +45,14 @@ button,input,select{font:inherit} button{cursor:pointer} .num,input[type=number]
 .positions-wrap{width:100%;max-width:100%;overflow-x:auto;overflow-y:hidden;border:1px solid var(--border);border-radius:13px;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain}.positions-table{width:1120px;min-width:1120px;max-width:none;border-collapse:collapse}.positions-table th{background:var(--surface-2);color:var(--muted);font-size:10px;font-weight:800;padding:10px 8px;border-bottom:1px solid var(--border);white-space:nowrap}.positions-table td{padding:8px;border-bottom:1px solid var(--border);vertical-align:middle;font-size:11px}.positions-table tr:last-child td{border-bottom:0}.cell-select,.cell-input{width:100%;min-width:74px;background:var(--surface-2);border:1px solid var(--border);color:var(--text);border-radius:8px;padding:7px 8px;outline:none}.cell-select:focus,.cell-input:focus{border-color:var(--gold);box-shadow:0 0 0 3px var(--gold-soft)}.cell-input:disabled,.cell-select:disabled{opacity:.55}.side-toggle{display:flex;gap:4px}.side-btn{border:1px solid var(--border);background:var(--surface-2);color:var(--muted);border-radius:7px;padding:7px 9px;font-size:10px;font-weight:800}.side-btn.active-buy{background:var(--green-soft);border-color:var(--green);color:var(--green)}.side-btn.active-sell{background:var(--red-soft);border-color:var(--red);color:var(--red)}.symbol-badge{display:inline-flex;align-items:center;justify-content:center;min-width:72px;padding:7px 9px;border-radius:8px;font-weight:900;direction:ltr;background:var(--surface-3)}.symbol-badge.call{color:var(--green);background:var(--green-soft)}.symbol-badge.put{color:var(--red);background:var(--red-soft)}.symbol-badge.spot{color:var(--blue);background:var(--blue-soft)}.btn-remove{border:0;background:var(--red-soft);color:var(--red);width:30px;height:30px;border-radius:8px}.price-status{display:block;font-size:9px;color:var(--muted);margin-top:3px;white-space:nowrap}.price-status.live{color:var(--green)}.price-status.manual{color:var(--gold)}
 .summary-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px}.sum-card{padding:12px;border:1px solid var(--border);border-radius:12px;background:var(--surface-2);min-width:0}.sum-card .label{font-size:10px;color:var(--muted);margin-bottom:6px}.sum-card .value{font-size:14px;font-weight:900;overflow-wrap:anywhere}.sum-card.wide{grid-column:1/-1}.positive{color:var(--green)}.negative{color:var(--red)}
 .strategy-info{padding:16px;border-radius:14px;border:1px solid var(--border);background:linear-gradient(135deg,var(--surface-2),var(--surface))}.strategy-info .name{font-size:16px;font-weight:900}.strategy-info .tags{display:inline-block;margin-top:8px;color:var(--gold);background:var(--gold-soft);border-radius:999px;padding:4px 9px;font-size:10px;font-weight:800}
-.explanation{padding:18px}.exp-header{display:flex;align-items:center;gap:12px;padding-bottom:14px;border-bottom:1px solid var(--border)}.exp-icon{font-size:25px}.exp-title{font-weight:900;font-size:15px}.exp-sub{font-size:10px;color:var(--muted);margin-top:3px}.exp-body{display:grid;gap:12px;margin-top:14px}.exp-block{padding:13px;border:1px solid var(--border);border-radius:12px;background:var(--surface-2)}.blk-title{font-size:11px;font-weight:900;margin-bottom:7px}.exp-block p{margin:0;color:var(--muted);font-size:11px;line-height:1.9}.exp-block ul{margin:6px 0 0;padding-right:18px;color:var(--muted);font-size:11px;line-height:2}.exp-block.pros .blk-title{color:var(--green)}.exp-block.cons .blk-title{color:var(--red)}.exp-highlight{color:var(--gold);font-weight:800}
+.explanation{padding:18px}.exp-header{display:flex;align-items:center;gap:12px;padding-bottom:14px;border-bottom:1px solid var(--border)}.exp-icon{font-size:25px}.exp-title{font-weight:900;font-size:15px}.exp-sub{font-size:10px;color:var(--muted);margin-top:3px}.exp-body{display:grid;gap:12px;margin-top:14px}.exp-block{padding:13px;border:1px solid var(--border);border-radius:12px;background:var(--surface-2)}.blk-title{font-size:11px;font-weight:900;margin-bottom:7px}.exp-block p{margin:0;color:var(--muted);font-size:11px;line-height:1.9}.exp-block ul{margin:6px 0 0;padding-right:18px;color:var(--muted);font-size:11px;line-height:2}.exp-block.pros .blk-title{color:var(--green)}.exp-block.cons .blk-title{color:var(--red)}.exp-highlight{color:var(--gold);font-weight:800}.exp-pros-cons{display:grid;grid-template-columns:1fr 1fr;gap:0;padding:0;overflow:hidden}.exp-pros-cons .pros-col,.exp-pros-cons .cons-col{padding:13px;min-width:0}.exp-pros-cons .cons-col{border-right:1px solid var(--border)}
 .chart-panel{padding:18px}.chart-head{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;margin-bottom:12px}.chart-tools{display:flex;gap:5px;flex-wrap:wrap;justify-content:flex-end}.chart-btn{width:34px;height:32px;border:1px solid var(--border);background:var(--surface-2);color:var(--text);border-radius:8px;font-weight:900}.chart-btn.active{border-color:var(--gold);color:var(--gold);background:var(--gold-soft)}.zoom-info{font-size:10px;color:var(--muted);align-self:center;white-space:nowrap}.chart-canvas-wrap{position:relative;display:block;width:100%;max-width:100%;height:500px;min-height:0;overflow:hidden;border:1px solid var(--border);border-radius:13px;background:var(--surface-2);touch-action:none}.chart-canvas-wrap.panning{cursor:grab}.chart-canvas-wrap svg{display:block;width:100%;height:100%}.chart-tooltip{position:absolute;z-index:5;pointer-events:none;display:none;min-width:150px;padding:10px 12px;border-radius:10px;background:rgba(15,23,42,.96);color:#fff;box-shadow:0 10px 25px rgba(0,0,0,.22);font-size:11px}.chart-tooltip.visible{display:block}.chart-tooltip .tt-row{display:flex;justify-content:space-between;gap:12px}.chart-tooltip .tt-pnl-profit,.chart-tooltip .tt-pct-profit{color:#4ade80}.chart-tooltip .tt-pnl-loss,.chart-tooltip .tt-pct-loss{color:#fb7185}.chart-tooltip .tt-price{color:#fff}.chart-tooltip .tt-divider{height:1px;background:rgba(255,255,255,.12);margin:6px 0}.chart-hint{display:flex;justify-content:center;align-items:center;gap:6px;color:var(--muted);font-size:10px;padding-top:9px;text-align:center}.chart-hint.locked{color:var(--gold)}
 .status-bar{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:10px 13px;background:var(--surface-2);border:1px solid var(--border);border-radius:12px;margin-bottom:16px;color:var(--muted);font-size:10px}.status-left{display:flex;align-items:center;gap:8px}.status-bar .indicator{width:7px;height:7px}
 .tabs{display:flex;gap:5px;border-bottom:1px solid var(--border);margin-bottom:14px}.tab-btn{border:0;background:transparent;color:var(--muted);padding:9px 12px;border-bottom:2px solid transparent;font-weight:800;font-size:11px}.tab-btn.active{color:var(--gold);border-bottom-color:var(--gold)}.tab-content{display:none}.tab-content.active{display:block}
 .modal{position:fixed;inset:0;background:rgba(2,6,23,.58);backdrop-filter:blur(4px);display:none;align-items:center;justify-content:center;padding:20px;z-index:10000}.modal.active{display:flex}.modal-card{width:min(440px,100%);background:var(--surface);border:1px solid var(--border);border-radius:18px;padding:22px;box-shadow:0 25px 80px rgba(0,0,0,.3)}.modal-icon{font-size:30px}.modal-title{font-weight:900;font-size:17px;margin-top:8px}.modal-text{font-size:12px;color:var(--muted);line-height:1.9;margin:8px 0 18px}.modal-actions{display:flex;gap:8px;justify-content:flex-start}.notification{position:fixed;left:20px;bottom:20px;z-index:11000;background:var(--surface);border:1px solid var(--border);border-right:4px solid var(--gold);border-radius:12px;padding:12px 15px;box-shadow:var(--shadow);font-size:12px;max-width:min(420px,calc(100vw - 40px))}.chart-panel:fullscreen{background:var(--surface);padding:22px}.chart-panel:fullscreen .chart-canvas-wrap{height:calc(100vh - 100px)}
 @media(max-width:1180px){.presets{grid-template-columns:repeat(4,minmax(0,1fr))}.workspace{grid-template-columns:minmax(0,1fr) 260px}.hero{grid-template-columns:minmax(0,1fr) 300px}.chart-canvas-wrap{height:430px}}
 @media(max-width:1020px){.workspace{grid-template-columns:1fr}.side-col{order:2}.main-col{order:1}.presets{grid-template-columns:repeat(3,minmax(0,1fr))}.chart-canvas-wrap{height:400px}}
-@media(max-width:720px){.page{padding:78px 10px 35px}.hero{grid-template-columns:1fr}.hero-main,.hero-side,.panel,.chart-panel,.explanation{padding:14px}.hero h1{font-size:23px}.hero-actions .btn{flex:1;min-width:130px}.presets{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.preset-card{padding:11px}.preset-desc{min-height:auto}.section-head{align-items:flex-start}.chart-head{flex-direction:column;gap:9px}.chart-tools{width:100%;justify-content:flex-start}.chart-canvas-wrap{height:350px;min-height:0}.summary-grid{grid-template-columns:1fr 1fr}.status-bar{align-items:flex-start;flex-direction:column}.panel-head{align-items:flex-start;flex-direction:column}.actions{width:100%}.mini-btn{flex:1}.positions-wrap{width:100%;max-width:100%;overflow-x:auto}.positions-table{min-width:1120px}.main-col,.side-col{width:100%;min-width:0}}
+@media(max-width:720px){.exp-pros-cons{grid-template-columns:1fr}.exp-pros-cons .cons-col{border-right:0;border-top:1px solid var(--border)}.page{padding:78px 10px 35px}.hero{grid-template-columns:1fr}.hero-main,.hero-side,.panel,.chart-panel,.explanation{padding:14px}.hero h1{font-size:23px}.hero-actions .btn{flex:1;min-width:130px}.presets{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.preset-card{padding:11px}.preset-desc{min-height:auto}.section-head{align-items:flex-start}.chart-head{flex-direction:column;gap:9px}.chart-tools{width:100%;justify-content:flex-start}.chart-canvas-wrap{height:350px;min-height:0}.summary-grid{grid-template-columns:1fr 1fr}.status-bar{align-items:flex-start;flex-direction:column}.panel-head{align-items:flex-start;flex-direction:column}.actions{width:100%}.mini-btn{flex:1}.positions-wrap{width:100%;max-width:100%;overflow-x:auto}.positions-table{min-width:1120px}.main-col,.side-col{width:100%;min-width:0}}
 @media(max-width:480px){.page{padding-left:8px;padding-right:8px}.presets{grid-template-columns:1fr}.hero-metrics{grid-template-columns:1fr 1fr}.summary-grid{grid-template-columns:1fr}.sum-card.wide{grid-column:auto}.hero-actions .btn{min-width:100%}.chart-canvas-wrap{height:310px}.chart-btn{width:32px}.chart-tools .chart-btn{flex:0 0 32px}.zoom-info{margin-right:auto}.section-title{font-size:15px}.panel-title{font-size:14px}.panel-sub{line-height:1.7}}</style>
 </head>
 <body>
@@ -510,17 +510,19 @@ function renderExplanation(preset) {
     </div>
     <div class="exp-body">
       <div class="exp-block">
-        <div class="blk-title">📖 این استراتژی چیه؟</div>
+        <div class="blk-title">📖 توضیح استراتژی</div>
         <p>${e.what}</p>
         <p style="margin-top:10px;"><span class="exp-highlight">مناسب برای:</span> ${e.who}</p>
       </div>
-      <div class="exp-block pros">
-        <div class="blk-title pros">✅ مزایا</div>
-        <ul>${e.pros.map(x => `<li>${x}</li>`).join('')}</ul>
-      </div>
-      <div class="exp-block cons">
-        <div class="blk-title cons">⚠️ معایب</div>
-        <ul>${e.cons.map(x => `<li>${x}</li>`).join('')}</ul>
+      <div class="exp-block exp-pros-cons">
+        <div class="pros-col">
+          <div class="blk-title pros">✅ مزایا</div>
+          <ul>${e.pros.map(x => `<li>${x}</li>`).join('')}</ul>
+        </div>
+        <div class="cons-col">
+          <div class="blk-title cons">⚠️ معایب</div>
+          <ul>${e.cons.map(x => `<li>${x}</li>`).join('')}</ul>
+        </div>
       </div>
     </div>
   `;
@@ -1135,7 +1137,7 @@ function addPositionInternal() {
     asset: '',
     side: 'buy',
     type: 'call',
-    quantity: posDef.quantity || 1,
+    quantity: 1,
     currentPrice: 0,
     strike: 0,
     premium: 0,
