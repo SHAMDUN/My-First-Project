@@ -45,6 +45,7 @@ body{
   background:var(--bg);
   color:var(--text);
   font-family:Vazirmatn,Tahoma,sans-serif;
+  font-size:16px;
 }
 .page{max-width:1240px;margin:auto;padding:90px 20px 50px}
 .hero,.card,.chart,.guide-main,.guide-key,.info,.scenario{
@@ -52,74 +53,74 @@ body{
   border:1px solid var(--border);
   border-radius:18px;
 }
-.hero{padding:24px;border-color:rgba(200,155,60,.25);margin-bottom:18px}
-.live{display:flex;justify-content:space-between;align-items:center;color:var(--muted);font-size:11px}
-.dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--green);margin-left:7px}
-.hero h1{margin:8px 0 4px;font-size:34px}
-.hero p{color:var(--muted);font-size:13px;line-height:2;margin:0}
-.sub,.note{color:var(--muted);font-size:12px}
-.toolbar{display:flex;gap:8px;justify-content:flex-start;align-items:center;margin:16px 0}
+.hero{padding:26px;border-color:rgba(200,155,60,.25);margin-bottom:18px}
+.live{display:flex;justify-content:space-between;align-items:center;color:var(--muted);font-size:14px}
+.dot{display:inline-block;width:9px;height:9px;border-radius:50%;background:var(--green);margin-left:8px}
+.hero h1{margin:10px 0 6px;font-size:38px}
+.hero p{color:var(--muted);font-size:16px;line-height:2;margin:0}
+.sub,.note{color:var(--muted);font-size:14px}
+.toolbar{display:flex;gap:8px;justify-content:flex-start;align-items:center;margin:18px 0}
 .tabs{display:flex;gap:6px;overflow:auto;scrollbar-width:none}
 .tabs::-webkit-scrollbar{display:none}
 .btn{
   border:1px solid var(--border);background:var(--card);color:var(--text);
-  padding:8px 12px;border-radius:10px;cursor:pointer;font:inherit;
-  font-size:13px;white-space:nowrap;
+  padding:10px 14px;border-radius:10px;cursor:pointer;font:inherit;
+  font-size:15px;white-space:nowrap;
 }
 .btn.active{border-color:rgba(200,155,60,.5);color:var(--gold)}
-.section{scroll-margin-top:80px;margin-top:25px}
-.head{margin-bottom:11px}
-.head h2{font-size:20px;margin:0}
-.grid{display:grid;gap:12px}
+.section{scroll-margin-top:80px;margin-top:28px}
+.head{margin-bottom:14px}
+.head h2{font-size:24px;margin:0}
+.grid{display:grid;gap:14px}
 .g4{grid-template-columns:repeat(4,1fr)}
 .g3{grid-template-columns:repeat(3,1fr)}
 .g2{grid-template-columns:repeat(2,1fr)}
-.card,.chart{padding:16px;min-width:0}
-.label{color:var(--muted);font-size:13px}
-.value{font-size:28px;font-weight:900;margin:4px 0;direction:ltr;text-align:right}
-.date{font-size:12px;color:var(--muted)}
-.chartgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
-.chart{margin-top:12px}
+.card,.chart{padding:18px;min-width:0}
+.label{color:var(--muted);font-size:15px}
+.value{font-size:30px;font-weight:900;margin:6px 0;direction:ltr;text-align:right}
+.date{font-size:13px;color:var(--muted)}
+.chartgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+.chart{margin-top:14px}
 .charthead{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
-.chartwrap{height:230px;position:relative;margin-top:8px}
-.guide{display:grid;grid-template-columns:1.55fr .85fr;gap:12px;margin:0 0 22px}
-.guide-main,.guide-key{padding:18px}
+.chartwrap{height:250px;position:relative;margin-top:10px}
+.guide{display:grid;grid-template-columns:1.55fr .85fr;gap:14px;margin:0 0 24px}
+.guide-main,.guide-key{padding:20px}
 .guide-main{border-color:rgba(200,155,60,.28)}
 .guide-badge{
-  display:inline-block;color:var(--gold);font-size:10px;font-weight:800;
-  border:1px solid rgba(200,155,60,.35);padding:4px 9px;border-radius:999px;margin-bottom:8px;
+  display:inline-block;color:var(--gold);font-size:13px;font-weight:800;
+  border:1px solid rgba(200,155,60,.35);padding:5px 11px;border-radius:999px;margin-bottom:10px;
 }
-.guide h2{font-size:22px;margin:0 0 8px}
-.guide h3{font-size:16px;margin:0 0 10px}
-.guide p{font-size:16px;line-height:2;color:var(--muted);margin:6px 0}
-.guide-steps{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-top:12px}
-.guide-steps div{padding:11px;border:1px solid var(--border);border-radius:12px;background:rgba(148,163,184,.04)}
-.guide-steps b{display:block;font-size:13px;margin-bottom:4px}
-.guide-steps span{display:block;font-size:12px;line-height:1.8;color:var(--muted)}
+.guide h2{font-size:22px;margin:0 0 10px}
+.guide h3{font-size:17px;margin:0 0 12px}
+.guide p{font-size:15px;line-height:2;color:var(--muted);margin:8px 0}
+.guide-steps{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:14px}
+.guide-steps div{padding:13px;border:1px solid var(--border);border-radius:12px;background:rgba(148,163,184,.04)}
+.guide-steps b{display:block;font-size:15px;margin-bottom:6px}
+.guide-steps span{display:block;font-size:14px;line-height:1.9;color:var(--muted)}
 .guide-warning{
-  margin-top:12px;padding:10px 11px;border-radius:10px;
+  margin-top:14px;padding:12px 13px;border-radius:10px;
   background:rgba(200,155,60,.08);border:1px solid rgba(200,155,60,.18);
-  font-size:12px;color:var(--gold);
+  font-size:14px;color:var(--gold);
 }
-.flow{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
+.flow{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}
 .flow div{
-  padding:14px 8px;text-align:center;background:var(--card);
-  border:1px solid var(--border);border-radius:12px;font-size:13px;
+  padding:16px 10px;text-align:center;background:var(--card);
+  border:1px solid var(--border);border-radius:12px;font-size:15px;
 }
-.info{padding:15px}
-.info h3{font-size:15px;margin:0 0 5px}
-.info p{font-size:12px;color:var(--muted);margin:0;line-height:1.9}
-.scenario{padding:16px}
-.scenario h3{font-size:16px;margin:0 0 5px}
-.scenario p,.scenario li{font-size:12px;color:var(--muted);line-height:1.9}
-.scenario ul{margin:7px 0;padding-right:18px}
+.info{padding:17px}
+.info h3{font-size:17px;margin:0 0 7px}
+.info p{font-size:14px;color:var(--muted);margin:0;line-height:1.95}
+.scenario{padding:18px}
+.scenario h3{font-size:17px;margin:0 0 7px}
+.scenario p,.scenario li{font-size:14px;color:var(--muted);line-height:1.95}
+.scenario ul{margin:8px 0;padding-right:20px}
 .tablewrap{overflow:auto;border:1px solid var(--border);border-radius:13px}
-.table{width:100%;min-width:650px;border-collapse:collapse;font-size:12px}
-.table th,.table td{padding:10px;border-bottom:1px solid var(--border);text-align:right}
+.table{width:100%;min-width:650px;border-collapse:collapse;font-size:14px}
+.table th,.table td{padding:12px;border-bottom:1px solid var(--border);text-align:right}
 .table th{color:var(--muted)}
 .status{
-  margin-top:18px;padding:10px 12px;border:1px solid var(--border);
-  border-radius:10px;color:var(--muted);font-size:12px;
+  margin-top:20px;padding:12px 14px;border:1px solid var(--border);
+  border-radius:10px;color:var(--muted);font-size:14px;
 }
 @media(max-width:950px){
   .guide{grid-template-columns:1fr}
@@ -130,13 +131,15 @@ body{
 }
 @media(max-width:650px){
   .page{padding:78px 12px 35px}
-  .hero h1{font-size:24px}
+  .hero h1{font-size:26px}
   .toolbar{align-items:stretch}
   .tabs{width:100%}
   .guide-steps{grid-template-columns:1fr}
   .g4,.g3,.g2,.chartgrid,.flow{grid-template-columns:1fr}
   .flow div:last-child{grid-column:auto}
-  .chartwrap{height:215px}
+  .chartwrap{height:220px}
+  .value{font-size:26px}
+  .head h2{font-size:20px}
 }
 </style>
 </head>
@@ -225,7 +228,7 @@ body{
       <span class="sub">آخرین مشاهده معتبر</span>
     </div>
     <div class="grid g4" id="top"></div>
-    <div class="grid g4" id="extra" style="margin-top:12px"></div>
+    <div class="grid g4" id="extra" style="margin-top:14px"></div>
   </section>
 
   <section class="section" id="inflation">
@@ -341,7 +344,7 @@ body{
   <section class="section" id="markets">
     <div class="head">
       <h2>بازارهای مرتبط</h2>
-      <span class="sub">دلار، طلا، نفت، سهام و ریسک</span>
+      <span class="sub">دلار، طلا، نفت، سهام، BTC و ریسک</span>
     </div>
     <div class="grid g4" id="marketsCards"></div>
     <div class="chartgrid">
@@ -566,7 +569,7 @@ body{
 
   <div class="status" id="status">در حال دریافت داده...</div>
 
-  <div class="note" style="margin-top:10px">
+  <div class="note" style="margin-top:12px">
     منبع داده اقتصادی: FRED / Federal Reserve Bank of St. Louis.
     داده‌ها از API شمعدون خوانده می‌شوند؛
     در صورت نبود داده مقدار ساختگی نمایش داده نمی‌شود.
@@ -822,6 +825,8 @@ function chart(id,data,colorVariable,suffix='',format='number'){
         legend:{ display:false },
         tooltip:{
           rtl: true,
+          titleFont:{ family:'Vazirmatn', size:13 },
+          bodyFont:{ family:'Vazirmatn', size:13 },
           callbacks:{
             label: item => {
               const value = item.parsed.y;
@@ -839,13 +844,14 @@ function chart(id,data,colorVariable,suffix='',format='number'){
           ticks:{
             maxTicksLimit: 6,
             color: colorVar('--muted','#94A3B8'),
-            font:{ family:'Vazirmatn' }
+            font:{ family:'Vazirmatn', size:12 }
           }
         },
         y:{
           grid:{ color:'rgba(148,163,184,.08)' },
           ticks:{
             color: colorVar('--muted','#94A3B8'),
+            font:{ family:'Vazirmatn', size:12 },
             callback: value => {
               const prefix = format === 'money' ? '$' : '';
               return prefix + Number(value).toLocaleString('en-US',{
@@ -912,7 +918,7 @@ function dual(id,data2Y,data10Y){
           rtl: true,
           labels:{
             color: colorVar('--text','#F8FAFC'),
-            font:{ family:'Vazirmatn' }
+            font:{ family:'Vazirmatn', size:13 }
           }
         }
       },
@@ -921,12 +927,13 @@ function dual(id,data2Y,data10Y){
           ticks:{
             maxTicksLimit: 6,
             color: colorVar('--muted','#94A3B8'),
-            font:{ family:'Vazirmatn' }
+            font:{ family:'Vazirmatn', size:12 }
           }
         },
         y:{
           ticks:{
             color: colorVar('--muted','#94A3B8'),
+            font:{ family:'Vazirmatn', size:12 },
             callback: value => Number(value).toFixed(1) + '%'
           }
         }
@@ -1059,10 +1066,7 @@ async function render(j){
   const nasdaq = val(data,'NASDAQCOM');
   const wal = val(data,'WALCL');
 
-  /* ---------------------------------
-     Overview
-  ---------------------------------- */
-
+  /* Overview */
   [
     ['CPI · تورم سالانه', pct(cpi), 'CPIAUCSL'],
     ['بیکاری', pct(unemployment), 'UNRATE'],
@@ -1081,10 +1085,7 @@ async function render(j){
     add($('extra'), item[0], item[1], last(data,item[2])?.date || '—')
   );
 
-  /* ---------------------------------
-     Inflation
-  ---------------------------------- */
-
+  /* Inflation */
   [
     ['CPI', pct(cpi), 'CPIAUCSL'],
     ['Core CPI', pct(core), 'CPILFESL'],
@@ -1094,10 +1095,7 @@ async function render(j){
     add($('infl'), item[0], item[1], last(data,item[2])?.date || '—')
   );
 
-  /* ---------------------------------
-     Labor
-  ---------------------------------- */
-
+  /* Labor */
   [
     ['بیکاری', pct(unemployment), 'UNRATE'],
     ['اشتغال', payroll == null ? '—' : (payroll / 1000).toFixed(2) + 'M', 'PAYEMS'],
@@ -1107,10 +1105,7 @@ async function render(j){
     add($('laborCards'), item[0], item[1], last(data,item[2])?.date || '—')
   );
 
-  /* ---------------------------------
-     Rates
-  ---------------------------------- */
-
+  /* Rates */
   [
     ['Fed Funds', pct(fed), 'FEDFUNDS'],
     ['۲ ساله', pct(y2), 'DGS2'],
@@ -1120,10 +1115,7 @@ async function render(j){
     add($('ratesCards'), item[0], item[1], last(data,item[2])?.date || '—')
   );
 
-  /* ---------------------------------
-     Markets (فقط FRED)
-  ---------------------------------- */
-
+  /* Markets — FRED */
   [
     ['دلار وزن‌دار', num(dollar), 'DTWEXBGS'],
     ['نفت WTI', oil == null ? '—' : '$' + num(oil), 'DCOILWTICO'],
@@ -1135,18 +1127,11 @@ async function render(j){
     add($('marketsCards'), item[0], item[1], last(data,item[2])?.date || '—')
   );
 
-  /* ---------------------------------
-     طلا و بیت‌کوین — کارت‌های placeholder
-     که بعداً با داده Edge Function دوم پر می‌شوند
-  ---------------------------------- */
-
+  /* Markets — طلا و BTC (placeholder) */
   add($('marketsCards'), 'طلا', '—', 'در حال دریافت...');
   add($('marketsCards'), 'BTC', '—', 'در حال دریافت...');
 
-  /* ---------------------------------
-     Chart headers
-  ---------------------------------- */
-
+  /* Chart headers */
   $('cv').textContent = pct(cpi);
   $('cd').textContent = last(data,'CPIAUCSL')?.date || '—';
 
@@ -1177,16 +1162,10 @@ async function render(j){
   $('vv').textContent = num(vix);
   $('vd').textContent = last(data,'VIXCLS')?.date || '—';
 
-  /* ---------------------------------
-     Charts
-  ---------------------------------- */
-
+  /* Charts */
   refreshCharts(data);
 
-  /* ---------------------------------
-     طلا و بیت‌کوین از Edge Function دوم
-  ---------------------------------- */
-
+  /* طلا و BTC از Edge Function دوم */
   try{
     const market = await loadMarketExtras();
     const gold = market.GOLD;
@@ -1217,10 +1196,7 @@ async function render(j){
     updateMarketCard('BTC', '—', 'خطا در دریافت');
   }
 
-  /* ---------------------------------
-     Updated
-  ---------------------------------- */
-
+  /* Updated */
   const fetched = j.fetched_at ? new Date(j.fetched_at) : new Date();
 
   $('updated').textContent =
