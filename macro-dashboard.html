@@ -1,368 +1,480 @@
-<!doctype html><html lang="fa" dir="rtl" data-theme="dark"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>اقتصاد کلان | شمعدون</title><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css"><style>
-:root{--bg:#0a0a0f;--bg2:#14141c;--card:#1a1a24;--gold:#d4af37;--gold2:#f4d47c;--blue:#3b82f6;--green:#10b981;--red:#ef4444;--text:#f8fafc;--muted:#94a3b8;--border:rgba(255,255,255,.07)}[data-theme=light]{--bg:#f8fafc;--bg2:#eef2f7;--card:#fff;--gold:#b8860b;--gold2:#d4af37;--blue:#2563eb;--green:#059669;--red:#dc2626;--text:#0f172a;--muted:#64748b;--border:rgba(0,0,0,.07)}*{box-sizing:border-box}body{margin:0;font-family:Vazirmatn,Tahoma,sans-serif;background:var(--bg);color:var(--text);background-image:radial-gradient(circle at 0 0,rgba(212,175,55,.08),transparent 40%),radial-gradient(circle at 100% 100%,rgba(59,130,246,.06),transparent 40%);overflow-x:hidden}.page{max-width:1200px;margin:auto;padding:96px 20px 50px}.hero,.card{background:linear-gradient(135deg,var(--card),var(--bg2));border:1px solid var(--border);border-radius:18px}.hero{padding:24px;margin-bottom:20px;border-color:rgba(212,175,55,.25);background:linear-gradient(135deg,rgba(212,175,55,.1),rgba(59,130,246,.04))}.hero h1{margin:6px 0;font-size:28px}.hero p,.sub,.note{color:var(--muted);font-size:12px;line-height:1.9}.live-row{display:flex;justify-content:space-between;color:var(--muted);font-size:11px}.live{display:flex;gap:8px;align-items:center}.indicator{width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 10px rgba(16,185,129,.5)}.title{display:flex;justify-content:space-between;align-items:end;margin:24px 0 12px}.title h2{font-size:17px;margin:0}.grid{display:grid;gap:14px}.g4{grid-template-columns:repeat(4,1fr)}.g3{grid-template-columns:repeat(3,1fr)}.g2{grid-template-columns:repeat(2,1fr)}.card{padding:18px;min-width:0}.label{font-size:11px;color:var(--muted);margin-bottom:8px}.value{font-size:24px;font-weight:900}.gold{color:var(--gold)}.mini{display:grid;gap:9px}.mini div{display:flex;justify-content:space-between;color:var(--muted);font-size:11px}.mini strong{color:var(--text)}@media(max-width:900px){.g4{grid-template-columns:repeat(2,1fr)}.g3{grid-template-columns:repeat(2,1fr)}}@media(max-width:600px){.page{padding:84px 12px 35px}.hero h1{font-size:23px}.g4,.g3,.g2{grid-template-columns:1fr}.title{display:block}.title h2{margin-bottom:4px}}
-</style></head><body><main class="page"><section class="hero"><div class="live-row"><div class="live"><span class="indicator"></span><span>داشبورد اقتصاد کلان</span></div><span id="updated">در حال دریافت...</span></div><h1>اقتصاد کلان</h1><p>نمای یکپارچه تورم، بازار کار، سیاست پولی، اوراق و دلار. عدد ساختگی نمایش داده نمی‌شود.</p></section><div class="title"><div><h2>شاخص‌های کلیدی</h2><span class="sub">داده واقعی FRED</span></div></div><section class="grid g4" id="cards"><div class="card"><div class="label">تورم CPI</div><div class="value">—</div><div class="sub">در انتظار داده</div></div><div class="card"><div class="label">بیکاری</div><div class="value">—</div><div class="sub">در انتظار داده</div></div><div class="card"><div class="label">نرخ فدرال</div><div class="value">—</div><div class="sub">در انتظار داده</div></div><div class="card"><div class="label">بازده ۱۰ ساله</div><div class="value">—</div><div class="sub">در انتظار داده</div></div></section><div class="title"><div><h2>بازار اوراق و اقتصاد واقعی</h2></div></div><section class="grid g3"><div class="card"><div class="label">بازده ۲ ساله</div><div class="value" id="dgs2">—</div><div class="sub">DGS2</div></div><div class="card"><div class="label">بازده ۱۰ ساله</div><div class="value" id="dgs10">—</div><div class="sub">DGS10</div></div><div class="card"><div class="label">GDP</div><div class="value" id="gdp">—</div><div class="sub">آخرین مشاهده</div></div></section><div class="title"><div><h2>مکانیزم انتقال</h2><span class="sub">برای تحلیل، متغیرها را به‌صورت زنجیره‌ای بخوان</span></div></div><section class="grid g3"><div class="card"><div class="label">۱ · تورم</div><div class="value gold">CPI / PCE</div><div class="sub">فشار قیمت و انتظارات تورمی</div></div><div class="card"><div class="label">۲ · سیاست پولی</div><div class="value gold">Fed Funds</div><div class="sub">انتقال به نرخ‌های بازار</div></div><div class="card"><div class="label">۳ · بازارها</div><div class="value gold">Yield → USD → Risk</div><div class="sub">اوراق، دلار و دارایی‌های ریسکی</div></div></section><div class="title"><div><h2>روابط کلیدی</h2></div></div><section class="grid g2"><div class="card"><div class="label">تورم → نرخ بهره → اوراق</div><div class="mini"><div><span>تورم</span><strong>انتظارات نرخ</strong></div><div><span>انتظارات</span><strong>بازده کوتاه‌مدت</strong></div><div><span>بازده</span><strong>شرایط مالی</strong></div></div></div><div class="card"><div class="label">اوراق → دلار → دارایی‌ها</div><div class="mini"><div><span>بازده واقعی</span><strong>دلار</strong></div><div><span>دلار</span><strong>جریان سرمایه</strong></div><div><span>شرایط مالی</span><strong>دارایی‌های ریسکی</strong></div></div></div></section><p id="data-status" class="note">در حال بررسی اتصال به FRED...</p><p class="note">منبع فعلی شاخص‌های کلان آمریکا FRED است. لایه داده بعداً می‌تواند با API اختصاصی شمعدون جایگزین شود بدون تغییر در UI.</p></main><script src="navbar.js"></script><script>
+<!doctype html>
+<html lang="fa" dir="rtl" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>اقتصاد کلان | شمعدون</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css">
+<style>
+:root{
+  --bg:#0a0a0f;--bg2:#14141c;--card:#1a1a24;
+  --gold:#d4af37;--gold2:#f4d47c;
+  --blue:#3b82f6;--green:#10b981;--red:#ef4444;
+  --text:#f8fafc;--muted:#94a3b8;
+  --border:rgba(255,255,255,.07)
+}
+[data-theme=light]{
+  --bg:#f8fafc;--bg2:#eef2f7;--card:#fff;
+  --gold:#b8860b;--gold2:#d4af37;
+  --blue:#2563eb;--green:#059669;--red:#dc2626;
+  --text:#0f172a;--muted:#64748b;
+  --border:rgba(0,0,0,.07)
+}
+*{box-sizing:border-box}
+body{
+  margin:0;font-family:Vazirmatn,Tahoma,sans-serif;
+  background:var(--bg);color:var(--text);
+  background-image:
+    radial-gradient(circle at 0 0,rgba(212,175,55,.08),transparent 40%),
+    radial-gradient(circle at 100% 100%,rgba(59,130,246,.06),transparent 40%);
+  overflow-x:hidden
+}
+.page{max-width:1200px;margin:auto;padding:96px 20px 50px}
+.hero,.card{
+  background:linear-gradient(135deg,var(--card),var(--bg2));
+  border:1px solid var(--border);border-radius:18px
+}
+.hero{
+  padding:24px;margin-bottom:20px;
+  border-color:rgba(212,175,55,.25);
+  background:linear-gradient(135deg,rgba(212,175,55,.1),rgba(59,130,246,.04))
+}
+.hero h1{margin:6px 0;font-size:28px}
+.hero p,.sub,.note{color:var(--muted);font-size:12px;line-height:1.9}
+.live-row{display:flex;justify-content:space-between;color:var(--muted);font-size:11px}
+.live{display:flex;gap:8px;align-items:center}
+.indicator{width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 10px rgba(16,185,129,.5)}
+.title{display:flex;justify-content:space-between;align-items:end;margin:24px 0 12px}
+.title h2{font-size:17px;margin:0}
+.grid{display:grid;gap:14px}
+.g4{grid-template-columns:repeat(4,1fr)}
+.g3{grid-template-columns:repeat(3,1fr)}
+.g2{grid-template-columns:repeat(2,1fr)}
+.card{padding:18px;min-width:0}
+.label{font-size:11px;color:var(--muted);margin-bottom:8px}
+.value{font-size:24px;font-weight:900}
+.gold{color:var(--gold)}
+.mini{display:grid;gap:9px}
+.mini div{display:flex;justify-content:space-between;color:var(--muted);font-size:11px}
+.mini strong{color:var(--text)}
+@media(max-width:900px){
+  .g4{grid-template-columns:repeat(2,1fr)}
+  .g3{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:600px){
+  .page{padding:84px 12px 35px}
+  .hero h1{font-size:23px}
+  .g4,.g3,.g2{grid-template-columns:1fr}
+  .title{display:block}
+  .title h2{margin-bottom:4px}
+}
+</style>
+</head>
+<body>
+<main class="page">
+
+  <section class="hero">
+    <div class="live-row">
+      <div class="live">
+        <span class="indicator"></span>
+        <span>داشبورد اقتصاد کلان</span>
+      </div>
+      <span id="updated">در حال دریافت...</span>
+    </div>
+    <h1>اقتصاد کلان</h1>
+    <p>نمای یکپارچه تورم، بازار کار، سیاست پولی، اوراق و دلار. عدد ساختگی نمایش داده نمی‌شود.</p>
+  </section>
+
+  <div class="title">
+    <div>
+      <h2>شاخص‌های کلیدی</h2>
+      <span class="sub">داده واقعی FRED</span>
+    </div>
+  </div>
+
+  <section class="grid g4" id="cards">
+    <div class="card">
+      <div class="label">تورم CPI</div>
+      <div class="value">—</div>
+      <div class="sub">در انتظار داده</div>
+    </div>
+    <div class="card">
+      <div class="label">بیکاری</div>
+      <div class="value">—</div>
+      <div class="sub">در انتظار داده</div>
+    </div>
+    <div class="card">
+      <div class="label">نرخ فدرال</div>
+      <div class="value">—</div>
+      <div class="sub">در انتظار داده</div>
+    </div>
+    <div class="card">
+      <div class="label">بازده ۱۰ ساله</div>
+      <div class="value">—</div>
+      <div class="sub">در انتظار داده</div>
+    </div>
+  </section>
+
+  <div class="title">
+    <div>
+      <h2>بازار اوراق و اقتصاد واقعی</h2>
+    </div>
+  </div>
+
+  <section class="grid g3">
+    <div class="card">
+      <div class="label">بازده ۲ ساله</div>
+      <div class="value" id="dgs2">—</div>
+      <div class="sub">DGS2</div>
+    </div>
+    <div class="card">
+      <div class="label">بازده ۱۰ ساله</div>
+      <div class="value" id="dgs10">—</div>
+      <div class="sub">DGS10</div>
+    </div>
+    <div class="card">
+      <div class="label">GDP</div>
+      <div class="value" id="gdp">—</div>
+      <div class="sub">آخرین مشاهده</div>
+    </div>
+  </section>
+
+  <div class="title">
+    <div>
+      <h2>مکانیزم انتقال</h2>
+      <span class="sub">برای تحلیل، متغیرها را به‌صورت زنجیره‌ای بخوان</span>
+    </div>
+  </div>
+
+  <section class="grid g3">
+    <div class="card">
+      <div class="label">۱ · تورم</div>
+      <div class="value gold">CPI / PCE</div>
+      <div class="sub">فشار قیمت و انتظارات تورمی</div>
+    </div>
+    <div class="card">
+      <div class="label">۲ · سیاست پولی</div>
+      <div class="value gold">Fed Funds</div>
+      <div class="sub">انتقال به نرخ‌های بازار</div>
+    </div>
+    <div class="card">
+      <div class="label">۳ · بازارها</div>
+      <div class="value gold">Yield → USD → Risk</div>
+      <div class="sub">اوراق، دلار و دارایی‌های ریسکی</div>
+    </div>
+  </section>
+
+  <div class="title">
+    <div>
+      <h2>روابط کلیدی</h2>
+    </div>
+  </div>
+
+  <section class="grid g2">
+    <div class="card">
+      <div class="label">تورم → نرخ بهره → اوراق</div>
+      <div class="mini">
+        <div><span>تورم</span><strong>انتظارات نرخ</strong></div>
+        <div><span>انتظارات</span><strong>بازده کوتاه‌مدت</strong></div>
+        <div><span>بازده</span><strong>شرایط مالی</strong></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="label">اوراق → دلار → دارایی‌ها</div>
+      <div class="mini">
+        <div><span>بازده واقعی</span><strong>دلار</strong></div>
+        <div><span>دلار</span><strong>جریان سرمایه</strong></div>
+        <div><span>شرایط مالی</span><strong>دارایی‌های ریسکی</strong></div>
+      </div>
+    </div>
+  </section>
+
+  <p id="data-status" class="note" aria-live="polite">در حال بررسی اتصال به FRED...</p>
+  <p class="note">منبع فعلی شاخص‌های کلان آمریکا FRED است. لایه داده بعداً می‌تواند با API اختصاصی شمعدون جایگزین شود بدون تغییر در UI.</p>
+
+</main>
+
+<script src="navbar.js"></script>
+<script>
 const MACRO_API =
   'https://jcwwilatvstjrohvhtss.supabase.co/functions/v1/macro-data';
 
+const SERIES_LIST = [
+  'CPIAUCSL','CPILFESL','PCEPI','PCEPILFE',
+  'UNRATE','FEDFUNDS','DGS2','DGS10',
+  'DFII10','T10Y2Y','DTWEXBGS','VIXCLS',
+  'NFCI','GDP'
+].join(',');
+
+/* ---------- اتصال به API ---------- */
+
 async function loadMacroData() {
-  const url =
-    MACRO_API +
-    '?series=CPIAUCSL,CPILFESL,PCEPI,PCEPILFE,UNRATE,FEDFUNDS,DGS2,DGS10,DFII10,T10Y2Y,DTWEXBGS,VIXCLS,NFCI,GDP';
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), 15000);
 
-  const response = await fetch(url, {
-    cache: 'no-store'
-  });
+  try {
+    const url = MACRO_API + '?series=' + SERIES_LIST;
 
-  if (!response.ok) {
-    throw new Error('API HTTP ' + response.status);
+    const response = await fetch(url, {
+      cache: 'no-store',
+      signal: controller.signal
+    });
+
+    if (!response.ok) {
+      throw new Error('API HTTP ' + response.status);
+    }
+
+    const json = await response.json();
+
+    if (!json.ok) {
+      throw new Error(json.error || 'Macro API error');
+    }
+
+    return json;
+  } finally {
+    clearTimeout(timer);
   }
-
-  const json = await response.json();
-
-  if (!json.ok) {
-    throw new Error(json.error || 'Macro API error');
-  }
-
-  return json;
 }
+
+/* ---------- کمک‌تابع‌های داده ---------- */
 
 function latest(data, id) {
   return data?.[id]?.latest || null;
 }
 
 function history(data, id) {
-  return data?.[id]?.history || [];
+  const rows = data?.[id]?.history;
+  return Array.isArray(rows) ? rows : [];
 }
 
 function value(data, id) {
   const row = latest(data, id);
-  return row && Number.isFinite(row.value)
-    ? row.value
-    : null;
+  if (!row) return null;
+  const n = Number(row.value);
+  return Number.isFinite(n) ? n : null;
 }
 
+/* ---------- کمک‌تابع‌های قالب‌بندی ---------- */
+
 function formatPercent(v) {
-  return Number.isFinite(v)
-    ? v.toFixed(2) + '%'
-    : '—';
+  return Number.isFinite(v) ? v.toFixed(2) + '%' : '—';
+}
+
+function formatDecimal(v, digits = 2) {
+  return Number.isFinite(v) ? v.toFixed(digits) : '—';
 }
 
 function formatNumber(v) {
   return Number.isFinite(v)
-    ? v.toLocaleString('en-US', {
-        maximumFractionDigits: 0
-      })
+    ? v.toLocaleString('en-US', { maximumFractionDigits: 0 })
     : '—';
 }
 
+/* ---------- محاسبه YoY ---------- */
+
 function yoy(data, id) {
-  const rows = history(data, id);
-
-  if (!rows.length) return null;
-
-  const current = rows[rows.length - 1];
-
-  const currentDate =
-    new Date(current.date + 'T00:00:00Z');
-
-  const targetDate =
-    new Date(currentDate);
-
-  targetDate.setUTCMonth(
-    targetDate.getUTCMonth() - 12
+  const rows = history(data, id).filter(
+    r => r && r.date && Number.isFinite(Number(r.value))
   );
 
+  if (rows.length < 2) return null;
+
+  const current = rows[rows.length - 1];
+  const currentDate = new Date(current.date + 'T00:00:00Z');
+
+  if (isNaN(currentDate)) return null;
+
+  // همان تاریخ، ۱۲ ماه قبل (با Date.UTC برای پایداری)
+  const targetDate = new Date(Date.UTC(
+    currentDate.getUTCFullYear() - 1,
+    currentDate.getUTCMonth(),
+    currentDate.getUTCDate()
+  ));
+
+  // نزدیک‌ترین مشاهده ≤ targetDate
   let previous = null;
-
   for (let i = rows.length - 1; i >= 0; i--) {
-    const date =
-      new Date(rows[i].date + 'T00:00:00Z');
-
-    if (date <= targetDate) {
+    const d = new Date(rows[i].date + 'T00:00:00Z');
+    if (!isNaN(d) && d <= targetDate) {
       previous = rows[i];
       break;
     }
   }
 
-  if (
-    !previous ||
-    !Number.isFinite(previous.value) ||
-    previous.value === 0
-  ) {
-    return null;
-  }
+  if (!previous) return null;
 
-  return (
-    (current.value / previous.value - 1) * 100
-  );
+  const prevVal = Number(previous.value);
+  const curVal = Number(current.value);
+
+  if (!Number.isFinite(prevVal) || prevVal === 0) return null;
+
+  return (curVal / prevVal - 1) * 100;
 }
 
+/* ---------- به‌روزرسانی کارت‌ها ---------- */
+
 function setCard(index, valueText, subText) {
-  const cards =
-    document.querySelectorAll('#cards .card');
-
+  const cards = document.querySelectorAll('#cards .card');
   const card = cards[index];
-
   if (!card) return;
 
-  card.querySelector('.value').textContent =
-    valueText;
-
-  card.querySelector('.sub').textContent =
-    subText;
+  const vEl = card.querySelector('.value');
+  const sEl = card.querySelector('.sub');
+  if (vEl) vEl.textContent = valueText;
+  if (sEl) sEl.textContent = subText;
 }
 
 function showStatus(message) {
-  const el =
-    document.getElementById('data-status');
-
-  if (el) {
-    el.textContent = message;
-  }
+  const el = document.getElementById('data-status');
+  if (el) el.textContent = message;
 }
+
+function setUpdated(text) {
+  const el = document.getElementById('updated');
+  if (el) el.textContent = text;
+}
+
+/* ---------- ساخت سکشن‌های تکمیلی ---------- */
+
+function buildExtraSection(data, coreCpi, pce, corePce, realYield) {
+  const sec = document.createElement('section');
+  sec.className = 'grid g4';
+  sec.innerHTML = `
+    <div class="card">
+      <div class="label">Core CPI · YoY</div>
+      <div class="value">${formatPercent(coreCpi)}</div>
+      <div class="sub">${latest(data, 'CPILFESL')?.date || '—'}</div>
+    </div>
+    <div class="card">
+      <div class="label">PCE · YoY</div>
+      <div class="value">${formatPercent(pce)}</div>
+      <div class="sub">${latest(data, 'PCEPI')?.date || '—'}</div>
+    </div>
+    <div class="card">
+      <div class="label">Core PCE · YoY</div>
+      <div class="value">${formatPercent(corePce)}</div>
+      <div class="sub">${latest(data, 'PCEPILFE')?.date || '—'}</div>
+    </div>
+    <div class="card">
+      <div class="label">بازده واقعی ۱۰ ساله</div>
+      <div class="value">${formatPercent(realYield)}</div>
+      <div class="sub">DFII10 · ${latest(data, 'DFII10')?.date || '—'}</div>
+    </div>
+  `;
+  return sec;
+}
+
+function buildMarketSection(data, curve, dollar, vix, nfci) {
+  const sec = document.createElement('section');
+  sec.className = 'grid g4';
+  sec.innerHTML = `
+    <div class="card">
+      <div class="label">شیب منحنی ۱۰Y−۲Y</div>
+      <div class="value">${formatPercent(curve)}</div>
+      <div class="sub">T10Y2Y · ${latest(data, 'T10Y2Y')?.date || '—'}</div>
+    </div>
+    <div class="card">
+      <div class="label">دلار تجاری وزن‌دار</div>
+      <div class="value">${formatDecimal(dollar, 2)}</div>
+      <div class="sub">DTWEXBGS · ${latest(data, 'DTWEXBGS')?.date || '—'}</div>
+    </div>
+    <div class="card">
+      <div class="label">VIX</div>
+      <div class="value">${formatDecimal(vix, 2)}</div>
+      <div class="sub">نوسان بازار · ${latest(data, 'VIXCLS')?.date || '—'}</div>
+    </div>
+    <div class="card">
+      <div class="label">Financial Conditions</div>
+      <div class="value">${formatDecimal(nfci, 3)}</div>
+      <div class="sub">NFCI · ${latest(data, 'NFCI')?.date || '—'}</div>
+    </div>
+  `;
+  return sec;
+}
+
+/* ---------- اجرای اصلی ---------- */
 
 (async () => {
   try {
     const json = await loadMacroData();
     const data = json.data || {};
 
-    /*
-      CPI باید به‌صورت YoY محاسبه شود،
-      نه اینکه مقدار خام CPIAUCSL نمایش داده شود.
-    */
-    const cpi = yoy(data, 'CPIAUCSL');
-    const coreCpi = yoy(data, 'CPILFESL');
+    const cpi      = yoy(data, 'CPIAUCSL');
+    const coreCpi  = yoy(data, 'CPILFESL');
+    const pce      = yoy(data, 'PCEPI');
+    const corePce  = yoy(data, 'PCEPILFE');
 
-    const pce = yoy(data, 'PCEPI');
-    const corePce = yoy(data, 'PCEPILFE');
+    const unemployment = value(data, 'UNRATE');
+    const fed          = value(data, 'FEDFUNDS');
+    const twoYear      = value(data, 'DGS2');
+    const tenYear      = value(data, 'DGS10');
+    const realYield    = value(data, 'DFII10');
+    const curve        = value(data, 'T10Y2Y');
+    const dollar       = value(data, 'DTWEXBGS');
+    const vix          = value(data, 'VIXCLS');
+    const nfci         = value(data, 'NFCI');
+    const gdp          = value(data, 'GDP');
 
-    const unemployment =
-      value(data, 'UNRATE');
+    /* کارت‌های اصلی */
+    setCard(0, formatPercent(cpi),
+      'YoY · آخرین مشاهده: ' + (latest(data, 'CPIAUCSL')?.date || '—'));
 
-    const fed =
-      value(data, 'FEDFUNDS');
+    setCard(1, formatPercent(unemployment),
+      'آخرین مشاهده: ' + (latest(data, 'UNRATE')?.date || '—'));
 
-    const twoYear =
-      value(data, 'DGS2');
+    setCard(2, formatPercent(fed),
+      'آخرین مشاهده: ' + (latest(data, 'FEDFUNDS')?.date || '—'));
 
-    const tenYear =
-      value(data, 'DGS10');
+    setCard(3, formatPercent(tenYear),
+      'آخرین مشاهده: ' + (latest(data, 'DGS10')?.date || '—'));
 
-    const realYield =
-      value(data, 'DFII10');
+    /* کارت‌های اوراق و GDP */
+    const dgs2El  = document.getElementById('dgs2');
+    const dgs10El = document.getElementById('dgs10');
+    const gdpEl   = document.getElementById('gdp');
 
-    const curve =
-      value(data, 'T10Y2Y');
+    if (dgs2El)  dgs2El.textContent  = formatPercent(twoYear);
+    if (dgs10El) dgs10El.textContent = formatPercent(tenYear);
+    if (gdpEl)   gdpEl.textContent   = formatNumber(gdp);
 
-    const dollar =
-      value(data, 'DTWEXBGS');
-
-    const vix =
-      value(data, 'VIXCLS');
-
-    const nfci =
-      value(data, 'NFCI');
-
-    const gdp =
-      value(data, 'GDP');
-
-    setCard(
-      0,
-      formatPercent(cpi),
-      'YoY · آخرین مشاهده: ' +
-        (latest(data, 'CPIAUCSL')?.date || '—')
-    );
-
-    setCard(
-      1,
-      formatPercent(unemployment),
-      'آخرین مشاهده: ' +
-        (latest(data, 'UNRATE')?.date || '—')
-    );
-
-    setCard(
-      2,
-      formatPercent(fed),
-      'آخرین مشاهده: ' +
-        (latest(data, 'FEDFUNDS')?.date || '—')
-    );
-
-    setCard(
-      3,
-      formatPercent(tenYear),
-      'آخرین مشاهده: ' +
-        (latest(data, 'DGS10')?.date || '—')
-    );
-
-    document.getElementById('dgs2')
-      .textContent =
-      formatPercent(twoYear);
-
-    document.getElementById('dgs10')
-      .textContent =
-      formatPercent(tenYear);
-
-    document.getElementById('gdp')
-      .textContent =
-      formatNumber(gdp);
-
-    /*
-      شاخص‌های تکمیلی
-    */
-
-    const extra =
-      document.createElement('section');
-
-    extra.className = 'grid g4';
-
-    extra.innerHTML = `
-      <div class="card">
-        <div class="label">Core CPI · YoY</div>
-        <div class="value">
-          ${formatPercent(coreCpi)}
-        </div>
-        <div class="sub">
-          ${latest(data, 'CPILFESL')?.date || '—'}
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="label">PCE · YoY</div>
-        <div class="value">
-          ${formatPercent(pce)}
-        </div>
-        <div class="sub">
-          ${latest(data, 'PCEPI')?.date || '—'}
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="label">Core PCE · YoY</div>
-        <div class="value">
-          ${formatPercent(corePce)}
-        </div>
-        <div class="sub">
-          ${latest(data, 'PCEPILFE')?.date || '—'}
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="label">بازده واقعی ۱۰ ساله</div>
-        <div class="value">
-          ${formatPercent(realYield)}
-        </div>
-        <div class="sub">
-          DFII10 · ${latest(data, 'DFII10')?.date || '—'}
-        </div>
-      </div>
-    `;
-
-    const titles =
-      document.querySelectorAll('.title');
-
+    /* درج سکشن تورم تکمیلی بعد از تایتل «شاخص‌های کلیدی» */
+    const titles = document.querySelectorAll('.title');
     if (titles[1]) {
-      titles[1].parentNode.insertBefore(
-        extra,
-        titles[1].nextElementSibling
-      );
+      const extra = buildExtraSection(data, coreCpi, pce, corePce, realYield);
+      titles[1].insertAdjacentElement('afterend', extra);
     }
 
-    /*
-      شاخص‌های بازار
-    */
-
-    const marketExtra =
-      document.createElement('section');
-
-    marketExtra.className = 'grid g4';
-
-    marketExtra.innerHTML = `
-      <div class="card">
-        <div class="label">
-          شیب منحنی ۱۰Y−۲Y
-        </div>
-        <div class="value">
-          ${formatPercent(curve)}
-        </div>
-        <div class="sub">
-          T10Y2Y · ${latest(data, 'T10Y2Y')?.date || '—'}
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="label">
-          دلار تجاری وزن‌دار
-        </div>
-        <div class="value">
-          ${formatNumber(dollar)}
-        </div>
-        <div class="sub">
-          DTWEXBGS · ${latest(data, 'DTWEXBGS')?.date || '—'}
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="label">
-          VIX
-        </div>
-        <div class="value">
-          ${formatNumber(vix)}
-        </div>
-        <div class="sub">
-          نوسان بازار · ${latest(data, 'VIXCLS')?.date || '—'}
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="label">
-          Financial Conditions
-        </div>
-        <div class="value">
-          ${formatNumber(nfci)}
-        </div>
-        <div class="sub">
-          NFCI · ${latest(data, 'NFCI')?.date || '—'}
-        </div>
-      </div>
-    `;
-
-    const macroTitle =
-      [...document.querySelectorAll('.title')]
-        .find(el =>
-          el.textContent.includes('مکانیزم انتقال')
-        );
+    /* درج سکشن بازار قبل از تایتل «مکانیزم انتقال» */
+    const macroTitle = [...document.querySelectorAll('.title')]
+      .find(el => el.textContent.includes('مکانیزم انتقال'));
 
     if (macroTitle) {
-      macroTitle.parentNode.insertBefore(
-        marketExtra,
-        macroTitle
-      );
+      const marketExtra = buildMarketSection(data, curve, dollar, vix, nfci);
+      macroTitle.insertAdjacentElement('beforebegin', marketExtra);
     }
 
-    document.getElementById('updated')
-      .textContent =
+    /* زمان به‌روزرسانی */
+    const fetchedAt = json.fetched_at ? new Date(json.fetched_at) : new Date();
+    setUpdated(
       'به‌روزرسانی: ' +
-      new Date(json.fetched_at)
-        .toLocaleTimeString('fa-IR');
+      (isNaN(fetchedAt) ? '—' : fetchedAt.toLocaleTimeString('fa-IR'))
+    );
 
     showStatus(
       'اتصال API شمعدون برقرار است · منبع داده: FRED · بدون داده ساختگی'
     );
 
   } catch (error) {
-
     console.error(error);
 
-    document.getElementById('updated')
-      .textContent =
-      'خطا در دریافت';
+    const msg = error?.name === 'AbortError'
+      ? 'زمان انتظار برای دریافت داده به پایان رسید'
+      : (error.message || 'خطای نامشخص');
 
-    showStatus(
-      'خطای دریافت داده: ' +
-      (error.message || 'خطای نامشخص')
-    );
+    setUpdated('خطا در دریافت');
+    showStatus('خطای دریافت داده: ' + msg);
   }
 })();
 </script>
 </body>
-  </html>
+</html>
