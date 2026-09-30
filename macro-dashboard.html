@@ -19,14 +19,12 @@
   --text:#F8FAFC;
   --muted:#94A3B8;
   --border:rgba(148,163,184,.14);
-
   --gold:#C89B3C;
   --blue:#3B82F6;
   --green:#16835B;
   --red:#D64545;
   --orange:#D88A16;
 }
-
 [data-theme="light"]{
   --bg:#F7F8FA;
   --bg2:#EEF2F7;
@@ -34,524 +32,142 @@
   --text:#111827;
   --muted:#64748B;
   --border:rgba(15,23,42,.09);
-
   --gold:#B48625;
   --blue:#2563EB;
   --green:#16835B;
   --red:#D64545;
   --orange:#C9780D;
 }
-
-*{
-  box-sizing:border-box;
-}
-
-html{
-  scroll-behavior:smooth;
-}
-
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
 body{
   margin:0;
   background:var(--bg);
   color:var(--text);
   font-family:Vazirmatn,Tahoma,sans-serif;
 }
-
-.page{
-  max-width:1240px;
-  margin:auto;
-  padding:90px 20px 50px;
-}
-
-/* =========================
-   GENERAL
-========================= */
-
-.hero,
-.card,
-.chart,
-.guide-main,
-.guide-key,
-.info,
-.scenario{
-  background:linear-gradient(
-    135deg,
-    var(--card),
-    var(--bg2)
-  );
-
+.page{max-width:1240px;margin:auto;padding:90px 20px 50px}
+.hero,.card,.chart,.guide-main,.guide-key,.info,.scenario{
+  background:linear-gradient(135deg,var(--card),var(--bg2));
   border:1px solid var(--border);
   border-radius:18px;
 }
-
-.hero{
-  padding:24px;
-  border-color:rgba(200,155,60,.25);
-  margin-bottom:18px;
-}
-
-.live{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  color:var(--muted);
-  font-size:11px;
-}
-
-.dot{
-  display:inline-block;
-  width:8px;
-  height:8px;
-  border-radius:50%;
-  background:var(--green);
-  margin-left:7px;
-}
-
-.hero h1{
-  margin:8px 0 4px;
-  font-size:29px;
-}
-
-.hero p{
-  color:var(--muted);
-  font-size:11px;
-  line-height:2;
-  margin:0;
-}
-
-.sub,
-.note{
-  color:var(--muted);
-  font-size:10px;
-}
-
-.toolbar{
-  display:flex;
-  gap:8px;
-  justify-content:flex-start;
-  align-items:center;
-  margin:16px 0;
-}
-
-.tabs{
-  display:flex;
-  gap:6px;
-  overflow:auto;
-  scrollbar-width:none;
-}
-
-.tabs::-webkit-scrollbar{
-  display:none;
-}
-
+.hero{padding:24px;border-color:rgba(200,155,60,.25);margin-bottom:18px}
+.live{display:flex;justify-content:space-between;align-items:center;color:var(--muted);font-size:11px}
+.dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--green);margin-left:7px}
+.hero h1{margin:8px 0 4px;font-size:34px}
+.hero p{color:var(--muted);font-size:13px;line-height:2;margin:0}
+.sub,.note{color:var(--muted);font-size:12px}
+.toolbar{display:flex;gap:8px;justify-content:flex-start;align-items:center;margin:16px 0}
+.tabs{display:flex;gap:6px;overflow:auto;scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
 .btn{
-  border:1px solid var(--border);
-  background:var(--card);
-  color:var(--text);
-  padding:8px 12px;
-  border-radius:10px;
-  cursor:pointer;
-  font:inherit;
-  font-size:11px;
-  white-space:nowrap;
+  border:1px solid var(--border);background:var(--card);color:var(--text);
+  padding:8px 12px;border-radius:10px;cursor:pointer;font:inherit;
+  font-size:13px;white-space:nowrap;
 }
-
-.btn.active{
-  border-color:rgba(200,155,60,.5);
-  color:var(--gold);
-}
-
-.section{
-  scroll-margin-top:80px;
-  margin-top:25px;
-}
-
-.head{
-  margin-bottom:11px;
-}
-
-.head h2{
-  font-size:17px;
-  margin:0;
-}
-
-.grid{
-  display:grid;
-  gap:12px;
-}
-
-.g4{
-  grid-template-columns:repeat(4,1fr);
-}
-
-.g3{
-  grid-template-columns:repeat(3,1fr);
-}
-
-.g2{
-  grid-template-columns:repeat(2,1fr);
-}
-
-.card,
-.chart{
-  padding:16px;
-  min-width:0;
-}
-
-.label{
-  color:var(--muted);
-  font-size:11px;
-}
-
-.value{
-  font-size:24px;
-  font-weight:900;
-  margin:4px 0;
-  direction:ltr;
-  text-align:right;
-}
-
-.date{
-  font-size:10px;
-  color:var(--muted);
-}
-
-.chartgrid{
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:12px;
-}
-
-.chart{
-  margin-top:12px;
-}
-
-.charthead{
-  display:flex;
-  justify-content:space-between;
-  align-items:flex-start;
-  gap:10px;
-}
-
-.chartwrap{
-  height:230px;
-  position:relative;
-  margin-top:8px;
-}
-
-/* =========================
-   GUIDE
-========================= */
-
-.guide{
-  display:grid;
-  grid-template-columns:1.55fr .85fr;
-  gap:12px;
-  margin:0 0 22px;
-}
-
-.guide-main,
-.guide-key{
-  padding:18px;
-}
-
-.guide-main{
-  border-color:rgba(200,155,60,.28);
-}
-
+.btn.active{border-color:rgba(200,155,60,.5);color:var(--gold)}
+.section{scroll-margin-top:80px;margin-top:25px}
+.head{margin-bottom:11px}
+.head h2{font-size:20px;margin:0}
+.grid{display:grid;gap:12px}
+.g4{grid-template-columns:repeat(4,1fr)}
+.g3{grid-template-columns:repeat(3,1fr)}
+.g2{grid-template-columns:repeat(2,1fr)}
+.card,.chart{padding:16px;min-width:0}
+.label{color:var(--muted);font-size:13px}
+.value{font-size:28px;font-weight:900;margin:4px 0;direction:ltr;text-align:right}
+.date{font-size:12px;color:var(--muted)}
+.chartgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.chart{margin-top:12px}
+.charthead{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
+.chartwrap{height:230px;position:relative;margin-top:8px}
+.guide{display:grid;grid-template-columns:1.55fr .85fr;gap:12px;margin:0 0 22px}
+.guide-main,.guide-key{padding:18px}
+.guide-main{border-color:rgba(200,155,60,.28)}
 .guide-badge{
-  display:inline-block;
-  color:var(--gold);
-  font-size:10px;
-  font-weight:800;
-  border:1px solid rgba(200,155,60,.35);
-  padding:4px 9px;
-  border-radius:999px;
-  margin-bottom:8px;
+  display:inline-block;color:var(--gold);font-size:10px;font-weight:800;
+  border:1px solid rgba(200,155,60,.35);padding:4px 9px;border-radius:999px;margin-bottom:8px;
 }
-
-.guide h2{
-  font-size:18px;
-  margin:0 0 8px;
-}
-
-.guide h3{
-  font-size:13px;
-  margin:0 0 10px;
-}
-
-.guide p{
-  font-size:11px;
-  line-height:2;
-  color:var(--muted);
-  margin:6px 0;
-}
-
-.guide-steps{
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:8px;
-  margin-top:12px;
-}
-
-.guide-steps div{
-  padding:11px;
-  border:1px solid var(--border);
-  border-radius:12px;
-  background:rgba(148,163,184,.04);
-}
-
-.guide-steps b{
-  display:block;
-  font-size:11px;
-  margin-bottom:4px;
-}
-
-.guide-steps span{
-  display:block;
-  font-size:10px;
-  line-height:1.8;
-  color:var(--muted);
-}
-
+.guide h2{font-size:22px;margin:0 0 8px}
+.guide h3{font-size:16px;margin:0 0 10px}
+.guide p{font-size:16px;line-height:2;color:var(--muted);margin:6px 0}
+.guide-steps{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-top:12px}
+.guide-steps div{padding:11px;border:1px solid var(--border);border-radius:12px;background:rgba(148,163,184,.04)}
+.guide-steps b{display:block;font-size:13px;margin-bottom:4px}
+.guide-steps span{display:block;font-size:12px;line-height:1.8;color:var(--muted)}
 .guide-warning{
-  margin-top:12px;
-  padding:10px 11px;
-  border-radius:10px;
-  background:rgba(200,155,60,.08);
-  border:1px solid rgba(200,155,60,.18);
-  font-size:10px;
-  color:var(--gold);
+  margin-top:12px;padding:10px 11px;border-radius:10px;
+  background:rgba(200,155,60,.08);border:1px solid rgba(200,155,60,.18);
+  font-size:12px;color:var(--gold);
 }
-
-/* =========================
-   FLOW
-========================= */
-
-.flow{
-  display:grid;
-  grid-template-columns:repeat(5,1fr);
-  gap:8px;
-}
-
+.flow{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
 .flow div{
-  padding:14px 8px;
-  text-align:center;
-  background:var(--card);
-  border:1px solid var(--border);
-  border-radius:12px;
-  font-size:11px;
+  padding:14px 8px;text-align:center;background:var(--card);
+  border:1px solid var(--border);border-radius:12px;font-size:13px;
 }
-
-/* =========================
-   INFO
-========================= */
-
-.info{
-  padding:15px;
-}
-
-.info h3{
-  font-size:12px;
-  margin:0 0 5px;
-}
-
-.info p{
-  font-size:10px;
-  color:var(--muted);
-  margin:0;
-  line-height:1.9;
-}
-
-/* =========================
-   SCENARIOS
-========================= */
-
-.scenario{
-  padding:16px;
-}
-
-.scenario h3{
-  font-size:13px;
-  margin:0 0 5px;
-}
-
-.scenario p,
-.scenario li{
-  font-size:10px;
-  color:var(--muted);
-  line-height:1.9;
-}
-
-.scenario ul{
-  margin:7px 0;
-  padding-right:18px;
-}
-
-/* =========================
-   TABLE
-========================= */
-
-.tablewrap{
-  overflow:auto;
-  border:1px solid var(--border);
-  border-radius:13px;
-}
-
-.table{
-  width:100%;
-  min-width:650px;
-  border-collapse:collapse;
-  font-size:10px;
-}
-
-.table th,
-.table td{
-  padding:10px;
-  border-bottom:1px solid var(--border);
-  text-align:right;
-}
-
-.table th{
-  color:var(--muted);
-}
-
-/* =========================
-   STATUS
-========================= */
-
+.info{padding:15px}
+.info h3{font-size:15px;margin:0 0 5px}
+.info p{font-size:12px;color:var(--muted);margin:0;line-height:1.9}
+.scenario{padding:16px}
+.scenario h3{font-size:16px;margin:0 0 5px}
+.scenario p,.scenario li{font-size:12px;color:var(--muted);line-height:1.9}
+.scenario ul{margin:7px 0;padding-right:18px}
+.tablewrap{overflow:auto;border:1px solid var(--border);border-radius:13px}
+.table{width:100%;min-width:650px;border-collapse:collapse;font-size:12px}
+.table th,.table td{padding:10px;border-bottom:1px solid var(--border);text-align:right}
+.table th{color:var(--muted)}
 .status{
-  margin-top:18px;
-  padding:10px 12px;
-  border:1px solid var(--border);
-  border-radius:10px;
-  color:var(--muted);
-  font-size:10px;
+  margin-top:18px;padding:10px 12px;border:1px solid var(--border);
+  border-radius:10px;color:var(--muted);font-size:12px;
 }
-
-/* =========================
-   RESPONSIVE
-========================= */
-
 @media(max-width:950px){
-
-  .guide{
-    grid-template-columns:1fr;
-  }
-
-  .g4{
-    grid-template-columns:repeat(2,1fr);
-  }
-
-  .g3{
-    grid-template-columns:repeat(2,1fr);
-  }
-
-  .flow{
-    grid-template-columns:repeat(2,1fr);
-  }
-
-  .flow div:last-child{
-    grid-column:1/-1;
-  }
+  .guide{grid-template-columns:1fr}
+  .g4{grid-template-columns:repeat(2,1fr)}
+  .g3{grid-template-columns:repeat(2,1fr)}
+  .flow{grid-template-columns:repeat(2,1fr)}
+  .flow div:last-child{grid-column:1/-1}
 }
-
 @media(max-width:650px){
-
-  .page{
-    padding:78px 12px 35px;
-  }
-
-  .hero h1{
-    font-size:24px;
-  }
-
-  .toolbar{
-    align-items:stretch;
-  }
-
-  .tabs{
-    width:100%;
-  }
-
-  .guide-steps{
-    grid-template-columns:1fr;
-  }
-
-  .g4,
-  .g3,
-  .g2,
-  .chartgrid,
-  .flow{
-    grid-template-columns:1fr;
-  }
-
-  .flow div:last-child{
-    grid-column:auto;
-  }
-
-  .chartwrap{
-    height:215px;
-  }
+  .page{padding:78px 12px 35px}
+  .hero h1{font-size:24px}
+  .toolbar{align-items:stretch}
+  .tabs{width:100%}
+  .guide-steps{grid-template-columns:1fr}
+  .g4,.g3,.g2,.chartgrid,.flow{grid-template-columns:1fr}
+  .flow div:last-child{grid-column:auto}
+  .chartwrap{height:215px}
 }
 </style>
 </head>
-
 <body>
 
 <main class="page">
 
-  <!-- =========================
-       HERO
-  ========================== -->
-
   <section class="hero">
-
     <div class="live">
-
       <span>
         <i class="dot"></i>
         داشبورد اقتصاد کلان
       </span>
-
-      <span id="updated">
-        در حال دریافت...
-      </span>
-
+      <span id="updated">در حال دریافت...</span>
     </div>
-
     <h1>اقتصاد کلان</h1>
-
     <p>
       داشبوردی برای فهم رابطه تورم، بازار کار، رشد، سیاست پولی،
       اوراق، دلار و شرایط مالی با بازارهای مالی؛
       با داده واقعی و بدون عدد ساختگی.
     </p>
-
   </section>
 
-
-  <!-- =========================
-       GUIDE
-  ========================== -->
-
   <section class="guide" id="guide">
-
     <div class="guide-main">
-
-      <div class="guide-badge">
-        راهنمای صفحه
-      </div>
-
-      <h2>
-        این داشبورد برای چه ساخته شده؟
-      </h2>
-
+      <div class="guide-badge">راهنمای صفحه</div>
+      <h2>این داشبورد برای چه ساخته شده؟</h2>
       <p>
         این صفحه یک تصویر یکپارچه از وضعیت اقتصاد آمریکا و
         ارتباط آن با بازارهای مالی ارائه می‌کند.
       </p>
-
       <p>
         هدف این صفحه پیش‌بینی قطعی بازار یا ارائه سیگنال خرید و فروش نیست.
         هدف این است که بفهمی
@@ -560,966 +176,395 @@ body{
           و این تغییر از چه کانالی به نرخ‌ها، دلار و دارایی‌ها منتقل می‌شود.
         </b>
       </p>
-
       <div class="guide-steps">
-
         <div>
           <b>۱. اول نمای کلی را ببین</b>
-          <span>
-            تورم، بیکاری، نرخ فدرال رزرو و بازده ۱۰ ساله
-            را بررسی کن.
-          </span>
+          <span>تورم، بیکاری، نرخ فدرال رزرو و بازده ۱۰ ساله را بررسی کن.</span>
         </div>
-
         <div>
           <b>۲. بعد علت را پیدا کن</b>
-          <span>
-            تورم، بازار کار و رشد را با نمودارهای تاریخی
-            مقایسه کن.
-          </span>
+          <span>تورم، بازار کار و رشد را با نمودارهای تاریخی مقایسه کن.</span>
         </div>
-
         <div>
           <b>۳. شرایط مالی را بررسی کن</b>
-          <span>
-            ۲ ساله، ۱۰ ساله، Real Yield، دلار، VIX و NFCI
-            را کنار هم بخوان.
-          </span>
+          <span>۲ ساله، ۱۰ ساله، Real Yield، دلار، VIX و NFCI را کنار هم بخوان.</span>
         </div>
-
         <div>
           <b>۴. در آخر سناریو بساز</b>
-          <span>
-            به جای یک پیش‌بینی، بررسی کن اگر تورم،
-            رشد یا نرخ‌ها تغییر کنند چه اتفاقی می‌افتد.
-          </span>
+          <span>به جای یک پیش‌بینی، بررسی کن اگر تورم، رشد یا نرخ‌ها تغییر کنند چه اتفاقی می‌افتد.</span>
         </div>
-
       </div>
-
     </div>
-
-
     <div class="guide-key">
-
-      <h3>
-        چطور این صفحه را بخوانیم؟
-      </h3>
-
-      <p>
-        <b>عدد بزرگ:</b>
-        آخرین مقدار معتبر همان شاخص.
-      </p>
-
-      <p>
-        <b>تاریخ:</b>
-        تاریخ آخرین مشاهده همان شاخص.
-        شاخص‌های اقتصادی هم‌زمان منتشر نمی‌شوند.
-      </p>
-
-      <p>
-        <b>نمودار:</b>
-        روند تاریخی حدود پنج‌ساله برای مشاهده جهت
-        و تغییرات رژیم اقتصادی است.
-      </p>
-
-      <p>
-        <b>مقایسه:</b>
-        هیچ شاخصی را به‌تنهایی تفسیر نکن.
-        «واقعیت + انتظار + کانال انتقال» را کنار هم ببین.
-      </p>
-
+      <h3>چطور این صفحه را بخوانیم؟</h3>
+      <p><b>عدد بزرگ:</b> آخرین مقدار معتبر همان شاخص.</p>
+      <p><b>تاریخ:</b> تاریخ آخرین مشاهده همان شاخص. شاخص‌های اقتصادی هم‌زمان منتشر نمی‌شوند.</p>
+      <p><b>نمودار:</b> روند تاریخی حدود پنج‌ساله برای مشاهده جهت و تغییرات رژیم اقتصادی است.</p>
+      <p><b>مقایسه:</b> هیچ شاخصی را به‌تنهایی تفسیر نکن. «واقعیت + انتظار + کانال انتقال» را کنار هم ببین.</p>
       <div class="guide-warning">
-        این داشبورد ابزار تحلیل اقتصادی است،
-        نه توصیه سرمایه‌گذاری.
+        این داشبورد ابزار تحلیل اقتصادی است، نه توصیه سرمایه‌گذاری.
       </div>
-
     </div>
-
   </section>
-
-
-  <!-- =========================
-       NAVIGATION
-  ========================== -->
 
   <div class="toolbar">
-
     <div class="tabs">
-
-      <button class="btn active" data-go="overview">
-        نمای کلی
-      </button>
-
-      <button class="btn" data-go="inflation">
-        تورم
-      </button>
-
-      <button class="btn" data-go="labor">
-        بازار کار
-      </button>
-
-      <button class="btn" data-go="rates">
-        نرخ‌ها
-      </button>
-
-      <button class="btn" data-go="markets">
-        بازارها
-      </button>
-
-      <button class="btn" data-go="scenarios">
-        سناریوها
-      </button>
-
-      <button class="btn" data-go="glossary">
-        واژه‌نامه
-      </button>
-
+      <button class="btn active" data-go="overview">نمای کلی</button>
+      <button class="btn" data-go="inflation">تورم</button>
+      <button class="btn" data-go="labor">بازار کار</button>
+      <button class="btn" data-go="rates">نرخ‌ها</button>
+      <button class="btn" data-go="markets">بازارها</button>
+      <button class="btn" data-go="scenarios">سناریوها</button>
+      <button class="btn" data-go="glossary">واژه‌نامه</button>
     </div>
-
   </div>
 
-
-  <!-- =========================
-       OVERVIEW
-  ========================== -->
-
   <section class="section" id="overview">
-
     <div class="head">
       <h2>نمای کلی</h2>
-      <span class="sub">
-        آخرین مشاهده معتبر
-      </span>
+      <span class="sub">آخرین مشاهده معتبر</span>
     </div>
-
     <div class="grid g4" id="top"></div>
-
-    <div class="grid g4"
-         id="extra"
-         style="margin-top:12px">
-    </div>
-
+    <div class="grid g4" id="extra" style="margin-top:12px"></div>
   </section>
-
-
-  <!-- =========================
-       INFLATION
-  ========================== -->
 
   <section class="section" id="inflation">
-
     <div class="head">
       <h2>تورم</h2>
-      <span class="sub">
-        CPI و PCE و شاخص‌های هسته
-      </span>
+      <span class="sub">CPI و PCE و شاخص‌های هسته</span>
     </div>
-
     <div class="grid g4" id="infl"></div>
-
     <div class="chartgrid">
-
       <div class="chart">
-
         <div class="charthead">
-
           <div>
-            <span class="label">
-              CPI · YoY
-            </span>
-
-            <div class="value" id="cv">
-              —
-            </div>
+            <span class="label">CPI · YoY</span>
+            <div class="value" id="cv">—</div>
           </div>
-
-          <span class="sub" id="cd">
-            —
-          </span>
-
+          <span class="sub" id="cd">—</span>
         </div>
-
-        <div class="chartwrap">
-          <canvas id="cpi"></canvas>
-        </div>
-
+        <div class="chartwrap"><canvas id="cpi"></canvas></div>
       </div>
-
-
       <div class="chart">
-
         <div class="charthead">
-
           <div>
-            <span class="label">
-              Core CPI · YoY
-            </span>
-
-            <div class="value" id="ccv">
-              —
-            </div>
+            <span class="label">Core CPI · YoY</span>
+            <div class="value" id="ccv">—</div>
           </div>
-
-          <span class="sub" id="ccd">
-            —
-          </span>
-
+          <span class="sub" id="ccd">—</span>
         </div>
-
-        <div class="chartwrap">
-          <canvas id="corecpi"></canvas>
-        </div>
-
+        <div class="chartwrap"><canvas id="corecpi"></canvas></div>
       </div>
-
     </div>
-
   </section>
-
-
-  <!-- =========================
-       LABOR
-  ========================== -->
 
   <section class="section" id="labor">
-
     <div class="head">
       <h2>بازار کار و رشد</h2>
-
-      <span class="sub">
-        اشتغال، بیکاری و GDP
-      </span>
+      <span class="sub">اشتغال، بیکاری و GDP</span>
     </div>
-
     <div class="grid g4" id="laborCards"></div>
-
     <div class="chartgrid">
-
       <div class="chart">
-
         <div class="charthead">
-
           <div>
-            <span class="label">
-              نرخ بیکاری
-            </span>
-
-            <div class="value" id="uv">
-              —
-            </div>
+            <span class="label">نرخ بیکاری</span>
+            <div class="value" id="uv">—</div>
           </div>
-
-          <span class="sub" id="ud">
-            —
-          </span>
-
+          <span class="sub" id="ud">—</span>
         </div>
-
-        <div class="chartwrap">
-          <canvas id="unrate"></canvas>
-        </div>
-
+        <div class="chartwrap"><canvas id="unrate"></canvas></div>
       </div>
-
-
       <div class="chart">
-
         <div class="charthead">
-
           <div>
-            <span class="label">
-              اشتغال غیرکشاورزی
-            </span>
-
-            <div class="value" id="pv">
-              —
-            </div>
+            <span class="label">اشتغال غیرکشاورزی</span>
+            <div class="value" id="pv">—</div>
           </div>
-
-          <span class="sub" id="pd">
-            —
-          </span>
-
+          <span class="sub" id="pd">—</span>
         </div>
-
-        <div class="chartwrap">
-          <canvas id="payroll"></canvas>
-        </div>
-
+        <div class="chartwrap"><canvas id="payroll"></canvas></div>
       </div>
-
     </div>
-
   </section>
-
-
-  <!-- =========================
-       RATES
-  ========================== -->
 
   <section class="section" id="rates">
-
     <div class="head">
-
-      <h2>
-        سیاست پولی و اوراق
-      </h2>
-
-      <span class="sub">
-        نرخ سیاستی، منحنی و بازده واقعی
-      </span>
-
+      <h2>سیاست پولی و اوراق</h2>
+      <span class="sub">نرخ سیاستی، منحنی و بازده واقعی</span>
     </div>
-
     <div class="grid g4" id="ratesCards"></div>
-
     <div class="chartgrid">
-
       <div class="chart">
-
         <div class="charthead">
-
           <div>
-            <span class="label">
-              Fed Funds
-            </span>
-
-            <div class="value" id="fv">
-              —
-            </div>
+            <span class="label">Fed Funds</span>
+            <div class="value" id="fv">—</div>
           </div>
-
-          <span class="sub" id="fd">
-            —
-          </span>
-
+          <span class="sub" id="fd">—</span>
         </div>
-
-        <div class="chartwrap">
-          <canvas id="fed"></canvas>
-        </div>
-
+        <div class="chartwrap"><canvas id="fed"></canvas></div>
       </div>
-
-
       <div class="chart">
-
         <div class="charthead">
-
           <div>
-            <span class="label">
-              ۲ ساله و ۱۰ ساله
-            </span>
-
-            <div class="value" id="curvev">
-              —
-            </div>
+            <span class="label">۲ ساله و ۱۰ ساله</span>
+            <div class="value" id="curvev">—</div>
           </div>
-
-          <span class="sub" id="curved">
-            —
-          </span>
-
+          <span class="sub" id="curved">—</span>
         </div>
-
-        <div class="chartwrap">
-          <canvas id="curve"></canvas>
-        </div>
-
+        <div class="chartwrap"><canvas id="curve"></canvas></div>
       </div>
-
-
       <div class="chart">
-
         <div class="charthead">
-
           <div>
-            <span class="label">
-              Real Yield 10Y
-            </span>
-
-            <div class="value" id="rv">
-              —
-            </div>
+            <span class="label">Real Yield 10Y</span>
+            <div class="value" id="rv">—</div>
           </div>
-
-          <span class="sub" id="rd">
-            —
-          </span>
-
+          <span class="sub" id="rd">—</span>
         </div>
-
-        <div class="chartwrap">
-          <canvas id="real"></canvas>
-        </div>
-
+        <div class="chartwrap"><canvas id="real"></canvas></div>
       </div>
-
-
       <div class="chart">
-
         <div class="charthead">
-
           <div>
-            <span class="label">
-              Financial Conditions
-            </span>
-
-            <div class="value" id="nv">
-              —
-            </div>
+            <span class="label">Financial Conditions</span>
+            <div class="value" id="nv">—</div>
           </div>
-
-          <span class="sub" id="nd">
-            —
-          </span>
-
+          <span class="sub" id="nd">—</span>
         </div>
-
-        <div class="chartwrap">
-          <canvas id="nfci"></canvas>
-        </div>
-
+        <div class="chartwrap"><canvas id="nfci"></canvas></div>
       </div>
-
     </div>
-
   </section>
-
-
-  <!-- =========================
-       MARKETS
-  ========================== -->
 
   <section class="section" id="markets">
-
     <div class="head">
-
-      <h2>
-        بازارهای مرتبط
-      </h2>
-
-      <span class="sub">
-        دلار، طلا، نفت، سهام و ریسک
-      </span>
-
+      <h2>بازارهای مرتبط</h2>
+      <span class="sub">دلار، طلا، نفت، سهام و ریسک</span>
     </div>
-
     <div class="grid g4" id="marketsCards"></div>
-
     <div class="chartgrid">
-
       <div class="chart">
-
         <div class="charthead">
-
           <div>
-            <span class="label">
-              دلار وزن‌دار
-            </span>
-
-            <div class="value" id="dv">
-              —
-            </div>
+            <span class="label">دلار وزن‌دار</span>
+            <div class="value" id="dv">—</div>
           </div>
-
-          <span class="sub" id="dd">
-            —
-          </span>
-
+          <span class="sub" id="dd">—</span>
         </div>
-
-        <div class="chartwrap">
-          <canvas id="dollar"></canvas>
-        </div>
-
+        <div class="chartwrap"><canvas id="dollar"></canvas></div>
       </div>
-
-
       <div class="chart">
-
         <div class="charthead">
-
           <div>
-            <span class="label">
-              VIX
-            </span>
-
-            <div class="value" id="vv">
-              —
-            </div>
+            <span class="label">VIX</span>
+            <div class="value" id="vv">—</div>
           </div>
-
-          <span class="sub" id="vd">
-            —
-          </span>
-
+          <span class="sub" id="vd">—</span>
         </div>
-
-        <div class="chartwrap">
-          <canvas id="vix"></canvas>
-        </div>
-
+        <div class="chartwrap"><canvas id="vix"></canvas></div>
       </div>
-
     </div>
-
   </section>
 
-
-  <!-- =========================
-       TRANSMISSION
-  ========================== -->
-
   <section class="section">
-
     <div class="head">
-
-      <h2>
-        زنجیره انتقال
-      </h2>
-
-      <span class="sub">
-        مکانیزم را به‌صورت یک سیستم بخوان
-      </span>
-
+      <h2>زنجیره انتقال</h2>
+      <span class="sub">مکانیزم را به‌صورت یک سیستم بخوان</span>
     </div>
-
     <div class="flow">
-
-      <div>
-        <b>تورم</b>
-        <br>
-        <span class="sub">
-          CPI / PCE
-        </span>
-      </div>
-
-      <div>
-        <b>انتظارات</b>
-        <br>
-        <span class="sub">
-          Fed Path
-        </span>
-      </div>
-
-      <div>
-        <b>نرخ‌ها</b>
-        <br>
-        <span class="sub">
-          2Y / 10Y / Real
-        </span>
-      </div>
-
-      <div>
-        <b>دلار و اعتبار</b>
-        <br>
-        <span class="sub">
-          USD / NFCI
-        </span>
-      </div>
-
-      <div>
-        <b>دارایی‌ها</b>
-        <br>
-        <span class="sub">
-          Gold / Stocks / BTC
-        </span>
-      </div>
-
+      <div><b>تورم</b><br><span class="sub">CPI / PCE</span></div>
+      <div><b>انتظارات</b><br><span class="sub">Fed Path</span></div>
+      <div><b>نرخ‌ها</b><br><span class="sub">2Y / 10Y / Real</span></div>
+      <div><b>دلار و اعتبار</b><br><span class="sub">USD / NFCI</span></div>
+      <div><b>دارایی‌ها</b><br><span class="sub">Gold / Stocks / BTC</span></div>
     </div>
-
   </section>
 
-
-  <!-- =========================
-       IMPACT
-  ========================== -->
-
   <section class="section">
-
     <div class="head">
-
-      <h2>
-        اثر شاخص‌ها
-      </h2>
-
-      <span class="sub">
-        رابطه تحلیلی، نه سیگنال خرید یا فروش
-      </span>
-
+      <h2>اثر شاخص‌ها</h2>
+      <span class="sub">رابطه تحلیلی، نه سیگنال خرید یا فروش</span>
     </div>
-
     <div class="grid g3">
-
       <div class="info">
         <h3>تورم</h3>
-        <p>
-          تورم پایدار می‌تواند انتظارات نرخ بهره را تغییر دهد.
-          عدد واقعی را با روند و انتظارات مقایسه کن.
-        </p>
+        <p>تورم پایدار می‌تواند انتظارات نرخ بهره را تغییر دهد. عدد واقعی را با روند و انتظارات مقایسه کن.</p>
       </div>
-
       <div class="info">
         <h3>بازار کار</h3>
-        <p>
-          بیکاری و اشتغال برای تشخیص قدرت تقاضا
-          و مسیر سیاست پولی مهم‌اند.
-        </p>
+        <p>بیکاری و اشتغال برای تشخیص قدرت تقاضا و مسیر سیاست پولی مهم‌اند.</p>
       </div>
-
       <div class="info">
         <h3>Real Yield</h3>
-        <p>
-          بازده واقعی هزینه فرصت دارایی‌های بدون
-          جریان نقدی مانند طلا را بهتر نشان می‌دهد.
-        </p>
+        <p>بازده واقعی هزینه فرصت دارایی‌های بدون جریان نقدی مانند طلا را بهتر نشان می‌دهد.</p>
       </div>
-
       <div class="info">
         <h3>منحنی اوراق</h3>
-        <p>
-          اختلاف ۱۰ ساله و ۲ ساله بخشی از اطلاعات
-          بازار درباره مسیر نرخ‌ها و رشد است؛
-          به‌تنهایی حکم قطعی نیست.
-        </p>
+        <p>اختلاف ۱۰ ساله و ۲ ساله بخشی از اطلاعات بازار درباره مسیر نرخ‌ها و رشد است؛ به‌تنهایی حکم قطعی نیست.</p>
       </div>
-
       <div class="info">
         <h3>دلار</h3>
-        <p>
-          قدرت دلار می‌تواند از مسیر شرایط مالی،
-          کالاها و جریان سرمایه به اقتصادهای دیگر منتقل شود.
-        </p>
+        <p>قدرت دلار می‌تواند از مسیر شرایط مالی، کالاها و جریان سرمایه به اقتصادهای دیگر منتقل شود.</p>
       </div>
-
       <div class="info">
         <h3>VIX / NFCI</h3>
-        <p>
-          VIX نوسان بازار سهام و NFCI شرایط مالی
-          را نشان می‌دهند و برای سنجش ریسک کاربرد دارند.
-        </p>
+        <p>VIX نوسان بازار سهام و NFCI شرایط مالی را نشان می‌دهند و برای سنجش ریسک کاربرد دارند.</p>
       </div>
-
     </div>
-
   </section>
 
-
-  <!-- =========================
-       SCENARIOS
-  ========================== -->
-
   <section class="section" id="scenarios">
-
     <div class="head">
-
-      <h2>
-        سناریوهای کلان
-      </h2>
-
-      <span class="sub">
-        چارچوب تحلیلی، نه پیش‌بینی قطعی
-      </span>
-
+      <h2>سناریوهای کلان</h2>
+      <span class="sub">چارچوب تحلیلی، نه پیش‌بینی قطعی</span>
     </div>
-
     <div class="grid g3">
-
       <article class="scenario">
-
-        <h3>
-          تورم بالا + سیاست سخت
-        </h3>
-
-        <p>
-          تورم پایدار بماند و نرخ‌ها بالا بمانند.
-        </p>
-
+        <h3>تورم بالا + سیاست سخت</h3>
+        <p>تورم پایدار بماند و نرخ‌ها بالا بمانند.</p>
         <ul>
           <li>Core CPI / Core PCE</li>
           <li>بازده واقعی و ۲ ساله</li>
           <li>شرایط مالی</li>
         </ul>
-
       </article>
-
-
       <article class="scenario">
-
-        <h3>
-          کاهش تورم + رشد حفظ‌شده
-        </h3>
-
-        <p>
-          تورم آرام شود بدون افت شدید فعالیت.
-        </p>
-
+        <h3>کاهش تورم + رشد حفظ‌شده</h3>
+        <p>تورم آرام شود بدون افت شدید فعالیت.</p>
         <ul>
           <li>انتظارات نرخ</li>
           <li>بازده و دلار</li>
           <li>رشد سود شرکت‌ها</li>
         </ul>
-
       </article>
-
-
       <article class="scenario">
-
-        <h3>
-          رشد ضعیف + کاهش نرخ
-        </h3>
-
-        <p>
-          کاهش نرخ در واکنش به افت فعالیت رخ دهد.
-        </p>
-
+        <h3>رشد ضعیف + کاهش نرخ</h3>
+        <p>کاهش نرخ در واکنش به افت فعالیت رخ دهد.</p>
         <ul>
           <li>اشتغال و اعتبار</li>
           <li>ریسک‌پذیری</li>
           <li>رشد سود</li>
         </ul>
-
       </article>
-
     </div>
-
   </section>
 
-
-  <!-- =========================
-       CHECKLIST
-  ========================== -->
-
   <section class="section">
-
     <div class="head">
-
-      <h2>
-        چک‌لیست تحلیل
-      </h2>
-
+      <h2>چک‌لیست تحلیل</h2>
     </div>
-
     <div class="tablewrap">
-
       <table class="table">
-
         <thead>
-
           <tr>
             <th>مرحله</th>
             <th>سؤال</th>
             <th>داده‌های مرتبط</th>
           </tr>
-
         </thead>
-
         <tbody>
-
           <tr>
             <td>۱</td>
             <td>چه چیزی تغییر کرده؟</td>
-            <td>
-              CPI، اشتغال، GDP، نرخ‌ها
-            </td>
+            <td>CPI، اشتغال، GDP، نرخ‌ها</td>
           </tr>
-
           <tr>
             <td>۲</td>
             <td>بازار چه انتظاری داشت؟</td>
-            <td>
-              بازده اوراق و انتظارات نرخ
-            </td>
+            <td>بازده اوراق و انتظارات نرخ</td>
           </tr>
-
           <tr>
             <td>۳</td>
             <td>کانال انتقال چیست؟</td>
-            <td>
-              Yield → USD → Conditions
-            </td>
+            <td>Yield → USD → Conditions</td>
           </tr>
-
           <tr>
             <td>۴</td>
             <td>چه دارایی‌هایی مرتبط‌اند؟</td>
-            <td>
-              Gold، Stocks، Oil، BTC
-            </td>
+            <td>Gold، Stocks، Oil، BTC</td>
           </tr>
-
           <tr>
             <td>۵</td>
             <td>چه داده‌ای تحلیل را نقض می‌کند؟</td>
-            <td>
-              داده بعدی و تغییر انتظارات
-            </td>
+            <td>داده بعدی و تغییر انتظارات</td>
           </tr>
-
         </tbody>
-
       </table>
-
     </div>
-
   </section>
-
-
-  <!-- =========================
-       GLOSSARY
-  ========================== -->
 
   <section class="section" id="glossary">
-
     <div class="head">
-
-      <h2>
-        واژه‌نامه و تعریف شاخص‌ها
-      </h2>
-
-      <span class="sub">
-        تعریف ساده + کاربرد تحلیلی
-      </span>
-
+      <h2>واژه‌نامه و تعریف شاخص‌ها</h2>
+      <span class="sub">تعریف ساده + کاربرد تحلیلی</span>
     </div>
-
     <div class="grid g3">
-
       <div class="info">
         <h3>CPI</h3>
-        <p>
-          شاخص قیمت مصرف‌کننده است و تغییر قیمت
-          سبد کالاها و خدمات مصرفی را اندازه می‌گیرد.
-          در این صفحه مقدار CPI به‌صورت رشد سال‌به‌سال نمایش داده می‌شود.
-        </p>
+        <p>شاخص قیمت مصرف‌کننده است و تغییر قیمت سبد کالاها و خدمات مصرفی را اندازه می‌گیرد. در این صفحه مقدار CPI به‌صورت رشد سال‌به‌سال نمایش داده می‌شود.</p>
       </div>
-
       <div class="info">
         <h3>Core CPI</h3>
-        <p>
-          CPI بدون غذا و انرژی است و برای بررسی
-          روند تورم پایه استفاده می‌شود.
-        </p>
+        <p>CPI بدون غذا و انرژی است و برای بررسی روند تورم پایه استفاده می‌شود.</p>
       </div>
-
       <div class="info">
         <h3>PCE</h3>
-        <p>
-          شاخص قیمت مخارج مصرف شخصی است و یکی از
-          معیارهای مهم مورد توجه فدرال رزرو برای سنجش تورم است.
-        </p>
+        <p>شاخص قیمت مخارج مصرف شخصی است و یکی از معیارهای مهم مورد توجه فدرال رزرو برای سنجش تورم است.</p>
       </div>
-
       <div class="info">
         <h3>Core PCE</h3>
-        <p>
-          PCE بدون غذا و انرژی است و برای بررسی
-          روند تورم پایه کاربرد دارد.
-        </p>
+        <p>PCE بدون غذا و انرژی است و برای بررسی روند تورم پایه کاربرد دارد.</p>
       </div>
-
       <div class="info">
         <h3>Unemployment Rate</h3>
-        <p>
-          نرخ بیکاری، سهم نیروی کار بیکار و در جست‌وجوی
-          کار را نشان می‌دهد.
-        </p>
+        <p>نرخ بیکاری، سهم نیروی کار بیکار و در جست‌وجوی کار را نشان می‌دهد.</p>
       </div>
-
       <div class="info">
         <h3>Nonfarm Payrolls</h3>
-        <p>
-          اشتغال حقوق‌بگیری خارج از بخش کشاورزی را
-          اندازه‌گیری می‌کند. مقدار اینجا به میلیون نفر نمایش داده می‌شود.
-        </p>
+        <p>اشتغال حقوق‌بگیری خارج از بخش کشاورزی را اندازه‌گیری می‌کند. مقدار اینجا به میلیون نفر نمایش داده می‌شود.</p>
       </div>
-
       <div class="info">
         <h3>Fed Funds</h3>
-        <p>
-          نرخ بازار وجوه فدرال است و یکی از مهم‌ترین
-          نرخ‌های سیاست پولی آمریکاست.
-        </p>
+        <p>نرخ بازار وجوه فدرال است و یکی از مهم‌ترین نرخ‌های سیاست پولی آمریکاست.</p>
       </div>
-
       <div class="info">
         <h3>2Y / 10Y Yield</h3>
-        <p>
-          بازده اوراق خزانه دوساله و ده‌ساله هستند.
-          ۲ ساله معمولاً به انتظارات سیاست پولی حساس‌تر است.
-        </p>
+        <p>بازده اوراق خزانه دوساله و ده‌ساله هستند. ۲ ساله معمولاً به انتظارات سیاست پولی حساس‌تر است.</p>
       </div>
-
       <div class="info">
         <h3>Yield Curve</h3>
-        <p>
-          در این صفحه اختلاف بازده ۱۰ ساله منهای
-          ۲ ساله است. به‌تنهایی پیش‌بینی قطعی رکود یا رشد نیست.
-        </p>
+        <p>در این صفحه اختلاف بازده ۱۰ ساله منهای ۲ ساله است. به‌تنهایی پیش‌بینی قطعی رکود یا رشد نیست.</p>
       </div>
-
       <div class="info">
         <h3>Real Yield</h3>
-        <p>
-          بازده واقعی ۱۰ ساله خزانه‌داری است و اثر
-          تورم مورد انتظار را نیز در خود منعکس می‌کند.
-        </p>
+        <p>بازده واقعی ۱۰ ساله خزانه‌داری است و اثر تورم مورد انتظار را نیز در خود منعکس می‌کند.</p>
       </div>
-
       <div class="info">
         <h3>Trade-Weighted Dollar</h3>
-        <p>
-          شاخصی برای سنجش ارزش دلار در برابر سبدی
-          از ارزهای شرکای تجاری آمریکاست.
-        </p>
+        <p>شاخصی برای سنجش ارزش دلار در برابر سبدی از ارزهای شرکای تجاری آمریکاست.</p>
       </div>
-
       <div class="info">
         <h3>VIX</h3>
-        <p>
-          شاخصی از نوسان مورد انتظار بازار سهام آمریکا
-          و یکی از معیارهای سنجش وضعیت ریسک بازار است.
-        </p>
+        <p>شاخصی از نوسان مورد انتظار بازار سهام آمریکا و یکی از معیارهای سنجش وضعیت ریسک بازار است.</p>
       </div>
-
       <div class="info">
         <h3>NFCI</h3>
-        <p>
-          شاخص شرایط مالی ملی فدرال رزرو شیکاگو است
-          و برای بررسی سخت‌تر یا آسان‌تر شدن شرایط مالی استفاده می‌شود.
-        </p>
+        <p>شاخص شرایط مالی ملی فدرال رزرو شیکاگو است و برای بررسی سخت‌تر یا آسان‌تر شدن شرایط مالی استفاده می‌شود.</p>
       </div>
-
       <div class="info">
         <h3>GDP</h3>
-        <p>
-          تولید ناخالص داخلی ارزش تولید کالاها و خدمات
-          نهایی اقتصاد را اندازه می‌گیرد.
-        </p>
+        <p>تولید ناخالص داخلی ارزش تولید کالاها و خدمات نهایی اقتصاد را اندازه می‌گیرد.</p>
       </div>
-
       <div class="info">
         <h3>Real Yield vs Nominal Yield</h3>
-        <p>
-          بازده اسمی نرخ اوراق است؛ بازده واقعی اثر
-          تورم مورد انتظار را نیز در نظر می‌گیرد.
-        </p>
+        <p>بازده اسمی نرخ اوراق است؛ بازده واقعی اثر تورم مورد انتظار را نیز در نظر می‌گیرد.</p>
       </div>
-
     </div>
-
   </section>
 
-
-  <!-- =========================
-       STATUS
-  ========================== -->
-
-  <div class="status" id="status">
-    در حال دریافت داده...
-  </div>
+  <div class="status" id="status">در حال دریافت داده...</div>
 
   <div class="note" style="margin-top:10px">
     منبع داده اقتصادی: FRED / Federal Reserve Bank of St. Louis.
@@ -1530,9 +575,7 @@ body{
 
 </main>
 
-
 <script src="navbar.js"></script>
-
 <script>
 
 /* =========================================================
@@ -1568,8 +611,7 @@ const IDS =
 
 const charts = {};
 
-const $ = id =>
-  document.getElementById(id);
+const $ = id => document.getElementById(id);
 
 
 /* =========================================================
@@ -1577,27 +619,682 @@ const $ = id =>
 ========================================================= */
 
 function rows(data,id){
+  return (data?.[id]?.history || []).filter(
+    x => x?.date && Number.isFinite(+x.value)
+  );
+}
 
-  return (
-    data?.[id]?.history || []
-  )
-  .filter(
-    x =>
-      x?.date &&
-      Number.isFinite(+x.value)
+function last(data,id){
+  return data?.[id]?.latest || null;
+}
+
+function val(data,id){
+  const n = +(last(data,id)?.value);
+  return Number.isFinite(n) ? n : null;
+}
+
+function pct(v){
+  return Number.isFinite(v) ? v.toFixed(2) + '%' : '—';
+}
+
+function num(v){
+  return Number.isFinite(v) ? v.toFixed(2) : '—';
+}
+
+
+/* =========================================================
+   YEAR OVER YEAR
+========================================================= */
+
+function yoy(data,id){
+  const r = rows(data,id);
+  if(r.length < 2) return null;
+
+  const current = r[r.length - 1];
+  const currentDate = new Date(current.date + 'T00:00:00Z');
+
+  const target = new Date(Date.UTC(
+    currentDate.getUTCFullYear() - 1,
+    currentDate.getUTCMonth(),
+    currentDate.getUTCDate()
+  ));
+
+  let previous = null;
+  for(let i=r.length-1;i>=0;i--){
+    const d = new Date(r[i].date + 'T00:00:00Z');
+    if(d <= target){
+      previous = r[i];
+      break;
+    }
+  }
+
+  if(
+    !previous ||
+    !Number.isFinite(+previous.value) ||
+    +previous.value === 0
+  ) return null;
+
+  return ((+current.value / +previous.value) - 1) * 100;
+}
+
+
+/* =========================================================
+   YOY SERIES
+========================================================= */
+
+function yoySeries(data,id){
+  const r = rows(data,id);
+  const result = [];
+
+  for(let i=0;i<r.length;i++){
+    const current = new Date(r[i].date + 'T00:00:00Z');
+
+    const target = new Date(Date.UTC(
+      current.getUTCFullYear() - 1,
+      current.getUTCMonth(),
+      current.getUTCDate()
+    ));
+
+    let previous = null;
+    for(let j=i-1;j>=0;j--){
+      const d = new Date(r[j].date + 'T00:00:00Z');
+      if(d <= target){
+        previous = r[j];
+        break;
+      }
+    }
+
+    if(
+      previous &&
+      Number.isFinite(+previous.value) &&
+      +previous.value !== 0
+    ){
+      result.push({
+        date: r[i].date,
+        value: ((+r[i].value / +previous.value) - 1) * 100
+      });
+    }
+  }
+
+  if(!result.length) return [];
+
+  const latest = new Date(result[result.length - 1].date + 'T00:00:00Z');
+  const start = new Date(Date.UTC(
+    latest.getUTCFullYear() - 5,
+    latest.getUTCMonth(),
+    latest.getUTCDate()
+  ));
+
+  return result.filter(
+    x => new Date(x.date + 'T00:00:00Z') >= start
   );
 }
 
 
-function last(data,id){
+/* =========================================================
+   RECENT DATA
+========================================================= */
 
-  return data?.[id]?.latest || null;
+function recent(data,id,years=5){
+  const r = rows(data,id);
+  if(!r.length) return [];
+
+  const end = new Date(r[r.length - 1].date + 'T00:00:00Z');
+  const start = new Date(Date.UTC(
+    end.getUTCFullYear() - years,
+    end.getUTCMonth(),
+    end.getUTCDate()
+  ));
+
+  return r
+    .filter(x => new Date(x.date + 'T00:00:00Z') >= start)
+    .map(x => ({ date: x.date, value: +x.value }));
 }
 
 
-function val(data,id){
+/* =========================================================
+   MONTHLY NORMALIZATION
+========================================================= */
 
-  const n =
-    +(last(data,id)?.value);
+function monthly(data,id,years=5){
+  const r = recent(data,id,years);
+  if(!r.length) return [];
 
-  return Number.isFinite(n
+  const buckets = new Map();
+  for(const item of r){
+    const key = item.date.slice(0,7);
+    buckets.set(key, item);
+  }
+
+  return [...buckets.values()].sort(
+    (a,b) => a.date.localeCompare(b.date)
+  );
+}
+
+
+/* =========================================================
+   CHART COLORS
+========================================================= */
+
+function colorVar(name,fallback){
+  const value = getComputedStyle(document.documentElement)
+    .getPropertyValue(name)
+    .trim();
+  return value || fallback;
+}
+
+
+/* =========================================================
+   CREATE SINGLE CHART
+========================================================= */
+
+function chart(id,data,colorVariable,suffix='',format='number'){
+  charts[id]?.destroy();
+  if(!data.length) return;
+
+  const color = colorVar(colorVariable,'#3B82F6');
+  const canvas = $(id);
+  if(!canvas) return;
+
+  const ctx = canvas.getContext('2d');
+
+  charts[id] = new Chart(ctx,{
+    type:'line',
+    data:{
+      labels: data.map(x => x.date),
+      datasets:[{
+        data: data.map(x => x.value),
+        borderColor: color,
+        backgroundColor: color + '22',
+        fill: true,
+        borderWidth: 2,
+        tension: .25,
+        pointRadius: 0,
+        pointHoverRadius: 3,
+        spanGaps: true
+      }]
+    },
+    options:{
+      responsive: true,
+      maintainAspectRatio: false,
+      interaction:{ mode:'index', intersect:false },
+      plugins:{
+        legend:{ display:false },
+        tooltip:{
+          rtl: true,
+          callbacks:{
+            label: item => {
+              const value = item.parsed.y;
+              const prefix = format === 'money' ? '$' : '';
+              return prefix + Number(value).toLocaleString('en-US',{
+                maximumFractionDigits: 2
+              }) + suffix;
+            }
+          }
+        }
+      },
+      scales:{
+        x:{
+          grid:{ color:'rgba(148,163,184,.08)' },
+          ticks:{
+            maxTicksLimit: 6,
+            color: colorVar('--muted','#94A3B8'),
+            font:{ family:'Vazirmatn' }
+          }
+        },
+        y:{
+          grid:{ color:'rgba(148,163,184,.08)' },
+          ticks:{
+            color: colorVar('--muted','#94A3B8'),
+            callback: value => {
+              const prefix = format === 'money' ? '$' : '';
+              return prefix + Number(value).toLocaleString('en-US',{
+                maximumFractionDigits: 1
+              }) + suffix;
+            }
+          }
+        }
+      }
+    }
+  });
+}
+
+
+/* =========================================================
+   DUAL 2Y / 10Y CHART
+========================================================= */
+
+function dual(id,data2Y,data10Y){
+  charts[id]?.destroy();
+
+  const a = monthlyFromArray(data2Y);
+  const b = monthlyFromArray(data10Y);
+
+  if(!a.length && !b.length) return;
+
+  const map2 = new Map(a.map(x => [x.date.slice(0,7), x.value]));
+  const map10 = new Map(b.map(x => [x.date.slice(0,7), x.value]));
+
+  const labels = [...new Set([
+    ...map2.keys(),
+    ...map10.keys()
+  ])].sort();
+
+  charts[id] = new Chart($(id),{
+    type:'line',
+    data:{
+      labels,
+      datasets:[
+        {
+          label:'۲ ساله',
+          data: labels.map(x => map2.get(x) ?? null),
+          borderColor: colorVar('--blue','#3B82F6'),
+          borderWidth: 2,
+          pointRadius: 0,
+          spanGaps: true
+        },
+        {
+          label:'۱۰ ساله',
+          data: labels.map(x => map10.get(x) ?? null),
+          borderColor: colorVar('--gold','#C89B3C'),
+          borderWidth: 2,
+          pointRadius: 0,
+          spanGaps: true
+        }
+      ]
+    },
+    options:{
+      responsive: true,
+      maintainAspectRatio: false,
+      interaction:{ mode:'index', intersect:false },
+      plugins:{
+        legend:{
+          rtl: true,
+          labels:{
+            color: colorVar('--text','#F8FAFC'),
+            font:{ family:'Vazirmatn' }
+          }
+        }
+      },
+      scales:{
+        x:{
+          ticks:{
+            maxTicksLimit: 6,
+            color: colorVar('--muted','#94A3B8'),
+            font:{ family:'Vazirmatn' }
+          }
+        },
+        y:{
+          ticks:{
+            color: colorVar('--muted','#94A3B8'),
+            callback: value => Number(value).toFixed(1) + '%'
+          }
+        }
+      }
+    }
+  });
+}
+
+function monthlyFromArray(data){
+  const buckets = new Map();
+  for(const item of data){
+    const key = item.date.slice(0,7);
+    buckets.set(key, item);
+  }
+  return [...buckets.values()].sort(
+    (a,b) => a.date.localeCompare(b.date)
+  );
+}
+
+
+/* =========================================================
+   CARD
+========================================================= */
+
+function add(container,label,value,date){
+  const element = document.createElement('div');
+  element.className = 'card';
+  element.innerHTML = `
+    <span class="label">${label}</span>
+    <div class="value">${value}</div>
+    <span class="date">${date}</span>
+  `;
+  container.appendChild(element);
+}
+
+
+/* =========================================================
+   MARKET EXTRAS (طلا و BTC)
+========================================================= */
+
+async function loadMarketExtras(){
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), 10000);
+
+  try{
+    const res = await fetch(MARKET_API,{
+      cache: 'no-store',
+      signal: controller.signal
+    });
+
+    if(!res.ok) throw new Error('Market API HTTP ' + res.status);
+
+    const json = await res.json();
+    if(!json.ok) throw new Error(json.error || 'Market API error');
+
+    return json.data || {};
+  } finally {
+    clearTimeout(timer);
+  }
+}
+
+function updateMarketCard(labelText,valueText,dateText){
+  const cards = document.querySelectorAll('#marketsCards .card');
+  for(const card of cards){
+    const label = card.querySelector('.label');
+    if(label && label.textContent.trim() === labelText){
+      const valueEl = card.querySelector('.value');
+      const dateEl = card.querySelector('.date');
+      if(valueEl) valueEl.textContent = valueText;
+      if(dateEl) dateEl.textContent = dateText;
+      return;
+    }
+  }
+}
+
+
+/* =========================================================
+   REFRESH CHARTS
+========================================================= */
+
+function refreshCharts(data){
+  chart('cpi', yoySeries(data,'CPIAUCSL'), '--gold', '%');
+  chart('corecpi', yoySeries(data,'CPILFESL'), '--orange', '%');
+  chart('unrate', monthly(data,'UNRATE'), '--red', '%');
+  chart('payroll',
+    monthly(data,'PAYEMS').map(x => ({ ...x, value: x.value / 1000 })),
+    '--green', 'M'
+  );
+  chart('fed', monthly(data,'FEDFUNDS'), '--blue', '%');
+
+  dual(
+    'curve',
+    monthly(data,'DGS2'),
+    monthly(data,'DGS10')
+  );
+
+  chart('real', monthly(data,'DFII10'), '--gold', '%');
+  chart('nfci', monthly(data,'NFCI'), '--orange', '');
+  chart('dollar', monthly(data,'DTWEXBGS'), '--blue', '', 'number');
+  chart('vix', monthly(data,'VIXCLS'), '--red', '', 'number');
+}
+
+
+/* =========================================================
+   MAIN RENDER
+========================================================= */
+
+async function render(j){
+
+  const data = j.data || {};
+
+  const cpi = yoy(data,'CPIAUCSL');
+  const core = yoy(data,'CPILFESL');
+  const pce = yoy(data,'PCEPI');
+  const corePce = yoy(data,'PCEPILFE');
+
+  const unemployment = val(data,'UNRATE');
+  const payroll = val(data,'PAYEMS');
+  const fed = val(data,'FEDFUNDS');
+  const y2 = val(data,'DGS2');
+  const y10 = val(data,'DGS10');
+  const real = val(data,'DFII10');
+  const curve = val(data,'T10Y2Y');
+  const dollar = val(data,'DTWEXBGS');
+  const vix = val(data,'VIXCLS');
+  const nfci = val(data,'NFCI');
+  const gdp = val(data,'GDP');
+  const oil = val(data,'DCOILWTICO');
+  const sp = val(data,'SP500');
+  const nasdaq = val(data,'NASDAQCOM');
+  const wal = val(data,'WALCL');
+
+  /* ---------------------------------
+     Overview
+  ---------------------------------- */
+
+  [
+    ['CPI · تورم سالانه', pct(cpi), 'CPIAUCSL'],
+    ['بیکاری', pct(unemployment), 'UNRATE'],
+    ['Fed Funds', pct(fed), 'FEDFUNDS'],
+    ['بازده ۱۰ ساله', pct(y10), 'DGS10']
+  ].forEach(item =>
+    add($('top'), item[0], item[1], last(data,item[2])?.date || '—')
+  );
+
+  [
+    ['Core CPI', pct(core), 'CPILFESL'],
+    ['Core PCE', pct(corePce), 'PCEPILFE'],
+    ['Real Yield 10Y', pct(real), 'DFII10'],
+    ['NFCI', num(nfci), 'NFCI']
+  ].forEach(item =>
+    add($('extra'), item[0], item[1], last(data,item[2])?.date || '—')
+  );
+
+  /* ---------------------------------
+     Inflation
+  ---------------------------------- */
+
+  [
+    ['CPI', pct(cpi), 'CPIAUCSL'],
+    ['Core CPI', pct(core), 'CPILFESL'],
+    ['PCE', pct(pce), 'PCEPI'],
+    ['Core PCE', pct(corePce), 'PCEPILFE']
+  ].forEach(item =>
+    add($('infl'), item[0], item[1], last(data,item[2])?.date || '—')
+  );
+
+  /* ---------------------------------
+     Labor
+  ---------------------------------- */
+
+  [
+    ['بیکاری', pct(unemployment), 'UNRATE'],
+    ['اشتغال', payroll == null ? '—' : (payroll / 1000).toFixed(2) + 'M', 'PAYEMS'],
+    ['GDP', gdp == null ? '—' : gdp.toLocaleString(), 'GDP'],
+    ['رشد GDP · YoY', pct(yoy(data,'GDP')), 'GDP']
+  ].forEach(item =>
+    add($('laborCards'), item[0], item[1], last(data,item[2])?.date || '—')
+  );
+
+  /* ---------------------------------
+     Rates
+  ---------------------------------- */
+
+  [
+    ['Fed Funds', pct(fed), 'FEDFUNDS'],
+    ['۲ ساله', pct(y2), 'DGS2'],
+    ['۱۰ ساله', pct(y10), 'DGS10'],
+    ['شیب ۱۰Y−۲Y', pct(curve), 'T10Y2Y']
+  ].forEach(item =>
+    add($('ratesCards'), item[0], item[1], last(data,item[2])?.date || '—')
+  );
+
+  /* ---------------------------------
+     Markets (فقط FRED)
+  ---------------------------------- */
+
+  [
+    ['دلار وزن‌دار', num(dollar), 'DTWEXBGS'],
+    ['نفت WTI', oil == null ? '—' : '$' + num(oil), 'DCOILWTICO'],
+    ['S&P 500', num(sp), 'SP500'],
+    ['Nasdaq', num(nasdaq), 'NASDAQCOM'],
+    ['VIX', num(vix), 'VIXCLS'],
+    ['Fed Balance Sheet', wal == null ? '—' : wal.toLocaleString(), 'WALCL']
+  ].forEach(item =>
+    add($('marketsCards'), item[0], item[1], last(data,item[2])?.date || '—')
+  );
+
+  /* ---------------------------------
+     طلا و بیت‌کوین — کارت‌های placeholder
+     که بعداً با داده Edge Function دوم پر می‌شوند
+  ---------------------------------- */
+
+  add($('marketsCards'), 'طلا', '—', 'در حال دریافت...');
+  add($('marketsCards'), 'BTC', '—', 'در حال دریافت...');
+
+  /* ---------------------------------
+     Chart headers
+  ---------------------------------- */
+
+  $('cv').textContent = pct(cpi);
+  $('cd').textContent = last(data,'CPIAUCSL')?.date || '—';
+
+  $('ccv').textContent = pct(core);
+  $('ccd').textContent = last(data,'CPILFESL')?.date || '—';
+
+  $('uv').textContent = pct(unemployment);
+  $('ud').textContent = last(data,'UNRATE')?.date || '—';
+
+  $('pv').textContent = payroll == null ? '—' : (payroll / 1000).toFixed(2) + 'M';
+  $('pd').textContent = last(data,'PAYEMS')?.date || '—';
+
+  $('fv').textContent = pct(fed);
+  $('fd').textContent = last(data,'FEDFUNDS')?.date || '—';
+
+  $('curvev').textContent = pct(curve);
+  $('curved').textContent = last(data,'T10Y2Y')?.date || '—';
+
+  $('rv').textContent = pct(real);
+  $('rd').textContent = last(data,'DFII10')?.date || '—';
+
+  $('nv').textContent = num(nfci);
+  $('nd').textContent = last(data,'NFCI')?.date || '—';
+
+  $('dv').textContent = num(dollar);
+  $('dd').textContent = last(data,'DTWEXBGS')?.date || '—';
+
+  $('vv').textContent = num(vix);
+  $('vd').textContent = last(data,'VIXCLS')?.date || '—';
+
+  /* ---------------------------------
+     Charts
+  ---------------------------------- */
+
+  refreshCharts(data);
+
+  /* ---------------------------------
+     طلا و بیت‌کوین از Edge Function دوم
+  ---------------------------------- */
+
+  try{
+    const market = await loadMarketExtras();
+    const gold = market.GOLD;
+    const btc = market.BTC;
+
+    updateMarketCard(
+      'طلا',
+      gold && Number.isFinite(gold.price)
+        ? '$' + gold.price.toLocaleString('en-US', { maximumFractionDigits: 2 })
+        : '—',
+      gold?.updatedAt
+        ? new Date(gold.updatedAt).toLocaleTimeString('fa-IR')
+        : 'در دسترس نیست'
+    );
+
+    updateMarketCard(
+      'BTC',
+      btc && Number.isFinite(btc.price)
+        ? '$' + btc.price.toLocaleString('en-US', { maximumFractionDigits: 0 })
+        : '—',
+      btc?.updatedAt
+        ? new Date(btc.updatedAt).toLocaleTimeString('fa-IR')
+        : 'در دسترس نیست'
+    );
+  } catch(err){
+    console.error('Market extras failed:', err);
+    updateMarketCard('طلا', '—', 'خطا در دریافت');
+    updateMarketCard('BTC', '—', 'خطا در دریافت');
+  }
+
+  /* ---------------------------------
+     Updated
+  ---------------------------------- */
+
+  const fetched = j.fetched_at ? new Date(j.fetched_at) : new Date();
+
+  $('updated').textContent =
+    'به‌روزرسانی: ' + fetched.toLocaleTimeString('fa-IR');
+
+  $('status').textContent =
+    'اتصال API برقرار است · داده واقعی · بدون fallback ساختگی';
+}
+
+
+/* =========================================================
+   NAVIGATION
+========================================================= */
+
+document.querySelectorAll('[data-go]').forEach(button => {
+  button.addEventListener('click', () => {
+    const target = document.getElementById(button.dataset.go);
+    if(target){
+      target.scrollIntoView({ behavior:'smooth', block:'start' });
+    }
+  });
+});
+
+
+/* =========================================================
+   THEME SYNC
+========================================================= */
+
+const themeObserver = new MutationObserver(mutations => {
+  const changed = mutations.some(
+    m => m.type === 'attributes' && m.attributeName === 'data-theme'
+  );
+  if(changed && window.__macroData){
+    refreshCharts(window.__macroData.data || {});
+  }
+});
+
+themeObserver.observe(document.documentElement,{
+  attributes: true,
+  attributeFilter: ['data-theme']
+});
+
+
+/* =========================================================
+   LOAD API
+========================================================= */
+
+(async () => {
+  try{
+    const response = await fetch(
+      API + '?series=' + IDS,
+      { cache: 'no-store' }
+    );
+
+    if(!response.ok){
+      throw new Error('HTTP ' + response.status);
+    }
+
+    const json = await response.json();
+
+    if(!json.ok){
+      throw new Error(json.error || 'API error');
+    }
+
+    window.__macroData = json;
+    await render(json);
+
+  } catch(error){
+    $('status').textContent =
+      'خطای دریافت داده: ' + error.message;
+    $('updated').textContent = 'خطا';
+  }
+})();
+
+</script>
+</body>
+</html>
