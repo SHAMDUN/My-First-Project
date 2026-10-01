@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>Yahoo API Test</title>
+
+    <style>
+        body {
+            font-family: sans-serif;
+            background: #0B1220;
+            color: white;
+            padding: 40px;
+        }
+
+        button {
+            padding: 12px 20px;
+            cursor: pointer;
+            margin-bottom: 20px;
+        }
+
+        #result {
+            background: #151F30;
+            padding: 20px;
+            border-radius: 12px;
+            white-space: pre-wrap;
+            direction: ltr;
+            text-align: left;
+        }
+
+        .success {
+            color: #4ade80;
+        }
+
+        .error {
+            color: #f87171;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h2>تست Yahoo Finance</h2>
+
+    <button onclick="testYahoo()">تست دریافت قیمت طلا</button>
+
+    <div id="result">هنوز تست انجام نشده...</div>
+
+<script>
+
+async function testYahoo() {
+
+    const result = document.getElementById("result");
+
+    result.className = "";
+    result.textContent = "در حال دریافت داده...";
+
+    const yahooUrl =
+        "https://query1.finance.yahoo.com/v8/finance/chart/GC=F" +
+        "?range=1d" +
+        "&interval=5m" +
+        "&includePrePost=false";
+
+    const proxyUrl =
+        "https://corsproxy.io/?url=" +
+        encodeURIComponent(yahooUrl);
+
+    console.log("Yahoo URL:", yahooUrl);
+    console.log("Proxy URL:", proxyUrl);
+
+    try {
+
+        const response = await fetch(proxyUrl, {
+            method: "GET",
+            cache: "no-store"
+        });
+
+        console.log("HTTP Status:", response.status);
+        console.log("Response:", response);
+
+        if (!response.ok) {
+            throw new Error(
+                "HTTP Error: " + response.status
+            );
+        }
+
+        const json = await response.json();
+
+        console.log("JSON:", json);
+
+        const resultData =
+            json &&
+            json.chart &&
+            json.chart.result &&
+            json.chart.result[0];
+
+        if (!resultData) {
+
+            result.className = "error";
+
+            result.textContent =
+                "Yahoo پاسخ معتبر برنگرداند:\n\n" +
+                JSON.stringify(json, null, 2);
+
+            return;
+        }
+
+        const meta = resultData.meta || {};
+
+        const timestamps =
+            resultData.timestamp || [];
+
+        const quote =
+            resultData.indicators &&
+            resultData.indicators.quote &&
+            resultData.indicators.quote[0];
+
+        const closes =
+            quote && quote.close
+                ? quote.close
+                : [];
+
+        const lastIndex = closes.length - 1;
+
+        const lastPrice =
+            closes[lastIndex];
+
+        result.className = "success";
+
+        result.textContent =
+            "✅ اتصال موفق بود\n\n" +
+
+            "Symbol: " +
+            (meta.symbol || "—") +
+
+            "\n\nقیمت آخر:\n" +
+            lastPrice +
+
+            "\n\nتعداد نقاط:\n" +
+            closes.length +
+
+            "\n\nزمان آخرین نقطه:\n" +
+            (
+                timestamps[lastIndex]
+                    ? new Date(
+                        timestamps[lastIndex] * 1000
+                    ).toLocaleString("fa-IR")
+                    : "—"
+            ) +
+
+            "\n\nCurrency:\n" +
+            (meta.currency || "—") +
+
+            "\n\nExchange:\n" +
+            (meta.exchangeName || "—");
+
+    } catch (error) {
+
+        console.error("TEST ERROR:", error);
+
+        result.className = "error";
+
+        result.textContent =
+            "❌ تست ناموفق بود\n\n" +
+            "Error:\n" +
+            error.message +
+            "\n\nجزئیات بیشتر را در F12 → Console ببین.";
+
+    }
+
+}
+
+</script>
+
+</body>
+</html>
