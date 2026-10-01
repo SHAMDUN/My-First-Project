@@ -12,18 +12,19 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 
 <style>
-:root{
-  --bg:#0B1220;
-  --bg2:#111827;
-  --card:#151F30;
-  --text:#F8FAFC;
-  --muted:#94A3B8;
-  --border:rgba(148,163,184,.14);
-  --gold:#C89B3C;
-  --blue:#3B82F6;
-  --green:#16835B;
-  --red:#D64545;
-  --orange:#D88A16;
+body{
+  margin:0;
+  background-color:var(--bg);
+  background-image:
+    radial-gradient(circle at 0% 0%, rgba(212, 175, 55, 0.08) 0%, transparent 40%),
+    radial-gradient(circle at 100% 100%, rgba(59, 130, 246, 0.06) 0%, transparent 40%),
+    linear-gradient(rgba(255, 255, 255, 0.015) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
+  background-size: 100% 100%, 100% 100%, 60px 60px, 60px 60px;
+  background-attachment: fixed;
+  color:var(--text);
+  font-family:Vazirmatn,Tahoma,sans-serif;
+  font-size:16px;
 }
 [data-theme="light"]{
   --bg:#F7F8FA;
