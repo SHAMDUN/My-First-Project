@@ -520,6 +520,7 @@
             border: 2px solid var(--gold);
             background: linear-gradient(135deg, rgba(212, 175, 55, 0.1), rgba(212, 175, 55, 0.02));
         }
+        .compare-loading{padding:22px;text-align:center;color:var(--gray);font-size:12px}.compare-asset-card{background:rgba(10,10,15,.45);border:1px solid rgba(148,163,184,.14);border-radius:16px;padding:16px}.compare-asset-head{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;margin-bottom:14px}.compare-asset-name{font-weight:800;color:var(--white);font-size:14px}.compare-asset-date{color:var(--gray);font-size:10px;margin-top:4px}.compare-actual{font-weight:800;font-size:15px;white-space:nowrap}.compare-benchmarks{display:grid;grid-template-columns:repeat(4,minmax(130px,1fr));gap:8px}.compare-benchmark{border:1px solid rgba(148,163,184,.12);background:rgba(255,255,255,.025);border-radius:11px;padding:10px}.compare-benchmark.best{border-color:rgba(212,175,55,.5);box-shadow:inset 0 0 0 1px rgba(212,175,55,.12)}.compare-benchmark .b-name{font-size:10px;color:var(--gray);margin-bottom:7px}.compare-benchmark .b-ret{font-size:14px;font-weight:800}.compare-benchmark .b-meta{font-size:9px;color:var(--gray);margin-top:4px;line-height:1.6}.compare-source{font-size:10px;color:var(--gray);margin-top:12px}@media(max-width:900px){.compare-benchmarks{grid-template-columns:repeat(2,minmax(140px,1fr))}}@media(max-width:520px){.compare-benchmarks{grid-template-columns:1fr}}
         .modal-overlay {
             display: none;
             position: fixed;
@@ -670,7 +671,7 @@
             .quick-btn { font-size: 11px; padding: 6px 10px; }
         }
     
-        .portfolio-table-card{margin:20px 0;background:var(--bg-card);border:1px solid rgba(148,163,184,.14);border-radius:18px;overflow:hidden}
+        .portfolio-table-card{margin:20px 0;background:var(--bg-card);border:1px solid rgba(148,163,184,.14);border-radius:18px;overflow:hidden}.table-scroll{width:100%;overflow-x:auto;overflow-y:hidden;-webkit-overflow-scrolling:touch;scrollbar-width:thin;overscroll-behavior-x:contain}.table-scroll::-webkit-scrollbar{height:8px}.table-scroll::-webkit-scrollbar-thumb{background:rgba(212,175,55,.35);border-radius:99px}.table-scroll::-webkit-scrollbar-track{background:rgba(255,255,255,.03)}
         .table-card-head{padding:18px 20px;display:flex;justify-content:space-between;align-items:center;gap:15px;border-bottom:1px solid rgba(148,163,184,.14)}
         .table-subtitle{font-size:12px;color:var(--gray);margin-top:4px}
         .usd-rate-badge{font-size:12px;color:var(--gray);padding:9px 12px;border:1px solid rgba(148,163,184,.14);border-radius:10px;white-space:nowrap}.usd-rate-badge strong{color:var(--gold)}
@@ -793,10 +794,10 @@
                 { symbol: 'coin-quarter', name: 'ربع سکه', unit: 'عدد', icon: '🥉' },
                 { symbol: 'coin-1g', name: 'سکه گرمی', unit: 'عدد', icon: '⭕' },
                 { symbol: 'silver999', name: 'نقره ۹۹۹', unit: 'گرم', icon: '🥈' },
-                { symbol: 'ounce-gold', name: 'انس طلا', unit: 'انس', currency: 'USD', tv: 'OANDA:XAUUSD', icon: '🏅' },
-                { symbol: 'ounce-silver', name: 'انس نقره', unit: 'انس', currency: 'USD', tv: 'OANDA:XAGUSD', icon: '🥈' },
-                { symbol: 'ounce-platinum', name: 'انس پلاتین', unit: 'انس', currency: 'USD', tv: 'OANDA:XPTUSD', icon: '🔶' },
-                { symbol: 'ounce-palladium', name: 'انس پالادیوم', unit: 'انس', currency: 'USD', tv: 'OANDA:XPDUSD', icon: '💎' }
+                { symbol: 'ounce-gold', name: 'انس طلا', unit: 'انس', icon: '🏅' },
+                { symbol: 'ounce-silver', name: 'انس نقره', unit: 'انس', icon: '🥈' },
+                { symbol: 'ounce-platinum', name: 'انس پلاتین', unit: 'انس', icon: '🔶' },
+                { symbol: 'ounce-palladium', name: 'انس پالادیوم', unit: 'انس', icon: '💎' }
             ]
         },
         currency: {
@@ -885,7 +886,6 @@
     let currentUser = null;
     let portfolio = [];
     let priceCache = {};
-    let changeCache = {};
     let selectedStock = null;
     let stockSymbolsLoaded = false;
     let pieChart = null;
@@ -993,7 +993,6 @@
                     unit: 'سهم',
                     icon: '📊',
                     currentPrice: s.pc ? s.pc / 10 : 0,
-                    changePercent: s.pcp ?? null,
                     isin: s.isin
                 }));
 
@@ -1002,8 +1001,7 @@
                     name: s.l30 ? s.l30.trim() : s.l18.trim(),
                     unit: 'واحد',
                     icon: '💼',
-                    currentPrice: s.pc ? s.pc / 10 : 0,
-                    changePercent: s.pcp ?? null
+                    currentPrice: s.pc ? s.pc / 10 : 0
                 }));
 
                 stockSymbolsLoaded = true;
@@ -1015,36 +1013,35 @@
 
         async function loadPrices() {
             priceCache = {};
-            changeCache = {};
 
             try {
                 const data = await fetchBrsApi('https://Api.BrsApi.ir/Market/Gold_Currency.php');
                 if (data.gold && Array.isArray(data.gold)) {
                     data.gold.forEach(g => {
-                        if (g.symbol === 'IR_GOLD_18K') { priceCache['gold18'] = g.price; changeCache['gold18'] = Number(g.change_percent ?? g.percent ?? 0); }
-                        if (g.symbol === 'IR_GOLD_24K') { priceCache['gold24'] = g.price; changeCache['gold24'] = Number(g.change_percent ?? g.percent ?? 0); }
-                        if (g.symbol === 'IR_GOLD_MELTED') { priceCache['gold-melted'] = g.price; changeCache['gold-melted'] = Number(g.change_percent ?? g.percent ?? 0); }
-                        if (g.symbol === 'IR_COIN_EMAMI') { priceCache['coin-emami'] = g.price; changeCache['coin-emami'] = Number(g.change_percent ?? g.percent ?? 0); }
-                        if (g.symbol === 'IR_COIN_BAHAR') { priceCache['coin-bahar'] = g.price; changeCache['coin-bahar'] = Number(g.change_percent ?? g.percent ?? 0); }
-                        if (g.symbol === 'IR_COIN_HALF') { priceCache['coin-half'] = g.price; changeCache['coin-half'] = Number(g.change_percent ?? g.percent ?? 0); }
-                        if (g.symbol === 'IR_COIN_QUARTER') { priceCache['coin-quarter'] = g.price; changeCache['coin-quarter'] = Number(g.change_percent ?? g.percent ?? 0); }
-                        if (g.symbol === 'IR_COIN_1G') { priceCache['coin-1g'] = g.price; changeCache['coin-1g'] = Number(g.change_percent ?? g.percent ?? 0); }
+                        if (g.symbol === 'IR_GOLD_18K') priceCache['gold18'] = g.price;
+                        if (g.symbol === 'IR_GOLD_24K') priceCache['gold24'] = g.price;
+                        if (g.symbol === 'IR_GOLD_MELTED') priceCache['gold-melted'] = g.price;
+                        if (g.symbol === 'IR_COIN_EMAMI') priceCache['coin-emami'] = g.price;
+                        if (g.symbol === 'IR_COIN_BAHAR') priceCache['coin-bahar'] = g.price;
+                        if (g.symbol === 'IR_COIN_HALF') priceCache['coin-half'] = g.price;
+                        if (g.symbol === 'IR_COIN_QUARTER') priceCache['coin-quarter'] = g.price;
+                        if (g.symbol === 'IR_COIN_1G') priceCache['coin-1g'] = g.price;
                     });
                 }
                 if (data.currency && Array.isArray(data.currency)) {
                     data.currency.forEach(c => {
-                        if (c.symbol === 'USD') { priceCache['usd'] = c.price; changeCache['usd'] = Number(c.change_percent ?? c.percent ?? 0); }
-                        if (c.symbol === 'USDT_IRT') { priceCache['usdt'] = c.price; changeCache['usdt'] = Number(c.change_percent ?? c.percent ?? 0); }
-                        if (c.symbol === 'EUR') { priceCache['eur'] = c.price; changeCache['eur'] = Number(c.change_percent ?? c.percent ?? 0); }
-                        if (c.symbol === 'GBP') { priceCache['gbp'] = c.price; changeCache['gbp'] = Number(c.change_percent ?? c.percent ?? 0); }
-                        if (c.symbol === 'AED') { priceCache['aed'] = c.price; changeCache['aed'] = Number(c.change_percent ?? c.percent ?? 0); }
-                        if (c.symbol === 'TRY') { priceCache['try'] = c.price; changeCache['try'] = Number(c.change_percent ?? c.percent ?? 0); }
-                        if (c.symbol === 'CNY') { priceCache['cny'] = c.price; changeCache['cny'] = Number(c.change_percent ?? c.percent ?? 0); }
-                        if (c.symbol === 'CAD') { priceCache['cad'] = c.price; changeCache['cad'] = Number(c.change_percent ?? c.percent ?? 0); }
-                        if (c.symbol === 'CHF') { priceCache['chf'] = c.price; changeCache['chf'] = Number(c.change_percent ?? c.percent ?? 0); }
-                        if (c.symbol === 'JPY') { priceCache['jpy'] = c.price; changeCache['jpy'] = Number(c.change_percent ?? c.percent ?? 0); }
-                        if (c.symbol === 'SAR') { priceCache['sar'] = c.price; changeCache['sar'] = Number(c.change_percent ?? c.percent ?? 0); }
-                        if (c.symbol === 'QAR') { priceCache['qar'] = c.price; changeCache['qar'] = Number(c.change_percent ?? c.percent ?? 0); }
+                        if (c.symbol === 'USD') priceCache['usd'] = c.price;
+                        if (c.symbol === 'USDT_IRT') priceCache['usdt'] = c.price;
+                        if (c.symbol === 'EUR') priceCache['eur'] = c.price;
+                        if (c.symbol === 'GBP') priceCache['gbp'] = c.price;
+                        if (c.symbol === 'AED') priceCache['aed'] = c.price;
+                        if (c.symbol === 'TRY') priceCache['try'] = c.price;
+                        if (c.symbol === 'CNY') priceCache['cny'] = c.price;
+                        if (c.symbol === 'CAD') priceCache['cad'] = c.price;
+                        if (c.symbol === 'CHF') priceCache['chf'] = c.price;
+                        if (c.symbol === 'JPY') priceCache['jpy'] = c.price;
+                        if (c.symbol === 'SAR') priceCache['sar'] = c.price;
+                        if (c.symbol === 'QAR') priceCache['qar'] = c.price;
                     });
                 }
             } catch (e) { console.error('BrsApi Gold/Currency error:', e); }
@@ -1053,10 +1050,10 @@
                 const data = await fetchBrsApi('https://Api.BrsApi.ir/Market/Commodity.php');
                 if (data.metal_precious && Array.isArray(data.metal_precious)) {
                     data.metal_precious.forEach(m => {
-                        if (m.symbol === 'XAUUSD') { priceCache['ounce-gold'] = m.price; changeCache['ounce-gold'] = Number(m.change_percent ?? m.percent ?? 0); }
-                        if (m.symbol === 'XAGUSD') { priceCache['ounce-silver'] = m.price; changeCache['ounce-silver'] = Number(m.change_percent ?? m.percent ?? 0); }
-                        if (m.symbol === 'XPTUSD') { priceCache['ounce-platinum'] = m.price; changeCache['ounce-platinum'] = Number(m.change_percent ?? m.percent ?? 0); }
-                        if (m.symbol === 'XPDUSD') { priceCache['ounce-palladium'] = m.price; changeCache['ounce-palladium'] = Number(m.change_percent ?? m.percent ?? 0); }
+                        if (m.symbol === 'XAUUSD') priceCache['ounce-gold'] = m.price;
+                        if (m.symbol === 'XAGUSD') priceCache['ounce-silver'] = m.price;
+                        if (m.symbol === 'XPTUSD') priceCache['ounce-platinum'] = m.price;
+                        if (m.symbol === 'XPDUSD') priceCache['ounce-palladium'] = m.price;
                         if (m.symbol === 'XAUUSD') priceCache['xauusd'] = m.price;
                         if (m.symbol === 'XAGUSD') priceCache['xagusd'] = m.price;
                         if (m.symbol === 'XPTUSD') priceCache['xptusd'] = m.price;
@@ -1089,13 +1086,13 @@
             }
 
             if (stockSymbolsLoaded) {
-                ASSETS.stock.items.forEach(s => { if (s.currentPrice) { priceCache[s.symbol] = s.currentPrice; changeCache[s.symbol] = Number(s.changePercent); } });
-                ASSETS.fund.items.forEach(s => { if (s.currentPrice) { priceCache[s.symbol] = s.currentPrice; changeCache[s.symbol] = Number(s.changePercent); } });
+                ASSETS.stock.items.forEach(s => { if (s.currentPrice) priceCache[s.symbol] = s.currentPrice; });
+                ASSETS.fund.items.forEach(s => { if (s.currentPrice) priceCache[s.symbol] = s.currentPrice; });
             }
 
             try {
                 const ids = 'bitcoin,ethereum,tether-gold,pax-gold,tether,usd-coin,solana,ripple,dogecoin,cardano,binancecoin,tron,avalanche-2';
-                const res = await fetch(`https://api.coingecko.com/api/v3/simple/price?ids=${ids}&vs_currencies=usd&include_24hr_change=true`);
+                const res = await fetch(`https://api.coingecko.com/api/v3/simple/price?ids=${ids}&vs_currencies=usd`);
                 const data = await res.json();
                 if (data.bitcoin) priceCache['btc'] = data.bitcoin.usd;
                 if (data.ethereum) priceCache['eth'] = data.ethereum.usd;
@@ -1110,7 +1107,6 @@
                 if (data.binancecoin) priceCache['bnb'] = data.binancecoin.usd;
                 if (data.tron) priceCache['trx'] = data.tron.usd;
                 if (data['avalanche-2']) priceCache['avax'] = data['avalanche-2'].usd;
-                Object.entries({btc:'bitcoin',eth:'ethereum',xaut:'tether-gold',paxg:'pax-gold','usdt-erc':'tether',usdc:'usd-coin',sol:'solana',xrp:'ripple',doge:'dogecoin',ada:'cardano',bnb:'binancecoin',trx:'tron',avax:'avalanche-2'}).forEach(([k,id])=>{if(data[id]?.usd_24h_change!=null)changeCache[k]=Number(data[id].usd_24h_change)});
             } catch (e) { console.error('CoinGecko error:', e); }
 
             console.log('📊 Prices loaded:', priceCache);
@@ -1200,7 +1196,6 @@
                 const liveRaw = priceCache[item.asset_symbol];
                 const hasLive = Number.isFinite(Number(liveRaw)) && Number(liveRaw) > 0;
                 const currentPrice = hasLive ? Number(liveRaw) : null;
-                const changePercent = Number.isFinite(Number(changeCache[item.asset_symbol])) ? Number(changeCache[item.asset_symbol]) : null;
                 const investedToman = toToman(quantity * buyPrice, currency);
                 const valueToman = hasLive ? toToman(quantity * currentPrice, currency) : null;
                 const profit = (investedToman !== null && valueToman !== null) ? valueToman - investedToman : null;
@@ -1225,8 +1220,7 @@
                     holdingDuration: holdingDuration(item.buy_date),
                     hasLivePrice: hasLive,
                     liveUnit: currencyLabel(currency),
-                    tvSymbol: def?.tv || null,
-                    changePercent
+                    tvSymbol: def?.tv || null
                 };
             });
             const totalProfit = totalValue - totalInvested;
@@ -1370,6 +1364,12 @@
                     </div>
                 </div>
 
+                <div class="compare-section">
+                    <div class="compare-title">📊 مقایسه با بازارهای مرجع در تاریخ خرید</div>
+                    <div class="compare-desc">برای هر دارایی، بازده آن از تاریخ خرید خودش با چند بازار مرجع مقایسه می‌شود. قیمت مبنا از همان تاریخ گرفته می‌شود و مقدار نهایی بر اساس همان سرمایه اولیه محاسبه می‌شود؛ اگر داده تاریخی منبع در دسترس نباشد، عدد ساختگی نمایش داده نمی‌شود.</div>
+                    <div id="compareGrid" class="compare-grid"><div class="compare-loading">⏳ در حال دریافت تاریخچه بازارها...</div></div>
+                </div>
+
                 <div class="chart-section">
                     <div class="chart-grid">
                         <div>
@@ -1410,6 +1410,7 @@
             setTimeout(() => {
                 renderPieChart(stats);
                 renderBarChart(stats);
+                renderCompare(stats);
             }, 100);
         }
 
@@ -1437,7 +1438,7 @@
                     <td>${item.currentValue === null ? '—' : formatBigNum(item.currentValue) + ' تومان'}</td>
                     <td>${item.holdingDuration}</td>
                     <td class="${pClass}"><strong>${profitText}</strong></td>
-                    <td><button class="table-chart-btn" onclick="toggleAssetChart('${String(item.id).replace(/'/g,"\\'")}')" title="مشاهده چارت دارایی">${trendSvg(item.changePercent)}</button></td>
+                    <td><button class="table-chart-btn" onclick="toggleAssetChart('${String(item.id).replace(/'/g,"\\'")}')" title="مشاهده چارت دارایی">${trendSvg(item.profitPercent)}</button></td>
                     <td><button class="delete-btn" onclick="deleteAsset('${String(item.id).replace(/'/g,"\\'")}')">حذف</button></td>
                 </tr>
                 <tr id="chart-row-${escapeHtml(String(item.id))}" class="asset-chart-row"><td colspan="11"><div class="asset-chart-panel"><div class="asset-chart-head"><strong>${escapeHtml(item.asset_name)} — نمودار قیمت</strong><span>${item.hasLivePrice ? priceText : 'قیمت زنده در دسترس نیست'}</span></div><div class="chart-periods"><button class="chart-period active" onclick="loadAssetChart('${String(item.id).replace(/'/g,"\\'")}','1D',this)">روزانه</button><button class="chart-period" onclick="loadAssetChart('${String(item.id).replace(/'/g,"\\'")}','1W',this)">هفتگی</button><button class="chart-period" onclick="loadAssetChart('${String(item.id).replace(/'/g,"\\'")}','1M',this)">ماهانه</button><button class="chart-period" onclick="loadAssetChart('${String(item.id).replace(/'/g,"\\'")}','3M',this)">۳ ماه</button><button class="chart-period" onclick="loadAssetChart('${String(item.id).replace(/'/g,"\\'")}','6M',this)">۶ ماه</button><button class="chart-period" onclick="loadAssetChart('${String(item.id).replace(/'/g,"\\'")}','1Y',this)">سالانه</button></div><div class="asset-chart-canvas" id="asset-chart-${escapeHtml(String(item.id))}"><div class="chart-message">برای دریافت نمودار، یک بازه زمانی را انتخاب کنید.</div></div></div></td></tr>`;
@@ -1454,330 +1455,167 @@
             return period === '1D' ? '1d' : period === '1W' ? '1w' : period === '1M' ? '1M' : '1d';
         }
 
+        const tgjuHistoryCache = {};
+        const compareHistoryCache = {};
+
+        const TGJU_HISTORY_SLUGS = {
+            gold18: 'geram18', gold24: 'geram24', 'gold-melted': 'gold-mesghal',
+            'coin-emami': 'seke', 'coin-bahar': 'seke-bahar-azadi', 'coin-half': 'nim-seke',
+            'coin-quarter': 'rob-seke', 'coin-1g': 'seke-gerami', silver999: 'silver-999',
+            'ounce-gold': 'ons', 'ounce-silver': 'silver', usd: 'price_dollar_rl', eur: 'price_eur',
+            gbp: 'price_gbp', aed: 'price_aed', try: 'price_try', cny: 'price_cny',
+            cad: 'price_cad', chf: 'price_chf', jpy: 'price_jpy', sar: 'price_sar', qar: 'price_qar',
+            bourse: 'bourse'
+        };
+
+        function cleanNumeric(v) {
+            if (v === null || v === undefined) return null;
+            const n = Number(String(v).replace(/<[^>]*>/g,'').replace(/,/g,'').replace(/[^0-9.\-]/g,''));
+            return Number.isFinite(n) ? n : null;
+        }
+
+        function parseTgjuRows(payload) {
+            const rows = Array.isArray(payload?.data) ? payload.data : [];
+            return rows.map(row => {
+                if (!Array.isArray(row)) return null;
+                const close = cleanNumeric(row[3]);
+                const greg = String(row[6] || '').replace(/<[^>]*>/g,'').trim();
+                const jalali = String(row[7] || '').replace(/<[^>]*>/g,'').trim();
+                const iso = /^\d{4}\/\d{2}\/\d{2}$/.test(greg) ? greg.replaceAll('/','-') : null;
+                return { open:cleanNumeric(row[0]), low:cleanNumeric(row[1]), high:cleanNumeric(row[2]), close, greg, jalali, iso };
+            }).filter(x => x && x.close !== null && (x.iso || x.jalali));
+        }
+
+        async function fetchTgjuHistory(slug) {
+            if (tgjuHistoryCache[slug]) return tgjuHistoryCache[slug];
+            const params = new URLSearchParams({lang:'fa',order_dir:'asc',draw:'2'});
+            for(let i=0;i<8;i++){
+                params.append(`columns[${i}][data]`,String(i)); params.append(`columns[${i}][name]`,'');
+                params.append(`columns[${i}][searchable]`,'true'); params.append(`columns[${i}][orderable]`,'true');
+                params.append(`columns[${i}][search][value]`,''); params.append(`columns[${i}][search][regex]`,'false');
+            }
+            params.append('start','0'); params.append('length','5000'); params.append('search',''); params.append('order_col',''); params.append('order_dir',''); params.append('from',''); params.append('to',''); params.append('convert_to_ad','1'); params.append('_',String(Date.now()));
+            const res = await fetch(`https://api.tgju.org/v1/market/indicator/summary-table-data/${encodeURIComponent(slug)}?${params.toString()}`);
+            if (!res.ok) throw new Error(`TGJU ${res.status}`);
+            const data = await res.json();
+            const rows = parseTgjuRows(data);
+            if (!rows.length) throw new Error('empty-history');
+            tgjuHistoryCache[slug] = rows;
+            return rows;
+        }
+
+        function isoFromJalaliDate(iso) {
+            return iso || null;
+        }
+
+        function findHistoryAtOrBefore(rows, isoDate) {
+            if (!isoDate) return null;
+            let best = null;
+            for (const r of rows) {
+                if (r.iso && r.iso <= isoDate) best = r;
+            }
+            return best;
+        }
+
+        async function fetchCryptoHistoryAtDate(symbol, isoDate) {
+            const map={btc:'bitcoin',eth:'ethereum',sol:'solana',xrp:'ripple',doge:'dogecoin',ada:'cardano',bnb:'binancecoin',trx:'tron',avax:'avalanche-2',xaut:'tether-gold',paxg:'pax-gold'};
+            const id=map[symbol]; if(!id || !isoDate) throw new Error('unsupported-crypto');
+            const [y,m,d]=isoDate.split('-');
+            const date=`${d}-${m}-${y}`;
+            const res=await fetch(`https://api.coingecko.com/api/v3/coins/${id}/history?date=${date}&localization=false`);
+            if(!res.ok) throw new Error(`CoinGecko ${res.status}`);
+            const data=await res.json();
+            const p=Number(data?.market_data?.current_price?.usd);
+            if(!Number.isFinite(p) || p<=0) throw new Error('no-crypto-price');
+            return p;
+        }
+
+        async function getBenchmarkHistory(key) {
+            if (compareHistoryCache[key]) return compareHistoryCache[key];
+            if (key === 'btc') {
+                compareHistoryCache[key] = { type:'crypto', label:'بیت‌کوین', icon:'₿' };
+                return compareHistoryCache[key];
+            }
+            const slug = key === 'gold' ? 'geram18' : key === 'usd' ? 'price_dollar_rl' : key === 'bourse' ? 'bourse' : null;
+            if (!slug) throw new Error('unsupported-benchmark');
+            const rows = await fetchTgjuHistory(slug);
+            const latest = rows[rows.length-1]?.close;
+            if (!Number.isFinite(latest)) throw new Error('no-latest');
+            compareHistoryCache[key] = { type:'tgju', rows, latest, label:key==='gold'?'طلای ۱۸ عیار':key==='usd'?'دلار آزاد':'شاخص کل بورس', icon:key==='gold'?'🥇':key==='usd'?'💵':'📊' };
+            return compareHistoryCache[key];
+        }
+
+        async function benchmarkReturn(key, buyDate) {
+            if (!buyDate) return null;
+            const h = await getBenchmarkHistory(key);
+            if (h.type === 'crypto') {
+                const buy = await fetchCryptoHistoryAtDate('btc', buyDate);
+                const latestRes = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd');
+                if(!latestRes.ok) throw new Error('crypto-live');
+                const latest=Number((await latestRes.json())?.bitcoin?.usd);
+                if(!buy || !latest) return null;
+                return { buy, latest, percent:(latest/buy-1)*100, label:h.label, icon:h.icon, source:'CoinGecko' };
+            }
+            const base=findHistoryAtOrBefore(h.rows,buyDate);
+            if(!base || !Number.isFinite(base.close) || !Number.isFinite(h.latest)) return null;
+            return { buy:base.close, latest:h.latest, percent:(h.latest/base.close-1)*100, label:h.label, icon:h.icon, source:'TGJU' };
+        }
+
         async function loadAssetChart(id, period = '1D', button = null) {
             const item = calculateStats().items.find(x => String(x.id) === String(id));
             const box = document.getElementById(`asset-chart-${id}`);
             if (!item || !box) return;
-            if (button) {
-                button.parentElement.querySelectorAll('.chart-period').forEach(b => b.classList.remove('active'));
-                button.classList.add('active');
-            }
-            box.innerHTML = '<div class="chart-message">در حال دریافت تاریخچه قیمت زنده…</div>';
+            if (button) { button.parentElement.querySelectorAll('.chart-period').forEach(b=>b.classList.remove('active')); button.classList.add('active'); }
+            box.innerHTML='<div class="chart-message">در حال دریافت تاریخچه قیمت زنده…</div>';
+
             if (item.asset_category === 'stock' || item.asset_category === 'fund') {
                 try {
-                    const data = await fetchBrsApi(`https://Api.BrsApi.ir/Tsetmc/Candlestick.php?l18=${encodeURIComponent(item.asset_symbol)}&type=2`);
-                    const rows = Array.isArray(data?.candle_daily) ? data.candle_daily : [];
-                    const sliced = period === '1W' ? rows.slice(-5) : period === '1M' ? rows.slice(-22) : period === '3M' ? rows.slice(-66) : period === '6M' ? rows.slice(-132) : period === '1Y' ? rows.slice(-264) : rows.slice(-1);
-                    if (!sliced.length) throw new Error('no-history');
-                    renderLineChart(box, sliced.map(r => Number(r.close) / 10).filter(Boolean), '#3b82f6');
-                    return;
-                } catch(e) { box.innerHTML='<div class="chart-message">تاریخچه این نماد از منبع بازار دریافت نشد.</div>'; return; }
+                    const data=await fetchBrsApi(`https://Api.BrsApi.ir/Tsetmc/Candlestick.php?l18=${encodeURIComponent(item.asset_symbol)}&type=2`);
+                    const rows=Array.isArray(data?.candle_daily)?data.candle_daily:[];
+                    const days=period==='1W'?5:period==='1M'?22:period==='3M'?66:period==='6M'?132:period==='1Y'?264:30;
+                    const sliced=rows.slice(-days).map(r=>({date:r.date||r.dEven,close:Number(r.close)/10})).filter(r=>r.close>0);
+                    if(!sliced.length)throw new Error('no-history');
+                    renderLineChart(box,sliced.map(x=>x.close),'#3b82f6',sliced.map(x=>x.date)); return;
+                } catch(e){box.innerHTML='<div class="chart-message">تاریخچه این نماد از منبع بازار دریافت نشد.</div>';return;}
             }
             if (item.asset_category === 'crypto') {
-                const pairMap={btc:'BTCUSDT',eth:'ETHUSDT',sol:'SOLUSDT',xrp:'XRPUSDT',doge:'DOGEUSDT',ada:'ADAUSDT',bnb:'BNBUSDT',trx:'TRXUSDT',avax:'AVAXUSDT',xaut:'XAUTUSDT',paxg:'PAXGUSDT'};
-                const pair=pairMap[item.asset_symbol];
-                if (!pair) { box.innerHTML='<div class="chart-message">تاریخچه این دارایی در منبع زنده موجود نیست.</div>'; return; }
                 try {
-                    const interval=chartIntervalFor(period);
-                    const limit=period==='1D'?60:period==='1W'?90:period==='1M'?180:period==='3M'?220:period==='6M'?260:365;
-                    const res=await fetch(`https://api.binance.com/api/v3/klines?symbol=${pair}&interval=${interval}&limit=${limit}`);
-                    const rows=await res.json();
-                    const vals=Array.isArray(rows)?rows.map(x=>Number(x[4])).filter(Boolean):[];
-                    if(!vals.length)throw new Error('no-history');
-                    renderLineChart(box,vals,'#d4af37'); return;
+                    const pairMap={btc:'BTCUSDT',eth:'ETHUSDT',sol:'SOLUSDT',xrp:'XRPUSDT',doge:'DOGEUSDT',ada:'ADAUSDT',bnb:'BNBUSDT',trx:'TRXUSDT',avax:'AVAXUSDT',xaut:'XAUTUSDT',paxg:'PAXGUSDT'};
+                    const pair=pairMap[item.asset_symbol]; if(!pair)throw new Error('unsupported');
+                    const interval=chartIntervalFor(period); const limit=period==='1D'?60:period==='1W'?90:period==='1M'?180:period==='3M'?220:period==='6M'?260:365;
+                    const res=await fetch(`https://api.binance.com/api/v3/klines?symbol=${pair}&interval=${interval}&limit=${limit}`); if(!res.ok)throw new Error('binance');
+                    const rows=await res.json(); const vals=Array.isArray(rows)?rows.map(x=>Number(x[4])).filter(Boolean):[]; const labels=Array.isArray(rows)?rows.map(x=>new Date(Number(x[0])).toLocaleDateString('fa-IR-u-ca-persian')):[];
+                    if(!vals.length)throw new Error('no-history'); renderLineChart(box,vals,'#d4af37',labels); return;
                 }catch(e){box.innerHTML='<div class="chart-message">تاریخچه این ارز دیجیتال از منبع زنده دریافت نشد.</div>';return;}
             }
-            if (item.tvSymbol) {
-                box.innerHTML='';
-                const host=document.createElement('div'); host.style.width='100%'; host.style.height='100%'; host.id=`tv-${id}-${Date.now()}`; box.appendChild(host);
-                if (window.TradingView) {
-                    new TradingView.widget({container_id:host.id,symbol:item.tvSymbol,interval:period==='1D'?'D':period==='1W'?'W':'M',timezone:'Asia/Tehran',theme:document.documentElement.getAttribute('data-theme')==='light'?'light':'dark',style:'1',locale:'en',toolbar_bg:'#1a1a24',hide_side_toolbar:true,allow_symbol_change:false,hide_top_toolbar:false,save_image:false,width:'100%',height:'100%'});
-                } else box.innerHTML='<div class="chart-message">ماژول نمودار بازار جهانی بارگذاری نشد.</div>';
-                return;
+            const tgjuSlug=TGJU_HISTORY_SLUGS[item.asset_symbol] || (item.asset_symbol==='xauusd'?'ons':null);
+            if(tgjuSlug){
+                try{const rows=await fetchTgjuHistory(tgjuSlug);const days=period==='1W'?5:period==='1M'?22:period==='3M'?66:period==='6M'?132:period==='1Y'?264:30;const sliced=rows.slice(-days);renderLineChart(box,sliced.map(x=>x.close),'#d4af37',sliced.map(x=>x.jalali||x.greg));return;}catch(e){}
             }
-            box.innerHTML='<div class="chart-message">برای این دارایی تاریخچه قیمت زنده تعریف نشده است.</div>';
+            box.innerHTML='<div class="chart-message">تاریخچه قیمت زنده برای این دارایی در منبع فعلی در دسترس نیست.</div>';
         }
 
-        function renderLineChart(box, values, borderColor) {
-            box.innerHTML='<canvas></canvas>';
-            const canvas=box.querySelector('canvas');
-            new Chart(canvas,{type:'line',data:{labels:values.map((_,i)=>toFa(i+1)),datasets:[{data:values,borderColor,backgroundColor:'rgba(59,130,246,.08)',borderWidth:2,pointRadius:0,tension:.25,fill:true}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{mode:'index',intersect:false}},scales:{x:{display:false},y:{ticks:{color:'#94A3B8',font:{family:'Vazirmatn'}}}}}});
-        }
-
-        // ==========================================
-        // Render Categories
-        // ==========================================
-        function renderCategories(stats) {
-            const grouped = {};
-            stats.items.forEach(item => {
-                if (!grouped[item.asset_category]) {
-                    grouped[item.asset_category] = [];
-                }
-                grouped[item.asset_category].push(item);
-            });
-
-            return Object.entries(grouped).map(([catKey, items]) => {
-                const cat = ASSETS[catKey];
-                if (!cat) return '';
-
-                const categoryTotal = items.reduce((sum, i) => sum + (i.currentValue || 0), 0);
-
-                return `
-                    <div class="category-group">
-                        <div class="category-header" onclick="toggleCategory(this)">
-                            <div class="category-header-left">
-                                <div class="category-icon">${cat.icon}</div>
-                                <div>
-                                    <div class="category-name">${cat.name}</div>
-                                    <div class="category-count">${toFa(items.length)} دارایی</div>
-                                </div>
-                            </div>
-                            <div style="display:flex; align-items:center; gap:15px;">
-                                <div class="category-total">${formatBigNum(categoryTotal)} تومان</div>
-                                <div class="category-toggle">▼</div>
-                            </div>
-                        </div>
-                        <div class="category-content">
-                            ${items.map(item => renderAssetCard(item, stats.totalValue)).join('')}
-                        </div>
-                    </div>
-                `;
-            }).join('');
-        }
-
-        // ==========================================
-        // Render Asset Card
-        // ==========================================
-        function renderAssetCard(item, totalValue) {
-            const weight = totalValue > 0 && item.currentValue !== null ? (item.currentValue / totalValue) * 100 : 0;
-            const profitClass = item.profit === null ? 'neutral' : (item.profit >= 0 ? 'green' : 'red');
-            const profitSign = item.profit === null ? '' : (item.profit >= 0 ? '+' : '−');
-
-            let iconHtml = '';
-            if (item.asset_icon && item.asset_icon.startsWith('http')) {
-                iconHtml = `<img src="${item.asset_icon}" alt="${escapeHtml(item.asset_name)}" onerror="this.parentElement.innerHTML='<span class=\\'emoji\\'>🪙</span>'">`;
-            } else {
-                iconHtml = `<span class="emoji">${item.asset_icon || '📊'}</span>`;
-            }
-
-            return `
-                <div class="asset-card">
-                    <div class="asset-card-top">
-                        <div class="asset-card-left">
-                            <div class="asset-icon-wrapper">${iconHtml}</div>
-                            <div class="asset-name-info">
-                                <h4>${escapeHtml(item.asset_name)}</h4>
-                                <span class="symbol">${escapeHtml(item.asset_symbol)}</span>
-                            </div>
-                        </div>
-                        <div class="asset-card-actions">
-                            <button class="icon-btn" onclick="editAsset('${item.id}')" title="ویرایش">✏️</button>
-                            <button class="icon-btn danger" onclick="deleteAsset('${item.id}')" title="حذف">🗑️</button>
-                        </div>
-                    </div>
-                    <div class="asset-card-info">
-                        <div class="info-item">
-                            <div class="label">📦 مقدار</div>
-                            <div class="value">${formatNum(item.quantity, 4)} ${escapeHtml(item.unit || '')}</div>
-                        </div>
-                        <div class="info-item">
-                            <div class="label">💰 قیمت خرید</div>
-                            <div class="value">${formatNum(item.buy_price, item.currency === 'USD' ? 2 : 0)} ${currencyLabel(item.currency)}</div>
-                        </div>
-                        <div class="info-item">
-                            <div class="label">📈 قیمت فعلی</div>
-                            <div class="value gold">${item.currentPrice === null ? '—' : formatNum(item.currentPrice, item.currency === 'USD' ? 2 : 0) + ' ' + currencyLabel(item.currency)}</div>
-                        </div>
-                        <div class="info-item">
-                            <div class="label">📅 تاریخ خرید</div>
-                            <div class="value">${formatDate(item.buy_date)}</div>
-                        </div>
-                        <div class="info-item">
-                            <div class="label">💼 سرمایه اولیه</div>
-                            <div class="value">${item.invested === null ? '—' : formatBigNum(item.invested) + ' تومان'}</div>
-                        </div>
-                        <div class="info-item">
-                            <div class="label">💎 ارزش فعلی</div>
-                            <div class="value">${item.currentValue === null ? '—' : formatBigNum(item.currentValue) + ' تومان'}</div>
-                        </div>
-                        <div class="info-item">
-                            <div class="label">${item.profit === null ? '📊 سود/ضرر' : (item.profit >= 0 ? '📈 سود' : '📉 ضرر')}</div>
-                            <div class="value ${profitClass}">${item.profit === null ? '—' : profitSign + formatBigNum(Math.abs(item.profit)) + ' تومان'}</div>
-                        </div>
-                        <div class="info-item">
-                            <div class="label">📊 درصد</div>
-                            <div class="value ${profitClass}">${item.profitPercent === null ? '—' : profitSign + toFa(Math.abs(item.profitPercent).toFixed(2)) + '٪'}</div>
-                        </div>
-                    </div>
-                    <div class="asset-weight-bar">
-                        <span style="color:var(--gray); font-size:11px;">وزن در سبد:</span>
-                        <div class="bar">
-                            <div class="bar-fill" style="width:${weight}%"></div>
-                        </div>
-                        <span class="percent">${toFa(weight.toFixed(1))}٪</span>
-                    </div>
-                </div>
-            `;
-        }
-
-        // ==========================================
-        // Charts
-        // ==========================================
-        function renderPieChart(stats) {
-            const ctx = document.getElementById('pieChart');
-            if (!ctx) return;
-            if (pieChart) pieChart.destroy();
-
-            const labels = [];
-            const data = [];
-            const colors = ['#d4af37', '#10b981', '#8b5cf6', '#3b82f6', '#f97316', '#ec4899', '#06b6d4', '#84cc16'];
-
-            Object.entries(stats.categoryStats).forEach(([catKey, cat]) => {
-                const catInfo = ASSETS[catKey];
-                labels.push(catInfo ? catInfo.name : catKey);
-                data.push(cat.value);
-            });
-
-            pieChart = new Chart(ctx, {
-                type: 'doughnut',
-                data: {
-                    labels,
-                    datasets: [{
-                        data,
-                        backgroundColor: colors.slice(0, labels.length),
-                        borderColor: '#1a1a24',
-                        borderWidth: 3,
-                        hoverOffset: 10
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: {
-                            position: 'bottom',
-                            labels: {
-                                color: '#cbd5e1',
-                                font: { family: 'Vazirmatn', size: 12 },
-                                padding: 12,
-                                usePointStyle: true,
-                                pointStyle: 'circle'
-                            }
-                        },
-                        tooltip: {
-                            backgroundColor: '#1a1a24',
-                            titleColor: '#d4af37',
-                            bodyColor: '#f8fafc',
-                            borderColor: '#d4af37',
-                            borderWidth: 1,
-                            padding: 12,
-                            titleFont: { family: 'Vazirmatn', size: 13, weight: 'bold' },
-                            bodyFont: { family: 'Vazirmatn', size: 12 },
-                            callbacks: {
-                                label: function(context) {
-                                    const value = context.parsed;
-                                    const total = context.dataset.data.reduce((a, b) => a + b, 0);
-                                    const percent = total > 0 ? ((value / total) * 100).toFixed(1) : 0;
-                                    return ` ${context.label}: ${formatBigNum(value)} (${toFa(percent)}٪)`;
-                                }
-                            }
-                        }
-                    },
-                    cutout: '65%'
-                }
-            });
-        }
-
-        function renderBarChart(stats) {
-            const ctx = document.getElementById('barChart');
-            if (!ctx) return;
-            if (barChart) barChart.destroy();
-
-            const items = stats.items.filter(i => i.profit !== null).slice(0, 10);
-            const labels = items.map(i => i.asset_name);
-            const data = items.map(i => i.profit / 1e6);
-            const colors = items.map(i => i.profit >= 0 ? '#10b981' : '#ef4444');
-
-            barChart = new Chart(ctx, {
-                type: 'bar',
-                data: {
-                    labels,
-                    datasets: [{
-                        label: 'سود/ضرر (میلیون تومان)',
-                        data,
-                        backgroundColor: colors,
-                        borderColor: '#1a1a24',
-                        borderWidth: 2,
-                        borderRadius: 6
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: { display: false },
-                        tooltip: {
-                            backgroundColor: '#1a1a24',
-                            titleColor: '#d4af37',
-                            bodyColor: '#f8fafc',
-                            borderColor: '#d4af37',
-                            borderWidth: 1,
-                            padding: 12,
-                            titleFont: { family: 'Vazirmatn', size: 12, weight: 'bold' },
-                            bodyFont: { family: 'Vazirmatn', size: 12 },
-                            callbacks: {
-                                label: function(context) {
-                                    const value = context.parsed.y;
-                                    return ` ${value >= 0 ? '+' : ''}${formatNum(value, 2)} میلیون تومان`;
-                                }
-                            }
-                        }
-                    },
-                    scales: {
-                        x: {
-                            ticks: { color: '#94a3b8', font: { family: 'Vazirmatn', size: 10 } },
-                            grid: { display: false }
-                        },
-                        y: {
-                            ticks: {
-                                color: '#94a3b8',
-                                font: { family: 'Vazirmatn', size: 11 },
-                                callback: v => v + 'M'
-                            },
-                            grid: { color: 'rgba(255, 255, 255, 0.05)' }
-                        }
-                    }
-                }
-            });
+        function renderLineChart(box, values, borderColor, labels=[]) {
+            box.innerHTML='<canvas></canvas>'; const canvas=box.querySelector('canvas');
+            new Chart(canvas,{type:'line',data:{labels:labels.length?labels:values.map((_,i)=>toFa(i+1)),datasets:[{data:values,borderColor,backgroundColor:'rgba(59,130,246,.08)',borderWidth:2,pointRadius:0,tension:.25,fill:true}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{mode:'index',intersect:false}},scales:{x:{ticks:{color:'#94A3B8',font:{family:'Vazirmatn',size:9},maxTicksLimit:8}},y:{ticks:{color:'#94A3B8',font:{family:'Vazirmatn',size:10}}}}}});
         }
 
         // ==========================================
         // Compare
         // ==========================================
-        function renderCompare(stats) {
-            const grid = document.getElementById('compareGrid');
-            if (!grid) return;
-
-            const invested = stats.totalInvested;
-            const options = [
-                { label: '🥇 فقط طلا', return: 32.5 },
-                { label: '💵 فقط دلار', return: 8.7 },
-                { label: '📊 فقط بورس', return: 15.3 },
-                { label: '₿ فقط بیت‌کوین', return: 42.8 },
-                { label: '💼 سبد فعلی شما', return: stats.totalProfitPercent, highlight: true }
-            ];
-
-            grid.innerHTML = options.map(opt => {
-                const finalValue = invested * (1 + opt.return / 100);
-                const returnClass = opt.return >= 0 ? 'up' : 'down';
-                return `
-                    <div class="compare-card ${opt.highlight ? 'compare-highlight' : ''}">
-                        <div class="label">${opt.label}</div>
-                        <div class="value ${returnClass}">${opt.return >= 0 ? '+' : ''}${toFa(opt.return.toFixed(1))}٪</div>
-                        <div class="desc">${formatBigNum(finalValue)} تومان</div>
-                    </div>
-                `;
-            }).join('');
+        async function renderCompare(stats) {
+            const grid=document.getElementById('compareGrid'); if(!grid)return;
+            if(!stats.items.length){grid.innerHTML='<div class="compare-loading">سبدی برای مقایسه وجود ندارد.</div>';return;}
+            grid.innerHTML=stats.items.map(item=>`<div class="compare-asset-card"><div class="compare-asset-head"><div><div class="compare-asset-name">${escapeHtml(item.asset_name)}</div><div class="compare-asset-date">تاریخ خرید: ${formatDate(item.buy_date)}</div></div><div class="compare-actual ${item.profitPercent==null?'neutral':item.profitPercent>=0?'profit':'loss'}">عملکرد سبد: ${item.profitPercent==null?'—':(item.profitPercent>=0?'+':'−')+toFa(Math.abs(item.profitPercent).toFixed(2))+'٪'}</div></div><div class="compare-benchmarks" id="compare-bench-${escapeHtml(String(item.id))}"><div class="compare-loading">⏳ در حال دریافت داده تاریخی...</div></div></div>`).join('');
+            await Promise.all(stats.items.map(async item=>{
+                const box=document.getElementById(`compare-bench-${item.id}`); if(!box)return;
+                const keys=[{key:'gold'},{key:'usd'},{key:'bourse'},{key:'btc'}]; const results=[];
+                for(const x of keys){try{const r=await benchmarkReturn(x.key,item.buy_date);if(r)results.push(r);}catch(e){console.warn('compare',x.key,e);}}
+                if(!results.length){box.innerHTML='<div class="compare-loading">داده تاریخی این تاریخ برای بازارهای مرجع در دسترس نیست.</div>';return;}
+                const max=Math.max(...results.map(r=>r.percent));
+                box.innerHTML=results.map(r=>{const cls=r.percent>=0?'profit':'loss';const sign=r.percent>=0?'+':'−';const final=item.invested!=null?item.invested*(1+r.percent/100):null;return `<div class="compare-benchmark ${r.percent===max?'best':''}"><div class="b-name">${r.icon} ${escapeHtml(r.label)}</div><div class="b-ret ${cls}">${sign}${toFa(Math.abs(r.percent).toFixed(2))}٪</div><div class="b-meta">قیمت مبنا: ${formatNum(r.buy,2)}<br>امروز: ${formatNum(r.latest,2)}${final!=null?`<br>ارزش فرضی: ${formatBigNum(final)} تومان`:''}</div></div>`;}).join('');
+            }));
+            const note=document.createElement('div');note.className='compare-source';note.textContent='منابع مقایسه: TGJU برای طلا، دلار و شاخص کل بورس؛ CoinGecko برای بیت‌کوین. تاریخ مبنا نزدیک‌ترین روز معاملاتی/داده‌ای قبل یا مساوی تاریخ خرید است.';grid.parentElement.appendChild(note);
         }
 
         // ==========================================
