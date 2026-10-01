@@ -22,7 +22,7 @@
     ========================================================= */
 
     :root {
-      --bg: #0B1220;
+      --bg: #0a0a0f;
       --bg-2: #111827;
       --card: #151F30;
       --card-2: #182235;
@@ -90,20 +90,21 @@
     body {
       margin: 0;
 
-      background:
-        radial-gradient(
-          circle at 50% -20%,
-          rgba(59, 130, 246, .035),
-          transparent 40%
-        ),
-        var(--bg);
+      background-color: #0a0a0f;
+
+      background-image:
+        radial-gradient(circle at 0% 0%, rgba(212, 175, 55, 0.08) 0%, transparent 40%),
+        radial-gradient(circle at 100% 100%, rgba(59, 130, 246, 0.06) 0%, transparent 40%),
+        linear-gradient(rgba(255, 255, 255, 0.015) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
+
+      background-size: 100% 100%, 100% 100%, 60px 60px, 60px 60px;
+
+      background-attachment: fixed;
 
       color: var(--text);
 
-      font-family:
-        Vazirmatn,
-        Tahoma,
-        sans-serif;
+      font-family: Vazirmatn, Tahoma, sans-serif;
 
       font-size: 14px;
     }
