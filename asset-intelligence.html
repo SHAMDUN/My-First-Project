@@ -965,13 +965,21 @@
         // ==========================================
         // Price Fetching
         // ==========================================
-        async function fetchBrsApi(url) {
+        async function fetchBrsApi(url, timeoutMs = 8000) {
             const separator = url.includes('?') ? '&' : '?';
-            const res = await fetch(`${url}${separator}key=${BRS_API_KEY}`);
-            if (!res.ok) throw new Error('API error');
-            const text = await res.text();
-            if (text.trim().startsWith('<!DOCTYPE')) throw new Error('Invalid response');
-            return JSON.parse(text);
+            const controller = new AbortController();
+            const timer = setTimeout(() => controller.abort(), timeoutMs);
+            try {
+                const res = await fetch(`${url}${separator}key=${BRS_API_KEY}`, {
+                    signal: controller.signal
+                });
+                if (!res.ok) throw new Error('API error');
+                const text = await res.text();
+                if (text.trim().startsWith('<!DOCTYPE')) throw new Error('Invalid response');
+                return JSON.parse(text);
+            } finally {
+                clearTimeout(timer);
+            }
         }
 
         async function loadStockSymbols() {
@@ -1234,8 +1242,16 @@
         async function render() {
             const container = document.getElementById('mainContent');
             try {
-                await loadStockSymbols();
-                await loadPrices();
+                // منابع قیمت و نماد نباید مانع ورود به صفحه شوند؛ در صورت قطعی/کندی API
+                // صفحه با داده‌های موجود و علامت «—» نمایش داده می‌شود.
+                await Promise.race([
+                    loadStockSymbols(),
+                    new Promise(resolve => setTimeout(resolve, 9000))
+                ]);
+                await Promise.race([
+                    loadPrices(),
+                    new Promise(resolve => setTimeout(resolve, 9000))
+                ]);
                 portfolio = await loadPortfolio();
 
                 if (portfolio.length === 0) {
@@ -1408,9 +1424,9 @@
             `;
 
             setTimeout(() => {
-                renderPieChart(stats);
-                renderBarChart(stats);
-                renderCompare(stats);
+                try { renderPieChart(stats); } catch (e) { console.warn('Pie chart skipped:', e); }
+                try { renderBarChart(stats); } catch (e) { console.warn('Bar chart skipped:', e); }
+                renderCompare(stats).catch(e => console.warn('Compare skipped:', e));
             }, 100);
         }
 
@@ -1495,7 +1511,16 @@
                 params.append(`columns[${i}][search][value]`,''); params.append(`columns[${i}][search][regex]`,'false');
             }
             params.append('start','0'); params.append('length','5000'); params.append('search',''); params.append('order_col',''); params.append('order_dir',''); params.append('from',''); params.append('to',''); params.append('convert_to_ad','1'); params.append('_',String(Date.now()));
-            const res = await fetch(`https://api.tgju.org/v1/market/indicator/summary-table-data/${encodeURIComponent(slug)}?${params.toString()}`);
+            const controller = new AbortController();
+            const timer = setTimeout(() => controller.abort(), 10000);
+            let res;
+            try {
+                res = await fetch(`https://api.tgju.org/v1/market/indicator/summary-table-data/${encodeURIComponent(slug)}?${params.toString()}`, {
+                    signal: controller.signal
+                });
+            } finally {
+                clearTimeout(timer);
+            }
             if (!res.ok) throw new Error(`TGJU ${res.status}`);
             const data = await res.json();
             const rows = parseTgjuRows(data);
@@ -2020,8 +2045,22 @@ ${portfolioText}
         // Init
         // ==========================================
         document.addEventListener('DOMContentLoaded', async () => {
-            // ✅ فعال‌سازی تقویم شمسی
-            JalaliDatePicker.initAll();
+            // تقویم شمسی قابلیت کمکی است و نباید مانع بررسی نشست کاربر شود.
+            try {
+                if (window.JalaliDatePicker && typeof JalaliDatePicker.initAll === 'function') {
+                    JalaliDatePicker.initAll();
+                }
+            } catch (e) {
+                console.warn('JalaliDatePicker init skipped:', e);
+            }
+
+            if (!window.db || !db.auth) {
+                document.getElementById('mainContent').innerHTML = `
+                    <div class="loading-screen">
+                        ❌ اتصال پایگاه داده برقرار نشد.
+                    </div>`;
+                return;
+            }
 
             const { data: { session } } = await db.auth.getSession();
 
