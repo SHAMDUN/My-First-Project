@@ -2292,6 +2292,58 @@
       .date-gregorian { font-size: .78em; }
 
 
+      /* =========================================================
+         FINAL EVENT TITLE + GUIDE HEIGHT FIX
+      ========================================================= */
+
+      .event-name strong {
+        white-space: normal !important;
+        overflow: visible !important;
+        text-overflow: clip !important;
+        line-height: 1.55;
+        overflow-wrap: anywhere;
+        word-break: normal;
+      }
+
+      .guide-box {
+        min-height: 0 !important;
+        padding: 18px !important;
+      }
+
+      .terms {
+        margin-top: 8px;
+      }
+
+      .term {
+        padding: 12px !important;
+      }
+
+      .term strong {
+        margin-bottom: 4px;
+      }
+
+      .term span {
+        line-height: 1.7 !important;
+      }
+
+      @media (max-width: 850px) {
+        .guide-box {
+          min-height: 0 !important;
+          padding: 16px !important;
+        }
+      }
+
+      @media (max-width: 560px) {
+        .terms {
+          grid-template-columns: 1fr !important;
+        }
+
+        .term {
+          padding: 11px !important;
+        }
+      }
+
+
 
     /* =========================================================
        GUIDE CARDS — FULL WIDTH + MOBILE RESPONSIVE
@@ -4104,11 +4156,13 @@
 
       function normalizeCountry(value) {
 
-        return normalizeText(value)
+        return String(value ?? "")
+          .trim()
+          .toLowerCase()
           .replace(/[\u{1F1E6}-\u{1F1FF}]/gu, "")
-          .replace(/[()]/g, "")
-          .replace(/\b(country|economy)\b/g, "")
-          .replace(/[.\-_]/g, " ")
+          .replace(/[()[\]{}]/g, " ")
+          .replace(/[.\-_/,]+/g, " ")
+          .replace(/\b(country|economy|region)\b/g, " ")
           .replace(/\s+/g, " ")
           .trim();
 
@@ -4122,7 +4176,6 @@
 
         if (!selected) return true;
         if (!actual) return false;
-        if (actual === selected) return true;
 
         const aliases = {
           "united states": [
@@ -4139,43 +4192,52 @@
             "eurozone",
             "euro zone",
             "european union",
-            "eu"
+            "eu",
+            "europe"
           ],
           "china": [
             "china",
+            "people's republic of china",
             "peoples republic of china",
             "prc",
             "cn"
           ],
-          "japan": [
-            "japan",
-            "jp"
-          ],
+          "japan": ["japan", "jp"],
           "united kingdom": [
             "united kingdom",
             "uk",
             "great britain",
-            "england"
+            "england",
+            "gb"
           ],
-          "canada": [
-            "canada",
-            "ca"
-          ],
-          "germany": [
-            "germany",
-            "de"
-          ],
-          "france": [
-            "france",
-            "fr"
-          ],
-          "australia": [
-            "australia",
-            "au"
-          ]
+          "canada": ["canada", "ca"],
+          "germany": ["germany", "de"],
+          "france": ["france", "fr"],
+          "australia": ["australia", "au"]
         };
 
-        return (aliases[selected] || [selected]).includes(actual);
+        const selectedAliases =
+          aliases[selected] || [selected];
+
+        // Exact match first. This handles normal country names and ISO codes.
+        if (selectedAliases.includes(actual)) {
+          return true;
+        }
+
+        // The API may return values such as "United States (US)",
+        // "US - United States", or "United States / US".
+        // Match full alias tokens, never arbitrary substrings (so "us"
+        // cannot accidentally match "australia").
+        return selectedAliases.some(alias => {
+          const pattern = alias
+            .replace(/[.*+?^${}()|[\]\\]/g, "\\$&")
+            .replace(/\s+/g, "\\s+");
+
+          return new RegExp(
+            `(?:^|\\s)${pattern}(?:$|\\s)`,
+            "i"
+          ).test(actual);
+        });
 
       }
 
@@ -4547,6 +4609,20 @@
          EVENT CARD
       ======================================================== */
 
+      function getEventTitleFontSize(title) {
+
+        const length = String(title ?? "").trim().length;
+
+        if (length >= 110) return 10;
+        if (length >= 90) return 11;
+        if (length >= 72) return 12;
+        if (length >= 56) return 13;
+        if (length >= 42) return 14;
+        return 15;
+
+      }
+
+
       function renderEvent(event) {
 
         const isActive =
@@ -4600,7 +4676,11 @@
 
             <div class="event-name">
 
-              <strong>
+              <strong
+                style="font-size:${getEventTitleFontSize(
+                  event.translatedName || event.name
+                )}px;"
+              >
                 ${escapeHtml(
                   event.translatedName || event.name
                 )}
