@@ -12,6 +12,19 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 
 <style>
+:root{
+  --bg:#0a0a0f;
+  --bg2:#111827;
+  --card:#151F30;
+  --text:#F8FAFC;
+  --muted:#94A3B8;
+  --border:rgba(148,163,184,.14);
+  --gold:#C89B3C;
+  --blue:#3B82F6;
+  --green:#16835B;
+  --red:#D64545;
+  --orange:#D88A16;
+}      
 body{
   margin:0;
   background-color:var(--bg);
@@ -41,13 +54,6 @@ body{
 }
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
-body{
-  margin:0;
-  background:var(--bg);
-  color:var(--text);
-  font-family:Vazirmatn,Tahoma,sans-serif;
-  font-size:16px;
-}
 .page{max-width:1240px;margin:auto;padding:90px 20px 50px}
 .hero,.card,.chart,.guide-main,.guide-key,.info,.scenario{
   background:linear-gradient(135deg,var(--card),var(--bg2));
