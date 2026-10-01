@@ -1,69 +1,126 @@
-<!DOCTYPE html>
-<html dir="rtl">
-<head><meta charset="UTF-8"><title>تست API</title></head>
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>تست چارت بازار</title>
+<style>
+  *{box-sizing:border-box}
+  body{margin:0;padding:24px;background:#0f172a;color:#e5e7eb;font-family:Tahoma,Arial,sans-serif}
+  h1{text-align:center;font-size:24px;margin:0 0 24px}
+  .grid{max-width:1100px;margin:auto;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
+  .card{background:#172033;border:1px solid #26334d;border-radius:16px;padding:16px}
+  .title{font-size:18px;font-weight:700;margin-bottom:12px}
+  .status{font-size:13px;color:#94a3b8;margin-bottom:12px}
+  canvas{width:100%;height:300px;background:#101827;border-radius:10px}
+  @media(max-width:700px){.grid{grid-template-columns:1fr}}
+</style>
+</head>
 <body>
-<h1>تست APIهای همونجا</h1>
-<div id="result"></div>
 
+<h1>تست ساده دریافت و نمایش داده بازار</h1>
+
+<div class="grid">
+  <div class="card">
+    <div class="title">🪙 انس طلا</div>
+    <div id="goldStatus" class="status">در حال دریافت داده...</div>
+    <canvas id="goldChart"></canvas>
+  </div>
+
+  <div class="card">
+    <div class="title">🥇 طلای ۱۸ عیار</div>
+    <div id="gold18Status" class="status">در حال دریافت داده...</div>
+    <canvas id="gold18Chart"></canvas>
+  </div>
+
+  <div class="card">
+    <div class="title">₿ بیت‌کوین</div>
+    <div id="btcStatus" class="status">در حال دریافت داده...</div>
+    <canvas id="btcChart"></canvas>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
-const BRS_API_KEY = 'B4xp2gWXASUmB3n6WPHtJxhjyJkgcBJz';
+const TGJU = 'https://api.tgju.org/v1/market/indicator/summary-table-data/';
 
-async function testBrsApi() {
-    const url = `https://Api.BrsApi.ir/Market/Gold_Currency.php?key=${BRS_API_KEY}`;
-    try {
-        const res = await fetch(url);
-        const data = await res.json();
-        document.getElementById('result').innerHTML += 
-            `<p>✅ BrsApi: ${data.gold?.length || 0} طلا، ${data.currency?.length || 0} ارز</p>`;
-    } catch (e) {
-        document.getElementById('result').innerHTML += 
-            `<p style="color:red">❌ BrsApi: ${e.message}</p>`;
+function drawChart(canvasId, labels, values, title){
+  const ctx=document.getElementById(canvasId);
+  new Chart(ctx,{
+    type:'line',
+    data:{
+      labels,
+      datasets:[{
+        label:title,
+        data:values,
+        borderWidth:2,
+        pointRadius:0,
+        tension:.25,
+        fill:false
+      }]
+    },
+    options:{
+      responsive:true,
+      maintainAspectRatio:false,
+      interaction:{mode:'index',intersect:false},
+      plugins:{legend:{display:false}},
+      scales:{
+        x:{ticks:{color:'#94a3b8',maxTicksLimit:8}},
+        y:{ticks:{color:'#94a3b8'}}
+      }
     }
+  });
 }
 
-async function testCoinGecko() {
-    const url = `https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd`;
-    try {
-        const res = await fetch(url);
-        const data = await res.json();
-        document.getElementById('result').innerHTML += 
-            `<p>✅ CoinGecko: بیت‌کوین ${data.bitcoin?.usd}$</p>`;
-    } catch (e) {
-        document.getElementById('result').innerHTML += 
-            `<p style="color:red">❌ CoinGecko: ${e.message}</p>`;
-    }
+function tgjuRows(json){
+  const rows=json?.data?.[0]?.data || json?.data || [];
+  return Array.isArray(rows) ? rows : [];
 }
 
-async function testBinance() {
-    const url = `https://api.binance.com/api/v3/ticker/price?symbol=BTCUSDT`;
-    try {
-        const res = await fetch(url);
-        const data = await res.json();
-        document.getElementById('result').innerHTML += 
-            `<p>✅ Binance: BTC ${data.price}$</p>`;
-    } catch (e) {
-        document.getElementById('result').innerHTML += 
-            `<p style="color:red">❌ Binance: ${e.message}</p>`;
-    }
+function parseRows(rows){
+  return rows.map(r=>{
+    const date=r.date || r[0] || r.jdate || '';
+    const raw=r.price || r.value || r[1] || r.close || '';
+    const value=Number(String(raw).replace(/,/g,''));
+    return {date,value};
+  }).filter(x=>x.date && Number.isFinite(x.value)).slice(-180);
 }
 
-async function testTgju() {
-    const url = `https://api.tgju.org/v1/market/indicator/summary-table-data/geram18?lang=fa&order_dir=asc&start=0&length=5`;
-    try {
-        const res = await fetch(url);
-        const data = await res.json();
-        document.getElementById('result').innerHTML += 
-            `<p>✅ TGJU: ${data.data?.length || 0} ردیف</p>`;
-    } catch (e) {
-        document.getElementById('result').innerHTML += 
-            `<p style="color:red">❌ TGJU: ${e.message}</p>`;
-    }
+async function loadTgju(slug, canvas, status, title){
+  try{
+    const res=await fetch(TGJU+slug);
+    if(!res.ok) throw new Error('HTTP '+res.status);
+    const json=await res.json();
+    const rows=parseRows(tgjuRows(json));
+    if(!rows.length) throw new Error('داده‌ای برنگشت');
+    drawChart(canvas, rows.map(x=>x.date), rows.map(x=>x.value), title);
+    document.getElementById(status).textContent='داده دریافت شد: '+rows.length+' نقطه';
+  }catch(e){
+    console.error(title,e);
+    document.getElementById(status).textContent='❌ خطا: '+e.message;
+  }
 }
 
-testBrsApi();
-testCoinGecko();
-testBinance();
-testTGJU();
+async function loadBitcoin(){
+  const status=document.getElementById('btcStatus');
+  try{
+    const url='https://api.coingecko.com/api/v3/coins/bitcoin/market_chart?vs_currency=usd&days=180&interval=daily';
+    const res=await fetch(url);
+    if(!res.ok) throw new Error('HTTP '+res.status);
+    const json=await res.json();
+    const rows=(json.prices||[]).map(x=>({date:new Date(x[0]).toLocaleDateString('fa-IR'),value:x[1]}));
+    if(!rows.length) throw new Error('داده‌ای برنگشت');
+    drawChart('btcChart',rows.map(x=>x.date),rows.map(x=>x.value),'Bitcoin');
+    status.textContent='داده دریافت شد: '+rows.length+' نقطه';
+  }catch(e){
+    console.error('Bitcoin',e);
+    status.textContent='❌ خطا: '+e.message;
+  }
+}
+
+loadTgju('ons','goldChart','goldStatus','انس طلا');
+loadTgju('geram18','gold18Chart','gold18Status','طلای ۱۸ عیار');
+loadBitcoin();
 </script>
 </body>
 </html>
