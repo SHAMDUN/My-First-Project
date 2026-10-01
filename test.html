@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html dir="rtl">
+<head><meta charset="UTF-8"><title>تست API</title></head>
+<body>
+<h1>تست APIهای همونجا</h1>
+<div id="result"></div>
+
+<script>
+const BRS_API_KEY = 'B4xp2gWXASUmB3n6WPHtJxhjyJkgcBJz';
+
+async function testBrsApi() {
+    const url = `https://Api.BrsApi.ir/Market/Gold_Currency.php?key=${BRS_API_KEY}`;
+    try {
+        const res = await fetch(url);
+        const data = await res.json();
+        document.getElementById('result').innerHTML += 
+            `<p>✅ BrsApi: ${data.gold?.length || 0} طلا، ${data.currency?.length || 0} ارز</p>`;
+    } catch (e) {
+        document.getElementById('result').innerHTML += 
+            `<p style="color:red">❌ BrsApi: ${e.message}</p>`;
+    }
+}
+
+async function testCoinGecko() {
+    const url = `https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd`;
+    try {
+        const res = await fetch(url);
+        const data = await res.json();
+        document.getElementById('result').innerHTML += 
+            `<p>✅ CoinGecko: بیت‌کوین ${data.bitcoin?.usd}$</p>`;
+    } catch (e) {
+        document.getElementById('result').innerHTML += 
+            `<p style="color:red">❌ CoinGecko: ${e.message}</p>`;
+    }
+}
+
+async function testBinance() {
+    const url = `https://api.binance.com/api/v3/ticker/price?symbol=BTCUSDT`;
+    try {
+        const res = await fetch(url);
+        const data = await res.json();
+        document.getElementById('result').innerHTML += 
+            `<p>✅ Binance: BTC ${data.price}$</p>`;
+    } catch (e) {
+        document.getElementById('result').innerHTML += 
+            `<p style="color:red">❌ Binance: ${e.message}</p>`;
+    }
+}
+
+async function testTgju() {
+    const url = `https://api.tgju.org/v1/market/indicator/summary-table-data/geram18?lang=fa&order_dir=asc&start=0&length=5`;
+    try {
+        const res = await fetch(url);
+        const data = await res.json();
+        document.getElementById('result').innerHTML += 
+            `<p>✅ TGJU: ${data.data?.length || 0} ردیف</p>`;
+    } catch (e) {
+        document.getElementById('result').innerHTML += 
+            `<p style="color:red">❌ TGJU: ${e.message}</p>`;
+    }
+}
+
+testBrsApi();
+testCoinGecko();
+testBinance();
+testTGJU();
+</script>
+</body>
+</html>
