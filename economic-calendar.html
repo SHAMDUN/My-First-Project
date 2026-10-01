@@ -2263,33 +2263,33 @@
          Keep navbar/theme behavior untouched.
       ========================================================= */
 
-      body { font-size: 17px; }
-      .hero-description { font-size: 18px; line-height: 2; }
-      .hero-eyebrow, .hero-action { font-size: 15px; }
-      .section-head h2 { font-size: 25px; }
-      .section-head p, .guide-box p, .detail-description { font-size: 16px; line-height: 1.95; }
-      .field label, .metric-label, .day-count { font-size: 14px; }
-      select { font-size: 16px; }
-      .metric-value { font-size: 29px; }
-      .day-title { font-size: 19px; }
-      .event-time { font-size: 16px; }
-      .event-name strong { font-size: 18px; }
-      .event-meta { font-size: 14px; }
-      .badge { font-size: 13px; }
-      .mini-value small { font-size: 12px; }
-      .mini-value b { font-size: 15px; }
-      .detail-header h3 { font-size: 23px; }
-      .value-card span { font-size: 13px; }
-      .value-card strong { font-size: 19px; }
-      .comparison { font-size: 15px; }
-      .impact-box h4 { font-size: 17px; }
-      .impact-box p { font-size: 14px; }
-      .impact-flow span { font-size: 12px; }
-      .source-link { font-size: 14px; }
-      .state { font-size: 16px; }
-      .state strong { font-size: 19px; }
-      .footer { font-size: 14px; }
-      .date-gregorian { font-size: .82em; }
+      body { font-size: 16px; }
+      .hero-description { font-size: 17px; line-height: 1.95; }
+      .hero-eyebrow, .hero-action { font-size: 14px; }
+      .section-head h2 { font-size: 23px; }
+      .section-head p, .guide-box p, .detail-description { font-size: 14px; line-height: 1.9; }
+      .field label, .metric-label, .day-count { font-size: 12px; }
+      select { font-size: 14px; }
+      .metric-value { font-size: 27px; }
+      .day-title { font-size: 18px; }
+      .event-time { font-size: 15px; }
+      .event-name strong { font-size: 17px; }
+      .event-meta { font-size: 13px; }
+      .badge { font-size: 12px; }
+      .mini-value small { font-size: 11px; }
+      .mini-value b { font-size: 14px; }
+      .detail-header h3 { font-size: 22px; }
+      .value-card span { font-size: 12px; }
+      .value-card strong { font-size: 18px; }
+      .comparison { font-size: 14px; }
+      .impact-box h4 { font-size: 16px; }
+      .impact-box p { font-size: 13px; }
+      .impact-flow span { font-size: 11px; }
+      .source-link { font-size: 13px; }
+      .state { font-size: 15px; }
+      .state strong { font-size: 18px; }
+      .footer { font-size: 13px; }
+      .date-gregorian { font-size: .78em; }
 
 
 
@@ -4102,6 +4102,84 @@
          FILTER
       ======================================================== */
 
+      function normalizeCountry(value) {
+
+        return normalizeText(value)
+          .replace(/[\u{1F1E6}-\u{1F1FF}]/gu, "")
+          .replace(/[()]/g, "")
+          .replace(/\b(country|economy)\b/g, "")
+          .replace(/[.\-_]/g, " ")
+          .replace(/\s+/g, " ")
+          .trim();
+
+      }
+
+
+      function countryMatches(eventCountry, selectedCountry) {
+
+        const actual = normalizeCountry(eventCountry);
+        const selected = normalizeCountry(selectedCountry);
+
+        if (!selected) return true;
+        if (!actual) return false;
+        if (actual === selected) return true;
+
+        const aliases = {
+          "united states": [
+            "united states",
+            "united states of america",
+            "usa",
+            "us",
+            "u s",
+            "u s a",
+            "america"
+          ],
+          "euro area": [
+            "euro area",
+            "eurozone",
+            "euro zone",
+            "european union",
+            "eu"
+          ],
+          "china": [
+            "china",
+            "peoples republic of china",
+            "prc",
+            "cn"
+          ],
+          "japan": [
+            "japan",
+            "jp"
+          ],
+          "united kingdom": [
+            "united kingdom",
+            "uk",
+            "great britain",
+            "england"
+          ],
+          "canada": [
+            "canada",
+            "ca"
+          ],
+          "germany": [
+            "germany",
+            "de"
+          ],
+          "france": [
+            "france",
+            "fr"
+          ],
+          "australia": [
+            "australia",
+            "au"
+          ]
+        };
+
+        return (aliases[selected] || [selected]).includes(actual);
+
+      }
+
+
       function applyFilters() {
 
         let events =
@@ -4125,10 +4203,8 @@
           events =
             events.filter(
               event =>
-                normalizeText(
-                  event.country
-                ) ===
-                normalizeText(
+                countryMatches(
+                  event.country,
                   country
                 )
             );
