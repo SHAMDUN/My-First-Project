@@ -13,6 +13,8 @@
                 { href: 'index.html', icon: '🏠', label: 'صفحه اصلی' },
                 { href: 'home.html', icon: '📊', label: 'نمای بازار' },
                 { href: 'bourse.html', icon: '📈', label: 'بورس ایران' },
+                { href: 'macro-dashboard.html', icon: '🌍', label: 'اقتصاد کلان' },
+                { href: 'economic-calendar.html', icon: '📅', label: 'تقویم اقتصادی' },
                 { href: 'news.html', icon: '📰', label: 'اخبار اقتصادی' },
                 { href: 'analysis.html', icon: '📉', label: 'تحلیل اقتصادی' }
             ]
@@ -730,6 +732,8 @@
         pages: [
             { title: 'نمای بازار', url: 'home.html', icon: '📊', type: 'صفحه' },
             { title: 'بورس ایران', url: 'bourse.html', icon: '📈', type: 'صفحه' },
+            { title: 'اقتصاد کلان', url: 'macro-dashboard.html', icon: '🌍', type: 'صفحه' },
+            { title: 'تقویم اقتصادی', url: 'economic-calendar.html', icon: '📅', type: 'صفحه' },
             { title: 'شبیه‌ساز آپشن', url: 'options-simulator.html', icon: '🎯', type: 'صفحه' },
             { title: 'اخبار اقتصادی', url: 'news.html', icon: '📰', type: 'صفحه' },
             { title: 'دانش‌نامه اقتصادی', url: 'dictionary.html', icon: '🎓', type: 'صفحه' },
