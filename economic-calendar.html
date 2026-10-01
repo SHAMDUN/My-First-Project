@@ -2291,6 +2291,115 @@
       .footer { font-size: 14px; }
       .date-gregorian { font-size: .82em; }
 
+
+
+    /* =========================================================
+       GUIDE CARDS — FULL WIDTH + MOBILE RESPONSIVE
+       Requested layout only: second card below first card.
+    ========================================================= */
+
+    .guide-grid {
+      grid-template-columns: 1fr;
+      gap: 18px;
+    }
+
+    .guide-box {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 28px;
+      min-height: 250px;
+    }
+
+    .guide-box h3 {
+      font-size: 20px;
+      margin-bottom: 12px;
+    }
+
+    .guide-box p {
+      font-size: 15px;
+      line-height: 2.15;
+    }
+
+    .flow {
+      width: 100%;
+      box-sizing: border-box;
+      gap: 9px;
+    }
+
+    .flow-item {
+      font-size: 13px;
+      padding: 10px 14px;
+      white-space: normal;
+      text-align: center;
+    }
+
+    @media (max-width: 850px) {
+      .guide-grid {
+        grid-template-columns: 1fr;
+        gap: 14px;
+      }
+
+      .guide-box {
+        padding: 22px;
+        min-height: 0;
+      }
+
+      .guide-box h3 {
+        font-size: 19px;
+      }
+
+      .guide-box p {
+        font-size: 14px;
+        line-height: 2.05;
+      }
+
+      .terms {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 560px) {
+      .guide-grid {
+        gap: 12px;
+      }
+
+      .guide-box {
+        padding: 18px;
+        border-radius: 16px;
+      }
+
+      .guide-box h3 {
+        font-size: 18px;
+      }
+
+      .guide-box p {
+        font-size: 14px;
+        line-height: 2;
+      }
+
+      .flow {
+        gap: 7px;
+      }
+
+      .flow-item {
+        font-size: 12px;
+        padding: 9px 10px;
+      }
+
+      .flow-arrow {
+        font-size: 13px;
+      }
+
+      .terms {
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+      }
+
+      .term {
+        min-width: 0;
+        padding: 12px;
+      }
+    }
 </style>
 </head>
 
