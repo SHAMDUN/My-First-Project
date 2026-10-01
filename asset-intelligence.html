@@ -1523,110 +1523,142 @@
     /* ---------------------------------------------------------
        Yahoo Finance API
        --------------------------------------------------------- */
-
     async function fetchYahooChart(asset, period) {
 
-        const config = PERIODS[period];
+    const config = PERIODS[period];
 
-        if (!config) {
-            throw new Error("بازه زمانی نامعتبر است.");
-        }
+    if (!config) {
+        throw new Error("بازه زمانی نامعتبر است.");
+    }
 
-        const url =
-            "https://query1.finance.yahoo.com/v8/finance/chart/" +
-            encodeURIComponent(asset.symbol) +
-            "?range=" +
-            encodeURIComponent(config.range) +
-            "&interval=" +
-            encodeURIComponent(config.interval) +
-            "&includePrePost=false&events=div%2Csplits";
+    const yahooUrl =
+        "https://query1.finance.yahoo.com/v8/finance/chart/" +
+        encodeURIComponent(asset.symbol) +
+        "?range=" +
+        encodeURIComponent(config.range) +
+        "&interval=" +
+        encodeURIComponent(config.interval) +
+        "&includePrePost=false&events=div%2Csplits";
 
-        const response = await fetch(url, {
-            method: "GET",
-            cache: "no-store"
-        });
+    /*
+     * Yahoo Finance مستقیماً از مرورگر CORS را اجازه نمی‌دهد.
+     * بنابراین در این مرحله درخواست از proxy عبور می‌کند.
+     */
+    const url =
+        "https://corsproxy.io/?" +
+        "url=" +
+        encodeURIComponent(yahooUrl);
 
-        if (!response.ok) {
-            throw new Error(
-                "دریافت داده بازار ناموفق بود."
-            );
-        }
+    const response = await fetch(url, {
+        method: "GET",
+        cache: "no-store"
+    });
 
-        const json = await response.json();
+    if (!response.ok) {
+        throw new Error(
+            "دریافت داده بازار ناموفق بود. HTTP " +
+            response.status
+        );
+    }
 
-        const result =
+    const json = await response.json();
+
+    const result =
+        json &&
+        json.chart &&
+        json.chart.result &&
+        json.chart.result[0];
+
+    if (!result) {
+
+        const apiError =
             json &&
             json.chart &&
-            json.chart.result &&
-            json.chart.result[0];
+            json.chart.error;
 
-        if (!result) {
-            throw new Error(
-                "برای این دارایی داده‌ای از منبع دریافت نشد."
-            );
-        }
-
-        const timestamps = result.timestamp || [];
-
-        const quote =
-            result.indicators &&
-            result.indicators.quote &&
-            result.indicators.quote[0];
-
-        if (!quote) {
-            throw new Error(
-                "ساختار داده قیمت قابل خواندن نیست."
-            );
-        }
-
-        const points = [];
-
-        for (let i = 0; i < timestamps.length; i++) {
-
-            const close =
-                quote.close &&
-                quote.close[i];
-
-            const open =
-                quote.open &&
-                quote.open[i];
-
-            const high =
-                quote.high &&
-                quote.high[i];
-
-            const low =
-                quote.low &&
-                quote.low[i];
-
-            if (
-                close === null ||
-                close === undefined ||
-                !Number.isFinite(close)
-            ) {
-                continue;
-            }
-
-            points.push({
-                time: timestamps[i] * 1000,
-                open: Number.isFinite(open) ? open : null,
-                high: Number.isFinite(high) ? high : null,
-                low: Number.isFinite(low) ? low : null,
-                close
-            });
-        }
-
-        if (!points.length) {
-            throw new Error(
-                "برای این بازه داده قابل نمایش وجود ندارد."
-            );
-        }
-
-        return {
-            points,
-            meta: result.meta || {}
-        };
+        throw new Error(
+            apiError && apiError.description
+                ? apiError.description
+                : "برای این دارایی داده‌ای دریافت نشد."
+        );
     }
+
+    const timestamps =
+        result.timestamp || [];
+
+    const quote =
+        result.indicators &&
+        result.indicators.quote &&
+        result.indicators.quote[0];
+
+    if (!quote) {
+        throw new Error(
+            "ساختار داده قیمت قابل خواندن نیست."
+        );
+    }
+
+    const points = [];
+
+    for (let i = 0; i < timestamps.length; i++) {
+
+        const close =
+            quote.close &&
+            quote.close[i];
+
+        const open =
+            quote.open &&
+            quote.open[i];
+
+        const high =
+            quote.high &&
+            quote.high[i];
+
+        const low =
+            quote.low &&
+            quote.low[i];
+
+        if (
+            close === null ||
+            close === undefined ||
+            !Number.isFinite(Number(close))
+        ) {
+            continue;
+        }
+
+        points.push({
+            time: Number(timestamps[i]) * 1000,
+
+            open:
+                Number.isFinite(Number(open))
+                    ? Number(open)
+                    : null,
+
+            high:
+                Number.isFinite(Number(high))
+                    ? Number(high)
+                    : null,
+
+            low:
+                Number.isFinite(Number(low))
+                    ? Number(low)
+                    : null,
+
+            close: Number(close)
+        });
+    }
+
+    if (!points.length) {
+        throw new Error(
+            "برای این بازه داده قابل نمایش وجود ندارد."
+        );
+    }
+
+    return {
+        points,
+        meta: result.meta || {}
+    };
+}
+
 
     /* ---------------------------------------------------------
        Main load
