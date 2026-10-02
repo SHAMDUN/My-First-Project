@@ -1,35 +1,39 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl" data-theme="dark">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>مرکز تحلیل هوشمند | آکادمی شمعدون</title>
+    <title>مرکز تحلیل هوشمند | شمعدون</title>
 
     <link rel="stylesheet"
           href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css">
 
+    <!-- TradingView Lightweight Charts -->
+    <script src="https://unpkg.com/lightweight-charts@5.0.0/dist/lightweight-charts.standalone.production.js"></script>
+
     <style>
+
         /* =========================================================
-           SHAMDUN — AI MARKET ANALYSIS WORKBENCH
+           SHAMDUN AI MARKET ANALYSIS
            Responsive / RTL / Vazirmatn
            ========================================================= */
 
         :root {
             --bg: #090b12;
-            --bg-2: #0f121b;
-            --panel: #111521;
-            --panel-2: #171b28;
-            --panel-3: #1c2230;
+            --bg2: #0e121b;
+            --card: #121722;
+            --card2: #171d29;
+            --card3: #1d2432;
 
-            --line: rgba(255,255,255,.08);
-            --line-strong: rgba(255,255,255,.14);
+            --border: rgba(255,255,255,.08);
+            --border2: rgba(255,255,255,.14);
 
             --gold: #d4af37;
-            --gold-light: #f2d77a;
-            --gold-dark: #9b7610;
+            --gold2: #f2d77a;
 
-            --text: #f8fafc;
+            --white: #f8fafc;
             --muted: #94a3b8;
 
             --green: #10b981;
@@ -37,24 +41,23 @@
             --blue: #3b82f6;
             --cyan: #22d3ee;
 
-            --shadow: 0 18px 50px rgba(0,0,0,.20);
+            --radius: 18px;
         }
 
         [data-theme="light"] {
             --bg: #f5f7fb;
-            --bg-2: #eef2f7;
-            --panel: #ffffff;
-            --panel-2: #f1f5f9;
-            --panel-3: #e8edf4;
+            --bg2: #eef2f7;
+            --card: #ffffff;
+            --card2: #f1f5f9;
+            --card3: #e8edf4;
 
-            --line: rgba(15,23,42,.09);
-            --line-strong: rgba(15,23,42,.15);
+            --border: rgba(15,23,42,.09);
+            --border2: rgba(15,23,42,.15);
 
             --gold: #a87900;
-            --gold-light: #d4af37;
-            --gold-dark: #8a6800;
+            --gold2: #c99816;
 
-            --text: #0f172a;
+            --white: #0f172a;
             --muted: #64748b;
         }
 
@@ -64,34 +67,31 @@
             padding: 0;
         }
 
-        html {
-            scroll-behavior: smooth;
-        }
-
         body {
-            font-family: "Vazirmatn", Tahoma, sans-serif;
             direction: rtl;
+            font-family: "Vazirmatn", Tahoma, sans-serif;
+
             background:
                 radial-gradient(
-                    circle at 8% 0%,
-                    rgba(212,175,55,.09),
+                    circle at 5% 0%,
+                    rgba(212,175,55,.08),
                     transparent 32%
                 ),
                 radial-gradient(
-                    circle at 92% 80%,
-                    rgba(59,130,246,.07),
+                    circle at 95% 90%,
+                    rgba(59,130,246,.06),
                     transparent 35%
                 ),
                 var(--bg);
 
-            color: var(--text);
+            color: var(--white);
             min-height: 100vh;
             overflow-x: hidden;
         }
 
         button,
-        input,
-        select {
+        select,
+        input {
             font-family: inherit;
         }
 
@@ -100,33 +100,32 @@
         }
 
         /* =========================================================
-           LAYOUT
+           PAGE
            ========================================================= */
 
-        .analysis-page {
-            width: min(1240px, calc(100% - 32px));
-            margin: 0 auto;
-            padding: 105px 0 50px;
+        .page {
+            width: min(1380px, calc(100% - 30px));
+            margin: auto;
+            padding: 100px 0 45px;
         }
 
         .page-header {
             display: flex;
-            align-items: flex-end;
             justify-content: space-between;
+            align-items: flex-end;
             gap: 20px;
-            margin-bottom: 24px;
+            margin-bottom: 20px;
         }
 
         .page-header h1 {
-            font-size: 34px;
-            line-height: 1.3;
+            font-size: 32px;
             font-weight: 900;
 
             background:
                 linear-gradient(
                     135deg,
                     var(--gold),
-                    var(--gold-light)
+                    var(--gold2)
                 );
 
             -webkit-background-clip: text;
@@ -135,116 +134,316 @@
         }
 
         .page-header p {
-            margin-top: 8px;
+            margin-top: 7px;
             color: var(--muted);
-            font-size: 13px;
+            font-size: 12px;
         }
 
-        .engine-badge {
-            flex-shrink: 0;
-            padding: 9px 14px;
+        .live-status {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+
+            padding: 9px 13px;
+
             border-radius: 12px;
-            border: 1px solid rgba(212,175,55,.25);
-            background: rgba(212,175,55,.08);
-            color: var(--gold-light);
+
+            background: rgba(16,185,129,.08);
+            border: 1px solid rgba(16,185,129,.2);
+
+            color: var(--green);
             font-size: 11px;
             font-weight: 800;
         }
+
+        .live-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--green);
+            box-shadow: 0 0 10px var(--green);
+        }
+
+        /* =========================================================
+           CARDS
+           ========================================================= */
 
         .card {
             background:
                 linear-gradient(
                     145deg,
-                    var(--panel),
-                    var(--panel-2)
+                    var(--card),
+                    var(--card2)
                 );
 
-            border: 1px solid var(--line);
-            border-radius: 20px;
-            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            margin-bottom: 16px;
+            overflow: hidden;
         }
 
-        .section {
-            padding: 22px;
-            margin-bottom: 18px;
-        }
-
-        .section-title {
+        .card-header {
             display: flex;
             align-items: center;
             justify-content: space-between;
             gap: 15px;
-            margin-bottom: 18px;
+
+            padding: 18px 20px;
+
+            border-bottom: 1px solid var(--border);
         }
 
-        .section-title h2 {
-            font-size: 16px;
+        .card-header h2 {
+            font-size: 15px;
             font-weight: 900;
         }
 
-        .section-title span {
+        .card-header span {
             color: var(--muted);
             font-size: 10px;
+        }
+
+        .card-body {
+            padding: 20px;
         }
 
         /* =========================================================
-           ASSETS
+           ASSET SELECTOR
            ========================================================= */
-
-        .field-label {
-            display: block;
-            margin-bottom: 9px;
-            color: var(--muted);
-            font-size: 12px;
-            font-weight: 800;
-        }
 
         .asset-grid {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
+            grid-template-columns: repeat(9, 1fr);
+            gap: 8px;
         }
 
-        .asset-option {
-            width: 100%;
-            padding: 13px;
+        .asset-btn {
+            min-width: 0;
 
-            border-radius: 13px;
-            border: 1px solid var(--line);
+            padding: 12px 8px;
 
-            background: rgba(255,255,255,.02);
-            color: var(--text);
+            border-radius: 12px;
 
-            text-align: right;
+            border: 1px solid var(--border);
+            background: var(--card2);
 
-            transition:
-                transform .2s ease,
-                border-color .2s ease,
-                background .2s ease;
+            color: var(--white);
+
+            text-align: center;
+
+            transition: .2s ease;
         }
 
-        .asset-option:hover {
-            transform: translateY(-2px);
+        .asset-btn:hover {
             border-color: rgba(212,175,55,.35);
+            transform: translateY(-1px);
         }
 
-        .asset-option.active {
+        .asset-btn.active {
+            background: rgba(212,175,55,.11);
             border-color: var(--gold);
-            background: rgba(212,175,55,.10);
             box-shadow:
-                0 0 0 1px rgba(212,175,55,.12);
+                0 0 0 1px rgba(212,175,55,.08);
         }
 
-        .asset-option strong {
+        .asset-icon {
             display: block;
-            font-size: 13px;
+            font-size: 18px;
+            margin-bottom: 5px;
         }
 
-        .asset-option small {
+        .asset-name {
             display: block;
-            margin-top: 4px;
+            font-size: 10px;
+            font-weight: 800;
+        }
+
+        .asset-code {
+            display: block;
+            margin-top: 3px;
+            color: var(--muted);
+            font-size: 8px;
+        }
+
+        /* =========================================================
+           CONTROL BAR
+           ========================================================= */
+
+        .controls {
+            display: grid;
+            grid-template-columns: 1fr 1fr auto;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .control {
+            width: 100%;
+
+            padding: 11px 13px;
+
+            border-radius: 11px;
+            border: 1px solid var(--border);
+
+            background: var(--card2);
+            color: var(--white);
+
+            outline: none;
+        }
+
+        .control-label {
+            display: block;
+            margin-bottom: 6px;
+
             color: var(--muted);
             font-size: 10px;
+            font-weight: 800;
+        }
+
+        .refresh-btn {
+            align-self: end;
+
+            padding: 11px 18px;
+
+            border: 1px solid rgba(212,175,55,.3);
+            border-radius: 11px;
+
+            background: rgba(212,175,55,.08);
+            color: var(--gold2);
+
+            font-weight: 800;
+        }
+
+        /* =========================================================
+           CHART
+           ========================================================= */
+
+        .chart-wrap {
+            position: relative;
+
+            height: 560px;
+
+            background: #080b11;
+
+            border-bottom: 1px solid var(--border);
+        }
+
+        [data-theme="light"] .chart-wrap {
+            background: #f8fafc;
+        }
+
+        #liveChart {
+            width: 100%;
+            height: 100%;
+        }
+
+        .chart-overlay {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+
+            display: flex;
+            align-items: center;
+            gap: 8px;
+
+            z-index: 10;
+            pointer-events: none;
+        }
+
+        .chart-badge {
+            padding: 6px 9px;
+
+            border-radius: 8px;
+
+            background: rgba(0,0,0,.65);
+            border: 1px solid rgba(255,255,255,.1);
+
+            color: #fff;
+            font-size: 9px;
+            font-weight: 800;
+        }
+
+        .chart-empty {
+            position: absolute;
+            inset: 0;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            flex-direction: column;
+            gap: 8px;
+
+            color: var(--muted);
+
+            background: rgba(8,11,17,.86);
+
+            z-index: 20;
+        }
+
+        [data-theme="light"] .chart-empty {
+            background: rgba(248,250,252,.92);
+        }
+
+        .chart-empty strong {
+            color: var(--white);
+            font-size: 14px;
+        }
+
+        .chart-empty span {
+            max-width: 450px;
+            text-align: center;
+            line-height: 1.8;
+            font-size: 11px;
+        }
+
+        .chart-loading {
+            width: 30px;
+            height: 30px;
+
+            border: 3px solid rgba(212,175,55,.2);
+            border-top-color: var(--gold);
+
+            border-radius: 50%;
+
+            animation: spin .8s linear infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* =========================================================
+           CHART FOOTER
+           ========================================================= */
+
+        .chart-footer {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 1px;
+
+            background: var(--border);
+        }
+
+        .quote-box {
+            padding: 13px;
+
+            background: var(--card);
+
+            text-align: center;
+        }
+
+        .quote-box small {
+            display: block;
+            color: var(--muted);
+            font-size: 9px;
+        }
+
+        .quote-box strong {
+            display: block;
+            margin-top: 5px;
+            font-size: 13px;
         }
 
         /* =========================================================
@@ -254,558 +453,149 @@
         .horizon-grid {
             display: grid;
             grid-template-columns: repeat(5, 1fr);
-            gap: 9px;
+            gap: 8px;
         }
 
-        .horizon-button {
-            border: 1px solid var(--line);
-            background: var(--panel-2);
+        .horizon-btn {
+            padding: 11px 7px;
+
+            border-radius: 11px;
+
+            border: 1px solid var(--border);
+
+            background: var(--card2);
             color: var(--muted);
 
-            border-radius: 12px;
-            padding: 12px 8px;
-
-            font-size: 12px;
+            font-size: 11px;
             font-weight: 800;
-
-            transition: .2s ease;
         }
 
-        .horizon-button:hover {
-            border-color: rgba(212,175,55,.35);
-        }
-
-        .horizon-button.active {
+        .horizon-btn.active {
+            color: #111;
             background:
                 linear-gradient(
                     135deg,
                     var(--gold),
-                    var(--gold-dark)
+                    var(--gold2)
                 );
 
-            color: #111;
             border-color: var(--gold);
         }
 
-        .timeframe-hint {
-            margin-top: 14px;
+        .timeframe-note {
+            margin-top: 12px;
 
-            padding: 12px 14px;
+            padding: 11px 13px;
 
-            border-radius: 13px;
-            border: 1px dashed rgba(59,130,246,.35);
+            border-radius: 11px;
 
             background: rgba(59,130,246,.07);
+            border: 1px solid rgba(59,130,246,.18);
 
-            color: #bfdbfe;
+            color: #93c5fd;
 
-            font-size: 12px;
+            font-size: 10px;
             line-height: 1.9;
         }
 
-        [data-theme="light"] .timeframe-hint {
-            color: #1d4ed8;
-        }
-
         /* =========================================================
-           INPUT MODE
-           ========================================================= */
-
-        .mode-switch {
-            display: flex;
-            gap: 8px;
-            margin-bottom: 15px;
-        }
-
-        .mode-button {
-            flex: 1;
-
-            padding: 12px;
-
-            border-radius: 12px;
-            border: 1px solid var(--line);
-
-            background: var(--panel-2);
-            color: var(--muted);
-
-            font-size: 12px;
-            font-weight: 800;
-        }
-
-        .mode-button.active {
-            color: var(--gold-light);
-            border-color: rgba(212,175,55,.45);
-            background: rgba(212,175,55,.08);
-        }
-
-        /* =========================================================
-           UPLOAD BOXES
-           ========================================================= */
-
-        .upload-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 15px;
-        }
-
-        .upload-box {
-            position: relative;
-
-            min-height: 310px;
-
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-
-            padding: 20px;
-
-            text-align: center;
-
-            border-radius: 17px;
-            border: 1px dashed rgba(148,163,184,.35);
-
-            background: rgba(255,255,255,.018);
-
-            transition:
-                border-color .2s ease,
-                background .2s ease,
-                transform .2s ease;
-
-            overflow: hidden;
-        }
-
-        .upload-box:hover {
-            border-color: rgba(212,175,55,.40);
-        }
-
-        .upload-box.dragging {
-            border-color: var(--gold);
-            background: rgba(212,175,55,.08);
-            transform: scale(1.01);
-        }
-
-        .upload-box.has-image {
-            padding: 10px;
-        }
-
-        .upload-timeframe {
-            position: absolute;
-            top: 12px;
-            right: 12px;
-
-            padding: 5px 9px;
-
-            border-radius: 8px;
-
-            background: rgba(0,0,0,.55);
-            color: #fff;
-
-            font-size: 10px;
-            font-weight: 900;
-        }
-
-        .upload-icon {
-            font-size: 40px;
-            margin-bottom: 10px;
-        }
-
-        .upload-box strong {
-            font-size: 14px;
-        }
-
-        .upload-box p {
-            margin: 7px 0 15px;
-
-            color: var(--muted);
-            font-size: 11px;
-            line-height: 1.8;
-        }
-
-        .upload-button {
-            padding: 9px 14px;
-
-            border-radius: 10px;
-            border: 1px solid rgba(212,175,55,.35);
-
-            background: rgba(212,175,55,.09);
-            color: var(--gold-light);
-
-            font-size: 11px;
-            font-weight: 800;
-        }
-
-        .upload-box input {
-            display: none;
-        }
-
-        .upload-preview {
-            width: 100%;
-            max-height: 235px;
-
-            object-fit: contain;
-
-            border-radius: 12px;
-        }
-
-        .remove-image {
-            position: absolute;
-            top: 10px;
-            left: 10px;
-
-            padding: 6px 9px;
-
-            border: 0;
-            border-radius: 8px;
-
-            background: rgba(239,68,68,.88);
-            color: #fff;
-
-            font-size: 11px;
-            font-weight: 800;
-        }
-
-        .file-name {
-            margin-top: 8px;
-            color: var(--muted);
-            font-size: 10px;
-        }
-
-        /* =========================================================
-           ENGINE
+           ANALYSIS ENGINE
            ========================================================= */
 
         .engine-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            gap: 10px;
+            gap: 9px;
         }
 
-        .engine-item {
-            padding: 15px;
-
-            border-radius: 13px;
-            border: 1px solid var(--line);
-
-            background: rgba(255,255,255,.02);
-        }
-
-        .engine-item small {
-            color: var(--muted);
-            font-size: 10px;
-        }
-
-        .engine-item strong {
-            display: block;
-            margin-top: 7px;
-
-            font-size: 12px;
-            line-height: 1.7;
-        }
-
-        .action-row {
-            display: flex;
-            gap: 10px;
-            margin-top: 16px;
-        }
-
-        .primary-button,
-        .secondary-button {
-            border-radius: 13px;
-            padding: 13px 18px;
-            font-weight: 900;
-        }
-
-        .primary-button {
-            flex: 1;
-
-            border: 0;
-
-            background:
-                linear-gradient(
-                    135deg,
-                    var(--gold),
-                    var(--gold-dark)
-                );
-
-            color: #111;
-        }
-
-        .secondary-button {
-            border: 1px solid var(--line);
-            background: var(--panel-2);
-            color: var(--text);
-        }
-
-        /* =========================================================
-           RESULTS
-           ========================================================= */
-
-        #resultSection {
-            display: none;
-        }
-
-        .result-grid {
-            display: grid;
-            grid-template-columns: 1.45fr .75fr;
-            gap: 18px;
-        }
-
-        .chart-placeholder {
-            position: relative;
-
-            min-height: 430px;
-
-            border-radius: 16px;
-            border: 1px solid rgba(255,255,255,.07);
-
-            background: #080b12;
-
-            overflow: hidden;
-        }
-
-        [data-theme="light"] .chart-placeholder {
-            background: #f8fafc;
-        }
-
-        .chart-grid {
-            position: absolute;
-            inset: 35px;
-
-            background:
-                repeating-linear-gradient(
-                    to bottom,
-                    rgba(148,163,184,.10) 0 1px,
-                    transparent 1px 70px
-                ),
-                repeating-linear-gradient(
-                    to right,
-                    rgba(148,163,184,.07) 0 1px,
-                    transparent 1px 100px
-                );
-        }
-
-        .chart-line {
-            position: absolute;
-
-            width: 75%;
-            height: 150px;
-
-            left: 12%;
-            top: 35%;
-
-            border-bottom: 3px solid var(--gold);
-
-            border-radius: 50%;
-
-            transform:
-                skewY(-10deg)
-                rotate(-3deg);
-
-            opacity: .8;
-        }
-
-        .chart-message {
-            position: absolute;
-
-            bottom: 18px;
-            right: 18px;
-            left: 18px;
-
-            padding: 11px;
-
-            border-radius: 10px;
-
-            background: rgba(0,0,0,.58);
-            color: #cbd5e1;
-
-            font-size: 11px;
-            line-height: 1.8;
-
-            z-index: 2;
-        }
-
-        .metrics {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 10px;
-        }
-
-        .metric {
+        .engine {
             padding: 14px;
 
+            border: 1px solid var(--border);
             border-radius: 13px;
-            border: 1px solid var(--line);
 
-            background: rgba(255,255,255,.02);
+            background: rgba(255,255,255,.015);
         }
 
-        .metric small {
-            color: var(--muted);
-            font-size: 10px;
+        .engine-icon {
+            font-size: 20px;
         }
 
-        .metric strong {
+        .engine strong {
             display: block;
-            margin-top: 6px;
-
-            font-size: 14px;
-        }
-
-        .analysis-list {
-            margin-top: 14px;
-        }
-
-        .analysis-row {
-            display: flex;
-            justify-content: space-between;
-            gap: 12px;
-
-            padding: 11px 0;
-
-            border-bottom: 1px solid var(--line);
-
+            margin-top: 7px;
             font-size: 11px;
         }
 
-        .analysis-row:last-child {
-            border-bottom: 0;
-        }
+        .engine small {
+            display: block;
+            margin-top: 5px;
 
-        .analysis-row span {
-            color: var(--muted);
-        }
-
-        /* =========================================================
-           SCENARIOS
-           ========================================================= */
-
-        .scenario-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 12px;
-        }
-
-        .scenario {
-            padding: 16px;
-
-            border-radius: 14px;
-            border: 1px solid var(--line);
-
-            background: rgba(255,255,255,.02);
-        }
-
-        .scenario h3 {
-            font-size: 13px;
-            margin-bottom: 9px;
-        }
-
-        .scenario p {
             color: var(--muted);
 
-            font-size: 11px;
-            line-height: 1.9;
-        }
-
-        .scenario.bull {
-            border-color: rgba(16,185,129,.25);
-        }
-
-        .scenario.neutral {
-            border-color: rgba(148,163,184,.25);
-        }
-
-        .scenario.bear {
-            border-color: rgba(239,68,68,.25);
+            font-size: 9px;
+            line-height: 1.7;
         }
 
         /* =========================================================
            MULTI ASSET
            ========================================================= */
 
-        .comparison-controls {
+        .compare-grid {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 9px;
         }
 
-        .comparison-select {
+        .compare-select {
             width: 100%;
 
             padding: 11px;
 
-            border-radius: 11px;
-            border: 1px solid var(--line);
+            border-radius: 10px;
 
-            background: var(--panel-2);
-            color: var(--text);
+            border: 1px solid var(--border);
 
-            outline: none;
+            background: var(--card2);
+            color: var(--white);
         }
 
-        .comparison-chart {
-            height: 330px;
+        .compare-chart {
+            height: 300px;
 
-            margin-top: 14px;
+            margin-top: 13px;
 
-            border-radius: 15px;
+            border-radius: 14px;
+            border: 1px solid var(--border);
 
-            background: #080b12;
-
-            overflow: hidden;
+            background: #080b11;
         }
 
-        [data-theme="light"] .comparison-chart {
+        [data-theme="light"] .compare-chart {
             background: #f8fafc;
-        }
-
-        .comparison-chart svg {
-            width: 100%;
-            height: 100%;
-        }
-
-        /* =========================================================
-           FOOTER
-           ========================================================= */
-
-        .page-footer {
-            padding: 25px;
-
-            text-align: center;
-
-            color: var(--muted);
-
-            font-size: 11px;
         }
 
         /* =========================================================
            RESPONSIVE
            ========================================================= */
 
-        @media (max-width: 950px) {
+        @media (max-width: 1100px) {
 
             .asset-grid {
-                grid-template-columns: repeat(2, 1fr);
+                grid-template-columns: repeat(5, 1fr);
             }
 
             .engine-grid {
                 grid-template-columns: repeat(2, 1fr);
             }
 
-            .result-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .scenario-grid {
-                grid-template-columns: 1fr;
-            }
         }
 
-        @media (max-width: 700px) {
+        @media (max-width: 760px) {
 
-            .analysis-page {
-                width: min(100% - 22px, 1240px);
-                padding-top: 90px;
+            .page {
+                width: calc(100% - 20px);
+                padding-top: 88px;
             }
 
             .page-header {
@@ -814,1449 +604,1832 @@
             }
 
             .page-header h1 {
-                font-size: 26px;
-            }
-
-            .engine-badge {
-                align-self: flex-start;
-            }
-
-            .section {
-                padding: 16px;
-                border-radius: 16px;
-            }
-
-            .section-title {
-                align-items: flex-start;
-                flex-direction: column;
+                font-size: 25px;
             }
 
             .asset-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .controls {
                 grid-template-columns: 1fr;
+            }
+
+            .refresh-btn {
+                width: 100%;
+            }
+
+            .chart-wrap {
+                height: 430px;
+            }
+
+            .chart-footer {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .chart-footer .quote-box:last-child {
+                grid-column: span 2;
             }
 
             .horizon-grid {
                 grid-template-columns: repeat(2, 1fr);
             }
 
-            .horizon-button:last-child {
-                grid-column: span 2;
+            .compare-grid {
+                grid-template-columns: 1fr 1fr;
             }
 
-            .upload-grid {
-                grid-template-columns: 1fr;
-            }
+        }
 
-            .upload-box {
-                min-height: 270px;
+        @media (max-width: 460px) {
+
+            .asset-grid {
+                grid-template-columns: repeat(2, 1fr);
             }
 
             .engine-grid {
                 grid-template-columns: 1fr;
             }
 
-            .mode-switch {
-                flex-direction: column;
-            }
-
-            .comparison-controls {
+            .compare-grid {
                 grid-template-columns: 1fr;
             }
 
-            .action-row {
-                flex-direction: column;
+            .chart-wrap {
+                height: 380px;
             }
 
-            .chart-placeholder {
-                min-height: 330px;
+            .card-body {
+                padding: 13px;
             }
 
-            .comparison-chart {
-                height: 280px;
-            }
         }
 
-        @media (max-width: 420px) {
-
-            .horizon-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .horizon-button:last-child {
-                grid-column: auto;
-            }
-
-            .metrics {
-                grid-template-columns: 1fr;
-            }
-
-            .page-header h1 {
-                font-size: 23px;
-            }
-        }
     </style>
 </head>
 
+
 <body>
 
-<div class="analysis-page">
+    <!-- Navbar موجود پروژه -->
+    <div id="shamdun-navbar"></div>
 
-    <!-- =========================================================
-         HEADER
-         ========================================================= -->
 
-    <header class="page-header">
+    <main class="page">
 
-        <div>
-            <h1>🧠 مرکز تحلیل هوشمند</h1>
+        <!-- =====================================================
+             HEADER
+             ===================================================== -->
 
-            <p>
-                تحلیل ساختاری بازار با Price Action،
-                Wyckoff، Smart Money و Volume
-            </p>
-        </div>
-
-        <div class="engine-badge">
-            Analysis Engine · V1
-        </div>
-
-    </header>
-
-
-    <!-- =========================================================
-         STEP 1
-         ========================================================= -->
-
-    <section class="card section">
-
-        <div class="section-title">
-
-            <h2>
-                ۱. بازار و افق تحلیل
-            </h2>
-
-            <span>
-                نوع معامله، تایم‌فریم ورودی را تعیین می‌کند
-            </span>
-
-        </div>
-
-
-        <label class="field-label">
-            دارایی مورد تحلیل
-        </label>
-
-        <div
-            class="asset-grid"
-            id="assetGrid"
-        ></div>
-
-
-        <div style="height:18px"></div>
-
-
-        <label class="field-label">
-            برای چه نوع معامله‌ای تحلیل می‌خواهید؟
-        </label>
-
-        <div
-            class="horizon-grid"
-            id="horizonGrid"
-        ></div>
-
-
-        <div
-            class="timeframe-hint"
-            id="timeframeHint"
-        ></div>
-
-    </section>
-
-
-    <!-- =========================================================
-         STEP 2
-         ========================================================= -->
-
-    <section class="card section">
-
-        <div class="section-title">
-
-            <h2>
-                ۲. منبع داده
-            </h2>
-
-            <span>
-                چارت زنده یا تصویر چارت
-            </span>
-
-        </div>
-
-
-        <div class="mode-switch">
-
-            <button
-                class="mode-button active"
-                data-mode="image"
-            >
-                📷 تصویر چارت
-            </button>
-
-            <button
-                class="mode-button"
-                data-mode="live"
-            >
-                📡 چارت زنده
-            </button>
-
-        </div>
-
-
-        <div id="inputArea"></div>
-
-    </section>
-
-
-    <!-- =========================================================
-         STEP 3
-         ========================================================= -->
-
-    <section class="card section">
-
-        <div class="section-title">
-
-            <h2>
-                ۳. موتور تحلیل
-            </h2>
-
-            <span>
-                ساختار اولیه موتور تحلیل
-            </span>
-
-        </div>
-
-
-        <div class="engine-grid">
-
-            <div class="engine-item">
-                <small>
-                    Price Action
-                </small>
-
-                <strong>
-                    ساختار بازار · روند · حمایت و مقاومت
-                </strong>
-            </div>
-
-
-            <div class="engine-item">
-                <small>
-                    Wyckoff
-                </small>
-
-                <strong>
-                    فاز بازار · عرضه و تقاضا · Accumulation
-                </strong>
-            </div>
-
-
-            <div class="engine-item">
-                <small>
-                    Smart Money
-                </small>
-
-                <strong>
-                    Liquidity · BOS · CHoCH · OB · FVG
-                </strong>
-            </div>
-
-
-            <div class="engine-item">
-                <small>
-                    Volume / Momentum
-                </small>
-
-                <strong>
-                    Volume Profile · VWAP · RSI · ATR
-                </strong>
-            </div>
-
-        </div>
-
-
-        <div class="action-row">
-
-            <button
-                class="primary-button"
-                id="runAnalysis"
-            >
-                🔍 اجرای تحلیل
-            </button>
-
-            <button
-                class="secondary-button"
-                id="resetAnalysis"
-            >
-                پاک‌سازی
-            </button>
-
-        </div>
-
-    </section>
-
-
-    <!-- =========================================================
-         RESULTS
-         ========================================================= -->
-
-    <section
-        class="card section"
-        id="resultSection"
-    >
-
-        <div class="section-title">
-
-            <h2>
-                📊 خروجی تحلیل
-            </h2>
-
-            <span id="resultTitle">
-                —
-            </span>
-
-        </div>
-
-
-        <div class="result-grid">
-
-            <div class="chart-placeholder">
-
-                <div class="chart-grid"></div>
-
-                <div class="chart-line"></div>
-
-                <div class="chart-message">
-
-                    نمودار تحلیلی پس از اتصال به داده واقعی
-                    در این بخش نمایش داده می‌شود.
-
-                    هیچ قیمت، سطح یا سیگنال ساختگی
-                    وارد موتور تحلیل نمی‌شود.
-
-                </div>
-
-            </div>
-
+        <header class="page-header">
 
             <div>
 
-                <div class="metrics">
-
-                    <div class="metric">
-                        <small>
-                            رژیم بازار
-                        </small>
-
-                        <strong>
-                            داده لازم است
-                        </strong>
-                    </div>
-
-
-                    <div class="metric">
-                        <small>
-                            مومنتوم
-                        </small>
-
-                        <strong>
-                            داده لازم است
-                        </strong>
-                    </div>
-
-
-                    <div class="metric">
-                        <small>
-                            حمایت
-                        </small>
-
-                        <strong>
-                            —
-                        </strong>
-                    </div>
-
-
-                    <div class="metric">
-                        <small>
-                            مقاومت
-                        </small>
-
-                        <strong>
-                            —
-                        </strong>
-                    </div>
-
-                </div>
-
-
-                <div class="analysis-list">
-
-                    <div class="analysis-row">
-                        <span>
-                            ساختار بازار
-                        </span>
-
-                        <b>
-                            پس از دریافت چارت
-                        </b>
-                    </div>
-
-
-                    <div class="analysis-row">
-                        <span>
-                            خط روند
-                        </span>
-
-                        <b>
-                            پس از دریافت چارت
-                        </b>
-                    </div>
-
-
-                    <div class="analysis-row">
-                        <span>
-                            Liquidity
-                        </span>
-
-                        <b>
-                            پس از تحلیل
-                        </b>
-                    </div>
-
-
-                    <div class="analysis-row">
-                        <span>
-                            حد ابطال
-                        </span>
-
-                        <b>
-                            پس از تحلیل
-                        </b>
-                    </div>
-
-                </div>
-
-            </div>
-
-        </div>
-
-
-        <div style="height:22px"></div>
-
-
-        <div class="section-title">
-
-            <h2>
-                🎯 سناریوهای تحلیل
-            </h2>
-
-            <span>
-                بدون پیش‌بینی قطعی
-            </span>
-
-        </div>
-
-
-        <div class="scenario-grid">
-
-            <div class="scenario bull">
-
-                <h3>
-                    🟢 سناریوی صعودی
-                </h3>
+                <h1>
+                    🧠 مرکز تحلیل هوشمند
+                </h1>
 
                 <p>
-                    شرط فعال‌شدن، محدوده ورود،
-                    اهداف و نقطه ابطال پس از
-                    دریافت داده واقعی مشخص می‌شوند.
+                    تحلیل چندلایه بازار با داده واقعی و بدون قیمت ساختگی
                 </p>
 
             </div>
 
 
-            <div class="scenario neutral">
+            <div class="live-status">
 
-                <h3>
-                    🟡 سناریوی خنثی
-                </h3>
+                <span class="live-dot"></span>
 
-                <p>
-                    در صورت باقی‌ماندن قیمت در
-                    محدوده تعادل، سناریوی انتظار
-                    و سطوح تأیید بررسی می‌شود.
-                </p>
-
-            </div>
-
-
-            <div class="scenario bear">
-
-                <h3>
-                    🔴 سناریوی نزولی
-                </h3>
-
-                <p>
-                    در صورت شکست ساختار یا حمایت
-                    معتبر، مسیر جایگزین و نقطه
-                    ابطال بررسی می‌شود.
-                </p>
-
-            </div>
-
-        </div>
-
-    </section>
-
-
-    <!-- =========================================================
-         MULTI ASSET COMPARISON
-         ========================================================= -->
-
-    <section class="card section">
-
-        <div class="section-title">
-
-            <h2>
-                ⚖️ مقایسه چند دارایی
-            </h2>
-
-            <span>
-                Overlay · Correlation · Divergence · Relative Strength
-            </span>
-
-        </div>
-
-
-        <div
-            class="comparison-controls"
-            id="comparisonControls"
-        ></div>
-
-
-        <div class="comparison-chart">
-
-            <svg
-                viewBox="0 0 1000 330"
-                preserveAspectRatio="none"
-            >
-
-                <defs>
-
-                    <pattern
-                        id="analysisGrid"
-                        width="80"
-                        height="55"
-                        patternUnits="userSpaceOnUse"
-                    >
-
-                        <path
-                            d="M80 0H0V55"
-                            fill="none"
-                            stroke="rgba(148,163,184,.10)"
-                            stroke-width="1"
-                        />
-
-                    </pattern>
-
-                </defs>
-
-
-                <rect
-                    width="1000"
-                    height="330"
-                    fill="url(#analysisGrid)"
-                />
-
-
-                <polyline
-                    points="
-                        0,255
-                        80,240
-                        160,250
-                        240,190
-                        320,205
-                        400,145
-                        480,170
-                        560,105
-                        640,125
-                        720,80
-                        800,105
-                        900,55
-                        1000,75
-                    "
-                    fill="none"
-                    stroke="#d4af37"
-                    stroke-width="3"
-                />
-
-
-                <polyline
-                    points="
-                        0,275
-                        80,260
-                        160,245
-                        240,250
-                        320,180
-                        400,195
-                        480,145
-                        560,160
-                        640,115
-                        720,135
-                        800,95
-                        900,120
-                        1000,65
-                    "
-                    fill="none"
-                    stroke="#3b82f6"
-                    stroke-width="3"
-                />
-
-            </svg>
-
-        </div>
-
-
-        <div
-            class="metrics"
-            style="margin-top:14px"
-        >
-
-            <div class="metric">
-                <small>
-                    همبستگی
-                </small>
-
-                <strong>
-                    —
-                </strong>
-            </div>
-
-
-            <div class="metric">
-                <small>
-                    واگرایی
-                </small>
-
-                <strong>
-                    —
-                </strong>
-            </div>
-
-
-            <div class="metric">
-                <small>
-                    قدرت نسبی
-                </small>
-
-                <strong>
-                    —
-                </strong>
-            </div>
-
-
-            <div class="metric">
-                <small>
-                    Spread / Ratio
-                </small>
-
-                <strong>
-                    —
-                </strong>
-            </div>
-
-        </div>
-
-    </section>
-
-</div>
-
-
-<footer class="page-footer">
-    © ۱۴۰۵ آکادمی شمعدون | مرکز تحلیل هوشمند
-</footer>
-
-
-<!-- Navbar موجود پروژه -->
-<script src="navbar.js"></script>
-
-
-<script>
-/* =========================================================
-   SHAMDUN ANALYSIS ENGINE — UI FOUNDATION
-   ========================================================= */
-
-const ASSETS = [
-
-    ['gold18', '🥇 طلا ۱۸ عیار', 'Gold 18K'],
-
-    ['goldOunce', '🌍 انس طلا', 'XAU/USD'],
-
-    ['silverOunce', '🥈 انس نقره', 'XAG/USD'],
-
-    ['usd', '💵 دلار آزاد', 'USD/IRR'],
-
-    ['silver999', '🥈 نقره ۹۹۹', 'Silver 999'],
-
-    ['btc', '₿ بیت‌کوین', 'BTC/USDT'],
-
-    ['eth', 'Ξ اتریوم', 'ETH/USDT'],
-
-    ['sol', '◎ سولانا', 'SOL/USDT'],
-
-    ['bourse', '📊 شاخص کل بورس', 'TEDPIX']
-
-];
-
-
-const HORIZONS = {
-
-    scalp: {
-        title: '⚡ اسکالپ',
-        main: '5m',
-        confirmation: '15m',
-        description:
-            'برای معاملات بسیار کوتاه‌مدت، چارت اصلی ۵ دقیقه و چارت تأیید ۱۵ دقیقه باشد.'
-    },
-
-    short: {
-        title: '🎯 کوتاه‌مدت',
-        main: '1H',
-        confirmation: '4H',
-        description:
-            'برای معاملات کوتاه‌مدت، چارت اصلی ۱ ساعته و چارت تأیید ۴ ساعته باشد.'
-    },
-
-    swing: {
-        title: '📈 سویینگ',
-        main: '4H',
-        confirmation: '1D',
-        description:
-            'برای معاملات سویینگ، چارت اصلی ۴ ساعته و چارت تأیید روزانه باشد.'
-    },
-
-    medium: {
-        title: '🗓 میان‌مدت',
-        main: '1D',
-        confirmation: '1W',
-        description:
-            'برای روندهای چند هفته تا چند ماه، چارت روزانه و هفتگی استفاده شود.'
-    },
-
-    long: {
-        title: '🏦 بلندمدت',
-        main: '1W',
-        confirmation: '1M',
-        description:
-            'برای روندهای بزرگ، چارت هفتگی و ماهانه استفاده شود.'
-    }
-
-};
-
-
-let selectedAsset = 'gold18';
-
-let selectedHorizon = 'swing';
-
-let inputMode = 'image';
-
-let uploadedFiles = {
-    main: null,
-    confirmation: null
-};
-
-
-/* =========================================================
-   HELPERS
-   ========================================================= */
-
-const $ = id => document.getElementById(id);
-
-
-/* =========================================================
-   ASSETS
-   ========================================================= */
-
-function renderAssets() {
-
-    $('assetGrid').innerHTML = ASSETS.map(asset => {
-
-        const active =
-            asset[0] === selectedAsset
-                ? 'active'
-                : '';
-
-        return `
-            <button
-                type="button"
-                class="asset-option ${active}"
-                data-asset="${asset[0]}"
-            >
-
-                <strong>
-                    ${asset[1]}
-                </strong>
-
-                <small>
-                    ${asset[2]}
-                </small>
-
-            </button>
-        `;
-
-    }).join('');
-
-
-    document
-        .querySelectorAll('.asset-option')
-        .forEach(button => {
-
-            button.addEventListener('click', () => {
-
-                selectedAsset =
-                    button.dataset.asset;
-
-                renderAssets();
-
-            });
-
-        });
-
-}
-
-
-/* =========================================================
-   HORIZONS
-   ========================================================= */
-
-function renderHorizons() {
-
-    $('horizonGrid').innerHTML =
-        Object.entries(HORIZONS)
-        .map(([key, horizon]) => {
-
-            const active =
-                key === selectedHorizon
-                    ? 'active'
-                    : '';
-
-            return `
-                <button
-                    type="button"
-                    class="horizon-button ${active}"
-                    data-horizon="${key}"
-                >
-                    ${horizon.title}
-                </button>
-            `;
-
-        })
-        .join('');
-
-
-    document
-        .querySelectorAll('.horizon-button')
-        .forEach(button => {
-
-            button.addEventListener('click', () => {
-
-                selectedHorizon =
-                    button.dataset.horizon;
-
-                renderHorizons();
-
-                renderTimeframeHint();
-
-                renderInputArea();
-
-            });
-
-        });
-
-}
-
-
-/* =========================================================
-   TIMEFRAME HINT
-   ========================================================= */
-
-function renderTimeframeHint() {
-
-    const horizon =
-        HORIZONS[selectedHorizon];
-
-    $('timeframeHint').innerHTML = `
-
-        💡
-
-        <b>تنظیم پیشنهادی چارت:</b>
-
-        برای ${horizon.title}
-
-        چارت اصلی را روی
-
-        <b>${horizon.main}</b>
-
-        و چارت تأیید را روی
-
-        <b>${horizon.confirmation}</b>
-
-        قرار دهید.
-
-        <br>
-
-        <span>
-            ${horizon.description}
-        </span>
-
-    `;
-
-}
-
-
-/* =========================================================
-   INPUT MODE
-   ========================================================= */
-
-document
-    .querySelectorAll('.mode-button')
-    .forEach(button => {
-
-        button.addEventListener('click', () => {
-
-            inputMode =
-                button.dataset.mode;
-
-            document
-                .querySelectorAll('.mode-button')
-                .forEach(item =>
-                    item.classList.remove('active')
-                );
-
-            button.classList.add('active');
-
-            renderInputArea();
-
-        });
-
-    });
-
-
-/* =========================================================
-   UPLOAD BOX
-   ========================================================= */
-
-function createUploadBox(
-    key,
-    title,
-    timeframe,
-    file
-) {
-
-    if (file) {
-
-        return `
-
-            <div
-                class="upload-box has-image"
-                data-upload-zone="${key}"
-            >
-
-                <span class="upload-timeframe">
-                    ${timeframe}
+                <span id="connectionStatus">
+                    آماده اتصال
                 </span>
 
+            </div>
 
-                <button
-                    type="button"
-                    class="remove-image"
-                    data-remove="${key}"
-                >
-                    × حذف
-                </button>
+        </header>
 
 
-                <img
-                    class="upload-preview"
-                    src="${file.url}"
-                    alt="چارت ${timeframe}"
-                >
+        <!-- =====================================================
+             ASSET
+             ===================================================== -->
+
+        <section class="card">
+
+            <div class="card-header">
+
+                <h2>
+                    ۱. انتخاب بازار
+                </h2>
+
+                <span>
+                    دارایی مورد تحلیل را انتخاب کنید
+                </span>
+
+            </div>
 
 
-                <strong>
-                    ✓ ${title}
-                </strong>
+            <div class="card-body">
+
+                <div
+                    class="asset-grid"
+                    id="assetGrid"
+                ></div>
 
 
-                <div class="file-name">
-                    ${file.name}
+                <div class="controls">
+
+                    <div>
+
+                        <label class="control-label">
+                            نوع نمودار
+                        </label>
+
+                        <select
+                            id="chartType"
+                            class="control"
+                        >
+
+                            <option value="candles">
+                                کندلی
+                            </option>
+
+                            <option value="line">
+                                خطی
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div>
+
+                        <label class="control-label">
+                            تایم‌فریم
+                        </label>
+
+                        <select
+                            id="intervalSelect"
+                            class="control"
+                        >
+
+                            <option value="1m">
+                                ۱ دقیقه
+                            </option>
+
+                            <option value="5m">
+                                ۵ دقیقه
+                            </option>
+
+                            <option value="15m">
+                                ۱۵ دقیقه
+                            </option>
+
+                            <option value="1h" selected>
+                                ۱ ساعت
+                            </option>
+
+                            <option value="4h">
+                                ۴ ساعت
+                            </option>
+
+                            <option value="1d">
+                                روزانه
+                            </option>
+
+                            <option value="1w">
+                                هفتگی
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <button
+                        class="refresh-btn"
+                        id="refreshBtn"
+                    >
+                        ↻ بروزرسانی
+                    </button>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             HORIZON
+             ===================================================== -->
+
+        <section class="card">
+
+            <div class="card-header">
+
+                <h2>
+                    ۲. افق معامله
+                </h2>
+
+                <span>
+                    تایم‌فریم تحلیل بر اساس سبک معامله
+                </span>
+
+            </div>
+
+
+            <div class="card-body">
+
+                <div
+                    class="horizon-grid"
+                    id="horizonGrid"
+                ></div>
+
+
+                <div
+                    class="timeframe-note"
+                    id="timeframeNote"
+                ></div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             LIVE CHART
+             ===================================================== -->
+
+        <section class="card">
+
+            <div class="card-header">
+
+                <h2>
+                    📈 نمودار زنده
+                </h2>
+
+                <span id="chartSource">
+                    —
+                </span>
+
+            </div>
+
+
+            <div class="chart-wrap">
+
+                <div
+                    id="liveChart"
+                ></div>
+
+
+                <div class="chart-overlay">
+
+                    <div
+                        class="chart-badge"
+                        id="chartAssetBadge"
+                    >
+                        —
+                    </div>
+
+                    <div
+                        class="chart-badge"
+                        id="chartIntervalBadge"
+                    >
+                        —
+                    </div>
+
                 </div>
 
 
-                <input
-                    type="file"
-                    accept="image/png,image/jpeg,image/webp"
-                />
+                <div
+                    class="chart-empty"
+                    id="chartEmpty"
+                >
+
+                    <div class="chart-loading"></div>
+
+                    <strong>
+                        در حال دریافت داده واقعی...
+                    </strong>
+
+                    <span>
+                        سیستم تا دریافت داده معتبر،
+                        هیچ کندل یا قیمت ساختگی نمایش نمی‌دهد.
+                    </span>
+
+                </div>
 
             </div>
 
-        `;
 
-    }
+            <div class="chart-footer">
 
+                <div class="quote-box">
 
-    return `
+                    <small>
+                        آخرین قیمت
+                    </small>
 
-        <div
-            class="upload-box"
-            data-upload-zone="${key}"
-        >
+                    <strong id="qPrice">
+                        —
+                    </strong>
 
-            <span class="upload-timeframe">
-                ${timeframe}
-            </span>
-
-
-            <div class="upload-icon">
-                ${key === 'main' ? '📊' : '🔎'}
-            </div>
+                </div>
 
 
-            <strong>
-                ${title}
-            </strong>
+                <div class="quote-box">
+
+                    <small>
+                        تغییر
+                    </small>
+
+                    <strong id="qChange">
+                        —
+                    </strong>
+
+                </div>
 
 
-            <p>
-                تصویر چارت ${timeframe}
-                را اینجا بکشید و رها کنید
-                <br>
-                یا فایل را انتخاب کنید
-            </p>
+                <div class="quote-box">
+
+                    <small>
+                        بیشترین
+                    </small>
+
+                    <strong id="qHigh">
+                        —
+                    </strong>
+
+                </div>
 
 
-            <button
-                type="button"
-                class="upload-button"
-            >
-                📎 انتخاب تصویر
-            </button>
+                <div class="quote-box">
+
+                    <small>
+                        کمترین
+                    </small>
+
+                    <strong id="qLow">
+                        —
+                    </strong>
+
+                </div>
 
 
-            <input
-                type="file"
-                accept="image/png,image/jpeg,image/webp"
-            />
+                <div class="quote-box">
 
-        </div>
+                    <small>
+                        منبع
+                    </small>
 
-    `;
+                    <strong id="qSource">
+                        —
+                    </strong>
 
-}
-
-
-/* =========================================================
-   RENDER INPUT AREA
-   ========================================================= */
-
-function renderInputArea() {
-
-    if (inputMode === 'live') {
-
-        const horizon =
-            HORIZONS[selectedHorizon];
-
-        $('inputArea').innerHTML = `
-
-            <div class="timeframe-hint">
-
-                📡
-
-                <b>حالت چارت زنده</b>
-
-                <br>
-
-                پس از اتصال منبع داده زنده،
-                سیستم برای این افق تحلیل،
-
-                <b>${horizon.main}</b>
-
-                را به عنوان چارت اصلی و
-
-                <b>${horizon.confirmation}</b>
-
-                را به عنوان چارت تأیید دریافت می‌کند.
-
-                <br><br>
-
-                در این نسخه هیچ داده ساختگی
-                وارد تحلیل نمی‌شود.
+                </div>
 
             </div>
 
-        `;
-
-        return;
-
-    }
+        </section>
 
 
-    const horizon =
-        HORIZONS[selectedHorizon];
+        <!-- =====================================================
+             ANALYSIS ENGINE
+             ===================================================== -->
+
+        <section class="card">
+
+            <div class="card-header">
+
+                <h2>
+                    ۳. لایه‌های موتور تحلیل
+                </h2>
+
+                <span>
+                    تحلیل نهایی پس از دریافت داده کامل
+                </span>
+
+            </div>
 
 
-    $('inputArea').innerHTML = `
+            <div class="card-body">
 
-        <div class="upload-grid">
+                <div class="engine-grid">
 
-            ${createUploadBox(
-                'main',
-                '📊 چارت اصلی',
-                horizon.main,
-                uploadedFiles.main
-            )}
+                    <div class="engine">
 
-            ${createUploadBox(
-                'confirmation',
-                '🔎 چارت تأیید',
-                horizon.confirmation,
-                uploadedFiles.confirmation
-            )}
+                        <div class="engine-icon">
+                            🕯️
+                        </div>
 
-        </div>
+                        <strong>
+                            Price Action
+                        </strong>
 
-    `;
+                        <small>
+                            ساختار بازار، روند،
+                            حمایت، مقاومت و شکست‌ها
+                        </small>
 
-
-    bindUploadEvents();
-
-}
+                    </div>
 
 
-/* =========================================================
-   FILE HANDLING
-   ========================================================= */
+                    <div class="engine">
 
-function bindUploadEvents() {
+                        <div class="engine-icon">
+                            🧩
+                        </div>
 
-    document
-        .querySelectorAll('[data-upload-zone]')
-        .forEach(zone => {
+                        <strong>
+                            Wyckoff
+                        </strong>
 
-            const key =
-                zone.dataset.uploadZone;
+                        <small>
+                            فاز بازار، عرضه و تقاضا،
+                            Accumulation و Distribution
+                        </small>
 
-            const input =
-                zone.querySelector('input[type="file"]');
-
-
-            zone.addEventListener(
-                'click',
-                event => {
-
-                    if (
-                        event.target.closest('[data-remove]')
-                    ) {
-                        return;
-                    }
-
-                    input.click();
-
-                }
-            );
+                    </div>
 
 
-            [
-                'dragenter',
-                'dragover'
-            ].forEach(eventName => {
+                    <div class="engine">
 
-                zone.addEventListener(
-                    eventName,
-                    event => {
+                        <div class="engine-icon">
+                            🏦
+                        </div>
 
-                        event.preventDefault();
+                        <strong>
+                            Smart Money
+                        </strong>
 
-                        zone.classList.add(
-                            'dragging'
-                        );
+                        <small>
+                            Liquidity، BOS، CHoCH،
+                            Order Block و FVG
+                        </small>
 
-                    }
-                );
-
-            });
+                    </div>
 
 
-            [
-                'dragleave',
-                'drop'
-            ].forEach(eventName => {
+                    <div class="engine">
 
-                zone.addEventListener(
-                    eventName,
-                    event => {
+                        <div class="engine-icon">
+                            📊
+                        </div>
 
-                        event.preventDefault();
+                        <strong>
+                            Volume & Momentum
+                        </strong>
 
-                        zone.classList.remove(
-                            'dragging'
-                        );
+                        <small>
+                            Volume Profile، VWAP،
+                            RSI، ATR و مومنتوم
+                        </small>
 
-                    }
-                );
+                    </div>
 
-            });
+                </div>
 
+            </div>
 
-            zone.addEventListener(
-                'drop',
-                event => {
-
-                    const file =
-                        event.dataTransfer.files[0];
-
-                    if (file) {
-
-                        handleFile(
-                            key,
-                            file
-                        );
-
-                    }
-
-                }
-            );
+        </section>
 
 
-            input.addEventListener(
-                'change',
-                event => {
+        <!-- =====================================================
+             MULTI ASSET
+             ===================================================== -->
 
-                    const file =
-                        event.target.files[0];
+        <section class="card">
 
-                    if (file) {
+            <div class="card-header">
 
-                        handleFile(
-                            key,
-                            file
-                        );
+                <h2>
+                    ⚖️ مقایسه چند دارایی
+                </h2>
 
-                    }
+                <span>
+                    Correlation · Divergence · Relative Strength
+                </span>
 
-                }
-            );
-
-
-            const removeButton =
-                zone.querySelector(
-                    '[data-remove]'
-                );
+            </div>
 
 
-            if (removeButton) {
+            <div class="card-body">
 
-                removeButton.addEventListener(
-                    'click',
-                    event => {
+                <div
+                    class="compare-grid"
+                    id="compareGrid"
+                ></div>
 
-                        event.stopPropagation();
 
-                        uploadedFiles[key] = null;
+                <div
+                    id="comparisonChart"
+                    class="compare-chart"
+                ></div>
 
-                        renderInputArea();
+            </div>
 
-                    }
-                );
+        </section>
 
+    </main>
+
+
+    <script src="navbar.js"></script>
+
+
+    <script>
+
+        /* =========================================================
+           SHAMDUN — REAL MARKET CHART
+           ========================================================= */
+
+        const ASSETS = {
+
+            btc: {
+                name: 'بیت‌کوین',
+                code: 'BTC/USDT',
+                icon: '₿',
+                type: 'crypto',
+                symbol: 'BTCUSDT'
+            },
+
+            eth: {
+                name: 'اتریوم',
+                code: 'ETH/USDT',
+                icon: 'Ξ',
+                type: 'crypto',
+                symbol: 'ETHUSDT'
+            },
+
+            sol: {
+                name: 'سولانا',
+                code: 'SOL/USDT',
+                icon: '◎',
+                type: 'crypto',
+                symbol: 'SOLUSDT'
+            },
+
+            gold18: {
+                name: 'طلا ۱۸ عیار',
+                code: 'IRR',
+                icon: '🥇',
+                type: 'tgju',
+                slug: 'geram18'
+            },
+
+            goldOunce: {
+                name: 'انس طلا',
+                code: 'XAU',
+                icon: '🌍',
+                type: 'tgju',
+                slug: 'ons'
+            },
+
+            silverOunce: {
+                name: 'انس نقره',
+                code: 'XAG',
+                icon: '🥈',
+                type: 'tgju',
+                slug: 'silver-999'
+            },
+
+            usd: {
+                name: 'دلار آزاد',
+                code: 'USD/IRR',
+                icon: '💵',
+                type: 'tgju',
+                slug: 'price_dollar_rl'
+            },
+
+            silver999: {
+                name: 'نقره ۹۹۹',
+                code: 'IRR',
+                icon: '🥈',
+                type: 'tgju',
+                slug: 'silver-999'
+            },
+
+            bourse: {
+                name: 'شاخص کل بورس',
+                code: 'TEDPIX',
+                icon: '📊',
+                type: 'bourse'
             }
 
-        });
-
-}
+        };
 
 
-/* =========================================================
-   HANDLE IMAGE
-   ========================================================= */
+        const HORIZONS = {
 
-function handleFile(
-    key,
-    file
-) {
+            scalp: {
+                title: '⚡ اسکالپ',
+                main: '5m',
+                confirm: '15m'
+            },
 
-    if (!file.type.startsWith('image/')) {
+            short: {
+                title: '🎯 کوتاه‌مدت',
+                main: '1h',
+                confirm: '4h'
+            },
 
-        alert(
-            'لطفاً یک فایل تصویری انتخاب کنید.'
-        );
+            swing: {
+                title: '📈 سویینگ',
+                main: '4h',
+                confirm: '1d'
+            },
 
-        return;
+            medium: {
+                title: '🗓 میان‌مدت',
+                main: '1d',
+                confirm: '1w'
+            },
 
-    }
-
-
-    uploadedFiles[key] = {
-
-        name: file.name,
-
-        url: URL.createObjectURL(file),
-
-        file: file
-
-    };
-
-
-    renderInputArea();
-
-}
-
-
-/* =========================================================
-   COMPARISON
-   ========================================================= */
-
-function renderComparisonControls() {
-
-    const options = [
-
-        `<option value="">
-            — انتخاب دارایی —
-        </option>`,
-
-        ...ASSETS.map(asset => `
-
-            <option value="${asset[0]}">
-                ${asset[1]}
-            </option>
-
-        `)
-
-    ].join('');
-
-
-    $('comparisonControls').innerHTML = `
-
-        <select class="comparison-select">
-            ${options}
-        </select>
-
-        <select class="comparison-select">
-            ${options}
-        </select>
-
-        <select class="comparison-select">
-            ${options}
-        </select>
-
-    `;
-
-}
-
-
-/* =========================================================
-   RUN ANALYSIS
-   ========================================================= */
-
-$('runAnalysis')
-    .addEventListener(
-        'click',
-        () => {
-
-            if (
-                inputMode === 'image' &&
-                (
-                    !uploadedFiles.main ||
-                    !uploadedFiles.confirmation
-                )
-            ) {
-
-                alert(
-                    'برای تحلیل چندتایم‌فریمی، هر دو چارت را پیوست کنید.'
-                );
-
-                return;
-
+            long: {
+                title: '🏦 بلندمدت',
+                main: '1w',
+                confirm: '1M'
             }
 
+        };
 
-            const asset =
-                ASSETS.find(
-                    item =>
-                        item[0] === selectedAsset
-                );
 
-            const horizon =
+        let selectedAsset = 'btc';
+
+        let selectedHorizon = 'swing';
+
+        let chart = null;
+
+        let mainSeries = null;
+
+        let volumeSeries = null;
+
+        let socket = null;
+
+        let currentCandles = [];
+
+        let lastPrice = null;
+
+
+        /* =========================================================
+           DOM
+           ========================================================= */
+
+        const $ = id =>
+            document.getElementById(id);
+
+
+        /* =========================================================
+           ASSETS UI
+           ========================================================= */
+
+        function renderAssets() {
+
+            $('assetGrid').innerHTML =
+                Object.entries(ASSETS)
+                .map(([key, asset]) => `
+
+                    <button
+                        class="asset-btn ${key === selectedAsset ? 'active' : ''}"
+                        data-asset="${key}"
+                    >
+
+                        <span class="asset-icon">
+                            ${asset.icon}
+                        </span>
+
+                        <span class="asset-name">
+                            ${asset.name}
+                        </span>
+
+                        <span class="asset-code">
+                            ${asset.code}
+                        </span>
+
+                    </button>
+
+                `)
+                .join('');
+
+
+            document
+                .querySelectorAll('.asset-btn')
+                .forEach(btn => {
+
+                    btn.addEventListener(
+                        'click',
+                        () => {
+
+                            selectedAsset =
+                                btn.dataset.asset;
+
+                            renderAssets();
+
+                            loadMarket();
+
+                        }
+                    );
+
+                });
+
+        }
+
+
+        /* =========================================================
+           HORIZON UI
+           ========================================================= */
+
+        function renderHorizons() {
+
+            $('horizonGrid').innerHTML =
+                Object.entries(HORIZONS)
+                .map(([key, item]) => `
+
+                    <button
+                        class="horizon-btn ${key === selectedHorizon ? 'active' : ''}"
+                        data-horizon="${key}"
+                    >
+                        ${item.title}
+                    </button>
+
+                `)
+                .join('');
+
+
+            document
+                .querySelectorAll('.horizon-btn')
+                .forEach(btn => {
+
+                    btn.addEventListener(
+                        'click',
+                        () => {
+
+                            selectedHorizon =
+                                btn.dataset.horizon;
+
+                            renderHorizons();
+
+                            updateHorizonNote();
+
+                        }
+                    );
+
+                });
+
+
+            updateHorizonNote();
+
+        }
+
+
+        function updateHorizonNote() {
+
+            const h =
                 HORIZONS[selectedHorizon];
 
 
-            $('resultTitle').textContent =
-                `${asset[1]} · ${horizon.title}`;
+            $('timeframeNote').innerHTML = `
 
+                💡
 
-            $('resultSection').style.display =
-                'block';
+                برای
 
+                <b>${h.title}</b>
 
-            setTimeout(() => {
+                پیشنهاد سیستم این است که
 
-                $('resultSection')
-                    .scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
+                تایم‌فریم اصلی:
 
-            }, 50);
+                <b>${h.main}</b>
+
+                و تایم‌فریم تأیید:
+
+                <b>${h.confirm}</b>
+
+                باشد.
+
+                این انتخاب بعداً مستقیماً
+                وارد منطق موتور تحلیل می‌شود.
+
+            `;
 
         }
-    );
 
 
-/* =========================================================
-   RESET
-   ========================================================= */
+        /* =========================================================
+           CHART INIT
+           ========================================================= */
 
-$('resetAnalysis')
-    .addEventListener(
-        'click',
-        () => {
+        function createChart() {
 
-            uploadedFiles = {
-                main: null,
-                confirmation: null
-            };
+            if (chart) {
 
-            $('resultSection').style.display =
+                chart.remove();
+
+                chart = null;
+
+            }
+
+
+            const container =
+                $('liveChart');
+
+
+            chart =
+                LightweightCharts.createChart(
+                    container,
+                    {
+
+                        autoSize: true,
+
+                        layout: {
+
+                            background: {
+                                color:
+                                    document.documentElement
+                                    .dataset
+                                    .theme === 'light'
+                                        ? '#f8fafc'
+                                        : '#080b11'
+                            },
+
+                            textColor:
+                                document.documentElement
+                                .dataset
+                                .theme === 'light'
+                                    ? '#475569'
+                                    : '#94a3b8'
+
+                        },
+
+                        grid: {
+
+                            vertLines: {
+                                color:
+                                    'rgba(148,163,184,.08)'
+                            },
+
+                            horzLines: {
+                                color:
+                                    'rgba(148,163,184,.08)'
+                            }
+
+                        },
+
+                        rightPriceScale: {
+
+                            borderColor:
+                                'rgba(148,163,184,.15)'
+
+                        },
+
+                        timeScale: {
+
+                            borderColor:
+                                'rgba(148,163,184,.15)',
+
+                            timeVisible: true,
+
+                            secondsVisible: false
+
+                        },
+
+                        crosshair: {
+
+                            mode:
+                                LightweightCharts
+                                .CrosshairMode
+                                .Normal
+
+                        }
+
+                    }
+                );
+
+
+            mainSeries =
+                chart.addSeries(
+                    LightweightCharts.CandlestickSeries,
+                    {
+
+                        upColor: '#10b981',
+
+                        downColor: '#ef4444',
+
+                        borderVisible: false,
+
+                        wickUpColor: '#10b981',
+
+                        wickDownColor: '#ef4444'
+
+                    }
+                );
+
+
+            chart
+                .timeScale()
+                .fitContent();
+
+        }
+
+
+        /* =========================================================
+           LOADING
+           ========================================================= */
+
+        function setLoading(
+            message =
+                'در حال دریافت داده واقعی...'
+        ) {
+
+            $('chartEmpty').style.display =
+                'flex';
+
+            $('chartEmpty')
+                .querySelector('strong')
+                .textContent =
+                message;
+
+        }
+
+
+        function hideLoading() {
+
+            $('chartEmpty').style.display =
                 'none';
 
-            renderInputArea();
+        }
+
+
+        function setConnection(
+            text,
+            connected = false
+        ) {
+
+            $('connectionStatus')
+                .textContent =
+                text;
+
+
+            document
+                .querySelector('.live-dot')
+                .style.background =
+                connected
+                    ? 'var(--green)'
+                    : 'var(--red)';
 
         }
-    );
 
 
-/* =========================================================
-   INIT
-   ========================================================= */
+        /* =========================================================
+           BINANCE INTERVAL
+           ========================================================= */
 
-renderAssets();
+        function normalizeInterval(value) {
 
-renderHorizons();
+            const map = {
 
-renderTimeframeHint();
+                '1m': '1m',
+                '5m': '5m',
+                '15m': '15m',
+                '1h': '1h',
+                '4h': '4h',
+                '1d': '1d',
+                '1w': '1w'
 
-renderInputArea();
+            };
 
-renderComparisonControls();
+            return map[value] || '1h';
 
-</script>
+        }
+
+
+        /* =========================================================
+           BINANCE HISTORY
+           ========================================================= */
+
+        async function loadCryptoHistory() {
+
+            const asset =
+                ASSETS[selectedAsset];
+
+
+            const interval =
+                normalizeInterval(
+                    $('intervalSelect').value
+                );
+
+
+            const url =
+                `https://api.binance.com/api/v3/klines` +
+                `?symbol=${asset.symbol}` +
+                `&interval=${interval}` +
+                `&limit=500`;
+
+
+            const response =
+                await fetch(url);
+
+
+            if (!response.ok) {
+
+                throw new Error(
+                    'Binance history request failed'
+                );
+
+            }
+
+
+            const rows =
+                await response.json();
+
+
+            const candles =
+                rows.map(row => ({
+
+                    time:
+                        Math.floor(
+                            Number(row[0]) / 1000
+                        ),
+
+                    open:
+                        Number(row[1]),
+
+                    high:
+                        Number(row[2]),
+
+                    low:
+                        Number(row[3]),
+
+                    close:
+                        Number(row[4]),
+
+                    volume:
+                        Number(row[5])
+
+                }));
+
+
+            currentCandles =
+                candles;
+
+
+            mainSeries.setData(
+                candles
+            );
+
+
+            chart
+                .timeScale()
+                .fitContent();
+
+
+            updateQuote(
+                candles[candles.length - 1],
+                candles[0]
+            );
+
+
+            $('chartSource')
+                .textContent =
+                'Binance · REST + WebSocket';
+
+
+            $('qSource')
+                .textContent =
+                'Binance';
+
+
+            hideLoading();
+
+        }
+
+
+        /* =========================================================
+           BINANCE WEBSOCKET
+           ========================================================= */
+
+        function connectCryptoSocket() {
+
+            closeSocket();
+
+
+            const asset =
+                ASSETS[selectedAsset];
+
+
+            const interval =
+                normalizeInterval(
+                    $('intervalSelect').value
+                );
+
+
+            const stream =
+                `${asset.symbol.toLowerCase()}@kline_${interval}`;
+
+
+            socket =
+                new WebSocket(
+                    `wss://stream.binance.com:9443/ws/${stream}`
+                );
+
+
+            socket.onopen = () => {
+
+                setConnection(
+                    'اتصال زنده',
+                    true
+                );
+
+            };
+
+
+            socket.onmessage = event => {
+
+                try {
+
+                    const payload =
+                        JSON.parse(
+                            event.data
+                        );
+
+
+                    const k =
+                        payload.k;
+
+
+                    if (!k) return;
+
+
+                    const candle = {
+
+                        time:
+                            Math.floor(
+                                Number(k.t) / 1000
+                            ),
+
+                        open:
+                            Number(k.o),
+
+                        high:
+                            Number(k.h),
+
+                        low:
+                            Number(k.l),
+
+                        close:
+                            Number(k.c),
+
+                        volume:
+                            Number(k.v)
+
+                    };
+
+
+                    mainSeries.update(
+                        candle
+                    );
+
+
+                    lastPrice =
+                        candle.close;
+
+
+                    updateQuote(
+                        candle,
+                        currentCandles[0]
+                    );
+
+
+                } catch (error) {
+
+                    console.error(
+                        'WebSocket parse error:',
+                        error
+                    );
+
+                }
+
+            };
+
+
+            socket.onerror = () => {
+
+                setConnection(
+                    'خطا در اتصال',
+                    false
+                );
+
+            };
+
+
+            socket.onclose = () => {
+
+                setConnection(
+                    'اتصال قطع شد',
+                    false
+                );
+
+            };
+
+        }
+
+
+        /* =========================================================
+           CLOSE SOCKET
+           ========================================================= */
+
+        function closeSocket() {
+
+            if (socket) {
+
+                try {
+                    socket.close();
+                } catch (_) {}
+
+                socket = null;
+
+            }
+
+        }
+
+
+        /* =========================================================
+           QUOTE
+           ========================================================= */
+
+        function updateQuote(
+            candle,
+            first
+        ) {
+
+            if (!candle) return;
+
+
+            const price =
+                candle.close;
+
+
+            const change =
+                first &&
+                Number(first.open)
+                    ? (
+                        (
+                            price -
+                            Number(first.open)
+                        )
+                        /
+                        Number(first.open)
+                    ) * 100
+                    : null;
+
+
+            $('qPrice')
+                .textContent =
+                formatNumber(price);
+
+
+            $('qChange')
+                .textContent =
+                change === null
+                    ? '—'
+                    : `${change >= 0 ? '+' : ''}${change.toFixed(2)}%`;
+
+
+            $('qHigh')
+                .textContent =
+                formatNumber(
+                    candle.high
+                );
+
+
+            $('qLow')
+                .textContent =
+                formatNumber(
+                    candle.low
+                );
+
+        }
+
+
+        function formatNumber(value) {
+
+            if (
+                value === null ||
+                value === undefined ||
+                !Number.isFinite(value)
+            ) {
+
+                return '—';
+
+            }
+
+
+            return new Intl.NumberFormat(
+                'en-US',
+                {
+                    maximumFractionDigits:
+                        value >= 1000 ? 2 : 6
+                }
+            ).format(value);
+
+        }
+
+
+        /* =========================================================
+           TGJU
+           ========================================================= */
+
+        async function loadTGJU() {
+
+            const asset =
+                ASSETS[selectedAsset];
+
+
+            /*
+             * TGJU historical endpoint.
+             *
+             * Important:
+             * If browser CORS or TGJU availability prevents
+             * direct access, the page intentionally stays empty.
+             * No synthetic candles are generated.
+             */
+
+            const url =
+                `https://api.tgju.org/v1/market/indicator/summary-table-data/${asset.slug}`;
+
+
+            const response =
+                await fetch(url);
+
+
+            if (!response.ok) {
+
+                throw new Error(
+                    'TGJU request failed'
+                );
+
+            }
+
+
+            const json =
+                await response.json();
+
+
+            const rows =
+                Array.isArray(json)
+                    ? json
+                    : (
+                        json.data ||
+                        json.result ||
+                        []
+                    );
+
+
+            const candles =
+                rows
+                .map(row => {
+
+                    if (!Array.isArray(row)) {
+                        return null;
+                    }
+
+
+                    const close =
+                        Number(
+                            String(row[3])
+                            .replace(/,/g, '')
+                        );
+
+
+                    const timestamp =
+                        Date.parse(
+                            row[6]
+                        );
+
+
+                    if (
+                        !Number.isFinite(close) ||
+                        !Number.isFinite(timestamp)
+                    ) {
+
+                        return null;
+
+                    }
+
+
+                    return {
+
+                        time:
+                            Math.floor(
+                                timestamp / 1000
+                            ),
+
+                        open: close,
+
+                        high: close,
+
+                        low: close,
+
+                        close: close
+
+                    };
+
+                })
+                .filter(Boolean)
+                .sort(
+                    (a,b) =>
+                        a.time - b.time
+                );
+
+
+            if (!candles.length) {
+
+                throw new Error(
+                    'TGJU returned no usable candles'
+                );
+
+            }
+
+
+            currentCandles =
+                candles.slice(-500);
+
+
+            mainSeries.setData(
+                currentCandles
+            );
+
+
+            chart
+                .timeScale()
+                .fitContent();
+
+
+            updateQuote(
+                currentCandles[
+                    currentCandles.length - 1
+                ],
+                currentCandles[0]
+            );
+
+
+            $('chartSource')
+                .textContent =
+                'TGJU · historical market data';
+
+
+            $('qSource')
+                .textContent =
+                'TGJU';
+
+
+            hideLoading();
+
+            /*
+             * TGJU history endpoint is not treated as
+             * a fake realtime source.
+             *
+             * We poll for new data periodically.
+             */
+
+            startTGJUPoll();
+
+        }
+
+
+        let tgjuPollTimer = null;
+
+
+        function startTGJUPoll() {
+
+            if (tgjuPollTimer) {
+
+                clearInterval(
+                    tgjuPollTimer
+                );
+
+            }
+
+
+            tgjuPollTimer =
+                setInterval(
+                    async () => {
+
+                        if (
+                            ASSETS[
+                                selectedAsset
+                            ].type !== 'tgju'
+                        ) {
+                            return;
+                        }
+
+
+                        try {
+
+                            await loadTGJU();
+
+                        } catch (error) {
+
+                            console.warn(
+                                'TGJU refresh failed',
+                                error
+                            );
+
+                        }
+
+                    },
+                    60000
+                );
+
+        }
+
+
+        /* =========================================================
+           BOURSE
+           ========================================================= */
+
+        async function loadBourse() {
+
+            /*
+             * شاخص کل بورس از TSETMC/BrsApi
+             *
+             * این بخش عمداً بدون API Key داخلی نوشته شده.
+             *
+             * وقتی API پروژه را در فایل کانفیگ خودت داری،
+             * فقط تابع زیر را به همان endpoint متصل می‌کنیم.
+             *
+             * تا آن زمان هیچ مقدار ساختگی نمایش داده نمی‌شود.
+             */
+
+            throw new Error(
+                'منبع TSETMC برای این صفحه هنوز در کانفیگ عمومی ثبت نشده است.'
+            );
+
+        }
+
+
+        /* =========================================================
+           MARKET LOADER
+           ========================================================= */
+
+        async function loadMarket() {
+
+            closeSocket();
+
+
+            if (tgjuPollTimer) {
+
+                clearInterval(
+                    tgjuPollTimer
+                );
+
+                tgjuPollTimer = null;
+
+            }
+
+
+            createChart();
+
+
+            const asset =
+                ASSETS[selectedAsset];
+
+
+            $('chartAssetBadge')
+                .textContent =
+                asset.name;
+
+
+            $('chartIntervalBadge')
+                .textContent =
+                $('intervalSelect')
+                .value;
+
+
+            setLoading();
+
+
+            setConnection(
+                'در حال اتصال...',
+                false
+            );
+
+
+            try {
+
+                if (
+                    asset.type === 'crypto'
+                ) {
+
+                    await loadCryptoHistory();
+
+                    connectCryptoSocket();
+
+                    return;
+
+                }
+
+
+                if (
+                    asset.type === 'tgju'
+                ) {
+
+                    await loadTGJU();
+
+                    setConnection(
+                        'داده بازار دریافت شد',
+                        true
+                    );
+
+                    return;
+
+                }
+
+
+                if (
+                    asset.type === 'bourse'
+                ) {
+
+                    await loadBourse();
+
+                    return;
+
+                }
+
+
+            } catch (error) {
+
+                console.error(
+                    'Market load error:',
+                    error
+                );
+
+
+                setConnection(
+                    'داده در دسترس نیست',
+                    false
+                );
+
+
+                $('chartEmpty')
+                    .querySelector(
+                        'strong'
+                    )
+                    .textContent =
+                    'داده واقعی دریافت نشد';
+
+
+                $('chartEmpty')
+                    .querySelector(
+                        'span'
+                    )
+                    .textContent =
+                    'به دلیل نبود پاسخ معتبر از منبع داده، نمودار خالی نگه داشته شد و هیچ مقدار ساختگی نمایش داده نمی‌شود.';
+
+            }
+
+        }
+
+
+        /* =========================================================
+           INTERVAL CHANGE
+           ========================================================= */
+
+        $('intervalSelect')
+            .addEventListener(
+                'change',
+                () => {
+
+                    loadMarket();
+
+                }
+            );
+
+
+        $('chartType')
+            .addEventListener(
+                'change',
+                () => {
+
+                    /*
+                     * Candlestick is the real market series.
+                     * Line mode can be added without changing
+                     * the underlying data source.
+                     */
+
+                    loadMarket();
+
+                }
+            );
+
+
+        $('refreshBtn')
+            .addEventListener(
+                'click',
+                () => {
+
+                    loadMarket();
+
+                }
+            );
+
+
+        /* =========================================================
+           MULTI-ASSET COMPARISON
+           ========================================================= */
+
+        function renderComparison() {
+
+            const available =
+                Object.entries(
+                    ASSETS
+                );
+
+
+            const options =
+                available
+                .map(
+                    ([key, asset]) =>
+                        `
+                        <option value="${key}">
+                            ${asset.name}
+                        </option>
+                        `
+                )
+                .join('');
+
+
+            $('compareGrid').innerHTML = `
+
+                <select class="compare-select">
+                    <option value="">
+                        دارایی اول
+                    </option>
+                    ${options}
+                </select>
+
+                <select class="compare-select">
+                    <option value="">
+                        دارایی دوم
+                    </option>
+                    ${options}
+                </select>
+
+                <select class="compare-select">
+                    <option value="">
+                        دارایی سوم
+                    </option>
+                    ${options}
+                </select>
+
+                <select class="compare-select">
+                    <option value="">
+                        مبنای مقایسه
+                    </option>
+                    ${options}
+                </select>
+
+            `;
+
+        }
+
+
+        /* =========================================================
+           INIT
+           ========================================================= */
+
+        renderAssets();
+
+        renderHorizons();
+
+        renderComparison();
+
+        loadMarket();
+
+
+        /* =========================================================
+           CLEANUP
+           ========================================================= */
+
+        window.addEventListener(
+            'beforeunload',
+            () => {
+
+                closeSocket();
+
+                if (tgjuPollTimer) {
+
+                    clearInterval(
+                        tgjuPollTimer
+                    );
+
+                }
+
+            }
+        );
+
+    </script>
 
 </body>
 </html>
