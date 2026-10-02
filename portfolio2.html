@@ -706,15 +706,12 @@
         <div class="form-group">
             <label>دسته‌بندی *</label>
             <select id="assetCategory" onchange="onCategoryChange()">
-                <option value="gold">🥇 طلا و فلزات گرانبها</option>
-                <option value="currency">💵 ارز</option>
-                <option value="crypto">₿ کریپتوکارنسی</option>
-                <option value="global">🌍 بازار جهانی</option>
-                <option value="stock">📊 بورس ایران</option>
-                <option value="fund">💼 صندوق درآمد ثابت</option>
-                <option value="realestate">🏠 املاک</option>
-                <option value="bank">🏦 سپرده بانکی</option>
-                <option value="other">🌟 سایر</option>
+                <option value="gold">🥇 طلا ۱۸ عیار</option>
+                <option value="currency">💵 دلار آزاد</option>
+                <option value="stock">📊 سرمایه‌گذاری در بورس</option>
+                <option value="ayar">🟡 صندوق طلای عیار</option>
+                <option value="fund">💼 صندوق درآمد ثابت آوند</option>
+                <option value="bank">🏦 سپرده‌گذاری در بانک</option>
             </select>
         </div>
 
@@ -868,7 +865,8 @@
             ]
         },
         stock: { name: 'بورس ایران', icon: '📊', items: [] },
-        fund: { name: 'صندوق درآمد ثابت', icon: '💼', items: [] },
+        ayar: { name: 'صندوق طلای عیار', icon: '🟡', items: [{ symbol: 'عیار', name: 'صندوق طلای عیار', unit: 'واحد', icon: '🟡' }] },
+        fund: { name: 'صندوق درآمد ثابت آوند', icon: '💼', items: [{ symbol: 'آوند', name: 'صندوق درآمد ثابت آوند', unit: 'واحد', icon: '💼' }] },
         realestate: {
             name: 'املاک',
             icon: '🏠',
@@ -1002,13 +1000,20 @@
                     isin: s.isin
                 }));
 
-                ASSETS.fund.items = funds.map(s => ({
+                const fundItems = funds.map(s => ({
                     symbol: s.l18.trim(),
                     name: s.l30 ? s.l30.trim() : s.l18.trim(),
                     unit: 'واحد',
                     icon: '💼',
                     currentPrice: s.pc ? s.pc / 10 : 0
                 }));
+
+                // این صفحه فقط دو صندوق مشخص را به‌عنوان گزینه‌های پرتفوی نگه می‌دارد:
+                // عیار و آوند. بقیه صندوق‌ها برای جستجوی عمومی این صفحه استفاده نمی‌شوند.
+                const ayarItem = fundItems.find(x => x.symbol === 'عیار' || x.name.includes('عیار'));
+                const avandItem = fundItems.find(x => x.symbol === 'آوند' || x.name.includes('آوند'));
+                if (ayarItem) ASSETS.ayar.items = [ayarItem];
+                if (avandItem) ASSETS.fund.items = [avandItem];
 
                 stockSymbolsLoaded = true;
                 console.log(`✅ ${ASSETS.stock.items.length} نماد بورس و ${ASSETS.fund.items.length} صندوق لود شد`);
@@ -1093,6 +1098,7 @@
 
             if (stockSymbolsLoaded) {
                 ASSETS.stock.items.forEach(s => { if (s.currentPrice) priceCache[s.symbol] = s.currentPrice; });
+                ASSETS.ayar.items.forEach(s => { if (s.currentPrice) priceCache[s.symbol] = s.currentPrice; });
                 ASSETS.fund.items.forEach(s => { if (s.currentPrice) priceCache[s.symbol] = s.currentPrice; });
             }
 
@@ -1442,12 +1448,11 @@
 
                 <div class="quick-add">
                     <button class="quick-btn" onclick="quickAdd('gold', 'gold18')">🥇 طلا ۱۸ عیار</button>
-                    <button class="quick-btn" onclick="quickAdd('gold', 'coin-emami')">🪙 سکه امامی</button>
-                    <button class="quick-btn" onclick="quickAdd('gold', 'silver999')">🥈 نقره ۹۹۹</button>
-                    <button class="quick-btn" onclick="quickAdd('currency', 'usd')">💵 دلار</button>
-                    <button class="quick-btn" onclick="quickAdd('currency', 'usdt')"><img src="https://cryptologos.cc/logos/tether-usdt-logo.png" alt=""> تتر</button>
-                    <button class="quick-btn" onclick="quickAdd('crypto', 'btc')">₿ بیت‌کوین</button>
-                    <button class="quick-btn" onclick="quickAdd('crypto', 'eth')">⟠ اتریوم</button>
+                    <button class="quick-btn" onclick="quickAdd('currency', 'usd')">💵 دلار آزاد</button>
+                    <button class="quick-btn" onclick="openAddModal('stock')">📊 سرمایه‌گذاری در بورس</button>
+                    <button class="quick-btn" onclick="quickAdd('ayar', 'عیار')">🟡 صندوق طلای عیار</button>
+                    <button class="quick-btn" onclick="quickAdd('fund', 'آوند')">💼 صندوق درآمد ثابت آوند</button>
+                    <button class="quick-btn" onclick="quickAdd('bank', 'custom-bank')">🏦 سپرده‌گذاری در بانک</button>
                 </div>
 
                 <div class="portfolio-table-card">
@@ -2082,18 +2087,26 @@
                 if (key === 'usd') return cache[key] = {rows:await fetchTgjuHistory('price_dollar_rl'),currency:'IRR',label:'دلار آزاد',icon:'💵',source:'TGJU'};
                 if (key === 'bourse') return cache[key] = {rows:await fetchTgjuHistory('bourse'),currency:'INDEX',label:'شاخص کل بورس',icon:'📊',source:'TGJU'};
                 if (key === 'ayar') {
-                    const payload = await fetchBrsApi('https://Api.BrsApi.ir/Tsetmc/History.php?type=0&l18=' + encodeURIComponent('عیار'));
-                    const rows = parseBrsHistoryRows(payload);
-                    if (!rows.length) throw new Error('تاریخچه عیار خالی است');
-                    return cache[key] = {rows,currency:'IRR',label:'صندوق طلای عیار',icon:'🟡',source:'BrsApi / TSETMC'};
+                    let rows = [];
+                    try {
+                        const payload = await fetchBrsApi('https://Api.BrsApi.ir/Tsetmc/History.php?type=0&l18=' + encodeURIComponent('عیار'));
+                        rows = parseBrsHistoryRows(payload);
+                    } catch (e) {
+                        console.warn('Ayar history request failed:', e);
+                    }
+                    const live = Number(priceCache['عیار'] || priceCache['ayar']);
+                    if (!rows.length && !(live > 0)) throw new Error('تاریخچه و قیمت فعلی عیار در دسترس نیست');
+                    return cache[key] = {rows,currency:'IRR',label:'صندوق طلای عیار',icon:'🟡',source:'BrsApi / TSETMC',currentClose:live > 0 ? live : null};
                 }
                 throw new Error('unsupported benchmark');
             }
 
             function atPurchase(history, buyDate) {
-                const base = findHistoryAtOrBefore(history.rows,buyDate);
-                const latest = history.rows[history.rows.length-1];
-                if (!base || !latest || !(base.close>0) || !(latest.close>0)) return null;
+                const rows = Array.isArray(history.rows) ? history.rows : [];
+                const base = rows.length ? findHistoryAtOrBefore(rows,buyDate) : null;
+                const latest = rows.length ? rows[rows.length-1] : (history.currentClose > 0 ? {close:history.currentClose, iso:null, greg:'', jalali:''} : null);
+                if (!latest || !(latest.close>0)) return null;
+                if (!base || !(base.close>0)) return {...history,base:null,latest,percent:null};
                 return {...history,base,latest,percent:(latest.close/base.close-1)*100};
             }
             function priceText(result,value) {
@@ -2136,8 +2149,10 @@
 
                 const tableRows=rows.map(({benchmark,result})=>{
                     if(!result) return `<tr><td><div class="benchmark-name">${benchmark.icon} ${escapeHtml(benchmark.label)}</div><div class="benchmark-source">${escapeHtml(benchmark.source)}</div></td><td class="price">—</td><td class="price">—</td><td>—</td><td class="hypothetical">—</td></tr>`;
-                    const hypo=hypothetical(invested,result), isBest=result.percent===best;
-                    return `<tr class="${isBest?'best-row':''}"><td><div class="benchmark-name">${benchmark.icon} ${escapeHtml(benchmark.label)}</div><div class="benchmark-source">${escapeHtml(benchmark.source)}${isBest?' · بالاترین بازده این خرید':''}</div></td><td class="price">${priceText(result,result.base.close)}<br><small>${formatDate(result.base.iso)}</small></td><td class="price">${priceText(result,result.latest.close)}<br><small>${formatDate(result.latest.iso)}</small></td><td>${returnHtml(result.percent)}</td><td class="hypothetical">${hypo===null?'—':formatBigNum(hypo)+' تومان'}</td></tr>`;
+                    const hypo=hypothetical(invested,result), isBest=Number.isFinite(Number(result.percent)) && result.percent===best;
+                    const baseText = result.base ? `${priceText(result,result.base.close)}<br><small>${formatDate(result.base.iso)}</small>` : '—';
+                    const latestText = `${priceText(result,result.latest.close)}${result.latest.iso ? `<br><small>${formatDate(result.latest.iso)}</small>` : ''}`;
+                    return `<tr class="${isBest?'best-row':''}"><td><div class="benchmark-name">${benchmark.icon} ${escapeHtml(benchmark.label)}</div><div class="benchmark-source">${escapeHtml(benchmark.source)}${isBest?' · بالاترین بازده این خرید':''}</div></td><td class="price">${baseText}</td><td class="price">${latestText}</td><td>${returnHtml(result.percent)}</td><td class="hypothetical">${hypo===null?'—':formatBigNum(hypo)+' تومان'}</td></tr>`;
                 }).join('');
 
                 const actualText=actual===null?'عملکرد واقعی دارایی: —':`عملکرد واقعی دارایی: ${actual>=0?'+':'−'}${toFa(Math.abs(actual).toFixed(2))}٪`;
@@ -2148,7 +2163,7 @@
 
             const note=document.createElement('div');
             note.className='compare-source';
-            note.textContent='منابع: TGJU برای طلا ۱۸، دلار آزاد و شاخص کل بورس؛ BrsApi / TSETMC برای تاریخچه صندوق عیار. تاریخ مبنا نزدیک‌ترین داده موجود در همان روز یا قبل از آن است. در صورت نبود داده، «—» نمایش داده می‌شود.';
+            note.textContent='منابع: TGJU برای طلا ۱۸، دلار آزاد و شاخص کل بورس؛ BrsApi / TSETMC برای تاریخچه صندوق عیار. تاریخ مبنا نزدیک‌ترین داده موجود در همان روز یا قبل از آن است. اگر تاریخچه عیار در دسترس نباشد، قیمت فعلی از داده بازار نمایش داده می‌شود و بازده فرضی بدون داده تاریخی محاسبه نمی‌شود.';
             grid.parentElement.appendChild(note);
         }
 
@@ -2272,19 +2287,26 @@ ${portfolioText}
             selectedStock = null;
             stockSelectedBox.style.display = 'none';
 
-            if (catKey === 'stock' || catKey === 'fund') {
+            if (catKey === 'stock') {
                 stockSearchGroup.style.display = 'block';
                 assetSelectGroup.style.display = 'none';
                 document.getElementById('stockSearchInput').value = '';
                 document.getElementById('stockSearchResults').classList.remove('show');
-                document.getElementById('assetUnit').value = catKey === 'stock' ? 'سهم' : 'واحد';
+                document.getElementById('assetUnit').value = 'سهم';
                 document.getElementById('buyPriceLabel').textContent = 'قیمت خرید (هر واحد) - تومان *';
             } else {
                 stockSearchGroup.style.display = 'none';
                 assetSelectGroup.style.display = 'block';
                 const cat = ASSETS[catKey];
                 const select = document.getElementById('assetSelect');
-                select.innerHTML = cat.items.map(item => `<option value="${item.symbol}">${item.name}</option>`).join('');
+                // در فرم جدید فقط شش گزینه اصلی پرتفوی قابل انتخاب‌اند؛
+                // ساختار کامل ASSETS برای دارایی‌های قبلی حفظ می‌شود.
+                const visibleItems = catKey === 'gold'
+                    ? cat.items.filter(item => item.symbol === 'gold18')
+                    : catKey === 'currency'
+                        ? cat.items.filter(item => item.symbol === 'usd')
+                        : cat.items;
+                select.innerHTML = visibleItems.map(item => `<option value="${item.symbol}">${item.name}</option>`).join('');
                 onAssetChange();
             }
         }
@@ -2389,7 +2411,7 @@ ${portfolioText}
             const buyPrice = parseFloat(buyPriceRaw);
 
             let symbol, assetName, assetIcon;
-            if (category === 'stock' || category === 'fund') {
+            if (category === 'stock') {
                 if (!selectedStock) {
                     showToast('❌ لطفاً یک نماد انتخاب کن', 'error');
                     return;
