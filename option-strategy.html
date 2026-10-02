@@ -42,7 +42,7 @@ button,input,select{font:inherit} button{cursor:pointer} .num,input[type=number]
 .presets{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px}.preset-card{min-width:0;text-align:right;border:1px solid var(--border);background:var(--surface);border-radius:14px;padding:14px;color:var(--text);transition:.18s;box-shadow:0 2px 8px rgba(15,23,42,.025)}.preset-card:hover{border-color:var(--gold);transform:translateY(-2px)}.preset-card.active{border-color:var(--gold);box-shadow:0 0 0 2px var(--gold-soft),var(--shadow);background:linear-gradient(180deg,var(--surface),var(--gold-soft))}.preset-header{display:flex;align-items:center;gap:8px;margin-bottom:8px}.preset-icon{font-size:17px}.preset-name{font-size:12px;font-weight:900;direction:ltr;text-align:right}.preset-desc{font-size:11px;line-height:1.75;color:var(--muted);min-height:39px}.preset-badge{display:inline-block;margin-top:9px;font-size:10px;color:var(--gold);background:var(--gold-soft);border-radius:999px;padding:4px 8px}
 .workspace{display:grid;grid-template-columns:minmax(0,1fr) minmax(250px,280px);gap:16px;align-items:start;margin-top:18px;width:100%;min-width:0}.main-col,.side-col{min-width:0;width:100%;display:grid;gap:16px;align-content:start}.main-col{overflow:hidden}.side-col{position:static!important;top:auto!important;overflow:hidden}.main-col>.panel,.main-col>.chart-panel,.main-col>.explanation,.side-col>.panel{width:100%;min-width:0}
 .panel{padding:18px}.panel-head{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:14px}.panel-title{font-weight:900;font-size:15px}.panel-sub{font-size:11px;color:var(--muted);margin-top:3px}.actions{display:flex;gap:7px;flex-wrap:wrap}.mini-btn{border:1px solid var(--border);background:var(--surface-2);color:var(--text);border-radius:9px;padding:8px 10px;font-size:11px;font-weight:800}.mini-btn:hover{border-color:var(--gold)}
-.positions-wrap{width:100%;max-width:100%;overflow-x:auto;overflow-y:hidden;border:1px solid var(--border);border-radius:13px;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain}.positions-table{width:1120px;min-width:1120px;max-width:none;border-collapse:collapse}.positions-table th{background:var(--surface-2);color:var(--muted);font-size:10px;font-weight:800;padding:10px 8px;border-bottom:1px solid var(--border);white-space:nowrap}.positions-table td{padding:8px;border-bottom:1px solid var(--border);vertical-align:middle;font-size:11px}.positions-table tr:last-child td{border-bottom:0}.cell-select,.cell-input{width:100%;min-width:74px;background:var(--surface-2);border:1px solid var(--border);color:var(--text);border-radius:8px;padding:7px 8px;outline:none}.cell-select:focus,.cell-input:focus{border-color:var(--gold);box-shadow:0 0 0 3px var(--gold-soft)}.cell-input:disabled,.cell-select:disabled{opacity:.55}.side-toggle{display:flex;gap:4px}.side-btn{border:1px solid var(--border);background:var(--surface-2);color:var(--muted);border-radius:7px;padding:7px 9px;font-size:10px;font-weight:800}.side-btn.active-buy{background:var(--green-soft);border-color:var(--green);color:var(--green)}.side-btn.active-sell{background:var(--red-soft);border-color:var(--red);color:var(--red)}.symbol-badge{display:inline-flex;align-items:center;justify-content:center;min-width:72px;padding:7px 9px;border-radius:8px;font-weight:900;direction:ltr;background:var(--surface-3)}.symbol-badge.call{color:var(--green);background:var(--green-soft)}.symbol-badge.put{color:var(--red);background:var(--red-soft)}.symbol-badge.spot{color:var(--blue);background:var(--blue-soft)}.btn-remove{border:0;background:var(--red-soft);color:var(--red);width:30px;height:30px;border-radius:8px}.price-status{display:block;font-size:9px;color:var(--muted);margin-top:3px;white-space:nowrap}.price-status.live{color:var(--green)}.price-status.manual{color:var(--gold)}
+.positions-wrap{width:100%;max-width:100%;overflow-x:auto;overflow-y:hidden;border:1px solid var(--border);border-radius:13px;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain}.positions-table{width:1240px;min-width:1240px;max-width:none;border-collapse:collapse}.positions-table th{background:var(--surface-2);color:var(--muted);font-size:10px;font-weight:800;padding:10px 8px;border-bottom:1px solid var(--border);white-space:nowrap}.positions-table td{padding:8px;border-bottom:1px solid var(--border);vertical-align:middle;font-size:11px}.positions-table tr:last-child td{border-bottom:0}.cell-select,.cell-input{width:100%;min-width:74px;background:var(--surface-2);border:1px solid var(--border);color:var(--text);border-radius:8px;padding:7px 8px;outline:none}.cell-select:focus,.cell-input:focus{border-color:var(--gold);box-shadow:0 0 0 3px var(--gold-soft)}.cell-input:disabled,.cell-select:disabled{opacity:.55}.side-toggle{display:flex;gap:4px}.side-btn{border:1px solid var(--border);background:var(--surface-2);color:var(--muted);border-radius:7px;padding:7px 9px;font-size:10px;font-weight:800}.side-btn.active-buy{background:var(--green-soft);border-color:var(--green);color:var(--green)}.side-btn.active-sell{background:var(--red-soft);border-color:var(--red);color:var(--red)}.symbol-badge{display:inline-flex;align-items:center;justify-content:center;min-width:72px;padding:7px 9px;border-radius:8px;font-weight:900;direction:ltr;background:var(--surface-3)}.symbol-badge.call{color:var(--green);background:var(--green-soft)}.symbol-badge.put{color:var(--red);background:var(--red-soft)}.symbol-badge.spot{color:var(--blue);background:var(--blue-soft)}.btn-remove{border:0;background:var(--red-soft);color:var(--red);width:30px;height:30px;border-radius:8px}.price-status{display:block;font-size:9px;color:var(--muted);margin-top:3px;white-space:nowrap}.price-status.live{color:var(--green)}.price-status.manual{color:var(--gold)}
 .summary-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px}.sum-card{padding:12px;border:1px solid var(--border);border-radius:12px;background:var(--surface-2);min-width:0}.sum-card .label{font-size:10px;color:var(--muted);margin-bottom:6px}.sum-card .value{font-size:14px;font-weight:900;overflow-wrap:anywhere}.sum-card.wide{grid-column:1/-1}.positive{color:var(--green)}.negative{color:var(--red)}
 .strategy-info{padding:16px;border-radius:14px;border:1px solid var(--border);background:linear-gradient(135deg,var(--surface-2),var(--surface))}.strategy-info .name{font-size:16px;font-weight:900}.strategy-info .tags{display:inline-block;margin-top:8px;color:var(--gold);background:var(--gold-soft);border-radius:999px;padding:4px 9px;font-size:10px;font-weight:800}
 .explanation{padding:18px}.exp-header{display:flex;align-items:center;gap:12px;padding-bottom:14px;border-bottom:1px solid var(--border)}.exp-icon{font-size:25px}.exp-title{font-weight:900;font-size:15px}.exp-sub{font-size:10px;color:var(--muted);margin-top:3px}.exp-body{display:grid;gap:12px;margin-top:14px}.exp-block{padding:13px;border:1px solid var(--border);border-radius:12px;background:var(--surface-2)}.blk-title{font-size:11px;font-weight:900;margin-bottom:7px}.exp-block p{margin:0;color:var(--muted);font-size:11px;line-height:1.9}.exp-block ul{margin:6px 0 0;padding-right:18px;color:var(--muted);font-size:11px;line-height:2}.exp-block.pros .blk-title{color:var(--green)}.exp-block.cons .blk-title{color:var(--red)}.exp-highlight{color:var(--gold);font-weight:800}.exp-pros-cons{display:grid;grid-template-columns:1fr 1fr;gap:0;padding:0;overflow:hidden}.exp-pros-cons .pros-col,.exp-pros-cons .cons-col{padding:13px;min-width:0}.exp-pros-cons .cons-col{border-right:1px solid var(--border)}
@@ -52,7 +52,7 @@ button,input,select{font:inherit} button{cursor:pointer} .num,input[type=number]
 .modal{position:fixed;inset:0;background:rgba(2,6,23,.58);backdrop-filter:blur(4px);display:none;align-items:center;justify-content:center;padding:20px;z-index:10000}.modal.active{display:flex}.modal-card{width:min(440px,100%);background:var(--surface);border:1px solid var(--border);border-radius:18px;padding:22px;box-shadow:0 25px 80px rgba(0,0,0,.3)}.modal-icon{font-size:30px}.modal-title{font-weight:900;font-size:17px;margin-top:8px}.modal-text{font-size:12px;color:var(--muted);line-height:1.9;margin:8px 0 18px}.modal-actions{display:flex;gap:8px;justify-content:flex-start}.notification{position:fixed;left:20px;bottom:20px;z-index:11000;background:var(--surface);border:1px solid var(--border);border-right:4px solid var(--gold);border-radius:12px;padding:12px 15px;box-shadow:var(--shadow);font-size:12px;max-width:min(420px,calc(100vw - 40px))}.chart-panel:fullscreen{background:var(--surface);padding:22px}.chart-panel:fullscreen .chart-canvas-wrap{height:calc(100vh - 100px)}
 @media(max-width:1180px){.presets{grid-template-columns:repeat(4,minmax(0,1fr))}.workspace{grid-template-columns:minmax(0,1fr) 260px}.hero{grid-template-columns:minmax(0,1fr) 300px}.chart-canvas-wrap{height:430px}}
 @media(max-width:1020px){.workspace{grid-template-columns:1fr}.side-col{order:2}.main-col{order:1}.presets{grid-template-columns:repeat(3,minmax(0,1fr))}.chart-canvas-wrap{height:400px}}
-@media(max-width:720px){.exp-pros-cons{grid-template-columns:1fr}.exp-pros-cons .cons-col{border-right:0;border-top:1px solid var(--border)}.page{padding:78px 10px 35px}.hero{grid-template-columns:1fr}.hero-main,.hero-side,.panel,.chart-panel,.explanation{padding:14px}.hero h1{font-size:23px}.hero-actions .btn{flex:1;min-width:130px}.presets{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.preset-card{padding:11px}.preset-desc{min-height:auto}.section-head{align-items:flex-start}.chart-head{flex-direction:column;gap:9px}.chart-tools{width:100%;justify-content:flex-start}.chart-canvas-wrap{height:350px;min-height:0}.summary-grid{grid-template-columns:1fr 1fr}.status-bar{align-items:flex-start;flex-direction:column}.panel-head{align-items:flex-start;flex-direction:column}.actions{width:100%}.mini-btn{flex:1}.positions-wrap{width:100%;max-width:100%;overflow-x:auto}.positions-table{min-width:1120px}.main-col,.side-col{width:100%;min-width:0}}
+@media(max-width:720px){.exp-pros-cons{grid-template-columns:1fr}.exp-pros-cons .cons-col{border-right:0;border-top:1px solid var(--border)}.page{padding:78px 10px 35px}.hero{grid-template-columns:1fr}.hero-main,.hero-side,.panel,.chart-panel,.explanation{padding:14px}.hero h1{font-size:23px}.hero-actions .btn{flex:1;min-width:130px}.presets{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.preset-card{padding:11px}.preset-desc{min-height:auto}.section-head{align-items:flex-start}.chart-head{flex-direction:column;gap:9px}.chart-tools{width:100%;justify-content:flex-start}.chart-canvas-wrap{height:350px;min-height:0}.summary-grid{grid-template-columns:1fr 1fr}.status-bar{align-items:flex-start;flex-direction:column}.panel-head{align-items:flex-start;flex-direction:column}.actions{width:100%}.mini-btn{flex:1}.positions-wrap{width:100%;max-width:100%;overflow-x:auto}.positions-table{min-width:1240px}.main-col,.side-col{width:100%;min-width:0}}
 @media(max-width:480px){.page{padding-left:8px;padding-right:8px}.presets{grid-template-columns:1fr}.hero-metrics{grid-template-columns:1fr 1fr}.summary-grid{grid-template-columns:1fr}.sum-card.wide{grid-column:auto}.hero-actions .btn{min-width:100%}.chart-canvas-wrap{height:310px}.chart-btn{width:32px}.chart-tools .chart-btn{flex:0 0 32px}.zoom-info{margin-right:auto}.section-title{font-size:15px}.panel-title{font-size:14px}.panel-sub{line-height:1.7}}
 </style>
 </head>
@@ -92,12 +92,12 @@ button,input,select{font:inherit} button{cursor:pointer} .num,input[type=number]
     <main class="main-col">
       <section class="panel">
         <div class="panel-head">
-          <div><div class="panel-title">Position Builder</div><div class="panel-sub">دارایی، سمت معامله، نوع قرارداد، حجم و پارامترهای پوزیشن را تنظیم کن.</div></div>
+          <div><div class="panel-title">سازنده پوزیشن</div><div class="panel-sub">دارایی، سمت معامله، نوع قرارداد، حجم و پارامترهای پوزیشن را تنظیم کن.</div></div>
           <div class="actions"><button class="mini-btn" onclick="addPosition()">＋ پوزیشن</button><button class="mini-btn" onclick="clearAllPositions()">پاک کردن</button></div>
         </div>
         <div class="positions-wrap">
           <table class="positions-table">
-            <thead><tr><th>دارایی پایه</th><th>سمت</th><th>نوع</th><th>نماد</th><th>تعداد</th><th>قیمت فعلی</th><th>Strike</th><th>Premium</th><th>Delta</th><th>Margin</th><th>ارزش</th><th>حذف</th></tr></thead>
+            <thead><tr><th>دارایی پایه</th><th>سمت</th><th>نوع</th><th>قرارداد</th><th>نماد</th><th>تعداد</th><th>قیمت فعلی</th><th>Strike</th><th>Premium</th><th>Delta</th><th>Margin</th><th>ارزش</th><th>حذف</th></tr></thead>
             <tbody id="positionsBody"></tbody>
           </table>
         </div>
@@ -715,7 +715,7 @@ function renderPositions() {
   if (count === 0) {
     body.innerHTML = `
       <tr>
-        <td colspan="12" style="text-align:center; padding: 36px 20px; color: var(--muted); font-size: 13px;">
+        <td colspan="13" style="text-align:center; padding: 36px 20px; color: var(--muted); font-size: 13px;">
           📭 هنوز پوزیشنی اضافه نشده. از «استراتژی‌های آماده» استفاده کن یا دستی اضافه کن.
         </td>
       </tr>
@@ -725,6 +725,7 @@ function renderPositions() {
 
   const groups = ['کریپتو', 'کالا', 'بورس'];
   const isEmptyStrategy = currentPreset && positions.some(p => !p.asset);
+  const isPresetLocked = !!currentPreset; // ⭐ قفل استراتژی آماده
 
   body.innerHTML = positions.map((p) => {
     const sourceClass = p.priceSource === 'live' ? 'live' : (p.priceSource === 'manual' ? 'manual' : '');
@@ -738,6 +739,7 @@ function renderPositions() {
     const optionsList = isStock && assetObj._options ? assetObj._options : [];
     const filteredOptions = optionsList.filter(o => o.type === p.type);
 
+    // گزینه‌های دارایی پایه
     let assetOptions = '';
     if (!hasAsset) assetOptions += `<option value="" disabled selected hidden>یک دارایی را انتخاب کنید</option>`;
     groups.forEach(g => {
@@ -749,17 +751,26 @@ function renderPositions() {
       assetOptions += `<optgroup label="${g}">${opts}</optgroup>`;
     });
 
-    const optionSelector = (isStock && !isSpot && hasAsset) ? `
-      <select class="cell-select" style="margin-top:4px;font-size:10px;"
-              onchange="selectOptionContract(${p.id}, this.value)">
-        <option value="">— انتخاب قرارداد (${toFa(filteredOptions.length)}) —</option>
-        ${filteredOptions
-          .sort((a,b) => (a.price_strike||0) - (b.price_strike||0))
-          .map(o => `<option value="${o.insCode}" ${p.selectedOptionId === o.insCode ? 'selected' : ''}>
-            ${o.l18} | K:${toFa(formatNum(o.price_strike))} | P:${toFa(formatNum(o.pl))}
-          </option>`).join('')}
-      </select>
-    ` : '';
+    // ⭐ ستون قرارداد (فقط برای بورس و غیر Spot)
+    let contractCell = '<span style="color:var(--muted);font-size:11px;">—</span>';
+
+    if (isStock && !isSpot && hasAsset) {
+      const optionsCount = filteredOptions.length;
+      contractCell = `
+        <select class="cell-select" style="font-size:10px;min-width:140px;"
+                onchange="selectOptionContract(${p.id}, this.value)"
+                ${isPresetLocked ? 'disabled' : ''}>
+          <option value="">— انتخاب (${toFa(optionsCount)}) —</option>
+          ${filteredOptions
+            .sort((a,b) => (a.price_strike||0) - (b.price_strike||0))
+            .map(o => `<option value="${o.insCode}" ${p.selectedOptionId === o.insCode ? 'selected' : ''}>
+              ${o.l18} | K:${toFa(formatNum(o.price_strike))}
+            </option>`).join('')}
+        </select>
+      `;
+    } else if (isSpot) {
+      contractCell = '<span style="color:var(--muted);font-size:11px;">— (دارایی پایه)</span>';
+    }
 
     return `
       <tr data-id="${p.id}">
@@ -770,22 +781,22 @@ function renderPositions() {
         </td>
         <td>
           <div class="side-toggle">
-            <button class="side-btn ${p.side === 'buy' ? 'active-buy' : ''}" onclick="updatePosition(${p.id}, 'side', 'buy')">خرید</button>
-            <button class="side-btn ${p.side === 'sell' ? 'active-sell' : ''}" onclick="updatePosition(${p.id}, 'side', 'sell')">فروش</button>
+            <button class="side-btn ${p.side === 'buy' ? 'active-buy' : ''}" onclick="requestSideChange(${p.id}, 'buy')">خرید</button>
+            <button class="side-btn ${p.side === 'sell' ? 'active-sell' : ''}" onclick="requestSideChange(${p.id}, 'sell')">فروش</button>
           </div>
         </td>
         <td>
-          <select class="cell-select" onchange="updatePosition(${p.id}, 'type', this.value)">
-            <option value="call" ${p.type === 'call' ? 'selected' : ''}>اختیار خرید</option>
-            <option value="put" ${p.type === 'put' ? 'selected' : ''}>اختیار فروش</option>
-            <option value="spot" ${p.type === 'spot' ? 'selected' : ''}>دارایی پایه</option>
+          <select class="cell-select" onchange="requestTypeChange(${p.id}, this.value)" ${isPresetLocked ? 'disabled' : ''}>
+              <option value="call" ${p.type === 'call' ? 'selected' : ''}>اختیار خرید</option>
+              <option value="put" ${p.type === 'put' ? 'selected' : ''}>اختیار فروش</option>
+              <option value="spot" ${p.type === 'spot' ? 'selected' : ''}>دارایی پایه</option>
           </select>
         </td>
+        <td>${contractCell}</td>
         <td>
           <div class="symbol-badge ${symInfo.typeClass}" title="${symInfo.typeLabel}">
             ${symInfo.sym}
           </div>
-          ${optionSelector}
         </td>
         <td>
           <input type="number" class="cell-input" value="${p.quantity}" min="0" step="1"
@@ -834,7 +845,6 @@ function renderPositions() {
     `;
   }).join('');
 }
-
 function calculatePositionValue(p) {
   const cur = currencyOfPosition(p);
   if (p.type === 'spot') {
@@ -935,7 +945,70 @@ function updatePosition(id, field, value) {
   renderPositions();
   updateChart();
 }
+// ⭐⭐ تغییر سمت با محافظت از استراتژی آماده
+function requestSideChange(posId, newSide) {
+  const pos = positions.find(p => p.id === posId);
+  if (!pos) return;
+  if (pos.side === newSide) return; // بدون تغییر
 
+  // اگه استراتژی آماده فعاله
+  if (currentPreset) {
+    const preset = PRESETS.find(p => p.key === currentPreset);
+    openModal({
+      icon: '🔒',
+      title: 'ساختار استراتژی قفل است',
+      text: `شما در حال تغییر ساختار استراتژی <strong>«${preset.name}»</strong> هستید.<br><br>
+             برای تغییر ساختار، ابتدا استراتژی آماده را پاک کنید و استراتژی شخصی خودتان را بسازید.`,
+      confirmText: '🗑️ پاک کردن استراتژی',
+      onConfirm: () => {
+        // پاک کردن استراتژی
+        currentPreset = null;
+        positions = [];
+        renderPresets();
+        renderExplanation(null);
+        renderPositions();
+        updateChart();
+        showNotification('🗑️ استراتژی پاک شد — حالا می‌توانید شخصی‌سازی کنید', 'success');
+      }
+    });
+    return;
+  }
+
+  // استراتژی شخصی — تغییر آزاده
+  updatePosition(posId, 'side', newSide);
+}
+
+// ⭐⭐ تغییر نوع با محافظت از استراتژی آماده
+function requestTypeChange(posId, newType) {
+  const pos = positions.find(p => p.id === posId);
+  if (!pos) return;
+  if (pos.type === newType) return; // بدون تغییر
+
+  // اگه استراتژی آماده فعاله
+  if (currentPreset) {
+    const preset = PRESETS.find(p => p.key === currentPreset);
+    openModal({
+      icon: '🔒',
+      title: 'ساختار استراتژی قفل است',
+      text: `شما در حال تغییر ساختار استراتژی <strong>«${preset.name}»</strong> هستید.<br><br>
+             برای تغییر ساختار، ابتدا استراتژی آماده را پاک کنید و استراتژی شخصی خودتان را بسازید.`,
+      confirmText: '🗑️ پاک کردن استراتژی',
+      onConfirm: () => {
+        currentPreset = null;
+        positions = [];
+        renderPresets();
+        renderExplanation(null);
+        renderPositions();
+        updateChart();
+        showNotification('🗑️ استراتژی پاک شد — حالا می‌توانید شخصی‌سازی کنید', 'success');
+      }
+    });
+    return;
+  }
+
+  // استراتژی شخصی — تغییر آزاده
+  updatePosition(posId, 'type', newType);
+}
 // ⭐ انتخاب قرارداد آپشن
 function selectOptionContract(posId, insCode) {
   const pos = positions.find(p => p.id === posId);
