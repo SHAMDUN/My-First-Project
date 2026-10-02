@@ -986,11 +986,16 @@
         // ==========================================
         async function fetchBrsApi(url) {
             const separator = url.includes('?') ? '&' : '?';
-            const res = await fetch(`${url}${separator}key=${BRS_API_KEY}`);
-            if (!res.ok) throw new Error('API error');
+            const res = await fetch(`${url}${separator}key=${encodeURIComponent(BRS_API_KEY)}`);
             const text = await res.text();
             if (text.trim().startsWith('<!DOCTYPE')) throw new Error('Invalid response');
-            return JSON.parse(text);
+            let data;
+            try { data = JSON.parse(text); } catch { throw new Error('Invalid JSON response'); }
+            if (!res.ok) {
+                const msg = data?.message_error || data?.message || `HTTP ${res.status}`;
+                throw new Error(msg);
+            }
+            return data;
         }
 
         async function loadStockSymbols() {
@@ -1874,14 +1879,27 @@
             return rows;
         }
 
-        function findHistoryAtOrBefore(rows, isoDate) {
-            if (!isoDate || !Array.isArray(rows) || !rows.length) return null;
+        function normalizeHistoryIso(value) {
+            if (!value) return null;
+            const raw = String(value).trim();
+            const m = raw.match(/^(\d{4})[\/-](\d{1,2})[\/-](\d{1,2})/);
+            return m ? `${m[1]}-${String(m[2]).padStart(2,'0')}-${String(m[3]).padStart(2,'0')}` : null;
+        }
+
+        function findHistoryAtOrBefore(rows, dateValue) {
+            if (!dateValue || !Array.isArray(rows) || !rows.length) return null;
+            const target = normalizeHistoryIso(dateValue);
+            if (!target) return null;
             let best = null;
             for (const r of rows) {
-                if (r.iso && r.iso <= isoDate) best = r;
-                if (r.iso && r.iso > isoDate) break;
+                const rowDate = normalizeHistoryIso(r?.iso || r?.greg);
+                if (!rowDate) continue;
+                if (rowDate <= target) best = r;
+                else break;
             }
-            return best || rows[0];
+            // مهم: اگر هیچ رکوردی قبل/در تاریخ خرید وجود ندارد، رکورد دیگری را
+            // به‌عنوان قیمت خرید جا نمی‌زنیم؛ باید «—» نمایش داده شود.
+            return best;
         }
 
         function sliceHistory(rows, period) {
@@ -2126,8 +2144,7 @@
                     const pc = cleanNumeric(r[3]);
                     const gregRaw = String(r[6] ?? '').replace(/<[^>]*>/g,'').trim();
                     const jalali = String(r[7] ?? '').replace(/<[^>]*>/g,'').trim();
-                    const m = gregRaw.match(/^(\d{4})[\/-](\d{1,2})[\/-](\d{1,2})$/);
-                    const iso = m ? `${m[1]}-${String(m[2]).padStart(2,'0')}-${String(m[3]).padStart(2,'0')}` : null;
+                    const iso = normalizeHistoryIso(gregRaw);
                     return pc !== null && iso ? {close:pc/10, greg:gregRaw, jalali, iso} : null;
                 }).filter(Boolean).sort((a,b)=>a.iso.localeCompare(b.iso));
             }
@@ -2147,7 +2164,7 @@
                     const symbol = key === 'ayar' ? 'عیار' : 'آوند';
                     let rows = [];
                     try {
-                        const payload = await fetchBrsApi('https://Api.BrsApi.ir/Tsetmc/History.php?type=0&l18=' + encodeURIComponent(symbol));
+                        const payload = await fetchBrsApi('https://Api.BrsApi.ir/Tsetmc/History.php?l18=' + encodeURIComponent(symbol) + '&type=0');
                         rows = parseBrsHistoryRows(payload);
                     } catch (e) {
                         console.warn(`${key} history request failed:`, e);
@@ -2238,7 +2255,7 @@
 
             const note=document.createElement('div');
             note.className='compare-source';
-            note.textContent='منابع: TGJU برای طلا ۱۸، دلار آزاد و شاخص کل بورس؛ BrsApi / TSETMC برای تاریخچه عیار و آوند؛ بانک بر اساس نرخ سالانه‌ای که کاربر وارد می‌کند. تاریخ مبنا نزدیک‌ترین داده موجود در همان روز یا قبل از آن است. اگر تاریخچه یک دارایی در دسترس نباشد، «—» نمایش داده می‌شود و عدد ساختگی تولید نمی‌شود.';
+            note.textContent='منابع: TGJU برای طلا ۱۸، دلار آزاد و شاخص کل بورس؛ BrsApi / TSETMC برای تاریخچه عیار و آوند؛ در صورت رد شدن درخواست API، برای آن مرجع «—» نمایش داده می‌شود؛ بانک بر اساس نرخ سالانه‌ای که کاربر وارد می‌کند. تاریخ مبنا نزدیک‌ترین داده موجود در همان روز یا قبل از آن است. اگر تاریخچه یک دارایی در دسترس نباشد، «—» نمایش داده می‌شود و عدد ساختگی تولید نمی‌شود.';
             grid.parentElement.appendChild(note);
         }
 
