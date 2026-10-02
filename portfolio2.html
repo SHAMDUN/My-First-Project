@@ -520,7 +520,7 @@
             border: 2px solid var(--gold);
             background: linear-gradient(135deg, rgba(212, 175, 55, 0.1), rgba(212, 175, 55, 0.02));
         }
-        .compare-loading{padding:22px;text-align:center;color:var(--gray);font-size:12px}.compare-asset-card{background:rgba(10,10,15,.45);border:1px solid rgba(148,163,184,.14);border-radius:16px;padding:16px}.compare-asset-head{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;margin-bottom:14px}.compare-asset-name{font-weight:800;color:var(--white);font-size:14px}.compare-asset-date{color:var(--gray);font-size:10px;margin-top:4px}.compare-actual{font-weight:800;font-size:15px;white-space:nowrap}.compare-benchmarks{display:grid;grid-template-columns:repeat(4,minmax(130px,1fr));gap:8px}.compare-benchmark{border:1px solid rgba(148,163,184,.12);background:rgba(255,255,255,.025);border-radius:11px;padding:10px}.compare-benchmark.best{border-color:rgba(212,175,55,.5);box-shadow:inset 0 0 0 1px rgba(212,175,55,.12)}.compare-benchmark .b-name{font-size:10px;color:var(--gray);margin-bottom:7px}.compare-benchmark .b-ret{font-size:14px;font-weight:800}.compare-benchmark .b-meta{font-size:9px;color:var(--gray);margin-top:4px;line-height:1.6}.compare-source{font-size:10px;color:var(--gray);margin-top:12px}@media(max-width:900px){.compare-benchmarks{grid-template-columns:repeat(2,minmax(140px,1fr))}}@media(max-width:520px){.compare-benchmarks{grid-template-columns:1fr}}
+        .compare-loading{padding:22px;text-align:center;color:var(--gray);font-size:12px}.compare-asset-card{background:rgba(10,10,15,.45);border:1px solid rgba(148,163,184,.14);border-radius:16px;padding:16px}.compare-asset-head{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;margin-bottom:14px}.compare-asset-name{font-weight:800;color:var(--white);font-size:14px}.compare-asset-date{color:var(--gray);font-size:10px;margin-top:4px}.compare-actual{font-weight:800;font-size:15px;white-space:nowrap}.compare-benchmarks{display:grid;grid-template-columns:repeat(4,minmax(130px,1fr));gap:8px}.compare-benchmark{border:1px solid rgba(148,163,184,.12);background:rgba(255,255,255,.025);border-radius:11px;padding:10px}.compare-benchmark.best{border-color:rgba(212,175,55,.5);box-shadow:inset 0 0 0 1px rgba(212,175,55,.12)}.compare-benchmark .b-name{font-size:10px;color:var(--gray);margin-bottom:7px}.compare-benchmark .b-ret{font-size:14px;font-weight:800}.compare-benchmark .b-meta{font-size:9px;color:var(--gray);margin-top:4px;line-height:1.6}.manual-price-box{display:flex;gap:5px;align-items:center;min-width:145px}.manual-price-box input{width:92px;padding:6px 7px;border:1px solid rgba(212,175,55,.35);border-radius:7px;background:var(--bg-card);color:var(--white);font-family:inherit;font-size:10px}.manual-price-box button{padding:6px 8px;border:1px solid rgba(212,175,55,.45);border-radius:7px;background:rgba(212,175,55,.12);color:var(--gold);font-family:inherit;font-size:10px;cursor:pointer}.compare-source{font-size:10px;color:var(--gray);margin-top:12px}@media(max-width:900px){.compare-benchmarks{grid-template-columns:repeat(2,minmax(140px,1fr))}}@media(max-width:520px){.compare-benchmarks{grid-template-columns:1fr}}
         .compare-selector{margin:16px 0 14px;padding:14px;border:1px solid rgba(212,175,55,.18);border-radius:14px;background:rgba(255,255,255,.018)}
         .compare-selector-title{color:var(--white);font-size:12px;font-weight:800;margin-bottom:10px}
         .compare-selector-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}
@@ -2111,6 +2111,22 @@
             renderCompare(stats);
         }
 
+        // اگر تاریخچه قیمت خرید در دسترس نباشد، قیمت مرجع را می‌توان دستی وارد و ذخیره کرد.
+        function manualCompareKey(item, benchmarkKey) {
+            const id = item.id || `${item.asset_symbol || item.asset_name}_${item.buy_date}`;
+            return `shamdun_compare_manual_${id}_${benchmarkKey}`;
+        }
+        function getManualComparePrice(item, benchmarkKey) {
+            const value = Number(localStorage.getItem(manualCompareKey(item, benchmarkKey)));
+            return Number.isFinite(value) && value > 0 ? value : null;
+        }
+        function setManualComparePrice(itemId, benchmarkKey, value) {
+            const n = Number(value);
+            if (!(n > 0)) { showToast('❌ قیمت دستی باید بزرگ‌تر از صفر باشد', 'error'); return; }
+            localStorage.setItem(`shamdun_compare_manual_${itemId}_${benchmarkKey}`, String(n));
+            refreshComparison();
+        }
+
         async function renderCompare(stats) {
             const grid = document.getElementById('compareGrid');
             if (!grid) return;
@@ -2155,11 +2171,26 @@
             }
 
             const cache = {};
+            function marketCurrentPrice(key) {
+                if (key === 'gold18') return Number(priceCache.gold18) > 0 ? Number(priceCache.gold18) : null;
+                if (key === 'usd') return Number(priceCache.usd) > 0 ? Number(priceCache.usd) : null;
+                return null;
+            }
+
             async function loadBenchmarkHistory(key) {
                 if (cache[key]) return cache[key];
-                if (key === 'gold18') return cache[key] = {rows:await fetchTgjuHistory('geram18'),currency:'IRR',label:'طلا ۱۸ عیار',icon:'🥇',source:'TGJU',type:'market'};
-                if (key === 'usd') return cache[key] = {rows:await fetchTgjuHistory('price_dollar_rl'),currency:'IRR',label:'دلار آزاد',icon:'💵',source:'TGJU',type:'market'};
-                if (key === 'bourse') return cache[key] = {rows:await fetchTgjuHistory('bourse'),currency:'INDEX',label:'شاخص کل بورس',icon:'📊',source:'TGJU',type:'market'};
+                if (key === 'gold18') {
+                    try { return cache[key] = {rows:await fetchTgjuHistory('geram18'),currency:'IRR',label:'طلا ۱۸ عیار',icon:'🥇',source:'TGJU',type:'market',currentClose:marketCurrentPrice(key)}; }
+                    catch(e) { console.warn('gold18 history request failed:',e); return cache[key] = {rows:[],currency:'IRR',label:'طلا ۱۸ عیار',icon:'🥇',source:'TGJU',type:'market',currentClose:marketCurrentPrice(key)}; }
+                }
+                if (key === 'usd') {
+                    try { return cache[key] = {rows:await fetchTgjuHistory('price_dollar_rl'),currency:'IRR',label:'دلار آزاد',icon:'💵',source:'TGJU',type:'market',currentClose:marketCurrentPrice(key)}; }
+                    catch(e) { console.warn('usd history request failed:',e); return cache[key] = {rows:[],currency:'IRR',label:'دلار آزاد',icon:'💵',source:'TGJU',type:'market',currentClose:marketCurrentPrice(key)}; }
+                }
+                if (key === 'bourse') {
+                    try { return cache[key] = {rows:await fetchTgjuHistory('bourse'),currency:'INDEX',label:'شاخص کل بورس',icon:'📊',source:'TGJU',type:'market',currentClose:null}; }
+                    catch(e) { console.warn('bourse history request failed:',e); return cache[key] = {rows:[],currency:'INDEX',label:'شاخص کل بورس',icon:'📊',source:'TGJU',type:'market',currentClose:null}; }
+                }
                 if (key === 'ayar' || key === 'fund') {
                     const symbol = key === 'ayar' ? 'عیار' : 'آوند';
                     let rows = [];
@@ -2176,7 +2207,7 @@
                 throw new Error('unsupported benchmark');
             }
 
-            function atPurchase(history, buyDate) {
+            function atPurchase(history, buyDate, manualBase) {
                 if (history.type === 'bank') {
                     const start = new Date(buyDate);
                     const end = new Date();
@@ -2186,9 +2217,10 @@
                     return {...history,base:{close:1,iso:buyDate,greg:'',jalali:''},latest:{close:1+percent/100,iso:null,greg:'',jalali:''},percent,days};
                 }
                 const rows = Array.isArray(history.rows) ? history.rows : [];
-                const base = rows.length ? findHistoryAtOrBefore(rows,buyDate) : null;
+                const realBase = rows.length ? findHistoryAtOrBefore(rows,buyDate) : null;
                 const latest = rows.length ? rows[rows.length-1] : (history.currentClose > 0 ? {close:history.currentClose, iso:null, greg:'', jalali:''} : null);
-                if (!latest || !(latest.close>0)) return null;
+                const base = realBase && realBase.close > 0 ? realBase : (manualBase > 0 ? {close:manualBase, iso:buyDate, greg:'', jalali:'', manual:true} : null);
+                if (!latest || !(latest.close>0)) return {...history,base,latest:null,percent:null};
                 if (!base || !(base.close>0)) return {...history,base:null,latest,percent:null};
                 return {...history,base,latest,percent:(latest.close/base.close-1)*100};
             }
@@ -2232,18 +2264,22 @@
                 const rows=[];
                 for (const b of benchmarks) {
                     const source=sources[b.key];
-                    rows.push({benchmark:b,result:source?atPurchase(source,item.buy_date):null});
+                    const manualBase=getManualComparePrice(item,b.key);
+                    rows.push({benchmark:b,result:source?atPurchase(source,item.buy_date,manualBase):null,manualBase});
                 }
                 const valid=rows.filter(x=>x.result);
                 const comparable=valid.filter(x=>Number.isFinite(Number(x.result.percent)));
                 const basket=comparable.length===benchmarks.length ? comparable.reduce((sum,x)=>sum+x.result.percent,0)/benchmarks.length : null;
                 const best=comparable.length?Math.max(...comparable.map(x=>x.result.percent)):null;
 
-                const tableRows=rows.map(({benchmark,result})=>{
-                    if(!result) return `<tr><td><div class="benchmark-name">${benchmark.icon} ${escapeHtml(benchmark.label)}</div><div class="benchmark-source">${escapeHtml(benchmark.source)}</div></td><td class="price">—</td><td class="price">—</td><td>—</td><td class="hypothetical">—</td></tr>`;
+                const tableRows=rows.map(({benchmark,result,manualBase})=>{
+                    const manualKey = item.id || `${item.asset_symbol || item.asset_name}_${item.buy_date}`;
+                    const inputId = `manual_${String(manualKey).replace(/[^a-zA-Z0-9_-]/g,'_')}_${benchmark.key}`;
+                    const manualInput = `<div class="manual-price-box"><input type="number" min="0" step="any" placeholder="قیمت دستی" value="${manualBase || ''}" id="${inputId}"><button type="button" onclick="setManualComparePrice('${escapeHtml(String(manualKey))}','${benchmark.key}',document.getElementById('${inputId}').value)">ثبت</button></div>`;
+                    if(!result) return `<tr><td><div class="benchmark-name">${benchmark.icon} ${escapeHtml(benchmark.label)}</div><div class="benchmark-source">${escapeHtml(benchmark.source)}</div></td><td class="price">${manualInput}</td><td class="price">—</td><td>—</td><td class="hypothetical">—</td></tr>`;
                     const hypo=hypothetical(invested,result), isBest=Number.isFinite(Number(result.percent)) && result.percent===best;
-                    const baseText = result.base ? `${priceText(result,result.base.close)}<br><small>${formatDate(result.base.iso)}</small>` : '—';
-                    const latestText = `${priceText(result,result.latest.close)}${result.latest.iso ? `<br><small>${formatDate(result.latest.iso)}</small>` : ''}`;
+                    const baseText = result.base ? `${priceText(result,result.base.close)}${result.base.manual ? '<br><small>ورود دستی</small>' : `<br><small>${formatDate(result.base.iso)}</small>`}` : manualInput;
+                    const latestText = result.latest ? `${priceText(result,result.latest.close)}${result.latest.iso ? `<br><small>${formatDate(result.latest.iso)}</small>` : ''}` : '—';
                     return `<tr class="${isBest?'best-row':''}"><td><div class="benchmark-name">${benchmark.icon} ${escapeHtml(benchmark.label)}</div><div class="benchmark-source">${escapeHtml(benchmark.source)}${isBest?' · بالاترین بازده این خرید':''}</div></td><td class="price">${baseText}</td><td class="price">${latestText}</td><td>${returnHtml(result.percent)}</td><td class="hypothetical">${hypo===null?'—':formatBigNum(hypo)+' تومان'}</td></tr>`;
                 }).join('');
 
