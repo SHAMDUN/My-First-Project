@@ -695,6 +695,7 @@
 
         .compare-portfolio-note{grid-column:1/-1;background:linear-gradient(135deg,rgba(212,175,55,.09),rgba(59,130,246,.04));border:1px solid rgba(212,175,55,.18);border-radius:14px;padding:14px 16px;color:var(--gray);font-size:11px;line-height:1.9}.compare-portfolio-note strong{color:var(--gold)}
         .compare-asset-card{grid-column:1/-1;background:rgba(10,10,15,.42);border:1px solid rgba(148,163,184,.14);border-radius:16px;padding:16px;overflow:hidden}.compare-asset-head{display:flex;justify-content:space-between;gap:14px;align-items:flex-start;margin-bottom:14px;flex-wrap:wrap}.compare-asset-name{font-weight:800;color:var(--white);font-size:14px}.compare-asset-date{color:var(--gray);font-size:10px;margin-top:4px}.compare-actual{font-weight:800;font-size:14px;white-space:nowrap}
+        .asset-card-chart{display:none;margin-top:14px;padding:12px;border:1px solid rgba(148,163,184,.14);border-radius:12px;background:var(--bg-secondary)}.asset-card-chart.open{display:block}.asset-card-chart .chart-periods{margin-bottom:8px}.asset-card-chart .asset-chart-canvas{height:230px}
         .compare-table-wrap{overflow-x:auto;border:1px solid rgba(148,163,184,.12);border-radius:12px}.compare-table{width:100%;min-width:850px;border-collapse:collapse}.compare-table th,.compare-table td{padding:10px 9px;border-bottom:1px solid rgba(148,163,184,.1);font-size:11px;text-align:right;vertical-align:middle}.compare-table th{color:var(--gray);font-weight:700;background:rgba(255,255,255,.025);white-space:nowrap}.compare-table tr:last-child td{border-bottom:0}.compare-table .benchmark-name{font-weight:800;color:var(--white)}.compare-table .benchmark-source{font-size:9px;color:var(--gray);margin-top:2px}.compare-table .price{font-variant-numeric:tabular-nums;white-space:nowrap}.compare-table .return{font-weight:900;white-space:nowrap}.compare-table .hypothetical{font-weight:800;white-space:nowrap}.compare-table .best-row{background:rgba(212,175,55,.045)}
         .compare-basket-summary{margin-top:12px;padding:11px 13px;border-radius:11px;background:rgba(16,185,129,.045);border:1px solid rgba(16,185,129,.12);color:var(--gray);font-size:10px;line-height:1.8}.compare-basket-summary strong{color:var(--white)}.compare-error{color:var(--gray);font-size:11px;padding:10px 0}
         @media(max-width:900px){.compare-asset-card{padding:12px}}@media(max-width:520px){.compare-asset-card{padding:10px}.compare-asset-head{display:block}.compare-actual{margin-top:10px}}
@@ -1334,6 +1335,7 @@
                                                 </div>
                                             </div>
                                             <div class="asset-card-actions">
+                                                ${canChartAsset(item) ? `<button class="icon-btn" onclick="toggleAssetChartCard('${id}')" title="مشاهده چارت">📈</button>` : ''}
                                                 <button class="icon-btn" onclick="editAsset('${id}')" title="ویرایش">✏️</button>
                                                 <button class="icon-btn danger" onclick="deleteAsset('${id}')" title="حذف">🗑️</button>
                                             </div>
@@ -1362,6 +1364,16 @@
                                             <div class="bar"><div class="bar-fill" style="width:${weight.toFixed(2)}%"></div></div>
                                             <div class="percent">${current === null ? '—' : toFa(weight.toFixed(1)) + '٪'}</div>
                                         </div>
+                                        ${canChartAsset(item) ? `
+                                        <div class="asset-card-chart" id="asset-card-chart-${escapeHtml(String(item.id))}">
+                                            <div class="chart-periods">
+                                                <button class="chart-period active" onclick="loadAssetChartCard('${id}','1M',this)">ماهانه</button>
+                                                <button class="chart-period" onclick="loadAssetChartCard('${id}','3M',this)">۳ ماه</button>
+                                                <button class="chart-period" onclick="loadAssetChartCard('${id}','6M',this)">۶ ماه</button>
+                                                <button class="chart-period" onclick="loadAssetChartCard('${id}','1Y',this)">سالانه</button>
+                                            </div>
+                                            <div class="asset-chart-canvas" id="asset-card-canvas-${escapeHtml(String(item.id))}"><div class="chart-message">برای نمایش چارت باز کنید.</div></div>
+                                        </div>` : ''}
                                     </div>
                                 `;
                             }).join('')}
@@ -1749,11 +1761,11 @@
         const CHARTABLE_SYMBOLS = new Set(['gold18','silver999','ounce-gold','ounce-silver','xauusd','xagusd']);
 
         function canChartAsset(item) {
-            return !!item && (
-                CHARTABLE_CRYPTO.has(item.asset_symbol) ||
-                CHARTABLE_SYMBOLS.has(item.asset_symbol) ||
-                (item.asset_category === 'global' && !!getAssetDefinition(item.asset_category, item.asset_symbol)?.tv)
-            );
+            if (!item) return false;
+            if (CHARTABLE_CRYPTO.has(item.asset_symbol) || CHARTABLE_SYMBOLS.has(item.asset_symbol)) return true;
+            if (['usd', 'gold18', 'bourse'].includes(item.asset_symbol)) return true;
+            if (item.asset_category === 'stock' || item.asset_category === 'fund' || item.asset_category === 'ayar') return true;
+            return item.asset_category === 'global' && !!getAssetDefinition(item.asset_category, item.asset_symbol)?.tv;
         }
 
         function renderSmartRow(item) {
@@ -1810,6 +1822,34 @@
             if (!row) return;
             const open = row.classList.toggle('open');
             if (open) loadAssetChart(id, '1D', row.querySelector('.chart-period'));
+        }
+
+        function toggleAssetChartCard(id) {
+            const panel = document.getElementById(`asset-card-chart-${id}`);
+            if (!panel) return;
+            const open = panel.classList.toggle('open');
+            if (open) loadAssetChartCard(id, '1M', panel.querySelector('.chart-period'));
+        }
+
+        async function loadAssetChartCard(id, period = '1M', button = null) {
+            const panel = document.getElementById(`asset-card-chart-${id}`);
+            const box = document.getElementById(`asset-card-canvas-${id}`);
+            if (!panel || !box) return;
+            if (button) { panel.querySelectorAll('.chart-period').forEach(b=>b.classList.remove('active')); button.classList.add('active'); }
+            await loadAssetChart(id, period, null);
+            const sourceBox = document.getElementById(`asset-chart-${id}`);
+            if (sourceBox) box.innerHTML = sourceBox.innerHTML;
+            const sourceCanvas = sourceBox?.querySelector('canvas');
+            const targetCanvas = box.querySelector('canvas');
+            if (sourceCanvas && targetCanvas) {
+                const sourceChart = Chart.getChart(sourceCanvas);
+                if (sourceChart) {
+                    const values = sourceChart.data.datasets[0].data.slice();
+                    const labels = sourceChart.data.labels.slice();
+                    sourceChart.destroy();
+                    renderLineChart(box, values, '#d4af37', labels);
+                }
+            }
         }
 
         const tgjuHistoryCache = {};
@@ -2047,6 +2087,18 @@
             });
         }
 
+        function parseBrsHistoryRowsForChart(payload) {
+            const raw = Array.isArray(payload) ? payload : (Array.isArray(payload?.data) ? payload.data : []);
+            return raw.map(r => {
+                if (!Array.isArray(r)) return null;
+                const close = cleanNumeric(r[3]);
+                const greg = String(r[6] ?? '').replace(/<[^>]*>/g, '').trim();
+                const jalali = String(r[7] ?? '').replace(/<[^>]*>/g, '').trim();
+                const iso = normalizeHistoryIso(greg);
+                return close !== null && iso ? { close: close / 10, greg, jalali, iso } : null;
+            }).filter(Boolean).sort((a,b) => a.iso.localeCompare(b.iso));
+        }
+
         async function loadAssetChart(id, period = '1D', button = null) {
             const item = calculateStats().items.find(x => String(x.id) === String(id));
             const box = document.getElementById(`asset-chart-${id}`);
@@ -2064,6 +2116,20 @@
 
                 if (item.asset_symbol === 'gold18') {
                     const rows = sliceHistory(await fetchTgjuHistory('geram18'), period);
+                    renderLineChart(box, rows.map(x=>x.close), '#d4af37', rows.map(x=>x.jalali || x.greg));
+                    return;
+                }
+
+                if (item.asset_symbol === 'usd') {
+                    const rows = sliceHistory(await fetchTgjuHistory('price_dollar_rl'), period);
+                    renderLineChart(box, rows.map(x=>x.close), '#35c58a', rows.map(x=>x.jalali || x.greg));
+                    return;
+                }
+
+                if (item.asset_category === 'stock' || item.asset_category === 'fund' || item.asset_category === 'ayar') {
+                    const payload = await fetchBrsApi('https://Api.BrsApi.ir/Tsetmc/History.php?l18=' + encodeURIComponent(item.asset_symbol) + '&type=0');
+                    const rows = sliceHistory(parseBrsHistoryRowsForChart(payload), period);
+                    if (!rows.length) throw new Error('empty-tsetmc-history');
                     renderLineChart(box, rows.map(x=>x.close), '#d4af37', rows.map(x=>x.jalali || x.greg));
                     return;
                 }
