@@ -1531,6 +1531,171 @@
             }, 100);
         }
 
+        function renderPieChart(stats) {
+            const canvas = document.getElementById('pieChart');
+            if (!canvas || typeof Chart === 'undefined') return;
+
+            if (pieChart) {
+                try { pieChart.destroy(); } catch (e) {}
+                pieChart = null;
+            }
+
+            const labels = [];
+            const values = [];
+            const categoryStats = stats?.categoryStats || {};
+            const orderedKeys = [
+                ...Object.keys(ASSETS || {}).filter(key => categoryStats[key]),
+                ...Object.keys(categoryStats).filter(key => !(ASSETS || {})[key])
+            ];
+
+            orderedKeys.forEach(key => {
+                const value = Number(categoryStats[key]?.value) || 0;
+                if (value <= 0) return;
+                const category = ASSETS[key] || { name: key, icon: '🌟' };
+                labels.push(category.name || key);
+                values.push(value);
+            });
+
+            if (!values.length) {
+                const ctx = canvas.getContext('2d');
+                if (ctx) {
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                    ctx.font = '12px Vazirmatn';
+                    ctx.fillStyle = '#94A3B8';
+                    ctx.textAlign = 'center';
+                    ctx.fillText('داده‌ای برای نمایش تخصیص دارایی وجود ندارد', canvas.width / 2, canvas.height / 2);
+                }
+                return;
+            }
+
+            const isDark = document.documentElement.getAttribute('data-theme') !== 'light';
+            const textColor = isDark ? '#F8FAFC' : '#1F2937';
+            const gridColor = isDark ? 'rgba(148,163,184,.12)' : 'rgba(71,85,105,.12)';
+
+            pieChart = new Chart(canvas.getContext('2d'), {
+                type: 'doughnut',
+                data: {
+                    labels,
+                    datasets: [{
+                        data: values,
+                        borderWidth: 2,
+                        borderColor: isDark ? '#101116' : '#FFFFFF',
+                        backgroundColor: [
+                            '#D4AF37', '#3B82F6', '#35C58A', '#F97316', '#A855F7',
+                            '#14B8A6', '#EAB308', '#EC4899', '#64748B', '#06B6D4'
+                        ]
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    cutout: '58%',
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                color: textColor,
+                                font: { family: 'Vazirmatn', size: 11 },
+                                padding: 14,
+                                usePointStyle: true
+                            }
+                        },
+                        tooltip: {
+                            backgroundColor: isDark ? '#1A1A24' : '#FFFFFF',
+                            titleColor: textColor,
+                            bodyColor: textColor,
+                            borderColor: gridColor,
+                            borderWidth: 1,
+                            callbacks: {
+                                label: context => {
+                                    const total = values.reduce((a, b) => a + b, 0);
+                                    const value = Number(context.raw) || 0;
+                                    const percent = total > 0 ? (value / total) * 100 : 0;
+                                    return ` ${formatMoney(value, 'IRR', true)} · ${toFa(percent.toFixed(1))}٪`;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        function renderBarChart(stats) {
+            const canvas = document.getElementById('barChart');
+            if (!canvas || typeof Chart === 'undefined') return;
+
+            if (barChart) {
+                try { barChart.destroy(); } catch (e) {}
+                barChart = null;
+            }
+
+            const items = Array.isArray(stats?.items) ? stats.items : [];
+            const validItems = items.filter(item => Number.isFinite(Number(item.profitPercent)));
+            if (!validItems.length) {
+                const ctx = canvas.getContext('2d');
+                if (ctx) {
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                    ctx.font = '12px Vazirmatn';
+                    ctx.fillStyle = '#94A3B8';
+                    ctx.textAlign = 'center';
+                    ctx.fillText('برای نمایش سود/زیان، قیمت فعلی معتبر لازم است', canvas.width / 2, canvas.height / 2);
+                }
+                return;
+            }
+
+            const labels = validItems.map(item => {
+                const def = getAssetDefinition(item.asset_category, item.asset_symbol);
+                return def?.name || item.asset_name || item.asset_symbol || 'دارایی';
+            });
+            const values = validItems.map(item => Number(item.profitPercent));
+            const isDark = document.documentElement.getAttribute('data-theme') !== 'light';
+            const textColor = isDark ? '#F8FAFC' : '#1F2937';
+            const gridColor = isDark ? 'rgba(148,163,184,.12)' : 'rgba(71,85,105,.12)';
+
+            barChart = new Chart(canvas.getContext('2d'), {
+                type: 'bar',
+                data: {
+                    labels,
+                    datasets: [{
+                        label: 'سود / زیان',
+                        data: values,
+                        backgroundColor: values.map(v => v >= 0 ? '#35C58A' : '#F06B6B'),
+                        borderRadius: 7,
+                        borderSkipped: false
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    indexAxis: validItems.length > 5 ? 'y' : 'x',
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            backgroundColor: isDark ? '#1A1A24' : '#FFFFFF',
+                            titleColor: textColor,
+                            bodyColor: textColor,
+                            borderColor: gridColor,
+                            borderWidth: 1,
+                            callbacks: {
+                                label: context => ` ${context.parsed.y !== undefined ? toFa(Number(context.parsed.y).toFixed(2)) : toFa(Number(context.parsed.x).toFixed(2))}٪`
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            ticks: { color: textColor, font: { family: 'Vazirmatn', size: 9 } },
+                            grid: { color: gridColor }
+                        },
+                        y: {
+                            ticks: { color: textColor, font: { family: 'Vazirmatn', size: 10 } },
+                            grid: { color: gridColor },
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        }
+
         function trendSvg(change) {
             const c = Number(change) || 0;
             const color = c > 0 ? '#35c58a' : c < 0 ? '#f06b6b' : '#94A3B8';
