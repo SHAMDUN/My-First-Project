@@ -2198,16 +2198,57 @@
         }
 
         function editManualComparePrice(itemId, benchmarkKey) {
-            const cell = document.getElementById(`manual-cell-${itemId}-${benchmarkKey}`);
-            if (!cell) return;
-            const current = Number(localStorage.getItem(`shamdun_compare_manual_${itemId}_${benchmarkKey}`));
-            const value = Number.isFinite(current) && current > 0 ? current : '';
-            const inputId = `manual-edit-${itemId}-${benchmarkKey}`;
-            cell.innerHTML = `<div class="manual-price-box"><input type="number" min="0" step="any" value="${value}" id="${inputId}" autofocus><button type="button" onclick="setManualComparePrice('${String(itemId).replace(/'/g,"\'")}','${benchmarkKey}',document.getElementById('${inputId}').value)">ثبت</button></div>`;
-            const input = document.getElementById(inputId);
-            if (input) { input.focus(); input.select(); }
+            // همان شناسه‌ای که هنگام ساخت جدول استفاده شده
+            const safeId = String(itemId).replace(/[^a-zA-Z0-9_-]/g, '_');
+            const cellId = `manual-cell-manual_${safeId}_${benchmarkKey}`;
+            const cell = document.getElementById(cellId);
+
+            if (!cell) {
+                console.warn('Manual price cell not found:', cellId);
+                return;
         }
 
+        const storageKey = `shamdun_compare_manual_${itemId}_${benchmarkKey}`;
+        const current = Number(localStorage.getItem(storageKey));
+        const value = Number.isFinite(current) && current > 0 ? current : '';
+
+        const inputId = `manual-edit-${safeId}-${benchmarkKey}`;
+
+        cell.innerHTML = `
+            <div class="manual-price-box">
+                <input
+                    type="number"
+                    min="0"
+                    step="any"
+                    value="${value}"
+                    id="${inputId}"
+                    autofocus
+                >
+                <button
+                    type="button"
+                    onclick="setManualComparePrice(
+                        '${String(itemId).replace(/'/g, "\\'")}',
+                        '${benchmarkKey}',
+                         document.getElementById('${inputId}').value
+                    )"
+                 >ثبت</button>
+            </div>
+        `;
+
+        const input = document.getElementById(inputId);
+
+        if (input) {
+            input.focus();
+            input.select();
+
+            input.addEventListener('keydown', function (e) {
+                if (e.key === 'Enter') {
+                    const value = this.value;
+                    setManualComparePrice(itemId, benchmarkKey, value);
+                }
+            });
+        }
+    }
         async function renderCompare(stats) {
             const grid = document.getElementById('compareGrid');
             if (!grid) return;
