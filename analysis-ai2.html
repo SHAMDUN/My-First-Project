@@ -36,7 +36,7 @@ const E={price:{n:'Price Action',i:'🕯️',d:'ساختار بازار، Swing�
 let asset='gold18',horizon='swing',chart,series,candles=[],engines=new Set(),compare=['gold18','usd'],compareChart,compareLines=[],compareStore={},compareRenderId=0,compareTimer=null,analysisOverlay={lines:[],markers:[]};
 const $=x=>document.getElementById(x);
 const num=(v,d=2)=>Number.isFinite(Number(v))?new Intl.NumberFormat('en-US',{maximumFractionDigits:d}).format(Number(v)):'—';
-function setStatus(s,ok=false){$('statusText').textContent=s;$('statusDot').style.background=ok?'var(--green)':'var(--red')}
+function setStatus(s,ok=false){$('statusText').textContent=s;$('statusDot').style.background=ok?'var(--green)':'var(--red)'}
 function renderAssets(){$('assetGrid').innerHTML=Object.entries(A).map(([k,a])=>`<button class="asset ${k===asset?'active':''}" data-k="${k}"><i>${a.i}</i><b>${a.n}</b><small>${a.c}</small></button>`).join('');document.querySelectorAll('.asset').forEach(x=>x.onclick=()=>{asset=x.dataset.k;renderAssets();loadMarket()})}
 function renderHorizons(){$('horizons').innerHTML=Object.entries(H).map(([k,x])=>`<button class="horizon ${k===horizon?'active':''}" data-k="${k}">${x.n}</button>`).join('');document.querySelectorAll('.horizon').forEach(x=>x.onclick=()=>{horizon=x.dataset.k;applyHorizon()});applyHorizon()}
 function applyHorizon(){const x=H[horizon];$('interval').value=x.main;$('chartTf').textContent=x.main;$('horizonNote').innerHTML=`💡 افق <b>${x.n}</b> انتخاب شد. نمودار زنده به‌صورت خودکار روی <b>${x.main}</b> رفت.`;if(candles.length)loadMarket()}
