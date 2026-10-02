@@ -818,10 +818,12 @@
             color: #64748b !important;
         }  
         html.light-theme #compareBankRate,
-        body.light-theme #compareBankRate {
-            color: #ffffff !important;
+        body.light-theme #compareBankRate,
+        html[data-theme="light"] #compareBankRate {
+             color: #ffffff !important;
             -webkit-text-fill-color: #ffffff !important;
-       }
+            opacity: 1 !important;
+        }
 </style>
 </head>
 <body>
