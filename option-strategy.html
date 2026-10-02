@@ -725,4 +725,95 @@ function drawPayoff() {
   container.innerHTML = '';
 
   const isLight = document.documentElement.getAttribute('data-theme') === 'light';
-  const textColor = is
+  const textColor = isLight ? '#64748b' : '#94a3b8';
+  const gridColor = isLight ? 'rgba(0,0,0,0.06)' : 'rgba(255,255,255,0.05)';
+
+  payoffChart = LightweightCharts.createChart(container, {
+    width: container.clientWidth,
+    height: container.clientHeight,
+    layout: {
+      background: { color: 'transparent' },
+      textColor: textColor,
+      fontFamily: 'Vazirmatn, Tahoma, sans-serif',
+    },
+    grid: {
+      vertLines: { color: gridColor },
+      horzLines: { color: gridColor },
+    },
+    rightPriceScale: { borderColor: gridColor },
+    timeScale: {
+      borderColor: gridColor,
+      timeVisible: false,
+      secondsVisible: false,
+    },
+    crosshair: { mode: LightweightCharts.CrosshairMode.Normal },
+    localization: {
+      priceFormatter: (p) => Math.round(p).toLocaleString('fa-IR'),
+      timeFormatter: (t) => Number(t).toLocaleString('fa-IR'),
+    },
+  });
+
+  // خط صفر
+  const zeroSeries = payoffChart.addLineSeries({
+    color: isLight ? 'rgba(0,0,0,0.2)' : 'rgba(255,255,255,0.15)',
+    lineWidth: 1,
+    lineStyle: 2,
+    priceLineVisible: false,
+    lastValueVisible: false,
+    crosshairMarkerVisible: false,
+  });
+  zeroSeries.setData(points.map(p => ({ time: p.time, value: 0 })));
+
+  // خط Payoff
+  const lineSeries = payoffChart.addLineSeries({
+    color: '#d4af37',
+    lineWidth: 3,
+    priceLineVisible: false,
+    lastValueVisible: true,
+    crosshairMarkerVisible: true,
+  });
+  lineSeries.setData(points);
+
+  payoffChart.timeScale().fitContent();
+
+  // خلاصه
+  document.getElementById('summaryGrid').innerHTML = `
+    <div class="summary-card"><div class="label">استراتژی</div><div class="value">${selectedStrategy.name}</div></div>
+    <div class="summary-card"><div class="label">دارایی پایه</div><div class="value">${selectedBase}</div></div>
+    <div class="summary-card"><div class="label">قیمت اعمال</div><div class="value">${fmt(K)}</div></div>
+    <div class="summary-card"><div class="label">پریمیوم</div><div class="value">${fmt(prem1)}</div></div>
+    <div class="summary-card"><div class="label">حداکثر ضرر</div><div class="value neg">${fmt(Math.round(maxLoss))}</div></div>
+    <div class="summary-card"><div class="label">حداکثر سود</div><div class="value pos">${maxProfit > 1e9 ? 'نامحدود' : fmt(Math.round(maxProfit))}</div></div>
+    <div class="summary-card"><div class="label">نقطه سربه‌سر</div><div class="value">${breakeven ? fmt(breakeven) : '—'}</div></div>
+  `;
+
+  // ریسایز
+  const ro = new ResizeObserver(() => {
+    if (payoffChart) {
+      payoffChart.applyOptions({ width: container.clientWidth, height: container.clientHeight });
+    }
+  });
+  ro.observe(container);
+}
+
+// ================================================================
+//  EVENTS
+// ================================================================
+document.getElementById('searchInput').addEventListener('input', (e) => {
+  renderBaseChips(e.target.value.trim());
+});
+document.getElementById('searchBtn').addEventListener('click', () => {
+  renderBaseChips(document.getElementById('searchInput').value.trim());
+});
+document.getElementById('typeFilter').addEventListener('change', renderContracts);
+document.getElementById('sortBy').addEventListener('change', renderContracts);
+document.getElementById('refreshBtn').addEventListener('click', fetchAllOptions);
+
+// ================================================================
+//  INIT
+// ================================================================
+renderStrategies();
+fetchAllOptions();
+</script>
+</body>
+</html>
