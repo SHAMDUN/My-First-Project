@@ -178,9 +178,6 @@ const ASSETS = [
   { key: 'ada',  name: 'کاردانو',  emoji: '🟣', defaultPrice: 0.9,   group: 'کریپتو', source: 'coingecko', coingeckoId: 'cardano' },
   { key: 'trx',  name: 'ترون',     emoji: '🟢', defaultPrice: 0.25,  group: 'کریپتو', source: 'coingecko', coingeckoId: 'tron' },
   { key: 'avax', name: 'آوالانچ',  emoji: '🔺', defaultPrice: 35,    group: 'کریپتو', source: 'coingecko', coingeckoId: 'avalanche-2' },
-  { key: 'gold',   name: 'انس طلا',  emoji: '🥇', defaultPrice: 4306, group: 'کالا', source: 'commodity', symbol: 'XAUUSD' },
-  { key: 'silver', name: 'انس نقره', emoji: '🥈', defaultPrice: 64.8, group: 'کالا', source: 'commodity', symbol: 'XAGUSD' },
-  { key: 'oil',    name: 'نفت برنت', emoji: '🛢️', defaultPrice: 105,  group: 'کالا', source: 'commodity', symbol: 'BRENT' },
   { key: 'اخابر',      name: 'اخابر',      emoji: '📡', defaultPrice: 1000,  optionBase: 'اخابر', group: 'بورس', source: 'stocks' },
   { key: 'اطلس',       name: 'اطلس',       emoji: '🏗️', defaultPrice: 15800, optionBase: 'اطلس', group: 'بورس', source: 'stocks' },
   { key: 'اهرم',       name: 'اهرم',       emoji: '⚡', defaultPrice: 6765,  optionBase: 'اهرم', group: 'بورس', source: 'stocks' },
@@ -556,7 +553,7 @@ function renderPositions() {
     return;
   }
 
-  const groups = ['کریپتو', 'کالا', 'بورس'];
+  const groups = ['کریپتو','بورس'];
   // ⭐⭐ فقط نوع رو قفل می‌کنیم، نه بقیه ستون‌ها
   const isPresetLocked = !!currentPreset;
 
