@@ -2114,8 +2114,15 @@
                 return result.currency === 'INDEX' ? formatNum(value,2) : formatNum(value,0)+' تومان';
             }
             function hypothetical(invested,result) {
-                if (!(invested>0) || !result || !(result.base.close>0)) return null;
-                return invested*(result.latest.close/result.base.close);
+                if (
+                    !(invested > 0) ||
+                    !result ||
+                    !result.base ||
+                    !(result.base.close > 0) ||
+                    !result.latest ||
+                    !(result.latest.close > 0)
+                ) return null;
+                return invested * (result.latest.close / result.base.close);
             }
             function returnHtml(p) {
                 if (!Number.isFinite(Number(p))) return '<span class="neutral">—</span>';
@@ -2144,8 +2151,9 @@
                     rows.push({benchmark:b,result:source?atPurchase(source,item.buy_date):null});
                 }
                 const valid=rows.filter(x=>x.result);
-                const basket=valid.length===benchmarks.length ? valid.reduce((sum,x)=>sum+x.result.percent,0)/benchmarks.length : null;
-                const best=valid.length?Math.max(...valid.map(x=>x.result.percent)):null;
+                const comparable=valid.filter(x=>Number.isFinite(Number(x.result.percent)));
+                const basket=comparable.length===benchmarks.length ? comparable.reduce((sum,x)=>sum+x.result.percent,0)/benchmarks.length : null;
+                const best=comparable.length?Math.max(...comparable.map(x=>x.result.percent)):null;
 
                 const tableRows=rows.map(({benchmark,result})=>{
                     if(!result) return `<tr><td><div class="benchmark-name">${benchmark.icon} ${escapeHtml(benchmark.label)}</div><div class="benchmark-source">${escapeHtml(benchmark.source)}</div></td><td class="price">—</td><td class="price">—</td><td>—</td><td class="hypothetical">—</td></tr>`;
