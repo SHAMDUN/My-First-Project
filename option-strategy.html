@@ -585,7 +585,7 @@ function renderPositions() {
     } else if (isStock && hasAsset) {
       const optionsCount = filteredOptions.length;
       contractCell = `
-        <select class="cell-select" style="font-size:10px;min-width:140px;"
+        <select class="cell-select" style="font-size:10px;min-width:130px;"
                 onchange="selectOptionContract(${p.id}, this.value)">
           <option value="">— انتخاب (${toFa(optionsCount)}) —</option>
           ${filteredOptions
@@ -600,7 +600,7 @@ function renderPositions() {
     return `
       <tr data-id="${p.id}">
         <td>
-          <select class="cell-select" onchange="updatePosition(${p.id}, 'asset', this.value)">
+          <select class="cell-select" style="min-width:84px;" onchange="updatePosition(${p.id}, 'asset', this.value)">
             ${assetOptions}
           </select>
         </td>
