@@ -521,6 +521,21 @@
             background: linear-gradient(135deg, rgba(212, 175, 55, 0.1), rgba(212, 175, 55, 0.02));
         }
         .compare-loading{padding:22px;text-align:center;color:var(--gray);font-size:12px}.compare-asset-card{background:rgba(10,10,15,.45);border:1px solid rgba(148,163,184,.14);border-radius:16px;padding:16px}.compare-asset-head{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;margin-bottom:14px}.compare-asset-name{font-weight:800;color:var(--white);font-size:14px}.compare-asset-date{color:var(--gray);font-size:10px;margin-top:4px}.compare-actual{font-weight:800;font-size:15px;white-space:nowrap}.compare-benchmarks{display:grid;grid-template-columns:repeat(4,minmax(130px,1fr));gap:8px}.compare-benchmark{border:1px solid rgba(148,163,184,.12);background:rgba(255,255,255,.025);border-radius:11px;padding:10px}.compare-benchmark.best{border-color:rgba(212,175,55,.5);box-shadow:inset 0 0 0 1px rgba(212,175,55,.12)}.compare-benchmark .b-name{font-size:10px;color:var(--gray);margin-bottom:7px}.compare-benchmark .b-ret{font-size:14px;font-weight:800}.compare-benchmark .b-meta{font-size:9px;color:var(--gray);margin-top:4px;line-height:1.6}.compare-source{font-size:10px;color:var(--gray);margin-top:12px}@media(max-width:900px){.compare-benchmarks{grid-template-columns:repeat(2,minmax(140px,1fr))}}@media(max-width:520px){.compare-benchmarks{grid-template-columns:1fr}}
+        .compare-selector{margin:16px 0 14px;padding:14px;border:1px solid rgba(212,175,55,.18);border-radius:14px;background:rgba(255,255,255,.018)}
+        .compare-selector-title{color:var(--white);font-size:12px;font-weight:800;margin-bottom:10px}
+        .compare-selector-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}
+        .compare-option{position:relative;display:flex;align-items:center;gap:9px;padding:10px 11px;border:1px solid rgba(148,163,184,.14);border-radius:11px;background:rgba(10,10,15,.35);cursor:pointer;transition:.2s;user-select:none}
+        .compare-option:hover{border-color:rgba(212,175,55,.35)}
+        .compare-option input{position:absolute;opacity:0;pointer-events:none}
+        .compare-option .check{width:18px;height:18px;border:1px solid rgba(148,163,184,.35);border-radius:5px;display:flex;align-items:center;justify-content:center;flex:0 0 18px;color:transparent;font-size:11px;font-weight:900}
+        .compare-option input:checked + .check{background:var(--gold);border-color:var(--gold);color:#111}
+        .compare-option input:checked ~ .option-text{color:var(--white)}
+        .option-text{color:var(--gray);font-size:11px;font-weight:700}
+        .compare-bank-rate{display:flex;align-items:center;gap:9px;margin-top:11px;padding-top:11px;border-top:1px solid rgba(148,163,184,.1);color:var(--gray);font-size:10px}
+        .compare-bank-rate input{width:90px;padding:7px 9px;background:rgba(10,10,15,.8);border:1px solid rgba(255,255,255,.1);border-radius:8px;color:var(--white);font-family:inherit;text-align:center}
+        .compare-selector-help{margin-top:8px;color:var(--gray);font-size:9px;line-height:1.8}
+        @media(max-width:900px){.compare-selector-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+        @media(max-width:520px){.compare-selector-grid{grid-template-columns:1fr}}
         .modal-overlay {
             display: none;
             position: fixed;
@@ -1487,8 +1502,25 @@
                 </div>
 
                 <div class="compare-section">
-                    <div class="compare-title">📊 مقایسه با سبد مرجع</div>
-                    <div class="compare-desc">برای هر دارایی خریداری‌شده، قیمت چهار مرجع واقعی در تاریخ خرید و امروز نمایش داده می‌شود. مدت مقایسه از تاریخ خرید همان دارایی محاسبه می‌شود و هیچ بازده یا مبلغ ساختگی در این بخش وجود ندارد.</div>
+                    <div class="compare-title">📊 مقایسه عملکرد دارایی‌ها</div>
+                    <div class="compare-desc">دارایی‌هایی را که می‌خواهی با خریدهای واقعی سبد مقایسه شوند تیک بزن. تعداد انتخاب‌ها محدود نیست و برای بانک، نرخ سود سالانه را خودت وارد می‌کنی.</div>
+                    <div class="compare-selector">
+                        <div class="compare-selector-title">انتخاب دارایی‌های مرجع</div>
+                        <div class="compare-selector-grid">
+                            <label class="compare-option"><input type="checkbox" class="compare-check" value="gold18" checked onchange="refreshComparison()"><span class="check">✓</span><span class="option-text">🥇 طلا ۱۸ عیار</span></label>
+                            <label class="compare-option"><input type="checkbox" class="compare-check" value="usd" checked onchange="refreshComparison()"><span class="check">✓</span><span class="option-text">💵 دلار آزاد</span></label>
+                            <label class="compare-option"><input type="checkbox" class="compare-check" value="bourse" checked onchange="refreshComparison()"><span class="check">✓</span><span class="option-text">📊 شاخص کل بورس</span></label>
+                            <label class="compare-option"><input type="checkbox" class="compare-check" value="ayar" checked onchange="refreshComparison()"><span class="check">✓</span><span class="option-text">🟡 صندوق طلای عیار</span></label>
+                            <label class="compare-option"><input type="checkbox" class="compare-check" value="fund" checked onchange="refreshComparison()"><span class="check">✓</span><span class="option-text">💼 صندوق درآمد ثابت آوند</span></label>
+                            <label class="compare-option"><input type="checkbox" class="compare-check" value="bank" onchange="refreshComparison()"><span class="check">✓</span><span class="option-text">🏦 سپرده‌گذاری در بانک</span></label>
+                        </div>
+                        <div class="compare-bank-rate">
+                            <span>نرخ سود سالانه بانک:</span>
+                            <input id="compareBankRate" type="number" min="0" max="100" step="0.1" placeholder="مثلاً ۲۳" onchange="refreshComparison()">
+                            <span>٪</span>
+                        </div>
+                        <div class="compare-selector-help">برای هر خرید، مدت مقایسه از تاریخ همان خرید محاسبه می‌شود. هیچ مبلغ یا بازده ساختگی برای بازارها نمایش داده نمی‌شود.</div>
+                    </div>
                     <div id="compareGrid" class="compare-grid"><div class="compare-loading">⏳ در حال دریافت تاریخچه بازارها...</div></div>
                 </div>
 
@@ -2052,6 +2084,15 @@
         // ==========================================
         // مقایسه واقعی بازارها
         // ==========================================
+        function getSelectedCompareKeys() {
+            return Array.from(document.querySelectorAll('.compare-check:checked')).map(el => el.value);
+        }
+
+        function refreshComparison() {
+            const stats = calculateStats();
+            renderCompare(stats);
+        }
+
         async function renderCompare(stats) {
             const grid = document.getElementById('compareGrid');
             if (!grid) return;
@@ -2060,12 +2101,23 @@
             const oldNote = grid.parentElement.querySelector('.compare-source');
             if (oldNote) oldNote.remove();
 
-            const benchmarks = [
-                { key:'gold18', label:'طلا ۱۸ عیار', icon:'🥇', source:'TGJU' },
-                { key:'usd', label:'دلار آزاد', icon:'💵', source:'TGJU' },
-                { key:'bourse', label:'شاخص کل بورس', icon:'📊', source:'TGJU' },
-                { key:'ayar', label:'صندوق طلای عیار', icon:'🟡', source:'BrsApi / TSETMC' }
-            ];
+            const selectedKeys = getSelectedCompareKeys();
+            if (!selectedKeys.length) {
+                grid.innerHTML = '<div class="compare-loading">حداقل یک دارایی را برای مقایسه انتخاب کن.</div>';
+                return;
+            }
+
+            const benchmarkDefs = {
+                gold18: { key:'gold18', label:'طلا ۱۸ عیار', icon:'🥇', source:'TGJU', type:'market' },
+                usd: { key:'usd', label:'دلار آزاد', icon:'💵', source:'TGJU', type:'market' },
+                bourse: { key:'bourse', label:'شاخص کل بورس', icon:'📊', source:'TGJU', type:'market' },
+                ayar: { key:'ayar', label:'صندوق طلای عیار', icon:'🟡', source:'BrsApi / TSETMC', type:'fund' },
+                fund: { key:'fund', label:'صندوق درآمد ثابت آوند', icon:'💼', source:'BrsApi / TSETMC', type:'fund' },
+                bank: { key:'bank', label:'سپرده‌گذاری در بانک', icon:'🏦', source:'نرخ واردشده توسط کاربر', type:'bank' }
+            };
+            const benchmarks = selectedKeys.map(k => benchmarkDefs[k]).filter(Boolean);
+            const bankRateInput = document.getElementById('compareBankRate');
+            const bankAnnualRate = bankRateInput ? Number(bankRateInput.value) : 0;
 
             function parseBrsHistoryRows(payload) {
                 const raw = Array.isArray(payload) ? payload : (Array.isArray(payload?.data) ? payload.data : []);
@@ -2080,28 +2132,42 @@
                 }).filter(Boolean).sort((a,b)=>a.iso.localeCompare(b.iso));
             }
 
+            function findCurrentFundPrice(symbol) {
+                const item = ASSETS.fund?.items?.find(x=>x.symbol===symbol) || ASSETS.ayar?.items?.find(x=>x.symbol===symbol);
+                return item && Number(item.currentPrice)>0 ? Number(item.currentPrice) : null;
+            }
+
             const cache = {};
             async function loadBenchmarkHistory(key) {
                 if (cache[key]) return cache[key];
-                if (key === 'gold18') return cache[key] = {rows:await fetchTgjuHistory('geram18'),currency:'IRR',label:'طلا ۱۸ عیار',icon:'🥇',source:'TGJU'};
-                if (key === 'usd') return cache[key] = {rows:await fetchTgjuHistory('price_dollar_rl'),currency:'IRR',label:'دلار آزاد',icon:'💵',source:'TGJU'};
-                if (key === 'bourse') return cache[key] = {rows:await fetchTgjuHistory('bourse'),currency:'INDEX',label:'شاخص کل بورس',icon:'📊',source:'TGJU'};
-                if (key === 'ayar') {
+                if (key === 'gold18') return cache[key] = {rows:await fetchTgjuHistory('geram18'),currency:'IRR',label:'طلا ۱۸ عیار',icon:'🥇',source:'TGJU',type:'market'};
+                if (key === 'usd') return cache[key] = {rows:await fetchTgjuHistory('price_dollar_rl'),currency:'IRR',label:'دلار آزاد',icon:'💵',source:'TGJU',type:'market'};
+                if (key === 'bourse') return cache[key] = {rows:await fetchTgjuHistory('bourse'),currency:'INDEX',label:'شاخص کل بورس',icon:'📊',source:'TGJU',type:'market'};
+                if (key === 'ayar' || key === 'fund') {
+                    const symbol = key === 'ayar' ? 'عیار' : 'آوند';
                     let rows = [];
                     try {
-                        const payload = await fetchBrsApi('https://Api.BrsApi.ir/Tsetmc/History.php?type=0&l18=' + encodeURIComponent('عیار'));
+                        const payload = await fetchBrsApi('https://Api.BrsApi.ir/Tsetmc/History.php?type=0&l18=' + encodeURIComponent(symbol));
                         rows = parseBrsHistoryRows(payload);
                     } catch (e) {
-                        console.warn('Ayar history request failed:', e);
+                        console.warn(`${key} history request failed:`, e);
                     }
-                    const live = Number(priceCache['عیار'] || priceCache['ayar']);
-                    if (!rows.length && !(live > 0)) throw new Error('تاریخچه و قیمت فعلی عیار در دسترس نیست');
-                    return cache[key] = {rows,currency:'IRR',label:'صندوق طلای عیار',icon:'🟡',source:'BrsApi / TSETMC',currentClose:live > 0 ? live : null};
+                    const live = findCurrentFundPrice(symbol);
+                    return cache[key] = {rows,currency:'IRR',label:benchmarkDefs[key].label,icon:benchmarkDefs[key].icon,source:benchmarkDefs[key].source,type:'fund',currentClose:live};
                 }
+                if (key === 'bank') return cache[key] = {rows:[],currency:'IRR',label:'سپرده‌گذاری در بانک',icon:'🏦',source:'نرخ واردشده توسط کاربر',type:'bank',annualRate:bankAnnualRate};
                 throw new Error('unsupported benchmark');
             }
 
             function atPurchase(history, buyDate) {
+                if (history.type === 'bank') {
+                    const start = new Date(buyDate);
+                    const end = new Date();
+                    const days = Number.isFinite(start.getTime()) ? Math.max(0, Math.floor((end-start)/86400000)) : 0;
+                    const rate = Number(history.annualRate) || 0;
+                    const percent = rate > 0 ? (Math.pow(1 + rate/100, days/365) - 1) * 100 : 0;
+                    return {...history,base:{close:1,iso:buyDate,greg:'',jalali:''},latest:{close:1+percent/100,iso:null,greg:'',jalali:''},percent,days};
+                }
                 const rows = Array.isArray(history.rows) ? history.rows : [];
                 const base = rows.length ? findHistoryAtOrBefore(rows,buyDate) : null;
                 const latest = rows.length ? rows[rows.length-1] : (history.currentClose > 0 ? {close:history.currentClose, iso:null, greg:'', jalali:''} : null);
@@ -2111,6 +2177,7 @@
             }
             function priceText(result,value) {
                 if (!result || !Number.isFinite(Number(value))) return '—';
+                if (result.type === 'bank') return formatNum(value,0)+' تومان';
                 return result.currency === 'INDEX' ? formatNum(value,2) : formatNum(value,0)+' تومان';
             }
             function hypothetical(invested,result) {
@@ -2164,14 +2231,14 @@
                 }).join('');
 
                 const actualText=actual===null?'عملکرد واقعی دارایی: —':`عملکرد واقعی دارایی: ${actual>=0?'+':'−'}${toFa(Math.abs(actual).toFixed(2))}٪`;
-                const basketText=basket===null?'سبد ۴ مرجعی: — (برای محاسبه کامل، تاریخچه هر چهار مرجع لازم است)':`سبد ۴ مرجعی با وزن مساوی ۲۵٪: ${basket>=0?'+':'−'}${toFa(Math.abs(basket).toFixed(2))}٪`;
+                const basketText=basket===null?'سبد مرجع انتخابی: — (برای محاسبه کامل، داده همه گزینه‌های انتخاب‌شده لازم است)':`سبد مرجع انتخابی با وزن مساوی: ${basket>=0?'+':'−'}${toFa(Math.abs(basket).toFixed(2))}٪`;
 
                 grid.insertAdjacentHTML('beforeend',`<div class="compare-asset-card"><div class="compare-asset-head"><div><div class="compare-asset-name">${escapeHtml(item.asset_name)}</div><div class="compare-asset-date">تاریخ خرید: ${formatDate(item.buy_date)} · مدت نگهداری: ${escapeHtml(item.holdingDuration||'—')}</div></div><div class="compare-actual ${actual===null?'neutral':actual>=0?'profit':'loss'}">${actualText}</div></div><div class="compare-table-wrap"><table class="compare-table"><thead><tr><th>مرجع</th><th>قیمت در تاریخ خرید</th><th>قیمت امروز</th><th>بازده از تاریخ خرید</th><th>ارزش فرضی همان سرمایه</th></tr></thead><tbody>${tableRows}</tbody></table></div><div class="compare-basket-summary"><strong>${basketText}</strong>${invested>0?` · سرمایه مبنای این خرید: ${formatBigNum(invested)} تومان.`:''}</div></div>`);
             }
 
             const note=document.createElement('div');
             note.className='compare-source';
-            note.textContent='منابع: TGJU برای طلا ۱۸، دلار آزاد و شاخص کل بورس؛ BrsApi / TSETMC برای تاریخچه صندوق عیار. تاریخ مبنا نزدیک‌ترین داده موجود در همان روز یا قبل از آن است. اگر تاریخچه عیار در دسترس نباشد، قیمت فعلی از داده بازار نمایش داده می‌شود و بازده فرضی بدون داده تاریخی محاسبه نمی‌شود.';
+            note.textContent='منابع: TGJU برای طلا ۱۸، دلار آزاد و شاخص کل بورس؛ BrsApi / TSETMC برای تاریخچه عیار و آوند؛ بانک بر اساس نرخ سالانه‌ای که کاربر وارد می‌کند. تاریخ مبنا نزدیک‌ترین داده موجود در همان روز یا قبل از آن است. اگر تاریخچه یک دارایی در دسترس نباشد، «—» نمایش داده می‌شود و عدد ساختگی تولید نمی‌شود.';
             grid.parentElement.appendChild(note);
         }
 
