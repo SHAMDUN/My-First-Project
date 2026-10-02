@@ -1235,6 +1235,117 @@
         }
 
         // ==========================================
+        // Category / Asset Cards
+        // ==========================================
+        function renderCategories(stats) {
+            const items = Array.isArray(stats?.items) ? stats.items : [];
+            if (!items.length) {
+                return '<div class="empty-state"><div class="icon">📦</div><h2>دارایی‌ای ثبت نشده است</h2><p>هنوز دارایی‌ای برای نمایش وجود ندارد.</p></div>';
+            }
+
+            const categoryOrder = Object.keys(ASSETS);
+            const grouped = {};
+            items.forEach(item => {
+                const key = item.asset_category || 'other';
+                if (!grouped[key]) grouped[key] = [];
+                grouped[key].push(item);
+            });
+
+            const totalValue = Number(stats.totalValue) || 0;
+            const totalInvested = Number(stats.totalInvested) || 0;
+
+            const categoryKeys = [
+                ...categoryOrder.filter(key => grouped[key]?.length),
+                ...Object.keys(grouped).filter(key => !categoryOrder.includes(key))
+            ];
+
+            return categoryKeys.map(categoryKey => {
+                const category = ASSETS[categoryKey] || { name: categoryKey, icon: '🌟' };
+                const categoryItems = grouped[categoryKey] || [];
+                const categoryStat = stats.categoryStats?.[categoryKey] || { value: 0, count: categoryItems.length };
+                const categoryValue = Number(categoryStat.value) || 0;
+                const categoryWeight = totalValue > 0 ? (categoryValue / totalValue) * 100 : 0;
+
+                return `
+                    <div class="category-group">
+                        <div class="category-header" onclick="toggleCategory(this)">
+                            <div class="category-header-left">
+                                <span class="category-icon">${category.icon || '🌟'}</span>
+                                <div>
+                                    <span class="category-name">${escapeHtml(category.name || categoryKey)}</span>
+                                    <span class="category-count">${toFa(categoryItems.length)} دارایی</span>
+                                </div>
+                            </div>
+                            <div style="display:flex;align-items:center;gap:14px;">
+                                <span class="category-total">${categoryValue > 0 ? formatBigNum(categoryValue) + ' تومان' : '—'}</span>
+                                <span class="category-toggle">⌄</span>
+                            </div>
+                        </div>
+                        <div class="category-content">
+                            ${categoryItems.map(item => {
+                                const invested = Number(item.invested) || 0;
+                                const current = item.currentValue === null || item.currentValue === undefined ? null : Number(item.currentValue);
+                                const profit = item.profit === null || item.profit === undefined ? null : Number(item.profit);
+                                const pct = item.profitPercent === null || item.profitPercent === undefined ? null : Number(item.profitPercent);
+                                const weight = totalValue > 0 && current !== null ? Math.max(0, Math.min(100, (current / totalValue) * 100)) : 0;
+                                const pClass = profit === null ? '' : profit >= 0 ? 'green' : 'red';
+                                const pSign = profit === null ? '' : profit >= 0 ? '+' : '−';
+                                const pctText = pct === null || !Number.isFinite(pct) ? '—' : `${pct >= 0 ? '+' : '−'}${toFa(Math.abs(pct).toFixed(2))}٪`;
+                                const icon = item.asset_icon || getAssetDefinition(item.asset_category, item.asset_symbol)?.icon || category.icon || '📊';
+                                const iconHtml = String(icon).startsWith('http')
+                                    ? `<img src="${escapeHtml(icon)}" alt="">`
+                                    : `<span class="emoji">${escapeHtml(String(icon))}</span>`;
+                                const id = String(item.id || '').replace(/'/g, "\\'");
+
+                                return `
+                                    <div class="asset-card">
+                                        <div class="asset-card-top">
+                                            <div class="asset-card-left">
+                                                <div class="asset-icon-wrapper">${iconHtml}</div>
+                                                <div class="asset-name-info">
+                                                    <h4>${escapeHtml(item.asset_name || getAssetDefinition(item.asset_category, item.asset_symbol)?.name || item.asset_symbol || 'دارایی')}</h4>
+                                                    <div class="symbol">${escapeHtml(item.asset_symbol || '—')}</div>
+                                                </div>
+                                            </div>
+                                            <div class="asset-card-actions">
+                                                <button class="icon-btn" onclick="editAsset('${id}')" title="ویرایش">✏️</button>
+                                                <button class="icon-btn danger" onclick="deleteAsset('${id}')" title="حذف">🗑️</button>
+                                            </div>
+                                        </div>
+
+                                        <div class="asset-card-info">
+                                            <div class="info-item">
+                                                <div class="label">مقدار</div>
+                                                <div class="value">${formatNum(item.quantity, 4)} ${escapeHtml(item.unit || 'واحد')}</div>
+                                            </div>
+                                            <div class="info-item">
+                                                <div class="label">قیمت خرید</div>
+                                                <div class="value">${formatNum(item.buy_price, item.currency === 'USD' ? 2 : 0)} ${currencyLabel(item.currency)}</div>
+                                            </div>
+                                            <div class="info-item">
+                                                <div class="label">ارزش فعلی</div>
+                                                <div class="value gold">${current === null ? '—' : formatBigNum(current) + ' تومان'}</div>
+                                            </div>
+                                            <div class="info-item">
+                                                <div class="label">سود / زیان</div>
+                                                <div class="value ${pClass}">${profit === null ? '—' : pSign + formatBigNum(Math.abs(profit)) + ' تومان'}${profit !== null ? ` · ${pctText}` : ''}</div>
+                                            </div>
+                                        </div>
+
+                                        <div class="asset-weight-bar">
+                                            <div class="bar"><div class="bar-fill" style="width:${weight.toFixed(2)}%"></div></div>
+                                            <div class="percent">${current === null ? '—' : toFa(weight.toFixed(1)) + '٪'}</div>
+                                        </div>
+                                    </div>
+                                `;
+                            }).join('')}
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // ==========================================
         // Main Render
         // ==========================================
         async function render() {
