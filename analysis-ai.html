@@ -8,11 +8,13 @@
 <style>
 :root{--bg:#090b12;--card:#121722;--card2:#171d29;--border:rgba(255,255,255,.09);--border2:rgba(255,255,255,.15);--gold:#d4af37;--gold2:#f2d77a;--white:#f8fafc;--muted:#94a3b8;--green:#10b981;--red:#ef4444;--blue:#3b82f6;--cyan:#22d3ee;--r:18px}
 [data-theme=light]{--bg:#f5f7fb;--card:#fff;--card2:#f1f5f9;--border:rgba(15,23,42,.09);--border2:rgba(15,23,42,.15);--gold:#a87900;--gold2:#c99816;--white:#0f172a;--muted:#64748b}
-*{box-sizing:border-box;margin:0;padding:0}body{font-family:Vazirmatn,Tahoma,sans-serif;background:var(--bg);color:var(--white);min-height:100vh;overflow-x:hidden}button,select,input{font-family:inherit}.page{width:min(1380px,calc(100% - 28px));margin:auto;padding:96px 0 40px}.head{display:flex;justify-content:space-between;align-items:end;gap:15px;margin-bottom:18px}.head h1{font-size:30px;font-weight:900;background:linear-gradient(135deg,var(--gold),var(--gold2));-webkit-background-clip:text;color:transparent}.head p{margin-top:6px;color:var(--muted);font-size:13px}.status{display:flex;gap:8px;align-items:center;padding:8px 12px;border-radius:11px;border:1px solid rgba(16,185,129,.2);color:var(--green);font-size:12px;font-weight:800}.dot{width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 9px var(--green)}.card{background:linear-gradient(145deg,var(--card),var(--card2));border:1px solid var(--border);border-radius:var(--r);margin-bottom:15px;overflow:hidden}.ch{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:16px 18px;border-bottom:1px solid var(--border)}.ch h2{font-size:22px;font-weight:900}.ch span{font-size:15px;color:var(--muted)}.body{padding:18px}.grid9{display:grid;grid-template-columns:repeat(6,1fr);gap:8px}.asset{padding:11px 6px;border-radius:11px;border:1px solid var(--border);background:var(--card2);color:var(--white);transition:.2s}.asset:hover{transform:translateY(-1px);border-color:rgba(212,175,55,.4)}.asset.active{border-color:var(--gold);background:rgba(212,175,55,.1)}.asset i{display:flex;align-items:center;justify-content:center;font-style:normal;font-size:18px;height:24px}.asset i img{width:18px;height:18px;display:block;object-fit:contain}.asset b{display:block;font-size:16px;margin-top:6px}.asset small{display:block;color:var(--muted);font-size:12px;margin-top:3px}.controls{display:grid;grid-template-columns:1fr 1fr auto;gap:9px;margin-top:12px}.label{display:block;color:var(--muted);font-size:15px;margin-bottom:5px}.control,.btn{width:100%;padding:10px 12px;border-radius:10px;border:1px solid var(--border);background:var(--card2);color:var(--white);outline:none}.btn{background:rgba(212,175,55,.08);border-color:rgba(212,175,55,.3);color:var(--gold2);font-weight:800}.horizons{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}.horizon{padding:14px 6px;border-radius:10px;border:1px solid var(--border);background:var(--card2);color:var(--muted);font-weight:800;font-size:14px;cursor:pointer;transition:all .2s ease;box-shadow:none;outline:none}.horizon:hover{border-color:var(--gold);color:var(--gold2);background:rgba(212,175,55,.08);transform:translateY(-1px)}.horizon.active{background:rgba(212,175,55,.12);color:var(--gold2);border-color:var(--gold);box-shadow:inset 0 0 0 1px rgba(212,175,55,.14),0 0 14px rgba(212,175,55,.08)}.horizon.active:hover{background:rgba(212,175,55,.18);color:var(--gold2);border-color:var(--gold2);transform:translateY(-1px);box-shadow:inset 0 0 0 1px rgba(212,175,55,.18),0 0 18px rgba(212,175,55,.12)}.note{margin-top:10px;padding:13px 15px;border-radius:10px;background:rgba(59,130,246,.07);border:1px solid rgba(59,130,246,.18);color:#93c5fd;font-size:12px;line-height:2}.chart{height:540px;background:#080b11;position:relative}.chart>div:first-child{width:100%;height:100%}.chart-empty{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:8px;background:rgba(8,11,17,.9);z-index:5;color:var(--muted)}[data-theme=light] .chart{background:#f8fafc}[data-theme=light] .chart-empty{background:rgba(248,250,252,.94)}.chart-empty strong{font-size:13px;color:var(--white)}.chart-empty span{max-width:520px;text-align:center;font-size:9px;line-height:1.9}.spin{width:28px;height:28px;border:3px solid rgba(212,175,55,.2);border-top-color:var(--gold);border-radius:50%;animation:s .8s linear infinite}@keyframes s{to{transform:rotate(360deg)}}.badge{position:absolute;right:12px;top:12px;z-index:7;display:flex;gap:6px}.badge span{background:rgba(0,0,0,.62);color:#fff;border:1px solid rgba(255,255,255,.1);padding:6px 8px;border-radius:8px;font-size:10px}.quotes{display:grid;grid-template-columns:repeat(5,1fr);gap:1px;background:var(--border)}.quote{background:var(--card);padding:11px;text-align:center}.quote small{display:block;color:var(--muted);font-size:11px}.quote b{display:block;margin-top:5px;font-size:18px}.engine-select{display:grid;grid-template-columns:repeat(4,1fr);gap:9px}.engine{position:relative;padding:14px;border:1px solid var(--border);border-radius:13px;background:var(--card2);cursor:pointer}.engine input{position:absolute;opacity:0}.engine.on{border-color:var(--gold);background:rgba(212,175,55,.09);box-shadow:0 0 0 1px rgba(212,175,55,.08)}.engine strong{display:block;font-size:11px}.engine small{display:block;margin-top:5px;color:var(--muted);font-size:8px;line-height:1.8}.engine .tick{position:absolute;top:9px;left:9px;color:var(--gold);display:none}.engine.on .tick{display:block}.engine-actions{display:flex;justify-content:space-between;align-items:center;margin-top:10px;gap:10px}.run{padding:10px 16px;border:1px solid rgba(212,175,55,.35);border-radius:10px;background:linear-gradient(135deg,var(--gold),var(--gold2));color:#111;font-weight:900}.limit{font-size:9px;color:var(--muted)}.analysis-summary{margin-top:12px;padding:18px;border:1px solid var(--border);border-radius:12px;background:rgba(255,255,255,.02);font-size:15px;line-height:2.25}.analysis-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:10px}.acard{padding:12px;border:1px solid var(--border);border-radius:12px;background:rgba(255,255,255,.018)}.acard h3{font-size:15px}.acard p,.acard li{font-size:13px;color:var(--muted);line-height:2;margin-top:5px}.levels{display:grid;gap:5px;margin-top:6px}.lvl{display:flex;justify-content:space-between;padding:5px 7px;background:rgba(255,255,255,.025);border-radius:7px;font-size:8px}.lvl b{color:var(--white)}.scenarios{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:10px}.scenario{padding:13px;border:1px solid var(--border);border-radius:12px}.scenario h3{font-size:15px}.scenario p{font-size:13px;color:var(--muted);line-height:2;margin-top:5px}.comparison-tools{display:grid;grid-template-columns:1fr auto auto;gap:8px}.add,.clear{padding:10px 13px;border-radius:10px;font-weight:800}.add{border:1px solid rgba(212,175,55,.3);background:rgba(212,175,55,.08);color:var(--gold2)}.clear{border:1px solid rgba(239,68,68,.25);background:rgba(239,68,68,.07);color:#fca5a5}.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}.chip{display:flex;align-items:center;gap:7px;padding:7px 9px 7px 6px;border:1px solid var(--border2);border-radius:999px;background:var(--card2);font-size:12px}.chip button{width:21px;height:21px;border:0;border-radius:50%;background:rgba(239,68,68,.1);color:#fca5a5;font-size:14px}.compare-chart{height:430px;min-height:430px;margin-top:10px;border:1px solid var(--border);border-radius:13px;background:#080b11}.compare-info{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:9px}.metric{padding:10px;border:1px solid var(--border);border-radius:10px}.metric small{font-size:11px;color:var(--muted)}.metric b{display:block;font-size:13px;margin-top:4px}.metric span{display:block;font-size:11px;color:var(--muted);margin-top:4px;line-height:1.7}.telegram-report{margin-top:12px;padding:18px;border:1px solid rgba(34,211,238,.2);border-radius:14px;background:rgba(34,211,238,.035)}.telegram-report h3{font-size:15px;margin-bottom:10px}.telegram-report .report-body{font-size:14px;line-height:2.35;color:var(--white);white-space:pre-wrap}.copy-report{margin-top:12px;padding:10px 15px;border:1px solid rgba(34,211,238,.3);background:rgba(34,211,238,.08);color:#67e8f9;border-radius:10px;font-weight:800;cursor:pointer}.disclaimer{margin-top:10px;color:var(--muted);font-size:10px;line-height:1.9}
+*{box-sizing:border-box;margin:0;padding:0}body{font-family:Vazirmatn,Tahoma,sans-serif;background:var(--bg);color:var(--white);min-height:100vh;overflow-x:hidden}button,select,input{font-family:inherit}.page{width:min(1380px,calc(100% - 28px));margin:auto;padding:96px 0 40px}.head{display:flex;justify-content:space-between;align-items:end;gap:15px;margin-bottom:18px}.head h1{font-size:30px;font-weight:900;background:linear-gradient(135deg,var(--gold),var(--gold2));-webkit-background-clip:text;color:transparent}.head p{margin-top:6px;color:var(--muted);font-size:13px}.status{display:flex;gap:8px;align-items:center;padding:8px 12px;border-radius:11px;border:1px solid rgba(16,185,129,.2);color:var(--green);font-size:12px;font-weight:800}.dot{width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 9px var(--green)}.card{background:linear-gradient(145deg,var(--card),var(--card2));border:1px solid var(--border);border-radius:var(--r);margin-bottom:15px;overflow:hidden}.ch{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:16px 18px;border-bottom:1px solid var(--border)}.ch h2{font-size:22px;font-weight:900}.ch span{font-size:15px;color:var(--muted)}.body{padding:18px}.grid9{display:grid;grid-template-columns:repeat(6,1fr);gap:8px}.asset{padding:11px 6px;border-radius:11px;border:1px solid var(--border);background:var(--card2);color:var(--white);transition:.2s}.asset:hover{transform:translateY(-1px);border-color:rgba(212,175,55,.4)}.asset.active{border-color:var(--gold);background:rgba(212,175,55,.1)}.asset i{display:flex;align-items:center;justify-content:center;font-style:normal;font-size:18px;height:24px}.asset i img{width:18px;height:18px;display:block;object-fit:contain}.asset b{display:block;font-size:16px;margin-top:6px}.asset small{display:block;color:var(--muted);font-size:12px;margin-top:3px}.controls{display:grid;grid-template-columns:1fr 1fr auto;gap:9px;margin-top:12px}.label{display:block;color:var(--muted);font-size:15px;margin-bottom:5px}.control,.btn{width:100%;padding:10px 12px;border-radius:10px;border:1px solid var(--border);background:var(--card2);color:var(--white);outline:none}.btn{background:rgba(212,175,55,.08);border-color:rgba(212,175,55,.3);color:var(--gold2);font-weight:800}.horizons{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}.horizon{padding:14px 6px;border-radius:10px;border:1px solid var(--border);background:var(--card2);color:var(--muted);font-weight:800;font-size:14px;cursor:pointer;transition:all .2s ease;box-shadow:none;outline:none}.horizon:hover{border-color:var(--gold);color:var(--gold2);background:rgba(212,175,55,.08);transform:translateY(-1px)}.horizon.active{background:rgba(212,175,55,.12);color:var(--gold2);border-color:var(--gold);box-shadow:inset 0 0 0 1px rgba(212,175,55,.14),0 0 14px rgba(212,175,55,.08)}.horizon.active:hover{background:rgba(212,175,55,.18);color:var(--gold2);border-color:var(--gold2);transform:translateY(-1px);box-shadow:inset 0 0 0 1px rgba(212,175,55,.18),0 0 18px rgba(212,175,55,.12)}.note{margin-top:10px;padding:13px 15px;border-radius:10px;background:rgba(59,130,246,.07);border:1px solid rgba(59,130,246,.18);color:#93c5fd;font-size:12px;line-height:2}.chart{height:540px;background:#080b11;position:relative}.chart>div:first-child{width:100%;height:100%}.chart-empty{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:8px;background:rgba(8,11,17,.9);z-index:5;color:var(--muted)}[data-theme=light] .chart{background:#f8fafc}[data-theme=light] .chart-empty{background:rgba(248,250,252,.94)}.chart-empty strong{font-size:13px;color:var(--white)}.chart-empty span{max-width:520px;text-align:center;font-size:9px;line-height:1.9}.spin{width:28px;height:28px;border:3px solid rgba(212,175,55,.2);border-top-color:var(--gold);border-radius:50%;animation:s .8s linear infinite}@keyframes s{to{transform:rotate(360deg)}}.badge{position:absolute;right:12px;top:12px;z-index:7;display:flex;gap:6px}.badge span{background:rgba(0,0,0,.62);color:#fff;border:1px solid rgba(255,255,255,.1);padding:6px 8px;border-radius:8px;font-size:10px}.quotes{display:grid;grid-template-columns:repeat(5,1fr);gap:1px;background:var(--border)}.quote{background:var(--card);padding:11px;text-align:center}.quote small{display:block;color:var(--muted);font-size:11px}.quote b{display:block;margin-top:5px;font-size:18px}.engine-select{display:grid;grid-template-columns:repeat(4,1fr);gap:9px}.engine{position:relative;padding:14px;border:1px solid var(--border);border-radius:13px;background:var(--card2);cursor:pointer}.engine input{position:absolute;opacity:0}.engine.on{border-color:var(--gold);background:rgba(212,175,55,.09);box-shadow:0 0 0 1px rgba(212,175,55,.08)}.engine strong{display:block;font-size:11px}.engine small{display:block;margin-top:5px;color:var(--muted);font-size:8px;line-height:1.8}.engine .tick{position:absolute;top:9px;left:9px;color:var(--gold);display:none}.engine.on .tick{display:block}.engine-actions{display:flex;justify-content:space-between;align-items:center;margin-top:10px;gap:10px}.run{padding:10px 16px;border:1px solid rgba(212,175,55,.35);border-radius:10px;background:linear-gradient(135deg,var(--gold),var(--gold2));color:#111;font-weight:900}.limit{font-size:9px;color:var(--muted)}.analysis-summary{margin-top:12px;padding:18px;border:1px solid var(--border);border-radius:12px;background:rgba(255,255,255,.02);font-size:15px;line-height:2.25}.analysis-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:10px}.acard{padding:12px;border:1px solid var(--border);border-radius:12px;background:rgba(255,255,255,.018)}.acard h3{font-size:15px}.acard p,.acard li{font-size:13px;color:var(--muted);line-height:2;margin-top:5px}.levels{display:grid;gap:5px;margin-top:6px}.lvl{display:flex;justify-content:space-between;padding:5px 7px;background:rgba(255,255,255,.025);border-radius:7px;font-size:8px}.lvl b{color:var(--white)}.scenarios{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:10px}.scenario{padding:13px;border:1px solid var(--border);border-radius:12px}.scenario h3{font-size:15px}.scenario p{font-size:13px;color:var(--muted);line-height:2;margin-top:5px}.comparison-tools{display:grid;grid-template-columns:1fr auto auto;gap:8px}.add,.clear{padding:10px 13px;border-radius:10px;font-weight:800}.add{border:1px solid rgba(212,175,55,.3);background:rgba(212,175,55,.08);color:var(--gold2)}.clear{border:1px solid rgba(239,68,68,.25);background:rgba(239,68,68,.07);color:#fca5a5}.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}.chip{display:flex;align-items:center;gap:7px;padding:7px 9px 7px 6px;border:1px solid var(--border2);border-radius:999px;background:var(--card2);font-size:12px}.chip button{width:21px;height:21px;border:0;border-radius:50%;background:rgba(239,68,68,.1);color:#fca5a5;font-size:14px}.compare-chart{height:430px;min-height:430px;margin-top:10px;border:1px solid var(--border);border-radius:13px;background:#080b11;overflow:hidden}.compare-info{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:9px}.metric{padding:10px;border:1px solid var(--border);border-radius:10px}.metric small{font-size:11px;color:var(--muted)}.metric b{display:block;font-size:13px;margin-top:4px}.metric span{display:block;font-size:11px;color:var(--muted);margin-top:4px;line-height:1.7}.telegram-report{margin-top:12px;padding:18px;border:1px solid rgba(34,211,238,.2);border-radius:14px;background:rgba(34,211,238,.035)}.telegram-report h3{font-size:15px;margin-bottom:10px}.telegram-report .report-body{font-size:14px;line-height:2.35;color:var(--white);white-space:pre-wrap}.copy-report{margin-top:12px;padding:10px 15px;border:1px solid rgba(34,211,238,.3);background:rgba(34,211,238,.08);color:#67e8f9;border-radius:10px;font-weight:800;cursor:pointer}.disclaimer{margin-top:10px;color:var(--muted);font-size:10px;line-height:1.9}
 @media(max-width:1100px){.grid9{grid-template-columns:repeat(3,1fr)}.engine-select,.analysis-grid{grid-template-columns:repeat(2,1fr)}}@media(max-width:760px){.page{width:calc(100% - 18px);padding-top:86px}.head{align-items:flex-start;flex-direction:column}.controls,.comparison-tools{grid-template-columns:1fr}.scenarios{grid-template-columns:1fr}.horizons{grid-template-columns:repeat(2,1fr)}.chart{height:430px}.quotes{grid-template-columns:repeat(2,1fr)}.quote:last-child{grid-column:span 2}.compare-info{grid-template-columns:1fr}.grid9{grid-template-columns:repeat(3,1fr)}}@media(max-width:460px){.grid9{grid-template-columns:repeat(2,1fr)}.engine-select,.analysis-grid{grid-template-columns:1fr}.chart{height:380px}.body{padding:12px}}
 </style>
 </head>
+
 <body>
+
 <div id="shamdun-navbar"></div>
 
 <main class="page">
@@ -22,6 +24,7 @@
     <h1>🧠 مرکز تحلیل هوشمند</h1>
     <p>تحلیل چندلایه با داده واقعی؛ بدون تولید عدد یا سیگنال ساختگی</p>
   </div>
+
   <div class="status">
     <i class="dot" id="statusDot"></i>
     <span id="statusText">آماده</span>
@@ -33,8 +36,10 @@
     <h2>۱. انتخاب بازار</h2>
     <span>دارایی مورد تحلیل</span>
   </div>
+
   <div class="body">
     <div id="assetGrid" class="grid9"></div>
+
     <div class="controls">
       <div>
         <label class="label">نوع نمودار</label>
@@ -43,6 +48,7 @@
           <option value="candle">کندلی</option>
         </select>
       </div>
+
       <div>
         <label class="label">تایم‌فریم نمودار زنده</label>
         <select id="interval" class="control">
@@ -54,6 +60,7 @@
           <option value="1w">هفتگی</option>
         </select>
       </div>
+
       <button id="refresh" class="btn">↻ بروزرسانی</button>
     </div>
   </div>
@@ -64,6 +71,7 @@
     <h2>۲. افق معامله</h2>
     <span>انتخاب افق، تایم‌فریم نمودار را هم تنظیم می‌کند</span>
   </div>
+
   <div class="body">
     <div id="horizons" class="horizons"></div>
     <div id="horizonNote" class="note"></div>
@@ -75,18 +83,22 @@
     <h2>📈 نمودار زنده</h2>
     <span id="source">—</span>
   </div>
+
   <div class="chart">
     <div id="liveChart"></div>
+
     <div class="badge">
       <span id="chartAsset">—</span>
       <span id="chartTf">—</span>
     </div>
+
     <div id="chartEmpty" class="chart-empty">
       <div class="spin"></div>
       <strong>در حال دریافت داده واقعی...</strong>
       <span>تا دریافت پاسخ معتبر، هیچ داده ساختگی نمایش داده نمی‌شود.</span>
     </div>
   </div>
+
   <div class="quotes">
     <div class="quote"><small>آخرین قیمت</small><b id="price">—</b></div>
     <div class="quote"><small>تغییر در بازه</small><b id="change">—</b></div>
@@ -101,26 +113,32 @@
     <h2>۳. لایه‌های تحلیل</h2>
     <span>حداقل ۱ و حداکثر ۴ موتور را انتخاب کنید</span>
   </div>
+
   <div class="body">
     <div id="engineSelect" class="engine-select"></div>
+
     <div class="engine-actions">
       <span class="limit" id="engineCount">۰ از ۴ انتخاب شده</span>
       <button id="runAnalysis" class="run">🧠 اجرای تحلیل چندموتوره</button>
     </div>
+
     <div id="analysisOutput"></div>
   </div>
 </section>
 
 <section class="card">
   <div class="ch">
-    <h2>⚖️ مقایسه چند دارایی</h2>
+    <h2>۴. مقایسه چند دارایی</h2>
     <span>نمودار زنده نرمال‌شده + همبستگی + واگرایی</span>
   </div>
+
   <div class="body">
+
     <div class="comparison-tools">
       <select id="comparePicker" class="control">
         <option value="">دارایی برای افزودن...</option>
       </select>
+
       <button id="addCompare" class="add">＋ افزودن</button>
       <button id="clearCompare" class="clear">پاک کردن همه</button>
     </div>
@@ -132,7 +150,9 @@
     </div>
 
     <div id="compareChart" class="compare-chart"></div>
+
     <div id="compareInfo" class="compare-info"></div>
+
   </div>
 </section>
 
@@ -141,6 +161,7 @@
 <script src="navbar.js"></script>
 
 <script>
+
 const A={
   gold18:{n:'طلا ۱۸ عیار',c:'IRR/g',i:'🥇',t:'tgju',slug:'geram18'},
   goldOunce:{n:'انس طلا',c:'XAU/USD',i:'🌍',t:'tgju',slug:'ons'},
@@ -174,7 +195,9 @@ let asset='gold18',
     compare=['gold18','usd'],
     compareChart,
     compareLines=[],
-    compareStore={};
+    compareStore={},
+    compareRenderId=0,
+    compareTimer=null;
 
 const $=x=>document.getElementById(x);
 
@@ -193,13 +216,15 @@ function intervalMin(x){
 }
 
 function renderAssets(){
-  $('assetGrid').innerHTML=Object.entries(A).map(([k,a])=>
-    `<button class="asset ${k===asset?'active':''}" data-k="${k}">
-      <i>${a.i}</i>
-      <b>${a.n}</b>
-      <small>${a.c}</small>
-    </button>`
-  ).join('');
+
+  $('assetGrid').innerHTML=
+    Object.entries(A).map(([k,a])=>
+      `<button class="asset ${k===asset?'active':''}" data-k="${k}">
+        <i>${a.i}</i>
+        <b>${a.n}</b>
+        <small>${a.c}</small>
+      </button>`
+    ).join('');
 
   document.querySelectorAll('.asset').forEach(x=>
     x.onclick=()=>{
@@ -211,9 +236,13 @@ function renderAssets(){
 }
 
 function renderHorizons(){
-  $('horizons').innerHTML=Object.entries(H).map(([k,x])=>
-    `<button class="horizon ${k===horizon?'active':''}" data-k="${k}">${x.n}</button>`
-  ).join('');
+
+  $('horizons').innerHTML=
+    Object.entries(H).map(([k,x])=>
+      `<button class="horizon ${k===horizon?'active':''}" data-k="${k}">
+        ${x.n}
+      </button>`
+    ).join('');
 
   document.querySelectorAll('.horizon').forEach(x=>
     x.onclick=()=>{
@@ -226,6 +255,7 @@ function renderHorizons(){
 }
 
 function applyHorizon(){
+
   const x=H[horizon];
 
   $('interval').value=x.main;
@@ -241,23 +271,39 @@ function makeChart(el,compareMode=false){
 
   if(compareMode){
 
-    if(compareChart)compareChart.remove();
+    if(compareChart){
+      try{
+        compareChart.remove()
+      }catch(e){}
+      compareChart=null
+    }
 
-    compareChart=LightweightCharts.createChart(el,{
-      autoSize:true,
-      layout:{
-        background:{color:'transparent'},
-        textColor:getComputedStyle(document.documentElement)
-          .getPropertyValue('--muted')
-      },
-      grid:{
-        vertLines:{color:'rgba(148,163,184,.06)'},
-        horzLines:{color:'rgba(148,163,184,.06)'}
-      },
-      timeScale:{
-        borderColor:'rgba(148,163,184,.15)'
-      }
-    });
+    el.innerHTML='';
+
+    const width=Math.max(el.clientWidth,300);
+    const height=Math.max(el.clientHeight,430);
+
+    compareChart=
+      LightweightCharts.createChart(el,{
+        width,
+        height,
+        layout:{
+          background:{color:'transparent'},
+          textColor:getComputedStyle(document.documentElement)
+            .getPropertyValue('--muted')
+        },
+        grid:{
+          vertLines:{color:'rgba(148,163,184,.06)'},
+          horzLines:{color:'rgba(148,163,184,.06)'}
+        },
+        rightPriceScale:{
+          borderColor:'rgba(148,163,184,.15)'
+        },
+        timeScale:{
+          borderColor:'rgba(148,163,184,.15)',
+          timeVisible:false
+        }
+      });
 
     return compareChart
   }
@@ -299,15 +345,28 @@ function makeChart(el,compareMode=false){
 }
 
 function tgjuRows(j){
-  const rows=Array.isArray(j?.data)?j.data:Array.isArray(j)?j:[];
+
+  const rows=
+    Array.isArray(j?.data)
+      ?j.data
+      :Array.isArray(j)
+        ?j
+        :[];
 
   return rows.map(r=>{
+
     if(!Array.isArray(r))return null;
 
-    const close=Number(String(r[3]).replace(/,/g,''));
+    const close=
+      Number(
+        String(r[3])
+          .replace(/,/g,'')
+      );
+
     const ts=Date.parse(r[6]);
 
-    if(!Number.isFinite(close)||!Number.isFinite(ts))return null;
+    if(!Number.isFinite(close)||!Number.isFinite(ts))
+      return null;
 
     return{
       time:Math.floor(ts/1000),
@@ -316,6 +375,7 @@ function tgjuRows(j){
       high:close,
       low:close
     }
+
   })
   .filter(Boolean)
   .sort((a,b)=>a.time-b.time)
@@ -326,13 +386,16 @@ async function tgju(slug){
   const u=
     `https://api.tgju.org/v1/market/indicator/summary-table-data/${encodeURIComponent(slug)}?order_dir=&from=&to=&convert_to_ad=1&_=${Date.now()}`;
 
-  const r=await fetch(u,{cache:'no-store'});
+  const r=
+    await fetch(u,{cache:'no-store'});
 
-  if(!r.ok)throw Error('TGJU '+r.status);
+  if(!r.ok)
+    throw Error('TGJU '+r.status);
 
   const d=tgjuRows(await r.json());
 
-  if(!d.length)throw Error('TGJU empty');
+  if(!d.length)
+    throw Error('TGJU empty');
 
   return d.slice(-720)
 }
@@ -342,7 +405,9 @@ async function loadMarket(){
   const iv=$('interval').value;
 
   $('chartEmpty').style.display='flex';
-  $('chartEmpty').querySelector('strong').textContent='در حال دریافت داده واقعی...';
+
+  $('chartEmpty').querySelector('strong').textContent=
+    'در حال دریافت داده واقعی...';
 
   $('chartAsset').textContent=A[asset].n;
   $('chartTf').textContent=iv;
@@ -355,18 +420,20 @@ async function loadMarket(){
 
     candles=await tgju(A[asset].slug);
 
-    if(!candles.length)throw Error('empty');
+    if(!candles.length)
+      throw Error('empty');
 
     if($('chartType').value==='line'){
 
-      const ls=chart.addSeries(
-        LightweightCharts.LineSeries,
-        {
-          lineWidth:2,
-          priceLineVisible:false,
-          color:'#d4af37'
-        }
-      );
+      const ls=
+        chart.addSeries(
+          LightweightCharts.LineSeries,
+          {
+            lineWidth:2,
+            priceLineVisible:false,
+            color:'#d4af37'
+          }
+        );
 
       ls.setData(
         candles.map(x=>({
@@ -379,16 +446,17 @@ async function loadMarket(){
 
     }else{
 
-      series=chart.addSeries(
-        LightweightCharts.CandlestickSeries,
-        {
-          upColor:'#10b981',
-          downColor:'#ef4444',
-          borderVisible:false,
-          wickUpColor:'#10b981',
-          wickDownColor:'#ef4444'
-        }
-      );
+      series=
+        chart.addSeries(
+          LightweightCharts.CandlestickSeries,
+          {
+            upColor:'#10b981',
+            downColor:'#ef4444',
+            borderVisible:false,
+            wickUpColor:'#10b981',
+            wickDownColor:'#ef4444'
+          }
+        );
 
       series.setData(candles)
     }
@@ -411,7 +479,8 @@ async function loadMarket(){
 
     setStatus('داده در دسترس نیست');
 
-    $('chartEmpty').querySelector('strong').textContent='داده واقعی دریافت نشد';
+    $('chartEmpty').querySelector('strong').textContent=
+      'داده واقعی دریافت نشد';
 
     $('chartEmpty').querySelector('span').textContent=
       'منبع داده پاسخ معتبر نداد؛ سیستم هیچ نمودار ساختگی تولید نمی‌کند.';
@@ -429,33 +498,35 @@ function quote(){
 
   if(!x)return;
 
-  $('price').textContent=num(
-    x.close,
-    x.close>1000?0:4
-  );
+  $('price').textContent=
+    num(x.close,x.close>1000?0:4);
 
   $('change').textContent=
     f?.close
       ?(((x.close/f.close-1)*100).toFixed(2)+'%')
       :'—';
 
-  $('high').textContent=num(
-    Math.max(...candles.map(x=>x.high)),
-    x.close>1000?0:4
-  );
+  $('high').textContent=
+    num(
+      Math.max(...candles.map(x=>x.high)),
+      x.close>1000?0:4
+    );
 
-  $('low').textContent=num(
-    Math.min(...candles.map(x=>x.low)),
-    x.close>1000?0:4
-  )
+  $('low').textContent=
+    num(
+      Math.min(...candles.map(x=>x.low)),
+      x.close>1000?0:4
+    )
 }
 
 function EMA(v,p){
 
   if(v.length<p)return null;
 
-  let e=v.slice(0,p).reduce((a,b)=>a+b,0)/p,
-      k=2/(p+1);
+  let e=
+    v.slice(0,p).reduce((a,b)=>a+b,0)/p;
+
+  const k=2/(p+1);
 
   for(let i=p;i<v.length;i++)
     e=v[i]*k+e*(1-k);
@@ -470,7 +541,9 @@ function RSI(v,p=14){
   let g=0,l=0;
 
   for(let i=1;i<=p;i++){
+
     const d=v[i]-v[i-1];
+
     g+=Math.max(d,0);
     l+=Math.max(-d,0)
   }
@@ -479,12 +552,16 @@ function RSI(v,p=14){
   l/=p;
 
   for(let i=p+1;i<v.length;i++){
+
     const d=v[i]-v[i-1];
+
     g=(g*(p-1)+Math.max(d,0))/p;
     l=(l*(p-1)+Math.max(-d,0))/p
   }
 
-  return l?100-100/(1+g/l):100
+  return l
+    ?100-100/(1+g/l)
+    :100
 }
 
 function ATR(c,p=14){
@@ -493,16 +570,20 @@ function ATR(c,p=14){
 
   let t=[];
 
-  for(let i=1;i<c.length;i++)
+  for(let i=1;i<c.length;i++){
+
     t.push(
       Math.max(
         c[i].high-c[i].low,
         Math.abs(c[i].high-c[i-1].close),
         Math.abs(c[i].low-c[i-1].close)
       )
-    );
+    )
+  }
 
-  let a=t.slice(0,p).reduce((x,y)=>x+y,0)/p;
+  let a=
+    t.slice(0,p)
+     .reduce((x,y)=>x+y,0)/p;
 
   for(let i=p;i<t.length;i++)
     a=(a*(p-1)+t[i])/p;
@@ -575,12 +656,20 @@ function calc(){
   const sup=
     lv.support.length
       ?lv.support
-      :[Math.min(...candles.slice(-30).map(x=>x.low))];
+      :[
+        Math.min(
+          ...candles.slice(-30).map(x=>x.low)
+        )
+      ];
 
   const res=
     lv.resistance.length
       ?lv.resistance
-      :[Math.max(...candles.slice(-30).map(x=>x.high))];
+      :[
+        Math.max(
+          ...candles.slice(-30).map(x=>x.high)
+        )
+      ];
 
   return{
     p,
@@ -592,17 +681,21 @@ function calc(){
     trend,
     sup,
     res,
+
     entry:[
       sup[0],
       sup[1]??sup[0],
       sup[2]??sup[0]
     ],
+
     targets:[
       res[0],
       res[1]??res[0],
       res[2]??res[0]
     ],
-    invalid:(sup.at(-1)||p)-(atr||p*.01)
+
+    invalid:
+      (sup.at(-1)||p)-(atr||p*.01)
   }
 }
 
@@ -646,9 +739,11 @@ function makeTelegramReport(m){
 
   const emaText=
     m.e20&&m.e50
-      ?(m.e20>m.e50
-        ?'چیدمان کوتاه‌مدت صعودی'
-        :'چیدمان کوتاه‌مدت نزولی')
+      ?(
+        m.e20>m.e50
+          ?'چیدمان کوتاه‌مدت صعودی'
+          :'چیدمان کوتاه‌مدت نزولی'
+      )
       :'برای EMA کافی نیست';
 
   const structure=
@@ -774,7 +869,9 @@ function updateAnalysis(){
 
       <article class="acard">
         <h3>🎯 حمایت و مقاومت</h3>
+
         <div class="levels">
+
           ${m.sup.map((x,i)=>
             `<div class="lvl">
               <span>S${i+1}</span>
@@ -788,6 +885,7 @@ function updateAnalysis(){
               <b>${num(x,m.p>1000?0:4)}</b>
             </div>`
           ).join('')}
+
         </div>
       </article>
     </div>
@@ -822,11 +920,15 @@ function updateAnalysis(){
     </div>
 
     <div class="telegram-report">
-      <h3>📣 گزارش آماده انتشار در تلگرام</h3>
+      <h3>📣 گزارش آماده انتشار </h3>
+
       <div class="report-body" id="telegramText">
         ${report.replace(/</g,'&lt;').replace(/>/g,'&gt;')}
       </div>
-      <button class="copy-report" id="copyReport">📋 کپی گزارش</button>
+
+      <button class="copy-report" id="copyReport">
+        📋 کپی گزارش
+      </button>
     </div>
 
     <div class="disclaimer">
@@ -834,11 +936,20 @@ function updateAnalysis(){
     </div>`;
 
   $('copyReport').onclick=async()=>{
+
     try{
+
       await navigator.clipboard.writeText(report);
+
       $('copyReport').textContent='✓ گزارش کپی شد';
-      setTimeout(()=>$('copyReport').textContent='📋 کپی گزارش',1800)
+
+      setTimeout(
+        ()=>$('copyReport').textContent='📋 کپی گزارش',
+        1800
+      )
+
     }catch(e){
+
       alert('کپی خودکار در این مرورگر مجاز نیست.')
     }
   }
@@ -846,17 +957,28 @@ function updateAnalysis(){
 
 function renderEngines(){
 
-  $('engineSelect').innerHTML=Object.entries(E).map(([k,e])=>
-    `<label class="engine ${engines.has(k)?'on':''}">
-      <input type="checkbox" data-engine="${k}" ${engines.has(k)?'checked':''}>
-      <span class="tick">✓</span>
-      <strong>${e.i} ${e.n}</strong>
-      <small>${e.d}</small>
-    </label>`
-  ).join('');
+  $('engineSelect').innerHTML=
+    Object.entries(E).map(([k,e])=>
+      `<label class="engine ${engines.has(k)?'on':''}">
+
+        <input
+          type="checkbox"
+          data-engine="${k}"
+          ${engines.has(k)?'checked':''}
+        >
+
+        <span class="tick">✓</span>
+
+        <strong>${e.i} ${e.n}</strong>
+
+        <small>${e.d}</small>
+
+      </label>`
+    ).join('');
 
   document.querySelectorAll('[data-engine]').forEach(x=>
     x.onchange=()=>{
+
       const k=x.dataset.engine;
 
       if(x.checked&&engines.size>=4){
@@ -872,128 +994,231 @@ function renderEngines(){
     }
   );
 
-  $('engineCount').textContent=`${engines.size} از ۴ انتخاب شده`
+  $('engineCount').textContent=
+    `${engines.size} از ۴ انتخاب شده`
 }
+
+
+/* =========================================================
+   مقایسه چند دارایی
+   ========================================================= */
 
 async function compareHistory(k){
   return tgju(A[k].slug)
 }
 
-function dateKey(t){
-  return new Date(t*1000).toISOString().slice(0,10)
-}
 
 /*
-  اصلاح اصلی مقایسه چنددارایی:
-  همه دارایی‌ها ابتدا روی تاریخ‌های مشترک هم‌تراز می‌شوند
-  و سپس همگی از اولین نقطه مشترک روی 100 شروع می‌شوند.
+  تاریخ استاندارد برای مقایسه.
+  همه داده‌ها بر اساس روز میلادی یکسان می‌شوند.
 */
-function alignCompareData(items){
+function dateKey(t){
 
-  if(!items?.length)return[];
+  const d=new Date(Number(t)*1000);
 
-  const maps=items.map(item=>{
-    const map=new Map();
+  if(!Number.isFinite(d.getTime()))
+    return null;
 
-    item.data.forEach(x=>{
-      const d=dateKey(x.time);
-      if(Number.isFinite(x.close))map.set(d,x)
-    });
+  return d.toISOString().slice(0,10)
+}
 
-    return{
-      k:item.k,
-      map
+
+/*
+  پاک‌سازی کامل داده مقایسه.
+
+  - time معتبر
+  - close معتبر
+  - close مثبت
+  - حذف timestamp تکراری
+  - مرتب‌سازی صعودی
+*/
+function cleanCompareData(data){
+
+  if(!Array.isArray(data))
+    return[];
+
+  const map=new Map();
+
+  data.forEach(x=>{
+
+    const time=Number(x?.time);
+    const close=Number(x?.close);
+
+    if(
+      !Number.isFinite(time)||
+      !Number.isFinite(close)||
+      close<=0
+    ){
+      return
     }
+
+    map.set(
+      Math.floor(time),
+      {
+        time:Math.floor(time),
+        close
+      }
+    )
   });
 
-  let commonDates=[...maps[0].map.keys()];
+  return[
+    ...map.values()
+  ].sort((a,b)=>a.time-b.time)
+}
+
+
+/*
+  داده‌های هر دارایی را به یک مقدار روزانه تبدیل می‌کند.
+
+  اگر در یک روز چند نقطه وجود داشته باشد،
+  آخرین مقدار همان روز استفاده می‌شود.
+*/
+function dailyMap(data){
+
+  const map=new Map();
+
+  cleanCompareData(data).forEach(x=>{
+
+    const day=dateKey(x.time);
+
+    if(day)
+      map.set(
+        day,
+        {
+          day,
+          close:x.close
+        }
+      )
+  });
+
+  return map
+}
+
+
+/*
+  پیدا کردن روزهای مشترک تمام دارایی‌ها.
+
+  نکته مهم:
+  timestamp اصلی TGJU مستقیماً برای رسم استفاده نمی‌شود.
+  برای جلوگیری از مشکل Lightweight Charts،
+  همه سری‌ها timestamp کاملاً یکسان دریافت می‌کنند.
+*/
+function buildCommonComparison(good){
+
+  if(!Array.isArray(good)||good.length<2)
+    return null;
+
+  const maps=good.map(item=>({
+    k:item.k,
+    map:dailyMap(item.data)
+  }));
+
+  let commonDates=
+    [...maps[0].map.keys()];
 
   for(let i=1;i<maps.length;i++){
-    commonDates=commonDates.filter(d=>maps[i].map.has(d))
+
+    commonDates=
+      commonDates.filter(
+        day=>maps[i].map.has(day)
+      )
   }
 
   commonDates.sort();
 
-  if(!commonDates.length)return[];
+  if(commonDates.length<2)
+    return null;
 
+  /*
+    تاریخ اول مشترک = مبنای ۱۰۰
+  */
   const firstDate=commonDates[0];
 
-  return maps.map(({k,map})=>{
-    const base=map.get(firstDate)?.close;
+  const result=[];
 
-    if(!Number.isFinite(base)||base===0)return null;
+  maps.forEach(({k,map})=>{
 
-    return{
-      k,
-      data:commonDates.map(d=>({
-        time:map.get(d).time,
-        value:(map.get(d).close/base)*100
-      }))
+    const base=Number(
+      map.get(firstDate)?.close
+    );
+
+    if(
+      !Number.isFinite(base)||
+      base<=0
+    ){
+      return
     }
-  }).filter(Boolean)
+
+    const data=
+      commonDates.map((day,index)=>{
+
+        /*
+          به‌جای timestamp واقعی هر دارایی،
+          یک timestamp مشترک می‌سازیم.
+
+          فاصله یک روزه تضمین می‌کند که
+          Lightweight Charts برای تمام سری‌ها
+          دقیقاً یک محور زمانی داشته باشد.
+        */
+        const time=
+          Math.floor(
+            Date.parse(day+'T00:00:00Z')/1000
+          );
+
+        const close=
+          Number(map.get(day)?.close);
+
+        return{
+          time,
+          value:(close/base)*100
+        }
+      });
+
+    if(data.length>=2){
+
+      result.push({
+        k,
+        data
+      })
+    }
+  });
+
+  return result.length>=2
+    ?result
+    :null
 }
 
-function normalize(c){
-  if(!c?.length)return[];
 
-  const b=c[0].close;
-
-  return c.map(x=>({
-    time:x.time,
-    value:x.close/b*100
-  }))
-}
-
-function corr(a,b){
-
-  const n=Math.min(a.length,b.length);
-
-  if(n<5)return null;
-
-  const x=a.slice(-n),
-        y=b.slice(-n),
-        mx=x.reduce((a,b)=>a+b,0)/n,
-        my=y.reduce((a,b)=>a+b,0)/n;
-
-  let q=0,dx=0,dy=0;
-
-  for(let i=0;i<n;i++){
-    const u=x[i]-mx,
-          v=y[i]-my;
-
-    q+=u*v;
-    dx+=u*u;
-    dy+=v*v
-  }
-
-  return dx&&dy?q/Math.sqrt(dx*dy):null
-}
-
+/*
+  برای محاسبه بازده و همبستگی.
+*/
 function pairReturns(a,b){
 
-  const ma=new Map(
-    a.map(x=>[dateKey(x.time),x.close])
-  );
+  const ma=dailyMap(a);
+  const mb=dailyMap(b);
 
-  const mb=new Map(
-    b.map(x=>[dateKey(x.time),x.close])
-  );
+  const days=
+    [...ma.keys()]
+      .filter(d=>mb.has(d))
+      .sort();
 
-  const days=[...ma.keys()]
-    .filter(d=>mb.has(d))
-    .sort();
-
-  const ra=[],
-        rb=[];
+  const ra=[];
+  const rb=[];
 
   for(let i=1;i<days.length;i++){
 
-    const ap=ma.get(days[i-1]),
-          ac=ma.get(days[i]),
-          bp=mb.get(days[i-1]),
-          bc=mb.get(days[i]);
+    const ap=Number(ma.get(days[i-1]).close);
+    const ac=Number(ma.get(days[i]).close);
 
-    if([ap,ac,bp,bc].every(Number.isFinite)){
+    const bp=Number(mb.get(days[i-1]).close);
+    const bc=Number(mb.get(days[i]).close);
+
+    if(
+      [ap,ac,bp,bc].every(Number.isFinite) &&
+      ap!==0 &&
+      bp!==0
+    ){
+
       ra.push(ac/ap-1);
       rb.push(bc/bp-1)
     }
@@ -1006,6 +1231,44 @@ function pairReturns(a,b){
   }
 }
 
+function corr(a,b){
+
+  const n=Math.min(
+    a.length,
+    b.length
+  );
+
+  if(n<5)
+    return null;
+
+  const x=a.slice(-n);
+  const y=b.slice(-n);
+
+  const mx=
+    x.reduce((a,b)=>a+b,0)/n;
+
+  const my=
+    y.reduce((a,b)=>a+b,0)/n;
+
+  let q=0,
+      dx=0,
+      dy=0;
+
+  for(let i=0;i<n;i++){
+
+    const u=x[i]-mx;
+    const v=y[i]-my;
+
+    q+=u*v;
+    dx+=u*u;
+    dy+=v*v
+  }
+
+  return dx&&dy
+    ?q/Math.sqrt(dx*dy)
+    :null
+}
+
 function renderCompareUI(){
 
   const used=new Set(compare);
@@ -1015,40 +1278,66 @@ function renderCompareUI(){
     Object.entries(A)
       .filter(([k])=>!used.has(k))
       .map(([k,a])=>
-        `<option value="${k}">${a.i} ${a.n}</option>`
+        `<option value="${k}">
+          ${a.i} ${a.n}
+        </option>`
       ).join('');
 
   $('chips').innerHTML=
     compare.map(k=>
       `<span class="chip">
         ${A[k].i} ${A[k].n}
-        <button data-x="${k}" title="حذف">×</button>
+        <button
+          data-x="${k}"
+          title="حذف"
+        >×</button>
       </span>`
     ).join('');
 
   document.querySelectorAll('[data-x]').forEach(x=>
+
     x.onclick=()=>{
-      compare=compare.filter(k=>k!==x.dataset.x);
+
+      compare=
+        compare.filter(
+          k=>k!==x.dataset.x
+        );
+
       renderComparison()
     }
   )
 }
 
+
+/*
+  رندر مقایسه.
+
+  compareRenderId جلوی این مشکل را می‌گیرد:
+  اگر کاربر سریعاً دارایی سوم یا چهارم را اضافه کند،
+  پاسخ درخواست قبلی دیگر اجازه ندارد نمودار جدید را خراب کند.
+*/
 async function renderComparison(){
+
+  const renderId=++compareRenderId;
 
   renderCompareUI();
 
   if(compare.length<2){
 
     if(compareChart){
-      compareChart.remove();
+
+      try{
+        compareChart.remove()
+      }catch(e){}
+
       compareChart=null
     }
 
-    clearInterval(compareTimer);
-
+    $('compareChart').innerHTML='';
     $('compareInfo').innerHTML='';
     $('compareEmpty').style.display='block';
+
+    clearInterval(compareTimer);
 
     return
   }
@@ -1056,36 +1345,72 @@ async function renderComparison(){
   $('compareEmpty').style.display='none';
 
   $('compareInfo').innerHTML=
-    '<div class="metric">'+
-      '<small>وضعیت</small>'+
-      '<b>در حال دریافت داده واقعی...</b>'+
-      '<span>نمودار قبلی تا زمان تأیید داده جدید حفظ می‌شود.</span>'+
-    '</div>';
+    `<div class="metric">
+      <small>وضعیت</small>
+      <b>در حال دریافت داده واقعی...</b>
+      <span>
+        در حال آماده‌سازی ${compare.length} دارایی برای مقایسه.
+      </span>
+    </div>`;
 
   try{
 
+    /*
+      دریافت تمام دارایی‌ها به‌صورت هم‌زمان.
+    */
     const results=
       await Promise.all(
-        compare.map(async k=>{
-          try{
-            return{
-              k,
-              data:await compareHistory(k)
+        compare.map(
+          async k=>{
+
+            try{
+
+              const raw=
+                await compareHistory(k);
+
+              const data=
+                cleanCompareData(raw);
+
+              return{
+                k,
+                data
+              }
+
+            }catch(error){
+
+              console.error(
+                'compare data error:',
+                k,
+                error
+              );
+
+              return{
+                k,
+                data:[],
+                error
+              }
             }
-          }catch(error){
-            return{k,error}
           }
-        })
+        )
       );
+
+    /*
+      اگر در این فاصله کاربر تعداد دارایی‌ها را تغییر داده،
+      این نتیجه دیگر معتبر نیست.
+    */
+    if(renderId!==compareRenderId)
+      return;
 
     const good=
       results.filter(
-        x=>Array.isArray(x.data)&&x.data.length>=5
+        x=>x.data.length>=5
       );
 
     const failed=
       results
-        .filter(x=>!x.data?.length)
+        .filter(
+          x=>x.data.length<5
+        )
         .map(x=>x.k);
 
     if(good.length<2){
@@ -1095,9 +1420,10 @@ async function renderComparison(){
           <small>مقایسه</small>
           <b>داده کافی برای مقایسه وجود ندارد</b>
           <span>
+            حداقل دو دارایی باید داده واقعی کافی داشته باشند.
             ${failed.length
-              ?`منابع ناموفق: ${failed.map(k=>A[k]?.n||k).join('، ')}`
-              :'حداقل دو دارایی انتخاب کنید.'}
+              ?`دارایی‌های بدون داده کافی: ${failed.map(k=>A[k]?.n||k).join('، ')}`
+              :''}
           </span>
         </div>`;
 
@@ -1105,32 +1431,63 @@ async function renderComparison(){
     }
 
     /*
-      داده‌های همه دارایی‌های موفق را روی تاریخ‌های مشترک
-      هم‌تراز می‌کنیم.
+      ساخت سری‌های کاملاً هم‌زمان.
     */
-    const aligned=alignCompareData(good);
+    const aligned=
+      buildCommonComparison(good);
 
-    if(aligned.length<2){
+    if(
+      !aligned||
+      aligned.length<2
+    ){
 
       $('compareInfo').innerHTML=
         `<div class="metric">
           <small>مقایسه</small>
-          <b>تاریخ مشترک کافی برای مقایسه وجود ندارد</b>
+          <b>بازه مشترک کافی وجود ندارد</b>
           <span>
-            داده واقعی دارایی‌های انتخاب‌شده بازه زمانی مشترک کافی ندارند.
+            بین داده‌های واقعی دارایی‌های انتخاب‌شده،
+            تاریخ مشترک کافی برای رسم نمودار وجود ندارد.
           </span>
         </div>`;
 
       return
     }
 
-    compareStore=Object.fromEntries(
-      aligned.map(x=>[x.k,x.data])
+    /*
+      باز هم بررسی می‌کنیم که رندر جدید نشده باشد.
+    */
+    if(renderId!==compareRenderId)
+      return;
+
+    compareStore=
+      Object.fromEntries(
+        aligned.map(
+          x=>[x.k,x.data]
+        )
+      );
+
+    /*
+      نمودار قبلی کاملاً حذف می‌شود.
+    */
+    if(compareChart){
+
+      try{
+        compareChart.remove()
+      }catch(e){}
+
+      compareChart=null
+    }
+
+    $('compareChart').innerHTML='';
+
+    /*
+      ساخت نمودار جدید.
+    */
+    makeChart(
+      $('compareChart'),
+      true
     );
-
-    if(compareChart)compareChart.remove();
-
-    makeChart($('compareChart'),true);
 
     compareLines=[];
 
@@ -1141,61 +1498,178 @@ async function renderComparison(){
       '#f97316'
     ];
 
-    aligned.forEach((x,i)=>{
+    /*
+      این قسمت برای ۲، ۳ و ۴ دارایی کاملاً یکسان است.
+    */
+    for(let i=0;i<aligned.length;i++){
 
-      const s=compareChart.addSeries(
-        LightweightCharts.LineSeries,
-        {
-          lineWidth:2.5,
-          color:colors[i%colors.length],
-          title:A[x.k].n,
-          priceLineVisible:false,
-          lastValueVisible:true
-        }
-      );
+      if(renderId!==compareRenderId)
+        return;
 
-      s.setData(x.data);
+      const item=aligned[i];
 
-      compareLines.push(s)
-    });
+      const cleanSeries=
+        item.data.filter(
+          p=>
+            Number.isFinite(p.time)&&
+            Number.isFinite(p.value)
+        );
 
-    compareChart.timeScale().fitContent();
+      if(cleanSeries.length<2)
+        continue;
 
-    const cards=[];
+      const line=
+        compareChart.addSeries(
+          LightweightCharts.LineSeries,
+          {
+            lineWidth:2.5,
+            color:colors[i%colors.length],
+            title:A[item.k].n,
+            priceLineVisible:false,
+            lastValueVisible:true,
+            crosshairMarkerVisible:true
+          }
+        );
+
+      line.setData(cleanSeries);
+
+      compareLines.push(line)
+    }
+
+    if(compareLines.length<2){
+
+      try{
+        compareChart.remove()
+      }catch(e){}
+
+      compareChart=null;
+
+      $('compareInfo').innerHTML=
+        `<div class="metric">
+          <small>مقایسه</small>
+          <b>سری‌های نمودار قابل رسم نبودند</b>
+          <span>
+            داده واقعی دریافت شد اما نقاط معتبر کافی برای رسم وجود نداشت.
+          </span>
+        </div>`;
+
+      return
+    }
 
     /*
-      محاسبه همبستگی و بازده بر اساس همان دارایی‌های موفق.
-      بنابراین ۲، ۳ و ۴ دارایی بدون تفاوت در منطق پردازش می‌شوند.
+      اندازه واقعی کانتینر را به Lightweight Charts اعلام می‌کنیم.
     */
+    const chartEl=$('compareChart');
+
+    const width=
+      Math.max(
+        chartEl.clientWidth,
+        300
+      );
+
+    const height=
+      Math.max(
+        chartEl.clientHeight,
+        430
+      );
+
+    try{
+      compareChart.resize(
+        width,
+        height
+      )
+    }catch(e){}
+
+    compareChart
+      .timeScale()
+      .fitContent();
+
+    /*
+      اطلاعات آماری.
+    */
+    const cards=[];
+
     for(let i=0;i<good.length;i++){
 
       for(let j=i+1;j<good.length;j++){
 
-        const p=pairReturns(
-          good[i].data,
-          good[j].data
-        );
+        const p=
+          pairReturns(
+            good[i].data,
+            good[j].data
+          );
 
-        const c=corr(p.ra,p.rb);
+        const c=
+          corr(
+            p.ra,
+            p.rb
+          );
 
-        const ar=good[i].data,
-              br=good[j].data;
+        const ar=
+          cleanCompareData(
+            good[i].data
+          );
+
+        const br=
+          cleanCompareData(
+            good[j].data
+          );
+
+        const arFirst=
+          Number(
+            ar[0]?.close
+          );
+
+        const arLast=
+          Number(
+            ar.at(-1)?.close
+          );
+
+        const brFirst=
+          Number(
+            br[0]?.close
+          );
+
+        const brLast=
+          Number(
+            br.at(-1)?.close
+          );
 
         const r1=
-          ar.at(-1).close/ar[0].close-1;
+          arFirst>0
+            ?arLast/arFirst-1
+            :null;
 
         const r2=
-          br.at(-1).close/br[0].close-1;
+          brFirst>0
+            ?brLast/brFirst-1
+            :null;
 
         cards.push(
           `<div class="metric">
-            <small>${A[good[i].k].n} ↔ ${A[good[j].k].n}</small>
-            <b>همبستگی ${c===null?'—':c.toFixed(2)}</b>
+
+            <small>
+              ${A[good[i].k].n}
+              ↔
+              ${A[good[j].k].n}
+            </small>
+
+            <b>
+              همبستگی
+              ${c===null?'—':c.toFixed(2)}
+            </b>
+
             <span>
-              بازده ${A[good[i].k].n}: ${(r1*100).toFixed(2)}%
-              · ${A[good[j].k].n}: ${(r2*100).toFixed(2)}%
-              · روزهای مشترک: ${p.count}
+              بازده ${A[good[i].k].n}:
+              ${r1===null?'—':(r1*100).toFixed(2)+'%'}
+              ·
+              بازده ${A[good[j].k].n}:
+              ${r2===null?'—':(r2*100).toFixed(2)+'%'}
+              ·
+              روزهای مشترک:
+              ${p.count}
             </span>
+
           </div>`
         )
       }
@@ -1205,24 +1679,41 @@ async function renderComparison(){
 
       cards.push(
         `<div class="metric">
+
           <small>داده در دسترس نیست</small>
-          <b>${failed.map(k=>A[k]?.n||k).join('، ')}</b>
+
+          <b>
+            ${failed.map(
+              k=>A[k]?.n||k
+            ).join('، ')}
+          </b>
+
           <span>
-            این دارایی‌ها بدون داده واقعی از نمودار حذف شدند؛
-            نمودار سایر دارایی‌ها حفظ شد.
+            این دارایی‌ها داده کافی نداشتند
+            و از نمودار حذف شدند؛
+            سایر دارایی‌ها نمایش داده می‌شوند.
           </span>
+
         </div>`
       )
     }
 
-    $('compareInfo').innerHTML=cards.join('');
+    $('compareInfo').innerHTML=
+      cards.join('');
 
     startComparePolling();
 
   }catch(e){
 
-    console.error('comparison',e);
+    console.error(
+      'comparison error:',
+      e
+    );
 
+    /*
+      خطای واقعی را در کنسول نگه می‌داریم،
+      ولی رابط کاربری پیام قابل فهم نشان می‌دهد.
+    */
     if(
       compareStore&&
       Object.keys(compareStore).length>=2
@@ -1230,89 +1721,149 @@ async function renderComparison(){
 
       $('compareInfo').innerHTML=
         `<div class="metric">
+
           <small>بروزرسانی</small>
-          <b>داده جدید دریافت نشد</b>
+
+          <b>
+            داده جدید دریافت نشد
+          </b>
+
           <span>
-            آخرین نمودار معتبر حفظ شده است و در تلاش بعدی دوباره به‌روزرسانی می‌شود.
+            آخرین نمودار معتبر حفظ شده است
+            و در تلاش بعدی دوباره به‌روزرسانی می‌شود.
           </span>
+
         </div>`;
 
     }else{
 
       $('compareInfo').innerHTML=
         `<div class="metric">
+
           <small>مقایسه</small>
-          <b>نمودار قابل محاسبه نشد</b>
+
+          <b>
+            نمودار قابل محاسبه نشد
+          </b>
+
           <span>
-            داده واقعی کافی از منبع دریافت نشد و هیچ داده ساختگی جایگزین نشده است.
+            خطا در آماده‌سازی داده واقعی رخ داد.
+            هیچ داده ساختگی جایگزین نشده است.
           </span>
+
         </div>`
     }
   }
 }
 
-let compareTimer=null;
-
 function startComparePolling(){
 
   clearInterval(compareTimer);
 
-  if(compare.length<2)return;
+  if(compare.length<2)
+    return;
 
-  compareTimer=setInterval(
-    ()=>renderComparison(),
-    60000
-  )
+  compareTimer=
+    setInterval(
+      ()=>{
+        renderComparison()
+      },
+      60000
+    )
 }
 
-$('refresh').onclick=loadMarket;
 
-$('interval').onchange=loadMarket;
+/* =========================================================
+   رویدادها
+   ========================================================= */
 
-$('chartType').onchange=()=>{
-  loadMarket()
-};
+$('refresh').onclick=
+  loadMarket;
 
-$('runAnalysis').onclick=()=>{
-  if(!engines.size){
-    alert('حداقل یک موتور تحلیل را انتخاب کنید.');
-    return
-  }
+$('interval').onchange=
+  loadMarket;
 
-  updateAnalysis()
-};
+$('chartType').onchange=
+  ()=>{
+    loadMarket()
+  };
 
-$('addCompare').onclick=()=>{
-  const k=$('comparePicker').value;
+$('runAnalysis').onclick=
+  ()=>{
+    if(!engines.size){
 
-  if(
-    k&&
-    compare.length<4&&
-    !compare.includes(k)
-  ){
-    compare.push(k);
+      alert(
+        'حداقل یک موتور تحلیل را انتخاب کنید.'
+      );
+
+      return
+    }
+
+    updateAnalysis()
+  };
+
+$('addCompare').onclick=
+  ()=>{
+
+    const k=
+      $('comparePicker').value;
+
+    if(
+      k&&
+      compare.length<4&&
+      !compare.includes(k)
+    ){
+
+      compare.push(k);
+
+      /*
+        هر تغییر انتخاب، رندر قبلی را منسوخ می‌کند.
+      */
+      renderComparison()
+    }
+  };
+
+$('clearCompare').onclick=
+  ()=>{
+
+    compare=[];
+
     renderComparison()
-  }
-};
+  };
 
-$('clearCompare').onclick=()=>{
-  compare=[];
-  renderComparison()
-};
+
+/* =========================================================
+   شروع
+   ========================================================= */
 
 renderAssets();
 renderHorizons();
 renderEngines();
 renderCompareUI();
+
+/*
+  فقط یک بار مقایسه اولیه اجرا می‌شود.
+*/
 renderComparison();
+
 loadMarket();
 
 window.addEventListener(
   'beforeunload',
   ()=>{
-    clearInterval(compareTimer)
+    clearInterval(compareTimer);
+
+    try{
+      if(compareChart)
+        compareChart.remove();
+
+      if(chart)
+        chart.remove();
+
+    }catch(e){}
   }
 );
+
 </script>
 
 </body>
