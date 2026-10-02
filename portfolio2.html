@@ -399,6 +399,10 @@
             color: var(--red);
             background: rgba(239, 68, 68, 0.1);
         }
+        .table-delete-btn { width:32px; height:32px; border-radius:9px; border:1px solid rgba(239,68,68,.16); background:rgba(239,68,68,.045); color:var(--gray); cursor:pointer; display:inline-flex; align-items:center; justify-content:center; font-size:15px; transition:.2s ease; }
+        .table-delete-btn:hover { color:#fff; border-color:rgba(239,68,68,.55); background:rgba(239,68,68,.14); transform:translateY(-1px); }
+        .compare-edit-btn { width:26px; height:26px; border-radius:7px; border:1px solid rgba(212,175,55,.22); background:rgba(212,175,55,.06); color:var(--gold); cursor:pointer; font-family:inherit; font-size:12px; margin-inline-start:5px; vertical-align:middle; }
+        .compare-edit-btn:hover { background:rgba(212,175,55,.14); border-color:rgba(212,175,55,.5); }
         .asset-card-info {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
@@ -1490,8 +1494,8 @@
                 <div class="portfolio-table-card">
                     <div class="table-card-head">
                         <div>
-                            <div class="chart-title">📋 جدول هوشمند سبد دارایی</div>
-                            <div class="table-subtitle">قیمت‌های فعلی از منابع بازار دریافت می‌شوند و ارزش کل سبد به تومان محاسبه می‌شود.</div>
+                            <div class="chart-title">📈 نمودار قیمت تاریخی دارایی</div>
+                            <div class="table-subtitle">قیمت تاریخی و روند تغییرات هر دارایی از منابع واقعی بازار نمایش داده می‌شود.</div>
                         </div>
                         <div class="usd-rate-badge">دلار آزاد: <strong>${stats.usdRate ? formatNum(stats.usdRate) + ' تومان' : '—'}</strong></div>
                     </div>
@@ -1812,7 +1816,7 @@
                     <td>${item.holdingDuration}</td>
                     <td class="${pClass}"><strong>${profitText}</strong></td>
                     <td>${chartButton}</td>
-                    <td><button class="delete-btn" onclick="deleteAsset('${String(item.id).replace(/'/g,"\\'")}')">حذف</button></td>
+                    <td><button class="table-delete-btn" title="حذف دارایی" aria-label="حذف دارایی" onclick="deleteAsset('${String(item.id).replace(/'/g,"\\'")}')">🗑️</button></td>
                 </tr>
                 ${chartRow}`;
         }
@@ -2193,6 +2197,17 @@
             refreshComparison();
         }
 
+        function editManualComparePrice(itemId, benchmarkKey) {
+            const cell = document.getElementById(`manual-cell-${itemId}-${benchmarkKey}`);
+            if (!cell) return;
+            const current = Number(localStorage.getItem(`shamdun_compare_manual_${itemId}_${benchmarkKey}`));
+            const value = Number.isFinite(current) && current > 0 ? current : '';
+            const inputId = `manual-edit-${itemId}-${benchmarkKey}`;
+            cell.innerHTML = `<div class="manual-price-box"><input type="number" min="0" step="any" value="${value}" id="${inputId}" autofocus><button type="button" onclick="setManualComparePrice('${String(itemId).replace(/'/g,"\'")}','${benchmarkKey}',document.getElementById('${inputId}').value)">ثبت</button></div>`;
+            const input = document.getElementById(inputId);
+            if (input) { input.focus(); input.select(); }
+        }
+
         async function renderCompare(stats) {
             const grid = document.getElementById('compareGrid');
             if (!grid) return;
@@ -2342,11 +2357,11 @@
                     const manualKey = item.id || `${item.asset_symbol || item.asset_name}_${item.buy_date}`;
                     const inputId = `manual_${String(manualKey).replace(/[^a-zA-Z0-9_-]/g,'_')}_${benchmark.key}`;
                     const manualInput = `<div class="manual-price-box"><input type="number" min="0" step="any" placeholder="قیمت دستی" value="${manualBase || ''}" id="${inputId}"><button type="button" onclick="setManualComparePrice('${escapeHtml(String(manualKey))}','${benchmark.key}',document.getElementById('${inputId}').value)">ثبت</button></div>`;
-                    if(!result) return `<tr><td><div class="benchmark-name">${benchmark.icon} ${escapeHtml(benchmark.label)}</div><div class="benchmark-source">${escapeHtml(benchmark.source)}</div></td><td class="price">${manualInput}</td><td class="price">—</td><td>—</td><td class="hypothetical">—</td></tr>`;
+                    if(!result) return `<tr><td><div class="benchmark-name">${benchmark.icon} ${escapeHtml(benchmark.label)}</div><div class="benchmark-source">${escapeHtml(benchmark.source)}</div></td><td class="price" id="manual-cell-${inputId}">${manualInput}</td><td class="price">—</td><td>—</td><td class="hypothetical">—</td></tr>`;
                     const hypo=hypothetical(invested,result), isBest=Number.isFinite(Number(result.percent)) && result.percent===best;
-                    const baseText = result.base ? `${priceText(result,result.base.close)}${result.base.manual ? '<br><small>ورود دستی</small>' : `<br><small>${formatDate(result.base.iso)}</small>`}` : manualInput;
+                    const baseText = result.base ? `${priceText(result,result.base.close)}${result.base.manual ? `<br><small>ورود دستی <button type="button" class="compare-edit-btn" onclick="editManualComparePrice('${String(manualKey).replace(/'/g,"\'")}','${benchmark.key}')" title="ویرایش قیمت دستی" aria-label="ویرایش قیمت دستی">✏️</button></small>` : `<br><small>${formatDate(result.base.iso)}</small>`}` : manualInput;
                     const latestText = result.latest ? `${priceText(result,result.latest.close)}${result.latest.iso ? `<br><small>${formatDate(result.latest.iso)}</small>` : ''}` : '—';
-                    return `<tr class="${isBest?'best-row':''}"><td><div class="benchmark-name">${benchmark.icon} ${escapeHtml(benchmark.label)}</div><div class="benchmark-source">${escapeHtml(benchmark.source)}${isBest?' · بالاترین بازده این خرید':''}</div></td><td class="price">${baseText}</td><td class="price">${latestText}</td><td>${returnHtml(result.percent)}</td><td class="hypothetical">${hypo===null?'—':formatBigNum(hypo)+' تومان'}</td></tr>`;
+                    return `<tr class="${isBest?'best-row':''}"><td><div class="benchmark-name">${benchmark.icon} ${escapeHtml(benchmark.label)}</div><div class="benchmark-source">${escapeHtml(benchmark.source)}${isBest?' · بالاترین بازده این خرید':''}</div></td><td class="price" id="manual-cell-${inputId}">${baseText}</td><td class="price">${latestText}</td><td>${returnHtml(result.percent)}</td><td class="hypothetical">${hypo===null?'—':formatBigNum(hypo)+' تومان'}</td></tr>`;
                 }).join('');
 
                 const actualText=actual===null?'عملکرد واقعی دارایی: —':`عملکرد واقعی دارایی: ${actual>=0?'+':'−'}${toFa(Math.abs(actual).toFixed(2))}٪`;
