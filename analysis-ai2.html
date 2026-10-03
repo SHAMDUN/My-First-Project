@@ -37,7 +37,7 @@ let asset='gold18',horizon='swing',chart,series,candles=[],engines=new Set(),com
 const $=x=>document.getElementById(x);
 const num=(v,d=2)=>Number.isFinite(Number(v))?new Intl.NumberFormat('fa-IR',{useGrouping:true,maximumFractionDigits:d,minimumFractionDigits:d}).format(Number(v)):'—';
 const pct=(v,d=2)=>Number.isFinite(Number(v))?new Intl.NumberFormat('fa-IR',{useGrouping:false,maximumFractionDigits:d,minimumFractionDigits:d}).format(Number(v)):'—';
-const unitOf=k=>({gold18:'تومان / گرم',silver999:'تومان / گرم',usd:'تومان',goldOunce:'دلار / اونس',silverOunce:'دلار / اونس',bourse:'واحد شاخص'}[k]||'واحد');
+const unitOf=k=>({gold18:'ریال / گرم',silver999:'ریال / گرم',usd:'ریال',goldOunce:'دلار / اونس',silverOunce:'دلار / اونس',bourse:'واحد شاخص'}[k]||'واحد');
 const validityText=()=>`تا پایان کندل تایم‌فریم اصلی (${H[horizon].main})؛ در صورت شکست حد ابطال یا تغییر ساختار، تحلیل زودتر منقضی می‌شود.`;
 const fmtPrice=v=>Number.isFinite(Number(v))?new Intl.NumberFormat('fa-IR',{useGrouping:true,maximumFractionDigits:0,minimumFractionDigits:0}).format(Number(v)):'—';
 function applyPriceScale(target,mode){try{if(!target)return;const ps=target.priceScale('right');const m=mode==='logarithmic'?(LightweightCharts.PriceScaleMode?.Logarithmic??1):(LightweightCharts.PriceScaleMode?.Normal??0);ps.applyOptions({mode:m})}catch(e){console.warn('price scale mode:',e)}}
