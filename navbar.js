@@ -735,6 +735,8 @@
             { title: 'بورس ایران', url: 'bourse.html', icon: '📈', type: 'صفحه' },
             { title: 'اقتصاد کلان', url: 'macro-dashboard.html', icon: '🌍', type: 'صفحه' },
             { title: 'تقویم اقتصادی', url: 'economic-calendar.html', icon: '📅', type: 'صفحه' },
+            { title: 'تحلیل اقتصادی', url: 'analysis.html', icon: '📉', type: 'صفحه' },
+            { title: 'اتاق تحلیل', url: 'analysis-ai2.html', icon: '🔬', type: 'صفحه' },
             { title: 'شبیه‌ساز آپشن', url: 'options-simulator.html', icon: '🎯', type: 'صفحه' },
             { title: 'اخبار اقتصادی', url: 'news.html', icon: '📰', type: 'صفحه' },
             { title: 'دانش‌نامه اقتصادی', url: 'dictionary.html', icon: '🎓', type: 'صفحه' },
@@ -840,15 +842,20 @@
     }
 
     // ===== هایلایت صفحه فعلی =====
-    function highlightCurrentPage() {
-        const currentPath = window.location.pathname.split('/').pop() || 'index.html';
-        document.querySelectorAll('.sn-menu-item').forEach(item => {
-            const href = item.getAttribute('href');
-            if (href === currentPath) {
-                item.classList.add('active');
-            }
-        });
-    }
+        // ===== هایلایت صفحه فعلی =====
+        function highlightCurrentPage() {
+            let currentPath = window.location.pathname.split('/').pop() || 'index.html';
+            currentPath = currentPath.split('?')[0].split('#')[0];
+        
+            document.querySelectorAll('.sn-menu-item').forEach(item => {
+                const href = item.getAttribute('href');
+                if (!href) return;
+                const cleanHref = href.split('?')[0].split('#')[0];
+                if (cleanHref === currentPath) {
+                    item.classList.add('active');
+                }
+            });
+        }
 
     // ===== چک کردن کاربر =====
     function checkUser() {
