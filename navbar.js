@@ -17,6 +17,7 @@
                 { href: 'economic-calendar.html', icon: '📅', label: 'تقویم اقتصادی' },
                 { href: 'news.html', icon: '📰', label: 'اخبار اقتصادی' },
                 { href: 'analysis.html', icon: '📉', label: 'تحلیل اقتصادی' }
+                { href: 'analysis-ai2.html', icon: '🔬', label: 'اتاق تحلیل' }
             ]
         },
         {
