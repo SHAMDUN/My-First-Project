@@ -2352,74 +2352,75 @@
             renderCompare(stats);
         }
 
-        // اگر تاریخچه قیمت خرید در دسترس نباشد، قیمت مرجع را می‌توان دستی وارد و ذخیره کرد.
-        function manualCompareKey(item, benchmarkKey) {
+        // ✅ اصلاح: کلید دستی برای base و latest جداگانه ذخیره می‌شود
+        function manualCompareKey(item, benchmarkKey, kind = 'base') {
             const id = item.id || `${item.asset_symbol || item.asset_name}_${item.buy_date}`;
-            return `shamdun_compare_manual_${id}_${benchmarkKey}`;
+            return `shamdun_compare_manual_${id}_${benchmarkKey}_${kind}`;
         }
-        function getManualComparePrice(item, benchmarkKey) {
-            const value = Number(localStorage.getItem(manualCompareKey(item, benchmarkKey)));
+        function getManualComparePrice(item, benchmarkKey, kind = 'base') {
+            const value = Number(localStorage.getItem(manualCompareKey(item, benchmarkKey, kind)));
             return Number.isFinite(value) && value > 0 ? value : null;
         }
-        function setManualComparePrice(itemId, benchmarkKey, value) {
+        function setManualComparePrice(itemId, benchmarkKey, value, kind = 'base') {
             const n = Number(value);
             if (!(n > 0)) { showToast('❌ قیمت دستی باید بزرگ‌تر از صفر باشد', 'error'); return; }
-            localStorage.setItem(`shamdun_compare_manual_${itemId}_${benchmarkKey}`, String(n));
+            localStorage.setItem(`shamdun_compare_manual_${itemId}_${benchmarkKey}_${kind}`, String(n));
             refreshComparison();
         }
 
-        function editManualComparePrice(itemId, benchmarkKey) {
-            // همان شناسه‌ای که هنگام ساخت جدول استفاده شده
+        function editManualComparePrice(itemId, benchmarkKey, kind = 'base') {
             const safeId = String(itemId).replace(/[^a-zA-Z0-9_-]/g, '_');
-            const cellId = `manual-cell-manual_${safeId}_${benchmarkKey}`;
+            const cellId = `manual-cell-${kind}_${safeId}_${benchmarkKey}`;
             const cell = document.getElementById(cellId);
 
             if (!cell) {
                 console.warn('Manual price cell not found:', cellId);
                 return;
+            }
+
+            const storageKey = `shamdun_compare_manual_${itemId}_${benchmarkKey}_${kind}`;
+            const current = Number(localStorage.getItem(storageKey));
+            const value = Number.isFinite(current) && current > 0 ? current : '';
+
+            const inputId = `manual-edit-${kind}-${safeId}-${benchmarkKey}`;
+
+            cell.innerHTML = `
+                <div class="manual-price-box">
+                    <input
+                        type="number"
+                        min="0"
+                        step="any"
+                        value="${value}"
+                        id="${inputId}"
+                        autofocus
+                    >
+                    <button
+                        type="button"
+                        onclick="setManualComparePrice(
+                            '${String(itemId).replace(/'/g, "\\'")}',
+                            '${benchmarkKey}',
+                            document.getElementById('${inputId}').value,
+                            '${kind}'
+                        )"
+                     >ثبت</button>
+                </div>
+            `;
+
+            const input = document.getElementById(inputId);
+
+            if (input) {
+                input.focus();
+                input.select();
+
+                input.addEventListener('keydown', function (e) {
+                    if (e.key === 'Enter') {
+                        const value = this.value;
+                        setManualComparePrice(itemId, benchmarkKey, value, kind);
+                    }
+                });
+            }
         }
 
-        const storageKey = `shamdun_compare_manual_${itemId}_${benchmarkKey}`;
-        const current = Number(localStorage.getItem(storageKey));
-        const value = Number.isFinite(current) && current > 0 ? current : '';
-
-        const inputId = `manual-edit-${safeId}-${benchmarkKey}`;
-
-        cell.innerHTML = `
-            <div class="manual-price-box">
-                <input
-                    type="number"
-                    min="0"
-                    step="any"
-                    value="${value}"
-                    id="${inputId}"
-                    autofocus
-                >
-                <button
-                    type="button"
-                    onclick="setManualComparePrice(
-                        '${String(itemId).replace(/'/g, "\\'")}',
-                        '${benchmarkKey}',
-                         document.getElementById('${inputId}').value
-                    )"
-                 >ثبت</button>
-            </div>
-        `;
-
-        const input = document.getElementById(inputId);
-
-        if (input) {
-            input.focus();
-            input.select();
-
-            input.addEventListener('keydown', function (e) {
-                if (e.key === 'Enter') {
-                    const value = this.value;
-                    setManualComparePrice(itemId, benchmarkKey, value);
-                }
-            });
-        }
-    }
         async function renderCompare(stats) {
             const grid = document.getElementById('compareGrid');
             if (!grid) return;
@@ -2500,7 +2501,8 @@
                 throw new Error('unsupported benchmark');
             }
 
-            function atPurchase(history, buyDate, manualBase) {
+            // ✅ اصلاح: پارامتر manualLatest اضافه شد و اگر latest واقعی نبود از manual استفاده می‌کند
+            function atPurchase(history, buyDate, manualBase, manualLatest) {
                 if (history.type === 'bank') {
                     const start = new Date(buyDate);
                     const end = new Date();
@@ -2511,8 +2513,21 @@
                 }
                 const rows = Array.isArray(history.rows) ? history.rows : [];
                 const realBase = rows.length ? findHistoryAtOrBefore(rows,buyDate) : null;
-                const latest = rows.length ? rows[rows.length-1] : (history.currentClose > 0 ? {close:history.currentClose, iso:null, greg:'', jalali:''} : null);
-                const base = realBase && realBase.close > 0 ? realBase : (manualBase > 0 ? {close:manualBase, iso:buyDate, greg:'', jalali:'', manual:true} : null);
+                const realLatest = rows.length ? rows[rows.length-1] : null;
+
+                const base = realBase && realBase.close > 0
+                    ? realBase
+                    : (manualBase > 0 ? {close:manualBase, iso:buyDate, greg:'', jalali:'', manual:true} : null);
+
+                // ✅ جدید: اگر latest واقعی نبود، از currentClose یا manualLatest استفاده می‌شود
+                const latest = (realLatest && realLatest.close > 0)
+                    ? realLatest
+                    : (history.currentClose > 0
+                        ? {close:history.currentClose, iso:null, greg:'', jalali:''}
+                        : (manualLatest > 0
+                            ? {close:manualLatest, iso:null, greg:'', jalali:'', manual:true}
+                            : null));
+
                 if (!latest || !(latest.close>0)) return {...history,base,latest:null,percent:null};
                 if (!base || !(base.close>0)) return {...history,base:null,latest,percent:null};
                 return {...history,base,latest,percent:(latest.close/base.close-1)*100};
@@ -2557,23 +2572,72 @@
                 const rows=[];
                 for (const b of benchmarks) {
                     const source=sources[b.key];
-                    const manualBase=getManualComparePrice(item,b.key);
-                    rows.push({benchmark:b,result:source?atPurchase(source,item.buy_date,manualBase):null,manualBase});
+                    // ✅ اصلاح: هر دو manual برای base و latest خوانده می‌شوند
+                    const manualBase=getManualComparePrice(item,b.key,'base');
+                    const manualLatest=getManualComparePrice(item,b.key,'latest');
+                    rows.push({
+                        benchmark:b,
+                        result:source?atPurchase(source,item.buy_date,manualBase,manualLatest):null,
+                        manualBase,
+                        manualLatest
+                    });
                 }
                 const valid=rows.filter(x=>x.result);
                 const comparable=valid.filter(x=>Number.isFinite(Number(x.result.percent)));
                 const basket=comparable.length===benchmarks.length ? comparable.reduce((sum,x)=>sum+x.result.percent,0)/benchmarks.length : null;
                 const best=comparable.length?Math.max(...comparable.map(x=>x.result.percent)):null;
 
-                const tableRows=rows.map(({benchmark,result,manualBase})=>{
+                // ✅ اصلاح: سلول‌های base و latest هر دو امکان ورود دستی دارند
+                const tableRows=rows.map(({benchmark,result,manualBase,manualLatest})=>{
                     const manualKey = item.id || `${item.asset_symbol || item.asset_name}_${item.buy_date}`;
-                    const inputId = `manual_${String(manualKey).replace(/[^a-zA-Z0-9_-]/g,'_')}_${benchmark.key}`;
-                    const manualInput = `<div class="manual-price-box"><input type="number" min="0" step="any" placeholder="قیمت دستی" value="${manualBase || ''}" id="${inputId}"><button type="button" onclick="setManualComparePrice('${escapeHtml(String(manualKey))}','${benchmark.key}',document.getElementById('${inputId}').value)">ثبت</button></div>`;
-                    if(!result) return `<tr><td><div class="benchmark-name">${benchmark.icon} ${escapeHtml(benchmark.label)}</div><div class="benchmark-source">${escapeHtml(benchmark.source)}</div></td><td class="price" id="manual-cell-${inputId}">${manualInput}</td><td class="price">—</td><td>—</td><td class="hypothetical">—</td></tr>`;
+                    const safeManualKey = String(manualKey).replace(/[^a-zA-Z0-9_-]/g,'_');
+
+                    const baseInputId    = `manual_base_${safeManualKey}_${benchmark.key}`;
+                    const latestInputId  = `manual_latest_${safeManualKey}_${benchmark.key}`;
+
+                    const baseManualInput = `<div class="manual-price-box">
+                        <input type="number" min="0" step="any" placeholder="قیمت خرید دستی" value="${manualBase || ''}" id="${baseInputId}">
+                        <button type="button" onclick="setManualComparePrice('${escapeHtml(String(manualKey))}','${benchmark.key}',document.getElementById('${baseInputId}').value,'base')">ثبت</button>
+                    </div>`;
+
+                    const latestManualInput = `<div class="manual-price-box">
+                        <input type="number" min="0" step="any" placeholder="قیمت امروز دستی" value="${manualLatest || ''}" id="${latestInputId}">
+                        <button type="button" onclick="setManualComparePrice('${escapeHtml(String(manualKey))}','${benchmark.key}',document.getElementById('${latestInputId}').value,'latest')">ثبت</button>
+                    </div>`;
+
+                    if(!result) {
+                        return `<tr>
+                            <td><div class="benchmark-name">${benchmark.icon} ${escapeHtml(benchmark.label)}</div><div class="benchmark-source">${escapeHtml(benchmark.source)}</div></td>
+                            <td class="price" id="manual-cell-base_${baseInputId}">${baseManualInput}</td>
+                            <td class="price" id="manual-cell-latest_${latestInputId}">${latestManualInput}</td>
+                            <td>—</td>
+                            <td class="hypothetical">—</td>
+                        </tr>`;
+                    }
+
                     const hypo=hypothetical(invested,result), isBest=Number.isFinite(Number(result.percent)) && result.percent===best;
-                    const baseText = result.base ? `${priceText(result,result.base.close)}${result.base.manual ? `<br><small>ورود دستی <button type="button" class="compare-edit-btn" onclick="editManualComparePrice('${String(manualKey).replace(/'/g,"\'")}','${benchmark.key}')" title="ویرایش قیمت دستی" aria-label="ویرایش قیمت دستی">✏️</button></small>` : `<br><small>${formatDate(result.base.iso)}</small>`}` : manualInput;
-                    const latestText = result.latest ? `${priceText(result,result.latest.close)}${result.latest.iso ? `<br><small>${formatDate(result.latest.iso)}</small>` : ''}` : '—';
-                    return `<tr class="${isBest?'best-row':''}"><td><div class="benchmark-name">${benchmark.icon} ${escapeHtml(benchmark.label)}</div><div class="benchmark-source">${escapeHtml(benchmark.source)}${isBest?' · بالاترین بازده این خرید':''}</div></td><td class="price" id="manual-cell-${inputId}">${baseText}</td><td class="price">${latestText}</td><td>${returnHtml(result.percent)}</td><td class="hypothetical">${hypo===null?'—':formatBigNum(hypo)+' تومان'}</td></tr>`;
+
+                    // ✅ baseText: اگر manual بود، دکمه ویرایش نمایش داده می‌شود
+                    const baseText = result.base
+                        ? `${priceText(result,result.base.close)}${result.base.manual
+                            ? `<br><small>ورود دستی <button type="button" class="compare-edit-btn" onclick="editManualComparePrice('${String(manualKey).replace(/'/g,"\\'")}','${benchmark.key}','base')" title="ویرایش قیمت دستی" aria-label="ویرایش قیمت دستی">✏️</button></small>`
+                            : (result.base.iso ? `<br><small>${formatDate(result.base.iso)}</small>` : '')}`
+                        : baseManualInput;
+
+                    // ✅ latestText: اگر manual بود، دکمه ویرایش نمایش داده می‌شود
+                    const latestText = result.latest
+                        ? `${priceText(result,result.latest.close)}${result.latest.manual
+                            ? `<br><small>ورود دستی <button type="button" class="compare-edit-btn" onclick="editManualComparePrice('${String(manualKey).replace(/'/g,"\\'")}','${benchmark.key}','latest')" title="ویرایش قیمت دستی" aria-label="ویرایش قیمت دستی">✏️</button></small>`
+                            : (result.latest.iso ? `<br><small>${formatDate(result.latest.iso)}</small>` : '')}`
+                        : latestManualInput;
+
+                    return `<tr class="${isBest?'best-row':''}">
+                        <td><div class="benchmark-name">${benchmark.icon} ${escapeHtml(benchmark.label)}</div><div class="benchmark-source">${escapeHtml(benchmark.source)}${isBest?' · بالاترین بازده این خرید':''}</div></td>
+                        <td class="price" id="manual-cell-base_${baseInputId}">${baseText}</td>
+                        <td class="price" id="manual-cell-latest_${latestInputId}">${latestText}</td>
+                        <td>${returnHtml(result.percent)}</td>
+                        <td class="hypothetical">${hypo===null?'—':formatBigNum(hypo)+' تومان'}</td>
+                    </tr>`;
                 }).join('');
 
                 const actualText=actual===null?'عملکرد واقعی دارایی: —':`عملکرد واقعی دارایی: ${actual>=0?'+':'−'}${toFa(Math.abs(actual).toFixed(2))}٪`;
@@ -2584,7 +2648,7 @@
 
             const note=document.createElement('div');
             note.className='compare-source';
-            note.textContent='منابع: TGJU برای طلا ۱۸، دلار آزاد و شاخص کل بورس؛ BrsApi / TSETMC برای تاریخچه عیار و آوند؛ در صورت رد شدن درخواست API، برای آن مرجع «—» نمایش داده می‌شود؛ بانک بر اساس نرخ سالانه‌ای که کاربر وارد می‌کند. تاریخ مبنا نزدیک‌ترین داده موجود در همان روز یا قبل از آن است. اگر تاریخچه یک دارایی در دسترس نباشد، «—» نمایش داده می‌شود و عدد ساختگی تولید نمی‌شود.';
+            note.textContent='منابع: TGJU برای طلا ۱۸، دلار آزاد و شاخص کل بورس؛ BrsApi / TSETMC برای تاریخچه عیار و آوند؛ در صورت رد شدن درخواست API، برای آن مرجع «—» نمایش داده می‌شود؛ بانک بر اساس نرخ سالانه‌ای که کاربر وارد می‌کند. تاریخ مبنا نزدیک‌ترین داده موجود در همان روز یا قبل از آن است. اگر تاریخچه یک دارایی در دسترس نباشد، «—» نمایش داده می‌شود و عدد ساختگی تولید نمی‌شود. برای هر دو ستون (قیمت خرید و قیمت امروز) امکان ورود دستی وجود دارد.';
             grid.parentElement.appendChild(note);
         }
 
