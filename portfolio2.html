@@ -2592,8 +2592,8 @@
                     const manualKey = item.id || `${item.asset_symbol || item.asset_name}_${item.buy_date}`;
                     const safeManualKey = String(manualKey).replace(/[^a-zA-Z0-9_-]/g,'_');
 
-                    const baseInputId    = `manual_base_${safeManualKey}_${benchmark.key}`;
-                    const latestInputId  = `manual_latest_${safeManualKey}_${benchmark.key}`;
+                    const baseInputId    = `base_${safeManualKey}_${benchmark.key}`;
+                    const latestInputId  = `latest_${safeManualKey}_${benchmark.key}`;
 
                     const baseManualInput = `<div class="manual-price-box">
                         <input type="number" min="0" step="any" placeholder="قیمت خرید دستی" value="${manualBase || ''}" id="${baseInputId}">
