@@ -1180,6 +1180,7 @@
                             <label class="compare-option"><input type="checkbox" class="compare-check" value="usd" checked onchange="refreshComparison()"><span class="check">✓</span><span class="option-text">💵 دلار آزاد</span></label>
                             <label class="compare-option"><input type="checkbox" class="compare-check" value="bourse" checked onchange="refreshComparison()"><span class="check">✓</span><span class="option-text">📊 شاخص کل بورس</span></label>
                             <label class="compare-option"><input type="checkbox" class="compare-check" value="silver999" onchange="refreshComparison()"><span class="check">✓</span><span class="option-text">🥈 نقره ۹۹۹</span></label>
+                            <label class="compare-option"><input type="checkbox" class="compare-check" value="ayar" checked onchange="refreshComparison()"><span class="check">✓</span><span class="option-text">🟡 صندوق طلای عیار</span></label>
                             <label class="compare-option"><input type="checkbox" class="compare-check" value="avand" checked onchange="refreshComparison()"><span class="check">✓</span><span class="option-text">💼 صندوق آوند</span></label>
                             <label class="compare-option"><input type="checkbox" class="compare-check" value="bank" onchange="refreshComparison()"><span class="check">✓</span><span class="option-text">🏦 سپرده بانکی</span></label>
                         </div>
@@ -1340,9 +1341,9 @@
                 usd: { slug: 'price_dollar_rl', label: 'دلار آزاد', icon: '💵', type: 'tgju' },
                 bourse: { slug: 'bourse', label: 'شاخص کل بورس', icon: '📊', type: 'tgju', noRial: true },
                 silver999: { slug: 'silver_999', label: 'نقره ۹۹۹', icon: '🥈', type: 'tgju' },
+                ayar: { slug: 'gc3', label: 'صندوق طلای عیار', icon: '🟡', type: 'tgju' },
                 avand: { label: 'صندوق آوند', icon: '💼', type: 'manual-avand' }
             };
-
             const sources = {};
             for (const key of selected) {
                 if (key === 'bank' || key === 'avand') continue;
@@ -1375,19 +1376,29 @@
                         continue;
                     }
                     if (key === 'avand') {
-                        // مقایسه آوند: از قیمت خرید و قیمت دستی فعلی
-                        if (avandBuyPrice && avandCurrentManual && avandBuyPrice > 0) {
-                            const percent = (avandCurrentManual / avandBuyPrice - 1) * 100;
-                            rows.push({
-                                label: 'صندوق آوند', icon: '💼',
-                                base: avandBuyPrice, latest: avandCurrentManual, percent,
-                                hypothetical: invested * (avandCurrentManual / avandBuyPrice)
-                            });
-                        } else {
-                            rows.push({ label: 'صندوق آوند', icon: '💼', base: null, latest: null, percent: null, hypothetical: null, hint: 'قیمت دستی آوند را ثبت کنید' });
-                        }
-                        continue;
-                    }
+                    // دکمه ثبت قیمت برای آوند (اگه آوند توی پرتفوی هست)
+                      const avandItemId = avandItem?.id;
+                      const editBtn = avandItemId 
+                          ? `<button class="compare-edit-btn" onclick="editManualPrice('${String(avandItemId).replace(/'/g,"\\'")}')" title="ثبت قیمت دستی آوند">✏️</button>` 
+                          : '';
+    
+                     if (avandBuyPrice && avandCurrentManual && avandBuyPrice > 0) {
+                          const percent = (avandCurrentManual / avandBuyPrice - 1) * 100;
+                          rows.push({
+                              label: 'صندوق آوند', icon: '💼',
+                              base: avandBuyPrice, latest: avandCurrentManual, percent,
+                              hypothetical: invested * (avandCurrentManual / avandBuyPrice),
+                              editBtn
+                          });
+                      } else {
+                          rows.push({ 
+                              label: 'صندوق آوند', icon: '💼', 
+                              base: null, latest: null, percent: null, hypothetical: null, 
+                              hint: 'برای ثبت قیمت روی ✏️ بزن', editBtn 
+                          });
+                      }
+                      continue;
+                   }
                     const src = sources[key];
                     if (!src) {
                         rows.push({ label: defs[key].label, icon: defs[key].icon, base: null, latest: null, percent: null, hypothetical: null });
@@ -1415,7 +1426,7 @@
                     const sign = p === null ? '' : p >= 0 ? '+' : '−';
                     const hint = r.hint ? `<div style="font-size:9px;color:#94a3b8">${r.hint}</div>` : '';
                     return `<tr>
-                        <td>${r.icon} ${escapeHtml(r.label)}${hint}</td>
+                        <td>${r.icon} ${escapeHtml(r.label)}${hint}${editBtn}</td>
                         <td>${r.base === null ? '—' : formatNum(r.base) + ' تومان'}</td>
                         <td>${r.latest === null ? '—' : formatNum(r.latest) + ' تومان'}</td>
                         <td class="${cls}">${p === null ? '—' : sign + toFa(Math.abs(p).toFixed(2)) + '٪'}</td>
