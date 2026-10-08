@@ -4,7 +4,7 @@
 // ==========================================
 
 // نسخه خودکار: هر بار که فایل تغییر کنه، نسخه جدید میاد
-const VERSION = 'v3.1.7';
+const VERSION = 'v3.1.8';
 const CACHE_NAME = `shamdun-${VERSION}`;
 
 const urlsToCache = [
