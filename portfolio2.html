@@ -36,22 +36,51 @@
             --white: #0f172a;
             --gray: #64748b;
         }
+        /* ===== تم روشن — فرم و مودال ===== */
         [data-theme="light"] .form-group input,
         [data-theme="light"] .form-group select,
         [data-theme="light"] .form-group textarea {
             background: #ffffff;
-            border-color: rgba(0, 0, 0, 0.1);
+            border-color: #cbd5e1;
             color: #0f172a;
+        }
+        [data-theme="light"] .form-group input::placeholder,
+        [data-theme="light"] .form-group textarea::placeholder {
+            color: #94a3b8;
         }
         [data-theme="light"] .modal {
             background: #ffffff;
-            border-color: rgba(184, 134, 11, 0.3);
+            border-color: #e5d9b8;
         }
         [data-theme="light"] .modal h2 {
             color: #b8860b;
-            border-bottom-color: rgba(184, 134, 11, 0.2);
+            border-bottom-color: #ead9aa;
         }
-        [data-theme="light"] .form-group label { color: #334155; }
+        [data-theme="light"] .form-group label {
+            color: #334155;
+        }
+        /* ===== تم روشن — دکمه‌ها ===== */
+        [data-theme="light"] .btn-secondary {
+            background: #f1f5f9;
+            color: #0f172a;
+            border-color: #cbd5e1;
+        }
+        [data-theme="light"] .btn-secondary:hover {
+            background: #e2e8f0;
+            border-color: #94a3b8;
+        }
+        [data-theme="light"] .table-edit-btn {
+            background: rgba(59,130,246,.10);
+            border-color: rgba(59,130,246,.35);
+        }
+        [data-theme="light"] .table-delete-btn {
+            background: rgba(239,68,68,.10);
+            border-color: rgba(239,68,68,.35);
+        }
+        [data-theme="light"] .table-icon {
+            background: rgba(184, 134, 11, 0.1);
+        }
+        /* ===== تم روشن — بخش مقایسه ===== */
         html[data-theme="light"] .compare-selector,
         body.light-theme .compare-selector {
             background: #ffffff !important;
@@ -101,11 +130,15 @@
         body.light-theme #compareBankRate {
             background: #ffffff !important;
             color: #0f172a !important;
-            border-color: #e5e7eb !important;
+            border-color: #cbd5e1 !important;
             -webkit-text-fill-color: #0f172a !important;
         }
         html[data-theme="light"] .compare-table-wrap,
         body.light-theme .compare-table-wrap { border-color: #e5e7eb !important; }
+        html[data-theme="light"] .compare-asset-date,
+        body.light-theme .compare-asset-date { color: #64748b !important; }
+        html[data-theme="light"] .compare-loading,
+        body.light-theme .compare-loading { color: #64748b !important; }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -286,6 +319,7 @@
             display: flex; gap: 10px; margin-top: 20px; justify-content: flex-end;
         }
         .modal-actions .btn { flex: 1; justify-content: center; }
+        .hint-text { font-size: 11px; color: var(--gray); margin-top: 4px; }
         .toast {
             position: fixed; bottom: 30px; left: 50%;
             transform: translateX(-50%) translateY(100px);
@@ -470,32 +504,52 @@
                     <option value="other">🌟 سایر</option>
                 </select>
             </div>
+
+            <!-- انتخاب دارایی از لیست (به‌جز stock و سایر که نام دلخواه دارن) -->
             <div class="form-group" id="assetSelectGroup">
                 <label>دارایی *</label>
                 <select id="assetSelect" onchange="onAssetChange()"></select>
             </div>
+
+            <!-- نام دلخواه (فقط برای بورس ایران و سایر) -->
+            <div class="form-group" id="customNameGroup" style="display:none;">
+                <label>نام دلخواه *</label>
+                <input type="text" id="customName" placeholder="مثلاً: سهم فولاد، سکه پارسیان، ...">
+                <div class="hint-text">هر نامی که می‌خوای وارد کن</div>
+            </div>
+
             <div class="form-row">
                 <div class="form-group">
                     <label>مقدار *</label>
-                    <input type="number" id="assetQuantity" step="any" min="0">
+                    <input type="number" id="assetQuantity" step="any" min="0" placeholder="۰">
                 </div>
                 <div class="form-group">
                     <label>واحد</label>
-                    <input type="text" id="assetUnit" readonly>
+                    <input type="text" id="assetUnit" readonly placeholder="واحد">
                 </div>
             </div>
+
             <div class="form-group">
                 <label>قیمت خرید (هر واحد) *</label>
-                <input type="number" id="assetBuyPrice" step="any" min="0">
+                <input type="number" id="assetBuyPrice" step="any" min="0" placeholder="۰">
             </div>
+
+            <div class="form-group">
+                <label>قیمت فعلی (اختیاری)</label>
+                <input type="number" id="assetCurrentPrice" step="any" min="0" placeholder="خالی بگذار تا از TGJU/CoinGecko خونده بشه">
+                <div class="hint-text">اگه پر کنی، به‌عنوان قیمت زنده استفاده می‌شه. برای دارایی‌های دستی (سایر، بانک، آوند و...) پر کن.</div>
+            </div>
+
             <div class="form-group">
                 <label>تاریخ خرید *</label>
                 <input type="text" id="assetBuyDate" data-jalali-picker>
             </div>
+
             <div class="form-group">
                 <label>یادداشت (اختیاری)</label>
                 <textarea id="assetNotes" rows="2"></textarea>
             </div>
+
             <div class="modal-actions">
                 <button class="btn btn-secondary" onclick="closeModal('assetModal')">لغو</button>
                 <button class="btn btn-primary" onclick="saveAsset()">💾 ذخیره</button>
@@ -503,18 +557,18 @@
         </div>
     </div>
 
-    <!-- Modal: قیمت دستی (برای صندوق آوند توی مقایسه) -->
+    <!-- Modal: قیمت دستی صندوق آوند -->
     <div class="modal-overlay" id="manualModal">
         <div class="modal">
-            <h2 id="manualModalTitle">✏️ ثبت قیمت دستی</h2>
+            <h2>✏️ ثبت قیمت صندوق آوند</h2>
             <input type="hidden" id="manualItemId">
             <div class="form-group">
                 <label>قیمت خرید (تومان) *</label>
-                <input type="number" id="manualBuyPrice" step="any" min="0">
+                <input type="number" id="manualBuyPrice" step="any" min="0" placeholder="۰">
             </div>
             <div class="form-group">
                 <label>قیمت فعلی (تومان) *</label>
-                <input type="number" id="manualCurrentPrice" step="any" min="0">
+                <input type="number" id="manualCurrentPrice" step="any" min="0" placeholder="۰">
             </div>
             <div class="modal-actions">
                 <button class="btn btn-secondary" onclick="closeModal('manualModal')">لغو</button>
@@ -530,9 +584,123 @@
     <script src="https://cdn.jsdelivr.net/npm/jalaali-js@1.2.6/dist/jalaali.min.js"></script>
     <script src="jalali-datepicker.js"></script>
     <script>
-        // ==========================================
-        // ASSETS — کامل
-        // ==========================================
+        // لیست سهم‌های معروف بورس ایران
+        const IRAN_STOCKS = [
+            { symbol: 'فولاد', name: 'فولاد مبارکه' },
+            { symbol: 'خودرو', name: 'ایران خودرو' },
+            { symbol: 'خساپا', name: 'سایپا' },
+            { symbol: 'شپنا', name: 'پالایش نفت اصفهان' },
+            { symbol: 'شتران', name: 'پالایش نفت تهران' },
+            { symbol: 'همراه', name: 'همراه اول' },
+            { symbol: 'فملی', name: 'ملی صنایع مس' },
+            { symbol: 'وبملت', name: 'بانک ملت' },
+            { symbol: 'وتجارت', name: 'بانک تجارت' },
+            { symbol: 'وپاسار', name: 'بانک پاسارگاد' },
+            { symbol: 'وپارس', name: 'بانک پارسیان' },
+            { symbol: 'و صادرات'.replace(/\s/g,''), name: 'بانک صادرات' },
+            { symbol: 'شستا', name: 'سرمایه‌گذاری تأمین اجتماعی' },
+            { symbol: 'شبریز', name: 'پالایش نفت تبریز' },
+            { symbol: 'کگل', name: 'گل گهر' },
+            { symbol: 'کچاد', name: 'چادرملو' },
+            { symbol: 'فخوز', name: 'فولاد خوزستان' },
+            { symbol: 'فارس', name: 'صنایع پتروشیمی خلیج فارس' },
+            { symbol: 'شپدیس', name: 'پتروشیمی پردیس' },
+            { symbol: 'شبریز'.replace('شبریز','شبریز'), name: 'پالایش نفت تبریز' },
+            { symbol: 'شاوان', name: 'پالایش نفت لاوان' },
+            { symbol: 'شبندر', name: 'پالایش نفت بندرعباس' },
+            { symbol: 'شبصیر', name: 'پتروشیمی بوعلی سینا' },
+            { symbol: 'شاراک', name: 'پتروشیمی شازند' },
+            { symbol: 'شفن', name: 'پتروشیمی فناوران' },
+            { symbol: 'شیراز', name: 'پتروشیمی شیراز' },
+            { symbol: 'شغدیر', name: 'پتروشیمی غدیر' },
+            { symbol: 'شکبیر', name: 'پتروشیمی امیرکبیر' },
+            { symbol: 'شپاس', name: 'پتروشیمی پارس' },
+            { symbol: 'شجم', name: 'پتروشیمی جم' },
+            { symbol: 'شلعاب', name: 'لعابیران' },
+            { symbol: 'شگویا', name: 'پتروشیمی تندگویان' },
+            { symbol: 'شسینا', name: 'پتروشیمی سینا' },
+            { symbol: 'شمواد', name: 'پتروشیمی مواد' },
+            { symbol: 'شزپن', name: 'پتروشیمی زاگرس' },
+            { symbol: 'شصدف', name: 'پتروشیمی صدف' },
+            { symbol: 'شکام', name: 'پتروشیمی کام' },
+            { symbol: 'شهراز', name: 'پتروشیمی رازی' },
+            { symbol: 'شخارک', name: 'پتروشیمی خارک' },
+            { symbol: 'شاهان', name: 'پتروشیمی اصفهان' },
+            { symbol: 'سخوز', name: 'سیمان خوزستان' },
+            { symbol: 'سفارس', name: 'سیمان فارس' },
+            { symbol: 'سهرمز', name: 'سیمان هرمزگان' },
+            { symbol: 'ستران', name: 'سیمان تهران' },
+            { symbol: 'سشرق', name: 'سیمان شرق' },
+            { symbol: 'سبزوا', name: 'سیمان لار سبزوار' },
+            { symbol: 'ساربیل', name: 'سیمان اربیل' },
+            { symbol: 'سهگمت', name: 'سیمان هگمتان' },
+            { symbol: 'سصفها', name: 'سیمان اصفهان' },
+            { symbol: 'سکرما', name: 'سیمان کرمان' },
+            { symbol: 'سفارز', name: 'سیمان فارس نو' },
+            { symbol: 'سبهان', name: 'سیمان بهبهان' },
+            { symbol: 'سقاین', name: 'سیمان قاین' },
+            { symbol: 'سدور', name: 'سیمان دورود' },
+            { symbol: 'سخاش', name: 'سیمان خاش' },
+            { symbol: 'سدشت', name: 'سیمان دشتستان' },
+            { symbol: 'سنیر', name: 'سیمان سفید نی‌ریز' },
+            { symbol: 'سپاها', name: 'سیمان پاها' },
+            { symbol: 'شپترو', name: 'پتروشیمی آبادان' },
+            { symbol: 'شاملا', name: 'پتروشیمی املاک' },
+            { symbol: 'شساخت', name: 'پتروشیمی ساخت' },
+            { symbol: 'شپمچا', name: 'پتروشیمی مچا' },
+            { symbol: 'شفارا', name: 'پتروشیمی فارابی' },
+            { symbol: 'شپمچا'.replace('شپمچا','شپمچا'), name: 'پتروشیمی مچا' },
+            { symbol: 'شکربن', name: 'پتروشیمی کربن' },
+            { symbol: 'شفن'.replace('شفن','شفن'), name: 'پتروشیمی فناوران' },
+            { symbol: 'ونیکی', name: 'سرمایه‌گذاری ملی ایران' },
+            { symbol: 'وغدیر', name: 'سرمایه‌گذاری غدیر' },
+            { symbol: 'وپترو', name: 'سرمایه‌گذاری پتروشیمی' },
+            { symbol: 'وسپه', name: 'سرمایه‌گذاری سپه' },
+            { symbol: 'وصندوق', name: 'سرمایه‌گذاری صندوق بازنشستگی' },
+            { symbol: 'وامید', name: 'سرمایه‌گذاری امید' },
+            { symbol: 'وبانک', name: 'سرمایه‌گذاری گروه توسعه ملی' },
+            { symbol: 'وتوکا', name: 'سرمایه‌گذاری توکا فولاد' },
+            { symbol: 'وساخت', name: 'سرمایه‌گذاری ساختمان ایران' },
+            { symbol: 'وآیند', name: 'سرمایه‌گذاری آینده' },
+            { symbol: 'وتوسم', name: 'سرمایه‌گذاری توسعه ملی' },
+            { symbol: 'وکار', name: 'بانک کارآفرین' },
+            { symbol: 'وخارزم', name: 'بانک خاورمیانه' },
+            { symbol: 'وسینا', name: 'بانک سینا' },
+            { symbol: 'وپست', name: 'پست بانک ایران' },
+            { symbol: 'وآفری', name: 'بانک آفریقا' },
+            { symbol: 'وایران', name: 'بانک ایران زمین' },
+            { symbol: 'واقتصاد', name: 'بانک اقتصاد نوین' },
+            { symbol: 'وپست'.replace('وپست','وپست'), name: 'پست بانک ایران' },
+            { symbol: 'ولملت', name: 'بانک ملل' },
+            { symbol: 'ولیز', name: 'بانک لیزینگ ایران' },
+            { symbol: 'وپترو'.replace('وپترو','وپترو'), name: 'سرمایه‌گذاری پتروشیمی' },
+            { symbol: 'وکغدیر', name: 'سرمایه‌گذاری کشت و صنعت' },
+            { symbol: 'وبهمن', name: 'سرمایه‌گذاری بهمن' },
+            { symbol: 'وسنا', name: 'سرمایه‌گذاری سنا' },
+            { symbol: 'ونفت', name: 'سرمایه‌گذاری نفت' },
+            { symbol: 'وغدیر'.replace('وغدیر','وغدیر'), name: 'سرمایه‌گذاری غدیر' },
+            { symbol: 'تاپیکو', name: 'سرمایه‌گذاری نفت و گاز تأمین' },
+            { symbol: 'اخابر', name: 'مخابرات ایران' },
+            { symbol: 'کهمدا', name: 'کاشی الوند' },
+            { symbol: 'کحافظ', name: 'کاشی حافظ' },
+            { symbol: 'کساوه', name: 'کاشی ساوه' },
+            { symbol: 'کپارس', name: 'کاشی پارس' },
+            { symbol: 'شیشه', name: 'شیشه ایران' },
+            { symbol: 'کروی', name: 'کاشی رویا' },
+            { symbol: 'شیراز'.replace('شیراز','شیراز'), name: 'پتروشیمی شیراز' },
+            { symbol: 'حفاری', name: 'حفاری شمال' },
+            { symbol: 'شتران'.replace('شتران','شتران'), name: 'پالایش نفت تهران' },
+            { symbol: 'شبریز'.replace('شبریز','شبریز'), name: 'پالایش نفت تبریز' },
+            { symbol: 'شبندر'.replace('شبندر','شبندر'), name: 'پالایش نفت بندرعباس' }
+        ];
+        // حذف تکراری‌ها
+        const seenSymbols = new Set();
+        const UNIQUE_STOCKS = IRAN_STOCKS.filter(s => {
+            if (seenSymbols.has(s.symbol)) return false;
+            seenSymbols.add(s.symbol);
+            return true;
+        });
+
         const ASSETS = {
             gold: {
                 name: 'طلا و فلزات گرانبها', icon: '🥇',
@@ -540,16 +708,14 @@
                     { symbol: 'gold18', name: 'طلا ۱۸ عیار', unit: 'گرم', icon: '🥇', tgju: 'geram18' },
                     { symbol: 'gold24', name: 'طلا ۲۴ عیار', unit: 'گرم', icon: '🥇', tgju: 'geram24' },
                     { symbol: 'gold-melted', name: 'طلای آب‌شده', unit: 'مثقال', icon: '🟡', tgju: 'mesghal' },
-                    { symbol: 'coin-emami', name: 'سکه امامی', unit: 'عدد', icon: '🪙', tgju: 'emami1' },
-                    { symbol: 'coin-bahar', name: 'سکه بهار آزادی', unit: 'عدد', icon: '🏅', tgju: 'bahar1' },
-                    { symbol: 'coin-half', name: 'نیم سکه', unit: 'عدد', icon: '🥈', tgju: 'nim1' },
-                    { symbol: 'coin-quarter', name: 'ربع سکه', unit: 'عدد', icon: '🥉', tgju: 'rob1' },
-                    { symbol: 'coin-1g', name: 'سکه گرمی', unit: 'عدد', icon: '⭕', tgju: 'gerami1' },
+                    { symbol: 'coin-emami', name: 'سکه امامی', unit: 'عدد', icon: '🪙' },
+                    { symbol: 'coin-bahar', name: 'سکه بهار آزادی', unit: 'عدد', icon: '🏅' },
+                    { symbol: 'coin-half', name: 'نیم سکه', unit: 'عدد', icon: '🥈' },
+                    { symbol: 'coin-quarter', name: 'ربع سکه', unit: 'عدد', icon: '🥉' },
+                    { symbol: 'coin-1g', name: 'سکه گرمی', unit: 'عدد', icon: '⭕' },
                     { symbol: 'silver999', name: 'نقره ۹۹۹', unit: 'گرم', icon: '🥈', tgju: 'silver_999' },
                     { symbol: 'ounce-gold', name: 'انس طلا', unit: 'انس', icon: '🏅', tgju: 'ons' },
-                    { symbol: 'ounce-silver', name: 'انس نقره', unit: 'انس', icon: '🥈', tgju: 'silver' },
-                    { symbol: 'ounce-platinum', name: 'انس پلاتین', unit: 'انس', icon: '🔶', manual: true },
-                    { symbol: 'ounce-palladium', name: 'انس پالادیوم', unit: 'انس', icon: '💎', manual: true }
+                    { symbol: 'ounce-silver', name: 'انس نقره', unit: 'انس', icon: '🥈', tgju: 'silver' }
                 ]
             },
             currency: {
@@ -589,26 +755,33 @@
             global: {
                 name: 'بازار جهانی', icon: '🌍',
                 items: [
-                    { symbol: 'xauusd', name: 'طلای جهانی', unit: 'انس', icon: '🥇', manual: true },
-                    { symbol: 'xagusd', name: 'نقره جهانی', unit: 'انس', icon: '🥈', manual: true },
-                    { symbol: 'brent', name: 'نفت برنت', unit: 'بشکه', icon: '🛢️', manual: true },
-                    { symbol: 'wti', name: 'نفت WTI', unit: 'بشکه', icon: '🛢️', manual: true },
-                    { symbol: 'sp500', name: 'شاخص S&P 500', unit: 'واحد', icon: '📈', manual: true },
-                    { symbol: 'nasdaq', name: 'شاخص Nasdaq', unit: 'واحد', icon: '📈', manual: true },
-                    { symbol: 'copper', name: 'مس جهانی', unit: 'واحد', icon: '🟠', manual: true },
-                    { symbol: 'aluminum', name: 'آلومینیوم', unit: 'واحد', icon: '⚙️', manual: true },
-                    { symbol: 'zinc', name: 'روی', unit: 'واحد', icon: '⚙️', manual: true },
-                    { symbol: 'lead', name: 'سرب', unit: 'واحد', icon: '⚙️', manual: true },
-                    { symbol: 'nickel', name: 'نیکل', unit: 'واحد', icon: '⚙️', manual: true },
-                    { symbol: 'gas', name: 'گاز طبیعی', unit: 'MMBtu', icon: '🔥', manual: true },
-                    { symbol: 'gasoline', name: 'بنزین', unit: 'گالن', icon: '⛽', manual: true },
-                    { symbol: 'gasoil', name: 'گازوئیل', unit: 'تن', icon: '⛽', manual: true }
+                    { symbol: 'xauusd', name: 'طلای جهانی', unit: 'انس', icon: '🥇' },
+                    { symbol: 'xagusd', name: 'نقره جهانی', unit: 'انس', icon: '🥈' },
+                    { symbol: 'brent', name: 'نفت برنت', unit: 'بشکه', icon: '🛢️' },
+                    { symbol: 'wti', name: 'نفت WTI', unit: 'بشکه', icon: '🛢️' },
+                    { symbol: 'sp500', name: 'شاخص S&P 500', unit: 'واحد', icon: '📈' },
+                    { symbol: 'nasdaq', name: 'شاخص Nasdaq', unit: 'واحد', icon: '📈' },
+                    { symbol: 'copper', name: 'مس جهانی', unit: 'واحد', icon: '🟠' },
+                    { symbol: 'aluminum', name: 'آلومینیوم', unit: 'واحد', icon: '⚙️' },
+                    { symbol: 'zinc', name: 'روی', unit: 'واحد', icon: '⚙️' },
+                    { symbol: 'lead', name: 'سرب', unit: 'واحد', icon: '⚙️' },
+                    { symbol: 'nickel', name: 'نیکل', unit: 'واحد', icon: '⚙️' },
+                    { symbol: 'gas', name: 'گاز طبیعی', unit: 'MMBtu', icon: '🔥' },
+                    { symbol: 'gasoline', name: 'بنزین', unit: 'گالن', icon: '⛽' },
+                    { symbol: 'gasoil', name: 'گازوئیل', unit: 'تن', icon: '⛽' }
                 ]
             },
             stock: {
                 name: 'بورس ایران', icon: '📊',
                 items: [
-                    { symbol: 'bourse-index', name: 'شاخص کل بورس', unit: 'واحد', icon: '📊', tgju: 'bourse' }
+                    { symbol: '__shakhes__', name: '📊 شاخص کل بورس', unit: 'واحد', icon: '📊', tgju: 'bourse' },
+                    { symbol: '__custom_stock__', name: '✏️ سهم دلخواه (نام را وارد کن)', unit: 'سهم', icon: '📊', custom: true },
+                    ...UNIQUE_STOCKS.map(s => ({
+                        symbol: s.symbol,
+                        name: `${s.name} (${s.symbol})`,
+                        unit: 'سهم',
+                        icon: '📊'
+                    }))
                 ]
             },
             ayar: {
@@ -620,25 +793,25 @@
             fund: {
                 name: 'صندوق درآمد ثابت آوند', icon: '💼',
                 items: [
-                    { symbol: 'avand', name: 'صندوق درآمد ثابت آوند', unit: 'واحد', icon: '💼', manual: true }
+                    { symbol: 'avand', name: 'صندوق درآمد ثابت آوند', unit: 'واحد', icon: '💼' }
                 ]
             },
             bank: {
                 name: 'سپرده بانکی', icon: '🏦',
                 items: [
-                    { symbol: 'custom-bank', name: 'سپرده (دستی)', unit: 'تومان', icon: '🏦', manual: true }
+                    { symbol: 'custom-bank', name: 'سپرده بانکی', unit: 'تومان', icon: '🏦' }
                 ]
             },
             realestate: {
                 name: 'املاک', icon: '🏠',
                 items: [
-                    { symbol: 'custom-realestate', name: 'ملک (دستی)', unit: 'متر', icon: '🏠', manual: true }
+                    { symbol: 'custom-realestate', name: 'ملک', unit: 'متر', icon: '🏠' }
                 ]
             },
             other: {
                 name: 'سایر', icon: '🌟',
                 items: [
-                    { symbol: 'custom-other', name: 'سایر (دستی)', unit: 'عدد', icon: '🌟', manual: true }
+                    { symbol: 'custom-other', name: '✏️ نام دلخواه', unit: 'عدد', icon: '🌟', custom: true }
                 ]
             }
         };
@@ -650,12 +823,8 @@
         let barChart = null;
         const tgjuHistoryCache = {};
 
-        // slugهایی که واحدشون ریال نیست (نباید تقسیم بر ۱۰ بشن)
         const NON_RIAL_SLUGS = new Set(['ons', 'silver', 'xauusd', 'xagusd', 'bourse']);
 
-        // ==========================================
-        // UTILS
-        // ==========================================
         function toFa(num) {
             if (num === null || num === undefined) return '۰';
             const p = ['۰','۱','۲','۳','۴','۵','۶','۷','۸','۹'];
@@ -709,9 +878,6 @@
             } catch { return '—'; }
         }
 
-        // ==========================================
-        // TGJU
-        // ==========================================
         function parseTgjuRows(payload) {
             const rows = Array.isArray(payload?.data) ? payload.data : [];
             return rows.map(row => {
@@ -755,9 +921,6 @@
             return rows;
         }
 
-        // ==========================================
-        // قیمت دستی برای دارایی‌های پرتفوی
-        // ==========================================
         function manualPriceKey(itemId) { return `shamdun_manual_price_${itemId}`; }
         function getManualPrice(itemId) {
             const v = Number(localStorage.getItem(manualPriceKey(itemId)));
@@ -776,9 +939,6 @@
             render();
         }
 
-        // ==========================================
-        // قیمت دستی برای صندوق آوند (مقایسه)
-        // ==========================================
         function avandManualKey() { return 'shamdun_avand_compare_prices'; }
         function getAvandCompare() {
             try {
@@ -797,27 +957,22 @@
             renderCompare(calculateStats());
         }
         function openManualModal(itemId, title, defaultBuy, defaultCurrent) {
-            document.getElementById('manualModalTitle').textContent = '✏️ ' + title;
             document.getElementById('manualItemId').value = itemId || '';
             document.getElementById('manualBuyPrice').value = defaultBuy || '';
             document.getElementById('manualCurrentPrice').value = defaultCurrent || '';
             document.getElementById('manualModal').classList.add('show');
         }
         function saveManualPrice() {
-            const itemId = document.getElementById('manualItemId').value;
             const buy = document.getElementById('manualBuyPrice').value;
             const current = document.getElementById('manualCurrentPrice').value;
             closeModal('manualModal');
-            if (itemId === 'avand') {
-                setAvandCompare(buy, current);
-            } else if (itemId) {
-                setManualPrice(itemId, current);
-            }
+            setAvandCompare(buy, current);
+        }
+        function openAvandModal() {
+            const existing = getAvandCompare();
+            openManualModal('avand', 'ثبت قیمت صندوق آوند', existing?.buy, existing?.current);
         }
 
-        // ==========================================
-        // LOAD PRICES
-        // ==========================================
         async function loadPrices() {
             priceCache = {};
             const tgjuSlugs = new Set();
@@ -871,15 +1026,12 @@
             return cat?.items?.find(i => i.symbol === symbol) || null;
         }
         function getCurrentPrice(item) {
-            // اولویت ۱: قیمت دستی
             const manual = getManualPrice(item.id);
             if (manual) return { price: manual, source: 'دستی', manual: true };
-            // اولویت ۲: TGJU
             const def = getAssetDefinition(item.asset_category, item.asset_symbol);
             if (def?.tgju && priceCache[def.symbol]?.price) {
                 return { price: priceCache[def.symbol].price, source: 'TGJU', manual: false };
             }
-            // اولویت ۳: کریپتو
             if (def && priceCache[def.symbol]?.price) {
                 return { price: priceCache[def.symbol].price, source: 'CoinGecko', manual: false };
             }
@@ -913,9 +1065,6 @@
             return `${toFa(Math.floor(days / 365))} سال · ${toFa(days % 365)} روز`;
         }
 
-        // ==========================================
-        // CALC STATS
-        // ==========================================
         function calculateStats() {
             let totalValue = 0, totalInvested = 0, totalInvestedWithLive = 0;
             const categoryStats = {};
@@ -959,9 +1108,6 @@
             return data || [];
         }
 
-        // ==========================================
-        // RENDER
-        // ==========================================
         async function render() {
             const container = document.getElementById('mainContent');
             try {
@@ -1181,9 +1327,6 @@
             });
         }
 
-        // ==========================================
-        // COMPARE — همیشه از TGJU برای مرجع‌ها + دستی برای آوند
-        // ==========================================
         function getSelectedCompareKeys() {
             return Array.from(document.querySelectorAll('.compare-check:checked')).map(el => el.value);
         }
@@ -1219,14 +1362,12 @@
                 const rows = [];
 
                 for (const key of selected) {
-                    // بانک
                     if (key === 'bank') {
                         const days = holdingDays(item.buy_date) || 0;
                         const percent = bankRate > 0 ? (Math.pow(1 + bankRate / 100, days / 365) - 1) * 100 : 0;
                         rows.push({ label: 'سپرده بانکی', icon: '🏦', baseText: '—', latestText: '—', percent, hypothetical: invested * (1 + percent / 100) });
                         continue;
                     }
-                    // صندوق آوند — همیشه دستی
                     if (key === 'avand') {
                         const editBtn = `<button class="manual-price-btn" onclick="openAvandModal()" title="ثبت قیمت دستی آوند">✏️</button>`;
                         if (avand) {
@@ -1248,7 +1389,6 @@
                         }
                         continue;
                     }
-                    // TGJU
                     const def = tgjuDefs[key];
                     const src = sources[key];
                     if (!src || !def) {
@@ -1308,11 +1448,6 @@
             }
         }
 
-        function openAvandModal() {
-            const existing = getAvandCompare();
-            openManualModal('avand', 'ثبت قیمت صندوق آوند', existing?.buy, existing?.current);
-        }
-
         function findHistoryAtOrBefore(rows, dateStr) {
             if (!dateStr || !rows?.length) return null;
             const target = String(dateStr).trim();
@@ -1325,7 +1460,7 @@
         }
 
         // ==========================================
-        // FORM
+        // فرم افزودن/ویرایش دارایی
         // ==========================================
         function openAddModal(categoryKey = 'gold', symbol = null) {
             document.getElementById('assetModalTitle').textContent = '➕ افزودن دارایی';
@@ -1342,9 +1477,12 @@
             if (dp) dp.setValue(iso);
             document.getElementById('assetQuantity').value = '';
             document.getElementById('assetBuyPrice').value = '';
+            document.getElementById('assetCurrentPrice').value = '';
+            document.getElementById('customName').value = '';
             document.getElementById('assetNotes').value = '';
             document.getElementById('assetModal').classList.add('show');
         }
+
         function onCategoryChange() {
             const catKey = document.getElementById('assetCategory').value;
             const cat = ASSETS[catKey];
@@ -1352,12 +1490,28 @@
             select.innerHTML = (cat?.items || []).map(i => `<option value="${i.symbol}">${i.name}</option>`).join('');
             onAssetChange();
         }
+
         function onAssetChange() {
             const catKey = document.getElementById('assetCategory').value;
             const symbol = document.getElementById('assetSelect').value;
             const item = ASSETS[catKey]?.items?.find(i => i.symbol === symbol);
             if (item) document.getElementById('assetUnit').value = item.unit || '';
+
+            // نمایش فیلد نام دلخواه برای بورس و سایر
+            const customGroup = document.getElementById('customNameGroup');
+            const isCustom = item?.custom || catKey === 'other';
+            if (isCustom) {
+                customGroup.style.display = 'block';
+            } else {
+                customGroup.style.display = 'none';
+            }
+
+            // اگه سهم بورس انتخاب شد، واحد رو سهم بذار
+            if (catKey === 'stock' && symbol !== '__shakhes__') {
+                document.getElementById('assetUnit').value = 'سهم';
+            }
         }
+
         async function saveAsset() {
             const id = document.getElementById('assetId').value;
             const category = document.getElementById('assetCategory').value;
@@ -1366,6 +1520,9 @@
             const item = cat?.items?.find(i => i.symbol === symbol);
             const quantity = parseFloat(document.getElementById('assetQuantity').value);
             const buyPrice = parseFloat(document.getElementById('assetBuyPrice').value);
+            const currentPriceRaw = document.getElementById('assetCurrentPrice').value;
+            const currentPrice = currentPriceRaw ? parseFloat(currentPriceRaw) : null;
+            const customName = document.getElementById('customName').value.trim();
             const input = document.getElementById('assetBuyDate');
             const dp = JalaliDatePicker.get(input);
             const buyDate = dp ? dp.getIsoValue() : input.value;
@@ -1374,42 +1531,93 @@
             if (!buyPrice || buyPrice <= 0) { showToast('❌ قیمت معتبر وارد کن', 'error'); return; }
             if (!buyDate) { showToast('❌ تاریخ را وارد کن', 'error'); return; }
 
+            // نام نهایی دارایی
+            let assetName = item?.name || symbol;
+            let assetSymbol = symbol;
+            if (item?.custom || (category === 'stock' && symbol === '__custom_stock__') || category === 'other') {
+                if (!customName) { showToast('❌ نام دلخواه را وارد کن', 'error'); return; }
+                assetName = customName;
+                assetSymbol = customName;
+            } else if (category === 'stock' && symbol !== '__shakhes__') {
+                // برای سهم‌های بورس، از اسم کامل استفاده کن
+                assetName = item?.name || symbol;
+            }
+
             const payload = {
                 user_id: currentUser.id,
                 asset_category: category,
-                asset_symbol: symbol,
-                asset_name: item?.name || symbol,
+                asset_symbol: assetSymbol,
+                asset_name: assetName,
                 asset_icon: item?.icon || '📊',
                 quantity,
-                unit: item?.unit || 'واحد',
+                unit: document.getElementById('assetUnit').value || item?.unit || 'واحد',
                 buy_price: buyPrice,
                 buy_date: buyDate,
                 notes: document.getElementById('assetNotes').value.trim() || null
             };
-            let error;
-            if (id) ({ error } = await db.from('user_portfolio').update(payload).eq('id', id));
-            else ({ error } = await db.from('user_portfolio').insert(payload));
+
+            let error, insertedId = id;
+            if (id) {
+                ({ error } = await db.from('user_portfolio').update(payload).eq('id', id));
+            } else {
+                const res = await db.from('user_portfolio').insert(payload).select();
+                if (res.error) { showToast('❌ ' + res.error.message, 'error'); return; }
+                insertedId = res.data?.[0]?.id;
+            }
+
             if (error) { showToast('❌ ' + error.message, 'error'); return; }
+
+            // اگه قیمت فعلی وارد شده، توی localStorage ذخیره کن
+            if (currentPrice && insertedId) {
+                localStorage.setItem(manualPriceKey(insertedId), String(currentPrice));
+            }
+
             showToast(id ? '✅ ویرایش شد' : '✅ اضافه شد');
             closeModal('assetModal');
             await render();
         }
+
         function editAsset(id) {
             const item = portfolio.find(p => String(p.id) === String(id));
             if (!item) return;
             document.getElementById('assetModalTitle').textContent = '✏️ ویرایش';
             document.getElementById('assetId').value = item.id;
             document.getElementById('assetCategory').value = item.asset_category;
-            onCategoryChange();
-            document.getElementById('assetSelect').value = item.asset_symbol;
-            onAssetChange();
+
+            const catKey = item.asset_category;
+            const cat = ASSETS[catKey];
+            const select = document.getElementById('assetSelect');
+
+            // برای دسته‌های خاص (سایر، بورس) گزینه‌ها رو با آیتم فعلی پر کن
+            let items = cat?.items || [];
+            const foundItem = items.find(i => i.symbol === item.asset_symbol);
+            if (!foundItem && (catKey === 'other' || catKey === 'stock')) {
+                // اگه پیدا نشد، یه آیتم custom اضافه کن
+                items = [
+                    { symbol: item.asset_symbol, name: item.asset_name, unit: item.unit, icon: item.asset_icon, custom: true },
+                    ...items
+                ];
+            }
+            select.innerHTML = items.map(i => `<option value="${i.symbol}">${i.name}</option>`).join('');
+            select.value = item.asset_symbol;
+
+            const foundDef = items.find(i => i.symbol === item.asset_symbol);
+            const isCustom = foundDef?.custom || catKey === 'other';
+            document.getElementById('customNameGroup').style.display = isCustom ? 'block' : 'none';
+            document.getElementById('customName').value = isCustom ? item.asset_name : '';
+
+            document.getElementById('assetUnit').value = item.unit || '';
             document.getElementById('assetQuantity').value = item.quantity;
             document.getElementById('assetBuyPrice').value = item.buy_price;
             const dp = JalaliDatePicker.get('assetBuyDate');
             if (dp) dp.setValue(item.buy_date);
+
+            const storedManual = getManualPrice(item.id);
+            document.getElementById('assetCurrentPrice').value = storedManual || '';
             document.getElementById('assetNotes').value = item.notes || '';
             document.getElementById('assetModal').classList.add('show');
         }
+
         async function deleteAsset(id) {
             if (!confirm('مطمئنی؟')) return;
             const { error } = await db.from('user_portfolio').delete().eq('id', id);
@@ -1418,6 +1626,7 @@
             showToast('🗑️ حذف شد');
             await render();
         }
+
         function exportCSV() {
             const stats = calculateStats();
             let csv = 'نام,نماد,دسته,مقدار,واحد,قیمت خرید,قیمت فعلی,سرمایه,ارزش فعلی,سود,درصد,تاریخ\n';
