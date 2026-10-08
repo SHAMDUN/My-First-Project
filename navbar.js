@@ -34,7 +34,7 @@
             items: [
                 { href: 'options-simulator.html', icon: '🎯', label: 'شبیه‌ساز آپشن' },
                 { href: 'calculator-v2.html', icon: '🧮', label: 'همراه مالی هوشمند' },
-                { href: 'portfolio.html', icon: '💼', label: 'پرتفوی من' }
+                { href: 'portfolio2.html', icon: '💼', label: 'پرتفوی من' }
             ]
         },
         {
@@ -742,7 +742,7 @@
             { title: 'دانش‌نامه اقتصادی', url: 'dictionary.html', icon: '🎓', type: 'صفحه' },
             { title: 'دستیار هوشمند', url: 'assistant.html', icon: '🤖', type: 'صفحه' },
             { title: 'همراه مالی هوشمند', url: 'calculator-v2.html', icon: '🧮', type: 'صفحه' },
-            { title: 'پرتفوی من', url: 'portfolio.html', icon: '💼', type: 'صفحه' },
+            { title: 'پرتفوی من', url: 'portfolio2.html', icon: '💼', type: 'صفحه' },
             { title: 'تست شخصیت مالی', url: 'personality-test.html', icon: '🧠', type: 'صفحه' }
         ]
     };
