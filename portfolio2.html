@@ -86,10 +86,6 @@
         body.light-theme .compare-table tr:nth-child(even) td {
             background: #fafafa !important;
         }
-        html[data-theme="light"] .compare-table .price,
-        body.light-theme .compare-table .price { color: #1f2937 !important; }
-        html[data-theme="light"] .compare-asset-date,
-        body.light-theme .compare-asset-date { color: #64748b !important; }
         html[data-theme="light"] .compare-title,
         body.light-theme .compare-title { color: #1f2937 !important; }
         html[data-theme="light"] .compare-desc,
@@ -208,51 +204,32 @@
             display: block; color: var(--gray); font-size: 10px;
             margin-top: 1px; direction: ltr; text-align: right;
         }
-
-        /* ==========================================
-           دکمه ✏️ قیمت دستی — واضح و بزرگ
-           ========================================== */
         .manual-price-btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 34px;
-            height: 34px;
-            min-width: 34px;
+            display: inline-flex; align-items: center; justify-content: center;
+            width: 34px; height: 34px;
             border-radius: 9px;
             border: 2px solid #d4af37;
-            background: rgba(212, 175, 55, 0.2);
+            background: rgba(212, 175, 55, 0.18);
             color: #d4af37;
-            cursor: pointer;
-            font-family: inherit;
-            font-size: 15px;
-            padding: 0;
-            margin: 0 6px;
-            vertical-align: middle;
-            box-shadow: 0 2px 8px rgba(212, 175, 55, 0.3);
+            cursor: pointer; font-family: inherit;
+            font-size: 15px; padding: 0;
+            margin: 0 6px; vertical-align: middle;
+            box-shadow: 0 2px 8px rgba(212, 175, 55, 0.25);
             transition: all 0.15s;
         }
         .manual-price-btn:hover {
             background: rgba(212, 175, 55, 0.4);
-            transform: scale(1.1);
-            box-shadow: 0 4px 12px rgba(212, 175, 55, 0.5);
+            transform: scale(1.08);
         }
         .manual-price-btn.wide {
-            width: auto;
-            padding: 0 14px;
-            font-size: 12px;
-            font-weight: 800;
+            width: auto; padding: 0 14px;
+            font-size: 12px; font-weight: 800;
         }
         [data-theme="light"] .manual-price-btn {
             background: rgba(184, 134, 11, 0.15);
             border-color: #b8860b;
             color: #b8860b;
-            box-shadow: 0 2px 8px rgba(184, 134, 11, 0.25);
         }
-        [data-theme="light"] .manual-price-btn:hover {
-            background: rgba(184, 134, 11, 0.3);
-        }
-
         .profit { color: #35c58a !important; }
         .loss { color: #f06b6b !important; }
         .neutral { color: var(--gray) !important; }
@@ -429,8 +406,6 @@
             background: rgba(255,255,255,.025);
         }
         .compare-table .price { white-space: nowrap; }
-        .compare-table .return { font-weight: 900; white-space: nowrap; }
-        .compare-table .hypothetical { font-weight: 800; white-space: nowrap; }
         .chart-section {
             background: linear-gradient(135deg, var(--bg-card), var(--bg-secondary));
             border: 1px solid rgba(212, 175, 55, 0.15);
@@ -475,6 +450,7 @@
         © ۱۴۰۵ آکادمی شمعدون | تمامی حقوق محفوظ است
     </footer>
 
+    <!-- Modal: افزودن/ویرایش دارایی -->
     <div class="modal-overlay" id="assetModal">
         <div class="modal">
             <h2 id="assetModalTitle">➕ افزودن دارایی</h2>
@@ -482,12 +458,15 @@
             <div class="form-group">
                 <label>دسته‌بندی *</label>
                 <select id="assetCategory" onchange="onCategoryChange()">
-                    <option value="gold">🥇 طلا</option>
+                    <option value="gold">🥇 طلا و فلزات گرانبها</option>
                     <option value="currency">💵 ارز</option>
+                    <option value="crypto">₿ کریپتوکارنسی</option>
+                    <option value="global">🌍 بازار جهانی</option>
                     <option value="stock">📊 بورس ایران</option>
                     <option value="ayar">🟡 صندوق طلای عیار</option>
                     <option value="fund">💼 صندوق درآمد ثابت آوند</option>
                     <option value="bank">🏦 سپرده بانکی</option>
+                    <option value="realestate">🏠 املاک</option>
                     <option value="other">🌟 سایر</option>
                 </select>
             </div>
@@ -524,6 +503,26 @@
         </div>
     </div>
 
+    <!-- Modal: قیمت دستی (برای صندوق آوند توی مقایسه) -->
+    <div class="modal-overlay" id="manualModal">
+        <div class="modal">
+            <h2 id="manualModalTitle">✏️ ثبت قیمت دستی</h2>
+            <input type="hidden" id="manualItemId">
+            <div class="form-group">
+                <label>قیمت خرید (تومان) *</label>
+                <input type="number" id="manualBuyPrice" step="any" min="0">
+            </div>
+            <div class="form-group">
+                <label>قیمت فعلی (تومان) *</label>
+                <input type="number" id="manualCurrentPrice" step="any" min="0">
+            </div>
+            <div class="modal-actions">
+                <button class="btn btn-secondary" onclick="closeModal('manualModal')">لغو</button>
+                <button class="btn btn-primary" onclick="saveManualPrice()">💾 ذخیره</button>
+            </div>
+        </div>
+    </div>
+
     <div id="toast" class="toast"></div>
 
     <script src="navbar.js"></script>
@@ -531,20 +530,26 @@
     <script src="https://cdn.jsdelivr.net/npm/jalaali-js@1.2.6/dist/jalaali.min.js"></script>
     <script src="jalali-datepicker.js"></script>
     <script>
+        // ==========================================
+        // ASSETS — کامل
+        // ==========================================
         const ASSETS = {
             gold: {
                 name: 'طلا و فلزات گرانبها', icon: '🥇',
                 items: [
                     { symbol: 'gold18', name: 'طلا ۱۸ عیار', unit: 'گرم', icon: '🥇', tgju: 'geram18' },
+                    { symbol: 'gold24', name: 'طلا ۲۴ عیار', unit: 'گرم', icon: '🥇', tgju: 'geram24' },
                     { symbol: 'gold-melted', name: 'طلای آب‌شده', unit: 'مثقال', icon: '🟡', tgju: 'mesghal' },
+                    { symbol: 'coin-emami', name: 'سکه امامی', unit: 'عدد', icon: '🪙', tgju: 'emami1' },
+                    { symbol: 'coin-bahar', name: 'سکه بهار آزادی', unit: 'عدد', icon: '🏅', tgju: 'bahar1' },
+                    { symbol: 'coin-half', name: 'نیم سکه', unit: 'عدد', icon: '🥈', tgju: 'nim1' },
+                    { symbol: 'coin-quarter', name: 'ربع سکه', unit: 'عدد', icon: '🥉', tgju: 'rob1' },
+                    { symbol: 'coin-1g', name: 'سکه گرمی', unit: 'عدد', icon: '⭕', tgju: 'gerami1' },
                     { symbol: 'silver999', name: 'نقره ۹۹۹', unit: 'گرم', icon: '🥈', tgju: 'silver_999' },
                     { symbol: 'ounce-gold', name: 'انس طلا', unit: 'انس', icon: '🏅', tgju: 'ons' },
                     { symbol: 'ounce-silver', name: 'انس نقره', unit: 'انس', icon: '🥈', tgju: 'silver' },
-                    { symbol: 'coin-emami', name: 'سکه امامی', unit: 'عدد', icon: '🪙' },
-                    { symbol: 'coin-bahar', name: 'سکه بهار آزادی', unit: 'عدد', icon: '🏅' },
-                    { symbol: 'coin-half', name: 'نیم سکه', unit: 'عدد', icon: '🥈' },
-                    { symbol: 'coin-quarter', name: 'ربع سکه', unit: 'عدد', icon: '🥉' },
-                    { symbol: 'coin-1g', name: 'سکه گرمی', unit: 'عدد', icon: '⭕' }
+                    { symbol: 'ounce-platinum', name: 'انس پلاتین', unit: 'انس', icon: '🔶', manual: true },
+                    { symbol: 'ounce-palladium', name: 'انس پالادیوم', unit: 'انس', icon: '💎', manual: true }
                 ]
             },
             currency: {
@@ -581,6 +586,31 @@
                     { symbol: 'avax', name: 'آوالانچ', unit: 'عدد', icon: 'https://cryptologos.cc/logos/avalanche-avax-logo.png' }
                 ]
             },
+            global: {
+                name: 'بازار جهانی', icon: '🌍',
+                items: [
+                    { symbol: 'xauusd', name: 'طلای جهانی', unit: 'انس', icon: '🥇', manual: true },
+                    { symbol: 'xagusd', name: 'نقره جهانی', unit: 'انس', icon: '🥈', manual: true },
+                    { symbol: 'brent', name: 'نفت برنت', unit: 'بشکه', icon: '🛢️', manual: true },
+                    { symbol: 'wti', name: 'نفت WTI', unit: 'بشکه', icon: '🛢️', manual: true },
+                    { symbol: 'sp500', name: 'شاخص S&P 500', unit: 'واحد', icon: '📈', manual: true },
+                    { symbol: 'nasdaq', name: 'شاخص Nasdaq', unit: 'واحد', icon: '📈', manual: true },
+                    { symbol: 'copper', name: 'مس جهانی', unit: 'واحد', icon: '🟠', manual: true },
+                    { symbol: 'aluminum', name: 'آلومینیوم', unit: 'واحد', icon: '⚙️', manual: true },
+                    { symbol: 'zinc', name: 'روی', unit: 'واحد', icon: '⚙️', manual: true },
+                    { symbol: 'lead', name: 'سرب', unit: 'واحد', icon: '⚙️', manual: true },
+                    { symbol: 'nickel', name: 'نیکل', unit: 'واحد', icon: '⚙️', manual: true },
+                    { symbol: 'gas', name: 'گاز طبیعی', unit: 'MMBtu', icon: '🔥', manual: true },
+                    { symbol: 'gasoline', name: 'بنزین', unit: 'گالن', icon: '⛽', manual: true },
+                    { symbol: 'gasoil', name: 'گازوئیل', unit: 'تن', icon: '⛽', manual: true }
+                ]
+            },
+            stock: {
+                name: 'بورس ایران', icon: '📊',
+                items: [
+                    { symbol: 'bourse-index', name: 'شاخص کل بورس', unit: 'واحد', icon: '📊', tgju: 'bourse' }
+                ]
+            },
             ayar: {
                 name: 'صندوق طلای عیار', icon: '🟡',
                 items: [
@@ -590,25 +620,25 @@
             fund: {
                 name: 'صندوق درآمد ثابت آوند', icon: '💼',
                 items: [
-                    { symbol: 'avand', name: 'صندوق درآمد ثابت آوند', unit: 'واحد', icon: '💼' }
+                    { symbol: 'avand', name: 'صندوق درآمد ثابت آوند', unit: 'واحد', icon: '💼', manual: true }
                 ]
             },
             bank: {
                 name: 'سپرده بانکی', icon: '🏦',
                 items: [
-                    { symbol: 'custom-bank', name: 'سپرده (دستی)', unit: 'تومان', icon: '🏦' }
+                    { symbol: 'custom-bank', name: 'سپرده (دستی)', unit: 'تومان', icon: '🏦', manual: true }
                 ]
             },
-            stock: {
-                name: 'بورس ایران', icon: '📊',
+            realestate: {
+                name: 'املاک', icon: '🏠',
                 items: [
-                    { symbol: 'bourse-index', name: 'شاخص کل بورس', unit: 'واحد', icon: '📊', tgju: 'bourse' }
+                    { symbol: 'custom-realestate', name: 'ملک (دستی)', unit: 'متر', icon: '🏠', manual: true }
                 ]
             },
             other: {
                 name: 'سایر', icon: '🌟',
                 items: [
-                    { symbol: 'custom-other', name: 'سایر (دستی)', unit: 'عدد', icon: '🌟' }
+                    { symbol: 'custom-other', name: 'سایر (دستی)', unit: 'عدد', icon: '🌟', manual: true }
                 ]
             }
         };
@@ -619,14 +649,18 @@
         let pieChart = null;
         let barChart = null;
         const tgjuHistoryCache = {};
+
+        // slugهایی که واحدشون ریال نیست (نباید تقسیم بر ۱۰ بشن)
         const NON_RIAL_SLUGS = new Set(['ons', 'silver', 'xauusd', 'xagusd', 'bourse']);
 
+        // ==========================================
+        // UTILS
+        // ==========================================
         function toFa(num) {
             if (num === null || num === undefined) return '۰';
             const p = ['۰','۱','۲','۳','۴','۵','۶','۷','۸','۹'];
             return String(num).replace(/\d/g, d => p[d]);
         }
-
         function formatNum(num, decimals = 0) {
             if (num === null || num === undefined || num === '') return '۰';
             const n = Number(num);
@@ -640,7 +674,6 @@
             const p = ['۰','۱','۲','۳','۴','۵','۶','۷','۸','۹'];
             return result.replace(/\d/g, d => p[d]);
         }
-
         function formatBigNum(num) {
             if (num === null || num === undefined || num === '') return '۰';
             const n = Number(num);
@@ -651,23 +684,19 @@
             if (Math.abs(n) >= 1e3) return formatNum(n / 1e3, 1) + ' هزار';
             return formatNum(n);
         }
-
         function escapeHtml(text) {
             if (!text) return '';
             const div = document.createElement('div');
             div.textContent = text;
             return div.innerHTML;
         }
-
         function showToast(msg, type = 'success') {
             const toast = document.getElementById('toast');
             toast.textContent = msg;
             toast.className = 'toast show ' + type;
             setTimeout(() => toast.classList.remove('show'), 3000);
         }
-
         function closeModal(id) { document.getElementById(id).classList.remove('show'); }
-
         function formatDate(dateStr) {
             if (!dateStr) return '—';
             try {
@@ -680,6 +709,9 @@
             } catch { return '—'; }
         }
 
+        // ==========================================
+        // TGJU
+        // ==========================================
         function parseTgjuRows(payload) {
             const rows = Array.isArray(payload?.data) ? payload.data : [];
             return rows.map(row => {
@@ -692,7 +724,6 @@
                 return Number.isFinite(close) && iso ? { close, greg, jalali, iso } : null;
             }).filter(Boolean);
         }
-
         async function fetchTgjuHistory(slug, length = 5000) {
             const cacheKey = `${slug}_${length}`;
             if (tgjuHistoryCache[cacheKey]) return tgjuHistoryCache[cacheKey];
@@ -724,6 +755,9 @@
             return rows;
         }
 
+        // ==========================================
+        // قیمت دستی برای دارایی‌های پرتفوی
+        // ==========================================
         function manualPriceKey(itemId) { return `shamdun_manual_price_${itemId}`; }
         function getManualPrice(itemId) {
             const v = Number(localStorage.getItem(manualPriceKey(itemId)));
@@ -742,6 +776,48 @@
             render();
         }
 
+        // ==========================================
+        // قیمت دستی برای صندوق آوند (مقایسه)
+        // ==========================================
+        function avandManualKey() { return 'shamdun_avand_compare_prices'; }
+        function getAvandCompare() {
+            try {
+                const raw = localStorage.getItem(avandManualKey());
+                if (!raw) return null;
+                const obj = JSON.parse(raw);
+                if (obj.buy > 0 && obj.current > 0) return obj;
+                return null;
+            } catch { return null; }
+        }
+        function setAvandCompare(buy, current) {
+            const b = Number(buy), c = Number(current);
+            if (!(b > 0) || !(c > 0)) { showToast('❌ هر دو قیمت باید معتبر باشند', 'error'); return; }
+            localStorage.setItem(avandManualKey(), JSON.stringify({ buy: b, current: c }));
+            showToast('✅ قیمت‌های صندوق آوند ذخیره شد');
+            renderCompare(calculateStats());
+        }
+        function openManualModal(itemId, title, defaultBuy, defaultCurrent) {
+            document.getElementById('manualModalTitle').textContent = '✏️ ' + title;
+            document.getElementById('manualItemId').value = itemId || '';
+            document.getElementById('manualBuyPrice').value = defaultBuy || '';
+            document.getElementById('manualCurrentPrice').value = defaultCurrent || '';
+            document.getElementById('manualModal').classList.add('show');
+        }
+        function saveManualPrice() {
+            const itemId = document.getElementById('manualItemId').value;
+            const buy = document.getElementById('manualBuyPrice').value;
+            const current = document.getElementById('manualCurrentPrice').value;
+            closeModal('manualModal');
+            if (itemId === 'avand') {
+                setAvandCompare(buy, current);
+            } else if (itemId) {
+                setManualPrice(itemId, current);
+            }
+        }
+
+        // ==========================================
+        // LOAD PRICES
+        // ==========================================
         async function loadPrices() {
             priceCache = {};
             const tgjuSlugs = new Set();
@@ -752,6 +828,7 @@
             Object.values(ASSETS).forEach(cat => {
                 (cat.items || []).forEach(item => { if (item.tgju) slugToSymbol[item.tgju] = item.symbol; });
             });
+
             const results = [];
             for (const slug of Array.from(tgjuSlugs)) {
                 try {
@@ -760,11 +837,9 @@
                         const raw = rows[rows.length - 1].close;
                         const price = NON_RIAL_SLUGS.has(slug) ? raw : raw / 10;
                         results.push({ status: 'fulfilled', value: { slug, price } });
-                    } else {
-                        results.push({ status: 'rejected', reason: new Error('empty') });
                     }
-                } catch (e) { results.push({ status: 'rejected', reason: e }); }
-                await new Promise(r => setTimeout(r, 100));
+                } catch (e) { /* ignore */ }
+                await new Promise(r => setTimeout(r, 80));
             }
             results.forEach(r => {
                 if (r.status === 'fulfilled') {
@@ -773,6 +848,7 @@
                     if (symbol) priceCache[symbol] = { price, source: 'TGJU', slug };
                 }
             });
+
             try {
                 const ids = 'bitcoin,ethereum,tether-gold,pax-gold,tether,usd-coin,solana,ripple,dogecoin,cardano,binancecoin,tron,avalanche-2';
                 const res = await fetch(`https://api.coingecko.com/api/v3/simple/price?ids=${ids}&vs_currencies=usd`);
@@ -786,6 +862,7 @@
                     if (data[k]?.usd) priceCache[map[k]] = { price: data[k].usd, source: 'CoinGecko' };
                 });
             } catch (e) { console.error('CoinGecko error:', e); }
+
             console.log('📊 Prices loaded:', priceCache);
         }
 
@@ -793,20 +870,21 @@
             const cat = ASSETS[category];
             return cat?.items?.find(i => i.symbol === symbol) || null;
         }
-
         function getCurrentPrice(item) {
+            // اولویت ۱: قیمت دستی
             const manual = getManualPrice(item.id);
             if (manual) return { price: manual, source: 'دستی', manual: true };
+            // اولویت ۲: TGJU
             const def = getAssetDefinition(item.asset_category, item.asset_symbol);
             if (def?.tgju && priceCache[def.symbol]?.price) {
                 return { price: priceCache[def.symbol].price, source: 'TGJU', manual: false };
             }
+            // اولویت ۳: کریپتو
             if (def && priceCache[def.symbol]?.price) {
                 return { price: priceCache[def.symbol].price, source: 'CoinGecko', manual: false };
             }
             return null;
         }
-
         function currencyLabel(currency) { return currency === 'USD' ? 'دلار' : 'تومان'; }
         function assetCurrency(item) { return item.asset_category === 'crypto' ? 'USD' : 'IRR'; }
         function getUsdRate() {
@@ -835,6 +913,9 @@
             return `${toFa(Math.floor(days / 365))} سال · ${toFa(days % 365)} روز`;
         }
 
+        // ==========================================
+        // CALC STATS
+        // ==========================================
         function calculateStats() {
             let totalValue = 0, totalInvested = 0, totalInvestedWithLive = 0;
             const categoryStats = {};
@@ -878,6 +959,9 @@
             return data || [];
         }
 
+        // ==========================================
+        // RENDER
+        // ==========================================
         async function render() {
             const container = document.getElementById('mainContent');
             try {
@@ -943,7 +1027,7 @@
                     <div class="table-card-head">
                         <div>
                             <div class="chart-title">📈 جدول دارایی‌ها</div>
-                            <div class="table-subtitle">قیمت‌ها از TGJU و CoinGecko. برای هر دارایی می‌تونی با ✏️ قیمت دستی ثبت کنی.</div>
+                            <div class="table-subtitle">قیمت‌ها از TGJU و CoinGecko. کنار هر قیمت زنده، دکمه ✏️ برای ثبت قیمت دستی.</div>
                         </div>
                         <div class="usd-rate-badge">دلار آزاد: <strong>${stats.usdRate ? formatNum(stats.usdRate) + ' تومان' : '—'}</strong></div>
                     </div>
@@ -972,17 +1056,17 @@
 
                 <div class="compare-section">
                     <div class="compare-title">📊 مقایسه عملکرد دارایی‌ها</div>
-                    <div class="compare-desc">دارایی‌های مرجع را انتخاب کن. برای صندوق عیار و آوند، با ✏️ قیمت دستی ثبت کن.</div>
+                    <div class="compare-desc">دارایی‌های مرجع را انتخاب کن. برای صندوق آوند، با ✏️ قیمت خرید و قیمت فعلی را وارد کن.</div>
                     <div class="compare-selector">
                         <div class="compare-selector-title">انتخاب دارایی‌های مرجع</div>
                         <div class="compare-selector-grid">
                             <label class="compare-option"><input type="checkbox" class="compare-check" value="gold18" checked onchange="refreshComparison()"><span class="check">✓</span><span class="option-text">🥇 طلا ۱۸ عیار</span></label>
                             <label class="compare-option"><input type="checkbox" class="compare-check" value="usd" checked onchange="refreshComparison()"><span class="check">✓</span><span class="option-text">💵 دلار آزاد</span></label>
                             <label class="compare-option"><input type="checkbox" class="compare-check" value="bourse" checked onchange="refreshComparison()"><span class="check">✓</span><span class="option-text">📊 شاخص کل بورس</span></label>
-                            <label class="compare-option"><input type="checkbox" class="compare-check" value="silver999" onchange="refreshComparison()"><span class="check">✓</span><span class="option-text">🥈 نقره ۹۹۹</span></label>
+                            <label class="compare-option"><input type="checkbox" class="compare-check" value="silver999" checked onchange="refreshComparison()"><span class="check">✓</span><span class="option-text">🥈 نقره ۹۹۹</span></label>
                             <label class="compare-option"><input type="checkbox" class="compare-check" value="ayar" checked onchange="refreshComparison()"><span class="check">✓</span><span class="option-text">🟡 صندوق طلای عیار</span></label>
                             <label class="compare-option"><input type="checkbox" class="compare-check" value="avand" checked onchange="refreshComparison()"><span class="check">✓</span><span class="option-text">💼 صندوق آوند</span></label>
-                            <label class="compare-option"><input type="checkbox" class="compare-check" value="bank" onchange="refreshComparison()"><span class="check">✓</span><span class="option-text">🏦 سپرده بانکی</span></label>
+                            <label class="compare-option"><input type="checkbox" class="compare-check" value="bank" checked onchange="refreshComparison()"><span class="check">✓</span><span class="option-text">🏦 سپرده بانکی</span></label>
                         </div>
                         <div class="compare-bank-rate">
                             <span>نرخ سود سالانه بانک:</span>
@@ -1018,7 +1102,6 @@
             const pSign = item.profit === null ? '' : item.profit >= 0 ? '+' : '−';
             const buyText = `${formatNum(item.buy_price)} ${currencyLabel(item.currency)}`;
 
-            // دکمه ✏️ همیشه هست
             let priceText;
             if (item.hasLivePrice) {
                 const manualLabel = item.isManualPrice
@@ -1081,7 +1164,6 @@
                 options: { responsive: true, maintainAspectRatio: false, cutout: '58%', plugins: { legend: { position: 'bottom', labels: { color: isLight ? '#1f2937' : '#F8FAFC', font: { family: 'Vazirmatn', size: 11 } } } } }
             });
         }
-
         function renderBarChart(stats) {
             const canvas = document.getElementById('barChart');
             if (!canvas) return;
@@ -1099,6 +1181,9 @@
             });
         }
 
+        // ==========================================
+        // COMPARE — همیشه از TGJU برای مرجع‌ها + دستی برای آوند
+        // ==========================================
         function getSelectedCompareKeys() {
             return Array.from(document.querySelectorAll('.compare-check:checked')).map(el => el.value);
         }
@@ -1114,7 +1199,8 @@
                 gold18: { slug: 'geram18', label: 'طلا ۱۸ عیار', icon: '🥇' },
                 usd: { slug: 'price_dollar_rl', label: 'دلار آزاد', icon: '💵' },
                 bourse: { slug: 'bourse', label: 'شاخص کل بورس', icon: '📊', noRial: true },
-                silver999: { slug: 'silver_999', label: 'نقره ۹۹۹', icon: '🥈' }
+                silver999: { slug: 'silver_999', label: 'نقره ۹۹۹', icon: '🥈' },
+                ayar: { slug: 'gc3', label: 'صندوق طلای عیار', icon: '🟡' }
             };
 
             const sources = {};
@@ -1125,8 +1211,7 @@
             }
 
             const bankRate = Number(document.getElementById('compareBankRate')?.value) || 0;
-            const ayarItem = portfolio.find(p => p.asset_symbol === 'ayar');
-            const avandItem = portfolio.find(p => p.asset_symbol === 'avand');
+            const avand = getAvandCompare();
 
             for (const item of stats.items) {
                 const invested = Number(item.invested) || 0;
@@ -1134,40 +1219,36 @@
                 const rows = [];
 
                 for (const key of selected) {
+                    // بانک
                     if (key === 'bank') {
                         const days = holdingDays(item.buy_date) || 0;
                         const percent = bankRate > 0 ? (Math.pow(1 + bankRate / 100, days / 365) - 1) * 100 : 0;
                         rows.push({ label: 'سپرده بانکی', icon: '🏦', baseText: '—', latestText: '—', percent, hypothetical: invested * (1 + percent / 100) });
                         continue;
                     }
-                    if (key === 'ayar') {
-                        const editBtn = ayarItem
-                            ? `<button class="manual-price-btn" onclick="editManualPrice('${String(ayarItem.id).replace(/'/g,"\\'")}')" title="ثبت قیمت دستی عیار">✏️</button>`
-                            : '';
-                        const manual = ayarItem ? getManualPrice(ayarItem.id) : null;
-                        const buy = ayarItem ? Number(ayarItem.buy_price) : null;
-                        if (buy && manual && buy > 0) {
-                            const percent = (manual / buy - 1) * 100;
-                            rows.push({ label: 'صندوق طلای عیار', icon: '🟡', baseText: formatNum(buy) + ' تومان', latestText: formatNum(manual) + ' تومان', percent, hypothetical: invested * (manual / buy), editBtn });
-                        } else {
-                            rows.push({ label: 'صندوق طلای عیار', icon: '🟡', baseText: buy ? formatNum(buy) + ' تومان' : '—', latestText: '—', percent: null, hypothetical: null, hint: 'قیمت دستی ثبت نشده', editBtn });
-                        }
-                        continue;
-                    }
+                    // صندوق آوند — همیشه دستی
                     if (key === 'avand') {
-                        const editBtn = avandItem
-                            ? `<button class="manual-price-btn" onclick="editManualPrice('${String(avandItem.id).replace(/'/g,"\\'")}')" title="ثبت قیمت دستی آوند">✏️</button>`
-                            : '';
-                        const manual = avandItem ? getManualPrice(avandItem.id) : null;
-                        const buy = avandItem ? Number(avandItem.buy_price) : null;
-                        if (buy && manual && buy > 0) {
-                            const percent = (manual / buy - 1) * 100;
-                            rows.push({ label: 'صندوق آوند', icon: '💼', baseText: formatNum(buy) + ' تومان', latestText: formatNum(manual) + ' تومان', percent, hypothetical: invested * (manual / buy), editBtn });
+                        const editBtn = `<button class="manual-price-btn" onclick="openAvandModal()" title="ثبت قیمت دستی آوند">✏️</button>`;
+                        if (avand) {
+                            const percent = (avand.current / avand.buy - 1) * 100;
+                            rows.push({
+                                label: 'صندوق آوند', icon: '💼',
+                                baseText: formatNum(avand.buy) + ' تومان',
+                                latestText: formatNum(avand.current) + ' تومان',
+                                percent, hypothetical: invested * (avand.current / avand.buy),
+                                editBtn
+                            });
                         } else {
-                            rows.push({ label: 'صندوق آوند', icon: '💼', baseText: buy ? formatNum(buy) + ' تومان' : '—', latestText: '—', percent: null, hypothetical: null, hint: 'قیمت دستی ثبت نشده', editBtn });
+                            rows.push({
+                                label: 'صندوق آوند', icon: '💼',
+                                baseText: '—', latestText: '—',
+                                percent: null, hypothetical: null,
+                                hint: 'برای ثبت قیمت روی ✏️ بزن', editBtn
+                            });
                         }
                         continue;
                     }
+                    // TGJU
                     const def = tgjuDefs[key];
                     const src = sources[key];
                     if (!src || !def) {
@@ -1227,6 +1308,11 @@
             }
         }
 
+        function openAvandModal() {
+            const existing = getAvandCompare();
+            openManualModal('avand', 'ثبت قیمت صندوق آوند', existing?.buy, existing?.current);
+        }
+
         function findHistoryAtOrBefore(rows, dateStr) {
             if (!dateStr || !rows?.length) return null;
             const target = String(dateStr).trim();
@@ -1238,6 +1324,9 @@
             return best;
         }
 
+        // ==========================================
+        // FORM
+        // ==========================================
         function openAddModal(categoryKey = 'gold', symbol = null) {
             document.getElementById('assetModalTitle').textContent = '➕ افزودن دارایی';
             document.getElementById('assetId').value = '';
@@ -1256,7 +1345,6 @@
             document.getElementById('assetNotes').value = '';
             document.getElementById('assetModal').classList.add('show');
         }
-
         function onCategoryChange() {
             const catKey = document.getElementById('assetCategory').value;
             const cat = ASSETS[catKey];
@@ -1264,14 +1352,12 @@
             select.innerHTML = (cat?.items || []).map(i => `<option value="${i.symbol}">${i.name}</option>`).join('');
             onAssetChange();
         }
-
         function onAssetChange() {
             const catKey = document.getElementById('assetCategory').value;
             const symbol = document.getElementById('assetSelect').value;
             const item = ASSETS[catKey]?.items?.find(i => i.symbol === symbol);
             if (item) document.getElementById('assetUnit').value = item.unit || '';
         }
-
         async function saveAsset() {
             const id = document.getElementById('assetId').value;
             const category = document.getElementById('assetCategory').value;
@@ -1300,17 +1386,14 @@
                 buy_date: buyDate,
                 notes: document.getElementById('assetNotes').value.trim() || null
             };
-
             let error;
             if (id) ({ error } = await db.from('user_portfolio').update(payload).eq('id', id));
             else ({ error } = await db.from('user_portfolio').insert(payload));
-
             if (error) { showToast('❌ ' + error.message, 'error'); return; }
             showToast(id ? '✅ ویرایش شد' : '✅ اضافه شد');
             closeModal('assetModal');
             await render();
         }
-
         function editAsset(id) {
             const item = portfolio.find(p => String(p.id) === String(id));
             if (!item) return;
@@ -1327,7 +1410,6 @@
             document.getElementById('assetNotes').value = item.notes || '';
             document.getElementById('assetModal').classList.add('show');
         }
-
         async function deleteAsset(id) {
             if (!confirm('مطمئنی؟')) return;
             const { error } = await db.from('user_portfolio').delete().eq('id', id);
@@ -1336,7 +1418,6 @@
             showToast('🗑️ حذف شد');
             await render();
         }
-
         function exportCSV() {
             const stats = calculateStats();
             let csv = 'نام,نماد,دسته,مقدار,واحد,قیمت خرید,قیمت فعلی,سرمایه,ارزش فعلی,سود,درصد,تاریخ\n';
