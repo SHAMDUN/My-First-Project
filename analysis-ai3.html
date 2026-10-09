@@ -52,7 +52,6 @@ function syncAnalysisOverlayGeometry(){const box=$('analysisOverlay');if(!box||!
 function bindChartOverlayEvents(){if(!chart)return;try{const ts=chart.timeScale();if(ts&&typeof ts.subscribeVisibleLogicalRangeChange==='function')ts.subscribeVisibleLogicalRangeChange(scheduleAnalysisOverlay);if(ts&&typeof ts.subscribeVisibleTimeRangeChange==='function')ts.subscribeVisibleTimeRangeChange(scheduleAnalysisOverlay);if(ts&&typeof ts.subscribeSizeChange==='function')ts.subscribeSizeChange(()=>{syncAnalysisOverlayGeometry();scheduleAnalysisOverlay()})}catch(e){}const el=$('liveChart');if(el&&!el.__overlayBound){el.__overlayBound=true;let redrawTimer=0;const redraw=()=>{syncAnalysisOverlayGeometry();scheduleAnalysisOverlay()};el.addEventListener('pointerdown',redraw,{passive:true});el.addEventListener('pointermove',redraw,{passive:true});el.addEventListener('pointerup',redraw,{passive:true});el.addEventListener('wheel',()=>{clearTimeout(redrawTimer);redrawTimer=setTimeout(redraw,60)},{passive:true});el.addEventListener('mouseleave',redraw,{passive:true})}}
 function makeChart(el,compareMode=false){const cc=chartColors();if(compareMode){if(compareChart){try{compareChart.remove()}catch(e){}compareChart=null}el.innerHTML='';const width=Math.max(el.clientWidth,300),height=Math.max(el.clientHeight,430);compareChart=LightweightCharts.createChart(el,{width,height,layout:{background:{color:cc.bg},textColor:cc.text},grid:{vertLines:{color:cc.grid},horzLines:{color:cc.grid}},rightPriceScale:{borderColor:cc.border},timeScale:{borderColor:cc.border,timeVisible:false}});applyPriceScale(compareChart,compareScaleMode);return compareChart}if(chart)try{chart.remove()}catch(e){}chart=LightweightCharts.createChart(el,{autoSize:true,layout:{background:{color:cc.bg},textColor:cc.text},grid:{vertLines:{color:cc.grid},horzLines:{color:cc.grid}},rightPriceScale:{borderColor:cc.border},timeScale:{borderColor:cc.border,timeVisible:true}});applyPriceScale(chart,priceScaleMode);syncAnalysisOverlayGeometry();bindChartOverlayEvents();bindChartCrosshair();return chart}
 function refreshChartTheme(){const cc=chartColors();try{if(chart)chart.applyOptions({layout:{background:{color:cc.bg},textColor:cc.text},grid:{vertLines:{color:cc.grid},horzLines:{color:cc.grid}},rightPriceScale:{borderColor:cc.border},timeScale:{borderColor:cc.border}})}catch(e){}try{if(compareChart)compareChart.applyOptions({layout:{background:{color:cc.bg},textColor:cc.text},grid:{vertLines:{color:cc.grid},horzLines:{color:cc.grid}},rightPriceScale:{borderColor:cc.border},timeScale:{borderColor:cc.border}})}catch(e){}}
-```javascript
 function tgjuRows(j) {
   const rows = Array.isArray(j?.data)
     ? j.data
@@ -99,7 +98,6 @@ function tgjuRows(j) {
   .filter(Boolean)
   .sort((a, b) => a.time - b.time);
 }
-```
 async function tgju(slug){const u=`https://api.tgju.org/v1/market/indicator/summary-table-data/${encodeURIComponent(slug)}?order_dir=&from=&to=&convert_to_ad=1&_=${Date.now()}`,r=await fetch(u,{cache:'no-store'});if(!r.ok)throw Error('TGJU '+r.status);const d=tgjuRows(await r.json());if(!d.length)throw Error('TGJU empty');return d.slice(-720)}
 
 async function captureChartImage(){
